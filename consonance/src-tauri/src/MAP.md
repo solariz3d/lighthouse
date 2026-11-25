@@ -31,8 +31,9 @@ the file in all, is `#[cfg(test)]` modules. `mcp.rs` ~4,400, `cochlea.rs` ~4,100
 | **a builder pane cut at its hand-back, or before its dispatch** (L218; `cut_at_handback` in ~/.consonance.json, empty by default, so it does nothing) | `cut_at_handback.rs` (the pure rule: `listing`, `at_ring`, `after_turn`, `before_dispatch`, `open_background_tasks`) | `main.rs` `cut_at_handback_after_ring` (called by `pane_call_librarian_exec` after a delivered ring), `cut_before_dispatch` (called by `chair_inject_exec` before its gate), `cut_listing`, `compact_and_confirm`; rows `cut_at_handback_wiring_tests` |
 | **a builder pane is denied, not held, by a prompt nobody sees** (L216) | `main.rs` `no_prompt_for` (skip_perms AND a `sibling-` folder under the instances root; `"builder_no_prompt": false` turns it off) | `spawn_claude_pane` adds ONE `--settings` (`launch_settings`, `launch_settings_file`; Claude Code applies only the last one given): `<data>/builder-no-prompt.settings.json` (`NO_PROMPT_SETTINGS`), or with the floor too `<data>/builder-launch.settings.json` (`BUILDER_LAUNCH_SETTINGS`); rows `one_settings_tests` and; rows `no_prompt_tests` |
 | **a builder pane launches without the Artifact tool and most of the skills listing** (L225 B1, Q2 half B) | `main.rs` `floor_launch_for` (a `sibling-` folder under the instances root; `"builder_floor": false` turns it off with the intake floor) | `spawn_claude_pane` names the floor's key in its one settings file (`skillListingBudgetFraction: 0.001`, never 0, which Claude Code refuses with the whole file; `FLOOR_LAUNCH_SETTINGS`, alone in `<data>/builder-floor.settings.json` or with the no-prompt keys in `builder-launch.settings.json`; `launch_settings`) and `--disallowedTools Artifact` (`FLOOR_DISALLOWED`); rows `floor_launch_tests` |
+| **the next move's glow, and ⟳ Restart** (L233: the button for the proper next move wears a steady gold halo) | `ui/next-move.js` (`nextMove`, the pure rule; `view`, `apply`; it polls `next_move_facts` every 5 s) | `main.rs` `next_move_facts`* (the three facts: `newer_build` and `exe_mtime` against `process_start`, whats-live's rule; `next_move_working`, the X's own reading; `next_move_compact`, close-small.js's list cached 60 s in `NEXT_MOVE_COMPACT`), `restart_app`* (refuses while closing or compacting or with no newer build; asks when a seat works; starts `consonance/tools/relaunch.js`, then the X's Leave); rows `next_move_tests`, `ui/next-move.test.js`, `tools/relaunch.test.js` |
 | **leaving / closing / the stick** | `main.rs` `leave_run`, `close_route`, `leave_confirmed`, `block_shutdown` | `sync_launch.rs` `run_leave`, `arrive`, `await_handshake`, `find_stick`; `main.rs` `stick_state` and the other `stick_*` commands |
-| **a frontend call** (`invoke('x')` in `ui/`) | `main.rs` the 51 `#[tauri::command]` functions, listed in `.invoke_handler(tauri::generate_handler![...])` at the end of `fn main()` | |
+| **a frontend call** (`invoke('x')` in `ui/`) | `main.rs` the 53 `#[tauri::command]` functions, listed in `.invoke_handler(tauri::generate_handler![...])` at the end of `fn main()` | |
 
 ## The files
 
@@ -85,10 +86,11 @@ the functions do. Functions marked * are `#[tauri::command]`.
 - **The cut at a hand-back, and before a dispatch** (L218). `CUT_TURN_WAIT`, `cut_listing`, `cut_listing_refusals_at_launch`, `cut_at_handback_after_ring`, `cut_before_dispatch`; rows `cut_at_handback_wiring_tests`.
 - **Launch.** `sync_at_launch`, `run_state_pull`, `machine_identity`, `launch_effects`, `start_exit_waiter`, `start_jev_shadow`, `leave_cleanup_at_launch`.
 - **The stick.** `stick_state`*, `stick_rehearse`*, `stick_start_applier`*, `stick_release`*, `stick_ack_result`*, `stick_close_app`*, `checked_stick_folder`.
+- **The next move and ⟳ Restart** (L233). `PROCESS_START`, `process_start`, `newer_build`, `exe_mtime`, `NEXT_MOVE_COMPACT_EVERY`, `NEXT_MOVE_COMPACT`, `next_move_compact`, `next_move_working`, `next_move_facts`*, `restart_app`*, `sleep_off_the_workers`; rows `next_move_tests`.
 - **Leave and close.** `leave_close_requested`, `close_route`, `close_needs_confirm`, `leave_confirmed`*, `leave_run`, `run_publish`; the OS ending the session (`block_shutdown`, `watch_session_end`); keep-awake (`keep_awake_thread`); `leave_exit`*.
 - **Audio commands** (the listening tab's front door). `audio_sources`*, `audio_status`*, `audio_start`*, `audio_snapshot`*, `audio_stop`*.
 - **Clipboard.** `clipboard_read`*, `clipboard_write`*.
-- **`fn main()`.** Priority, the launch steps, the threads (drain, keep-warm, the MCP server and the others), then `.invoke_handler` with the 51 commands.
+- **`fn main()`.** Priority, the launch steps, the threads (drain, keep-warm, the MCP server and the others), then `.invoke_handler` with the 53 commands.
 
 ## `mcp.rs`, by area
 
@@ -132,6 +134,10 @@ the answer to a specific failure, and the comment above the function usually nam
   `landing-train.test.js`, each seen red by `landing-train.mutants.js`. dreamzone-3's check and game guard are
   `landing-train-dz3-check.cmd` and `landing-train-dz3-guard.cmd`, and the config lives in the data folder
   (`landing-train.config.dreamzone-3.json`). A Node tool, not part of the app.
+
+- `consonance/tools/relaunch.js` and `relaunch.test.js` (L233): ⟳ Restart's helper. `restart_app` starts it detached with the app's pid
+  and exe; it waits until that pid is gone (the single-instance mutex is free only then), opens the exe at the same path without
+  `CONSONANCE_LAUNCH_ID` or `CONSONANCE_DATA`, and writes one row to `<data>/relaunch.jsonl`. A Node tool, not part of the app.
 
 - `consonance/tools/t180-rebuilder/`: the T-180 Rebuilder's source (`Rebuilder.cs`, the `rebuilder.ico` it compiles with, and a
   `README.md`). It is the launcher his desktop shortcut runs on each machine. It pulls the track builder, rebuilds and reinstalls it

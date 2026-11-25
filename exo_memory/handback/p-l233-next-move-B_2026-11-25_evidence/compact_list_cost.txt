@@ -1,0 +1,3 @@
+close-small.js --json, run 1: 173 ms
+close-small.js --json, run 2: 166 ms
+close-small.js --json, run 3: 166 ms

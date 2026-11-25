@@ -15303,12 +15303,307 @@ fn close_small_run(app: &AppHandle, panes: Vec<String>) {
         let _ = t.join();
     }
     close_small_note(app, serde_json::json!({ "event": "done" }));
+    *NEXT_MOVE_COMPACT.lock().unwrap_or_else(|p| p.into_inner()) = None;   // L233: the glow reads the list again, after the cut
     CLOSE_SMALL_IN_FLIGHT.store(false, Ordering::SeqCst);
 }
 
 /// A run started by his click in this session and not yet ended (set before the run's thread starts, cleared after its `done`
 /// row). The close question reads it beside the ledger, so a ledger that cannot be read never makes a run look finished.
 static CLOSE_SMALL_IN_FLIGHT: AtomicBool = AtomicBool::new(false);
+
+// ---------------------------------------------------------------------------------------------------------------------------
+// L233 (pane B; packet exo_memory/loop/packet_next_move_glow_B_2026-11-25.md): THE BUTTON FOR THE PROPER NEXT MOVE GLOWS. The
+// keeper, 02:45: "say if the proper thing to do is close consonance, the X will be golden resonant aura, but then if the proper move
+// is to compact warm seats, that button will have the aura". The decision and the drawing are ui/next-move.js; this is its three
+// facts, each read from what already owns it, and ⟳ Restart (the window's X is Windows' and cannot glow).
+
+/// When this process started, taken first thing in `main()`. The exe's time is compared with it.
+static PROCESS_START: std::sync::OnceLock<SystemTime> = std::sync::OnceLock::new();
+fn process_start() -> SystemTime {
+    *PROCESS_START.get_or_init(SystemTime::now)
+}
+
+/// whats-live.js's rule (`staleness`: "the binary on disk is newer than the running process"): the file at the running exe's path
+/// was written after this process started. A landing moves the running exe aside and writes the new one at the same path, so the
+/// path's time is the new build's; with nothing at the path yet (moved aside, not yet written) there is no newer build.
+fn newer_build(exe_mtime: Option<SystemTime>, started: SystemTime) -> bool {
+    matches!(exe_mtime, Some(t) if t > started)
+}
+
+/// The time of the file at `exe` now, or None when nothing is there.
+fn exe_mtime(exe: &Path) -> Option<SystemTime> {
+    fs::metadata(exe).ok().filter(|m| m.is_file()).and_then(|m| m.modified().ok())
+}
+
+/// How long one compact list is used. close-small.js reads every seat's transcript (about 175 ms a read, three runs timed on L,
+/// 2026-11-25); its warmth is counted in whole minutes and its size changes only when a seat's turn ends, so a minute is as often
+/// as the list can change. A run of Compact warm seats clears it when it ends, so its glow does not outlive the cut.
+const NEXT_MOVE_COMPACT_EVERY: Duration = Duration::from_secs(60);
+static NEXT_MOVE_COMPACT: Mutex<Option<(Instant, serde_json::Value)>> = Mutex::new(None);
+
+/// The compact list's facts: the names close-small.js marks `cut`, its size line and its warm window. A failed read is logged once
+/// per distinct error and gives no list (nothing glows rather than a guess).
+fn next_move_compact() -> serde_json::Value {
+    static LAST_ERR: Mutex<String> = Mutex::new(String::new());
+    let mut cache = NEXT_MOVE_COMPACT.lock().unwrap_or_else(|p| p.into_inner());
+    if let Some((at, v)) = cache.as_ref() {
+        if at.elapsed() < NEXT_MOVE_COMPACT_EVERY {
+            return v.clone();
+        }
+    }
+    let v = match close_small_list() {
+        Ok(list) => {
+            let names: Vec<serde_json::Value> = list
+                .get("seats")
+                .and_then(|s| s.as_array())
+                .map(|a| {
+                    a.iter()
+                        .filter(|s| s.get("action").and_then(|x| x.as_str()) == Some("cut"))
+                        .map(|s| s.get("name").or_else(|| s.get("pane")).cloned().unwrap_or_default())
+                        .collect()
+                })
+                .unwrap_or_default();
+            serde_json::json!({ "compactList": names, "big": list.get("big"), "warmMin": list.get("warmMin") })
+        }
+        Err(e) => {
+            let mut last = LAST_ERR.lock().unwrap_or_else(|p| p.into_inner());
+            if *last != e {
+                plog(&format!("NEXT MOVE the compact list could not be read, so Compact does not glow: {e}"));
+                *last = e;
+            }
+            serde_json::json!({ "compactList": [] })
+        }
+    };
+    *cache = Some((Instant::now(), v.clone()));
+    v
+}
+
+/// The seats the X would ask about: its own reading (`close_seat_gates`, `close_needs_confirm`: any gate not Ready counts as
+/// working). One reading for both doors, so Restart and the X never disagree about whether a seat is working.
+fn next_move_working(app: &AppHandle) -> Vec<(String, PaneGate)> {
+    close_needs_confirm(&close_seat_gates(app)).unwrap_or_default()
+}
+
+/// The page's three facts (ui/next-move.js decides from them). Off the event loop: the gates take the emulators' locks and the
+/// compact list may run node.
+#[tauri::command]
+async fn next_move_facts(app: AppHandle) -> Result<serde_json::Value, String> {
+    tauri::async_runtime::spawn_blocking(move || {
+        let exe = std::env::current_exe().map_err(|e| format!("cannot name this app's own executable ({e})"))?;
+        let built = exe_mtime(&exe);
+        let mut facts = next_move_compact();
+        facts["newerBuild"] = serde_json::Value::Bool(newer_build(built, process_start()));
+        facts["builtAt"] = built
+            .map(|t| serde_json::Value::String(chrono::DateTime::<chrono::Local>::from(t).format("%H:%M").to_string()))
+            .unwrap_or(serde_json::Value::Null);
+        facts["working"] = next_move_working(&app).into_iter().map(|(l, _)| serde_json::Value::String(l)).collect();
+        Ok(facts)
+    })
+    .await
+    .map_err(|e| format!("the next move could not be read ({e})"))?
+}
+
+/// ⟳ Restart. Refused while a Leave or a Compact run is going, or with no newer build on disk. With a seat working and `force`
+/// false, nothing happens and the seats are returned so the page asks (in the app). Otherwise relaunch.js is started to wait for
+/// this pid and open the exe at the same path, and the app closes through its own Leave (`leave_close_requested`, as the X's
+/// [Close] does), so every seat is ended and saved as at any close and comes back as at any launch.
+///
+/// WHY relaunch.js AND NOT TAURI'S RESTART: `AppHandle::restart` starts the new process before this one has exited, and the
+/// single-instance mutex (`claim_single_instance`) is held until this one has: the new copy would be refused as a second instance.
+/// It would also skip the Leave. A detached child that waits on this pid is dev/stick-apply.js's pattern, already in use.
+#[tauri::command]
+async fn restart_app(app: AppHandle, force: bool) -> Result<serde_json::Value, String> {
+    if LEAVE_PHASE.load(Ordering::SeqCst) != LEAVE_IDLE {
+        return Err("Consonance is already closing, so it was not restarted".into());
+    }
+    if CLOSE_SMALL_IN_FLIGHT.load(Ordering::SeqCst) {
+        return Err("Compact warm seats is still running; restart when it is done (compacting needs the app open)".into());
+    }
+    let exe = std::env::current_exe().map_err(|e| format!("cannot name this app's own executable ({e}), so it was not restarted"))?;
+    if !newer_build(exe_mtime(&exe), process_start()) {
+        return Err(format!("no build newer than the running one is at {}, so nothing was restarted", exe.display()));
+    }
+    let a = app.clone();
+    let working = tauri::async_runtime::spawn_blocking(move || next_move_working(&a))
+        .await
+        .map_err(|e| format!("the seats could not be read ({e}), so nothing was restarted"))?;
+    if !working.is_empty() && !force {
+        let rows: Vec<serde_json::Value> =
+            working.iter().map(|(l, g)| serde_json::json!({ "label": l, "gate": gate_word(*g) })).collect();
+        return Ok(serde_json::json!({ "asked": true, "working": rows }));
+    }
+    let script = repo_root()
+        .map(|r| r.join("consonance").join("tools").join("relaunch.js"))
+        .filter(|p| p.is_file())
+        .ok_or("consonance/tools/relaunch.js is not on disk in this checkout, so nothing was restarted and Consonance stays open")?;
+    let mut child = Command::new("node")
+        .arg(&script)
+        .arg("--pid")
+        .arg(std::process::id().to_string())
+        .arg("--exe")
+        .arg(&exe)
+        .arg("--log")
+        .arg(data_dir().join("relaunch.jsonl"))
+        // The launch-id rule (LAUNCH_ID_ENV): this process removed it at start; removed again here so no child can carry it.
+        .env_remove(LAUNCH_ID_ENV)
+        .env_remove("CONSONANCE_DATA")
+        // No window, and its own process group so it outlives the exit it waits for (stick_start_applier, the same flags).
+        .creation_flags(NO_WINDOW | CREATE_NEW_PROCESS_GROUP)
+        .stdin(Stdio::null())
+        .stdout(Stdio::null())
+        .stderr(Stdio::null())
+        .spawn()
+        .map_err(|e| format!("node would not start the relaunch ({e}), so Consonance stays open"))?;
+    // It waits on this pid, so it must still be running a moment later; one that already exited could not reopen anything.
+    sleep_off_the_workers(Duration::from_millis(500)).await;
+    if let Ok(Some(status)) = child.try_wait() {
+        return Err(format!("the relaunch exited ({status}) before Consonance closed, so Consonance stays open; see relaunch.jsonl"));
+    }
+    plog(&format!(
+        "RESTART his click: relaunch pid={} waits for this pid {} and opens {}; {} seat(s) working{}",
+        child.id(),
+        std::process::id(),
+        exe.display(),
+        working.len(),
+        if working.is_empty() {
+            String::new()
+        } else {
+            format!(" ({}), and he chose Restart", working.iter().map(|(l, _)| l.as_str()).collect::<Vec<_>>().join(", "))
+        }
+    ));
+    leave_close_requested(&app);
+    Ok(serde_json::json!({ "asked": false, "started": true }))
+}
+
+/// A sleep that does not hold an async worker: the wait runs on the blocking pool.
+async fn sleep_off_the_workers(d: Duration) {
+    let _ = tauri::async_runtime::spawn_blocking(move || std::thread::sleep(d)).await;
+}
+
+#[cfg(test)]
+mod next_move_tests {
+    use super::*;
+
+    fn scratch(name: &str) -> crate::test_scratch::Scratch {
+        let d = crate::test_scratch::root().join(format!("l233-{}-{name}", std::process::id()));
+        let _ = fs::remove_dir_all(&d);
+        fs::create_dir_all(&d).unwrap();
+        crate::test_scratch::Scratch::owning(d)
+    }
+    fn write_at(p: &Path, bytes: &[u8], t: SystemTime) {
+        fs::write(p, bytes).unwrap();
+        fs::File::options().write(true).open(p).unwrap().set_modified(t).unwrap();
+    }
+
+    // R2: the landing's own steps on real files. The running exe was written before this process started; the landing moves it
+    // aside (release\consonance.exe.running-before-*) and writes the new build at the same path.
+    #[test]
+    fn r2_before_the_landing_there_is_no_newer_build() {
+        let d = scratch("before");
+        let exe = d.join("consonance.exe");
+        let started = SystemTime::now();
+        write_at(&exe, b"old build", started - Duration::from_secs(600));
+        assert!(!newer_build(exe_mtime(&exe), started));
+    }
+
+    #[test]
+    fn r2_after_the_rename_and_the_new_write_there_is() {
+        let d = scratch("after");
+        let exe = d.join("consonance.exe");
+        let started = SystemTime::now() - Duration::from_secs(5);
+        write_at(&exe, b"old build", started - Duration::from_secs(600));
+        fs::rename(&exe, d.join("consonance.exe.running-before-l233")).unwrap();
+        fs::write(&exe, b"new build").unwrap(); // written now, by the clock: after the start
+        assert!(newer_build(exe_mtime(&exe), started));
+    }
+
+    #[test]
+    fn r2_moved_aside_and_not_yet_written_is_not_a_newer_build() {
+        let d = scratch("between");
+        let exe = d.join("consonance.exe");
+        let started = SystemTime::now();
+        write_at(&exe, b"old build", started - Duration::from_secs(600));
+        fs::rename(&exe, d.join("consonance.exe.running-before-l233")).unwrap();
+        assert_eq!(exe_mtime(&exe), None);
+        assert!(!newer_build(exe_mtime(&exe), started));
+    }
+
+    #[test]
+    fn r2_the_moved_aside_file_keeps_its_old_time() {
+        // so a rule that read the renamed file (the running process's own image) would never see the new build
+        let d = scratch("aside");
+        let exe = d.join("consonance.exe");
+        let started = SystemTime::now();
+        write_at(&exe, b"old build", started - Duration::from_secs(600));
+        let aside = d.join("consonance.exe.running-before-l233");
+        fs::rename(&exe, &aside).unwrap();
+        assert!(!newer_build(exe_mtime(&aside), started));
+    }
+
+    #[test]
+    fn a_build_written_at_the_same_instant_as_the_start_is_not_newer() {
+        let t = SystemTime::now();
+        assert!(!newer_build(Some(t), t));
+    }
+
+    fn src() -> &'static str {
+        include_str!("main.rs")
+    }
+    fn body_of(sig: &str) -> &'static str {
+        let s = src();
+        // anchored at a line's start, so a test's own string (where a newline is written as two characters) is never taken for
+        // the definition
+        let at = s.find(&format!("\n{sig}")).unwrap_or_else(|| panic!("{sig} not found")) + 1;
+        let rest = &s[at..];
+        &rest[..rest.find("\n}\n").map(|e| e + 3).unwrap_or(rest.len())]
+    }
+
+    #[test]
+    fn both_commands_are_in_the_handler_list() {
+        let s = src();
+        let list = &s[s.rfind("tauri::generate_handler![").unwrap()..];
+        let list = &list[..list.find("])").unwrap()];
+        assert!(list.contains("next_move_facts") && list.contains("restart_app"), "{list}");
+    }
+
+    #[test]
+    fn restart_strips_the_launch_id_and_closes_through_the_leave() {
+        let b = body_of(concat!("async fn restart_", "app("));
+        assert!(b.contains(".env_remove(LAUNCH_ID_ENV)"), "the launch-id rule");
+        assert!(b.contains("leave_close_requested(&app)"), "the close is the X's Leave");
+        assert!(!b.contains(".restart("), "Tauri's restart starts the new copy before the mutex is free");
+    }
+
+    #[test]
+    fn restart_refuses_before_it_starts_anything() {
+        let b = body_of(concat!("async fn restart_", "app("));
+        let spawn = b.find("Command::new(\"node\")").expect("the relaunch");
+        for guard in ["LEAVE_PHASE.load", "CLOSE_SMALL_IN_FLIGHT.load", "if !newer_build(", "if !working.is_empty() && !force"] {
+            let at = b.find(guard).unwrap_or_else(|| panic!("{guard} missing"));
+            assert!(at < spawn, "{guard} must come before the relaunch is started");
+        }
+    }
+
+    #[test]
+    fn working_is_the_x_s_own_reading() {
+        let b = body_of(concat!("fn next_move_", "working("));
+        assert!(b.contains("close_needs_confirm(&close_seat_gates(app))"));
+    }
+
+    #[test]
+    fn a_compact_run_clears_the_cached_list_when_it_ends() {
+        let b = body_of(concat!("fn close_small_", "run("));
+        let clear = b.find(concat!("*NEXT_MOVE_COMPACT", ".lock()")).expect("the cache is cleared");
+        assert!(clear < b.find("CLOSE_SMALL_IN_FLIGHT.store(false").unwrap(), "cleared before the run is marked over");
+    }
+
+    #[test]
+    fn process_start_is_taken_first_in_main() {
+        let b = body_of("fn main() {");
+        let taken = b.find("process_start();").expect("taken in main");
+        assert!(taken < b.find("priority::start()").unwrap(), "before the launch steps");
+    }
+}
 
 /// One writer at a time: the seats' threads write at once, and a row must never interleave with another.
 static CLOSE_SMALL_LEDGER_LOCK: Mutex<()> = Mutex::new(());
@@ -18261,6 +18556,7 @@ fn main() {
         warn_second_instance();
         return;
     }
+    let _ = process_start(); // L233: the start the exe's time is compared with (next_move_facts, restart_app)
     // W1 / critic E3: take launch.ps1's id for this launch, and remove it from the environment, before anything is spawned.
     let _ = launch_id();
     // D338: Consonance keeps its own priority (High) and opts out of EcoQoS, and so do its WebView2 children; a failure is logged and never stops the start.
@@ -18742,7 +19038,8 @@ fn main() {
             pane_scrollback,
             audio_sources, audio_start, audio_stop, audio_status, audio_snapshot,
             stick_state, stick_rehearse, stick_start_applier, stick_release, stick_ack_result, stick_close_app,
-            leave_exit, leave_confirmed
+            leave_exit, leave_confirmed,
+            next_move_facts, restart_app
         ])
         // P-LEAVE §2.2: the main window's close is PREVENTED and becomes the Leave (D317: after the question, when a seat is working). `app.exit` (the applier's confirm,
         // the Leave's own button) raises ExitRequested, not CloseRequested, so it does not come back through here —

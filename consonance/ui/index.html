@@ -29,6 +29,8 @@
   <!-- L212 · COMPACT WARM SEATS, named "Close for the night" until L218 (close-small.js). The list of seats a close would cut, and the one button that cuts them.
        Below the Leave window: a Leave outranks it. -->
   <div id="close-small" hidden><div class="stick-body"></div></div>
+  <!-- L233 · ⟳ Restart's question when a seat is working, and its refusal (next-move.js). The same family as the close window. -->
+  <div id="restart-ask" hidden><div class="stick-body"></div></div>
 
   <div id="topbar">
     <span class="brandmini" title="Consonance — instances, in concert">
@@ -83,6 +85,8 @@
       </span>
       <button id="convene" class="btn convene" title="convene the committee — the other live panes feed input to the focused pane (◎ a pane to focus it)" disabled>⛬ Convene</button>
       <button id="closesmall" class="btn" title="compact warm seats: list the seats that are warm and large, then cut them (each asked first to write where it stands) only when you press the cut button on that list">☾ Compact warm seats</button>
+      <!-- L233 · ⟳ Restart: shown only when a newer build is on disk (next-move.js); the window's X is Windows' and cannot glow. -->
+      <button id="restartbtn" class="btn" hidden>⟳ Restart</button>
       <button id="gearbtn" class="btn gear" title="gate · breaker · dyad">⚙</button>
     </span>
   </div>
@@ -391,6 +395,8 @@
   <script src="leave.js"></script>
   <!-- close-small.js AFTER term.js for the same reason: it calls inv and escapeHtml, in one function scope. -->
   <script src="close-small.js"></script>
+  <!-- next-move.js AFTER term.js: it calls escapeHtml, in one function scope. -->
+  <script src="next-move.js"></script>
   <!-- chain-indicator.js LAST, and for the same reason the two above are ordered. It reads term.js's
        `paneLetters` to name a pane by its letter, and `typeof` on a `let` still in its temporal dead
        zone THROWS rather than returning "undefined" — so the guard in that file only holds once

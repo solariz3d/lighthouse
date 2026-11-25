@@ -1,0 +1,3 @@
+Get-Process after the rename: <scratch>\probe.exe
+at start: "<scratch>\probe.exe"
+after rename: "<scratch>\probe.exe"

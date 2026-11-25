@@ -1,0 +1,7 @@
+caught   main.rs: matches!(exe_mtime, Some(t) if t > started) -> matches!(exe_mtime, Some(t) if t >= started) | test result: FAILED. 10 passed; 1 failed; 0 ignored; 0 measured; 1319 filtered out; finished in 0.00s
+caught   main.rs: matches!(exe_mtime, Some(t) if t > started) -> exe_mtime.is_some() | test result: FAILED. 8 passed; 3 failed; 0 ignored; 0 measured; 1319 filtered out; finished in 0.00s
+caught   main.rs: fs::metadata(exe).ok().filter(|m| m.is_file()) -> fs::metadata(exe.with_extension("exe.running-befor | test result: FAILED. 9 passed; 2 failed; 0 ignored; 0 measured; 1319 filtered out; finished in 0.00s
+caught   main.rs: *NEXT_MOVE_COMPACT.lock().unwrap_or_else(|p| p.into_inner()) = None;   -> // L233 | test result: FAILED. 10 passed; 1 failed; 0 ignored; 0 measured; 1319 filtered out; finished in 0.02s
+caught   main.rs: .env_remove(LAUNCH_ID_ENV) -> (removed) | test result: FAILED. 10 passed; 1 failed; 0 ignored; 0 measured; 1319 filtered out; finished in 0.00s
+caught   main.rs: let _ = process_start(); // L233 -> // L233 | test result: FAILED. 10 passed; 1 failed; 0 ignored; 0 measured; 1319 filtered out; finished in 0.00s
+exit 0

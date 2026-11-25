@@ -1,0 +1,5 @@
+RED FIRST: the same test files against stubs (next-move.js answers 'none' and draws nothing; relaunch.js returns code 9 and does nothing)
+== next-move.test.js on the stub
+8 passed, 15 failed
+== relaunch.test.js on the stub
+0 passed, 8 failed

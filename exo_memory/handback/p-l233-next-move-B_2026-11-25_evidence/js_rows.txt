@@ -1,0 +1,50 @@
+== ui/next-move.test.js
+R1 · the decision
+  ok   nothing owed: none
+  ok   a pane working and nothing owed: none
+  ok   close-small lists a seat: compact
+  ok   close-small lists a seat while a pane works: compact (the list is what it is)
+  ok   a newer build and no pane working: restart
+  ok   a newer build and a pane working: restart-waiting
+  ok   BOTH OWED: compact wins (compacting needs the app open)
+  ok   both owed and a pane working: compact
+  ok   newerBuild not exactly true (unknown) never asks for a restart
+  ok   a missing or malformed list is no list
+  ok   no facts at all: none
+R3 · the top bar
+  ok   not owed: Restart hidden, nothing glows, Compact keeps its own title
+  ok   owed: Restart shown and glowing, Compact not
+  ok   owed: its title says the build time and that every seat comes back
+  ok   a pane working: Restart shown, dimmed, NOT glowing
+  ok   a pane working: the title names the working pane
+  ok   a seat listed: Compact glows, its title counts the seats and names the thresholds
+  ok   one seat listed: "1 seat is"
+  ok   both owed: Compact glows, Restart shown dimmed and not glowing, its title says compact first
+  ok   one button glows when a move is owed, none otherwise
+  ok   the glow goes away when the move is done (the same buttons, the next facts)
+  ok   facts that could not be read: nothing glows and Restart is hidden
+  ok   a pane label goes into the title as written (a title is text, never markup)
+
+23 passed, 0 failed
+== tools/relaunch.test.js
+the helper
+  ok   waits until the app is gone, then opens the exe at the path it was given
+  ok   nothing is opened while the app still runs
+  ok   a gave-up wait says so in the ledger
+  ok   the opened app does not inherit the launch id (main.rs LAUNCH_ID_ENV) or CONSONANCE_DATA
+  ok   a relative exe is refused, and nothing waits or opens
+  ok   a missing or bad pid is refused
+  ok   the opened row names the exe
+  ok   THE REAL FILE: waits on a real process, opens only after it exits
+
+8 passed, 0 failed
+== ui/scripts-load.test.js
+ui/scripts-load
+  ok   the app's own scripts share a global scope without a redeclaration error
+  ok   POSITIVE CONTROL: a duplicated top-level const IS caught
+  ok   term.js loads BEFORE app.js — app.js depends on it, never the reverse
+  ok   escapeHtml is defined exactly once across the app's own scripts
+
+4 passed, 0 failed
+== ui/leave.test.js
+47 passed, 0 failed
