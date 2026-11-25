@@ -440,3 +440,4 @@ carry it, so this brief does.
 - 2026-11-25 03:09 (L): "but what if the panes work goes over the context limit? Can we make it so it has a natural limit, but can work beyond it if the runs need it?"
 - 2026-11-25 03:14 (L): "I have no clue if you should, but we could try it. When it comes to these type of metrics I will admit I do not have the same level of accurate intuition as my philosophical outlooks on how everything else in nature relates to the rest"
 - 2026-11-25 03:20 (L): "let me know when all lighthouse work is done so that we can get back to track builder"
+- 2026-11-25 03:27 (L): "we dont do the stick anymore, could just remove it all together, but something comes to mind, idk how we didnt go over the limits doing that, if anything we always had room, but we never used fable at all and all opus on medium"
