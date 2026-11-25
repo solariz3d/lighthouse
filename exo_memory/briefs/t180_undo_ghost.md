@@ -83,3 +83,7 @@ back to its resting state.
 - 07:2x, superseding the line above: his pieces folder now holds the old "Smooth S as driven" pair as it was (piece
   sha256 cc6d3766…) plus NEW "Smooth S straight" (turn −1) and "Smooth S straight ease-out", each with a recipe (A's
   second addendum, l238-A 593aa401). Checked by ls and sha256 at 07:2x. Folder frozen at that state.
+- 07:2x, FINAL, superseding both lines above: his pieces folder at 07:22:18 is the end state. "Smooth S as driven" = HIS
+  turn −1 S (sha256 1bc6c4e0…) with recipe; ease-out aea4a1be…; Smooth S flow f55056c5…; Smooth S ease-out e9d147ef…;
+  no "Smooth S straight". The old turn-0 S is only in A's aside copy (his_pieces_before2/). Fixed by sha in one
+  absolute ring to the chair.
