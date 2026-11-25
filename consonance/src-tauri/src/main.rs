@@ -1207,14 +1207,29 @@ fn spawn_claude_pane(app: AppHandle, pane_id: String, cwd: String, resume: bool,
     // autonomous bodies do NOT get this — their prompts are the only thing keeping a body's
     // tool use inside its sandbox (the gate only governs cross-pane injection, not local bash).
     // L216: a builder pane is denied, never held, by a prompt nobody sees (no_prompt_for, above is_fresh_cwd's neighbours).
-    if no_prompt_for(skip_perms, is_managed_cwd(&cwd), is_builder_dir_name(&cwd), fs::read_to_string(config_path()).ok().as_deref()) {
-        match no_prompt_settings_file() {
+    // L225 B1 (Q2 half B): a builder's launch leaves out the Artifact tool and most of the skills listing (floor_launch_for).
+    // L225, pane A's read: Claude Code applies only the LAST `--settings`, so both rules' keys ride ONE file (launch_settings).
+    let raw_config = fs::read_to_string(config_path()).ok();
+    let no_prompt = no_prompt_for(skip_perms, is_managed_cwd(&cwd), is_builder_dir_name(&cwd), raw_config.as_deref());
+    let floor = floor_launch_for(is_managed_cwd(&cwd), is_builder_dir_name(&cwd), raw_config.as_deref());
+    if let Some((name, text)) = launch_settings(no_prompt, floor) {
+        match launch_settings_file(name, text) {
             Ok(p) => {
                 cmd.args(["--settings", &p]);
-                plog(&format!("NO PROMPT pane={pane_id}: --settings {p} (denyInsteadOfPrompting; \"builder_no_prompt\": false in the config turns it off)"));
+                if no_prompt {
+                    plog(&format!("NO PROMPT pane={pane_id}: --settings {p} (denyInsteadOfPrompting; \"builder_no_prompt\": false in the config turns it off)"));
+                }
+                if floor {
+                    plog(&format!("BUILDER FLOOR pane={pane_id}: --settings {p} (skillListingBudgetFraction 0.001; \"builder_floor\": false in the config puts it back)"));
+                }
             }
-            Err(e) => plog(&format!("NO PROMPT pane={pane_id}: the settings file was not written ({e}); this pane prompts as before")),
+            Err(e) => plog(&format!("NO PROMPT / BUILDER FLOOR pane={pane_id}: the settings file {name} was not written ({e}); this pane prompts and lists skills as before")),
         }
+    }
+    // The floor's other half needs no file, so it stands even when the settings file could not be written.
+    if floor {
+        cmd.args(["--disallowedTools", FLOOR_DISALLOWED]);
+        plog(&format!("BUILDER FLOOR pane={pane_id}: --disallowedTools {FLOOR_DISALLOWED} (\"builder_floor\": false in the config puts it back)"));
     }
     if skip_perms {
         cmd.arg("--dangerously-skip-permissions");
@@ -4052,7 +4067,9 @@ fn prepare_sibling_dir() -> Result<String, String> {
     let id = Uuid::new_v4().to_string();
     let dir = instances_root().join(format!("sibling-{}", &id[..8]));
     fs::create_dir_all(&dir).map_err(|e| e.to_string())?;
-    fs::write(dir.join("CLAUDE.md"), format!("{}{}", shelf_stamp(), assemble_intake())).map_err(|e| e.to_string())?;   // W1 (a)
+    // Q2: a new sibling is a builder folder; its first brief takes the floor as its resumes do
+    let brief = builder_floor_for(&dir.to_string_lossy(), assemble_intake());
+    fs::write(dir.join("CLAUDE.md"), format!("{}{}", shelf_stamp(), brief)).map_err(|e| e.to_string())?;   // W1 (a)
     dir.to_str().map(|s| s.to_string()).ok_or_else(|| "bad sibling path".into())
 }
 
@@ -4656,6 +4673,306 @@ fn is_fresh_cwd(cwd: &str) -> bool {
 const NO_PROMPT_SETTINGS: &str = r#"{"permissions":{"denyInsteadOfPrompting":true}}"#;
 
 /// A builder pane's folder: `sibling-<8>` (prepare_sibling_dir). Split, like is_fresh_dir_name, so it is testable without DIRS.
+/* Q2 / L223 (B), the builder floor (packet_q2_builder_floor_B_2026-11-21.md, Half A; plan_quantize_intake_2026-11-21.md: "A piece
+ * may change tier. It may not change words."). A seat in a `sibling-` folder wakes without the memory topic map (with its live edge),
+ * the not-carried index and the long-form references; each is replaced by ONE line naming the one situation that needs it and the
+ * path to open. The brief is BUILT WHOLE FIRST and the pieces are cut out after, so every budget (the deck, the committee brief, the
+ * own map's allowance) is computed exactly as today and nothing re-spends the saving. The chair, the librarian and the Third Place
+ * never pass through here. `"builder_floor": false` in ~/.consonance.json puts all three back, no rebuild. */
+const FLOOR_HEADS: [&str; 3] = ["---\n\n# THE MEMORY", "---\n\n# NOT CARRIED IN THIS SHELL", "---\n\n# THE LONG-FORM REFERENCES"];
+
+/// The three trigger lines, one per piece, in FLOOR_HEADS order. Narrow by rule: none says a piece "is always there".
+fn floor_lines(topics: &Path, atoms: &Path, cards: &Path, refs: &Path) -> [String; 3] {
+    [
+        format!(
+            "---\n\n**The memory is not carried for a builder seat.** When a packet or a ring cites a memory topic or a board claim \
+             you do not hold, open that topic in `{}` (the atom master is `{}`).\n\n",
+            topics.display(),
+            atoms.display()
+        ),
+        format!(
+            "---\n\n**The briefs not carried are not indexed for a builder seat.** When you reach for an instrument that is not in \
+             THE DECK above, open its card in `{}`.\n\n",
+            cards.display()
+        ),
+        format!(
+            "---\n\n**The long-form references are not carried for a builder seat.** When a synthesis feels too good to look straight \
+             at, or you need the case behind a card, open `{}` (spread/, research/, record/).\n\n",
+            refs.display()
+        ),
+    ]
+}
+
+/// Cut each piece (from its header to the next `---\n\n# ` section) and put its line in its place. PURE.
+fn builder_floor_text(brief: &str, lines: &[String; 3]) -> String {
+    // Every range is taken from the ORIGINAL brief and replaced from the back: a line put in first is not a "# " header, so a cut
+    // made after it would run on through it (the first full suite caught exactly that).
+    let mut cuts: Vec<(usize, usize, &String)> = Vec::new();
+    for (head, line) in FLOOR_HEADS.iter().zip(lines.iter()) {
+        let Some(at) = brief.find(head) else { continue };
+        let rest = at + head.len();
+        let end = brief[rest..].find("---\n\n# ").map(|i| rest + i).unwrap_or(brief.len());
+        cuts.push((at, end, line));
+    }
+    cuts.sort_by(|a, b| b.0.cmp(&a.0));
+    let mut out = brief.to_string();
+    for (at, end, line) in cuts {
+        out.replace_range(at..end, line);
+    }
+    out
+}
+
+/// Is the builder floor on? Absent, unreadable or anything but `"builder_floor": false`: on.
+fn builder_floor_on_from(raw: &str) -> bool {
+    serde_json::from_str::<serde_json::Value>(raw).ok().and_then(|v| v.get("builder_floor").and_then(|b| b.as_bool())) != Some(false)
+}
+#[cfg(test)]
+thread_local! { static TEST_BUILDER_FLOOR: std::cell::Cell<bool> = const { std::cell::Cell::new(false) }; }
+fn builder_floor_on() -> bool {
+    #[cfg(test)]
+    {
+        TEST_BUILDER_FLOOR.with(|m| m.get())
+    }
+    #[cfg(not(test))]
+    {
+        builder_floor_on_from(&fs::read_to_string(config_path()).unwrap_or_default())
+    }
+}
+
+/// The floor on a seat's whole brief: only a builder folder, only with the switch on.
+fn builder_floor_for(cwd: &str, brief: String) -> String {
+    if !(is_builder_dir_name(cwd) && builder_floor_on()) {
+        return brief;
+    }
+    let res = data_dir().join("resonance");
+    builder_floor_text(&brief, &floor_lines(&res.join("topics"), &res.join("atoms.jsonl"), &cards_dir(), &PathBuf::from(default_data())))
+}
+
+#[cfg(test)]
+mod builder_floor_tests {
+    use super::*;
+    fn brief() -> String {
+        [
+            "# Consonance sibling\n\nroom text\n\n",
+            "---\n\n# THE DECK — the instruments\n\ncard\n\n",
+            "---\n\n# NOT CARRIED IN THIS SHELL — indexed by path\n\n- a card\n\n",
+            "\n---\n\n# THE LONG-FORM REFERENCES — on disk, not in this shell\n\n- spread\n\n",
+            "---\n\n# THE MEMORY — topic map\n\n- topic\n\n## The live edge — newest\n\n- claim\n\n",
+            "\n---\n\n# YOUR OWN MAP — findings\n\nentry\n",
+        ]
+        .concat()
+    }
+    fn lines() -> [String; 3] {
+        floor_lines(Path::new("T"), Path::new("A"), Path::new("C"), Path::new("R"))
+    }
+    #[test]
+    fn r1_a_builder_brief_holds_none_of_the_three_pieces() {
+        let b = builder_floor_text(&brief(), &lines());
+        for gone in ["# THE MEMORY", "## The live edge", "# NOT CARRIED IN THIS SHELL", "# THE LONG-FORM REFERENCES", "- topic", "- claim", "- a card", "- spread"] {
+            assert!(!b.contains(gone), "{gone} still rides:\n{b}");
+        }
+    }
+    #[test]
+    fn r1_a_builder_brief_holds_the_three_trigger_lines_and_keeps_the_rest() {
+        let b = builder_floor_text(&brief(), &lines());
+        for l in lines() {
+            assert!(b.contains(&l), "missing {l}");
+        }
+        for kept in ["room text", "# THE DECK", "card\n", "# YOUR OWN MAP", "entry\n"] {
+            assert!(b.contains(kept), "{kept} was cut:\n{b}");
+        }
+    }
+    #[test]
+    fn r1_no_line_says_a_piece_is_always_there() {
+        for l in lines() {
+            assert!(!l.to_lowercase().contains("always"), "{l}");
+        }
+    }
+    #[test]
+    fn r1_a_brief_without_the_pieces_is_unchanged() {
+        let plain = "# Consonance sibling\n\n---\n\n# THE DECK\n\ncard\n";
+        assert_eq!(builder_floor_text(plain, &lines()), plain);
+    }
+    #[test]
+    fn r1_the_switch_off_restores_and_absent_is_on() {
+        assert!(!builder_floor_on_from(r#"{"builder_floor": false}"#), "false must restore all three");
+        assert!(builder_floor_on_from(""), "no config: on");
+        assert!(builder_floor_on_from(r#"{"builder_floor": true, "x": 1}"#));
+        assert!(builder_floor_on_from("not json"));
+    }
+    #[test]
+    fn r1_a_housed_seat_and_the_switch_off_pass_the_brief_byte_identical() {
+        let b = brief();
+        // housed seats' folders are not `sibling-`: the brief is returned as built
+        assert_eq!(builder_floor_for("C:/Consonance/instances/main", b.clone()), b);
+        // switch off (the test default) on a builder folder: as built
+        assert_eq!(builder_floor_for("C:/Consonance/instances/sibling-abcd1234", b.clone()), b);
+    }
+    #[test]
+    fn r1_with_the_switch_on_a_builder_folder_gets_the_floor() {
+        TEST_BUILDER_FLOOR.with(|m| m.set(true));
+        let out = builder_floor_for("C:/Consonance/instances/sibling-abcd1234", brief());
+        let housed = builder_floor_for("C:/Consonance/instances/main", brief());
+        TEST_BUILDER_FLOOR.with(|m| m.set(false));
+        assert!(!out.contains("# THE MEMORY") && housed == brief(), "builder floored, housed untouched");
+    }
+    // The wiring: both writers of a builder's CLAUDE.md pass the WHOLE brief through the floor, after the own map is seated.
+    #[test]
+    fn r1_both_builder_intake_writers_pass_through_the_floor() {
+        let s = include_str!("main.rs");
+        let body = |name: &str| { let at = s.find(name).expect(name); &s[at..at + s[at..].find("\n}\n").unwrap()] };
+        let m = body(concat!("fn intake_with", "_map("));
+        let (seat, floor) = (m.rfind("brief.push_str(&section)").expect("the map seated"), m.find(concat!("builder_floor", "_for(cwd, brief)")).expect("the floor"));
+        assert!(seat < floor, "the floor must come after the map's allowance is taken");
+        assert!(body(concat!("fn prepare_sibling", "_dir(")).contains(concat!("builder_floor", "_for(")), "a new sibling's first brief too");
+    }
+}
+
+/* L225 B1 (Q2 half B, packet_q2_builder_floor_B_2026-11-21.md): a builder's LAUNCH leaves out what the probe showed removable AND
+ * unused in 41 builder laps (handback/p-q2-builder-floor-B_2026-11-21.md, its L225 section):
+ *   - the Artifact tool (0 laps). In the panes' own request shapes it rode as a FULL definition, 34,422 to 38,426 B, from 11-04 to
+ *     11-21 and again today, not as a deferred line; `--disallowedTools Artifact` leaves it out;
+ *   - most of the skills listing (Skill called 0 times ever): `skillListingBudgetFraction: 0.001` takes it from 17,777 to 8,498 B on
+ *     opus (probe_fraction.js; 0 is REFUSED with the whole file, and 0.01 does not shrink it). Disallowing Skill instead grows Workflow's description (5,745 to 22,976 B).
+ * Monitor, SendMessage and Agent are used, so they stay. Same gate as the intake floor (a `sibling-` folder) plus the instances root
+ * (a keeper's "+ Pane" folder is not touched, as L216), and the same switch: `"builder_floor": false` puts all of it back at the next
+ * spawn, no rebuild. */
+const FLOOR_LAUNCH_SETTINGS: &str = r#"{"skillListingBudgetFraction":0.001}"#;
+const FLOOR_DISALLOWED: &str = "Artifact";
+
+/// Does this spawn get the floor's launch flags? Pure: the caller hands in what it read.
+fn floor_launch_for(managed: bool, builder_name: bool, raw_config: Option<&str>) -> bool {
+    managed && builder_name && builder_floor_on_from(raw_config.unwrap_or(""))
+}
+
+/* L225, pane A's read (handback/p-l225-A-read-B_2026-11-25.md): Claude Code applies only the LAST `--settings` it is given (with two,
+ * the first file is dropped), so a builder with both rules lost its no-prompt file to the floor's. A spawn now passes ONE file:
+ * the no-prompt keys, the floor's key, or, when both rules apply, one file holding both. A pane with one rule gets that rule's file,
+ * as before. */
+const BUILDER_LAUNCH_SETTINGS: &str = r#"{"permissions":{"denyInsteadOfPrompting":true},"skillListingBudgetFraction":0.001}"#;
+
+/// Which one settings file this spawn names, and its fixed text; None for a spawn neither rule reaches. Pure.
+fn launch_settings(no_prompt: bool, floor: bool) -> Option<(&'static str, &'static str)> {
+    match (no_prompt, floor) {
+        (true, true) => Some(("builder-launch.settings.json", BUILDER_LAUNCH_SETTINGS)),
+        (true, false) => Some(("builder-no-prompt.settings.json", NO_PROMPT_SETTINGS)),
+        (false, true) => Some(("builder-floor.settings.json", FLOOR_LAUNCH_SETTINGS)),
+        (false, false) => None,
+    }
+}
+
+/// The settings file a spawn names, beside the room's other state, rewritten only when its fixed text differs.
+fn launch_settings_file(name: &str, text: &str) -> Result<String, String> {
+    let p = data_dir().join(name);
+    if fs::read_to_string(&p).ok().as_deref() != Some(text) {
+        fs::write(&p, text).map_err(|e| e.to_string())?;
+    }
+    p.to_str().map(str::to_string).ok_or_else(|| "a non-UTF-8 data path".to_string())
+}
+
+#[cfg(test)]
+mod one_settings_tests {
+    use super::*;
+    fn json(s: &str) -> serde_json::Value {
+        serde_json::from_str(s).expect("json")
+    }
+    #[test]
+    fn a_builder_with_both_rules_gets_one_file_holding_both() {
+        let (name, text) = launch_settings(true, true).expect("a file");
+        let mut both = json(NO_PROMPT_SETTINGS);
+        both.as_object_mut().unwrap().extend(json(FLOOR_LAUNCH_SETTINGS).as_object().unwrap().clone());
+        assert_eq!(json(text), both, "the no-prompt keys and the floor's key, nothing else");
+        assert_eq!(json(text)["permissions"]["denyInsteadOfPrompting"], serde_json::json!(true));
+        assert_eq!(json(text)["skillListingBudgetFraction"], json(FLOOR_LAUNCH_SETTINGS)["skillListingBudgetFraction"]);
+        assert!(name != "builder-no-prompt.settings.json" && name != "builder-floor.settings.json", "its own file, never one rule's");
+    }
+    // L225 (the repair's own probe, probe_fraction.js): Claude Code 2.1.332 REFUSES a settings file whose skillListingBudgetFraction is 0
+    // ("Number must be greater than or equal to 0", --debug) and drops the WHOLE file, so the combined file lost denyInsteadOfPrompting
+    // with it. 0.001 loads and halves the listing on opus (17,777 -> 8,498 B); 0.01 loads and does not (17,776 B).
+    #[test]
+    fn every_launch_file_holds_a_listing_budget_claude_code_loads() {
+        for text in [FLOOR_LAUNCH_SETTINGS, BUILDER_LAUNCH_SETTINGS] {
+            let f = json(text)["skillListingBudgetFraction"].as_f64().expect("the floor's key");
+            assert!(f > 0.0 && f <= 0.001, "above 0 (0 is refused with the whole file) and at most 0.001 (0.01 does not shrink it): {text}");
+        }
+    }
+    #[test]
+    fn a_pane_with_one_rule_gets_that_rules_file_as_before() {
+        assert_eq!(launch_settings(true, false), Some(("builder-no-prompt.settings.json", NO_PROMPT_SETTINGS)), "\"builder_floor\": false");
+        assert_eq!(launch_settings(false, true), Some(("builder-floor.settings.json", FLOOR_LAUNCH_SETTINGS)), "\"builder_no_prompt\": false");
+    }
+    #[test]
+    fn a_housed_seat_and_a_keepers_pane_get_no_settings() {
+        let at = |name: &str| std::env::temp_dir().join("Consonance").join("instances").join(name).to_string_lossy().into_owned();
+        for name in ["main", "librarian", "third-place", "fresh-12345678"] {
+            let b = is_builder_dir_name(&at(name));
+            assert_eq!(launch_settings(no_prompt_for(true, true, b, None), floor_launch_for(true, b, None)), None, "{name}");
+        }
+        assert_eq!(launch_settings(no_prompt_for(true, false, true, None), floor_launch_for(false, true, None)), None, "a keeper's + Pane");
+        assert_eq!(launch_settings(false, false), None);
+    }
+    #[test]
+    fn a_builder_spawn_passes_exactly_one_settings() {
+        let s = std::fs::read_to_string(concat!(env!("CARGO_MANIFEST_DIR"), "/src/main.rs")).unwrap();
+        let spawn = &s[s.find("fn spawn_claude_pane(").expect("the spawn")..];
+        let spawn = &spawn[..spawn.find("\n}\n").unwrap()];
+        assert_eq!(spawn.matches("\"--settings\"").count(), 1, "one --settings site: the last one given is the only one applied");
+        let block = "    if let Some((name, text)) = launch_settings(no_prompt, floor) {\n        match launch_settings_file(name, text) {\n            Ok(p) => {\n                cmd.args([\"--settings\", &p]);";
+        assert!(spawn.contains(block), "the one file, named by launch_settings from both rules");
+        let file = &s[s.find("fn launch_settings_file(").expect("the writer")..];
+        let file = &file[..file.find("\n}\n").unwrap()];
+        assert!(file.contains("data_dir().join(name)"), "beside the room's other state");
+    }
+}
+
+#[cfg(test)]
+mod floor_launch_tests {
+    use super::*;
+    fn at(name: &str) -> String {
+        std::env::temp_dir().join("Consonance").join("instances").join(name).to_string_lossy().into_owned()
+    }
+    #[test]
+    fn r1_a_builder_pane_gets_the_floor_launch() {
+        assert!(floor_launch_for(true, is_builder_dir_name(&at("sibling-5bf9d657")), None), "no config: on");
+        assert!(floor_launch_for(true, true, Some("{}")), "a config without the switch: on");
+        assert!(floor_launch_for(true, true, Some("not json")), "an unreadable config is not the switch");
+    }
+    #[test]
+    fn r1_the_housed_seats_and_a_keepers_pane_keep_their_launch() {
+        for name in ["main", "librarian", "third-place", "fresh-12345678"] {
+            assert!(!floor_launch_for(true, is_builder_dir_name(&at(name)), None), "{name} keeps its launch");
+        }
+        assert!(!floor_launch_for(false, true, None), "a sibling- name outside the instances root (a keeper's + Pane folder)");
+    }
+    #[test]
+    fn r1_the_one_switch_restores_the_launch_with_the_intake() {
+        let off = r#"{"builder_floor": false}"#;
+        assert!(!floor_launch_for(true, true, Some(off)));
+        assert!(!builder_floor_on_from(off), "the same key restores the intake's three pieces");
+    }
+    #[test]
+    fn r1_only_what_is_unused_is_left_out() {
+        assert_eq!(FLOOR_DISALLOWED, "Artifact", "Monitor, SendMessage and Agent are used; leaving Skill out grows Workflow");
+        let v: serde_json::Value = serde_json::from_str(FLOOR_LAUNCH_SETTINGS).expect("json");
+        // AMENDED BY NAME (L225, the repair): it pinned 0, which Claude Code refuses with the whole file (one_settings_tests).
+        assert_eq!(v, serde_json::json!({ "skillListingBudgetFraction": 0.001 }), "the listing budget and nothing else");
+    }
+    #[test]
+    fn r1_the_spawn_passes_the_floor_rule_exactly_what_it_read() {
+        let s = std::fs::read_to_string(concat!(env!("CARGO_MANIFEST_DIR"), "/src/main.rs")).unwrap();
+        let spawn = &s[s.find("fn spawn_claude_pane(").expect("the spawn")..];
+        let spawn = &spawn[..spawn.find("\n}\n").unwrap()];
+        // AMENDED BY NAME (L225, pane A's read): the floor no longer passes its own `--settings` (a second one replaced the
+        // no-prompt file); its key rides the one file `launch_settings` names (one_settings_tests), and Artifact is left out here.
+        let read = "    let raw_config = fs::read_to_string(config_path()).ok();\n";
+        let call = "    let floor = floor_launch_for(is_managed_cwd(&cwd), is_builder_dir_name(&cwd), raw_config.as_deref());\n";
+        let flag = "    if floor {\n        cmd.args([\"--disallowedTools\", FLOOR_DISALLOWED]);";
+        assert!(spawn.contains(read) && spawn.contains(call), "the ask, its three arguments, from the config the spawn read");
+        assert!(spawn.contains(flag), "Artifact left out on the floor's rule alone");
+        assert_eq!(spawn.matches("floor_launch_for(").count(), 1, "asked once");
+    }
+}
+
 fn is_builder_dir_name(cwd: &str) -> bool {
     PathBuf::from(cwd).file_name().and_then(|n| n.to_str()).map(|n| n.starts_with("sibling-")).unwrap_or(false)
 }
@@ -4670,15 +4987,6 @@ fn no_prompt_for(skip_perms: bool, managed: bool, builder_name: bool, raw_config
         Some(v) => v.get("builder_no_prompt").and_then(|x| x.as_bool()) != Some(false),
         None => true,
     }
-}
-
-/// The settings file the flag names, written beside the room's other state; its contents are fixed above.
-fn no_prompt_settings_file() -> Result<String, String> {
-    let p = data_dir().join("builder-no-prompt.settings.json");
-    if fs::read_to_string(&p).ok().as_deref() != Some(NO_PROMPT_SETTINGS) {
-        fs::write(&p, NO_PROMPT_SETTINGS).map_err(|e| e.to_string())?;
-    }
-    p.to_str().map(str::to_string).ok_or_else(|| "a non-UTF-8 data path".to_string())
 }
 
 #[cfg(test)]
@@ -4724,11 +5032,14 @@ mod no_prompt_tests {
         let s = std::fs::read_to_string(concat!(env!("CARGO_MANIFEST_DIR"), "/src/main.rs")).unwrap();
         let spawn = &s[s.find("fn spawn_claude_pane(").expect("the spawn")..];
         let spawn = &spawn[..spawn.find("\n}\n").unwrap()];
-        assert_eq!(spawn.matches("\"--settings\"").count(), 1, "the spawn adds --settings at one site");
+        // AMENDED BY NAME, twice. L225 B1 counted 2 (a second site for the floor). L225 pane A's read: the second `--settings`
+        // REPLACED the first in Claude Code, so a builder lost denyInsteadOfPrompting; there is one site again, naming the one file
+        // `launch_settings` picks from both rules (one_settings_tests).
+        assert_eq!(spawn.matches("\"--settings\"").count(), 1, "one site");
         let ask = spawn.find("no_prompt_for(").expect("the spawn asks the rule");
         let flag = spawn.find("\"--settings\"").unwrap();
         assert!(ask < flag, "the rule is asked before the flag is added");
-        assert!(spawn[ask..flag].contains("no_prompt_settings_file()"), "the flag names the fixed file");
+        assert!(spawn[ask..flag].contains("launch_settings_file("), "the flag names the file the rules picked");
     }
     // A's read, item 3: the row above pinned the ORDER of two strings and nothing the ask is given, so five one-edit mutants of the
     // call site survived (S2 `|| true`, S3 inverted, S4 the builder name forced true, S5 the config never read, S6 another file).
@@ -4738,12 +5049,12 @@ mod no_prompt_tests {
         let s = std::fs::read_to_string(concat!(env!("CARGO_MANIFEST_DIR"), "/src/main.rs")).unwrap();
         let spawn = &s[s.find("fn spawn_claude_pane(").expect("the spawn")..];
         let spawn = &spawn[..spawn.find("\n}\n").unwrap()];
-        let call = "    if no_prompt_for(skip_perms, is_managed_cwd(&cwd), is_builder_dir_name(&cwd), fs::read_to_string(config_path()).ok().as_deref()) {\n        match no_prompt_settings_file() {\n            Ok(p) => {\n                cmd.args([\"--settings\", &p]);";
-        assert!(spawn.contains(call), "the ask, its four arguments, the file and the flag, exactly (S2-S6)");
+        // AMENDED BY NAME (L225, pane A's read): the ask now reads the config once (shared with the floor's ask) and the file is the
+        // one `launch_settings` names; the file name and text for this rule alone are pinned in one_settings_tests.
+        let read = "    let raw_config = fs::read_to_string(config_path()).ok();\n";
+        let call = "    let no_prompt = no_prompt_for(skip_perms, is_managed_cwd(&cwd), is_builder_dir_name(&cwd), raw_config.as_deref());\n";
+        assert!(spawn.contains(read) && spawn.contains(call), "the ask, its four arguments, exactly (S2-S6)");
         assert_eq!(spawn.matches("no_prompt_for(").count(), 1, "asked once");
-        let file = &s[s.find("fn no_prompt_settings_file(").expect("the file")..];
-        let file = &file[..file.find("\n}\n").unwrap()];
-        assert!(file.contains("data_dir().join(\"builder-no-prompt.settings.json\")") && file.contains("NO_PROMPT_SETTINGS"), "the fixed file and its fixed text");
         assert_eq!(NO_PROMPT_SETTINGS, r#"{"permissions":{"denyInsteadOfPrompting":true}}"#);
     }
 }
@@ -6618,6 +6929,8 @@ fn intake_with_map(pane: &str, cwd: &str) -> String {
             brief.push_str(&no_map_section(&path));
         }
     }
+    // Q2 / L223: a builder folder's brief loses the three pieces for their lines, after every allowance above was taken from the whole
+    let mut brief = builder_floor_for(cwd, brief);
     // W1 (a): the stamp, first, on a briefed pane only. A fresh pane's brief is empty by design and `resumed_intake` removes
     // its CLAUDE.md when it is, so an unconditional stamp would brief every fresh pane (the spec's second reader, :621).
     if !brief.is_empty() {
@@ -13432,10 +13745,21 @@ fn not_submitted_line(dest: &str) -> String {
 }
 
 /// A note for the rows that say DELIVERED without a render check (the drain, a pull, a dyad spot).
+///
+/// L225 (the librarian's order, 01:3x; B's B4 probe, handback/p-l225-finish-B_2026-11-25.md): an UNKNOWN or NOT-OURS submit
+/// is said too. Both leave a ring with one Enter and no retry (`deliver`), and until now the drain's row for either read exactly
+/// like a submitted one, so a ring could sit in an input line for hours behind a clean DELIVERED (D, 2026-11-24, 09:54-14:04).
+/// It REPORTS ONLY: no keystroke and no retry changes (an Enter on a box nobody can read is D415's refusal and his word).
 fn submit_note(wrote: &Result<Submit, String>) -> &'static str {
     match wrote {
         Ok(Submit::NotSubmitted { .. }) => {
             " [NOT SUBMITTED — the text is in the input box: the Enter was not taken, after retries; press Enter there, do NOT re-send]"
+        }
+        Ok(Submit::Unknown) => {
+            " [SUBMIT UNCONFIRMED — the input box could not be read after the Enter, so no Enter was retried; look there: if the text is still in it, press Enter, do NOT re-send]"
+        }
+        Ok(Submit::NotOurs) => {
+            " [SUBMIT UNCONFIRMED — after the Enter the input box held text not read as this message, so no Enter was retried; look there: if it is this message, press Enter, do NOT re-send]"
         }
         _ => "",
     }
@@ -25897,6 +26221,56 @@ mod submit_check_tests {
         let (out, bytes, _, _) = run(MSG, vec![Some(stuck), Some(empty())]);
         assert_eq!(out, Ok(Submit::Submitted { retries: 1 }));
         assert_only_enters(&bytes, 2);
+    }
+
+    // L225 B4, then L225 step 1 (the librarian's order, 01:3x): the two ways the code leaves a ring in the box with ONE Enter sent.
+    // AMENDED BY NAME: as first written (4051d8b2) these rows pinned the drain's silence (`submit_note` = "") as evidence for the
+    // probe; the note is now built, so they pin that the drain's DELIVERED row SAYS the submit was not confirmed. The keystrokes
+    // are unchanged: still one Enter, no retry (pressing Enter on a box nobody can read is D415's refusal and his word).
+    #[test]
+    fn l225_b4_a_box_unreadable_after_the_enter_gets_no_retry_and_the_drain_row_says_so() {
+        // e.g. a dialog or menu drawn over the composer (no composer row), or two grids that disagree, on all four readings
+        let (out, bytes, _, reads) = run(MSG, vec![None, None, None, None]);
+        assert_eq!(out, Ok(Submit::Unknown));
+        assert_only_enters(&bytes, 1);
+        assert_eq!(reads, SUBMIT_CHECK_GAPS_MS.len());
+        let note = submit_note(&out);
+        assert!(note.contains("SUBMIT UNCONFIRMED") && note.contains("could not be read"), "the drain's row must say it: {note:?}");
+    }
+    #[test]
+    fn l225_b4_our_paste_collapsed_under_another_line_count_gets_no_retry_and_the_drain_row_says_so() {
+        // the box holds our paste, but its placeholder counts lines differently from ours (e.g. a CRLF counted as two):
+        // it reads as text that is not ours, so the Enter is never pressed again
+        let n = MSG.matches('\n').count();
+        let stuck = screen(&[&format!("\u{276f} [Pasted text #1 +{} lines]", 2 * n)], false);
+        let (out, bytes, _, _) = run(MSG, vec![Some(stuck)]);
+        assert_eq!(out, Ok(Submit::NotOurs));
+        assert_only_enters(&bytes, 1);
+        let note = submit_note(&out);
+        assert!(note.contains("SUBMIT UNCONFIRMED") && note.contains("not read as this message"), "the drain's row must say it: {note:?}");
+    }
+    #[test]
+    fn l225_the_unconfirmed_notes_tell_the_reader_what_to_do_and_not_to_resend() {
+        for s in [Submit::Unknown, Submit::NotOurs] {
+            let note = submit_note(&Ok(s));
+            assert!(note.starts_with(" [") && note.ends_with(']'), "a bracketed note, as NOT SUBMITTED's: {note:?}");
+            assert!(note.contains("press Enter") && note.contains("do NOT re-send"), "{s:?}: {note:?}");
+        }
+    }
+    #[test]
+    fn l225_a_submitted_or_failed_write_still_carries_no_note() {
+        assert_eq!(submit_note(&Ok(Submit::Submitted { retries: 0 })), "");
+        assert_eq!(submit_note(&Ok(Submit::Submitted { retries: 2 })), "");
+        assert_eq!(submit_note(&Err("pane not found".into())), "", "a failed write is the row's own [WRITE FAILED]");
+        assert!(submit_note(&Ok(Submit::NotSubmitted { retries: 3 })).contains("NOT SUBMITTED"), "unchanged");
+    }
+    #[test]
+    fn l225_the_drain_row_carries_the_note() {
+        let s = include_str!("main.rs");
+        let at = s.find("fn drain_inboxes(").expect("the drain");
+        let body = &s[at..at + s[at..].find("\n}\n").expect("its end")];
+        let row = body.find("\"DELIVERED -> {} {}{}{}: {}\"").expect("the DELIVERED row");
+        assert!(body[row..].contains("submit_note(&wrote)"), "the drain's DELIVERED row is built with the submit note");
     }
 
     #[test]

@@ -259,7 +259,9 @@ pub fn progress(ledger: &str) -> Option<Progress> {
                 if let Some(r) = run.as_mut() {
                     if !r.finished {
                         r.finished = true;
-                        r.interrupted = end == "interrupted";
+                        // L225 B3: an `interrupted` row ends nothing when every listed seat already has its outcome (the
+                        // launch of 11-25 wrote one for the 11-21 13:47Z run, cut whole by a build that wrote no end row).
+                        r.interrupted = end == "interrupted" && r.seats.iter().any(|s| !s.state.is_final());
                         let why = if end == "panic" { "the run stopped on an internal error" } else { "never reached: the app closed before its cut" };
                         for s in r.seats.iter_mut().filter(|s| !s.state.is_final()) {
                             s.detail = format!("{why} (it was {})", s.state.word());
@@ -270,6 +272,13 @@ pub fn progress(ledger: &str) -> Option<Progress> {
                 }
             }
             _ => {}
+        }
+    }
+    // L225 B3: a run whose every listed seat has an outcome row is finished, end row or not (the L212 build wrote none), so
+    // the launch finds nothing to end and writes no `interrupted` row for it.
+    if let Some(r) = run.as_mut() {
+        if !r.finished && !r.seats.is_empty() && r.seats.iter().all(|s| s.state.is_final()) {
+            r.finished = true;
         }
     }
     run
@@ -496,6 +505,30 @@ mod tests {
         let p2 = progress(&after).expect("a run");
         assert!(p2.finished && p2.interrupted && interrupted_line(&p2).is_none());
         assert!(summary(&p2).contains("4 never reached"), "{}", summary(&p2));
+    }
+    // L225 B3 (R2): the click of 2026-11-21T13:47:04Z as the ledger holds it. The L212 build that ran it wrote no end row,
+    // and every listed seat has its cut row. The launch of 2026-11-25 still wrote `interrupted` for it.
+    fn l225_the_1347_run() -> Vec<serde_json::Value> {
+        vec![
+            click("2026-11-21T13:47:04.963Z", &["0c0c0c0a", "0c0c0c0b", "3d000000"], &[]),
+            seat("2026-11-21T13:48:20.983Z", "0c0c0c0a", "cut: the transcript records the manual compaction, 18k tokens left"),
+            seat("2026-11-21T13:51:12.316Z", "0c0c0c0b", "cut: the transcript records the manual compaction, 33k tokens left"),
+            seat("2026-11-21T13:52:48.393Z", "3d000000", "cut: the transcript records the manual compaction, 16k tokens left"),
+        ]
+    }
+    #[test]
+    fn r2_a_run_whose_every_seat_has_an_outcome_is_finished_not_interrupted() {
+        let p = progress(&ledger(&l225_the_1347_run())).expect("a run");
+        assert!(p.finished && !p.interrupted, "every listed seat has its outcome row: the launch must find nothing to end");
+        assert_eq!(summary(&p), "Done: 3 cut, 0 failed");
+    }
+    #[test]
+    fn r2_the_false_interrupted_row_already_written_does_not_mark_the_run_interrupted() {
+        let mut rows = l225_the_1347_run();
+        rows.push(serde_json::json!({ "event": "interrupted", "t": "2026-11-25T06:08:44.028Z" }));
+        let p = progress(&ledger(&rows)).expect("a run");
+        assert!(p.finished && !p.interrupted && interrupted_line(&p).is_none());
+        assert_eq!(summary(&p), "Done: 3 cut, 0 failed");
     }
     #[test]
     fn r1_a_finished_run_is_not_said_at_launch() {
