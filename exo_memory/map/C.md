@@ -1965,3 +1965,7 @@ Claim (could be wrong): his 08:19 crash was Export to Assetto Corsa: `v8-oom-sta
 ## 2026-11-25 — L235 read: the same-lap rule reads the FIRST lap id, so a dispatch that opens a new lap by naming the closed one first ("L215 IS COLLATED … YOUR NEXT LAP IS L217") skips the cut (cut_at_handback.rs:256); and the counter's 15/6 re-reads are mostly sed/grep fragments against a whole-history before-set (usage-ledger.js:157-196), 0-1 real files per cut when windowed
 - Evidence: row C1 red (4 real heads), C2 green, C3 red, in `exo_memory/handback/p-l235-read-C_2026-11-25_evidence/rust_rows/`; replay over 405 November dispatches in `same_lap_replay.txt` (7 false skips, all on or before 11-21); `rereads_window_C.txt`, `rereads_window_E.txt`.
 - Hand-back: `exo_memory/handback/p-l235-read-C_2026-11-25.md`
+
+## 2026-11-25 — L233 re-run: at d79cf37b the relaunch helper logs not-opened and exits 3 for six non-programs of my choosing (a directory, a PNG, markdown, a zero-byte file, a .cmd and a DLL as .exe), by both paths (spawn throws; no pid); relaunch.test.js 12/12; CLEAN
+- Evidence: `exo_memory/handback/p-l233-rerun-C_2026-11-25_evidence/cases_d79cf37b.txt`, `relaunch_test_d79cf37b.txt`.
+- Hand-back: `exo_memory/handback/p-l233-rerun-C_2026-11-25.md`

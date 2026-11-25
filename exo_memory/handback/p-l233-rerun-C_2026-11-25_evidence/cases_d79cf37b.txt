@@ -1,0 +1,12 @@
+a directory named consonance.exe
+   pid 14512 dead: true | exit 3 in 41 ms | rows 1 | outcome not-opened | why the exe could not be started (the spawn gave no process) | child - | stderr: -
+a PNG (C's redrawn picture 3), its own name
+   pid 10384 dead: true | exit 3 in 49 ms | rows 1 | outcome not-opened | why the exe could not be started (spawn EFTYPE) | child - | stderr: -
+a markdown hand-back renamed consonance.exe
+   pid 10728 dead: true | exit 3 in 54 ms | rows 1 | outcome not-opened | why the exe could not be started (spawn UNKNOWN) | child - | stderr: -
+a zero-byte consonance.exe
+   pid 18900 dead: true | exit 3 in 47 ms | rows 1 | outcome not-opened | why the exe could not be started (spawn EFTYPE) | child - | stderr: -
+a .cmd batch file (body: exit /b 0)
+   pid 8384 dead: true | exit 3 in 43 ms | rows 1 | outcome not-opened | why the exe could not be started (spawn EINVAL) | child - | stderr: -
+a real PE that is a DLL (System32 version.dll) renamed consonance.exe
+   pid 28268 dead: true | exit 3 in 52 ms | rows 1 | outcome not-opened | why the exe could not be started (spawn EFTYPE) | child - | stderr: -

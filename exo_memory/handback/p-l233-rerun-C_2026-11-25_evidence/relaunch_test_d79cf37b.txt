@@ -1,0 +1,16 @@
+the helper
+  ok   waits until the app is gone, then opens the exe at the path it was given
+  ok   nothing is opened while the app still runs
+  ok   a gave-up wait says so in the ledger
+  ok   the opened app does not inherit the launch id (main.rs LAUNCH_ID_ENV) or CONSONANCE_DATA
+  ok   a relative exe is refused, and nothing waits or opens
+  ok   a missing or bad pid is refused
+  ok   the opened row names the exe
+  ok   THE REAL FILE: waits on a real process, opens only after it exits
+  ok   a launch that starts nothing is NOT logged opened: not-opened, code 3
+  ok   THE REAL FILE: a dead pid and a missing exe: non-zero exit and a not-opened row saying nothing is at the path
+  ok   THE REAL FILE: an exe that is there but is not a program: not-opened with the spawn reason, not a crash
+  ok   the spawn itself: a path that vanished after the existence check gives no pid and a reason, never a pid
+
+12 passed, 0 failed
+exit 0
