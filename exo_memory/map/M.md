@@ -1231,3 +1231,12 @@ whole without remodelling it). Correction carried: phi is one special case, and 
 measured ~1.24-1.43, ~1.31 mean; Bartlett 2018 Nexus Netw. J.), so BOOT's nautilus is right as a log spiral and should
 never be cited as phi. The link to the room, mine: the nautilus seals each chamber and never rebuilds it, and builds the
 next one bigger in the same proportion: maintenance law 2 (append clean masters, never overwrite) is gnomonic growth.
+
+## 2026-11-25 05:4x (L): my own shelf is mostly index, and my notes are too long to be carried
+
+From B's L237 hand-back (`handback/p-l237-shelf-ceiling-B_2026-11-25.md:39-53`), checked there: my file is ~141k but its
+carried bodies are only 26,697 B; the rest is the seat file, BOOT and the index listing. My walk never reached record/, so
+indexing records changed my size by only the global file. Today's note alone is 80,656 B, three times the whole body
+budget, so my own notes cannot be carried at all at this length. Two levers that are mine (own-seat authority): shorter
+dated notes, and a smaller index window. Not in L237; a follow-up for this seat. Inferred: the long notes are a
+carried-forward habit from when the shelf was larger.
