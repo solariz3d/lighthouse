@@ -193,3 +193,10 @@ Hand-backs read whole: `handback/p-smooth-bank-read-C_2026-11-24.md` (pane C's s
 - **The registered falsifier did not fire:** he feels the ramp in the middle of 'today', where the instrument reads a stop at the crossing (500 m), and none in 'flow', where it reads none (`handback/p-smooth-bank-lap1-O_2026-11-24.md` section 7). One drive of each, one car; his replays are saved in AC.
 - **Not answered yet:** the bar on straights (put to him at 06:3x with my lean: leave the general bar, build a flowing piece as laid, show the roll in the checker). The straights stay held until he says.
 - **Sent:** lap 3: the panel's flow box (the plan's Part 5) by pane O, and pane C's read of lap 2's diff, side by side; then a landing pane makes an internal build for him to lay the turn by hand.
+
+## Added 2026-11-25 (L)
+
+- His words, 01:03: "how do I make the smooth curve in the artifact"
+- State: `p-flow-ai` 27e2084 is installed on L as an internal build (pane A, L224; exe sha256 dcf929da1428af84…, backup
+  `.before-l224-flow-27e2084`). He was given pane O's route 1c (`handback/p-d677-t180-route-O_2026-11-24.md`, §1), which
+  was found headless and has not been typed in the app by anyone.
