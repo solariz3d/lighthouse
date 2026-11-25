@@ -1,0 +1,45 @@
+[32m✔ C0: the S saved through the panel keeps a recipe, and a click puts its typed numbers back in the boxes [90m(395.3952ms)[39m[39m
+[31m✖ C1: Rename carries the recipe, AND the renamed piece still shows its numbers on a click [90m(281.3565ms)[39m[39m
+[31m✖ C2: a case-only Rename on a case-blind store (as Windows names are) keeps the recipe [90m(174.1594ms)[39m[39m
+[32m✔ C3: the numbers make it by hand: Extend pressed on the boxes a click filled lays the same road Place lays [90m(232.3849ms)[39m[39m
+C5 tree=t180-wt-piece hasGhost=true events=t180-ghost-clear,t180-ghost-clear lastEvent=t180-ghost-clear ghostSegments=- message="No saved pieces yet: select pieces on the track and press Save as piece. | no preview of this piece: TURN_TOO_SHORT: the turn change 2 (a corner of -91.0°) needs at least 21.0 m before the piece's end (shorter, it has no room to ease in and out): from at most 199.0, got 200 | end heading 0.00°, on the 90° grid" state.message=null
+[32m✔ C4: Place then Undo gives back exactly the document the ghost was shown over, and Redo the placed one (one step) [90m(235.4786ms)[39m[39m
+[32m✔ C5 (a record, both trees): the S typed with length 220: what the panel ghost does [90m(133.3942ms)[39m[39m
+[34mℹ tests 6[39m
+[34mℹ suites 0[39m
+[34mℹ pass 4[39m
+[34mℹ fail 2[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 1622.8525[39m
+
+[31m✖ failing tests:[39m
+
+test at c-l238-read.test.js:101:1
+[31m✖ C1: Rename carries the recipe, AND the renamed piece still shows its numbers on a click [90m(281.3565ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: the renamed piece shows no numbers; its note: the saved numbers belong to another file of this name, so they are not used
+      at TestContext.<anonymous> [90m(C:\Consonance\lighthouse\exo_memory\handback\p-l238-read-C_2026-11-25_evidence\[39mc-l238-read.test.js:106:35[90m)[39m
+  [90m    at async Test.run (node:internal/test_runner/test:1332:7)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [1mnull[22m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at c-l238-read.test.js:109:1
+[31m✖ C2: a case-only Rename on a case-blind store (as Windows names are) keeps the recipe [90m(174.1594ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: the recipe is gone after a case-only rename; message: renamed the piece "bend" to "Bend"
+      at TestContext.<anonymous> [90m(C:\Consonance\lighthouse\exo_memory\handback\p-l238-read-C_2026-11-25_evidence\[39mc-l238-read.test.js:113:10[90m)[39m
+  [90m    at async Test.run (node:internal/test_runner/test:1332:7)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }

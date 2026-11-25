@@ -1,0 +1,15 @@
+C5 tree=c-l238-base hasGhost=false events=t180-ghost-clear,t180-ghost-clear lastEvent=t180-ghost-clear ghostSegments=- message="no preview of this piece: TURN_TOO_SHORT: the turn change 2 (a corner of -91.0°) needs at least 21.0 m before the piece's end (shorter, it has no room to ease in and out): from at most 199.0, got 200 | end heading 0.00°, on the 90° grid" state.message=null
+[90m﹣ C0: the S saved through the panel keeps a recipe, and a click puts its typed numbers back in the boxes [90m(0.5605ms)[39m # SKIP[39m
+[90m﹣ C1: Rename carries the recipe, AND the renamed piece still shows its numbers on a click [90m(0.0836ms)[39m # SKIP[39m
+[90m﹣ C2: a case-only Rename on a case-blind store (as Windows names are) keeps the recipe [90m(0.0491ms)[39m # SKIP[39m
+[90m﹣ C3: the numbers make it by hand: Extend pressed on the boxes a click filled lays the same road Place lays [90m(0.0422ms)[39m # SKIP[39m
+[90m﹣ C4: Place then Undo gives back exactly the document the ghost was shown over, and Redo the placed one (one step) [90m(0.0557ms)[39m # SKIP[39m
+[32m✔ C5 (a record, both trees): the S typed with length 220: what the panel ghost does [90m(316.6199ms)[39m[39m
+[34mℹ tests 6[39m
+[34mℹ suites 0[39m
+[34mℹ pass 1[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 5[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 482.8901[39m

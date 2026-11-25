@@ -1989,3 +1989,7 @@ Claim (could be wrong): his 08:19 crash was Export to Assetto Corsa: `v8-oom-sta
 ## 2026-11-25 — L237 made: the pane intake row now bounds the rest at the floor reserve (SHELL_MAP_FLOOR), so a long C map entry can no longer turn it green (80,181 B at reserve 27,283 still red under 88,000), and LIGHT_PANE_REST_MAX is 91,500 by ruling for the keeper's 11-07 BOOT words; row green at 88,893 B
 - Evidence: `exo_memory/handback/p-l237-C_2026-11-25_evidence/row_c_only.txt`, `row_c_only_long_map.txt`, `intake_tests_c_d.txt` (47 pass, 2 old librarian reds).
 - Hand-back: `exo_memory/handback/p-l237-C_2026-11-25.md` (addendum, 11:45Z)
+
+## 2026-11-25 — L238 read: at builder e16c646f Rename keeps a saved piece's .t180recipe but its numbers are then refused (the recipe hashes the piece text, which Rename rewrites; app/core/coreshell.js:1340 vs :1320), and a case-only Rename deletes it on Windows; Place, one undo step, make-by-hand and the older reader are clean; the 220 blank is the same at 4e19e33
+- Evidence: `exo_memory/handback/p-l238-read-C_2026-11-25_evidence/run_e16c646f.txt` (C1, C2 red), `run_4e19e33.txt`, `ntfs_case_rename.txt`, `row20_assert_restored.txt`.
+- Hand-back: `exo_memory/handback/p-l238-read-C_2026-11-25.md`
