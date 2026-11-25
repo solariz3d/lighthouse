@@ -1973,3 +1973,7 @@ Claim (could be wrong): his 08:19 crash was Export to Assetto Corsa: `v8-oom-sta
 ## 2026-11-25 — L235 re-read: at 3ac00138 the "same lap" marker closes line 1 (C1, C3 and the marker rows green; M5, a glued id, red but in 0 of 1,110 dispatches), and the window table reads 0/1/1; the new token filter drops quoted paths, 537 of ~12k shell tokens (usage-ledger.js:170)
 - Evidence: `exo_memory/handback/p-l235-reread-C_2026-11-25_evidence/rust_rows_3ac00138.txt`, `window_3ac00138.txt`, `quoted_row.txt`.
 - Hand-back: `exo_memory/handback/p-l235-reread-C_2026-11-25.md`
+
+## 2026-11-25 — L236 read: at 99c5fe99 the counter drops 0 of 585 quoted paths (534 at 3ac00138), through the branch's own rereadsAfterCuts; CLEAN; landing waits on B's push
+- Evidence: `exo_memory/handback/p-l236-read-C_2026-11-25_evidence/quoted_rederive_before_after.txt`, `quoted_row_99c5fe99.txt`.
+- Hand-back: `exo_memory/handback/p-l236-read-C_2026-11-25.md`

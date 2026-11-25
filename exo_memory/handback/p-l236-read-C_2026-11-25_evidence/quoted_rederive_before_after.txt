@@ -1,0 +1,8 @@
+== lh-wt-c-l235q 3ac00138
+commands with a reading verb 21025 | distinct paths counted by the branch (sum per command) 9968
+quoted paths with an extension 585 | dropped by the branch 534 (91.28%)
+admitted that start with s/ (a sed expression?): 8 ["s/game_tests.exe","s/xb.px","s/r.hash","s/1.5","s/changes.bank","s/c.turn","s/build.bat","s/l212_release.sh"]
+== lh-wt-c-l236 99c5fe99
+commands with a reading verb 21025 | distinct paths counted by the branch (sum per command) 10640
+quoted paths with an extension 585 | dropped by the branch 0 (0.00%)
+admitted that start with s/ (a sed expression?): 16 ["s/`consonance//hooks//board-digest.test.js","s/`tools//kn5nodes.js","s/game_tests.exe","s/`score.mjs","s/xb.px","s/std::fabs(to.y","s/r.hash","s/run.step(player_at(arena.spawn().pos"]
