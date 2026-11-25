@@ -1,0 +1,19 @@
+// PANE C L237 PROBE — local to C's worktree, NEVER committed: dumps the light pane intake's rest exactly as the row assembles it.
+#[cfg(test)]
+mod c_l237_probe {
+    use super::*;
+    #[test]
+    fn c_l237_dump_the_light_rest() {
+        let _g = DIRS_SERIAL.lock().unwrap_or_else(|e| e.into_inner());
+        let own = fs::read_to_string(own_map_path("C")).ok();
+        let reserve = map_reserve(own.as_deref());
+        let prev = std::env::var("CONSONANCE_GATES_MODE").ok();
+        let _ = prev;
+        let out = std::env::var("C_L237_OUT").expect("C_L237_OUT");
+        TEST_INTAKE_LIGHT.with(|m| m.set(true));
+        let light = intake_light();
+        let rest = assemble_intake_within(reserve);
+        eprintln!("C_L237 light-flag {light} reserve {reserve} rest {} B cards_dir {} room {}", rest.len(), cards_dir().display(), room_master_path().display());
+        fs::write(out, rest).unwrap();
+    }
+}

@@ -1,0 +1,6 @@
+test c_l237_probe::c_l237_dump_the_light_rest ... C_L237 light-flag true reserve 8000 rest 88893 B cards_dir C:\Users\zackn\.consonance\cards room C:\Consonance\lh-wt-c-l237\exo_memory\BOOT.md
+test intake_light_tests::light_the_pane_intake_is_under_target_with_the_cards_and_the_room ... PANE INTAKE strict 105471 B, light 94338 B
+PANE INTAKE light rest 88893 B, map section 5445 B, reserve 8000 B
+PANE INTAKE fork note 0 B (set aside; 0 in a dev tree)
+light pane intake without its map section and fork note is 88893 B, over 88000
+test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 1337 filtered out; finished in 0.13s

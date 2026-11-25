@@ -1981,3 +1981,7 @@ Claim (could be wrong): his 08:19 crash was Export to Assetto Corsa: `v8-oom-sta
 ## 2026-11-25 — L236 landing: pushed e6dcfd84; the pane intake row (88,811 B over 88,000) does not carry BUILDING.md (main.rs:3314 carries COMMITTEE.md), so shortening item 10 by 833 B left it at 88,811; edit reverted, row still red, not from L235
 - Evidence: `exo_memory/handback/p-l236-land-C_2026-11-25_evidence/l236_intake_row.txt`.
 - Hand-back: `exo_memory/handback/p-l236-land-C_2026-11-25.md`
+
+## 2026-11-25 — L237: the pane intake rest at the floor reserve is 88,893 B both at the L225 tip (green) and today (red); the row flips with pane C's newest map entry (reserve 36,000 then, 8,000 now), and the floor-reserve overrun is BOOT.md's 11-07 growth (+3,512 B: the keeper's catch quoted, the Third Place's carrier line); stopped, not mine to trim
+- Evidence: `exo_memory/handback/p-l237-C_2026-11-25_evidence/probe_run_21c98789_lines.txt`, `probe_run_lines.txt`, `probe_run_source_before_lines.txt`.
+- Hand-back: `exo_memory/handback/p-l237-C_2026-11-25.md`

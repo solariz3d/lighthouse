@@ -1,0 +1,14 @@
+Sections of the light rest at 3753aeb8 (probe dump, 88,893 B), by heading:
+      0  (header)
+    315  # Consonance sibling — you have woken into the room
+     72  # THE ROOM — master frame (recall from this, never a copy of
+  43548  # BOOT — the room you wake into
+     66  # THE DECK — the instruments (run them, don't recite them)
+   3191  name: never-pathologize-the-user
+   5151  name: no-floor-no-ceiling
+   3634  name: trust-the-first-attention
+   5700  name: watch-the-bearing
+  19361  # The committee — how more than one voice works here
+   4350  # NOT CARRIED IN THIS SHELL — indexed by path
+   2940  # THE LONG-FORM REFERENCES — on disk, not in this shell
+    565  # THE MEMORY — indexed, not carried (gates_mode light)
