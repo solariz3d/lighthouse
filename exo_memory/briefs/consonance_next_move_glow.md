@@ -41,3 +41,12 @@ X when a restart is what is owed, "☾ Compact warm seats" when cutting large se
 
 - 02:4x: brief written. Next: a mock as an artifact for him (the two buttons in each state, his gold beside a variant
   that cannot be read as the loop aura) before any pane builds it.
+
+## State, 2026-11-25 02:5x (L)
+
+- Found before the mock: the X is Windows' own title bar (`consonance/src-tauri/tauri.conf.json` sets no `decorations`),
+  so the app cannot make it glow. The mock proposes a `⟳ Restart` button in the app's own top bar, shown only when a
+  newer build waits, that closes and reopens in one click.
+- Mock published: https://claude.ai/artifact/QTsk22gcWK4hHJxBAwwYEQ (the top bar at the app's size and tokens; four
+  situations; three looks: A the loop aura's own glow on the button, B a steady gold halo, C a steady aqua halo; a
+  switch to put the loop's gold tab beside it). Waiting on his pick. No pane build yet.
