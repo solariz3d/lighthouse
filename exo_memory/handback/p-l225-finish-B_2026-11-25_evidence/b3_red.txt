@@ -1,0 +1,25 @@
+---- close_small::tests::r2_a_run_whose_every_seat_has_an_outcome_is_finished_not_interrupted stdout ----
+
+thread 'close_small::tests::r2_a_run_whose_every_seat_has_an_outcome_is_finished_not_interrupted' (16952) panicked at src\close_small.rs:513:9:
+every listed seat has its outcome row: the launch must find nothing to end
+
+---- print::print_progress stdout ----
+
+thread 'print::print_progress' (21668) panicked at src\lib.rs:6:47:
+L221_FIXTURE: NotPresent
+
+---- close_small::tests::r2_the_false_interrupted_row_already_written_does_not_mark_the_run_interrupted stdout ----
+
+thread 'close_small::tests::r2_the_false_interrupted_row_already_written_does_not_mark_the_run_interrupted' (29760) panicked at src\close_small.rs:521:9:
+assertion failed: p.finished && !p.interrupted && interrupted_line(&p).is_none()
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    close_small::tests::r2_a_run_whose_every_seat_has_an_outcome_is_finished_not_interrupted
+    close_small::tests::r2_the_false_interrupted_row_already_written_does_not_mark_the_run_interrupted
+    print::print_progress
+
+test result: FAILED. 32 passed; 3 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `--lib`

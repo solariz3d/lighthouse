@@ -51,7 +51,7 @@ with the inherited `CLAUDECODE`/`CLAUDE_CODE_*` cleared. Each piece is measured 
 
 | piece | in a builder request | can be left out by | saves (tokens) | laps of 41 using it |
 |---|---|---|---|---|
-| Artifact | seen, deferred line 215 B | `--disallowedTools Artifact` (seen absent: haiku arm 1 deferred listing 1,546 → 408 B) | ~73 | 0 |
+| Artifact | seen, ~~deferred line 215 B~~ **a full definition, 34,422-38,426 B, in every logged request shape of panes A and B from 11-04 to 11-21 10:58Z and in B again from 11-25; a deferred line only after the 11-21 13:0xZ compaction** (struck 2026-11-25, L225: see the section at the end) | `--disallowedTools Artifact` (seen absent: haiku arm 1 deferred listing 1,546 → 408 B) | ~~~73~~ ~13,000 when loaded | 0 |
 | Monitor | seen; line 145 B, loaded 7,658 B once used | `--disallowedTools Monitor` | ~49 (+2,600 once loaded) | 1 (stays) |
 | SendMessage | seen; line 127 B, loaded 6,261 B | `--disallowedTools SendMessage` | ~43 (+2,120) | 1 (stays) |
 | skills listing | seen 17,721 B | Skill disallowed (net ~620, Workflow grows); `skillListingBudgetFraction: 0` (~3,200, haiku only) | see left | Skill 0 |
@@ -87,7 +87,7 @@ the folder. R3 and R4 are not started.
 
 - Each arm ran once. The Workflow growth is tied to the skill arms in ~~5 of 5~~ **4 of 4** cases, but its cause is inferred.
   - *Struck 2026-11-25 (L225 B2): "5 of 5" was never counted.*
-  - The recount: Workflow is 22,976 B in the four arms that touch the skills (probe 1 arms 5 and 6, probe 2 arms 1 and 2) and 5,745 B in the other five.
+  - The recount: Workflow is 22,976 B in the four arms that touch the skills (probe 1 arms 5 and 6, probe 2 arms 1 and 2) and 5,745 B in the other ~~five~~ six (probe 1 arms 0 to 4, probe 2 arm 0; struck 2026-11-25).
   - It is read from `analyze_q2probe.json` and `analyze_q2probe2.json` in the evidence folder, each arm's `workflowBytes`. Redo it with `node -e "for(const f of ['analyze_q2probe','analyze_q2probe2'])for(const[k,v] of Object.entries(require('./'+f+'.json')))console.log(f,k,v.workflowBytes)"` in that folder. Which flags each arm used is in `probe_out.txt` and `probe2.js`.
 - The haiku arms' listing sizes differ slightly from opus (17,225 vs 16,760 B).
 
@@ -136,3 +136,8 @@ the folder. R3 and R4 are not started.
   Workflow growth. `skillListingBudgetFraction: 0` (~3,200) is not yet run on opus.
 
 NEXT: librarian route pane A to read git diff 0663ea74..q2-builder-floor when the next lap opens; plan default after it: B finishes the probe on opus, then lands Q2 with one release build
+
+## L225 (2026-11-25): the probe finished on opus, Half B built
+
+- **Artifact was measured in the wrong window (checked).** Finding 1 read Artifact as a 215 B deferred line in B's and A's transcripts. That reading came from requests after the 11-21 13:0xZ compaction. Every `api-request-shape` row in B's transcript (12fb81f6, 16 rows) and A's (6fe15f0a, 13 rows) carries Artifact as a full definition from 11-04 to 11-21 10:58Z: 34,422, then 38,001, then 38,256 B. B's row of 11-25 06:35Z carries it again at 38,426 B. So the saving when it is loaded is about 13,000 tokens a call at 0.339 a byte, not ~73. Its use is unchanged: 0 of 41 laps.
+- The rest of L225 is in `p-l225-finish-B_2026-11-25.md`.

@@ -1,0 +1,4 @@
+intake_light_tests::light_the_librarian_worst_case_intake_is_under_145_000 --- FAILED
+    intake_light_tests::light_the_librarian_worst_case_intake_is_under_145_000
+test result: FAILED. 1286 passed; 1 failed; 7 ignored; 0 measured; 0 filtered out; finished in 299.09s
+base 12c2dd55

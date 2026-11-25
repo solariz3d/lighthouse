@@ -1,0 +1,40 @@
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+running 11 tests
+.. 2/11
+floor_launch_tests::r1_a_builder_pane_gets_the_floor_launch --- FAILED
+..... 8/11
+floor_launch_tests::r1_the_spawn_passes_the_floor_rule_exactly_what_it_read --- FAILED
+. 10/11
+no_prompt_tests::the_spawn_asks_the_rule_and_settings_is_passed_from_one_place --- FAILED
+
+failures:
+
+---- floor_launch_tests::r1_a_builder_pane_gets_the_floor_launch stdout ----
+
+thread 'floor_launch_tests::r1_a_builder_pane_gets_the_floor_launch' (36056) panicked at src\main.rs:4846:9:
+no config: on
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- floor_launch_tests::r1_the_spawn_passes_the_floor_rule_exactly_what_it_read stdout ----
+
+thread 'floor_launch_tests::r1_the_spawn_passes_the_floor_rule_exactly_what_it_read' (38336) panicked at src\main.rs:4875:9:
+the ask, its three arguments, the file and the flags, exactly
+
+---- no_prompt_tests::the_spawn_asks_the_rule_and_settings_is_passed_from_one_place stdout ----
+
+thread 'no_prompt_tests::the_spawn_asks_the_rule_and_settings_is_passed_from_one_place' (20160) panicked at src\main.rs:4953:9:
+assertion `left == right` failed: the no-prompt site and the floor's site
+  left: 1
+ right: 2
+
+
+failures:
+    floor_launch_tests::r1_a_builder_pane_gets_the_floor_launch
+    floor_launch_tests::r1_the_spawn_passes_the_floor_rule_exactly_what_it_read
+    no_prompt_tests::the_spawn_asks_the_rule_and_settings_is_passed_from_one_place
+
+test result: FAILED. 8 passed; 3 failed; 0 ignored; 0 measured; 1298 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `--bin consonance`

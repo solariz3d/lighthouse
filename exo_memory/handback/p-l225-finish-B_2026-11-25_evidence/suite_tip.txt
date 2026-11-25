@@ -1,0 +1,11 @@
+test result: ok. 22 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+test result: ok. 77 passed; 0 failed; 3 ignored; 0 measured; 0 filtered out; finished in 2.06s
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+test result: ok. 22 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+test result: ok. 77 passed; 0 failed; 3 ignored; 0 measured; 0 filtered out; finished in 2.04s
+intake_light_tests::light_the_librarian_worst_case_intake_is_under_145_000 --- FAILED
+failures:
+thread 'intake_light_tests::light_the_librarian_worst_case_intake_is_under_145_000' (14248) panicked at src\main.rs:10475:9:
+failures:
+    intake_light_tests::light_the_librarian_worst_case_intake_is_under_145_000
+test result: FAILED. 1303 passed; 1 failed; 7 ignored; 0 measured; 0 filtered out; finished in 307.46s

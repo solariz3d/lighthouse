@@ -3,7 +3,7 @@
 What each file does and where to look for things. Anchors are **function names**, not line numbers (lines move every lap;
 `grep -n "fn <name>"` finds them). Read from the code itself, 2026-10-30. When you add or move a module, update its line here.
 
-**Size, so you know what you are opening** (re-count with `wc -l *.rs`): 22 `.rs` files and `bin/` (10 probes). `main.rs` is
+**Size, so you know what you are opening** (re-count with `wc -l *.rs`): 22 `.rs` files and `bin/` (11 probes). `main.rs` is
 about 24,400 lines, and **its non-test code ends with `fn main()` at about line 16,100**; everything after it, and about 46 % of
 the file in all, is `#[cfg(test)]` modules. `mcp.rs` ~4,400, `cochlea.rs` ~4,100, `sync_launch.rs` ~3,500; the rest are under 800.
 
@@ -59,7 +59,7 @@ the file in all, is `#[cfg(test)]` modules. `mcp.rs` ~4,400, `cochlea.rs` ~4,100
 | `nowplaying.rs` | What is actually playing, read from Windows' media session. |
 | `test_scratch.rs` | Test-only scratch folders that remove themselves on drop. |
 | `d476p4_review_c_tests.rs`, `d476p4_rr_c_tests.rs`, `d476p4_rr2_c_tests.rs` | Review tests from one lap, included into `main.rs` as `#[cfg(test)]` modules by `#[path]` at its very end. Not app code. |
-| `bin/` | Standalone probes and replays, each with its run line in its header: `pty_spike` (can portable-pty drive claude), `jsonl_tap` (the transcript path and its `usage`), `capture_probe` (layer 2 on real output), `composer_probe` (is the composer's separator reliable), `flush_probe` and `resume_probe` (transcript flush and `--resume` after a hard kill), `harvest_replay` (a `.log` through the harvester), `compact_probe` (does `/compact` written with deliver()'s bytes run as the command: yes, L218 R0, once the probe answers the terminal's queries as xterm.js does), `cochlea_replay` and `conf_sweep` (the listening maths on recorded frames). |
+| `bin/` | Standalone probes and replays, each with its run line in its header: `pty_spike` (can portable-pty drive claude), `jsonl_tap` (the transcript path and its `usage`), `capture_probe` (layer 2 on real output), `composer_probe` (is the composer's separator reliable), `flush_probe` and `resume_probe` (transcript flush and `--resume` after a hard kill), `harvest_replay` (a `.log` through the harvester), `compact_probe` (does `/compact` written with deliver()'s bytes run as the command: yes, L218 R0, once the probe answers the terminal's queries as xterm.js does), `ring_probe` (L225 B4: does a ring written with deliver()'s bytes submit when the seat is mid-turn, onto typed text, or with an @ path), `cochlea_replay` and `conf_sweep` (the listening maths on recorded frames). |
 
 ## `main.rs`, by area
 
