@@ -437,3 +437,5 @@ carry it, so this brief does.
 
 - 2026-11-25 02:2x (L), after his `/model` (Fable 5.2 to Opus 5.5) and `/effort` high in the librarian's pane: "it is good now"
 - 2026-11-25 03:05 (L): "does the builders compacting sooner really save more work if they compact every loop, losing context from the previous loop? In a way I know it saves context from less tokens being read, but it loses the last lap of what it done directly within its context? Thoughts?"
+- 2026-11-25 03:09 (L): "but what if the panes work goes over the context limit? Can we make it so it has a natural limit, but can work beyond it if the runs need it?"
+- 2026-11-25 03:14 (L): "I have no clue if you should, but we could try it. When it comes to these type of metrics I will admit I do not have the same level of accurate intuition as my philosophical outlooks on how everything else in nature relates to the rest"
