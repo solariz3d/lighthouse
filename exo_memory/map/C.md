@@ -1957,3 +1957,7 @@ Claim (could be wrong): his 08:19 crash was Export to Assetto Corsa: `v8-oom-sta
 ## 2026-11-25 — L232 landing: l232-A 175fd1bb merged to room main as 9607148a and pushed (fast-forward, 9 commits), carrier-drift GREEN and its test 60/60 on the tip; A's uncommitted A.md lines set aside (stash@{0} plus a copy) and put back after
 - Evidence: push-gate row 2026-11-25T09:02:45.890Z (allow); `git ls-remote origin main` 9607148a.
 - Hand-back: `exo_memory/handback/p-l232-land-C_2026-11-25.md`
+
+## 2026-11-25 — L233 read: at bd113955 the Restart helper logs "opened" and exits 0 when the exe at the path cannot be opened (spawn's ENOENT arrives after the log and the exit), so Consonance stays closed with a ledger that says it reopened (consonance/tools/relaunch.js:77-79); the decision, the glow and the gate reading are clean
+- Evidence: `exo_memory/handback/p-l233-read-C_2026-11-25_evidence/README.txt` rows 1-2 (`relaunch_missing_exe.jsonl`, `spawn_err.js`).
+- Hand-back: `exo_memory/handback/p-l233-read-C_2026-11-25.md`
