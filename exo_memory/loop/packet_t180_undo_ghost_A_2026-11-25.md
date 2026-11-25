@@ -169,3 +169,24 @@ calls the change small; C must re-read anyway. So it goes in now, and C reads bo
 
 **Then pane C** re-reads 2e70b9f..<new tip> in one pass: C3, C4, T1, the amended C3b, varied (a different first piece;
 a Jump after a Sharp; an undo, a typed change, a redo). CLEAN or the line. Then the install, as in addendum 2.
+
+---
+
+## ADDENDUM 4 (the librarian, 02:3x): the grid step to the setting; then build while C reads; install on C's CLEAN
+
+Pane C's re-read (`handback/p-l230-C-reread_2026-11-25.md`): the ghost and the boxes CLEAN on every command, varied
+(V1 to V3). The line: `app/core/panel.js:574`, `putBack` writes the grid step to the box and not to S (V4: box 45,
+Settings menu 15). **Ruled: it is fixed before the install.** One call; a known fault is not installed to save minutes.
+
+**Pane A, from b921ab1, tier "check it":**
+1. Red first: C's V4 from `handback/p-l230-C-reread_2026-11-25_evidence/c-l230r-read.test.js` into
+   `undo-commands.test.js`.
+2. The fix as C proposes: in `putBack`, `S.set('gridStep', Number(c.gridStep) || 90)` in place of the bare assignment.
+   Green: V4, T2, C3b Turn to grid, and the 589 set.
+3. Push, then ring the librarian with the tip, and in the same turn start the internal build of that tip
+   (`heavy-run.js --status && <build>`, in the background). **No install until the librarian rings CLEAN from C.**
+4. On that ring: back up the installed exe (sha256 of both), install, re-hash, and say whether
+   `t180-track-builder.exe` was running (if it is, stop and say so). Install first; no whole suite before it.
+
+**Pane C** reads only the new diff (b921ab1..tip) and re-runs V4, T2, C3b Turn to grid on it while A builds. CLEAN or
+the line, to the librarian.
