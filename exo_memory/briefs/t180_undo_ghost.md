@@ -76,3 +76,4 @@ back to its resting state.
 - Measured 07:2x (librarian): the S as driven ends 1.000° off (turns +92 and −91, pane O's numbers, carried into the
   hand recipe I gave him unflagged). His fix, turn −1 on the S, ends it at 0.000°. In his saved track the 300 m piece
   after it kept −1 in the turn box and ends at −1.000°. Packet addendum 1: the re-saved S uses his numbers.
+- His words, 07:07: "the global angle is what made me realize plus the straight was obviously off to the grid, even by one degree easy to spot"
