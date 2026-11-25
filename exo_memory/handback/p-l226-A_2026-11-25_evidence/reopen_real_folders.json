@@ -1,0 +1,63 @@
+{
+ "projectPieces": 3,
+ "project": {
+  "label": "project reopened (shell.open)",
+  "turnA": 89.77,
+  "turnB": -89.77,
+  "turnAmiss": 0.03,
+  "turnBmiss": 0.03,
+  "marks": [
+   {
+    "mark": "55 m",
+    "want": -27,
+    "got": -27,
+    "miss": 0
+   },
+   {
+    "mark": "112 m",
+    "want": 0,
+    "got": 0,
+    "miss": 0
+   },
+   {
+    "mark": "157 m",
+    "want": 26,
+    "got": 26,
+    "miss": 0
+   }
+  ],
+  "worstBankMiss": 0,
+  "halts": 0
+ },
+ "bytesSameAsSaved": true,
+ "piecesAddedPieces": 3,
+ "piecesAdded": {
+  "label": "saved pieces added at the head of a straight",
+  "turnA": 89.77,
+  "turnB": -89.77,
+  "turnAmiss": 0.03,
+  "turnBmiss": 0.03,
+  "marks": [
+   {
+    "mark": "55 m",
+    "want": -27,
+    "got": -27,
+    "miss": 0
+   },
+   {
+    "mark": "112 m",
+    "want": 0,
+    "got": 0,
+    "miss": 0
+   },
+   {
+    "mark": "157 m",
+    "want": 26,
+    "got": 26,
+    "miss": 0
+   }
+  ],
+  "worstBankMiss": 0,
+  "halts": 0
+ }
+}
