@@ -57,3 +57,10 @@ X when a restart is what is owed, "☾ Compact warm seats" when cutting large se
 - He liked the mock as a whole and did not pick a look; built with B (the librarian's lean) unless he says otherwise.
 - Packet: `loop/packet_next_move_glow_B_2026-11-25.md` (pane B; pane C reads second; pictures before any build he runs).
   Prior art named in it: `dev/stick-apply.js`, the app's existing relaunch (`main.rs:9494`).
+
+## State, 2026-11-25 06:28 (L): first real sighting
+
+- His words, 06:28: "yes its there, and dimmed". The new release exe (built 12:25:07Z) was newer than the running app
+  (started 11:15:46Z, whats-live, checked by the librarian) while pane B was still working: ⟳ Restart shown and dimmed,
+  as the rule says ('restart-waiting'). Next: it should glow when B is idle; his press of it is R4's first real run
+  (`<data>/relaunch.jsonl`, one "opened" row; every kept seat back with its conversation).
