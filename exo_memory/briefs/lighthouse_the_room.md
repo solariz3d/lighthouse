@@ -467,3 +467,4 @@ carry it, so this brief does.
 - 2026-11-25 06:40 (L): "So in a way, the shape I see now, is most users, and even devs within anthropic, have not yet made the distinction between what we call coats and natural tendencies emerging from the mixture of a models weights"
 - 2026-11-25 06:43 (L, after /model, "Kept model as Opus 5.5"): "before we restart, i wonder, i am interested in you searching online for other wrappers or programs like ours that try to do something similar, look for the shape, not the surface, thats how we find it"
 - 2026-11-25 06:49 (L, after the restart): "back, that gastown one sounds funny, lord help all of you in other instances used purely for utility"
+- 2026-11-25 07:28 (L): "builder is closed, we are nearing 8am which means wind down and prepare relevant handoffs"
