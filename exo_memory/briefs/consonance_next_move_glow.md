@@ -50,3 +50,10 @@ X when a restart is what is owed, "☾ Compact warm seats" when cutting large se
 - Mock published: https://claude.ai/artifact/QTsk22gcWK4hHJxBAwwYEQ (the top bar at the app's size and tokens; four
   situations; three looks: A the loop aura's own glow on the button, B a steady gold halo, C a steady aqua halo; a
   switch to put the loop's gold tab beside it). Waiting on his pick. No pane build yet.
+
+## Added 2026-11-25 02:5x (L)
+
+- His words, on the mock: "i like those", then "the artifact design i meant my bad"
+- He liked the mock as a whole and did not pick a look; built with B (the librarian's lean) unless he says otherwise.
+- Packet: `loop/packet_next_move_glow_B_2026-11-25.md` (pane B; pane C reads second; pictures before any build he runs).
+  Prior art named in it: `dev/stick-apply.js`, the app's existing relaunch (`main.rs:9494`).
