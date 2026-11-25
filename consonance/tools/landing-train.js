@@ -135,8 +135,8 @@ function scanForPush(repo, remote, pushSha, { gate = require('../hooks/push-gate
 //    A hit is named by file, line, commit and kind, never shown. Fails CLOSED, as the credential scan does. ──
 const PRIVACY = [
   { kind: 'an email address', re: /[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*\.(?:com|net|org|io)\b/ },
-  { kind: 'an account path', re: /\bUsers[\\/]+(?!Public\b)[A-Za-z0-9._-]+[\\/]/i },
-  { kind: 'an AppData path', re: /\bAppData[\\/]/i },
+  // Home-folder and AppData paths are not refused: the keeper, 2026-11-25 04:3x on L, "Push, and stop blocking" (his 09-28 word:
+  // privacy here means passwords and keys, which push-gate.js's credential scan holds). exo_memory/briefs/lighthouse_the_room.md.
   { kind: 'a private folder', re: /\bprivate[\\/]|stays here/i },
 ];
 const PRIVACY_ALLOW = /noreply@anthropic\.com|users\.noreply\.github\.com/i;   // the commits' own Co-Authored-By and author lines

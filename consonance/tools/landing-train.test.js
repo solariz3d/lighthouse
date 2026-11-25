@@ -227,7 +227,7 @@ test('the scan refuses a planted key shape: nothing is pushed, main does not mov
   assert.ok(!JSON.stringify(rows).includes(fake), 'the ledger never carries the key');
 });
 
-test('the privacy scan refuses an email address or an account path: nothing is pushed, main does not move, and the line is named, never shown', () => {
+test('the privacy scan refuses an email address but lets a home-folder path through: the address is named, never shown, and main does not move', () => {
   // The plan keeps "the credential and privacy scan" from today's landings (plan_l194_landing_train_2026-11-13.md, "Kept").
   // The first real batch (2026-11-13) ran the credential scan only; this is the other half.
   const w = world();
@@ -242,11 +242,11 @@ test('the privacy scan refuses an email address or an account path: nothing is p
   assert.doesNotMatch(r.stopped, new RegExp(addr.replace('.', '\\.')), 'the address itself is never shown');
   assert.equal(git(w.repo, 'rev-parse', 'main'), before.main, 'main did not move');
   assert.equal(originMain(w), before.origin, 'nothing was pushed');
-  // The account path is BUILT at run time, so the file still carries `see C:\Users\someone\Downloads\x` for the scan to refuse, while this source
-  // holds no literal drive path for portable-paths.js to flag (the same move as push-gate.test.js's fake secrets; pane P, 2026-11-13).
+  // The account path is BUILT at run time, so the file carries `see C:\Users\someone\Downloads\x` while this source holds no literal
+  // drive path for portable-paths.js to flag (pane P, 2026-11-13). The keeper ruled such paths allowed (2026-11-25 04:3x, L).
   const acct = branch(w, 'p2', 'paths.txt', `see ${['C:', 'Users', 'someone', 'Downloads', 'x'].join('\\')}\n`);
   T.writeReady(w.data, [acct]);
-  assert.match(T.runTrain(w.cfg, { ...quiet, data: w.data }).stopped || '', /privacy scan refused.*paths\.txt:1/);
+  assert.doesNotMatch(T.runTrain(w.cfg, { ...quiet, data: w.data }).stopped || '', /privacy scan refused/);
 });
 
 test('the exclusive hold is not free in time: the train stops and says who held it, and main and the READY list are untouched', () => {
