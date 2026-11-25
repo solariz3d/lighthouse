@@ -436,3 +436,4 @@ carry it, so this brief does.
 - 2026-11-25 02:13 (L): "i think maybe having you on fable high is it tbh, i wonder, if you had to choose, would you pick opus 5.5 high, or fable medium?"
 
 - 2026-11-25 02:2x (L), after his `/model` (Fable 5.2 to Opus 5.5) and `/effort` high in the librarian's pane: "it is good now"
+- 2026-11-25 03:05 (L): "does the builders compacting sooner really save more work if they compact every loop, losing context from the previous loop? In a way I know it saves context from less tokens being read, but it loses the last lap of what it done directly within its context? Thoughts?"
