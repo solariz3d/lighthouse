@@ -13638,6 +13638,14 @@ fn inject_to_pane(panes: &State<Panes>, pane_id: &str, text: &str, emus: &PaneEm
 /// the MCP caller's 15 s (this runs on the actuator thread; see `RECEIPT_WAIT_MS`).
 const SUBMIT_CHECK_GAPS_MS: [u64; 4] = [200, 300, 600, 1_200];
 
+/// R2 (pane O, 2026-11-25): before the first Enter, the composer is read this often until our paste is drawn in it…
+const PASTE_SEEN_POLL_MS: u64 = 50;
+/// …for at most this long. THE NUMBER: the paste is held on the pane map's lock (no keystroke may land between it and the
+/// Enter), so every other pane's typing waits this long in the worst case; 1.5 s is under twice the old 900 ms ceiling, and a
+/// TUI slower than that still gets its paste confirmed by the readings after the Enter, which no longer count an unseen empty
+/// box as a submit. A fast TUI is seen on the first poll and pays nothing (the Enter still waits `submit_delay_ms`).
+const PASTE_SEEN_MAX_MS: u64 = 1_500;
+
 /// The submit, as the composer showed it after the Enter(s).
 #[derive(Debug, PartialEq, Eq, Clone, Copy)]
 enum Submit {
@@ -13667,9 +13675,15 @@ enum SubmitStep {
 /// EMPTY IS A SUBMIT, and it is the composer rule's EMPTY, so a dim suggestion left behind reads empty
 /// (`typed_only`). UNREADABLE IS NEVER A SUBMIT and never gets an Enter: a key pressed on a box nobody
 /// can see is the splice the inbox exists to prevent. TEXT THAT IS NOT OURS STOPS IT, with no Enter.
-fn submit_step(reading: Composer, ours: bool, retries_sent: u32) -> SubmitStep {
+///
+/// R2 (pane O, 2026-11-25): EMPTY IS A SUBMIT ONLY ONCE OUR TEXT HAS BEEN SEEN (`seen`). A box the TUI has not yet drawn the
+/// paste into is empty too, and reads exactly like one a submit cleared: pane O's ring of 2026-11-24T15:54:16Z was taken as
+/// submitted on that reading and sat in the librarian's line for ten hours. Unseen and empty decides nothing; the next reading
+/// may show the paste (and get the Enter again). `seen` is true from the start for a message that can never be read as ours.
+fn submit_step(reading: Composer, ours: bool, retries_sent: u32, seen: bool) -> SubmitStep {
     match reading {
-        Composer::Empty => SubmitStep::Submitted,
+        Composer::Empty if seen => SubmitStep::Submitted,
+        Composer::Empty => SubmitStep::Unknown,
         Composer::Unreadable(_) => SubmitStep::Unknown,
         Composer::HasText if !ours => SubmitStep::NotOurs,
         Composer::HasText if (retries_sent as usize) < SUBMIT_CHECK_GAPS_MS.len() - 1 => SubmitStep::RetryEnter,
@@ -13745,26 +13759,51 @@ fn deliver(
     //
     // AND NO WAIT CLOSES IT, 2026-10-19 (D415): the wait is the first attempt, and the reading
     // below is what says whether it worked.
-    let delay = Duration::from_millis(submit_delay_ms(payload.len()));
+    //
+    // AND THE ENTER WAITS FOR THE PASTE TO BE DRAWN, 2026-11-25 (R2, pane O). A TUI slower than the delay above was still
+    // drawing pane O's ring ("Pasting…", then `[Pasted text #14 +10 lines]`) when the Enter came, and the Enter was lost. So
+    // after the delay the composer is read, and then every `PASTE_SEEN_POLL_MS` until our text is in it, for at most
+    // `PASTE_SEEN_MAX_MS` more, and the Enter goes then (a fast TUI is seen on the first reading: the same bytes at the same
+    // moments as before, one reading more).
+    // Still ONE call to the writer, so nothing the keeper types can land between the paste and the Enter; the screen is read
+    // under the emulator's own lock, which the PTY reader takes alone (never under the pane map), so the reads cannot wait on
+    // this hold. A message that can never be read as ours (too short for a needle, one line) waits the delay, as before.
+    let delay = submit_delay_ms(payload.len());
+    let confirmable = !receipt_needle(text).is_empty() || !receipt_needle_tail(text).is_empty() || text.contains('\n');
+    let mut seen = !confirmable;
     with_writer(&mut |w| {
         w.write_all(payload.as_bytes()).map_err(|e| e.to_string())?;
         w.flush().map_err(|e| e.to_string())?;
-        sleep(delay);
+        sleep(Duration::from_millis(delay));
+        let drawn = |r: Option<(Vec<String>, Vec<String>)>| r.is_some_and(|(rendered, _)| ours_in_box(&rendered, text));
+        if !seen {
+            seen = drawn(read());
+            let mut waited = 0u64;
+            while !seen && waited < PASTE_SEEN_MAX_MS {
+                sleep(Duration::from_millis(PASTE_SEEN_POLL_MS));
+                waited += PASTE_SEEN_POLL_MS;
+                seen = drawn(read());
+            }
+        }
         w.write_all(b"\r").map_err(|e| e.to_string())?;
         w.flush().map_err(|e| e.to_string())
     })?;
     let mut retries = 0u32;
-    for gap in SUBMIT_CHECK_GAPS_MS {
+    for (k, gap) in SUBMIT_CHECK_GAPS_MS.into_iter().enumerate() {
         sleep(Duration::from_millis(gap));
         let (reading, ours) = match read() {
             Some((rendered, typed)) => (composer_state(&rendered, &typed), ours_in_box(&rendered, text)),
             None => (Composer::Unreadable(Unreadable::NoScreen), false),
         };
-        match submit_step(reading, ours, retries) {
+        seen |= ours && reading == Composer::HasText;
+        match submit_step(reading, ours, retries, seen) {
             SubmitStep::Submitted => return Ok(Submit::Submitted { retries }),
             SubmitStep::NotSubmitted => return Ok(Submit::NotSubmitted { retries }),
             SubmitStep::NotOurs => return Ok(Submit::NotOurs),
             SubmitStep::Unknown => {}
+            // R2: our text first seen on the LAST reading (the paste drawn that late) gets no Enter, because no reading would
+            // follow to say whether it was taken: the line still holds it, and that is what is reported.
+            SubmitStep::RetryEnter if k + 1 == SUBMIT_CHECK_GAPS_MS.len() => return Ok(Submit::NotSubmitted { retries }),
             SubmitStep::RetryEnter => {
                 with_writer(&mut |w| {
                     w.write_all(b"\r").map_err(|e| e.to_string())?;
@@ -13813,7 +13852,7 @@ fn submit_note(wrote: &Result<Submit, String>) -> &'static str {
             " [NOT SUBMITTED — the text is in the input box: the Enter was not taken, after retries; press Enter there, do NOT re-send]"
         }
         Ok(Submit::Unknown) => {
-            " [SUBMIT UNCONFIRMED — the input box could not be read after the Enter, so no Enter was retried; look there: if the text is still in it, press Enter, do NOT re-send]"
+            " [SUBMIT UNCONFIRMED — the input box could not be read after the Enter, or never showed this message, so no Enter was retried; look there: if the text is still in it, press Enter, do NOT re-send]"
         }
         Ok(Submit::NotOurs) => {
             " [SUBMIT UNCONFIRMED — after the Enter the input box held text not read as this message, so no Enter was retried; look there: if it is this message, press Enter, do NOT re-send]"
@@ -26690,22 +26729,39 @@ mod submit_check_tests {
         screen(&["\u{276f} sup brah"], false)
     }
 
-    /// Runs `deliver` over a recording writer and a scripted screen per reading (None = no screen).
+    /// Runs `deliver` over a recording writer and a scripted screen per reading AFTER the Enter (None = no screen);
+    /// `reads` counts those. Before the Enter (R2: `deliver` waits to see its paste drawn) every reading shows our text,
+    /// a TUI that draws the paste at once; the R2 rows below drive a TUI that draws it late.
+    /// The recording writer, borrowing per write: `deliver` reads the screen between the paste and the Enter.
+    struct Rec<'a>(&'a std::cell::RefCell<Vec<u8>>);
+    impl Write for Rec<'_> {
+        fn write(&mut self, b: &[u8]) -> std::io::Result<usize> {
+            self.0.borrow_mut().extend_from_slice(b);
+            Ok(b.len())
+        }
+        fn flush(&mut self) -> std::io::Result<()> {
+            Ok(())
+        }
+    }
     fn run(text: &str, screens: Vec<Option<(Vec<String>, Vec<String>)>>) -> (Result<Submit, String>, Vec<u8>, Vec<Duration>, usize) {
-        let mut bytes: Vec<u8> = Vec::new();
+        assert_eq!(text, MSG, "premise: the screen before the Enter is ours() of MSG");
+        let bytes = std::cell::RefCell::new(Vec::<u8>::new());
         let mut slept: Vec<Duration> = Vec::new();
         let mut script = screens.into_iter();
         let mut reads = 0usize;
         let out = deliver(
-            &mut |f| f(&mut bytes),
+            &mut |f| f(&mut Rec(&bytes)),
             &mut || {
+                if !bytes.borrow().contains(&b'\r') {
+                    return Some(ours());
+                }
                 reads += 1;
                 script.next().unwrap_or(None)
             },
             &mut |d| slept.push(d),
             text,
         );
-        (out, bytes, slept, reads)
+        (out, bytes.into_inner(), slept, reads)
     }
 
     fn pastes(b: &[u8]) -> usize {
@@ -26844,15 +26900,125 @@ mod submit_check_tests {
     #[test]
     fn the_decision_table() {
         let max = (SUBMIT_CHECK_GAPS_MS.len() - 1) as u32;
-        assert_eq!(submit_step(Composer::Empty, false, 0), SubmitStep::Submitted);
-        assert_eq!(submit_step(Composer::Empty, true, max), SubmitStep::Submitted);
-        assert_eq!(submit_step(Composer::HasText, true, 0), SubmitStep::RetryEnter);
-        assert_eq!(submit_step(Composer::HasText, true, max - 1), SubmitStep::RetryEnter);
-        assert_eq!(submit_step(Composer::HasText, true, max), SubmitStep::NotSubmitted);
-        assert_eq!(submit_step(Composer::HasText, false, 0), SubmitStep::NotOurs);
+        assert_eq!(submit_step(Composer::Empty, false, 0, true), SubmitStep::Submitted);
+        assert_eq!(submit_step(Composer::Empty, true, max, true), SubmitStep::Submitted);
+        assert_eq!(submit_step(Composer::HasText, true, 0, true), SubmitStep::RetryEnter);
+        assert_eq!(submit_step(Composer::HasText, true, max - 1, true), SubmitStep::RetryEnter);
+        assert_eq!(submit_step(Composer::HasText, true, max, true), SubmitStep::NotSubmitted);
+        assert_eq!(submit_step(Composer::HasText, false, 0, true), SubmitStep::NotOurs);
         for u in [Unreadable::NoRow, Unreadable::GridMismatch, Unreadable::NoScreen] {
-            assert_eq!(submit_step(Composer::Unreadable(u), true, 0), SubmitStep::Unknown, "{u:?}");
+            assert_eq!(submit_step(Composer::Unreadable(u), true, 0, true), SubmitStep::Unknown, "{u:?}");
         }
+        // R2: an empty box is a submit only once our text was seen in it; before that it decides nothing
+        assert_eq!(submit_step(Composer::Empty, false, 0, false), SubmitStep::Unknown);
+        assert_eq!(submit_step(Composer::Empty, true, max, false), SubmitStep::Unknown);
+    }
+
+    // ── R2 (pane O, 2026-11-25): THE RING THAT SAT UNSENT. Pane O's ring of 2026-11-24T15:54:16Z sat in the librarian's input
+    // line until the keeper pressed Enter at 20:04:35Z, and its board row said [Unconfirmed]. Replayed from the librarian's own
+    // capture through `composer_state` (61x305): the box read EMPTY before the paste was drawn and through the start of
+    // "Pasting…", and only then held `[Pasted text #14 +10 lines]`. `deliver` pressed Enter 165 ms after the paste and read
+    // 200 ms later; a TUI slower than that shows the box from BEFORE the paste, which reads exactly like a box a submit cleared.
+    // So the one Enter was lost on a paste still being drawn, the empty box was taken as the submit, and no retry was sent.
+    //
+    // THE SIMULATED TUI. Virtual time moves only by `sleep`. The paste is drawn `drawn_after` ms after it is written (never,
+    // with None); until then the box reads empty, as the replay showed. An Enter before the drawing is lost; an Enter after it
+    // submits and clears the box. Rows assert what happened to the MESSAGE, not which readings were taken.
+    struct Tui {
+        now: u64,
+        drawn_after: Option<u64>,
+        pasted_at: Option<u64>,
+        submitted: bool,
+        enters: u32,
+        lost: u32,
+    }
+    impl Tui {
+        fn drawn(&self) -> bool {
+            matches!((self.pasted_at, self.drawn_after), (Some(p), Some(d)) if self.now >= p + d)
+        }
+        /// The screen now: our collapsed paste while it sits in the box, else an empty box (before the drawing, or after a submit).
+        fn screen(&self, text: &str) -> (Vec<String>, Vec<String>) {
+            if self.drawn() && !self.submitted {
+                screen(&[&format!("\u{276f} [Pasted text #14 +{} lines]", text.matches('\n').count())], false)
+            } else {
+                empty()
+            }
+        }
+    }
+    struct TuiWriter(std::rc::Rc<std::cell::RefCell<Tui>>);
+    impl Write for TuiWriter {
+        fn write(&mut self, b: &[u8]) -> std::io::Result<usize> {
+            let mut t = self.0.borrow_mut();
+            if b.starts_with(b"\x1b[200~") {
+                t.pasted_at = Some(t.now);
+            } else if b == b"\r" {
+                t.enters += 1;
+                if t.drawn() { t.submitted = true } else { t.lost += 1 }
+            }
+            Ok(b.len())
+        }
+        fn flush(&mut self) -> std::io::Result<()> {
+            Ok(())
+        }
+    }
+    /// `deliver` over the simulated TUI: what it said, and the TUI at the end.
+    fn over_tui(text: &str, drawn_after: Option<u64>) -> (Result<Submit, String>, Tui) {
+        let tui = std::rc::Rc::new(std::cell::RefCell::new(Tui { now: 0, drawn_after, pasted_at: None, submitted: false, enters: 0, lost: 0 }));
+        let (w, r, s) = (tui.clone(), tui.clone(), tui.clone());
+        let out = deliver(
+            &mut |f| f(&mut TuiWriter(w.clone())),
+            &mut || Some(r.borrow().screen(text)),
+            &mut |d| s.borrow_mut().now += d.as_millis() as u64,
+            text,
+        );
+        drop((w, r, s));
+        let t = std::rc::Rc::try_unwrap(tui).ok().expect("one owner left").into_inner();
+        (out, t)
+    }
+    /// The incident's message shape: a ring of several lines with its send stamp, collapsed by the TUI.
+    const RING: &str = "[pane:O] LAP 4 hand-back: exo_memory/handback/p-smooth-bank-lap4-O_2026-11-24.md\nBASE: t180 15b1306\nSOURCES: the chair's GO\nNEXT: librarian read it when this ring lands\n[sent 2026-11-24T15:54:16Z · Nov 24, 9:54 AM local]";
+
+    #[test]
+    fn r2_a_paste_the_tui_draws_late_is_submitted_and_not_counted_on_the_empty_box_before_it() {
+        let (out, tui) = over_tui(RING, Some(400));
+        assert!(tui.submitted, "the ring must leave the input line: {out:?}, {} Enter(s), {} lost", tui.enters, tui.lost);
+        assert!(matches!(out, Ok(Submit::Submitted { .. })), "and be reported submitted: {out:?}");
+    }
+
+    #[test]
+    fn r2_an_empty_box_where_our_text_was_never_seen_is_never_reported_submitted() {
+        // the paste never drawn (lost, or a TUI slower than every reading): nothing proves a submit
+        let (out, tui) = over_tui(RING, None);
+        assert!(!tui.submitted, "premise: nothing was submitted");
+        assert_eq!(out, Ok(Submit::Unknown), "an empty box we never saw our text in is not a submit");
+        assert_eq!(delivery_receipt(Receipt::Unconfirmed, out.unwrap()), Receipt::Unconfirmed);
+    }
+
+    #[test]
+    fn r2_whatever_the_tui_speed_the_report_says_submitted_exactly_when_the_ring_left_the_line() {
+        for d in [0u64, 50, 100, 165, 200, 300, 365, 400, 600, 900, 1_200, 1_500, 2_000, 2_600, 3_500, 5_000] {
+            let (out, tui) = over_tui(RING, Some(d));
+            let said = matches!(out, Ok(Submit::Submitted { .. }));
+            assert_eq!(said, tui.submitted, "drawn after {d} ms: reported {out:?}, submitted {}", tui.submitted);
+            if !tui.submitted {
+                assert!(matches!(out, Ok(Submit::NotSubmitted { .. }) | Ok(Submit::Unknown)), "drawn after {d} ms: a ring left in the line is reported as not delivered: {out:?}");
+            }
+        }
+    }
+
+    #[test]
+    fn r2_a_tui_drawing_within_the_wait_gets_the_ring_submitted() {
+        for d in [0u64, 100, 200, 400, 800, 1_200, 1_500] {
+            let (out, tui) = over_tui(RING, Some(d));
+            assert!(tui.submitted, "drawn after {d} ms: the ring sat in the line ({out:?}, {} Enter(s), {} lost)", tui.enters, tui.lost);
+        }
+    }
+
+    #[test]
+    fn r2_a_fast_tui_still_gets_one_enter() {
+        let (out, tui) = over_tui(RING, Some(0));
+        assert_eq!(out, Ok(Submit::Submitted { retries: 0 }));
+        assert_eq!((tui.enters, tui.lost), (1, 0), "one Enter, none lost");
     }
 
     /// The paste, its wait and the first Enter are as before this lap; the whole check adds at most the gaps.
