@@ -55,3 +55,9 @@ back to its resting state.
 - Reads: pane C, three passes (`handback/p-l230-C_2026-11-25.md` NOT CLEAN, `-reread` one line, `-short` CLEAN).
 - Open: whether he wants a ghost for an undone brush stroke, handle drag or grip change (today: a clear or nothing);
   the merge to the builder's main and a release.
+
+## Added 2026-11-25 06:5x (L)
+
+- His words, 06:55: "its okay for sculpting no ghost"
+- So: no ghost for an undone brush stroke, handle drag or grip change. Settled; the open item is only his test of
+  4e19e33 and then the merge.
