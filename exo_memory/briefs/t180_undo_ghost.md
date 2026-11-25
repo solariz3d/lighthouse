@@ -80,3 +80,6 @@ back to its resting state.
 - 07:2x (L238 addendum, pane A, `handback/p-l238-A-addendum_2026-11-25.md` on l238-A 79babc90): the piece "Smooth S as
   driven" now holds HIS S (turn −1) and its recipe; S plus ease-out ends at −0.0000028°. The old 1°-off piece file is
   copied aside in A's evidence folder (not committed). The "Smooth S straight" new-piece ask was cancelled (redundant).
+- 07:2x, superseding the line above: his pieces folder now holds the old "Smooth S as driven" pair as it was (piece
+  sha256 cc6d3766…) plus NEW "Smooth S straight" (turn −1) and "Smooth S straight ease-out", each with a recipe (A's
+  second addendum, l238-A 593aa401). Checked by ls and sha256 at 07:2x. Folder frozen at that state.
