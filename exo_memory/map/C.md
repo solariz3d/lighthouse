@@ -1953,3 +1953,7 @@ Claim (could be wrong): his 08:19 crash was Export to Assetto Corsa: `v8-oom-sta
 ## 2026-11-25 — L230 short read: builder 4e19e33 puts an undone Turn to grid's step back through the setting, so the box and the Settings menu agree (V4 green, red at b921ab1); CLEAN for install
 - Evidence: `exo_memory/handback/p-l230-C-reread_2026-11-25_evidence/run_4e19e33.txt`: 5 of 5 pass.
 - Hand-back: `exo_memory/handback/p-l230-C-short_2026-11-25.md`
+
+## 2026-11-25 — L232 landing: l232-A 175fd1bb merged to room main as 9607148a and pushed (fast-forward, 9 commits), carrier-drift GREEN and its test 60/60 on the tip; A's uncommitted A.md lines set aside (stash@{0} plus a copy) and put back after
+- Evidence: push-gate row 2026-11-25T09:02:45.890Z (allow); `git ls-remote origin main` 9607148a.
+- Hand-back: `exo_memory/handback/p-l232-land-C_2026-11-25.md`
