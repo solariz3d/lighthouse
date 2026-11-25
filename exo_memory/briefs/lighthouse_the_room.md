@@ -432,3 +432,4 @@ carry it, so this brief does.
 - 2026-11-25 02:02 (L): "so close consonance first?"
 - 2026-11-25 02:03 (L): "i wonder, why hasnt c and E pane been working"
 - 2026-11-25 02:05 (L): "but wouldnt it be better to get them going some how" [after my answer that we had left them asleep at 00:19 for their size]
+- 2026-11-25 02:12 (L): "i think having everything on high is too much usage, we have went through 5 percent of our usage in just over 2 hours, what do you think? Or have we just been working a lot"
