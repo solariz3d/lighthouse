@@ -149,6 +149,7 @@ function render(out, letters = {}) {
 }
 
 // L235: files a pane re-reads in its first lap after a cut that it had already read before the cut (read-only; a transcript in, numbers out).
+// "Read before" is only the reads since the PREVIOUS cut (what this cut removed), and a shell token counts only with a separator and an extension (pane C, L235).
 // A cut is a `system` row with subtype `compact_boundary`. "Read" is a Read tool call (input.file_path) or a shell command whose
 // reading verb (cat, head, tail, sed, grep, rg, type, less, more, Get-Content) is followed by a path-looking token. The first lap after a cut runs
 // from the boundary to the next chair dispatch whose lap id differs from the first one after it (else to the next cut, else the end).
@@ -165,7 +166,8 @@ function shellPaths(cmd) {
   for (const m of String(cmd || '').matchAll(READ_VERB)) {
     for (const tok of m[1].split(/\s+/)) {
       if (!tok || tok.startsWith('-')) continue;
-      if (/[/\\]/.test(tok) || /\.[a-z0-9]{1,5}$/i.test(tok)) out.push(normPath(tok));
+      if (/[*?[\]$]/.test(tok)) continue;   // a glob or a pattern, not a path
+      if (/[/\\]/.test(tok) && /\.[a-z0-9]{1,5}$/i.test(tok)) out.push(normPath(tok));   // a separator AND an extension (pane C, L235)
     }
   }
   return out;
@@ -193,7 +195,7 @@ function rereadsAfterCuts(lines) {
   const out = [];
   for (let c = 0; c < cuts.length; c++) {
     const seen = new Set();
-    for (let i = 0; i < cuts[c]; i++) if (rows[i].type === 'assistant') for (const b of (rows[i].message && rows[i].message.content) || []) for (const p of pathsOf(b)) seen.add(p);
+    for (let i = c > 0 ? cuts[c - 1] + 1 : 0; i < cuts[c]; i++) if (rows[i].type === 'assistant') for (const b of (rows[i].message && rows[i].message.content) || []) for (const p of pathsOf(b)) seen.add(p);
     const end = c + 1 < cuts.length ? cuts[c + 1] : rows.length;
     let firstLap = null, stop = end;
     for (let i = cuts[c] + 1; i < end; i++) {

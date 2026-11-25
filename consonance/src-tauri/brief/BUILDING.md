@@ -253,6 +253,15 @@ his process list or his disk is ours to clean, and he should never be the one to
    D585), found from the packet's own paths: a packet that names a repository but gives no checkout path wakes the pane with a note
    instead of the map. Falsifier (the plan's): three laps on, packets still carry "where" lines with no anchor.
 
+10. The marker `same lap`, when a dispatch continues the lap the pane is already in: write it right after the lap id
+    (`L229 same lap: addendum 4`). The app skips the pre-dispatch cut of a cold, large builder pane only when the marker is there AND
+    the id equals the id of that pane's last chair dispatch, and never over 600,000 tokens (`cut_at_handback.rs`, `marked_lap`). A dispatch
+    with no marker is cut as today, so forgetting it is safe; a new lap that names the one it closes ("L215 is collated, next is L217")
+    must not carry it.
+    Why: the id alone misread 7 of 164 November "same lap" calls (pane C's replay, `exo_memory/handback/p-l235-read-C_2026-11-25.md`),
+    and a wrong skip is the one harmful case. Falsifier (the librarian's): a pane that skipped a cut by the marker makes more re-reads
+    in its next lap than the cut panes (`usage-ledger.js --rereads`; the app writes a "cut skipped by same lap" board row at each skip).
+
 ---
 
 ## The order of a dispatch
