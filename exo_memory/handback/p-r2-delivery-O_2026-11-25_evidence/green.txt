@@ -1,0 +1,82 @@
+   Compiling consonance v0.2.0 (G:\consonance-scratch\o-r2-lh\consonance\src-tauri)
+warning: unused doc comment
+    --> src\main.rs:8327:1
+     |
+8327 | / /// L237 call 1 (packet_intake_ceiling_BC_2026-11-25.md): THE GLOBAL FILE COUNTS. Claude Code loads `~/.claude/CLAUDE.md`
+8328 | | /// beside a seat's own CLAUDE.md and now warns on the two together, so a shelf budgeted to the single-file cap landed over it
+8329 | | /// at every launch (the Third Place at 152,320 with the global file's 7,479 B). Both shelves subtract this from their budget.
+8330 | | /// Read at each build, 0 when absent. Bytes, so it is never smaller than the host's character count.
+8331 | | /// Under `cargo test` the host's file is NOT read (as `~/.consonance.json` is not, `intake_light`): a row sets the size it means.
+     | |_---------------------------------------------------------------------------------------------------------------------------------^
+     |   |
+     |   rustdoc does not generate documentation for macro invocations
+     |
+     = help: to document an item produced by a macro, the macro must produce the documentation as part of its expansion
+     = note: `#[warn(unused_doc_comments)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused import: `HashMap`
+     --> src\main.rs:19170:28
+      |
+19170 |     use std::collections::{HashMap, HashSet};
+      |                            ^^^^^^^
+      |
+      = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused variable: `ratio`
+    --> src\cochlea.rs:3004:13
+     |
+3004 |         let ratio = |track: &[Option<f32>]| -> (f32, f32) {
+     |             ^^^^^ help: if this is intentional, prefix it with an underscore: `_ratio`
+     |
+     = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused variable: `sr`
+    --> src\cochlea.rs:3157:13
+     |
+3157 |         let sr = 46.875;
+     |             ^^ help: if this is intentional, prefix it with an underscore: `_sr`
+
+warning: unused variable: `rows`
+     --> src\main.rs:19428:14
+      |
+19428 |         let (rows, flags) = render(&format!("❯ {msg}"));
+      |              ^^^^ help: if this is intentional, prefix it with an underscore: `_rows`
+
+warning: function `sysdrive` is never used
+   --> src\main.rs:514:4
+    |
+514 | fn sysdrive() -> String {
+    |    ^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `consonance` (bin "consonance" test) generated 6 warnings (run `cargo fix --bin "consonance" -p consonance --tests` to apply 4 suggestions)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 7.66s
+     Running unittests src\main.rs (G:/consonance-scratch/o-r2-target\debug\deps\consonance-99995e0d7afe289f.exe)
+
+running 22 tests
+test submit_check_tests::l225_a_submitted_or_failed_write_still_carries_no_note ... ok
+test submit_check_tests::l225_the_unconfirmed_notes_tell_the_reader_what_to_do_and_not_to_resend ... ok
+test submit_check_tests::a_ring_is_received_only_when_rendered_and_submitted ... ok
+test submit_check_tests::a_dim_suggestion_only_reads_as_empty_and_is_submitted ... ok
+test submit_check_tests::our_text_gone_after_the_first_enter_is_submitted_with_no_retry ... ok
+test submit_check_tests::r2_a_fast_tui_still_gets_one_enter ... ok
+test submit_check_tests::l225_b4_a_box_unreadable_after_the_enter_gets_no_retry_and_the_drain_row_says_so ... ok
+test submit_check_tests::a_collapsed_paste_of_ours_is_ours_and_gets_the_enter_again ... ok
+test submit_check_tests::our_text_stuck_after_the_enter_and_gone_after_one_retry_is_submitted_after_one_retry ... ok
+test submit_check_tests::an_unreadable_composer_is_unknown_never_submitted_and_gets_no_enter ... ok
+test submit_check_tests::l225_b4_our_paste_collapsed_under_another_line_count_gets_no_retry_and_the_drain_row_says_so ... ok
+test submit_check_tests::our_text_there_through_every_retry_is_not_submitted_and_nothing_is_pasted_or_cleared ... ok
+test submit_check_tests::a_collapsed_paste_with_another_line_count_is_not_ours ... ok
+test submit_check_tests::r2_a_paste_the_tui_draws_late_is_submitted_and_not_counted_on_the_empty_box_before_it ... ok
+test submit_check_tests::the_decision_table ... ok
+test submit_check_tests::the_keepers_text_in_the_composer_is_not_ours_and_no_enter_is_sent_on_it ... ok
+test submit_check_tests::the_wait_is_bounded_by_the_submit_delay_plus_the_gaps ... ok
+test submit_check_tests::l225_the_drain_row_carries_the_note ... ok
+test submit_check_tests::r2_an_empty_box_where_our_text_was_never_seen_is_never_reported_submitted ... ok
+test submit_check_tests::r2_a_tui_drawing_within_the_wait_gets_the_ring_submitted ... ok
+test submit_check_tests::r2_whatever_the_tui_speed_the_report_says_submitted_exactly_when_the_ring_left_the_line ... ok
+test submit_check_tests::the_source_writes_one_paste_and_no_clear_or_delete_key ... ok
+
+test result: ok. 22 passed; 0 failed; 0 ignored; 0 measured; 1332 filtered out; finished in 0.02s
+
