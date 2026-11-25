@@ -1993,3 +1993,7 @@ Claim (could be wrong): his 08:19 crash was Export to Assetto Corsa: `v8-oom-sta
 ## 2026-11-25 — L238 read: at builder e16c646f Rename keeps a saved piece's .t180recipe but its numbers are then refused (the recipe hashes the piece text, which Rename rewrites; app/core/coreshell.js:1340 vs :1320), and a case-only Rename deletes it on Windows; Place, one undo step, make-by-hand and the older reader are clean; the 220 blank is the same at 4e19e33
 - Evidence: `exo_memory/handback/p-l238-read-C_2026-11-25_evidence/run_e16c646f.txt` (C1, C2 red), `run_4e19e33.txt`, `ntfs_case_rename.txt`, `row20_assert_restored.txt`.
 - Hand-back: `exo_memory/handback/p-l238-read-C_2026-11-25.md`
+
+## 2026-11-25 — L238 re-read: at builder db20182d a renamed piece keeps its numbers (C1, C2, C1b, C1c green; the in-place case-only write checked on this disk), but the rename re-stamps any recipe under the old name, so one that belonged to another file becomes valid (row C6 red; app/core/coreshell.js:1343)
+- Evidence: `exo_memory/handback/p-l238-reread-C_2026-11-25_evidence/run_db20182d.txt`, `ntfs_case_inplace.txt`, `touched_tests_db20182d.txt`.
+- Hand-back: `exo_memory/handback/p-l238-reread-C_2026-11-25.md`

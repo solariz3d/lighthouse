@@ -1,0 +1,120 @@
+[32m✔ C0: the S saved through the panel keeps a recipe, and a click puts its typed numbers back in the boxes [90m(285.3171ms)[39m[39m
+[32m✔ C1: Rename carries the recipe, AND the renamed piece still shows its numbers on a click [90m(145.7288ms)[39m[39m
+[32m✔ C2: a case-only Rename on a case-blind store (as Windows names are) keeps the recipe [90m(117.2331ms)[39m[39m
+[32m✔ C3: the numbers make it by hand: Extend pressed on the boxes a click filled lays the same road Place lays [90m(186.6591ms)[39m[39m
+[32m✔ C4: Place then Undo gives back exactly the document the ghost was shown over, and Redo the placed one (one step) [90m(160.7895ms)[39m[39m
+C5 tree=c-l238-tip hasGhost=true events=t180-ghost-clear,t180-ghost-clear lastEvent=t180-ghost-clear ghostSegments=- message="No saved pieces yet: select pieces on the track and press Save as piece. | no preview of this piece: TURN_TOO_SHORT: the turn change 2 (a corner of -91.0°) needs at least 21.0 m before the piece's end (shorter, it has no room to ease in and out): from at most 199.0, got 200 | end heading 0.00°, on the 90° grid" state.message=null
+[32m✔ C1b: Rename to a wholly different name, then a click fills the boxes, and Extend on them lays what Place lays [90m(183.6573ms)[39m[39m
+[32m✔ C1c: two renames in a row (S to T to S again) still show the numbers [90m(135.7102ms)[39m[39m
+[31m✖ C6: a recipe refused before a rename (it belongs to another file of that name) is still refused after it [90m(150.998ms)[39m[39m
+[32m✔ C5 (a record, both trees): the S typed with length 220: what the panel ghost does [90m(121.8832ms)[39m[39m
+[34mℹ tests 9[39m
+[34mℹ suites 0[39m
+[34mℹ pass 8[39m
+[34mℹ fail 1[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 1665.0186[39m
+
+[31m✖ failing tests:[39m
+
+test at c-l238-reread.test.js:155:1
+[31m✖ C6: a recipe refused before a rename (it belongs to another file of that name) is still refused after it [90m(150.998ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: the rename made a recipe that was not this piece's its own
+  [32m+ actual[39m [31m- expected[39m
+  
+  [32m+[39m {
+  [32m+[39m   bankAt: '80',
+  [32m+[39m   flow: true,
+  [32m+[39m   len: '300',
+  [32m+[39m   op: 'extend',
+  [32m+[39m   second: {
+  [32m+[39m     bank: [
+  [32m+[39m       {
+  [32m+[39m         auto: false,
+  [32m+[39m         dflt: false,
+  [32m+[39m         from: '145',
+  [32m+[39m         share: null,
+  [32m+[39m         then: '-27'
+  [32m+[39m       },
+  [32m+[39m       {
+  [32m+[39m         auto: false,
+  [32m+[39m         dflt: false,
+  [32m+[39m         from: '200',
+  [32m+[39m         share: null,
+  [32m+[39m         then: '0'
+  [32m+[39m       },
+  [32m+[39m       {
+  [32m+[39m         auto: false,
+  [32m+[39m         dflt: false,
+  [32m+[39m         from: '255',
+  [32m+[39m         share: null,
+  [32m+[39m         then: '25'
+  [32m+[39m       },
+  [32m+[39m       {
+  [32m+[39m         auto: false,
+  [32m+[39m         dflt: false,
+  [32m+[39m         from: '300',
+  [32m+[39m         share: null,
+  [32m+[39m         then: '26'
+  [32m+[39m       }
+  [32m+[39m     ],
+  [32m+[39m     climb: [],
+  [32m+[39m     cup: [],
+  [32m+[39m     edge: [],
+  [32m+[39m     edgeR: [],
+  [32m+[39m     turn: [
+  [32m+[39m       {
+  [32m+[39m         auto: false,
+  [32m+[39m         dflt: false,
+  [32m+[39m         from: '80',
+  [32m+[39m         share: null,
+  [32m+[39m         then: '92'
+  [32m+[39m       },
+  [32m+[39m       {
+  [32m+[39m         auto: false,
+  [32m+[39m         dflt: false,
+  [32m+[39m         from: '200',
+  [32m+[39m         share: null,
+  [32m+[39m         then: '-91'
+  [32m+[39m       }
+  [32m+[39m     ],
+  [32m+[39m     width: []
+  [32m+[39m   },
+  [32m+[39m   ticks: {
+  [32m+[39m     bank: false,
+  [32m+[39m     climb: false,
+  [32m+[39m     cup: false,
+  [32m+[39m     edge: false,
+  [32m+[39m     edgeR: false,
+  [32m+[39m     start: false,
+  [32m+[39m     tube: false,
+  [32m+[39m     turn: false,
+  [32m+[39m     width: false
+  [32m+[39m   },
+  [32m+[39m   turnAs: 'corner',
+  [32m+[39m   values: {
+  [32m+[39m     bank: '-20',
+  [32m+[39m     climb: '',
+  [32m+[39m     cup: '15.5',
+  [32m+[39m     edge: '0',
+  [32m+[39m     edgeR: '0',
+  [32m+[39m     start: '0.64',
+  [32m+[39m     tube: '0',
+  [32m+[39m     turn: '-1',
+  [32m+[39m     width: '33'
+  [32m+[39m   }
+  [32m+[39m }
+  [31m-[39m null
+  
+      at TestContext.<anonymous> [90m(C:\Consonance\lighthouse\exo_memory\handback\p-l238-reread-C_2026-11-25_evidence\[39mc-l238-reread.test.js:161:10[90m)[39m
+  [90m    at async Test.run (node:internal/test_runner/test:1332:7)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: { len: [32m'300'[39m, values: { turn: [32m'-1'[39m, climb: [32m''[39m, bank: [32m'-20'[39m, width: [32m'33'[39m, cup: [32m'15.5'[39m, edge: [32m'0'[39m, edgeR: [32m'0'[39m, start: [32m'0.64'[39m, tube: [32m'0'[39m }, ticks: { turn: [33mfalse[39m, climb: [33mfalse[39m, bank: [33mfalse[39m, width: [33mfalse[39m, cup: [33mfalse[39m, edge: [33mfalse[39m, edgeR: [33mfalse[39m, start: [33mfalse[39m, tube: [33mfalse[39m }, turnAs: [32m'corner'[39m, second: { turn: [36m[Array][39m, climb: [], bank: [36m[Array][39m, width: [], cup: [], edge: [], edgeR: [] }, flow: [33mtrue[39m, bankAt: [32m'80'[39m, op: [32m'extend'[39m },
+    expected: [1mnull[22m,
+    operator: [32m'strictEqual'[39m,
+    diff: [32m'simple'[39m
+  }
