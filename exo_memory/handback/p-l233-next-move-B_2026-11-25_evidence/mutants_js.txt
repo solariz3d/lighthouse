@@ -1,0 +1,10 @@
+caught   next-move.js: if (list.length) return 'compact'; -> if (list.length > 1) return 'compact'; | 18 passed, 5 failed
+caught   next-move.js: if (f.newerBuild === true) return -> if (f.newerBuild) return | 22 passed, 1 failed
+caught   next-move.js: return f.paneWorking ? 'restart-waiting' : 'restart'; -> return 'restart'; | 19 passed, 4 failed
+caught   next-move.js: v.restart.dimmed = true; -> v.restart.title = 'a newer Consonance is built' +  | 22 passed, 1 failed
+caught   next-move.js: els.compact.title = v.compact.title || compactTitle; -> els.compact.title = v.compact.title || els.compact | 22 passed, 1 failed
+caught   next-move.js: els.restart.hidden = !v.restart.shown; -> if (v.restart.shown) els.restart.hidden = false; | 22 passed, 1 failed
+caught   relaunch.js: while (k.alive(o.pid)) { -> while (false) { | 4 passed, 4 failed
+caught   relaunch.js: CONSONANCE_LAUNCH_ID: _thatLaunchOnly, -> (removed) | 7 passed, 1 failed
+caught   relaunch.js: if (!o.exe || !path.isAbsolute(o.exe)) -> if (!o.exe) | 7 passed, 1 failed
+caught   relaunch.js: return { code: 2, why }; -> break; | 7 passed, 1 failed
