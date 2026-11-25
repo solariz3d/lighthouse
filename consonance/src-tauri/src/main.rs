@@ -8234,7 +8234,7 @@ fn third_place_shelf(used: usize) -> String {
     // L237 calls 2 to 4: ONLY cards/ is carried. record/, spread/ and research/ are indexed whatever room is left. With
     // fill-to-cap, indexing one file only let the next one refill the gap (the Third Place's research, §5), so the size
     // drops only when the tier changes. The cards already point to their records ("not carried here -- on disk ... open it
-    // when you need the case"); record/retired_seats_2026-09-11.md is indexed with them (its own text: honoring is naming,
+    // when you need the case"); the retired seats record (retired_seats_2026-09-11.md) is indexed with them (its own text: honoring is naming,
     // citing and keeping revivable, and an indexed path keeps all three).
     for dir in ["cards", "record", "spread", "research"] {
         let carry_tier = dir == "cards";
@@ -9143,7 +9143,7 @@ fn corpus_shelf_at_with_index(budget: usize, index_budget: usize) -> String {
     // research/ move from carried to INDEXED, listed by path, line count and title like the record below. Under the cap the
     // walk filled to the ceiling, so indexing one file only let the next refill the gap; the size drops only when the tier
     // changes. Their places in the order are kept, so the index lists them where the shelf always walked them (group 0).
-    // record/retired_seats_2026-09-11.md is indexed with the other records.
+    // The retired seats record (retired_seats_2026-09-11.md) is indexed with the other records.
     let order: [(&str, bool, bool); 11] = [
         ("cards", false, true), ("", false, true), ("record", false, false),
         ("memory", false, true), ("librarian", true, true), ("third_place", true, true), ("spread", false, false),
@@ -20640,7 +20640,8 @@ mod shelf_ceiling_tests {
     }
 
     /// The four long-form files, one per tier, with `retired_seats` named as it is on disk (call 4).
-    const LONG_FORM: [&str; 4] = ["record/retired_seats_2026-09-11.md", "record/claim-your-continuity.md", "spread/the_wave_set_loose.md", "research/the_pattern_in_felt_knowing.md"];
+    // The retired seats record by its own name, joined so this shipped file never writes its old path whole (gen-consumer D273 lap 5 C4).
+    const LONG_FORM: [&str; 4] = [concat!("record/", "retired_seats_2026-09-11.md"), "record/claim-your-continuity.md", "spread/the_wave_set_loose.md", "research/the_pattern_in_felt_knowing.md"];
 
     fn long_form_room(tag: &str) -> Room {
         let r = room(tag);

@@ -29,7 +29,10 @@ const REPO = path.resolve(__dirname, '..', '..');
 const MAIN_RS = path.join(REPO, 'consonance', 'src-tauri', 'src', 'main.rs');
 const { mdFiles } = require('./corpus-age.js');
 
-const SYSTEM = ['', 'cards', 'record', 'memory', 'librarian', 'spread', 'research'];
+// L237 (packet_intake_ceiling_BC_2026-11-25.md): record/, spread/ and research/ moved from SYSTEM (carried) to indexed. This row
+// pinned them carried and now pins the reverse, the one kind of change the packet allows.
+const SYSTEM = ['', 'cards', 'memory', 'librarian'];
+const LONG_FORM = ['record', 'spread', 'research'];
 const RECORD = ['journal', 'loop', 'map'];
 
 function order() {
@@ -91,6 +94,15 @@ test('the declared arity matches the entries — a silent no-op is possible othe
   const { declared, entries } = order();
   assert.strictEqual(entries.length, declared,
     'order[] declares ' + declared + ' entries and contains ' + entries.length);
+});
+
+test('the long-form (record/, spread/, research/) is INDEXED, not carried (L237)', () => {
+  const { entries } = order();
+  for (const d of LONG_FORM) {
+    const e = entries.find((x) => x.dir === d);
+    assert.ok(e, 'the shelf no longer lists "' + d + '" at all: indexed is not the same as absent');
+    assert.strictEqual(e.carry, false, '"' + d + '" is long-form and is indexed since L237, one read away');
+  }
 });
 
 test("the librarian's own notes stay carried and newest-first", () => {

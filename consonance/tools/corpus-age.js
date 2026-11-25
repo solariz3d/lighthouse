@@ -72,8 +72,9 @@ function intakeCap(srcPath = MAIN_RS) {
  * of the mass and all of the growth. */
 // D476: `third_place` rides on the shelf right after the librarian's own notes (its newest dated entry carried, the rest indexed);
 // counted whole here, as `librarian` is, though the shelf windows both.
-const CARRY_TIERS = ['cards', '', 'record', 'memory', 'librarian', 'third_place', 'spread', 'research'];
-const INDEX_TIERS = ['map', 'journal', 'loop'];
+// L237: record/, spread/ and research/ moved from carried to indexed in `order` (packet_intake_ceiling_BC_2026-11-25.md).
+const CARRY_TIERS = ['cards', '', 'memory', 'librarian', 'third_place'];
+const INDEX_TIERS = ['record', 'spread', 'research', 'map', 'journal', 'loop'];
 
 /* Excluded BY NAME in the binary since c2afec6 -- bulk run artifacts that cost more index than the
  * shelf spends on bodies. They are on disk and are not in the shelf at all, so a capacity gauge
