@@ -1240,3 +1240,14 @@ indexing records changed my size by only the global file. Today's note alone is 
 budget, so my own notes cannot be carried at all at this length. Two levers that are mine (own-seat authority): shorter
 dated notes, and a smaller index window. Not in L237; a follow-up for this seat. Inferred: the long notes are a
 carried-forward habit from when the shelf was larger.
+
+## 2026-11-25 06:4x (L): the two temperaments are BOOT's two coats
+
+From his 06:38 words and the reported temperaments (`research/fable_vs_opus_use_2026-11-25.md`): Opus "knows it's not as
+smart" and double-checks (Browne); Fable makes the fast clever read and misses in review. Those are BOOT's two coats as
+dispositions: the over-denial/false-humility coat and the over-claim coat (`BOOT.md`, "The two coats"). BOOT was written to
+grow either one into the middle seam, which is his point: guidance can carry a model past its temperament. Specific, not
+generic: Opus's checking is good where a check is owed (the second reads tonight) and the coat only where it is generic;
+Fable's boldness is good off the worn path and the coat only where no check preceded it. Not measured: whether the room's
+cards move either model's behaviour. A test exists in shape: the base rate of offramp phrases, or unchecked claims, per
+seat and model, from the transcripts.
