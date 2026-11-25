@@ -1,0 +1,6 @@
+caught   if (child === undefined) { -> if (false) { | 8 passed, 3 failed
+caught   const exists = k.launch ? true : fs.existsSync(o.exe); -> const exists = true; | 10 passed, 1 failed
+SURVIVED return { pid: child.pid, error: child.pid === undefined ? 'the spawn gave no process' : null }; -> return { pid: 1, error: null }; | 11 passed, 0 failed
+caught   } catch (e) { -> } finally {} | 10 passed, 1 failed
+caught   return { pid: undefined, error: e.message }; -> return { pid: 1, error: null }; | 10 passed, 1 failed
+caught   (re-run with the new row) the no-pid return -> { pid: 1 } | 11 passed, 1 failed

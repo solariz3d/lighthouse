@@ -1,0 +1,19 @@
+RED FIRST (C's line): relaunch.test.js with the two new rows, against bd113955's relaunch.js
+the helper
+  ok   waits until the app is gone, then opens the exe at the path it was given
+  ok   nothing is opened while the app still runs
+  ok   a gave-up wait says so in the ledger
+  ok   the opened app does not inherit the launch id (main.rs LAUNCH_ID_ENV) or CONSONANCE_DATA
+  ok   a relative exe is refused, and nothing waits or opens
+  ok   a missing or bad pid is refused
+  ok   the opened row names the exe
+  ok   THE REAL FILE: waits on a real process, opens only after it exits
+  FAIL a launch that starts nothing is NOT logged opened: not-opened, code 3
+       {"code":0}
+
+0 !== 3
+
+  FAIL THE REAL FILE: a dead pid and a missing exe: non-zero exit and a not-opened row saying nothing is at the path
+       exit 0 for an exe that is not there
+
+8 passed, 2 failed
