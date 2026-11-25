@@ -1997,3 +1997,7 @@ Claim (could be wrong): his 08:19 crash was Export to Assetto Corsa: `v8-oom-sta
 ## 2026-11-25 — L238 re-read: at builder db20182d a renamed piece keeps its numbers (C1, C2, C1b, C1c green; the in-place case-only write checked on this disk), but the rename re-stamps any recipe under the old name, so one that belonged to another file becomes valid (row C6 red; app/core/coreshell.js:1343)
 - Evidence: `exo_memory/handback/p-l238-reread-C_2026-11-25_evidence/run_db20182d.txt`, `ntfs_case_inplace.txt`, `touched_tests_db20182d.txt`.
 - Hand-back: `exo_memory/handback/p-l238-reread-C_2026-11-25.md`
+
+## 2026-11-25 — L238 re-run: at builder cfa7ad91 the rename carries a recipe only when it was the old file's own, so C6, C1 and C2 are all green with my other six rows (9/9) and the touched tests 74/74; CLEAN
+- Evidence: `exo_memory/handback/p-l238-rerun-C_2026-11-25_evidence/run_cfa7ad91.txt`, `touched_tests_cfa7ad91.txt`.
+- Hand-back: `exo_memory/handback/p-l238-rerun-C_2026-11-25.md`
