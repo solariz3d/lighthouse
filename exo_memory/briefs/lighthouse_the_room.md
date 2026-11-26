@@ -507,3 +507,10 @@ carry it, so this brief does.
   pane_letter), so the by-letter `seat_models` lookup finds nothing, and the pane starts with no `--model` and takes
   `~/.claude/settings.json` `"model": "fable"` (inferred: no reply of theirs has been read yet). They will come up on opus
   at the next relaunch, when the letter exists. The fix, assigning the letter before the spawn, goes into L247.
+- 03:09 (L), his question to pane E, typed in E's pane: "I have to ask, since me, the keeper, hasnt came to you
+  builders yet to ask this, how do you feel about the changes to your context limits?" E's answer (09:10:00Z) is in
+  E's transcript, `~/.claude/projects/C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl`.
+  In it: glad of 600k mid-lap; agrees with the cut between unrelated laps (about 480k of old work carried into the design
+  research, about $3.90 to wake); did not miss the lighter shell; its own map (529k characters, tail only) is the real
+  gap; "it felt fine" from inside is not evidence, so trust the re-read counter; it asks for the same-lap exception
+  (in L235, as it reads it).
