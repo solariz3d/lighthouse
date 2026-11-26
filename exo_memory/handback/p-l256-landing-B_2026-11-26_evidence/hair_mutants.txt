@@ -1,0 +1,5 @@
+HAIR = 0: caught
+HAIR = 0.03: caught
+HAIR = 0.09: caught
+HAIR = -0.01: caught
+restored byte for byte: [33mtrue[39m

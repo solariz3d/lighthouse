@@ -1,0 +1,194 @@
+{
+ "results": [
+  {
+   "look": "sigil",
+   "ground": "rgb(11, 11, 10)",
+   "text": "rgb(235, 230, 220)",
+   "dim": "rgb(138, 132, 122)",
+   "edge": "rgb(36, 34, 31)",
+   "corner": "4px",
+   "groundAlpha": 1,
+   "textOnGround": 15.83,
+   "dimOnGround": 5.31,
+   "clearOnGround": 15.83,
+   "boxStyle": "display: block;",
+   "inlineInside": 0,
+   "rect": {
+    "x": 1186,
+    "y": 84,
+    "width": 308,
+    "height": 371
+   },
+   "readout": "942 m along its line · 10 m wide (10 to 10) · read 5 ms, built 0 ms",
+   "vsMenu": {
+    "backgroundImage": "same",
+    "backgroundColor": "same",
+    "borderTopColor": "same",
+    "borderTopLeftRadius": "same",
+    "backdropFilter": "same",
+    "boxShadow": {
+     "panel": "rgba(235, 230, 220, 0.14) 0px 1px 0px 0px inset",
+     "menu": "rgba(235, 230, 220, 0.14) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.12) 0px 2px 3px 0px, rgba(0, 0, 0, 0.1) 0px 6px 12px 0px"
+    },
+    "clipPath": "same"
+   }
+  },
+  {
+   "look": "aqua",
+   "ground": "rgba(0, 0, 0, 0)",
+   "text": "rgb(242, 253, 255)",
+   "dim": "rgb(166, 236, 247)",
+   "edge": "rgba(150, 245, 255, 0.7)",
+   "corner": "8px",
+   "groundAlpha": 0,
+   "textOnGround": 20.27,
+   "dimOnGround": 15.96,
+   "clearOnGround": 1.49,
+   "boxStyle": "display: block;",
+   "inlineInside": 0,
+   "rect": {
+    "x": 1186,
+    "y": 84,
+    "width": 308,
+    "height": 371
+   },
+   "readout": "942 m along its line · 10 m wide (10 to 10) · read 5 ms, built 0 ms",
+   "vsMenu": {
+    "backgroundImage": "same",
+    "backgroundColor": "same",
+    "borderTopColor": "same",
+    "borderTopLeftRadius": "same",
+    "backdropFilter": "same",
+    "boxShadow": "same",
+    "clipPath": "same"
+   }
+  },
+  {
+   "look": "aurora",
+   "ground": "rgba(0, 0, 0, 0)",
+   "text": "rgb(234, 246, 255)",
+   "dim": "rgb(182, 196, 228)",
+   "edge": "rgba(184, 146, 255, 0.45)",
+   "corner": "6px",
+   "groundAlpha": 0,
+   "textOnGround": 19.12,
+   "dimOnGround": 12.01,
+   "clearOnGround": 19.12,
+   "boxStyle": "display: block;",
+   "inlineInside": 0,
+   "rect": {
+    "x": 1186,
+    "y": 84,
+    "width": 308,
+    "height": 371
+   },
+   "readout": "942 m along its line · 10 m wide (10 to 10) · read 5 ms, built 0 ms",
+   "vsMenu": {
+    "backgroundImage": "same",
+    "backgroundColor": "same",
+    "borderTopColor": "same",
+    "borderTopLeftRadius": "same",
+    "backdropFilter": "same",
+    "boxShadow": "same",
+    "clipPath": "same"
+   }
+  },
+  {
+   "look": "glass",
+   "ground": "rgba(4, 14, 24, 0.9)",
+   "text": "rgb(240, 249, 255)",
+   "dim": "rgb(169, 201, 221)",
+   "edge": "rgba(205, 240, 255, 0.58)",
+   "corner": "0px",
+   "groundAlpha": 0.9,
+   "textOnGround": 18.22,
+   "dimOnGround": 11.18,
+   "clearOnGround": 18.22,
+   "boxStyle": "display: block;",
+   "inlineInside": 0,
+   "rect": {
+    "x": 1186,
+    "y": 84,
+    "width": 308,
+    "height": 371
+   },
+   "readout": "942 m along its line · 10 m wide (10 to 10) · read 5 ms, built 0 ms",
+   "vsMenu": {
+    "backgroundImage": "same",
+    "backgroundColor": "same",
+    "borderTopColor": "same",
+    "borderTopLeftRadius": "same",
+    "backdropFilter": "same",
+    "boxShadow": "same",
+    "clipPath": "same"
+   }
+  },
+  {
+   "look": "skyline",
+   "ground": "rgba(0, 0, 0, 0)",
+   "text": "rgb(11, 39, 71)",
+   "dim": "rgb(51, 80, 111)",
+   "edge": "rgb(169, 205, 240)",
+   "corner": "8px",
+   "groundAlpha": 0,
+   "textOnGround": 1.4,
+   "dimOnGround": 2.52,
+   "clearOnGround": 1.4,
+   "boxStyle": "display: block;",
+   "inlineInside": 0,
+   "rect": {
+    "x": 1186,
+    "y": 84,
+    "width": 308,
+    "height": 371
+   },
+   "readout": "942 m along its line · 10 m wide (10 to 10) · read 5 ms, built 0 ms",
+   "vsMenu": {
+    "backgroundImage": "same",
+    "backgroundColor": "same",
+    "borderTopColor": "same",
+    "borderTopLeftRadius": "same",
+    "backdropFilter": "same",
+    "boxShadow": {
+     "panel": "rgba(28, 92, 168, 0.26) 0px 1px 0px 0px inset",
+     "menu": "rgba(28, 92, 168, 0.26) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.12) 0px 2px 3px 0px, rgba(0, 0, 0, 0.1) 0px 6px 12px 0px"
+    },
+    "clipPath": "same"
+   }
+  },
+  {
+   "look": "skyline-night",
+   "ground": "rgba(0, 0, 0, 0)",
+   "text": "rgb(232, 242, 255)",
+   "dim": "rgb(169, 195, 230)",
+   "edge": "rgb(47, 85, 144)",
+   "corner": "8px",
+   "groundAlpha": 0,
+   "textOnGround": 18.58,
+   "dimOnGround": 11.64,
+   "clearOnGround": 18.58,
+   "boxStyle": "display: block;",
+   "inlineInside": 0,
+   "rect": {
+    "x": 1186,
+    "y": 84,
+    "width": 308,
+    "height": 371
+   },
+   "readout": "942 m along its line · 10 m wide (10 to 10) · read 5 ms, built 0 ms",
+   "vsMenu": {
+    "backgroundImage": "same",
+    "backgroundColor": "same",
+    "borderTopColor": "same",
+    "borderTopLeftRadius": "same",
+    "backdropFilter": "same",
+    "boxShadow": {
+     "panel": "rgba(150, 200, 255, 0.22) 0px 1px 0px 0px inset",
+     "menu": "rgba(150, 200, 255, 0.22) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.12) 0px 2px 3px 0px, rgba(0, 0, 0, 0.1) 0px 6px 12px 0px"
+    },
+    "clipPath": "same"
+   }
+  }
+ ],
+ "pageErrors": []
+}

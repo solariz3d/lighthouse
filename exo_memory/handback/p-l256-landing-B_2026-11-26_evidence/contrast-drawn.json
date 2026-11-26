@@ -1,0 +1,164 @@
+[
+ {
+  "look": "sigil",
+  "samples": 2082,
+  "groundDark": [
+   10,
+   10,
+   9
+  ],
+  "groundMedian": [
+   12,
+   12,
+   11
+  ],
+  "groundLight": [
+   25,
+   25,
+   24
+  ],
+  "words": {
+   "worst": 14.15,
+   "onMedian": 15.74
+  },
+  "dimWords": {
+   "worst": 4.74,
+   "onMedian": 5.28
+  }
+ },
+ {
+  "look": "aqua",
+  "samples": 2082,
+  "groundDark": [
+   1,
+   36,
+   46
+  ],
+  "groundMedian": [
+   2,
+   48,
+   61
+  ],
+  "groundLight": [
+   35,
+   110,
+   129
+  ],
+  "words": {
+   "worst": 5.6,
+   "onMedian": 13.58
+  },
+  "dimWords": {
+   "worst": 4.41,
+   "onMedian": 10.69
+  }
+ },
+ {
+  "look": "aurora",
+  "samples": 2082,
+  "groundDark": [
+   6,
+   8,
+   25
+  ],
+  "groundMedian": [
+   11,
+   14,
+   40
+  ],
+  "groundLight": [
+   41,
+   45,
+   74
+  ],
+  "words": {
+   "worst": 12.19,
+   "onMedian": 17.27
+  },
+  "dimWords": {
+   "worst": 7.65,
+   "onMedian": 10.84
+  }
+ },
+ {
+  "look": "glass",
+  "samples": 2082,
+  "groundDark": [
+   4,
+   18,
+   29
+  ],
+  "groundMedian": [
+   15,
+   38,
+   59
+  ],
+  "groundLight": [
+   46,
+   62,
+   74
+  ],
+  "words": {
+   "worst": 10.35,
+   "onMedian": 14.48
+  },
+  "dimWords": {
+   "worst": 6.35,
+   "onMedian": 8.88
+  }
+ },
+ {
+  "look": "skyline",
+  "samples": 2082,
+  "groundDark": [
+   224,
+   233,
+   242
+  ],
+  "groundMedian": [
+   238,
+   247,
+   255
+  ],
+  "groundLight": [
+   251,
+   253,
+   255
+  ],
+  "words": {
+   "worst": 12.26,
+   "onMedian": 13.89
+  },
+  "dimWords": {
+   "worst": 6.79,
+   "onMedian": 7.7
+  }
+ },
+ {
+  "look": "skyline-night",
+  "samples": 2082,
+  "groundDark": [
+   15,
+   26,
+   52
+  ],
+  "groundMedian": [
+   18,
+   34,
+   66
+  ],
+  "groundLight": [
+   31,
+   46,
+   80
+  ],
+  "words": {
+   "worst": 11.87,
+   "onMedian": 13.93
+  },
+  "dimWords": {
+   "worst": 7.44,
+   "onMedian": 8.73
+  }
+ }
+]

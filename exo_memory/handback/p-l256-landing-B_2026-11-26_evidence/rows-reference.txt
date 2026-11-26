@@ -1,0 +1,57 @@
+[32m✔ P1: every installed layout is listed; one with no AI line says so and cannot be picked [90m(5.2473ms)[39m[39m
+[32m✔ P2: pick draws it on his start; Show off hides it and keeps the pick and the nudge; Show on draws it again; Clear drops both [90m(63.0848ms)[39m[39m
+[32m✔ P3: a line that does not read is refused in words, the one shown before is taken down, and its entry is marked [90m(5.4556ms)[39m[39m
+[32m✔ P4: a layout carrying another layout's line is said so, and so is a line far off its stated length; a line of its own says nothing [90m(3.8029ms)[39m[39m
+[32m✔ P5: a later pick wins over an earlier one still being read [90m(1.9445ms)[39m[39m
+[32m✔ RD1: Road draws the kn5's road placed by the layout's AI line: Line and Road lie on each other across under one nudge; Road is set down on its road, flush with his [90m(20.1928ms)[39m[39m
+[32m✔ RD2: a road that does not read is refused in words and the one shown before is taken down; the same layout's Line still draws [90m(8.9749ms)[39m[39m
+[32m✔ RD3: a layout with no AI line is drawn as Road, placed by the start its kn5 names; with no start it is refused in words; in Line it stays greyed [90m(20.9858ms)[39m[39m
+[32m✔ P6 (E's V3e): Road shows one layout; he picks another, its road still reading, and changes to Line: his newest pick is drawn, as Line [90m(5.3595ms)[39m[39m
+[32m✔ P7 (E's V3f): nothing shown, Road; a road still reading when he changes to Line: it is drawn in the mode the panel names [90m(2.942ms)[39m[39m
+[32m✔ P8: a pick that ended, cleared while it read or refused, is not drawn by a later mode change [90m(2.2772ms)[39m[39m
+[32m✔ P9 (E's V3i): Road; a layout with no AI line picked, its road still reading; changed to Line: nothing is asked, Line says it has nothing to draw, and back in Road his pick is drawn [90m(0.8137ms)[39m[39m
+[32m✔ P10 (E's V3j): a layout with no AI line SHOWN as Road; changed to Line, then back to Road: drawn again, with its nudge [90m(0.8247ms)[39m[39m
+[32m✔ P11: a layout with no AI line kept in Line is let go by Clear, and by another pick: the change back to Road draws nothing, or the other [90m(2.5679ms)[39m[39m
+[32m✔ RD4 (E's V1n, which replaces E's V1): a layout with no AI line: greyed in Line; in Road listed "(no AI line: placed by its start)", drawn by its start on his start, its road the only read [90m(12.4857ms)[39m[39m
+[32m✔ N1: a nudge value that is not a number, typed or given, keeps the nudge it had (the box shows it again), and nothing moves [90m(17.6444ms)[39m[39m
+[32m✔ L1: the panel's look is one class on the page's own pane tokens, with nothing inline, so a look can style it [90m(1.3749ms)[39m[39m
+[32m✔ L2 (L256, the landing on L249): every look styles the reference panel in its menus' own rule, so it wears that look's pane ground, edge and blur [90m(28.5536ms)[39m[39m
+[32m✔ R1 (line): the document: nothing of the reference enters it, and the shell is not told of any of it [90m(47.2752ms)[39m[39m
+[32m✔ R1 (road): the document: nothing of the reference enters it, and the shell is not told of any of it [90m(35.1958ms)[39m[39m
+[32m✔ R2 (line): a save: the track file and its undo file are byte for byte the same with a reference shown [90m(23.635ms)[39m[39m
+[32m✔ R2 (road): a save: the track file and its undo file are byte for byte the same with a reference shown [90m(25.9671ms)[39m[39m
+[32m✔ R3 (line): an undo step: the reference is none; Ctrl+Z undoes his last edit, and the reference stays shown through it [90m(31.962ms)[39m[39m
+[32m✔ R3 (road): an undo step: the reference is none; Ctrl+Z undoes his last edit, and the reference stays shown through it [90m(32.7242ms)[39m[39m
+[32m✔ R4 (line): an export: every file is byte for byte the same with a reference shown [90m(4368.3123ms)[39m[39m
+[32m✔ R4 (road): an export: every file is byte for byte the same with a reference shown [90m(5083.6406ms)[39m[39m
+[32m✔ D1: the reference goes down before his road and writes no depth, so his road is drawn over it wherever they overlap [90m(2.5233ms)[39m[39m
+[32m✔ D2: the shadow's colour is the skin's --reference token, REFERENCE.colour when it sets none [90m(2.3416ms)[39m[39m
+[32m✔ a line with a grid is refused by readAiLine and read by readAiShape [90m(5.8473ms)[39m[39m
+[32m✔ a known circle gives its length and its width [90m(4.384ms)[39m[39m
+[32m✔ sideLeft goes to the left of the way the line runs, sideRight to the right [90m(2.9833ms)[39m[39m
+[32m✔ with no stored normal the camber leans the road: a + camber rises to the right [90m(3.4541ms)[39m[39m
+[32m✔ a stored normal leans the road even with no camber [90m(2.6134ms)[39m[39m
+[32m✔ with no normal and no camber the road is flat [90m(2.1293ms)[39m[39m
+[32m✔ an open line is not closed, and its length has no closing span [90m(1.6716ms)[39m[39m
+[32m✔ a long line is split into batches whose indices fit Uint16, covering every span once [90m(5.7484ms)[39m[39m
+[32m✔ placed, the reference starts at the anchor, faces its way, and keeps its scale [90m(1.5465ms)[39m[39m
+[32m✔ a nudge moves and turns it, and never scales it [90m(2.0108ms)[39m[39m
+[32m✔ refuses what it cannot read, by name [90m(0.5055ms)[39m[39m
+[32m✔ L250: the two kinds of line that do not read on L are refused in words, never drawn in part [90m(0.4933ms)[39m[39m
+[32m✔ L250: an open line draws open: no span and no edge joins its last point to its first; a lap whose ends are 2 spacings apart is closed [90m(2.985ms)[39m[39m
+[32m✔ L250: sameLine tells the same line, the same points with other widths, and another line apart [90m(2.0299ms)[39m[39m
+[32m✔ L250: a layout's stated length is read in metres, and a line more than 5 % off it is said so [90m(11.5587ms)[39m[39m
+[32m✔ L250: a road from the kn5 reads back exactly, its normals face up, and its triangles are counted [90m(1.4706ms)[39m[39m
+[32m✔ L250: road bytes that do not read whole are refused by name, in words, and never drawn in part [90m(1.7029ms)[39m[39m
+[32m✔ L250 repair: a road with no AI line is placed by the start its kn5 names, set down on the road under it; a start that is not one is refused [90m(5.4884ms)[39m[39m
+[32m✔ L250: the road is placed by its layout's AI line: the same way and the same place across, set down on its road under the line's first point, so Line and Road lie on each other across under one nudge [90m(2.6271ms)[39m[39m
+[32m✔ L250 second repair: groundUnder takes the highest road AT OR BELOW the start: a deck overhead, however near, is never the ground (pane E's bridge_check) [90m(0.3057ms)[39m[39m
+[32m✔ L256: a road at the point's own height is taken at any height, not only at powers of two: the cut is a hair, 1 cm, above the point (pane O's at-height case) [90m(47.823ms)[39m[39m
+[34mℹ tests 49[39m
+[34mℹ suites 0[39m
+[34mℹ pass 49[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 10097.9213[39m

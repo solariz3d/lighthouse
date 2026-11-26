@@ -1,0 +1,26 @@
+panel.js at 405045d, L1 amended:
+[31m✖ L1: the panel's look is one class on the page's own pane tokens, with nothing inline, so a look can style it [90m(5.3466ms)[39m[39m
+[34mℹ tests 1[39m
+[34mℹ suites 0[39m
+[34mℹ pass 0[39m
+[34mℹ fail 1[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 189.8102[39m
+
+[31m✖ failing tests:[39m
+
+test at app\test\reference-panel.test.js:430:1
+[31m✖ L1: the panel's look is one class on the page's own pane tokens, with nothing inline, so a look can style it [90m(5.3466ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: its ground is the page's texture over its panel, as the menus'
+      at TestContext.<anonymous> [90m(C:\Consonance\t180-wt-landing-1126\[39mapp\test\reference-panel.test.js:439:10[90m)[39m
+  [90m    at async Test.run (node:internal/test_runner/test:1332:7)[39m
+  [90m    at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [32m' position: absolute; top: 44px; right: 10px; z-index: 6; width: 300px; padding: 8px 10px; font: 12px/1.4 var(--body, system-ui);\n  background: var(--panel, #0b0b0a); color: var(--text, #ebe6dc); border: 1px solid var(--line, #24221f); border-radius: var(--r3, 4px); '[39m,
+    expected: [31m/background:\s*var\(--tex\b[^;]*,\s*var\(--panel\b/[39m,
+    operator: [32m'match'[39m,
+    diff: [32m'simple'[39m
+  }
