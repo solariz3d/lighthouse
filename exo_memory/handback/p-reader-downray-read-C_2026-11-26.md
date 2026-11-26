@@ -170,3 +170,21 @@ past vertical, which the code and the CHANGELOG now name as a limit.
   The skill's copy has it at :160. E caught it first and inferred I had read another machine's copy; it was simply a wrong number. The
   code text is the anchor.
 - The "within its gap" wording in §3 above is my first read's, now carried into a comment.
+
+## The chair's question (21:56:17Z): does E's 52° row with 30° sides dodge the case I meant?
+
+**Ruling: fair. It tests the case I meant, and the case it drops is a different one, which my probe still runs.**
+
+- What I meant was a banked road wider than the fixed height window. At dab271b that miss did not depend on the side angle at all.
+  checked: my first run (`evidence/synth_tip.txt`, at dab271b), 52° bank: 27, 38 and 49 m read **13.40 m with the centre 2.53 m off,
+  identically with 30° and 50° sides**. The 30° row therefore reproduces my finding exactly. It was red at dab271b on 13.40
+  (`reread/tests_new_rows_at_dab271b.txt`).
+- It loses nothing in power: the 52°/30° row is one of the three that catch M7 (the window fixed at the station again) and M8 (no step
+  refinement) (`reread/mutants2.txt`).
+- 50° sides at a 52° bank put the upper side at 102°, an overhang. That is a separate limit (rays straight down cannot see under a lip), and it is
+  not what my finding was about. My probe still runs it: 1.05-1.06 m short at every width, against 13.40 m at dab271b. It is named in
+  the CHANGELOG and at `piecewise.cjs:118-119`. Nothing pins it as a row, so a later change could move that number unseen. That is a gap in
+  coverage, not a dodge, and it does not change the verdict.
+
+**CLEAN stands.** M5 and the guard comment are as in §2 and §3 above. The chair's `read_track.cjs:157` is my wrong number, carried from
+my first read; the code is at :160 in the skill's copy (Corrections).
