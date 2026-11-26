@@ -2025,3 +2025,7 @@ Claim (could be wrong): his 08:19 crash was Export to Assetto Corsa: `v8-oom-sta
 ## 2026-11-26 — L248: the research carries a chrome spec (one 2/4/8/12 radius scale × one factor per look, concentric nesting, one capsule, glass on the control layer only, 0 coloured glows, Radix's 12 roles with steps 4 and 10 missing today); laid over 0ab6cc8 as one CSS override, it needs no markup change (every selector exists); the 3D overlay layer stays open questions
 - Evidence: `exo_memory/handback/p-l248-refactor-plan-C_2026-11-26_evidence/shots_run.txt`, `refactor_override.css`, `radius_rules_0ab6cc8.txt`; the spec `exo_memory/briefs/t180_ui_refactor_spec.md`.
 - Hand-back: `exo_memory/handback/p-l248-refactor-plan-C_2026-11-26.md`
+
+## 2026-11-26 — L247 read: at 72d88e09 the run preset is CLEAN (each role's argv unmoved by key order, 3,744 cases; Third Place fable at high while its entry is fable; the three births claim the letter first; Normal = 1f00fe9a's argv in 5,512 cases); but the Settings tab trims a padded " turbo" that the spawn refuses, so a later save turns Turbo on unasked (main.rs:93 vs run_preset_from)
+- Evidence: `exo_memory/handback/p-l247-read-C_2026-11-26_evidence/run_72d88e09.txt` (85/85; K4b lines 142-149), `spawn_body_diff.txt`, `live_roles.txt`.
+- Hand-back: `exo_memory/handback/p-l247-read-C_2026-11-26.md`

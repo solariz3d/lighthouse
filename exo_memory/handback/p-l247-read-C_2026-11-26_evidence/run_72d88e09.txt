@@ -1,0 +1,234 @@
+   Compiling consonance v0.2.0 (C:\Consonance\c-l247-wt\consonance\src-tauri)
+warning: unused doc comment
+    --> src\main.rs:8606:1
+     |
+8606 | / /// L237 call 1 (packet_intake_ceiling_BC_2026-11-25.md): THE GLOBAL FILE COUNTS. Claude Code loads `~/.claude/CLAUDE.md`
+8607 | | /// beside a seat's own CLAUDE.md and now warns on the two together, so a shelf budgeted to the single-file cap landed over it
+8608 | | /// at every launch (the Third Place at 152,320 with the global file's 7,479 B). Both shelves subtract this from their budget.
+8609 | | /// Read at each build, 0 when absent. Bytes, so it is never smaller than the host's character count.
+8610 | | /// Under `cargo test` the host's file is NOT read (as `~/.consonance.json` is not, `intake_light`): a row sets the size it means.
+     | |_---------------------------------------------------------------------------------------------------------------------------------^
+     |   |
+     |   rustdoc does not generate documentation for macro invocations
+     |
+     = help: to document an item produced by a macro, the macro must produce the documentation as part of its expansion
+     = note: `#[warn(unused_doc_comments)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused import: `HashMap`
+     --> src\main.rs:19449:28
+      |
+19449 |     use std::collections::{HashMap, HashSet};
+      |                            ^^^^^^^
+      |
+      = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused variable: `ratio`
+    --> src\cochlea.rs:3004:13
+     |
+3004 |         let ratio = |track: &[Option<f32>]| -> (f32, f32) {
+     |             ^^^^^ help: if this is intentional, prefix it with an underscore: `_ratio`
+     |
+     = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused variable: `sr`
+    --> src\cochlea.rs:3157:13
+     |
+3157 |         let sr = 46.875;
+     |             ^^ help: if this is intentional, prefix it with an underscore: `_sr`
+
+warning: unused variable: `rows`
+     --> src\main.rs:19707:14
+      |
+19707 |         let (rows, flags) = render(&format!("❯ {msg}"));
+      |              ^^^^ help: if this is intentional, prefix it with an underscore: `_rows`
+
+warning: function `sysdrive` is never used
+   --> src\main.rs:546:4
+    |
+546 | fn sysdrive() -> String {
+    |    ^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `consonance` (bin "consonance" test) generated 6 warnings (run `cargo fix --bin "consonance" -p consonance --tests` to apply 4 suggestions)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 14.66s
+     Running unittests src\main.rs (C:\build\lighthouse-target\debug\deps\consonance-bf4e1d20cf52ad15.exe)
+
+running 85 tests
+test c_l247_read_tests::k1_key_order_does_not_move_any_seats_argv ... K1 missing  main                         --model opus
+K1 missing  librarian                    --model opus
+K1 missing  third_place                  --model fable
+K1 missing  builder A                    --model opus
+K1 missing  builder C                    --model opus
+K1 missing  builder O                    --model opus
+K1 missing  builder P                    --model opus
+K1 missing  builder Q (never named)      
+K1 missing  builder newborn, no letter   
+K1 missing  fresh                        
+K1 missing  room                         
+K1 missing  body                         
+K1 missing  pty                          
+K1 normal   main                         --model opus
+K1 normal   librarian                    --model opus
+K1 normal   third_place                  --model fable
+K1 normal   builder A                    --model opus
+K1 normal   builder C                    --model opus
+K1 normal   builder O                    --model opus
+K1 normal   builder P                    --model opus
+K1 normal   builder Q (never named)      
+K1 normal   builder newborn, no letter   
+K1 normal   fresh                        
+K1 normal   room                         
+K1 normal   body                         
+K1 normal   pty                          
+K1 empty    main                         --model opus
+K1 empty    librarian                    --model opus
+K1 empty    third_place                  --model fable
+K1 empty    builder A                    --model opus
+K1 empty    builder C                    --model opus
+K1 empty    builder O                    --model opus
+K1 empty    builder P                    --model opus
+K1 empty    builder Q (never named)      
+K1 empty    builder newborn, no letter   
+K1 empty    fresh                        
+K1 empty    room                         
+K1 empty    body                         
+K1 empty    pty                          
+K1 turbo    main                         --model opus --effort xhigh
+K1 turbo    librarian                    --model fable --effort high
+K1 turbo    third_place                  --model fable --effort high
+K1 turbo    builder A                    --model opus --effort xhigh
+K1 turbo    builder C                    --model opus --effort xhigh
+K1 turbo    builder O                    --model opus --effort xhigh
+K1 turbo    builder P                    --model opus --effort xhigh
+K1 turbo    builder Q (never named)      --model opus --effort xhigh
+K1 turbo    builder newborn, no letter   --model opus --effort xhigh
+K1 turbo    fresh                        
+K1 turbo    room                         
+K1 turbo    body                         
+K1 turbo    pty                          
+K1 cases: 3744
+ok
+test c_l247_read_tests::k2_the_third_place_under_turbo_stays_on_its_entry_at_high ... K2 record: entry opus -> --model opus --effort high
+K2 record: no entry -> --effort high
+K2 record: entry "fable --x" -> --effort high
+ok
+test c_l247_read_tests::k3_every_birth_by_its_own_text ... K3 fn spawn_sibling(    claim before spawn; between them: ["let letter = pane_letter(&pane_id);", "let session ="]
+K3 fn spawn_fresh(      claim before spawn; between them: ["let letter = pane_letter(&pane_id);   // L247: before the first spawn, which reads it for the seat's model (spawn_sibling says why)", "let session ="]
+K3 fn new_room(         claim before spawn; between them: ["let letter = pane_letter(&pane_id);   // L247: before the first spawn, which reads it for the seat's model (spawn_sibling says why)", "let session ="]
+K3 record fn pty_spawn(  pane_letter before its spawn: false
+K3 record fn spawn_body( pane_letter before its spawn: false
+K3 record spawn_third_place: letter at open after the spawn: true
+ok
+test c_l247_read_tests::k3b_what_the_letter_first_order_changes ... ok
+test c_l247_read_tests::k3c_the_folder_each_birth_makes_is_or_is_not_a_builder ... ok
+test c_l247_read_tests::k4_more_unknown_values_are_refused_and_run_as_normal ... K4 "turbo "       refused: RUN PRESET REFUSED pane=pane-x: run_preset is "turbo ", which is neither "normal" nor "turbo"; this seat runs as normal (today's spawn)
+K4 "\tturbo"      refused: RUN PRESET REFUSED pane=pane-x: run_preset is "\tturbo", which is neither "normal" nor "turbo"; this seat runs as normal (today's spawn)
+K4 "turbo\n"      refused: RUN PRESET REFUSED pane=pane-x: run_preset is "turbo\n", which is neither "normal" nor "turbo"; this seat runs as normal (today's spawn)
+K4 "normal "      refused: RUN PRESET REFUSED pane=pane-x: run_preset is "normal ", which is neither "normal" nor "turbo"; this seat runs as normal (today's spawn)
+K4 "Normal"       refused: RUN PRESET REFUSED pane=pane-x: run_preset is "Normal", which is neither "normal" nor "turbo"; this seat runs as normal (today's spawn)
+K4 "turb\u043e"   refused: RUN PRESET REFUSED pane=pane-x: run_preset is "turbо", which is neither "normal" nor "turbo"; this seat runs as normal (today's spawn)
+K4 "turbo\u0000"  refused: RUN PRESET REFUSED pane=pane-x: run_preset is "turbo\u0000", which is neither "normal" nor "turbo"; this seat runs as normal (today's spawn)
+K4 "xhigh"        refused: RUN PRESET REFUSED pane=pane-x: run_preset is "xhigh", which is neither "normal" nor "turbo"; this seat runs as normal (today's spawn)
+K4 0              refused: RUN PRESET REFUSED pane=pane-x: run_preset is 0, which is neither "normal" nor "turbo"; this seat runs as normal (today's spawn)
+K4 -1             refused: RUN PRESET REFUSED pane=pane-x: run_preset is -1, which is neither "normal" nor "turbo"; this seat runs as normal (today's spawn)
+K4 1.5            refused: RUN PRESET REFUSED pane=pane-x: run_preset is 1.5, which is neither "normal" nor "turbo"; this seat runs as normal (today's spawn)
+K4 false          refused: RUN PRESET REFUSED pane=pane-x: run_preset is false, which is neither "normal" nor "turbo"; this seat runs as normal (today's spawn)
+K4 {}             refused: RUN PRESET REFUSED pane=pane-x: run_preset is {}, which is neither "normal" nor "turbo"; this seat runs as normal (today's spawn)
+K4 []             refused: RUN PRESET REFUSED pane=pane-x: run_preset is [], which is neither "normal" nor "turbo"; this seat runs as normal (today's spawn)
+K4 record: turbo then warp -> Normal refused Some("\"warp\""); warp then turbo -> Turbo refused None
+K4 record: "run\u005fpreset":"turbo" -> Turbo
+ok
+test c_l247_read_tests::k4b_an_unknown_value_through_a_settings_save ... K4b "turbo "   the tab is handed "turbo"; a save writes "turbo"; spawn before Normal, after Turbo
+K4b "\tturbo"  the tab is handed "turbo"; a save writes "turbo"; spawn before Normal, after Turbo
+K4b " turbo"   the tab is handed "turbo"; a save writes "turbo"; spawn before Normal, after Turbo
+K4b "TURBO"    the tab is handed "TURBO"; a save writes "TURBO"; spawn before Normal, after Normal
+K4b "warp"     the tab is handed "warp"; a save writes "warp"; spawn before Normal, after Normal
+K4b 1          the tab is handed "1"; a save writes "1"; spawn before Normal, after Normal
+K4b true       the tab is handed "true"; a save writes "true"; spawn before Normal, after Normal
+K4b {}         the tab is handed ""; a save writes ""; spawn before Normal, after Normal
+ok
+test c_l247_read_tests::k5_control_the_comparator_can_go_red ... ok
+test c_l247_read_tests::k5_normal_is_1f00fe9a_argv_byte_for_byte ... K5 cases: 5512, of which 708 carry a --model; configs 53
+ok
+test chair_tests::a_panes_own_map_resolves_to_its_letter_file ... ok
+test chair_tests::ansi_sequences_contribute_no_letters ... ok
+test config_merge_tests::a_bom_file_is_merged_not_refused ... ok
+test config_merge_tests::a_corrupt_file_is_refused_by_name_and_left_untouched ... [consonance] SETTINGS NOT SAVED to C:\Users\zackn\AppData\Local\Temp\cfgmerge-26300-notjson\.consonance.json: it is not valid JSON (key must be a string at line 1 column 23), so it was NOT overwritten. Fix the file by hand (or move it aside), then save again.
+[consonance] SETTINGS NOT SAVED to C:\Users\zackn\AppData\Local\Temp\cfgmerge-26300-array\.consonance.json: it is not a JSON object, so it was NOT overwritten. Fix the file by hand (or move it aside), then save again.
+ok
+test config_merge_tests::a_save_keeps_every_key_it_does_not_own ... ok
+test config_merge_tests::an_owned_key_changes_as_asked ... ok
+test config_merge_tests::saving_the_run_preset_keeps_every_other_key_and_backs_up_first ... ok
+test config_merge_tests::the_cfgmerge_helper_leaves_no_folder_behind ... ok
+test config_merge_tests::the_owned_keys_are_exactly_configs_fields ... ok
+test config_merge_tests::usb_mode_survives_a_save_and_a_fresh_machine_gets_the_tab_keys ... ok
+test floor_launch_tests::r1_a_builder_pane_gets_the_floor_launch ... ok
+test floor_launch_tests::r1_only_what_is_unused_is_left_out ... ok
+test floor_launch_tests::r1_the_housed_seats_and_a_keepers_pane_keep_their_launch ... ok
+test floor_launch_tests::r1_the_one_switch_restores_the_launch_with_the_intake ... ok
+test floor_launch_tests::r1_the_spawn_passes_the_floor_rule_exactly_what_it_read ... ok
+test fresh_permission_tests::a_model_that_is_not_a_plain_name_never_reaches_the_command_line ... ok
+test fresh_permission_tests::a_seat_is_named_by_its_role_its_letter_or_its_session_id ... ok
+test fresh_permission_tests::elevated_panes_do_not_also_get_the_allowlist ... ok
+test fresh_permission_tests::every_tool_a_fresh_pane_may_use_is_read_only ... ok
+test fresh_permission_tests::no_scoped_bash_entry_sneaks_in ... ok
+test fresh_permission_tests::no_seat_models_key_keeps_todays_spawn ... ok
+test fresh_permission_tests::the_seat_model_is_passed_on_spawn_and_resume ... ok
+test mcp::digest_at_ring_tests::a_four_letter_word_is_not_a_lap_id ... ok
+test mcp::digest_at_ring_tests::a_lap_id_is_one_letter_and_three_digits_no_more ... ok
+test mcp::third_place_mount_tests::a_lettered_mount_is_unchanged ... ok
+test no_prompt_tests::a_builder_pane_gets_the_no_prompt_settings ... ok
+test no_prompt_tests::the_builder_name_is_the_sibling_folder ... ok
+test no_prompt_tests::the_config_switch_turns_it_off_and_nothing_else_does ... ok
+test no_prompt_tests::the_housed_seats_a_keepers_pane_and_a_prompted_pane_do_not ... ok
+test no_prompt_tests::the_spawn_asks_the_rule_and_settings_is_passed_from_one_place ... ok
+test no_prompt_tests::the_spawn_passes_the_rule_exactly_what_it_read ... ok
+test one_settings_tests::a_builder_spawn_passes_exactly_one_settings ... ok
+test one_settings_tests::a_builder_with_both_rules_gets_one_file_holding_both ... ok
+test one_settings_tests::a_housed_seat_and_a_keepers_pane_get_no_settings ... ok
+test one_settings_tests::a_pane_with_one_rule_gets_that_rules_file_as_before ... ok
+test one_settings_tests::every_launch_file_holds_a_listing_budget_claude_code_loads ... ok
+test pane_call_tests::a_pane_speaks_under_its_mount_letter_and_no_other_name ... ok
+test pane_call_tests::an_unlettered_mount_is_refused_before_delivery ... ok
+test pane_exit::tests::only_the_two_fixed_senders_are_told_a_lettered_one_is_named ... ok
+test pane_exit_wiring_tests::a_committee_pane_resumes_where_its_kept_record_says_and_a_human_pane_never ... ok
+test pane_exit_wiring_tests::a_live_pane_s_row_is_d138_s_word_for_word ... ok
+test pane_exit_wiring_tests::an_exited_pane_s_row_says_exited_not_waiting_on_you ... ok
+test pane_exit_wiring_tests::keep_warm_skips_an_exited_child ... ok
+test pane_exit_wiring_tests::the_cut_tells_only_fixed_senders_and_both_new_sessions_clear_the_exit ... ok
+test pane_exit_wiring_tests::the_dead_childs_ready_stamp_is_not_the_reopened_childs ... ok
+test pane_exit_wiring_tests::the_door_and_the_drain_ask_the_exit_gate_first ... ok
+test pane_exit_wiring_tests::the_existing_waiter_reports_the_exit ... ok
+test pane_exit_wiring_tests::the_reopen_is_behind_the_once_guard_and_only_for_our_own_child ... ok
+test pane_exit_wiring_tests::the_reopen_is_marked_before_the_exit_and_cleared_after_the_new_pid ... ok
+test run_preset_tests::a_committee_pane_the_table_never_named_gets_turbo_by_its_role ... ok
+test run_preset_tests::a_newborn_pane_has_its_letter_before_its_first_spawn ... ok
+test run_preset_tests::an_unknown_value_runs_as_normal_and_is_refused ... ok
+test run_preset_tests::normal_gives_back_todays_argv ... ok
+test run_preset_tests::the_spawn_takes_the_launch_once ... ok
+test run_preset_tests::turbo_gives_each_seat_its_model_and_effort ... ok
+test seat_alias::tests::a_letter_finds_its_display_name_and_a_display_name_finds_its_letter ... ok
+test seat_role_tests::an_unknown_letter_is_committee_and_never_a_seat ... ok
+test seat_role_tests::the_reader_delegates_and_hardcodes_no_letter ... ok
+test seat_role_tests::the_seat_follows_the_registry_rather_than_a_hardcoded_letter ... ok
+test shell_budget_tests::the_third_place_holds_its_letter_so_the_next_sibling_is_not_given_it ... ok
+test suggestion_off_tests::a_seat_command_carries_prompt_suggestions_off ... ok
+test suggestion_off_tests::an_outranked_hold_with_no_readings_claims_nothing_it_did_not_read ... ok
+test suggestion_off_tests::the_seat_spawn_applies_it_before_the_command_is_spawned ... ok
+test third_place_return_tests::no_seat_can_reach_the_third_place ... ok
+test third_place_return_tests::no_seat_can_send_the_third_place_news_of_uptake ... ok
+test third_place_return_tests::the_librarian_shelf_carries_the_newest_third_place_entry ... ok
+test third_place_return_tests::the_newest_third_place_entry_is_the_one_carried ... ok
+test third_place_return_tests::the_third_place_can_ring_the_librarian ... ok
+test third_place_return_tests::the_third_place_is_launched_with_its_own_mount ... ok
+test third_place_return_tests::the_third_place_reaches_no_chair_and_no_pane ... ok
+test third_place_return_tests::the_third_place_speaks_under_its_own_name_and_the_table_is_its_only_destination ... ok
+test trailer::tests::a_single_uppercase_pane_letter_is_a_station_but_a_lowercase_article_is_not ... ok
+test usb_mode_tests::a_fresh_config_is_off_and_only_a_json_true_turns_it_on ... ok
+test usb_mode_tests::every_mode_line_is_tagged_so_on_is_todays_code ... ok
+test usb_mode_tests::off_runs_none_of_the_four_paths ... ok
+test usb_mode_tests::the_setting_persists_through_a_save ... ok
+
+test result: ok. 85 passed; 0 failed; 0 ignored; 0 measured; 1285 filtered out; finished in 17.62s
+

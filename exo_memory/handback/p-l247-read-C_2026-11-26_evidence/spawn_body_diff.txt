@@ -1,0 +1,13 @@
+spawn_claude_pane body: 1f00fe9a 367 lines, 72d88e09 373 lines, 365 in common; 10 differing:
++ 72d88e09:39      // L247: and, under the turbo preset, the model and effort its table names (seat_launch; normal is exactly the line above's rule).
++ 72d88e09:40      let launch = seat_launch(&pane_id, is_managed_cwd(&cwd) && is_builder_dir_name(&cwd));
++ 72d88e09:41      if let Some(model) = launch.model.clone() {
+- 1f00fe9a:39      if let Some(model) = seat_model(&pane_id) {
++ 72d88e09:43          let from = if launch.from_table { "the turbo table".to_string() } else { format!("seat_models in {}", config_path().display()) };
++ 72d88e09:44          plog(&format!("SEAT MODEL pane={pane_id} --model {model} ({from})"));
++ 72d88e09:45      }
++ 72d88e09:46      if let Some(effort) = launch.effort {
++ 72d88e09:47          cmd.args(["--effort", effort]);
+- 1f00fe9a:41          plog(&format!("SEAT MODEL pane={pane_id} --model {model} (seat_models in {})", config_path().display()));
+differing lines that add an argument: 1
+  + 72d88e09:47          cmd.args(["--effort", effort]);

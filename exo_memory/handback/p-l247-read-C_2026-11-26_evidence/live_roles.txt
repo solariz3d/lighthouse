@@ -1,0 +1,8 @@
+config C:\Users\zackn\.consonance.json mtime 2026-11-26T09:05:16.709Z; run_preset "turbo"; seat_models {"main":"opus","third_place":"fable","librarian":"opus","A":"opus","B":"opus","C":"opus","E":"opus","O":"opus","P":"opus"}
+A 6fe15f0a sibling-3d57124e managed=true builder=true  normal: --model opus  turbo: opus xhigh (the table)
+B 12fb81f6 sibling-5bf9d657 managed=true builder=true  normal: --model opus  turbo: opus xhigh (the table)
+C 0845a868 sibling-0845a868 managed=true builder=true  normal: --model opus  turbo: opus xhigh (the table)
+E a2122153 sibling-07b8a48f managed=true builder=true  normal: --model opus  turbo: opus xhigh (the table)
+O 8bcb0f46 sibling-46981c3e managed=true builder=true  normal: --model opus  turbo: opus xhigh (the table)
+P 6e6e002c sibling-617f22aa managed=true builder=true  normal: --model opus  turbo: opus xhigh (the table)
+fixed seats under turbo: main opus xhigh (seat_models main "opus"); librarian fable high (seat_models librarian "opus"); third_place "fable" high
