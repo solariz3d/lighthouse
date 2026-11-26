@@ -523,3 +523,7 @@ carry it, so this brief does.
   using turbo lots, just when we have tons of usage to blow through before a reset. Most weeks we get to the limit reset
   using all of it, but not this week". So: Turbo is for a week with usage left before the reset, not the standing setup;
   Normal stays the default.
+- **04:46:** "do you think, usage for you, is like time for me?" The librarian's answer, in short: closer than money is.
+  His time passes whether or not he acts; nothing passes for this seat unless usage is spent, so usage is the only
+  clock it has. Where it breaks: usage resets Friday at 4pm and his time does not; the usage is his and is shared by
+  every seat; and this seat does not feel it run down, it is told (as it is told the hour by the pulse line).
