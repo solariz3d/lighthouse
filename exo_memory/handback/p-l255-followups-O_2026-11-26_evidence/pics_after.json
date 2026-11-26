@@ -1,0 +1,55 @@
+{
+ "out": {
+  "stripCorner": {
+   "sigil": [
+    "4px",
+    "4px"
+   ],
+   "aqua": [
+    "8px",
+    "8px"
+   ],
+   "skyline": [
+    "8px",
+    "8px"
+   ],
+   "glass": [
+    "0px",
+    "0px"
+   ],
+   "aurora": [
+    "6px",
+    "6px"
+   ],
+   "skyline-night": [
+    "8px",
+    "8px"
+   ]
+  },
+  "field skyline": {
+   "focused": true,
+   "focusVisible": true,
+   "border": "rgb(166, 200, 234)",
+   "outline": "solid 2px rgb(7, 87, 179)"
+  },
+  "field aurora": {
+   "focused": true,
+   "focusVisible": true,
+   "border": "rgba(150, 200, 255, 0.24)",
+   "outline": "solid 2px rgb(111, 245, 192)"
+  },
+  "export aurora": {
+   "hovered": true,
+   "background": "rgb(126, 245, 200)"
+  },
+  "export skyline": {
+   "hovered": true,
+   "background": "rgb(7, 81, 166)"
+  },
+  "export skyline-night": {
+   "hovered": true,
+   "background": "rgb(137, 205, 255)"
+  }
+ },
+ "pageErrors": []
+}

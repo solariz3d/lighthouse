@@ -1,0 +1,74 @@
+✖ row 17 (L255): every menu on the bar, opened, lies wholly inside the window at every width from 900 px, in every look (79834.0229ms)
+ℹ the menus at 900 px, left..right: sigil m-file -55..205 m-edit -2..258 m-build 56..316 m-track 116..376 pieces 22..442 m-view 239..499 m-settings 313..573; aqua m-file -55..205 m-edit -2..258 m-build 56..316 m-track 116..376 pieces 22..442 m-view 239..499 m-settings 313..573; skyline m-file -55..205 m-edit -2..258 m-build 56..316 m-track 116..376 pieces 22..442 m-view 239..499 m-settings 313..573; glass m-file -55..205 m-edit -2..258 m-build 56..316 m-track 116..376 pieces 22..442 m-view 239..499 m-settings 313..573; aurora m-file -55..205 m-edit -2..258 m-build 56..316 m-track 116..376 pieces 22..442 m-view 239..499 m-settings 313..573; skyline-night m-file -55..205 m-edit -2..258 m-build 56..316 m-track 116..376 pieces 22..442 m-view 239..499 m-settings 313..573
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 80380.0013
+
+✖ failing tests:
+
+test at app\test\texture-page.test.js:522:1
+✖ row 17 (L255): every menu on the bar, opened, lies wholly inside the window at every width from 900 px, in every look (79834.0229ms)
+  AssertionError [ERR_ASSERTION]: an open menu past an edge of the window
+  + actual - expected
+  
+  + [
+  +   'sigil at 900: m-file -55..205 in a 900 px window',
+  +   'sigil at 900: m-edit -2..258 in a 900 px window',
+  +   'sigil at 910: m-file -45..215 in a 910 px window',
+  +   'sigil at 920: m-file -35..225 in a 920 px window',
+  +   'sigil at 930: m-file -25..235 in a 930 px window',
+  +   'sigil at 940: m-file -15..245 in a 940 px window',
+  +   'sigil at 950: m-file -5..255 in a 950 px window',
+  +   'aqua at 900: m-file -55..205 in a 900 px window',
+  +   'aqua at 900: m-edit -2..258 in a 900 px window',
+  +   'aqua at 910: m-file -45..215 in a 910 px window',
+  +   'aqua at 920: m-file -35..225 in a 920 px window',
+  +   'aqua at 930: m-file -25..235 in a 930 px window',
+  +   'aqua at 940: m-file -15..245 in a 940 px window',
+  +   'aqua at 950: m-file -5..255 in a 950 px window',
+  +   'skyline at 900: m-file -55..205 in a 900 px window',
+  +   'skyline at 900: m-edit -2..258 in a 900 px window',
+  +   'skyline at 910: m-file -45..215 in a 910 px window',
+  +   'skyline at 920: m-file -35..225 in a 920 px window',
+  +   'skyline at 930: m-file -25..235 in a 930 px window',
+  +   'skyline at 940: m-file -15..245 in a 940 px window',
+  +   'skyline at 950: m-file -5..255 in a 950 px window',
+  +   'glass at 900: m-file -55..205 in a 900 px window',
+  +   'glass at 900: m-edit -2..258 in a 900 px window',
+  +   'glass at 910: m-file -45..215 in a 910 px window',
+  +   'glass at 920: m-file -35..225 in a 920 px window',
+  +   'glass at 930: m-file -25..235 in a 930 px window',
+  +   'glass at 940: m-file -15..245 in a 940 px window',
+  +   'glass at 950: m-file -5..255 in a 950 px window',
+  +   'aurora at 900: m-file -55..205 in a 900 px window',
+  +   'aurora at 900: m-edit -2..258 in a 900 px window',
+  +   'aurora at 910: m-file -45..215 in a 910 px window',
+  +   'aurora at 920: m-file -35..225 in a 920 px window',
+  +   'aurora at 930: m-file -25..235 in a 930 px window',
+  +   'aurora at 940: m-file -15..245 in a 940 px window',
+  +   'aurora at 950: m-file -5..255 in a 950 px window',
+  +   'skyline-night at 900: m-file -55..205 in a 900 px window',
+  +   'skyline-night at 900: m-edit -2..258 in a 900 px window',
+  +   'skyline-night at 910: m-file -45..215 in a 910 px window',
+  +   'skyline-night at 920: m-file -35..225 in a 920 px window',
+  +   'skyline-night at 930: m-file -25..235 in a 930 px window',
+  +   'skyline-night at 940: m-file -15..245 in a 940 px window',
+  +   'skyline-night at 950: m-file -5..255 in a 950 px window'
+  + ]
+  - []
+  
+      at TestContext.<anonymous> (C:\Consonance\t180-wt-o-l255\app\test\texture-page.test.js:542:10)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [ 'sigil at 900: m-file -55..205 in a 900 px window', 'sigil at 900: m-edit -2..258 in a 900 px window', 'sigil at 910: m-file -45..215 in a 910 px window', 'sigil at 920: m-file -35..225 in a 920 px window', 'sigil at 930: m-file -25..235 in a 930 px window', 'sigil at 940: m-file -15..245 in a 940 px window', 'sigil at 950: m-file -5..255 in a 950 px window', 'aqua at 900: m-file -55..205 in a 900 px window', 'aqua at 900: m-edit -2..258 in a 900 px window', 'aqua at 910: m-file -45..215 in a 910 px window', 'aqua at 920: m-file -35..225 in a 920 px window', 'aqua at 930: m-file -25..235 in a 930 px window', 'aqua at 940: m-file -15..245 in a 940 px window', 'aqua at 950: m-file -5..255 in a 950 px window', 'skyline at 900: m-file -55..205 in a 900 px window', 'skyline at 900: m-edit -2..258 in a 900 px window', 'skyline at 910: m-file -45..215 in a 910 px window', 'skyline at 920: m-file -35..225 in a 920 px window', 'skyline at 930: m-file -25..235 in a 930 px window', 'skyline at 940: m-file -15..245 in a 940 px window', 'skyline at 950: m-file -5..255 in a 950 px window', 'glass at 900: m-file -55..205 in a 900 px window', 'glass at 900: m-edit -2..258 in a 900 px window', 'glass at 910: m-file -45..215 in a 910 px window', 'glass at 920: m-file -35..225 in a 920 px window', 'glass at 930: m-file -25..235 in a 930 px window', 'glass at 940: m-file -15..245 in a 940 px window', 'glass at 950: m-file -5..255 in a 950 px window', 'aurora at 900: m-file -55..205 in a 900 px window', 'aurora at 900: m-edit -2..258 in a 900 px window', 'aurora at 910: m-file -45..215 in a 910 px window', 'aurora at 920: m-file -35..225 in a 920 px window', 'aurora at 930: m-file -25..235 in a 930 px window', 'aurora at 940: m-file -15..245 in a 940 px window', 'aurora at 950: m-file -5..255 in a 950 px window', 'skyline-night at 900: m-file -55..205 in a 900 px window', 'skyline-night at 900: m-edit -2..258 in a 900 px window', 'skyline-night at 910: m-file -45..215 in a 910 px window', 'skyline-night at 920: m-file -35..225 in a 920 px window', 'skyline-night at 930: m-file -25..235 in a 930 px window', 'skyline-night at 940: m-file -15..245 in a 940 px window', 'skyline-night at 950: m-file -5..255 in a 950 px window' ],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

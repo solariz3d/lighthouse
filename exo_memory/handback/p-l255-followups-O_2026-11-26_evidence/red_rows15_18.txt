@@ -1,0 +1,113 @@
+✖ row 15 (L255): a real pointer over Export to Assetto Corsa changes its pixels in every look (20396.5119ms)
+ℹ Export hovered, pixels changed: sigil 18.7%, aqua 80.3%, skyline 0.0%, glass 16.7%, aurora 0.0%, skyline-night 0.0%
+✖ row 16 (L255): a real pointer over the File menu's title changes its pixels in every look (19450.8799ms)
+ℹ File title hovered, pixels changed: sigil 0.0%, aqua 79.0%, skyline 14.2%, glass 13.3%, aurora 80.5%, skyline-night 81.5%
+✖ row 17 (L255): the open File menu lies wholly inside the window at 900 px and at each wider width the bar folds at, in every look (31166.797ms)
+ℹ the File menu at 900 px, left..right: sigil -55..205, aqua -55..205, skyline -55..205, glass -55..205, aurora -55..205, skyline-night -55..205
+✖ row 18 (L255): a field clicked into wears one frame, the 2 px ring in the accent, and its border keeps its resting colour, in every look (16330.2544ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 0
+ℹ fail 4
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 87892.1873
+
+✖ failing tests:
+
+test at app\test\texture-page.test.js:492:1
+✖ row 15 (L255): a real pointer over Export to Assetto Corsa changes its pixels in every look (20396.5119ms)
+  AssertionError [ERR_ASSERTION]: Export with the pointer on it changes under 1% of its pixels
+  + actual - expected
+  
+  + [
+  +   'skyline: 0.0% of its pixels',
+  +   'aurora: 0.0% of its pixels',
+  +   'skyline-night: 0.0% of its pixels'
+  + ]
+  - []
+  
+      at TestContext.<anonymous> (C:\Consonance\t180-wt-o-l255\app\test\texture-page.test.js:504:10)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [ 'skyline: 0.0% of its pixels', 'aurora: 0.0% of its pixels', 'skyline-night: 0.0% of its pixels' ],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at app\test\texture-page.test.js:507:1
+✖ row 16 (L255): a real pointer over the File menu's title changes its pixels in every look (19450.8799ms)
+  AssertionError [ERR_ASSERTION]: the File title with the pointer on it changes under 1% of its pixels
+  + actual - expected
+  
+  + [
+  +   'sigil: 0.0% of its pixels'
+  + ]
+  - []
+  
+      at TestContext.<anonymous> (C:\Consonance\t180-wt-o-l255\app\test\texture-page.test.js:519:10)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [ 'sigil: 0.0% of its pixels' ],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at app\test\texture-page.test.js:522:1
+✖ row 17 (L255): the open File menu lies wholly inside the window at 900 px and at each wider width the bar folds at, in every look (31166.797ms)
+  AssertionError [ERR_ASSERTION]: the open File menu past an edge of the window
+  + actual - expected
+  
+  + [
+  +   'sigil at 900: -55..205 in a 900 px window',
+  +   'aqua at 900: -55..205 in a 900 px window',
+  +   'skyline at 900: -55..205 in a 900 px window',
+  +   'glass at 900: -55..205 in a 900 px window',
+  +   'aurora at 900: -55..205 in a 900 px window',
+  +   'skyline-night at 900: -55..205 in a 900 px window'
+  + ]
+  - []
+  
+      at TestContext.<anonymous> (C:\Consonance\t180-wt-o-l255\app\test\texture-page.test.js:538:10)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [ 'sigil at 900: -55..205 in a 900 px window', 'aqua at 900: -55..205 in a 900 px window', 'skyline at 900: -55..205 in a 900 px window', 'glass at 900: -55..205 in a 900 px window', 'aurora at 900: -55..205 in a 900 px window', 'skyline-night at 900: -55..205 in a 900 px window' ],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at app\test\texture-page.test.js:541:1
+✖ row 18 (L255): a field clicked into wears one frame, the 2 px ring in the accent, and its border keeps its resting colour, in every look (16330.2544ms)
+  AssertionError [ERR_ASSERTION]: the clicked field's border changed from its resting colour: a second frame beside the ring
+  + actual - expected
+  
+  + [
+  +   'sigil: border rgb(185, 168, 255) focused, rgba(235, 230, 220, 0.14) at rest',
+  +   'aqua: border rgb(63, 224, 245) focused, rgba(120, 230, 245, 0.55) at rest',
+  +   'skyline: border rgb(7, 87, 179) focused, rgb(166, 200, 234) at rest',
+  +   'glass: border rgb(143, 230, 255) focused, rgba(190, 235, 255, 0.4) at rest',
+  +   'aurora: border rgb(111, 245, 192) focused, rgba(150, 200, 255, 0.24) at rest',
+  +   'skyline-night: border rgb(124, 200, 255) focused, rgb(52, 89, 143) at rest'
+  + ]
+  - []
+  
+      at TestContext.<anonymous> (C:\Consonance\t180-wt-o-l255\app\test\texture-page.test.js:564:10)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [ 'sigil: border rgb(185, 168, 255) focused, rgba(235, 230, 220, 0.14) at rest', 'aqua: border rgb(63, 224, 245) focused, rgba(120, 230, 245, 0.55) at rest', 'skyline: border rgb(7, 87, 179) focused, rgb(166, 200, 234) at rest', 'glass: border rgb(143, 230, 255) focused, rgba(190, 235, 255, 0.4) at rest', 'aurora: border rgb(111, 245, 192) focused, rgba(150, 200, 255, 0.24) at rest', 'skyline-night: border rgb(124, 200, 255) focused, rgb(52, 89, 143) at rest' ],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
