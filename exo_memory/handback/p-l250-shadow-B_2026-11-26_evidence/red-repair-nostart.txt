@@ -1,0 +1,120 @@
+✔ P1: every installed layout is listed; one with no AI line says so and cannot be picked (4.6078ms)
+✔ P2: pick draws it on his start; Show off hides it and keeps the pick and the nudge; Show on draws it again; Clear drops both (52.8913ms)
+✔ P3: a line that does not read is refused in words, the one shown before is taken down, and its entry is marked (3.655ms)
+✔ P4: a layout carrying another layout's line is said so, and so is a line far off its stated length; a line of its own says nothing (3.0758ms)
+✔ P5: a later pick wins over an earlier one still being read (1.3354ms)
+✔ RD1: Road draws the kn5's road placed by the layout's AI line: Line and Road lie on each other under one nudge (16.6284ms)
+✔ RD2: a road that does not read is refused in words and the one shown before is taken down; the same layout's Line still draws (9.3205ms)
+✖ RD3: a layout with no AI line is drawn as Road, placed by the start its kn5 names; with no start it is refused in words; in Line it stays greyed (16.7787ms)
+✔ P6 (E's V3e): Road shows one layout; he picks another, its road still reading, and changes to Line: his newest pick is drawn, as Line (6.7758ms)
+✔ P7 (E's V3f): nothing shown, Road; a road still reading when he changes to Line: it is drawn in the mode the panel names (1.6099ms)
+✔ P8: a pick that ended, cleared while it read or refused, is not drawn by a later mode change (1.9469ms)
+✔ N1: a nudge value that is not a number, typed or given, keeps the nudge it had (the box shows it again), and nothing moves (14.0741ms)
+✔ L1: the panel's look is one class on the page's own pane tokens, with nothing inline, so a look can style it (1.9714ms)
+✔ R1 (line): the document: nothing of the reference enters it, and the shell is not told of any of it (35.7642ms)
+✔ R1 (road): the document: nothing of the reference enters it, and the shell is not told of any of it (26.7602ms)
+✔ R2 (line): a save: the track file and its undo file are byte for byte the same with a reference shown (28.4244ms)
+✔ R2 (road): a save: the track file and its undo file are byte for byte the same with a reference shown (19.8681ms)
+✔ R3 (line): an undo step: the reference is none; Ctrl+Z undoes his last edit, and the reference stays shown through it (27.7457ms)
+✔ R3 (road): an undo step: the reference is none; Ctrl+Z undoes his last edit, and the reference stays shown through it (23.443ms)
+✔ R4 (line): an export: every file is byte for byte the same with a reference shown (3307.3541ms)
+✔ R4 (road): an export: every file is byte for byte the same with a reference shown (3214.5502ms)
+✔ D1: the reference goes down before his road and writes no depth, so his road is drawn over it wherever they overlap (1.8925ms)
+✔ D2: the shadow's colour is the skin's --reference token, REFERENCE.colour when it sets none (1.0551ms)
+✔ a line with a grid is refused by readAiLine and read by readAiShape (5.744ms)
+✔ a known circle gives its length and its width (2.9861ms)
+✔ sideLeft goes to the left of the way the line runs, sideRight to the right (2.2439ms)
+✔ with no stored normal the camber leans the road: a + camber rises to the right (2.8732ms)
+✔ a stored normal leans the road even with no camber (2.7449ms)
+✔ with no normal and no camber the road is flat (2.1312ms)
+✔ an open line is not closed, and its length has no closing span (1.3414ms)
+✔ a long line is split into batches whose indices fit Uint16, covering every span once (5.9239ms)
+✔ placed, the reference starts at the anchor, faces its way, and keeps its scale (1.8448ms)
+✔ a nudge moves and turns it, and never scales it (1.4865ms)
+✔ refuses what it cannot read, by name (0.4131ms)
+✔ L250: the two kinds of line that do not read on L are refused in words, never drawn in part (0.5172ms)
+✔ L250: an open line draws open: no span and no edge joins its last point to its first; a lap whose ends are 2 spacings apart is closed (2.6652ms)
+✔ L250: sameLine tells the same line, the same points with other widths, and another line apart (2.1111ms)
+✔ L250: a layout's stated length is read in metres, and a line more than 5 % off it is said so (9.3809ms)
+✔ L250: a road from the kn5 reads back exactly, its normals face up, and its triangles are counted (1.3563ms)
+✖ L250: road bytes that do not read whole are refused by name, in words, and never drawn in part (1.2756ms)
+✖ L250 repair: a road with no AI line is placed by the start its kn5 names, set down on the road under it; a start that is not one is refused (0.5752ms)
+✔ L250: the road is placed by its layout's AI line: the same start and way, so Line and Road lie on each other under one nudge (2.4835ms)
+ℹ tests 42
+ℹ suites 0
+ℹ pass 39
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7077.234
+
+✖ failing tests:
+
+test at app\test\reference-panel.test.js:241:1
+✖ RD3: a layout with no AI line is drawn as Road, placed by the start its kn5 names; with no start it is refused in words; in Line it stays greyed (16.7787ms)
+  AssertionError [ERR_ASSERTION]: Road: it can be drawn
+  + actual - expected
+  
+    [
+  +   'reference track 7 (no AI line)',
+  +   true
+  -   'reference track 7 (no AI line: placed by its start)',
+  -   false
+    ]
+  
+      at TestContext.<anonymous> (<scratch>\l250\red-wt\app\test\reference-panel.test.js:253:10)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [ 'reference track 7 (no AI line)', true ],
+    expected: [ 'reference track 7 (no AI line: placed by its start)', false ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at test\reference_ribbon.test.js:191:1
+✖ L250: road bytes that do not read whole are refused by name, in words, and never drawn in part (1.2756ms)
+  AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
+  
+  Caught error:
+  
+  RefTrackError: NO_START: the road is placed by its layout's AI line, and there is none to place it by
+      at TestContext.<anonymous> (<scratch>\l250\red-wt\test\reference_ribbon.test.js:208:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: RefTrackError: NO_START: the road is placed by its layout's AI line, and there is none to place it by
+        at roadReference (<scratch>\l250\red-wt\src\reference\road.js:99:35)
+        at <scratch>\l250\red-wt\test\reference_ribbon.test.js:208:23
+        at getActual (node:assert:611:5)
+        at ok.throws (node:assert:759:24)
+        at TestContext.<anonymous> (<scratch>\l250\red-wt\test\reference_ribbon.test.js:208:10)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1325:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+        at Test.postRun (node:internal/test_runner/test:1465:19)
+        at Test.run (node:internal/test_runner/test:1390:12),
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at test\reference_ribbon.test.js:211:1
+✖ L250 repair: a road with no AI line is placed by the start its kn5 names, set down on the road under it; a start that is not one is refused (0.5752ms)
+  Error [RefTrackError]: NO_START: the road is placed by its layout's AI line, and there is none to place it by
+      at roadReference (<scratch>\l250\red-wt\src\reference\road.js:99:35)
+      at TestContext.<anonymous> (<scratch>\l250\red-wt\test\reference_ribbon.test.js:215:16)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    code: 'NO_START'
+  }

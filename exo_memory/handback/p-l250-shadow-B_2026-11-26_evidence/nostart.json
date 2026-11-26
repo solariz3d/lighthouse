@@ -1,0 +1,163 @@
+{
+ "layouts": 15,
+ "placed": 15,
+ "noRoadUnderStart": 0,
+ "refused": 0,
+ "startAboveRoadM": {
+  "min": 1.112,
+  "median": 1.554,
+  "max": 3.562
+ },
+ "rows": [
+  {
+   "layout": 1,
+   "triangles": 472992,
+   "startFrom": "AC_START_0",
+   "bytes": 9930356,
+   "decodeMs": 40.7,
+   "placeMs": 7.4,
+   "placedBy": "its kn5's start (AC_START_0)",
+   "startAboveRoadM": 2.098
+  },
+  {
+   "layout": 2,
+   "triangles": 881368,
+   "startFrom": "AC_START_0",
+   "bytes": 14985888,
+   "decodeMs": 41.6,
+   "placeMs": 5.7,
+   "placedBy": "its kn5's start (AC_START_0)",
+   "startAboveRoadM": 1.876
+  },
+  {
+   "layout": 3,
+   "triangles": 513178,
+   "startFrom": "AC_START_0",
+   "bytes": 8851852,
+   "decodeMs": 28,
+   "placeMs": 4.4,
+   "placedBy": "its kn5's start (AC_START_0)",
+   "startAboveRoadM": 1.587
+  },
+  {
+   "layout": 4,
+   "triangles": 3200034,
+   "startFrom": "AC_START_0",
+   "bytes": 60276216,
+   "decodeMs": 162.5,
+   "placeMs": 11.1,
+   "placedBy": "its kn5's start (AC_START_0)",
+   "startAboveRoadM": 2.916
+  },
+  {
+   "layout": 5,
+   "triangles": 657868,
+   "startFrom": "AC_START_0",
+   "bytes": 14410152,
+   "decodeMs": 45.5,
+   "placeMs": 2.9,
+   "placedBy": "its kn5's start (AC_START_0)",
+   "startAboveRoadM": 1.554
+  },
+  {
+   "layout": 7,
+   "triangles": 210298,
+   "startFrom": "AC_START_0",
+   "bytes": 3168276,
+   "decodeMs": 14.9,
+   "placeMs": 0.4,
+   "placedBy": "its kn5's start (AC_START_0)",
+   "startAboveRoadM": 1.112
+  },
+  {
+   "layout": 8,
+   "triangles": 59416,
+   "startFrom": "AC_START_0",
+   "bytes": 895456,
+   "decodeMs": 6.4,
+   "placeMs": 0.1,
+   "placedBy": "its kn5's start (AC_START_0)",
+   "startAboveRoadM": 1.112
+  },
+  {
+   "layout": 51,
+   "triangles": 926104,
+   "startFrom": "AC_START_0",
+   "bytes": 27784020,
+   "decodeMs": 91,
+   "placeMs": 2.1,
+   "placedBy": "its kn5's start (AC_START_0)",
+   "startAboveRoadM": 2
+  },
+  {
+   "layout": 53,
+   "triangles": 827912,
+   "startFrom": "AC_START_0",
+   "bytes": 10958560,
+   "decodeMs": 29.3,
+   "placeMs": 1.7,
+   "placedBy": "its kn5's start (AC_START_0)",
+   "startAboveRoadM": 3.562
+  },
+  {
+   "layout": 54,
+   "triangles": 1166100,
+   "startFrom": "AC_START_0",
+   "bytes": 16268508,
+   "decodeMs": 44.7,
+   "placeMs": 2.1,
+   "placedBy": "its kn5's start (AC_START_0)",
+   "startAboveRoadM": 1.539
+  },
+  {
+   "layout": 55,
+   "triangles": 159744,
+   "startFrom": "AC_START_0",
+   "bytes": 2083128,
+   "decodeMs": 16.6,
+   "placeMs": 0.3,
+   "placedBy": "its kn5's start (AC_START_0)",
+   "startAboveRoadM": 2.475
+  },
+  {
+   "layout": 57,
+   "triangles": 1034264,
+   "startFrom": "AC_START_0",
+   "bytes": 19088824,
+   "decodeMs": 49.3,
+   "placeMs": 2.6,
+   "placedBy": "its kn5's start (AC_START_0)",
+   "startAboveRoadM": 1.506
+  },
+  {
+   "layout": 58,
+   "triangles": 176820,
+   "startFrom": "AC_START_0",
+   "bytes": 3319688,
+   "decodeMs": 7.1,
+   "placeMs": 0.3,
+   "placedBy": "its kn5's start (AC_START_0)",
+   "startAboveRoadM": 1.5
+  },
+  {
+   "layout": 59,
+   "triangles": 809325,
+   "startFrom": "AC_START_0",
+   "bytes": 18363948,
+   "decodeMs": 45,
+   "placeMs": 1.5,
+   "placedBy": "its kn5's start (AC_START_0)",
+   "startAboveRoadM": 1.292
+  },
+  {
+   "layout": 60,
+   "triangles": 764414,
+   "startFrom": "AC_START_0",
+   "bytes": 17856004,
+   "decodeMs": 53.6,
+   "placeMs": 1.4,
+   "placedBy": "its kn5's start (AC_START_0)",
+   "startAboveRoadM": 1.292
+  }
+ ]
+}

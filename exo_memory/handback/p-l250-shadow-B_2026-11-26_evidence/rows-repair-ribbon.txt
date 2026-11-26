@@ -1,0 +1,27 @@
+✔ a line with a grid is refused by readAiLine and read by readAiShape (4.7186ms)
+✔ a known circle gives its length and its width (3.3773ms)
+✔ sideLeft goes to the left of the way the line runs, sideRight to the right (2.2343ms)
+✔ with no stored normal the camber leans the road: a + camber rises to the right (2.5292ms)
+✔ a stored normal leans the road even with no camber (1.692ms)
+✔ with no normal and no camber the road is flat (1.8019ms)
+✔ an open line is not closed, and its length has no closing span (1.6356ms)
+✔ a long line is split into batches whose indices fit Uint16, covering every span once (4.5317ms)
+✔ placed, the reference starts at the anchor, faces its way, and keeps its scale (1.9443ms)
+✔ a nudge moves and turns it, and never scales it (2.0688ms)
+✔ refuses what it cannot read, by name (0.3647ms)
+✔ L250: the two kinds of line that do not read on L are refused in words, never drawn in part (0.5195ms)
+✔ L250: an open line draws open: no span and no edge joins its last point to its first; a lap whose ends are 2 spacings apart is closed (2.8826ms)
+✔ L250: sameLine tells the same line, the same points with other widths, and another line apart (2.6216ms)
+✔ L250: a layout's stated length is read in metres, and a line more than 5 % off it is said so (10.0383ms)
+✔ L250: a road from the kn5 reads back exactly, its normals face up, and its triangles are counted (1.5063ms)
+✔ L250: road bytes that do not read whole are refused by name, in words, and never drawn in part (1.2618ms)
+✔ L250 repair: a road with no AI line is placed by the start its kn5 names, set down on the road under it; a start that is not one is refused (4.6638ms)
+✔ L250: the road is placed by its layout's AI line: the same start and way, so Line and Road lie on each other under one nudge (1.934ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 19
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 127.0902

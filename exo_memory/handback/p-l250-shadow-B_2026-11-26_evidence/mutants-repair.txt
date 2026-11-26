@@ -1,0 +1,17 @@
+caught      setMode re-reads the layout shown, not the one reading (59a54e3)
+caught      a pick does not say what it reads
+caught      Clear leaves the read it dropped as reading
+caught      a refusal leaves its layout as reading
+SURVIVED    a landed pick stays reading
+caught      a bad typed value is 0 again (59a54e3)
+caught      the box is not shown its value again
+caught      an empty box is 0
+caught      setNudge takes a bad value as 0 (59a54e3)
+caught      the ground is the veil again
+caught      the words are on-ink again
+caught      the corner is 6 px again
+caught      the edge is the veil rule again
+caught      a colour of its own in the class
+caught      an inline style comes back
+caught      the class rule is not brought
+15 of 16 caught; restored byte for byte: true

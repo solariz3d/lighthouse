@@ -1,0 +1,14 @@
+caught      the header's start is not used (7ff1215's rule)
+caught      the start is not set down on its road
+caught      a start facing up is taken
+caught      groundUnder takes a deck overhead
+caught      groundUnder takes the lowest road
+caught      groundUnder has no reach above
+caught      the native side's reason is dropped
+caught      Road reads a line it does not have
+caught      no AI line stays greyed in Road
+caught      a road with no start is not marked
+caught      notes are read for a road with no line
+caught      the readout calls it a line
+caught      Road's count says nothing of the layouts with no line
+13 of 13 caught; restored byte for byte: true

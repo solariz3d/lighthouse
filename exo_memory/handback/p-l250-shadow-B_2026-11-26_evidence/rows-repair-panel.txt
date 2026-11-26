@@ -1,0 +1,31 @@
+✔ P1: every installed layout is listed; one with no AI line says so and cannot be picked (5.3195ms)
+✔ P2: pick draws it on his start; Show off hides it and keeps the pick and the nudge; Show on draws it again; Clear drops both (56.9637ms)
+✔ P3: a line that does not read is refused in words, the one shown before is taken down, and its entry is marked (3.9399ms)
+✔ P4: a layout carrying another layout's line is said so, and so is a line far off its stated length; a line of its own says nothing (3.382ms)
+✔ P5: a later pick wins over an earlier one still being read (1.5145ms)
+✔ RD1: Road draws the kn5's road placed by the layout's AI line: Line and Road lie on each other under one nudge (19.1136ms)
+✔ RD2: a road that does not read is refused in words and the one shown before is taken down; the same layout's Line still draws (9.8871ms)
+✔ RD3: a layout with no AI line is drawn as Road, placed by the start its kn5 names; with no start it is refused in words; in Line it stays greyed (19.4227ms)
+✔ P6 (E's V3e): Road shows one layout; he picks another, its road still reading, and changes to Line: his newest pick is drawn, as Line (4.9181ms)
+✔ P7 (E's V3f): nothing shown, Road; a road still reading when he changes to Line: it is drawn in the mode the panel names (2.5562ms)
+✔ P8: a pick that ended, cleared while it read or refused, is not drawn by a later mode change (1.6838ms)
+✔ N1: a nudge value that is not a number, typed or given, keeps the nudge it had (the box shows it again), and nothing moves (15.7837ms)
+✔ L1: the panel's look is one class on the page's own pane tokens, with nothing inline, so a look can style it (1.3648ms)
+✔ R1 (line): the document: nothing of the reference enters it, and the shell is not told of any of it (38.3351ms)
+✔ R1 (road): the document: nothing of the reference enters it, and the shell is not told of any of it (29.6374ms)
+✔ R2 (line): a save: the track file and its undo file are byte for byte the same with a reference shown (29.1137ms)
+✔ R2 (road): a save: the track file and its undo file are byte for byte the same with a reference shown (19.6975ms)
+✔ R3 (line): an undo step: the reference is none; Ctrl+Z undoes his last edit, and the reference stays shown through it (29.2118ms)
+✔ R3 (road): an undo step: the reference is none; Ctrl+Z undoes his last edit, and the reference stays shown through it (24.5788ms)
+✔ R4 (line): an export: every file is byte for byte the same with a reference shown (3917.7535ms)
+✔ R4 (road): an export: every file is byte for byte the same with a reference shown (4122.1401ms)
+✔ D1: the reference goes down before his road and writes no depth, so his road is drawn over it wherever they overlap (2.2774ms)
+✔ D2: the shadow's colour is the skin's --reference token, REFERENCE.colour when it sets none (1.3849ms)
+ℹ tests 23
+ℹ suites 0
+ℹ pass 23
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 8586.3315

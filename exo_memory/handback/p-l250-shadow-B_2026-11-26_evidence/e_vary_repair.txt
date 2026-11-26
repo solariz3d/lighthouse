@@ -1,0 +1,35 @@
+V3a: mode=road kind=road picked="reference track 2\u0000" drawn=yes (942 m line) error=null readout="400 triangles of road from its kn5, placed by its 942 m AI line · read 0 ms, built 0 ms"
+V3b: mode=road kind=road picked="reference track 2\u0000" drawn=yes (942 m line) error=null readout="400 triangles of road from its kn5, placed by its 942 m AI line · read 0 ms, built 0 ms"
+V3c: mode=road kind=road picked="reference track 1\u0000two" drawn=yes (1257 m line) error=null readout="600 triangles of road from its kn5, placed by its 1,257 m AI line · read 0 ms, built 0 ms"
+V3d: mode=line kind=null picked=null drawn=no error=null readout="7 of 8 layouts have an AI line to show."
+V4 {"dx":100000}: reply=ok start=1.000e+5,0.000,0.000 model-as-f32 finite=true panel.error=null
+V4 {"dx":10000000}: reply=ok start=1.000e+7,0.000,0.000 model-as-f32 finite=true panel.error=null
+V4 {"dz":-1000000000}: reply=ok start=0.000,0.000,-1.000e+9 model-as-f32 finite=true panel.error=null
+V4 {"yawDeg":1000000000000}: reply=ok start=0.000,0.000,0.000 model-as-f32 finite=true panel.error=null
+V4 {"dx":3.5e+38}: reply=ok start=3.500e+38,0.000,0.000 model-as-f32 finite=false panel.error=null
+V4 {"dx":1e+39}: reply=ok start=1.000e+39,0.000,0.000 model-as-f32 finite=false panel.error=null
+V4 {dx: Infinity}: reply={"lengthM":942.4605676894042,"width":{"median":10,"min":10,"max":10},"closed":true,"points":300,"nudge":{"dx":1e+39,"dz":0,"dy":0,"yawDeg":0},"start":[1e+39,0,0],"forward":[0,0,1],"anchor":{"pos":[0,0,0],"T":[0,0,1]}} drawn start=1.000e+39,0.000,0.000 panel.nudge.dx=1e+39 panel.error=null readout="942 m along its line · 10 m wide (10 to 10) · read 0 ms, built 0 ms"
+V4 then pick track 1: picked="reference track 1\u0000" drawn lengthM=1257 (track 1 is 1257, track 2 is 942) error=null readout="1,257 m along its line · 10 m wide (10 to 10) · read 0 ms, built 0 ms"
+V1 option in Road: {"text":"reference track 5 (no AI line)","value":"reference track 5\u0000","disabled":true}; readout "7 of 8 layouts have an AI line to show."
+V1 pick() of it: mode=road kind=null picked=null drawn=no error="reference track 5: Not drawn: no AI line there. What does not read whole is never drawn in part." readout="reference track 5: Not drawn: no AI line there. What does not read whole is never drawn in part."
+V5 line: autosaves 1 (0 after the reference), same autosave=true, same share doc=true, mentions reference=false
+V5 road: autosaves 1 (0 after the reference), same autosave=true, same share doc=true, mentions reference=false
+V3e: mode=line kind=line picked="reference track 1\u0000" drawn=yes (1257 m line) error=null readout="1,257 m along its line · 10 m wide (10 to 10) · read 0 ms, built 0 ms"
+V3f: mode=line kind=line picked="reference track 2\u0000" drawn=yes (942 m line) error=null readout="942 m along its line · 10 m wide (10 to 10) · read 0 ms, built 0 ms"
+✔ V3a (Road): a later pick wins over an earlier one whose ROAD read is still out (22.9788ms)
+✔ V3b: nothing shown; a pick still reading, then the mode changed to Road: what is drawn is in the mode the panel names (3.7774ms)
+✔ V3c: A shown; B picked and still reading; the mode changed to Road: B is drawn as Road (his last pick and his last mode) (5.2219ms)
+✔ V3d: a pick still reading, then Clear: nothing is drawn when it lands (1.6966ms)
+✔ V4: the nudge at large values: what the preview draws and what the panel says (52.0429ms)
+✔ V1: a layout with no AI line, in Road mode and through pick(): listed greyed, refused in words (1.6726ms)
+✔ V5: the autosave and the share code are the same with a reference shown, Line and Road (81.6761ms)
+✔ V3e: A shown as Road; B picked, its road still reading; the mode changed to Line: B is drawn (his last pick), as Line (4.5851ms)
+✔ V3f: nothing shown, Road; B picked, its road still reading; the mode changed to Line: what is drawn is in the mode the panel names (2.9161ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 375.2539

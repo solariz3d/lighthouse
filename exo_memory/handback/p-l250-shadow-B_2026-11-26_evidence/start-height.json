@@ -1,0 +1,29 @@
+[
+ {
+  "alias": "reference track 1",
+  "roadTriangles": 152928,
+  "hasStart": true,
+  "startAboveRoadM": 1.082,
+  "groundUnderMs": 2.6,
+  "startToLineFirstPointM": 7.8,
+  "lineFirstPointAboveRoadM": 0.294
+ },
+ {
+  "alias": "reference track 2",
+  "roadTriangles": 217652,
+  "hasStart": true,
+  "startAboveRoadM": 0.281,
+  "groundUnderMs": 3.6,
+  "startToLineFirstPointM": 1.5,
+  "lineFirstPointAboveRoadM": 0.283
+ },
+ {
+  "alias": "reference track 3",
+  "roadTriangles": 335400,
+  "hasStart": true,
+  "startAboveRoadM": 0.281,
+  "groundUnderMs": 0.7,
+  "startToLineFirstPointM": 1.7,
+  "lineFirstPointAboveRoadM": 0.404
+ }
+]
