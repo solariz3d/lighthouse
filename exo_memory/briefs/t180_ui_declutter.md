@@ -90,3 +90,4 @@
   titles in SIGIL have none; the File menu runs 55 px off the left edge at 900 px wide; a clicked field wears its border and
   the ring together. The blur on label windows is dispatched (L251, pane C). P reads L254, L251 and L255.
   Open with him: L249 carries the per-theme handle colours of L244, and the record has no word from him on those pictures.
+- 06:13 (L), his words, on whether to keep the per-theme handle colours: "what do u think". The librarian answered keep them: the white length mark of today sits 40 RGB from the white road edges in SIGIL (`handback/p-l244-theme-colours-A_2026-11-26.md`, `palette_check.txt`), the W5 row holds every mark 60 or more off the road edges, grid, fog and sky in six looks, and P read c9fe4f1 clean. Each kind keeps its hue family across looks. Not yet his decision.
