@@ -387,3 +387,49 @@ seven:
   - the jogs (140 m)
 
 The same correction is appended to the hand-back.
+
+## M-C0: the extra-row floors on the switchback (REGISTERED 2026-11-26T20:18Z, before anything was run; chair D677)
+
+**The floors under test, as the code at ceb21f5 has them:**
+
+- **An extra turn row or an extra climb row** of a corner piece: `cornerChangeMinM` (`turnby.js:232`) returns
+  `cornerMinM`, the shortest first corner from a straight at the piece's knots (21 m at the default 20 m knots). A row
+  shorter than that is refused TURN_TOO_SHORT or CLIMB_TOO_SHORT (`turnby.js:309-310`). The panel reads the same number
+  through the shell.
+- **An extra bank row:** `changeLists` (`extend.js:563-567`). A span under min(secondMinM, BANK_FIT_FLOOR_M = 26 m) is
+  refused BAD_SECOND. A span over it goes to the built-road check (`bankAsBuilt`). A flowing bank (bankFlow) is checked
+  by `flowBuiltWrong` instead.
+
+**The copy:** `G:/consonance-scratch/m-rowfloor`, made by `git archive ceb21f5`, with only two changes:
+
+- `cornerChangeMinM` returns 2 m (one adapter segment) in place of `cornerMinM`;
+- `BANK_FIT_FLOOR_M = 0`.
+
+The built-road bank check and the flowing bank's check stay. If either refuses, that is reported as the next limit,
+not switched off. A second copy, with that check off, is laid only in that case, and is labelled.
+
+**The forms.** The zone is 7,394-7,682 m, as in M-A0. It is cut two ways: at the hand-back's sections, and at the
+reference's turn-rate inflections. Each bend is one corner piece, with these marks inside it:
+
+- **F1, middle marks** (the hand-back's `cornersMid`): the bank's mid value as the bank's first mark at the bend's
+  middle, flowing; the climb split there by an extra climb row.
+- **F2, the reference's own marks:**
+  - the bank row is marked at the reference's bank extreme inside the bend, with the reference's bank there, then
+    rows to the exit bank;
+  - the climb row is marked where the reference's pitch changes sign inside the bend (the hump's crest), with the climb
+    to there, then the rest.
+  - Bank as a list (not flowing).
+
+Both forms are laid on `m-base` too, as the control, to show which floor refuses there. A refused bend is carried into
+the next piece, as M-A0 did.
+
+**Scored** by `cmp.js` against every [T1] tolerance (`TOLERANCES.md`), with the junction rows in and out (JALL=0|1).
+
+**Falsifier:** if, in `m-rowfloor`, no form on either cut makes the zone (position p95 under 3 m and exit under 2° among
+the rest), then the extra-row floors are not what blocks the switchback.
+
+**The unwelcome outcome, in the words that would make it true:** "the marks lay and the zone still misses; the
+extra-row floors were never the blocker either".
+
+**Also asked:** the codes of the three truncated refusals, re-run in full (`oneRows {n:4}` on 2,552-2,640, 3,891-3,967
+and 7,442-7,514 m, base ceb21f5).
