@@ -118,8 +118,10 @@ test('the shelf header cannot claim completeness it has not checked', () => {
   // "0 indexed by path" is what a complete shelf looks like AND what a shelf that never opened a
   // subdirectory looks like. The two must not be indistinguishable again.
   const src = fs.readFileSync(MAIN_RS, 'utf8');
+  // maxBuffer: the full listing outgrew node's default 1 MiB (1,115,339 B at fce82d62), and the
+  // ENOBUFS it threw was read here as "git unavailable" (pane P, D677, 2026-11-26).
   const usesGit = (() => {
-    try { execFileSync('git', ['ls-files', 'exo_memory'], { cwd: REPO, encoding: 'utf8' }); return true; }
+    try { execFileSync('git', ['ls-files', 'exo_memory'], { cwd: REPO, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 }); return true; }
     catch (_) { return false; }
   })();
   assert.ok(usesGit, 'git unavailable; cannot cross-check the corpus set');
