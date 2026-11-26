@@ -32,3 +32,5 @@ Other authors' track names stay out of this public repo (the rule of `briefs/t18
 - L243 was sent to pane B at 02:2x with this added: the reference is picked from the installed tracks (and their
   layouts) in AC's tracks folder. It is read-only, and nothing of it enters the doc.
 - 03:3x (L): L243 first look done (`handback/p-l243-reference-overlay-B_2026-11-26.md`), pictures sent. Open with him: AI-line ribbon vs the kn5 road (about one more lap).
+- 04:49 (L): to ribbon now or the full road, "Yes finish the rest." Both go: L250,
+  `loop/packet_t180_shadow_tracks_BO_2026-11-26.md` (B the ribbon and panel, O the kn5 reader in Rust).

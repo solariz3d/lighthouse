@@ -60,3 +60,13 @@
 - 02:37 (L): "if we find good research. We defintelly need to do a whole UI refactor, but keep all the plumbing."
   So L246's findings feed a UI refactor: the look and layout change, while behaviour, data, the core, export and the
   native side stay as they are. The refactor is planned only after the research lands and he has read it.
+
+## His words, 2026-11-26 04:49 (L), on the refactor draft, the shadow tracks and the blur
+- "the refactor looks good enough. 2. Yes finish the rest. 3. I like the blur i think... Also to your recommendation,
+  how much are you planning on refactoring? Like the whole style and design of each themes UI? I like some of it, like
+  the backdrops, but i suppose it can always be done better"
+- Read as: the draft goes ahead as shown (docked, the drafted factors); the shadow tracks get both the ribbon and the
+  full road; the blur on label windows is a lean yes.
+- State: L249 (`loop/packet_t180_chrome_refactor_ACE_2026-11-26.md`) is the refactor: corners, pills, glows, shadows and
+  focus only; backdrops, colours, fonts and layout stay. L250 (`loop/packet_t180_shadow_tracks_BO_2026-11-26.md`) is the
+  shadow tracks. The blur is L251, queued behind L249 because both touch how a label window is drawn.
