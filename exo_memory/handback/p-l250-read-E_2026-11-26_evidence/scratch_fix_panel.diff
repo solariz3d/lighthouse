@@ -1,0 +1,56 @@
+diff --git a/app/reference/panel.js b/app/reference/panel.js
+index 1a022b1..5cd465b 100644
+--- a/app/reference/panel.js
++++ b/app/reference/panel.js
+@@ -61,7 +61,7 @@ function createReferencePanel({ doc, root, call, clock = () => (doc.defaultView
+   const note = el('div', `color:${dim};font-size:11px;margin-top:4px`, NOTE.line + NOTE.both);
+   box.append(head, pickEl, ctl, rows, readout, notesEl, note); root.append(box);
+ 
+-  let layouts = null, ref = null, nudge = { ...ZERO }, shownKey = null, timing = null, error = null, notes = [], shown = true, seq = 0, mode = 'line';
++  let layouts = null, ref = null, nudge = { ...ZERO }, shownKey = null, timing = null, error = null, notes = [], shown = true, seq = 0, mode = 'line', pendingKey = null;
+   // refusals are kept per mode (a road that does not read leaves its line drawable); a line that does not read is refused in both, since the line places the road
+   const refused = new Map(), borrowed = new Set();   // `${mode}\0${key}` -> the words it was refused with; keys of layouts found carrying another layout's line
+   const keyOf = (l) => `${l.track}\u0000${l.layout}`, rk = (k, m = mode) => `${m}\u0000${k}`;
+@@ -114,7 +114,7 @@ function createReferencePanel({ doc, root, call, clock = () => (doc.defaultView
+     relabel(); say(); return layouts;
+   }
+   async function clear() {
+-    seq++;   // a pick still reading is dropped when it lands
++    seq++; pendingKey = null;   // a pick still reading is dropped when it lands
+     ref = null; shownKey = null; timing = null; error = null; notes = []; nudge = { ...ZERO };
+     for (const [k] of NUDGES) inputs[k].value = '0';
+     pickEl.value = ''; await send(); say(); return null;
+@@ -122,7 +122,7 @@ function createReferencePanel({ doc, root, call, clock = () => (doc.defaultView
+   async function pick(track, layout) {
+     if (track === null || track === undefined) return clear();
+     const my = ++seq, m = mode, l = (layouts || []).find((x) => x.track === track && x.layout === (layout || '')) || { track, layout: layout || '', hasAi: true, uiLength: null };
+-    const key = keyOf(l), args = { track, layout: l.layout };
++    const key = keyOf(l), args = { track, layout: l.layout }; pendingKey = key;
+     error = null; notes = [];
+     let shape, line, next, t0, t1, t2, lineOk = false;
+     try {
+@@ -134,13 +134,14 @@ function createReferencePanel({ doc, root, call, clock = () => (doc.defaultView
+       next = m === 'road' ? roadReference(decodeRoad(roadBytes), line) : line; t2 = clock();
+     } catch (e) {
+       if (my !== seq) return null;   // a later pick (or Clear) won: this one says nothing
++      pendingKey = null;
+       const words = refusalWords(e);
+       refused.set(rk(key, lineOk ? m : 'line'), words);
+       ref = null; shownKey = null; timing = null; error = `${nameOf(l)}: ${words}`;
+       relabel(); await send(); say(); return null;   // what was shown before is taken down: the select no longer names it
+     }
+     if (my !== seq) return null;
+-    ref = next; shownKey = key; timing = { readMs: t1 - t0, buildMs: t2 - t1 };
++    pendingKey = null; ref = next; shownKey = key; timing = { readMs: t1 - t0, buildMs: t2 - t1 };
+     pickEl.value = key;
+     const info = await send(); say();
+     const n = await notesFor(l, shape, line, my);
+@@ -152,7 +153,7 @@ function createReferencePanel({ doc, root, call, clock = () => (doc.defaultView
+   async function setMode(m) {
+     if (!MODES.some(([v]) => v === m)) throw new Error(`reference panel: the mode is line or road, got ${JSON.stringify(m)}`);
+     mode = m; modeEl.value = m;
+-    const l = shownKey && layouts && layouts.find((x) => keyOf(x) === shownKey);
++    const k = pendingKey || shownKey, l = k && layouts && layouts.find((x) => keyOf(x) === k);
+     if (l) return pick(l.track, l.layout);
+     relabel(); say(); return null;
+   }

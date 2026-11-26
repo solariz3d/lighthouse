@@ -1,0 +1,43 @@
+[32m✔ P1: every installed layout is listed; one with no AI line says so and cannot be picked [90m(4.1381ms)[39m[39m
+[32m✔ P2: pick draws it on his start; Show off hides it and keeps the pick and the nudge; Show on draws it again; Clear drops both [90m(54.8843ms)[39m[39m
+[32m✔ P3: a line that does not read is refused in words, the one shown before is taken down, and its entry is marked [90m(3.6044ms)[39m[39m
+[32m✔ P4: a layout carrying another layout's line is said so, and so is a line far off its stated length; a line of its own says nothing [90m(2.8896ms)[39m[39m
+[32m✔ P5: a later pick wins over an earlier one still being read [90m(1.3959ms)[39m[39m
+[32m✔ RD1: Road draws the kn5's road placed by the layout's AI line: Line and Road lie on each other under one nudge [90m(18.0906ms)[39m[39m
+[32m✔ RD2: a road that does not read is refused in words and the one shown before is taken down; the same layout's Line still draws [90m(8.1835ms)[39m[39m
+[32m✔ R1 (line): the document: nothing of the reference enters it, and the shell is not told of any of it [90m(43.1923ms)[39m[39m
+[32m✔ R1 (road): the document: nothing of the reference enters it, and the shell is not told of any of it [90m(26.7364ms)[39m[39m
+[32m✔ R2 (line): a save: the track file and its undo file are byte for byte the same with a reference shown [90m(23.7398ms)[39m[39m
+[32m✔ R2 (road): a save: the track file and its undo file are byte for byte the same with a reference shown [90m(20.918ms)[39m[39m
+[32m✔ R3 (line): an undo step: the reference is none; Ctrl+Z undoes his last edit, and the reference stays shown through it [90m(24.949ms)[39m[39m
+[32m✔ R3 (road): an undo step: the reference is none; Ctrl+Z undoes his last edit, and the reference stays shown through it [90m(27.7704ms)[39m[39m
+[32m✔ R4 (line): an export: every file is byte for byte the same with a reference shown [90m(3247.9856ms)[39m[39m
+[32m✔ R4 (road): an export: every file is byte for byte the same with a reference shown [90m(3573.0981ms)[39m[39m
+[32m✔ D1: the reference goes down before his road and writes no depth, so his road is drawn over it wherever they overlap [90m(2ms)[39m[39m
+[32m✔ D2: the shadow's colour is the skin's --reference token, REFERENCE.colour when it sets none [90m(1.5128ms)[39m[39m
+[32m✔ a line with a grid is refused by readAiLine and read by readAiShape [90m(5.8067ms)[39m[39m
+[32m✔ a known circle gives its length and its width [90m(3.7706ms)[39m[39m
+[32m✔ sideLeft goes to the left of the way the line runs, sideRight to the right [90m(2.4507ms)[39m[39m
+[32m✔ with no stored normal the camber leans the road: a + camber rises to the right [90m(3.3268ms)[39m[39m
+[32m✔ a stored normal leans the road even with no camber [90m(2.1723ms)[39m[39m
+[32m✔ with no normal and no camber the road is flat [90m(2.4551ms)[39m[39m
+[32m✔ an open line is not closed, and its length has no closing span [90m(1.4897ms)[39m[39m
+[32m✔ a long line is split into batches whose indices fit Uint16, covering every span once [90m(4.099ms)[39m[39m
+[32m✔ placed, the reference starts at the anchor, faces its way, and keeps its scale [90m(1.3867ms)[39m[39m
+[32m✔ a nudge moves and turns it, and never scales it [90m(1.859ms)[39m[39m
+[32m✔ refuses what it cannot read, by name [90m(0.3697ms)[39m[39m
+[32m✔ L250: the two kinds of line that do not read on L are refused in words, never drawn in part [90m(0.3832ms)[39m[39m
+[32m✔ L250: an open line draws open: no span and no edge joins its last point to its first; a lap whose ends are 2 spacings apart is closed [90m(2.7498ms)[39m[39m
+[32m✔ L250: sameLine tells the same line, the same points with other widths, and another line apart [90m(1.8341ms)[39m[39m
+[32m✔ L250: a layout's stated length is read in metres, and a line more than 5 % off it is said so [90m(9.6189ms)[39m[39m
+[32m✔ L250: a road from the kn5 reads back exactly, its normals face up, and its triangles are counted [90m(1.7071ms)[39m[39m
+[32m✔ L250: road bytes that do not read whole are refused by name, in words, and never drawn in part [90m(0.9212ms)[39m[39m
+[32m✔ L250: the road is placed by its layout's AI line: the same start and way, so Line and Road lie on each other under one nudge [90m(1.8349ms)[39m[39m
+[34mℹ tests 35[39m
+[34mℹ suites 0[39m
+[34mℹ pass 35[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 7289.5205[39m

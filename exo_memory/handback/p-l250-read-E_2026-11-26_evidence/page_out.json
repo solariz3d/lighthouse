@@ -1,0 +1,125 @@
+{
+ "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5070 Ti Laptop GPU (0x00002F58) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+ "A": [
+  {
+   "which": "layout 61",
+   "ms": 118,
+   "timing": {
+    "readMs": 63.10000002384186,
+    "buildMs": 54
+   },
+   "triangles": 1330225,
+   "kind": "road",
+   "readout": "1,330,225 triangles of road from its kn5, placed by its 17,116 m AI line · read 63 ms, built 54 ms",
+   "heapMB": 57.8,
+   "longTasks": [],
+   "frameHiddenBefore": {
+    "frames": 479,
+    "median": 4.2,
+    "p95": 4.3,
+    "max": 8.5
+   },
+   "frameShown": {
+    "frames": 479,
+    "median": 4.2,
+    "p95": 4.3,
+    "max": 8.4
+   }
+  },
+  {
+   "which": "layout 29",
+   "ms": 188.3,
+   "timing": {
+    "readMs": 101.5,
+    "buildMs": 86
+   },
+   "triangles": 1227197,
+   "kind": "road",
+   "readout": "1,227,197 triangles of road from its kn5, placed by its 25,221 m AI line · read 102 ms, built 86 ms",
+   "heapMB": 64.4,
+   "longTasks": [],
+   "frameHiddenBefore": {
+    "frames": 479,
+    "median": 4.2,
+    "p95": 4.3,
+    "max": 8.6
+   },
+   "frameShown": {
+    "frames": 480,
+    "median": 4.2,
+    "p95": 4.3,
+    "max": 8.1
+   }
+  },
+  {
+   "which": "layout 3 (the largest installed)",
+   "option": {
+    "text": "reference L (no AI line)",
+    "disabled": true
+   },
+   "error": "reference L: Not drawn: no AI line there (The system cannot find the path specified. (os error 3)). What does not read whole is never drawn in part.",
+   "drawn": false
+  }
+ ],
+ "B": [
+  {
+   "typed": "1e400",
+   "inputValue": "",
+   "valueAsNumber": "NaN",
+   "badInput": true,
+   "panelDx": "0",
+   "drawnStartX": "0",
+   "error": null,
+   "r": true
+  },
+  {
+   "typed": "1e39",
+   "inputValue": "1e39",
+   "valueAsNumber": "1e+39",
+   "badInput": false,
+   "panelDx": "1e+39",
+   "drawnStartX": "1e+39",
+   "error": null,
+   "r": true
+  },
+  {
+   "typed": "250",
+   "inputValue": "250",
+   "valueAsNumber": "250",
+   "badInput": false,
+   "panelDx": "250",
+   "drawnStartX": "250",
+   "error": null,
+   "r": true
+  }
+ ],
+ "C": {
+  "plain": [
+   {
+    "cmd": "save_track",
+    "sha": "8c8de89e967c3fb4",
+    "bytes": 1082
+   },
+   {
+    "cmd": "save_undo",
+    "sha": "1118b03338df7bf0",
+    "bytes": 4203
+   }
+  ],
+  "shown": [
+   {
+    "cmd": "save_track",
+    "sha": "8c8de89e967c3fb4",
+    "bytes": 1082
+   },
+   {
+    "cmd": "save_undo",
+    "sha": "1118b03338df7bf0",
+    "bytes": 4203
+   }
+  ],
+  "same": true,
+  "mentionsReference": false
+ },
+ "pageErrors": []
+}

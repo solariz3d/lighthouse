@@ -1,0 +1,121 @@
+V3a: mode=road kind=road picked="reference track 2\u0000" drawn=yes (942 m line) error=null readout="400 triangles of road from its kn5, placed by its 942 m AI line · read 0 ms, built 0 ms"
+V3b: mode=road kind=line picked="reference track 2\u0000" drawn=yes (942 m line) error=null readout="942 m along its line · 10 m wide (10 to 10) · read 0 ms, built 0 ms"
+V3c: mode=road kind=road picked="reference track 2\u0000" drawn=yes (942 m line) error=null readout="400 triangles of road from its kn5, placed by its 942 m AI line · read 0 ms, built 0 ms"
+V3d: mode=line kind=null picked=null drawn=no error=null readout="7 of 8 layouts have an AI line to show."
+V4 {"dx":100000}: reply=ok start=1.000e+5,0.000,0.000 model-as-f32 finite=true panel.error=null
+V4 {"dx":10000000}: reply=ok start=1.000e+7,0.000,0.000 model-as-f32 finite=true panel.error=null
+V4 {"dz":-1000000000}: reply=ok start=0.000,0.000,-1.000e+9 model-as-f32 finite=true panel.error=null
+V4 {"yawDeg":1000000000000}: reply=ok start=0.000,0.000,0.000 model-as-f32 finite=true panel.error=null
+V4 {"dx":3.5e+38}: reply=ok start=3.500e+38,0.000,0.000 model-as-f32 finite=false panel.error=null
+V4 {"dx":1e+39}: reply=ok start=1.000e+39,0.000,0.000 model-as-f32 finite=false panel.error=null
+V4 {dx: Infinity}: reply={"error":"BAD_NUDGE: a nudge is finite numbers: dx, dy, dz in metres and yawDeg in degrees"} drawn start=1.000e+39,0.000,0.000 panel.nudge.dx=Infinity panel.error=null readout="942 m along its line · 10 m wide (10 to 10) · read 0 ms, built 0 ms"
+V4 then pick track 1: picked="reference track 1\u0000" drawn lengthM=942 (track 1 is 1257, track 2 is 942) error=null readout="1,257 m along its line · 10 m wide (10 to 10) · read 0 ms, built 0 ms"
+V1 option in Road: {"text":"reference track 5 (no AI line)","value":"reference track 5\u0000","disabled":true}; readout "7 of 8 layouts have an AI line to show."
+V1 pick() of it: mode=road kind=null picked=null drawn=no error="reference track 5: Not drawn: no AI line there. What does not read whole is never drawn in part." readout="reference track 5: Not drawn: no AI line there. What does not read whole is never drawn in part."
+V5 line: autosaves 1 (0 after the reference), same autosave=true, same share doc=true, mentions reference=false
+V5 road: autosaves 1 (0 after the reference), same autosave=true, same share doc=true, mentions reference=false
+V3e: mode=line kind=line picked="reference track 2\u0000" drawn=yes (942 m line) error=null readout="942 m along its line · 10 m wide (10 to 10) · read 0 ms, built 0 ms"
+V3f: mode=line kind=road picked="reference track 2\u0000" drawn=yes (942 m line) error=null readout="400 triangles of road from its kn5, placed by its 942 m AI line · read 0 ms, built 0 ms"
+[32m✔ V3a (Road): a later pick wins over an earlier one whose ROAD read is still out [90m(18.2375ms)[39m[39m
+[31m✖ V3b: nothing shown; a pick still reading, then the mode changed to Road: what is drawn is in the mode the panel names [90m(3.107ms)[39m[39m
+[31m✖ V3c: A shown; B picked and still reading; the mode changed to Road: B is drawn as Road (his last pick and his last mode) [90m(3.6698ms)[39m[39m
+[32m✔ V3d: a pick still reading, then Clear: nothing is drawn when it lands [90m(1.6283ms)[39m[39m
+[31m✖ V4: the nudge at large values: what the preview draws and what the panel says [90m(40.6841ms)[39m[39m
+[32m✔ V1: a layout with no AI line, in Road mode and through pick(): listed greyed, refused in words [90m(1.2027ms)[39m[39m
+[32m✔ V5: the autosave and the share code are the same with a reference shown, Line and Road [90m(77.4944ms)[39m[39m
+[31m✖ V3e: A shown as Road; B picked, its road still reading; the mode changed to Line: B is drawn (his last pick), as Line [90m(4.3285ms)[39m[39m
+[31m✖ V3f: nothing shown, Road; B picked, its road still reading; the mode changed to Line: what is drawn is in the mode the panel names [90m(1.1088ms)[39m[39m
+[34mℹ tests 9[39m
+[34mℹ suites 0[39m
+[34mℹ pass 4[39m
+[34mℹ fail 5[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 308.7755[39m
+
+[31m✖ failing tests:[39m
+
+test at ..\..\Users\zackn\AppData\Local\Temp\claude\8e9709f509cfea85\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\l250e\e_vary.test.js:52:1
+[31m✖ V3b: nothing shown; a pick still reading, then the mode changed to Road: what is drawn is in the mode the panel names [90m(3.107ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: and draws Road
+  
+  'line' !== 'road'
+  
+      at TestContext.<anonymous> (C:\Users\zackn\AppData\Local\Temp\claude\8e9709f509cfea85\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\l250e\e_vary.test.js:60:10)
+  [90m    at async Test.run (node:internal/test_runner/test:1332:7)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [32m'line'[39m,
+    expected: [32m'road'[39m,
+    operator: [32m'strictEqual'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at ..\..\Users\zackn\AppData\Local\Temp\claude\8e9709f509cfea85\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\l250e\e_vary.test.js:63:1
+[31m✖ V3c: A shown; B picked and still reading; the mode changed to Road: B is drawn as Road (his last pick and his last mode) [90m(3.6698ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: his last pick
+  [32mactual[39m [31mexpected[39m
+  
+  [39m'[39m[39mr[39m[39me[39m[39mf[39m[39me[39m[39mr[39m[39me[39m[39mn[39m[39mc[39m[39me[39m[39m [39m[39mt[39m[39mr[39m[39ma[39m[39mc[39m[39mk[39m[39m [39m[32m2[39m[31m1[39m[39m\[39m[39mx[39m[39m0[39m[39m0[39m[31mt[39m[31mw[39m[31mo[39m[39m'[39m
+  
+      at TestContext.<anonymous> (C:\Users\zackn\AppData\Local\Temp\claude\8e9709f509cfea85\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\l250e\e_vary.test.js:72:10)
+  [90m    at async Test.run (node:internal/test_runner/test:1332:7)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [32m'reference track 2\x00'[39m,
+    expected: [32m'reference track 1\x00two'[39m,
+    operator: [32m'strictEqual'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at ..\..\Users\zackn\AppData\Local\Temp\claude\8e9709f509cfea85\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\l250e\e_vary.test.js:87:1
+[31m✖ V4: the nudge at large values: what the preview draws and what the panel says [90m(40.6841ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: the panel names track 1: track 1 is what is drawn
+      at TestContext.<anonymous> (C:\Users\zackn\AppData\Local\Temp\claude\8e9709f509cfea85\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\l250e\e_vary.test.js:108:10)
+  [90m    at async Test.run (node:internal/test_runner/test:1332:7)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at ..\..\Users\zackn\AppData\Local\Temp\claude\8e9709f509cfea85\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\l250e\e_vary.test.js:145:1
+[31m✖ V3e: A shown as Road; B picked, its road still reading; the mode changed to Line: B is drawn (his last pick), as Line [90m(4.3285ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: his last pick
+  [32mactual[39m [31mexpected[39m
+  
+  [39m'[39m[39mr[39m[39me[39m[39mf[39m[39me[39m[39mr[39m[39me[39m[39mn[39m[39mc[39m[39me[39m[39m [39m[39mt[39m[39mr[39m[39ma[39m[39mc[39m[39mk[39m[39m [39m[32m2[39m[31m1[39m[39m\[39m[39mx[39m[39m0[39m[39m0[39m[39m'[39m
+  
+      at TestContext.<anonymous> (C:\Users\zackn\AppData\Local\Temp\claude\8e9709f509cfea85\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\l250e\e_vary.test.js:153:10)
+  [90m    at async Test.run (node:internal/test_runner/test:1332:7)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [32m'reference track 2\x00'[39m,
+    expected: [32m'reference track 1\x00'[39m,
+    operator: [32m'strictEqual'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at ..\..\Users\zackn\AppData\Local\Temp\claude\8e9709f509cfea85\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\l250e\e_vary.test.js:156:1
+[31m✖ V3f: nothing shown, Road; B picked, its road still reading; the mode changed to Line: what is drawn is in the mode the panel names [90m(1.1088ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: drawn as the panel says
+  
+  'road' !== 'line'
+  
+      at TestContext.<anonymous> (C:\Users\zackn\AppData\Local\Temp\claude\8e9709f509cfea85\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\l250e\e_vary.test.js:164:41)
+  [90m    at async Test.run (node:internal/test_runner/test:1332:7)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [32m'road'[39m,
+    expected: [32m'line'[39m,
+    operator: [32m'strictEqual'[39m,
+    diff: [32m'simple'[39m
+  }
