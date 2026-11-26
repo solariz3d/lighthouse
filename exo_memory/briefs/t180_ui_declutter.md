@@ -76,3 +76,11 @@
   librarian opened two first). Open with him, from A's "Said plainly": the left column is not flush to the window, it
   sits 12 px in (`index.html` `#left { margin: 12px 0 12px 12px }`), so it is a floating panel with square corners;
   flush, or floating with the 12 px corner, is his call. P reads next.
+
+## His words, 2026-11-26 05:41 (L), on the left column
+- "yes fix the one question. keeep it to the edge. also, when the player hovers mouse off of it, it goes fully opaque, then
+  comes back when you put your mouse over it to open up more space for the preview. The left side as in where the equation
+  dials sit"
+- Read as: the left column flush to the window's edge; and it fades out (see-through) when the pointer leaves it and
+  returns when the pointer is over it, since his purpose is more room for the preview. He wrote "opaque"; he has been
+  told the reading. L254: `loop/packet_t180_left_column_A_2026-11-26.md` (A builds, C reads).
