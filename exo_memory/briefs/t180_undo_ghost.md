@@ -91,3 +91,4 @@ back to its resting state.
   cc6d3766 (old turn 0, 1° off) + recipe 3ca37b95; its ease-out aea4a1be + recipe 3707f45f; **Smooth S straight**
   fffede2a (HIS turn −1) + recipe 99ce941e; Smooth S straight ease-out fb48775f + recipe 22edb886; Smooth S ease-out
   e9d147ef; Smooth S flow f55056c5. My "FINAL" line above did not land; this is the state, accepted, no more rings.
+- 2026-11-26 00:4x (L): piece-ghost build cfa7ad9 installed on L too (sha256 65172d23…; backup .before-l240-cfa7ad9 is the L229 exe). His try is next.
