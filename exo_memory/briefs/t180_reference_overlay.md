@@ -31,3 +31,4 @@ Other authors' track names stay out of this public repo (the rule of `briefs/t18
   doesnt create it through our system, just renders the total shape of the track to see within the preview"
 - L243 was sent to pane B at 02:2x with this added: the reference is picked from the installed tracks (and their
   layouts) in AC's tracks folder. It is read-only, and nothing of it enters the doc.
+- 03:3x (L): L243 first look done (`handback/p-l243-reference-overlay-B_2026-11-26.md`), pictures sent. Open with him: AI-line ribbon vs the kn5 road (about one more lap).
