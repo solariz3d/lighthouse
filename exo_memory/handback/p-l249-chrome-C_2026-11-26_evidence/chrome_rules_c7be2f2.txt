@@ -1,0 +1,32 @@
+== aqua at c7be2f2: 15 border-radius declarations, 0 coloured glows
+  radius  var(--r2)                          [data-theme="aqua"] button, [data-theme="aqua"] .more > summary
+  radius  999px                              [data-theme="aqua"] header #install > button
+  radius  0                                  [data-theme="aqua"] #winctl button
+  radius  var(--r1)                          [data-theme="aqua"] input[type="number"], [data-theme="aqua"] input[type="text"], [data-theme="aqua"] input:no
+  radius  0                                  [data-theme="aqua"] #left
+  radius  var(--r3)                          [data-theme="aqua"] .more-menu
+  radius  max(0px, calc(var(--r3) - 8px))    [data-theme="aqua"] .more-menu button, [data-theme="aqua"] .more-menu .menu-row, [data-theme="aqua"] .more-men
+  radius  var(--r2)                          [data-theme="aqua"] #camera [role="toolbar"]
+  radius  var(--r1)                          [data-theme="aqua"] #camera p
+  radius  var(--r4)                          [data-theme="aqua"] .ask-card
+  radius  max(0px, calc(var(--r4) - 22px))   [data-theme="aqua"] .ask-card button
+  radius  var(--r3)                          [data-theme="aqua"] .guide-card
+  radius  var(--r1)                          [data-theme="aqua"] .track li.selected
+  radius  8px                                [data-theme="aqua"] ::-webkit-scrollbar-thumb
+  radius  var(--r3)                          [data-theme="aqua"] header select::picker(select)
+== aurora at c7be2f2: 14 border-radius declarations, 0 coloured glows
+  radius  4px                                [data-theme="aurora"] ::-webkit-scrollbar-thumb
+  radius  var(--r1)                          [data-theme="aurora"] header input, [data-theme="aurora"] header select
+  radius  var(--r2)                          [data-theme="aurora"] button, [data-theme="aurora"] .more > summary
+  radius  0                                  [data-theme="aurora"] #winctl button
+  radius  var(--r3)                          [data-theme="aurora"] .more-menu
+  radius  max(0px, calc(var(--r3) - 8px))    [data-theme="aurora"] .more-menu button, [data-theme="aurora"] .more-menu .menu-row, [data-theme="aurora"] .mo
+  radius  var(--r1)                          [data-theme="aurora"] input[type="number"], [data-theme="aurora"] input[type="text"], [data-theme="aurora"] in
+  radius  var(--r3)                          [data-theme="aurora"] header select::picker(select)
+  radius  0                                  [data-theme="aurora"] #left
+  radius  var(--r2)                          [data-theme="aurora"] #camera [role="toolbar"]
+  radius  var(--r1)                          [data-theme="aurora"] #camera p
+  radius  var(--r3)                          [data-theme="aurora"] .guide-card
+  radius  var(--r4)                          [data-theme="aurora"] .ask-card
+  radius  max(0px, calc(var(--r4) - 22px))   [data-theme="aurora"] .ask-card button
+total coloured glows: 0

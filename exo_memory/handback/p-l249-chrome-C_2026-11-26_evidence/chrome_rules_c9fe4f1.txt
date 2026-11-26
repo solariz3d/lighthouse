@@ -1,0 +1,50 @@
+== aqua at c9fe4f1: 12 border-radius declarations, 7 coloured glows
+  radius  999px                              [data-theme="aqua"] button, [data-theme="aqua"] .more > summary
+  radius  0                                  [data-theme="aqua"] #winctl button
+  radius  10px                               [data-theme="aqua"] input[type="number"], [data-theme="aqua"] input[type="text"], [data-theme="aqua"] input:no
+  radius  18px                               [data-theme="aqua"] #left
+  radius  18px                               [data-theme="aqua"] .more-menu
+  radius  999px                              [data-theme="aqua"] #camera [role="toolbar"]
+  radius  999px                              [data-theme="aqua"] #camera p
+  radius  18px                               [data-theme="aqua"] .ask-card
+  radius  18px                               [data-theme="aqua"] .guide-card
+  radius  999px                              [data-theme="aqua"] .track li.selected
+  radius  8px                                [data-theme="aqua"] ::-webkit-scrollbar-thumb
+  radius  14px                               [data-theme="aqua"] header select::picker(select)
+  GLOW    box-shadow: 0 0 10px rgba(63, 224, 245, .8)  (blur 10, colour rgba(63, 224, 245, .8))  [data-theme="aqua"] header h1::before
+  GLOW    text-shadow: 0 0 14px rgba(63, 224, 245, .5)  (blur 14, colour rgba(63, 224, 245, .5))  [data-theme="aqua"] header h1
+  GLOW    box-shadow: 0 0 10px rgba(63, 224, 245, .8)  (blur 10, colour rgba(63, 224, 245, .8))  [data-theme="aqua"] button:hover:not([disabled]), [data-theme="aqua"] .more > summary:hove
+  GLOW    box-shadow: 0 0 8px rgba(63, 224, 245, .85)  (blur 8, colour rgba(63, 224, 245, .85))  [data-theme="aqua"] .more[open] > summary
+  GLOW    box-shadow: 0 0 10px rgba(63, 224, 245, .7)  (blur 10, colour rgba(63, 224, 245, .7))  [data-theme="aqua"] input:focus, [data-theme="aqua"] select:focus, [data-theme="aqua"] tex
+  GLOW    box-shadow: 0 0 40px rgba(63, 224, 245, .25)  (blur 40, colour rgba(63, 224, 245, .25))  [data-theme="aqua"] .ask-card
+  GLOW    box-shadow: 0 0 10px rgba(63, 224, 245, .8)  (blur 10, colour rgba(63, 224, 245, .8))  [data-theme="aqua"] .ask-row .ask-main
+== aurora at c9fe4f1: 14 border-radius declarations, 14 coloured glows
+  radius  4px                                [data-theme="aurora"] ::-webkit-scrollbar-thumb
+  radius  10px                               [data-theme="aurora"] header input, [data-theme="aurora"] header select
+  radius  10px                               [data-theme="aurora"] button, [data-theme="aurora"] .more > summary
+  radius  0                                  [data-theme="aurora"] #winctl button
+  radius  14px                               [data-theme="aurora"] .more-menu
+  radius  8px                                [data-theme="aurora"] .more-menu button
+  radius  8px                                [data-theme="aurora"] input[type="number"], [data-theme="aurora"] input[type="text"], [data-theme="aurora"] in
+  radius  12px                               [data-theme="aurora"] header select::picker(select)
+  radius  16px                               [data-theme="aurora"] #left
+  radius  16px                               [data-theme="aurora"] #camera [role="toolbar"]
+  radius  8px                                [data-theme="aurora"] #camera p
+  radius  6px                                [data-theme="aurora"] .preview-hud
+  radius  14px                               [data-theme="aurora"] .guide-card
+  radius  16px                               [data-theme="aurora"] .ask-card
+  GLOW    text-shadow: 0 0 10px var(--green-glow)  (blur 10, colour rgba(111, 245, 192, .45))  [data-theme="aurora"] header h1
+  GLOW    text-shadow: 0 0 22px var(--violet-glow)  (blur 22, colour rgba(160, 120, 255, .45))  [data-theme="aurora"] header h1
+  GLOW    box-shadow: 0 0 10px var(--green-glow)  (blur 10, colour rgba(111, 245, 192, .45))  [data-theme="aurora"] header h1::before
+  GLOW    box-shadow: 0 0 18px var(--violet-glow)  (blur 18, colour rgba(160, 120, 255, .45))  [data-theme="aurora"] header h1::before
+  GLOW    box-shadow: 0 0 12px var(--green-glow)  (blur 12, colour rgba(111, 245, 192, .45))  [data-theme="aurora"] button:hover:not([disabled]), [data-theme="aurora"] .more > summary:
+  GLOW    box-shadow: 0 0 14px var(--violet-glow)  (blur 14, colour rgba(160, 120, 255, .45))  [data-theme="aurora"] .more[open] > summary
+  GLOW    box-shadow: 0 0 26px rgba(111, 245, 192, .22)  (blur 26, colour rgba(111, 245, 192, .22))  [data-theme="aurora"] .more[open] > summary
+  GLOW    box-shadow: 0 0 14px var(--green-glow)  (blur 14, colour rgba(111, 245, 192, .45))  [data-theme="aurora"] header #install > button
+  GLOW    box-shadow: 0 0 26px var(--violet-glow)  (blur 26, colour rgba(160, 120, 255, .45))  [data-theme="aurora"] header #install > button
+  GLOW    box-shadow: 0 0 12px var(--green-glow)  (blur 12, colour rgba(111, 245, 192, .45))  [data-theme="aurora"] input:focus, [data-theme="aurora"] select:focus, [data-theme="aurora
+  GLOW    text-shadow: 0 0 8px rgba(111, 245, 192, .35)  (blur 8, colour rgba(111, 245, 192, .35))  [data-theme="aurora"] h3
+  GLOW    box-shadow: 0 0 12px rgba(111, 245, 192, .3)  (blur 12, colour rgba(111, 245, 192, .3))  [data-theme="aurora"] #camera [role="toolbar"] button[aria-pressed="true"], [data-theme="a
+  GLOW    text-shadow: 0 0 8px var(--green-glow)  (blur 8, colour rgba(111, 245, 192, .45))  [data-theme="aurora"] #camera [role="toolbar"] button[aria-pressed="true"], [data-theme="a
+  GLOW    box-shadow: 0 0 30px rgba(120, 90, 255, .3)  (blur 30, colour rgba(120, 90, 255, .3))  [data-theme="aurora"] .ask-card
+total coloured glows: 21

@@ -1,0 +1,125 @@
+[32m✔ W1: each look's window takes that look's own font and corner radius (read from its tokens, drawn) [90m(16.9272ms)[39m[39m
+[32m✔ W2: a page with no window tokens draws today's box: square, the veil, a 1.5 px edge in the mark's colour, bold 12px system-ui, the words at +6 px [90m(0.1855ms)[39m[39m
+[32m✔ W3: a look that sets no mark colours draws today's; a --mark-<field> token is what the field, its extra handles and its corner kind draw [90m(0.4987ms)[39m[39m
+[32m✔ W4: on every look, bank and turn are told apart (their colours at least 60 apart in RGB), and each window's words read on its fill (contrast 4.5:1 or better) [90m(8.3468ms)[39m[39m
+[32m✔ W5: every look sets its own colour for each field, no two fields within 60 of each other (W4's unit), and each 60 or more off that look's road edges, grid, fog and sky [90m(14.5461ms)[39m[39m
+[32m✔ W6: a field's hue, wherever it comes from (Build, the landing, the Sculpt brush and Smooth's channel, the dots' rows), draws as the look's colour for that field; a hue with no field, and every hue on a page with no tokens, as it is [90m(2.2967ms)[39m[39m
+[31m✖ W7: each look's window corner is the chrome scale's r1 (2 px) times that look's radius factor, written as a plain number [90m(9.5394ms)[39m[39m
+[32m✔ each melody sets its own skin on <html data-theme>; an unknown or missing melody leaves SIGIL [90m(1.2459ms)[39m[39m
+[32m✔ the page sets the skin in its head, before the first paint, from the same number the player draws its melody from [90m(2.8535ms)[39m[39m
+[32m✔ D394: Settings ▸ Theme has seven choices: music follows the melody, each of the four is its own skin, Skyline Night is its own, sigil is none [90m(0.1491ms)[39m[39m
+[32m✔ D394: the head reads the saved theme: a fixed theme sets its own skin AND melody; music keeps the random pick; nothing saved and broken saved text start on SIGIL; sigil plays its own melody under SIGIL [90m(18.4017ms)[39m[39m
+[32m✔ D405: Skyline Night is a sixth look on Skyline's melody: its own skin, chosen by name or by the random pick, kept by the boot [90m(4.3066ms)[39m[39m
+[32m✔ the reader understands every colour form a skin may write [90m(0.8285ms)[39m[39m
+[32m✔ the reader falls back to today's literal where the page has no such token or cannot read it, and says so once per token [90m(0.3506ms)[39m[39m
+[32m✔ the reader reads again when data-theme changes, and tells whoever listens [90m(1.0091ms)[39m[39m
+[32m✔ SIGIL's tokens are today's literals, so SIGIL draws exactly as before [90m(0.455ms)[39m[39m
+[32m✔ SIGIL's 3D frame is the same, call for call, with its tokens applied; a skin's tokens change it [90m(1.61ms)[39m[39m
+[32m✔ a skin is styling only: no theme file sets a property that moves or sizes a box, and each skin the page links is a look's [90m(4.5253ms)[39m[39m
+[32m✔ the canvas layers and overlays name no chrome colour of their own: they read the tokens (the meaning colours stay literal) [90m(24.4531ms)[39m[39m
+[31m✖ L249 the glow budget is 0: no box-shadow or text-shadow in the chrome is a centred blur (a glow or a halo), and every blurred shadow outside a box is black, blur 12 px or less, alpha 0.12 or less [90m(12.3265ms)[39m[39m
+[31m✖ L249 one radius scale: SIGIL sets the factor .5 and r1..r4 (2, 4, 8, 12 px times it), each skin sets only its own factor and its two hover steps; no corner in the chrome is a literal over 12 px but Export's capsule and the circles [90m(3.7269ms)[39m[39m
+[34mℹ tests 21[39m
+[34mℹ suites 0[39m
+[34mℹ pass 18[39m
+[34mℹ fail 3[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 171.8557[39m
+
+[31m✖ failing tests:[39m
+
+test at app\test\markwindow.test.js:130:1
+[31m✖ W7: each look's window corner is the chrome scale's r1 (2 px) times that look's radius factor, written as a plain number [90m(9.5394ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: the label window's radius per look
+  [32m+ actual[39m [31m- expected[39m
+  
+  [39m  {
+  [32m+[39m   'skyline-night': '12',
+  [31m-[39m   'skyline-night': '1',
+  [39m    aqua: '2',
+  [39m    aurora: '1.5',
+  [39m    glass: '0',
+  [39m    sigil: '1',
+  [32m+[39m   skyline: '12'
+  [31m-[39m   skyline: '1'
+  [39m  }
+  
+      at TestContext.<anonymous> [90m(C:\Consonance\t180-wt-c-l249-merge\[39mapp\test\markwindow.test.js:137:10[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:227:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1325:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:911:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1465:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1390:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: { sigil: [32m'1'[39m, aqua: [32m'2'[39m, skyline: [32m'12'[39m, glass: [32m'0'[39m, aurora: [32m'1.5'[39m, [32m'skyline-night'[39m: [32m'12'[39m },
+    expected: { sigil: [32m'1'[39m, aqua: [32m'2'[39m, skyline: [32m'1'[39m, glass: [32m'0'[39m, aurora: [32m'1.5'[39m, [32m'skyline-night'[39m: [32m'1'[39m },
+    operator: [32m'deepStrictEqual'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at app\test\theme.test.js:323:1
+[31m✖ L249 the glow budget is 0: no box-shadow or text-shadow in the chrome is a centred blur (a glow or a halo), and every blurred shadow outside a box is black, blur 12 px or less, alpha 0.12 or less [90m(12.3265ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: a centred blur is a glow (spec §5: hover, open and pressed are a fill or a border, focus a ring, no glowing words, dots or halos)
+  [32m+ actual[39m [31m- expected[39m
+  
+  [32m+[39m [
+  [32m+[39m   'themes/skyline.css:34 [data-theme="skyline"] header h1::before box-shadow: 0 0 8px var(--glow)',
+  [32m+[39m   'themes/skyline.css:39 [data-theme="skyline"] button:hover:not([disabled]), [data-theme="skyline"] .more > summary:hover box-shadow: 0 0 10px var(--glow)',
+  [32m+[39m   'themes/skyline.css:41 [data-theme="skyline"] .more[open] > summary, [data-theme="skyline"] header #install > button box-shadow: 0 0 12px var(--glow)',
+  [32m+[39m   'themes/skyline.css:86 [data-theme="skyline"] #camera [role="toolbar"] button[aria-pressed="true"], [data-theme="skyline"] #camera [role="toolbar"] button.on box-shadow: 0 0 10px var(--glow)',
+  [32m+[39m   'themes/skyline-night.css:31 [data-theme="skyline-night"] header h1 text-shadow: 0 0 8px rgba(124, 200, 255, .35)',
+  [32m+[39m   'themes/skyline-night.css:32 [data-theme="skyline-night"] header h1::before box-shadow: 0 0 8px var(--glow)',
+  [32m+[39m   'themes/skyline-night.css:37 [data-theme="skyline-night"] button:hover:not([disabled]), [data-theme="skyline-night"] .more > summary:hover box-shadow: 0 0 10px var(--glow)',
+  [32m+[39m   'themes/skyline-night.css:39 [data-theme="skyline-night"] .more[open] > summary, [data-theme="skyline-night"] header #install > button box-shadow: 0 0 12px var(--glow)',
+  [32m+[39m   'themes/skyline-night.css:83 [data-theme="skyline-night"] #camera [role="toolbar"] button[aria-pressed="true"], [data-theme="skyline-night"] #camera [role="toolbar"] button.on box-shadow: 0 0 10px var(--glow)'
+  [32m+[39m ]
+  [31m-[39m []
+  
+      at TestContext.<anonymous> [90m(C:\Consonance\t180-wt-c-l249-merge\[39mapp\test\theme.test.js:331:10[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:227:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1325:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:911:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1465:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1390:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [ [32m'themes/skyline.css:34 [data-theme="skyline"] header h1::before box-shadow: 0 0 8px var(--glow)'[39m, [32m'themes/skyline.css:39 [data-theme="skyline"] button:hover:not([disabled]), [data-theme="skyline"] .more > summary:hover box-shadow: 0 0 10px var(--glow)'[39m, [32m'themes/skyline.css:41 [data-theme="skyline"] .more[open] > summary, [data-theme="skyline"] header #install > button box-shadow: 0 0 12px var(--glow)'[39m, [32m'themes/skyline.css:86 [data-theme="skyline"] #camera [role="toolbar"] button[aria-pressed="true"], [data-theme="skyline"] #camera [role="toolbar"] button.on box-shadow: 0 0 10px var(--glow)'[39m, [32m'themes/skyline-night.css:31 [data-theme="skyline-night"] header h1 text-shadow: 0 0 8px rgba(124, 200, 255, .35)'[39m, [32m'themes/skyline-night.css:32 [data-theme="skyline-night"] header h1::before box-shadow: 0 0 8px var(--glow)'[39m, [32m'themes/skyline-night.css:37 [data-theme="skyline-night"] button:hover:not([disabled]), [data-theme="skyline-night"] .more > summary:hover box-shadow: 0 0 10px var(--glow)'[39m, [32m'themes/skyline-night.css:39 [data-theme="skyline-night"] .more[open] > summary, [data-theme="skyline-night"] header #install > button box-shadow: 0 0 12px var(--glow)'[39m, [32m'themes/skyline-night.css:83 [data-theme="skyline-night"] #camera [role="toolbar"] button[aria-pressed="true"], [data-theme="skyline-night"] #camera [role="toolbar"] button.on box-shadow: 0 0 10px var(--glow)'[39m ],
+    expected: [],
+    operator: [32m'deepStrictEqual'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at app\test\theme.test.js:335:1
+[31m✖ L249 one radius scale: SIGIL sets the factor .5 and r1..r4 (2, 4, 8, 12 px times it), each skin sets only its own factor and its two hover steps; no corner in the chrome is a literal over 12 px but Export's capsule and the circles [90m(3.7269ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: each look's factor (spec §1) and hover steps (§6)
+  [32m+ actual[39m [31m- expected[39m
+  
+  [32m+[39m [
+  [32m+[39m   "skyline: --radius-factor is undefined, the spec's 1",
+  [32m+[39m   'skyline: sets no --hover',
+  [32m+[39m   'skyline: sets no --accent-hover',
+  [32m+[39m   "skyline-night: --radius-factor is undefined, the spec's 1",
+  [32m+[39m   'skyline-night: sets no --hover',
+  [32m+[39m   'skyline-night: sets no --accent-hover'
+  [32m+[39m ]
+  [31m-[39m []
+  
+      at TestContext.<anonymous> [90m(C:\Consonance\t180-wt-c-l249-merge\[39mapp\test\theme.test.js:348:10[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:227:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1325:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:911:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1465:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1390:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [ [32m"skyline: --radius-factor is undefined, the spec's 1"[39m, [32m'skyline: sets no --hover'[39m, [32m'skyline: sets no --accent-hover'[39m, [32m"skyline-night: --radius-factor is undefined, the spec's 1"[39m, [32m'skyline-night: sets no --hover'[39m, [32m'skyline-night: sets no --accent-hover'[39m ],
+    expected: [],
+    operator: [32m'deepStrictEqual'[39m,
+    diff: [32m'simple'[39m
+  }

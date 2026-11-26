@@ -2029,3 +2029,7 @@ Claim (could be wrong): his 08:19 crash was Export to Assetto Corsa: `v8-oom-sta
 ## 2026-11-26 — L247 read: at 72d88e09 the run preset is CLEAN (each role's argv unmoved by key order, 3,744 cases; Third Place fable at high while its entry is fable; the three births claim the letter first; Normal = 1f00fe9a's argv in 5,512 cases); but the Settings tab trims a padded " turbo" that the spawn refuses, so a later save turns Turbo on unasked (main.rs:93 vs run_preset_from)
 - Evidence: `exo_memory/handback/p-l247-read-C_2026-11-26_evidence/run_72d88e09.txt` (85/85; K4b lines 142-149), `spawn_body_diff.txt`, `live_roles.txt`.
 - Hand-back: `exo_memory/handback/p-l247-read-C_2026-11-26.md`
+
+## 2026-11-26 — L249: aqua and aurora at builder l249-c 7ab2adf set only their factor (1, 0.75) and steps 4 and 10, with 0 coloured glows (21 at c9fe4f1); merged with A 3475c98 and E 6f64171 they compute the spec's corners (aqua 4/8/0/999/12, aurora 3/6/0/3/9) and every contrast row is green in them; row 13's focus ring is red in all six looks (A's), and row 14's one reading under 4.5 is skyline-night's panel button at 4.48 (E's)
+- Evidence: `exo_memory/handback/p-l249-chrome-C_2026-11-26_evidence/chrome_rules_c9fe4f1.txt`, `chrome_rules_7ab2adf.txt`, `theme_markwindow_merge3.txt` (21/21), `texture_page_merge3.txt`, `probe_merge3.txt`.
+- Hand-back: `exo_memory/handback/p-l249-chrome-C_2026-11-26.md`

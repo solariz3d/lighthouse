@@ -1,0 +1,105 @@
+{
+ "look": "aqua",
+ "tree": "C:\\Consonance\\t180-wt-c-l249-merge",
+ "stub": false,
+ "rest": {
+  "factor": "1",
+  "r": "calc(2px * 1) | calc(4px * 1) | calc(8px * 1) | calc(12px * 1)",
+  "hover": "#135060",
+  "accentHover": "#54e3f6",
+  "panelButton": "4px",
+  "menu": "8px",
+  "menuItem": "0px",
+  "left": "0px",
+  "exportBtn": "999px",
+  "cameraDock": "4px",
+  "cameraHint": "2px",
+  "field": "2px",
+  "panelSelect": "(none)",
+  "panelSelectCount": 0,
+  "dialog": "12px",
+  "dialogButton": "0px",
+  "dialogShadow": "rgba(255, 255, 255, 0.62) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.12) 0px 2px 3px 0px, rgba(0, 0, 0, 0.12) 0px 8px 12px 0px",
+  "exportShadow": "rgb(255, 255, 255) 0px 1px 0px 0px inset, rgba(0, 120, 150, 0.35) 0px -2px 0px 0px inset, rgba(0, 30, 40, 0.5) 0px 1px 0px 0px",
+  "nameShadow": "rgba(0, 30, 40, 0.8) 0px 1px 2px",
+  "markWinRadius": "2",
+  "title": "zz-headless-test"
+ },
+ "hoveredPanelButton": {
+  "hovered": false,
+  "boxShadow": "rgb(255, 255, 255) 0px 1px 0px 0px inset, rgba(0, 120, 150, 0.35) 0px -2px 0px 0px inset, rgba(0, 30, 40, 0.5) 0px 1px 0px 0px",
+  "background": "rgba(0, 0, 0, 0) linear-gradient(rgb(241, 254, 255) 0%, rgb(185, 244, 252) 46",
+  "border": "rgb(10, 125, 149)"
+ },
+ "pageErrors": []
+}
+{
+ "look": "aurora",
+ "tree": "C:\\Consonance\\t180-wt-c-l249-merge",
+ "stub": false,
+ "rest": {
+  "factor": "0.75",
+  "r": "calc(2px * 0.75) | calc(4px * 0.75) | calc(8px * 0.75) | calc(12px * 0.75)",
+  "hover": "#1b1f3c",
+  "accentHover": "#7ef5c8",
+  "panelButton": "3px",
+  "menu": "6px",
+  "menuItem": "0px",
+  "left": "0px",
+  "exportBtn": "3px",
+  "cameraDock": "3px",
+  "cameraHint": "1.5px",
+  "field": "1.5px",
+  "panelSelect": "(none)",
+  "panelSelectCount": 0,
+  "dialog": "9px",
+  "dialogButton": "0px",
+  "dialogShadow": "rgba(0, 0, 0, 0.12) 0px 2px 3px 0px, rgba(0, 0, 0, 0.12) 0px 8px 12px 0px",
+  "exportShadow": "none",
+  "nameShadow": "none",
+  "markWinRadius": "1.5",
+  "title": "zz-headless-test"
+ },
+ "hoveredPanelButton": {
+  "hovered": false,
+  "boxShadow": "rgba(200, 240, 255, 0.08) 0px 1px 0px 0px inset",
+  "background": "rgba(0, 0, 0, 0) linear-gradient(rgba(30, 40, 90, 0.55), rgba(10, 12, 34, 0.7",
+  "border": "rgba(140, 230, 210, 0.3)"
+ },
+ "pageErrors": []
+}
+{
+ "look": "sigil",
+ "tree": "C:\\Consonance\\t180-wt-c-l249-merge",
+ "stub": false,
+ "rest": {
+  "factor": ".5",
+  "r": "calc(2px * .5) | calc(4px * .5) | calc(8px * .5) | calc(12px * .5)",
+  "hover": "color-mix(in srgb, #121211 94%, #ebe6dc)",
+  "accentHover": "color-mix(in srgb, #b9a8ff 88%, #ebe6dc)",
+  "panelButton": "2px",
+  "menu": "4px",
+  "menuItem": "0px",
+  "left": "0px",
+  "exportBtn": "2px",
+  "cameraDock": "2px",
+  "cameraHint": "1px",
+  "field": "1px",
+  "panelSelect": "(none)",
+  "panelSelectCount": 0,
+  "dialog": "6px",
+  "dialogButton": "0px",
+  "dialogShadow": "rgba(235, 230, 220, 0.14) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.12) 0px 2px 3px 0px, rgba(0, 0, 0, 0.12) 0px 8px 12px 0px",
+  "exportShadow": "none",
+  "nameShadow": "none",
+  "markWinRadius": "1",
+  "title": "zz-headless-test"
+ },
+ "hoveredPanelButton": {
+  "hovered": false,
+  "boxShadow": "none",
+  "background": "rgba(0, 0, 0, 0) none",
+  "border": "rgba(235, 230, 220, 0.14)"
+ },
+ "pageErrors": []
+}

@@ -1,0 +1,7 @@
+aqua    8.65:1  #f2fdff on #135060  menu row hover, words --text
+aqua    8.96:1  #ffffff on #135060  camera dock button hover, words #ffffff
+aqua    8.96:1  #ffffff on #135060  dialog quiet button hover, words #ffffff
+aurora  11.85:1  #6ff5c0 on #1b1f3c  button / menu name hover, words --accent
+aurora  14.62:1  #eaf6ff on #1b1f3c  menu row hover, words --text
+aqua    9.20:1  #01303c on #54e3f6  step 10 (--accent-hover) under the gel ink --gel-text
+aurora  14.31:1  #03130d on #7ef5c8  step 10 (--accent-hover) under Export's ink #03130d

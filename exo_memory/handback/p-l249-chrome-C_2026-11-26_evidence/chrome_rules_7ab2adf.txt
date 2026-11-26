@@ -1,0 +1,7 @@
+== aqua at 7ab2adf: 2 border-radius declarations, 0 coloured glows
+  radius  0                                  [data-theme="aqua"] #winctl button
+  radius  8px                                [data-theme="aqua"] ::-webkit-scrollbar-thumb
+== aurora at 7ab2adf: 2 border-radius declarations, 0 coloured glows
+  radius  4px                                [data-theme="aurora"] ::-webkit-scrollbar-thumb
+  radius  0                                  [data-theme="aurora"] #winctl button
+total coloured glows: 0
