@@ -547,3 +547,5 @@ carry it, so this brief does.
   checks the function against its own rule and cannot see the rule missing the point. The librarian's changed lean: both
   free runs go to the track builder, whose purpose an outsider can read off the code; the room's code is read by a seat
   that holds the room.
+- 07:07: "waiting on me, decide for me haha, finish what is in motion now and keep queue for another day, when all work in motion ends, do the relevant hand offs for track builder and lighthouse"
+  - Read as: the landing in flight finishes; the parked work stays parked; then the librarian writes both handoffs. The three look choices he left open were decided by the librarian (`briefs/t180_ui_declutter.md`, 07:07); the install was left for his word.
