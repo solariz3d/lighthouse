@@ -1,0 +1,8 @@
+kh 50 [[200,70]] 400 -> laid c2e767e7401b5e04
+kh -120 [[100,-100]] 250 -> laid afb24afe34b46f3b
+kv 15 [[100,5]] 300 -> laid bbae9e61c5b3d5b0
+kh 0 [[200,30],[400,-10]] 600 -> refused BAD_SECOND: the turn (kh) change 2 (its third turn), from 0.00523599 to -0.00174533, needs at least 205.9 m before the piece's end (the built road rounds a shorter one back over the hold): from at most 394.1, got 400
+kv -8 [[150,4],[400,0]] 600 -> laid 12218c08a606b430
+kh 30 [[100,50],[350,20],[500,25]] 700 -> refused BAD_SECOND: the turn (kh) change 2 (its third turn), from 0.00872665 to 0.00349066, needs at least 154.4 m before change 3's mark (the built road rounds a shorter one back over the hold): from at most 345.6, got 350
+kv 4 [[10,6]] 300 -> laid dd409c5bf1f2b2ea
+kh -20 [[0,-10]] 300 -> refused BAD_SECOND: the turn (kh) change 1 (its second turn) starts inside the piece and before the piece's end (300 m): from in (0, 300), got 0

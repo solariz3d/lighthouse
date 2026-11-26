@@ -1,0 +1,216 @@
+✖ D642: dragging the extra bank back toward level on his p2 (a moving first ramp), the first time, costs a move within 2 × the same drag with the bank early (p95) (1807.9824ms)
+ℹ rolling (first drag) p95 13.5 ms a move, early p95 5.3 ms: 2.54 ×; both ended at -12.63°
+⚠ D642: dragging the extra bank on past what fits, into the hold, the first time, costs a move within 2 × the same drag with the bank early (p95) (1403.398ms) # the approach to the hold builds one probe road a move (the core's probe cost, pane B): 2.8-3.1 × measured, the panel already at one question a move
+ℹ rolling (first drag, into the hold) p95 31.2 ms a move, early p95 5.6 ms: 5.62 ×; rolling held at -360°, early ended at -163.5°
+✔ D642: his p2's extra bank still reaches −88.45° from 500 (the bank-back he asked for), laid by the core (63.5972ms)
+✔ D642 3j: his p2's extra bank mark, dragged across 420-540 through the panel, lays at every from the panel keeps (1685.0183ms)
+ℹ kept 121 distinct froms; refused 0
+✖ row 1: a 1,000 m turn dragged in every look: the work frames' p95 is within one frame at 165 Hz (6.0 ms) (3723.7213ms)
+✖ row 2: a 2,000 m turn dragged in every look: p95 within one frame at 165 Hz (6.0 ms) (3672.2144ms)
+✖ row 3: a 1,000 m and a 2,000 m piece stretched by its length handle: p95 within one frame at 165 Hz (6.0 ms) (3425.3592ms)
+✖ row 4: past the ordinary range the drag adapts and does not stall: a 20,000 m turn's p95 stays under 40 ms, at 20 or more rebuilds a second (7219.8808ms)
+✖ row 5: the release is the exact road: a few hundred stations while the handle is held, a station every 2 m the moment it is let go (3667.6015ms)
+✖ row 6: a 1,000 m piece with bank, cup and edge typed, stretched by its length handle: p95 within 0.4.19's cost with margin (13.4 ms) (3613.8157ms)
+✔ row 7: a 1,000 m piece with a left edge typed, turned after a placed piece: p95 within one frame at 144 Hz (6.9 ms) (10402.602ms)
+ℹ p95 5.7 ms (median 4.2), 70.0 work frames a second
+✖ row 8: a 1,000 m piece with a left edge typed, stretched on an empty track: the page works only on a move (at most 120 work frames a second), p95 within one frame at 144 Hz (6.9 ms) (3479.4654ms)
+✖ row 9: after 21 km whose last piece still rolls at its end (his 88.45°), the next piece stretched by its length handle: p95 at most 2 x the same drag with that piece flat (a proposed bar) (72466.739ms)
+ℹ p95 rolling 37.6 / 38.0 ms, flat 18.0 / 24.2 ms (2.09 x)
+✔ flow 1: the bank passes through each mark within 0.05° on the document (53.7085ms)
+✔ flow 2: no halt inside any roll on the built road (each run where the marks go one way) (48.3715ms)
+✔ flow 3: the roll-rate bars on the built road: 30 m mean at most 0.70, 20 m peak at most 0.89, 8 m peak at most 1.08 °/m (63.1555ms)
+✔ flow 4: C2 at both joints of the S piece: value, rate and roll acceleration continue the lead's at its start; rate and acceleration are 0 at its end (34.9829ms)
+✔ flow 4b: after a road whose bank is still rolling at its end (fixture F5), the flowing piece continues its bank, rate and roll acceleration (C2) (12.9672ms)
+✔ flow 4c: straight after a flight (F5, then a jump at 5°), the flowing piece lands at the flight's bank with no roll, whatever the take-off ended rolling with (15.7962ms)
+✔ flow 12: the least bending: on the banked S the bank's roll acceleration peaks under 0.026 °/m² (1 m second difference) (48.7061ms)
+✔ flow 5: no overshoot: between marks that go one way the bank stays in their range (+0.25°), and nowhere past the largest |target| by more than 0.5° (42.6762ms)
+✔ flow 6: mirror negates every mark: the mirrored bank is the exact negative (21.4309ms)
+✔ flow 7: save and open give the same bytes, and the reopened piece lays the same bank (19.5536ms)
+✔ flow 8: the refusals, each by its code (3.5173ms)
+✔ flow 9: on the same marks, today's bank halts at every mark inside a roll and the flowing bank at none (the document, so only the shape differs) (25.8068ms)
+✔ flow 11: a mark where the bank turns back is its peak: the roll there is 0, and the bank goes no further than 0.05° past it (23.8999ms)
+✔ flow 10: no `through`, no flow: an extend without them is the same bytes as before (the option is opt-in) (7.2098ms)
+✔ built 1: through the crossing (turn A's peak to the end of turn B) the adapter builds the bank as laid, within 0.1° (37.2595ms)
+⚠ built 1, straight road: the built bank on the run-in and the ease-out is within 0.1° of the document (35.6097ms) # the adapter re-rounds a straight road's bank (3.82° and 9.58°, measured); the fix is owed in the solve, next lap
+✔ built 2: the as-built check refuses nothing on a flowing bank (it judges bank CHANGES, and a flowing bank lays none) (18.0657ms)
+✔ built 3: extendCorner with the as-built check ON lays the whole banked S in one piece: two corners and a flowing bank, no refusal (35.1823ms)
+ℹ tests 31
+ℹ suites 0
+ℹ pass 20
+ℹ fail 9
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 2
+ℹ duration_ms 112088.8356
+
+✖ failing tests:
+
+test at app\test\core-extra-bank-drag-cost.test.js:94:1
+✖ D642: dragging the extra bank back toward level on his p2 (a moving first ramp), the first time, costs a move within 2 × the same drag with the bank early (p95) (1807.9824ms)
+  AssertionError [ERR_ASSERTION]: the rolling drag's p95 is 13.5 ms a move, the early drag's 5.3 ms: 2.54 ×, over 2 ×
+      at TestContext.<anonymous> (G:\consonance-scratch\t180-o1-base\app\test\core-extra-bank-drag-cost.test.js:101:10)
+      at async Test.run (node:internal/test_runner/test:1125:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at app\test\core-extra-bank-drag-cost.test.js:111:1
+⚠ D642: dragging the extra bank on past what fits, into the hold, the first time, costs a move within 2 × the same drag with the bank early (p95) (1403.398ms) # the approach to the hold builds one probe road a move (the core's probe cost, pane B): 2.8-3.1 × measured, the panel already at one question a move
+  AssertionError [ERR_ASSERTION]: the rolling drag went past −88.45 and is held short of where the pointer went (-360°)
+      at TestContext.<anonymous> (G:\consonance-scratch\t180-o1-base\app\test\core-extra-bank-drag-cost.test.js:117:10)
+      at async Test.run (node:internal/test_runner/test:1125:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:787:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at app\test\drag-frame.test.js:128:1
+✖ row 1: a 1,000 m turn dragged in every look: the work frames' p95 is within one frame at 165 Hz (6.0 ms) (3723.7213ms)
+  AssertionError [ERR_ASSERTION]: aqua: the turn handle is on the overlay
+      at drag (G:\consonance-scratch\t180-o1-base\app\test\drag-frame.test.js:101:142)
+      at async within (G:\consonance-scratch\t180-o1-base\app\test\drag-frame.test.js:123:46)
+      at async TestContext.<anonymous> (G:\consonance-scratch\t180-o1-base\app\test\drag-frame.test.js:130:41)
+      at async Test.run (node:internal/test_runner/test:1125:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at app\test\drag-frame.test.js:134:1
+✖ row 2: a 2,000 m turn dragged in every look: p95 within one frame at 165 Hz (6.0 ms) (3672.2144ms)
+  AssertionError [ERR_ASSERTION]: aqua: the turn handle is on the overlay
+      at drag (G:\consonance-scratch\t180-o1-base\app\test\drag-frame.test.js:101:142)
+      at async within (G:\consonance-scratch\t180-o1-base\app\test\drag-frame.test.js:123:46)
+      at async TestContext.<anonymous> (G:\consonance-scratch\t180-o1-base\app\test\drag-frame.test.js:136:41)
+      at async Test.run (node:internal/test_runner/test:1125:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:787:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at app\test\drag-frame.test.js:140:1
+✖ row 3: a 1,000 m and a 2,000 m piece stretched by its length handle: p95 within one frame at 165 Hz (6.0 ms) (3425.3592ms)
+  AssertionError [ERR_ASSERTION]: aqua: the stretch handle is on the overlay
+      at drag (G:\consonance-scratch\t180-o1-base\app\test\drag-frame.test.js:101:142)
+      at async within (G:\consonance-scratch\t180-o1-base\app\test\drag-frame.test.js:123:46)
+      at async TestContext.<anonymous> (G:\consonance-scratch\t180-o1-base\app\test\drag-frame.test.js:142:45)
+      at async Test.run (node:internal/test_runner/test:1125:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:787:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at app\test\drag-frame.test.js:146:1
+✖ row 4: past the ordinary range the drag adapts and does not stall: a 20,000 m turn's p95 stays under 40 ms, at 20 or more rebuilds a second (7219.8808ms)
+  AssertionError [ERR_ASSERTION]: aqua: the turn handle is on the overlay
+      at drag (G:\consonance-scratch\t180-o1-base\app\test\drag-frame.test.js:101:142)
+      at async within (G:\consonance-scratch\t180-o1-base\app\test\drag-frame.test.js:123:46)
+      at async TestContext.<anonymous> (G:\consonance-scratch\t180-o1-base\app\test\drag-frame.test.js:147:13)
+      at async Test.run (node:internal/test_runner/test:1125:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:787:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at app\test\drag-frame.test.js:152:1
+✖ row 5: the release is the exact road: a few hundred stations while the handle is held, a station every 2 m the moment it is let go (3667.6015ms)
+  AssertionError [ERR_ASSERTION]: aqua: the turn handle is on the overlay
+      at drag (G:\consonance-scratch\t180-o1-base\app\test\drag-frame.test.js:101:142)
+      at async TestContext.<anonymous> (G:\consonance-scratch\t180-o1-base\app\test\drag-frame.test.js:153:13)
+      at async Test.run (node:internal/test_runner/test:1125:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:787:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at app\test\drag-frame.test.js:164:1
+✖ row 6: a 1,000 m piece with bank, cup and edge typed, stretched by its length handle: p95 within 0.4.19's cost with margin (13.4 ms) (3613.8157ms)
+  AssertionError [ERR_ASSERTION]: aqua: the stretch handle is on the overlay
+      at drag (G:\consonance-scratch\t180-o1-base\app\test\drag-frame.test.js:101:142)
+      at async TestContext.<anonymous> (G:\consonance-scratch\t180-o1-base\app\test\drag-frame.test.js:166:46)
+      at async Test.run (node:internal/test_runner/test:1125:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:787:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at app\test\drag-frame.test.js:194:1
+✖ row 8: a 1,000 m piece with a left edge typed, stretched on an empty track: the page works only on a move (at most 120 work frames a second), p95 within one frame at 144 Hz (6.9 ms) (3479.4654ms)
+  AssertionError [ERR_ASSERTION]: aqua: the stretch handle is on the overlay
+      at drag (G:\consonance-scratch\t180-o1-base\app\test\drag-frame.test.js:101:142)
+      at async edgeRow (G:\consonance-scratch\t180-o1-base\app\test\drag-frame.test.js:180:46)
+      at async TestContext.<anonymous> (G:\consonance-scratch\t180-o1-base\app\test\drag-frame.test.js:195:3)
+      at async Test.run (node:internal/test_runner/test:1125:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:787:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at app\test\drag-frame.test.js:215:1
+✖ row 9: after 21 km whose last piece still rolls at its end (his 88.45°), the next piece stretched by its length handle: p95 at most 2 x the same drag with that piece flat (a proposed bar) (72466.739ms)
+  AssertionError [ERR_ASSERTION]: p95 rolling 37.6 / 38.0 ms, flat 18.0 / 24.2 ms (2.09 x): over 2 x
+      at TestContext.<anonymous> (G:\consonance-scratch\t180-o1-base\app\test\drag-frame.test.js:224:10)
+      at async Test.run (node:internal/test_runner/test:1125:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:787:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at test\core_bank_flow.test.js:197:1
+⚠ built 1, straight road: the built bank on the run-in and the ease-out is within 0.1° of the document (35.6097ms) # the adapter re-rounds a straight road's bank (3.82° and 9.58°, measured); the fix is owed in the solve, next lap
+  AssertionError [ERR_ASSERTION]: run-in 3.819° at 360; ease-out 9.583° at 673
+      at TestContext.<anonymous> (G:\consonance-scratch\t180-o1-base\test\core_bank_flow.test.js:199:10)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+      at Test.postRun (node:internal/test_runner/test:1247:19)
+      at Test.run (node:internal/test_runner/test:1175:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:787:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

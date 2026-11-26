@@ -1,0 +1,2 @@
+const EX=require('G:/consonance-scratch/t180-o1-c/src/core/extend.js'),R=(x)=>(x*Math.PI/180)/100;let same=0,n=0;
+for(const [st,a,b] of [[-80,-80,-60],[-80,-80,-75],[-30,-30,-20],[40,40,55],[-60,-60,-75]]){const base={step:R(st),length:300,shape:null};const kh=EX.secondMinM('kh',R(a),R(b),base),kv=EX.secondMinM('kv',R(a),R(b),base);n++;if(Math.abs(kh-kv)<1e-9)same++;console.log(st,a,b,'kh',kh.toFixed(3),'kv',kv.toFixed(3))}console.log('kh = kv in',same,'of',n)
