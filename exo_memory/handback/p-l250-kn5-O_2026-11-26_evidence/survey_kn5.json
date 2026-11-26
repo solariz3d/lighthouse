@@ -1,0 +1,15 @@
+{
+ "layouts": 61,
+ "kn5Files": 193,
+ "parseErr": {},
+ "ruleDiffLayouts": 30,
+ "ruleDiffMeshes": 5448,
+ "ruleDiffExamples": [],
+ "placedWithRoad": 0,
+ "dynamicWithRoad": 0,
+ "noSurfacesIni": 0,
+ "nonDigitValidNames": 0,
+ "layoutsNoRoad": 0,
+ "trisMax": 3200034,
+ "trisMedian": 152397
+}

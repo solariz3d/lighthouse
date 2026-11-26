@@ -1,0 +1,77 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.35s
+     Running unittests src\lib.rs (C:\build\t180-l250-o-target\debug\deps\t180_track_builder_lib-3e01addbbd0561a9.exe)
+
+running 2 tests
+test kn5road::tests::every_installed_layout_reads_or_says_why ... layout 1: 2 files (0 missing), 76 meshes, 881368 triangles, 15 batches, 14985252 bytes, 259 ms, surfaces from layout
+layout 2: 2 files (0 missing), 48 meshes, 513178 triangles, 9 batches, 8851392 bytes, 140 ms, surfaces from layout
+layout 3: 1 files (0 missing), 97 meshes, 3200034 triangles, 74 batches, 60275872 bytes, 941 ms, surfaces from track
+layout 4: 1 files (0 missing), 76 meshes, 657868 triangles, 17 batches, 14409516 bytes, 217 ms, surfaces from track
+layout 5: 1 files (2 missing), 17 meshes, 36951 triangles, 1 batches, 628652 bytes, 19 ms, surfaces from track
+layout 6: 3 files (0 missing), 19 meshes, 210298 triangles, 3 batches, 3168004 bytes, 65 ms, surfaces from layout
+layout 7: 2 files (0 missing), 7 meshes, 59416 triangles, 1 batches, 895264 bytes, 26 ms, surfaces from layout
+layout 8: 4 files (0 missing), 206 meshes, 497132 triangles, 6 batches, 7081356 bytes, 151 ms, surfaces from track
+layout 9: 11 files (0 missing), 241 meshes, 335202 triangles, 3 batches, 4340176 bytes, 113 ms, surfaces from layout
+layout 10: 11 files (0 missing), 238 meshes, 332678 triangles, 3 batches, 4306156 bytes, 98 ms, surfaces from layout
+layout 11: 7 files (0 missing), 343 meshes, 392936 triangles, 4 batches, 5313908 bytes, 122 ms, surfaces from layout
+layout 12: 7 files (0 missing), 343 meshes, 392936 triangles, 4 batches, 5313908 bytes, 107 ms, surfaces from layout
+layout 13: 7 files (0 missing), 343 meshes, 392936 triangles, 4 batches, 5313908 bytes, 122 ms, surfaces from layout
+layout 14: 7 files (0 missing), 76 meshes, 219529 triangles, 3 batches, 2923740 bytes, 79 ms, surfaces from layout
+layout 15: 7 files (0 missing), 76 meshes, 219529 triangles, 3 batches, 2923740 bytes, 71 ms, surfaces from layout
+layout 16: 3 files (0 missing), 26 meshes, 52224 triangles, 1 batches, 784820 bytes, 19 ms, surfaces from layout
+layout 17: 3 files (0 missing), 26 meshes, 52224 triangles, 1 batches, 784820 bytes, 15 ms, surfaces from layout
+layout 18: 3 files (0 missing), 26 meshes, 52224 triangles, 1 batches, 784820 bytes, 15 ms, surfaces from layout
+layout 19: 3 files (0 missing), 26 meshes, 52224 triangles, 1 batches, 784820 bytes, 15 ms, surfaces from layout
+layout 20: 3 files (0 missing), 26 meshes, 52224 triangles, 1 batches, 784820 bytes, 15 ms, surfaces from layout
+layout 21: 10 files (0 missing), 149 meshes, 462524 triangles, 8 batches, 8694872 bytes, 165 ms, surfaces from layout
+layout 22: 10 files (0 missing), 149 meshes, 462524 triangles, 8 batches, 8694872 bytes, 160 ms, surfaces from layout
+layout 23: 10 files (0 missing), 149 meshes, 462524 triangles, 8 batches, 8694872 bytes, 159 ms, surfaces from layout
+layout 24: 9 files (0 missing), 149 meshes, 462524 triangles, 8 batches, 8694872 bytes, 149 ms, surfaces from layout
+layout 25: 10 files (0 missing), 209 meshes, 353671 triangles, 17 batches, 14686796 bytes, 209 ms, surfaces from track
+layout 26: 8 files (0 missing), 81 meshes, 335400 triangles, 16 batches, 12308004 bytes, 165 ms, surfaces from layout
+layout 27: 7 files (0 missing), 58 meshes, 217652 triangles, 12 batches, 8741424 bytes, 127 ms, surfaces from layout
+layout 28: 8 files (0 missing), 58 meshes, 217652 triangles, 12 batches, 8741424 bytes, 127 ms, surfaces from layout
+layout 29: 19 files (0 missing), 1237 meshes, 1227197 triangles, 29 batches, 28659112 bytes, 501 ms, surfaces from layout
+layout 30: 19 files (0 missing), 1236 meshes, 1227102 triangles, 29 batches, 28657284 bytes, 451 ms, surfaces from layout
+layout 31: 14 files (0 missing), 953 meshes, 765977 triangles, 7 batches, 10032904 bytes, 215 ms, surfaces from layout
+layout 32: 12 files (0 missing), 954 meshes, 780529 triangles, 8 batches, 10456692 bytes, 219 ms, surfaces from layout
+layout 33: 8 files (0 missing), 279 meshes, 460967 triangles, 22 batches, 18621744 bytes, 276 ms, surfaces from layout
+layout 34: 8 files (0 missing), 282 meshes, 461304 triangles, 22 batches, 18626960 bytes, 266 ms, surfaces from layout
+layout 35: 8 files (0 missing), 279 meshes, 460967 triangles, 22 batches, 18621744 bytes, 267 ms, surfaces from layout
+layout 36: 8 files (0 missing), 282 meshes, 461304 triangles, 22 batches, 18626960 bytes, 276 ms, surfaces from layout
+layout 37: 10 files (0 missing), 262 meshes, 412723 triangles, 20 batches, 16759088 bytes, 258 ms, surfaces from layout
+layout 38: 10 files (0 missing), 262 meshes, 412723 triangles, 20 batches, 16759088 bytes, 237 ms, surfaces from layout
+layout 39: 10 files (0 missing), 274 meshes, 602412 triangles, 8 batches, 9471596 bytes, 182 ms, surfaces from layout
+layout 40: 9 files (0 missing), 278 meshes, 609837 triangles, 8 batches, 9672764 bytes, 166 ms, surfaces from layout
+layout 41: 8 files (0 missing), 269 meshes, 602265 triangles, 8 batches, 9469268 bytes, 171 ms, surfaces from layout
+layout 42: 6 files (0 missing), 142 meshes, 367901 triangles, 18 batches, 15401596 bytes, 218 ms, surfaces from track
+layout 43: 4 files (0 missing), 207 meshes, 152928 triangles, 2 batches, 2250484 bytes, 50 ms, surfaces from layout
+layout 44: 4 files (0 missing), 207 meshes, 152928 triangles, 2 batches, 2250484 bytes, 45 ms, surfaces from layout
+layout 45: 4 files (0 missing), 207 meshes, 152928 triangles, 2 batches, 2250484 bytes, 49 ms, surfaces from layout
+layout 46: 4 files (0 missing), 75 meshes, 125773 triangles, 5 batches, 3861228 bytes, 67 ms, surfaces from track
+layout 47: 2 files (0 missing), 163 meshes, 357588 triangles, 4 batches, 4956412 bytes, 88 ms, surfaces from track
+layout 48: 4 files (0 missing), 70 meshes, 472992 triangles, 13 batches, 9929744 bytes, 163 ms, surfaces from track
+layout 49: 7 files (0 missing), 194 meshes, 428872 triangles, 4 batches, 5591196 bytes, 115 ms, surfaces from track
+layout 50: 4 files (0 missing), 304 meshes, 457216 triangles, 5 batches, 6480764 bytes, 123 ms, surfaces from track
+layout 51: 1 files (0 missing), 85 meshes, 926104 triangles, 31 batches, 27783432 bytes, 385 ms, surfaces from track
+layout 52: 1 files (0 missing), 13 meshes, 285596 triangles, 13 batches, 8568152 bytes, 127 ms, surfaces from track
+layout 53: 3 files (0 missing), 123 meshes, 827912 triangles, 9 batches, 10957488 bytes, 206 ms, surfaces from track
+layout 54: 3 files (0 missing), 17 meshes, 1166100 triangles, 14 batches, 16268328 bytes, 314 ms, surfaces from track
+layout 55: 1 files (0 missing), 2 meshes, 159744 triangles, 2 batches, 2082972 bytes, 39 ms, surfaces from track
+layout 56: 6 files (2 missing), 297 meshes, 569436 triangles, 27 batches, 22238688 bytes, 306 ms, surfaces from track
+layout 57: 1 files (0 missing), 72 meshes, 1034264 triangles, 18 batches, 19088292 bytes, 324 ms, surfaces from track
+layout 58: 1 files (0 missing), 18 meshes, 176820 triangles, 4 batches, 3319516 bytes, 55 ms, surfaces from track
+layout 59: 5 files (0 missing), 72 meshes, 764414 triangles, 23 batches, 17855456 bytes, 289 ms, surfaces from layout
+layout 60: 4 files (0 missing), 78 meshes, 809325 triangles, 23 batches, 18363352 bytes, 315 ms, surfaces from layout
+layout 61: 1 files (0 missing), 152 meshes, 1330225 triangles, 13 batches, 17397476 bytes, 323 ms, surfaces from track
+61 of 61 layouts read. The most: 3200034 triangles, 60275872 bytes, 941 ms. Peak: working set 130.4 MB, private 125.5 MB
+ok
+test kn5road::tests::the_three_references_read_as_tools_kn5_cjs_reads_them ... reference track 1: rust {"files":4,"hash":1254934386,"meshes":207,"missing":0,"triangles":152928,"vertices":111060}
+reference track 1: tools/kn5.cjs {"files":4,"hash":1254934386,"meshes":207,"missing":0,"runRuleTriangles":152397,"triangles":152928,"vertices":111060}
+reference track 2: rust {"files":8,"hash":91663141,"meshes":58,"missing":0,"triangles":217652,"vertices":619601}
+reference track 2: tools/kn5.cjs {"files":8,"hash":91663141,"meshes":58,"missing":0,"runRuleTriangles":216365,"triangles":217652,"vertices":619601}
+reference track 3: rust {"files":8,"hash":391508649,"meshes":81,"missing":0,"triangles":335400,"vertices":857939}
+reference track 3: tools/kn5.cjs {"files":8,"hash":391508649,"meshes":81,"missing":0,"runRuleTriangles":334113,"triangles":335400,"vertices":857939}
+ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 81 filtered out; finished in 13.88s
+

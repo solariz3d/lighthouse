@@ -1,0 +1,223 @@
+{
+ "placed": true,
+ "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5070 Ti Laptop GPU (0x00002F58) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+ "views": {
+  "overhead, zoomed out 20 notches": [
+   {
+    "case": "none (control)",
+    "callbacks": 8622,
+    "frames": 958,
+    "workMed": 0.5,
+    "workP95": 0.8,
+    "workMax": 5.5,
+    "intervalMed": 4.2,
+    "intervalP95": 4.3,
+    "intervalMax": 12.6
+   },
+   {
+    "case": "reference track 1",
+    "bytes": 2250484,
+    "triangles": 152928,
+    "batches": 2,
+    "decodeMs": 1.2,
+    "firstThreeFramesWorkMs": [
+     1.6,
+     0.6,
+     0.7
+    ],
+    "shown": true,
+    "callbacks": 8613,
+    "frames": 957,
+    "workMed": 0.6,
+    "workP95": 0.8,
+    "workMax": 9.8,
+    "intervalMed": 4.2,
+    "intervalP95": 4.3,
+    "intervalMax": 12.7
+   },
+   {
+    "case": "reference track 2",
+    "bytes": 8741424,
+    "triangles": 217652,
+    "batches": 12,
+    "decodeMs": 4.7,
+    "firstThreeFramesWorkMs": [
+     1.3,
+     0.9,
+     1.9
+    ],
+    "shown": true,
+    "callbacks": 8604,
+    "frames": 956,
+    "workMed": 0.6,
+    "workP95": 0.9,
+    "workMax": 8.4,
+    "intervalMed": 4.2,
+    "intervalP95": 4.3,
+    "intervalMax": 12.5
+   },
+   {
+    "case": "reference track 3",
+    "bytes": 12308004,
+    "triangles": 335400,
+    "batches": 16,
+    "decodeMs": 6.8,
+    "firstThreeFramesWorkMs": [
+     0.5,
+     0.3,
+     0.6
+    ],
+    "shown": true,
+    "callbacks": 8613,
+    "frames": 957,
+    "workMed": 0.6,
+    "workP95": 0.8,
+    "workMax": 6.3,
+    "intervalMed": 4.2,
+    "intervalP95": 4.3,
+    "intervalMax": 12.4
+   },
+   {
+    "case": "the largest layout",
+    "bytes": 60275872,
+    "triangles": 3200034,
+    "batches": 74,
+    "decodeMs": 9.3,
+    "firstThreeFramesWorkMs": [
+     1,
+     0.5,
+     0.5
+    ],
+    "shown": true,
+    "callbacks": 8613,
+    "frames": 957,
+    "workMed": 0.6,
+    "workP95": 0.9,
+    "workMax": 8.4,
+    "intervalMed": 4.2,
+    "intervalP95": 4.3,
+    "intervalMax": 13
+   },
+   {
+    "case": "none again (control)",
+    "callbacks": 8631,
+    "frames": 959,
+    "workMed": 0.5,
+    "workP95": 0.8,
+    "workMax": 7.8,
+    "intervalMed": 4.2,
+    "intervalP95": 4.3,
+    "intervalMax": 8.5
+   }
+  ],
+  "build view at his start": [
+   {
+    "case": "none (control)",
+    "callbacks": 8604,
+    "frames": 956,
+    "workMed": 0.5,
+    "workP95": 0.7,
+    "workMax": 4.9,
+    "intervalMed": 4.2,
+    "intervalP95": 4.3,
+    "intervalMax": 12.5
+   },
+   {
+    "case": "reference track 1",
+    "bytes": 2250484,
+    "triangles": 152928,
+    "batches": 2,
+    "decodeMs": 0.1,
+    "firstThreeFramesWorkMs": [
+     0.7,
+     0.7,
+     0.8
+    ],
+    "shown": true,
+    "callbacks": 8613,
+    "frames": 957,
+    "workMed": 0.6,
+    "workP95": 0.8,
+    "workMax": 3.2,
+    "intervalMed": 4.2,
+    "intervalP95": 4.3,
+    "intervalMax": 8.7
+   },
+   {
+    "case": "reference track 2",
+    "bytes": 8741424,
+    "triangles": 217652,
+    "batches": 12,
+    "decodeMs": 1.1,
+    "firstThreeFramesWorkMs": [
+     0.7,
+     0.7,
+     0.5
+    ],
+    "shown": true,
+    "callbacks": 8595,
+    "frames": 955,
+    "workMed": 0.5,
+    "workP95": 0.7,
+    "workMax": 8.7,
+    "intervalMed": 4.2,
+    "intervalP95": 4.3,
+    "intervalMax": 12.5
+   },
+   {
+    "case": "reference track 3",
+    "bytes": 12308004,
+    "triangles": 335400,
+    "batches": 16,
+    "decodeMs": 1.3,
+    "firstThreeFramesWorkMs": [
+     0.5,
+     1.4,
+     0.5
+    ],
+    "shown": true,
+    "callbacks": 8622,
+    "frames": 958,
+    "workMed": 0.5,
+    "workP95": 0.7,
+    "workMax": 8.6,
+    "intervalMed": 4.2,
+    "intervalP95": 4.3,
+    "intervalMax": 8.8
+   },
+   {
+    "case": "the largest layout",
+    "bytes": 60275872,
+    "triangles": 3200034,
+    "batches": 74,
+    "decodeMs": 7,
+    "firstThreeFramesWorkMs": [
+     0.7,
+     0.4,
+     0.5
+    ],
+    "shown": true,
+    "callbacks": 8595,
+    "frames": 955,
+    "workMed": 0.5,
+    "workP95": 0.7,
+    "workMax": 10.9,
+    "intervalMed": 4.2,
+    "intervalP95": 4.3,
+    "intervalMax": 12.5
+   },
+   {
+    "case": "none again (control)",
+    "callbacks": 8586,
+    "frames": 954,
+    "workMed": 0.5,
+    "workP95": 0.7,
+    "workMax": 11.1,
+    "intervalMed": 4.2,
+    "intervalP95": 4.3,
+    "intervalMax": 12.7
+   }
+  ]
+ },
+ "pageErrors": []
+}

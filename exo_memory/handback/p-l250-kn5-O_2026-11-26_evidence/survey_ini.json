@@ -1,0 +1,66 @@
+{
+ "folders": 34,
+ "inis": 55,
+ "models": 367,
+ "nonZeroPos": 15,
+ "nonZeroRot": 12,
+ "posValues": {
+  "0,0,0": 330,
+  "null": 22,
+  "270.3,-15.15,-45.8": 2,
+  "-280.4,9.4,287.52": 2,
+  "-298,9.4,287.35": 1,
+  "705.2,9.7,579.13": 4,
+  "-767,143.45,2636.76": 2,
+  "-8.5,68.9,-696.7": 4
+ },
+ "rotValues": {
+  "0,0,0": 333,
+  "null": 22,
+  "213,0,0": 2,
+  "-17,0,0": 4,
+  "225,0,0": 2,
+  "180,0,0": 4
+ },
+ "noIni": 6,
+ "noIniTopKn5": [
+  {
+   "n": 1,
+   "hasFolderNamed": true
+  },
+  {
+   "n": 1,
+   "hasFolderNamed": true
+  },
+  {
+   "n": 1,
+   "hasFolderNamed": true
+  },
+  {
+   "n": 1,
+   "hasFolderNamed": true
+  },
+  {
+   "n": 1,
+   "hasFolderNamed": true
+  },
+  {
+   "n": 1,
+   "hasFolderNamed": true
+  }
+ ],
+ "iniFileMissing": 13,
+ "otherKeys": {
+  "FILE": 367,
+  "POSITION": 345,
+  "ROTATION": 345,
+  "PROBABILITY": 22,
+  "MULT": 22,
+  "POS_MODE": 22,
+  "RND_POS_CENTER": 22,
+  "RND_POS_RANGE": 22,
+  "VEL_MODE": 22,
+  "RND_VEL_BASE": 22,
+  "RND_VEL_RANGE": 22
+ }
+}

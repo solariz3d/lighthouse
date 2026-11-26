@@ -1,0 +1,15 @@
+caught: the letter-run key rule (pane B L243) instead of starts-with(16 passed, 3 failed: only_the_valid_track_meshes_are_read_and_the_rest_skipped, a_mesh_is_track_when_its_name_after_the_digits_starts_with_a_valid_key, a_layout_reads_every_kn5_its_own_models_ini_names_with_its_own_surfaces)
+caught: AC's defaults ROAD and KERB dropped(10 passed, 9 failed: a_mesh_is_track_when_its_name_after_the_digits_starts_with_a_valid_key, with_no_surfaces_ini_the_keys_are_acs_defaults_road_and_kerb, the_positions_reach_the_page_unchanged, a_listed_kn5_that_is_not_installed_is_skipped_and_counted, with_no_surfaces_ini_only_road_and_kerb_are_read, a_placed_model_with_no_road_in_it_is_read_without_complaint, a_layout_reads_every_kn5_its_own_models_ini_names_with_its_own_surfaces, road_in_a_model_that_models_ini_places_elsewhere_is_refused, the_bytes_for_the_page_split_at_65536_vertices_and_decode_back)
+caught: parent before child in the matrix product(18 passed, 1 failed: the_node_tree_places_each_mesh_in_world_space)
+caught: an index equal to the vertex count let through(18 passed, 1 failed: an_index_past_its_meshs_vertices_is_refused)
+caught: indices not moved by the batch offset(18 passed, 1 failed: the_bytes_for_the_page_split_at_65536_vertices_and_decode_back)
+caught: a placed model never seen as placed(18 passed, 1 failed: road_in_a_model_that_models_ini_places_elsewhere_is_refused)
+caught: a models ini file outside the track's folder let through(18 passed, 1 failed: a_models_ini_file_outside_the_track_folder_is_refused)
+caught: no padding after an odd index count(17 passed, 2 failed: the_positions_reach_the_page_unchanged, the_bytes_for_the_page_split_at_65536_vertices_and_decode_back)
+caught: the track's surfaces.ini before the layout's(18 passed, 1 failed: a_layout_reads_every_kn5_its_own_models_ini_names_with_its_own_surfaces)
+caught: models.ini before models_<layout>.ini(18 passed, 1 failed: a_layout_reads_every_kn5_its_own_models_ini_names_with_its_own_surfaces)
+caught: the length check one byte loose(18 passed, 1 failed: a_truncated_file_is_refused_with_a_reason)
+caught: version 5 read as if it had the extra int(17 passed, 2 failed: the_node_tree_places_each_mesh_in_world_space, a_layout_reads_every_kn5_its_own_models_ini_names_with_its_own_surfaces)
+applied 12 / caught 12 / NOT APPLIED 0 / did not compile 0; restored byte for byte: true
+(node:24720) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)

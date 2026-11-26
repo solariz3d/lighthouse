@@ -1,0 +1,34 @@
+   Compiling t180-track-builder v0.4.40 (C:\Consonance\t180-wt-o-l250\src-tauri)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 3.39s
+     Running unittests src\lib.rs (C:\build\t180-l250-o-target\debug\deps\t180_track_builder_lib-3e01addbbd0561a9.exe)
+
+running 26 tests
+test kn5road::tests::every_installed_layout_reads_or_says_why ... ignored
+test kn5road::tests::measure_the_three_references_cold_and_warm ... ignored
+test kn5road::tests::the_three_references_read_as_tools_kn5_cjs_reads_them ... ignored
+test kn5road::tests::a_file_that_is_not_a_kn5_is_refused_with_a_reason ... ok
+test kn5road::tests::bytes_left_after_the_node_tree_are_refused ... ok
+test kn5road::tests::a_mesh_is_track_when_its_name_after_the_digits_starts_with_a_valid_key ... ok
+test kn5road::tests::an_index_past_its_meshs_vertices_is_refused ... ok
+test kn5road::tests::only_the_valid_track_meshes_are_read_and_the_rest_skipped ... ok
+test kn5road::tests::the_node_tree_places_each_mesh_in_world_space ... ok
+test kn5road::tests::with_no_surfaces_ini_the_keys_are_acs_defaults_road_and_kerb ... ok
+test kn5road::tests::a_truncated_file_is_refused_with_a_reason ... ok
+test kn5road::tests::a_node_class_tracks_do_not_use_is_refused_by_name ... ok
+test reference::tests::a_name_that_is_not_one_plain_folder_is_refused_before_anything_is_opened ... ok
+test kn5road::tests::a_layout_with_no_track_mesh_is_refused_with_a_reason ... ok
+test kn5road::tests::the_positions_reach_the_page_unchanged ... ok
+test kn5road::tests::a_name_that_is_not_one_plain_folder_is_refused_before_anything_is_opened ... ok
+test kn5road::tests::a_listed_kn5_that_is_not_installed_is_skipped_and_counted ... ok
+test kn5road::tests::a_models_ini_file_outside_the_track_folder_is_refused ... ok
+test kn5road::tests::with_no_surfaces_ini_only_road_and_kerb_are_read ... ok
+test kn5road::tests::road_in_a_model_that_models_ini_places_elsewhere_is_refused ... ok
+test kn5road::tests::a_placed_model_with_no_road_in_it_is_read_without_complaint ... ok
+test kn5road::tests::a_layout_reads_every_kn5_its_own_models_ini_names_with_its_own_surfaces ... ok
+test reference::tests::the_shape_is_read_up_to_has_grid_and_the_grid_is_not ... ok
+test reference::tests::a_short_or_nonsense_line_is_refused ... ok
+test reference::tests::every_layout_is_listed_and_one_with_no_ai_line_says_so ... ok
+test kn5road::tests::the_bytes_for_the_page_split_at_65536_vertices_and_decode_back ... ok
+
+test result: ok. 23 passed; 0 failed; 3 ignored; 0 measured; 57 filtered out; finished in 0.07s
+

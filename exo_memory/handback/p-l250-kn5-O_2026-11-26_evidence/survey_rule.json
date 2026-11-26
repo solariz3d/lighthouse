@@ -1,0 +1,35 @@
+{
+ "cls": {
+  "A": 5448,
+  "B": 0,
+  "C": 0,
+  "D": 0
+ },
+ "trisByCls": {
+  "A": 11689735,
+  "B": 0,
+  "C": 0,
+  "D": 0
+ },
+ "shapes": {
+  "A run=6ch prefixKey=A-A byRun=false": 125,
+  "A run=4ch prefixKey=A-A byRun=false": 836,
+  "A run=3ch prefixKey=A-A byRun=false": 3353,
+  "A run=4ch prefixKey=A_A byRun=false": 170,
+  "A run=3ch prefixKey=A_A byRun=false": 16,
+  "A run=7ch prefixKey=A_A_ byRun=false": 379,
+  "A run=5ch prefixKey=A-A byRun=false": 97,
+  "A run=6ch prefixKey=A-A-A byRun=false": 163,
+  "A run=4ch prefixKey=A-A_A byRun=false": 178,
+  "A run=3ch prefixKey=A-A-A byRun=false": 131
+ },
+ "validKeyShapesWithNonLetters": [
+  "1A?",
+  "A-A",
+  "A_A",
+  "3A",
+  "A_A_",
+  "A-A-A",
+  "A-A_A"
+ ]
+}

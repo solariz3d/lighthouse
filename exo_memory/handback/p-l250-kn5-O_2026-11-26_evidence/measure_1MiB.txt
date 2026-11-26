@@ -1,0 +1,12 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.38s
+     Running unittests src\lib.rs (C:\build\t180-l250-o-target\debug\deps\t180_track_builder_lib-3e01addbbd0561a9.exe)
+
+running 1 test
+before any read: peak working set 5.4 MB, peak private 0.8 MB
+reference track 1: cold 203 ms (249.5 MB off the disk, unbuffered); warm 64 ms median of 5 (63 to 145); read and encoded. 4 files, 207 meshes, 152928 triangles, 111060 vertices, 2 batches, 2250484 bytes to the page. Peak so far: working set 12.9 MB, private 11.0 MB
+reference track 2: cold 253 ms (286.6 MB off the disk, unbuffered); warm 139 ms median of 5 (138 to 251); read and encoded. 8 files, 58 meshes, 217652 triangles, 619601 vertices, 12 batches, 8741424 bytes to the page. Peak so far: working set 27.5 MB, private 27.3 MB
+reference track 3: cold 445 ms (339.9 MB off the disk, unbuffered); warm 199 ms median of 5 (187 to 316); read and encoded. 8 files, 81 meshes, 335400 triangles, 857939 vertices, 16 batches, 12308004 bytes to the page. Peak so far: working set 38.7 MB, private 38.1 MB
+test kn5road::tests::measure_the_three_references_cold_and_warm ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 82 filtered out; finished in 3.48s
+
