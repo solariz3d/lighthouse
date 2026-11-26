@@ -1,0 +1,620 @@
+{
+ "steps": [
+  {
+   "label": "opened (Line)",
+   "mode": "line",
+   "picked": null,
+   "kind": null,
+   "shown": false,
+   "showOn": true,
+   "nudge": {
+    "dx": 0,
+    "dz": 0,
+    "dy": 0,
+    "yawDeg": 0
+   },
+   "error": null,
+   "readout": "2 of 3 layouts have an AI line to show.",
+   "drawn": null,
+   "select": {
+    "value": "",
+    "selectedIndex": 0,
+    "text": "None",
+    "disabled": false,
+    "colour": "rgb(235, 230, 220)"
+   },
+   "calls": [
+    "open_autosave",
+    "list_pieces",
+    "get_see_it_setting",
+    "find_ac_root",
+    "list_reference_tracks",
+    "save_autosave"
+   ]
+  },
+  {
+   "label": "1. N picked as Road",
+   "mode": "road",
+   "picked": "reference N\u0000",
+   "kind": "road",
+   "shown": true,
+   "showOn": true,
+   "nudge": {
+    "dx": 0,
+    "dz": 0,
+    "dy": 0,
+    "yawDeg": 0
+   },
+   "error": null,
+   "readout": "26,218 triangles of road from its kn5, placed by its kn5's start (its first grid slot): it has no AI line · read 14 ms, built 6 ms",
+   "drawn": "line",
+   "select": {
+    "value": "reference N\u0000",
+    "selectedIndex": 2,
+    "text": "reference N (no AI line: placed by its start)",
+    "disabled": false,
+    "colour": "rgb(235, 230, 220)"
+   },
+   "calls": [
+    "read_reference_road N"
+   ]
+  },
+  {
+   "label": "1. the mode to Line (N held)",
+   "mode": "line",
+   "picked": "reference N\u0000",
+   "kind": null,
+   "shown": false,
+   "showOn": true,
+   "nudge": {
+    "dx": 0,
+    "dz": 0,
+    "dy": 0,
+    "yawDeg": 0
+   },
+   "error": null,
+   "readout": "reference N: it has no AI line, so Line has nothing to draw. Road draws it, placed by the start its kn5 names.",
+   "drawn": null,
+   "select": {
+    "value": "reference N\u0000",
+    "selectedIndex": 2,
+    "text": "reference N (no AI line)",
+    "disabled": true,
+    "colour": "rgb(235, 230, 220)"
+   },
+   "calls": []
+  },
+  {
+   "label": "1. the mode back to Road",
+   "mode": "road",
+   "picked": "reference N\u0000",
+   "kind": "road",
+   "shown": true,
+   "showOn": true,
+   "nudge": {
+    "dx": 0,
+    "dz": 0,
+    "dy": 0,
+    "yawDeg": 0
+   },
+   "error": null,
+   "readout": "26,218 triangles of road from its kn5, placed by its kn5's start (its first grid slot): it has no AI line · read 5 ms, built 3 ms",
+   "drawn": "line",
+   "select": {
+    "value": "reference N\u0000",
+    "selectedIndex": 2,
+    "text": "reference N (no AI line: placed by its start)",
+    "disabled": false,
+    "colour": "rgb(235, 230, 220)"
+   },
+   "calls": [
+    "read_reference_road N"
+   ]
+  },
+  {
+   "label": "4. held again (Line)",
+   "mode": "line",
+   "picked": "reference N\u0000",
+   "kind": null,
+   "shown": false,
+   "showOn": true,
+   "nudge": {
+    "dx": 0,
+    "dz": 0,
+    "dy": 0,
+    "yawDeg": 0
+   },
+   "error": null,
+   "readout": "reference N: it has no AI line, so Line has nothing to draw. Road draws it, placed by the start its kn5 names.",
+   "drawn": null,
+   "select": {
+    "value": "reference N\u0000",
+    "selectedIndex": 2,
+    "text": "reference N (no AI line)",
+    "disabled": true,
+    "colour": "rgb(235, 230, 220)"
+   },
+   "calls": []
+  },
+  {
+   "label": "4a. held, a nudge x = 5 typed in its box",
+   "mode": "line",
+   "picked": "reference N\u0000",
+   "kind": null,
+   "shown": false,
+   "showOn": true,
+   "nudge": {
+    "dx": 5,
+    "dz": 0,
+    "dy": 0,
+    "yawDeg": 0
+   },
+   "error": null,
+   "readout": "reference N: it has no AI line, so Line has nothing to draw. Road draws it, placed by the start its kn5 names.",
+   "drawn": null,
+   "select": {
+    "value": "reference N\u0000",
+    "selectedIndex": 2,
+    "text": "reference N (no AI line)",
+    "disabled": true,
+    "colour": "rgb(235, 230, 220)"
+   },
+   "calls": []
+  },
+  {
+   "label": "4b. held, Show off",
+   "mode": "line",
+   "picked": "reference N\u0000",
+   "kind": null,
+   "shown": false,
+   "showOn": false,
+   "nudge": {
+    "dx": 5,
+    "dz": 0,
+    "dy": 0,
+    "yawDeg": 0
+   },
+   "error": null,
+   "readout": "reference N: it has no AI line, so Line has nothing to draw. Road draws it, placed by the start its kn5 names.",
+   "drawn": null,
+   "select": {
+    "value": "reference N\u0000",
+    "selectedIndex": 2,
+    "text": "reference N (no AI line)",
+    "disabled": true,
+    "colour": "rgb(235, 230, 220)"
+   },
+   "calls": []
+  },
+  {
+   "label": "4b. Road with Show off",
+   "mode": "road",
+   "picked": "reference N\u0000",
+   "kind": "road",
+   "shown": false,
+   "showOn": false,
+   "nudge": {
+    "dx": 5,
+    "dz": 0,
+    "dy": 0,
+    "yawDeg": 0
+   },
+   "error": null,
+   "readout": "Hidden (Show draws it again) · 26,218 triangles of road from its kn5, placed by its kn5's start (its first grid slot): it has no AI line · read 4 ms, built 2 ms",
+   "drawn": null,
+   "select": {
+    "value": "reference N\u0000",
+    "selectedIndex": 2,
+    "text": "reference N (no AI line: placed by its start)",
+    "disabled": false,
+    "colour": "rgb(235, 230, 220)"
+   },
+   "calls": [
+    "read_reference_road N"
+   ]
+  },
+  {
+   "label": "4b. Show on, in Road",
+   "mode": "road",
+   "picked": "reference N\u0000",
+   "kind": "road",
+   "shown": true,
+   "showOn": true,
+   "nudge": {
+    "dx": 5,
+    "dz": 0,
+    "dy": 0,
+    "yawDeg": 0
+   },
+   "error": null,
+   "readout": "26,218 triangles of road from its kn5, placed by its kn5's start (its first grid slot): it has no AI line · read 4 ms, built 2 ms",
+   "drawn": "line",
+   "select": {
+    "value": "reference N\u0000",
+    "selectedIndex": 2,
+    "text": "reference N (no AI line: placed by its start)",
+    "disabled": false,
+    "colour": "rgb(235, 230, 220)"
+   },
+   "calls": []
+  },
+  {
+   "label": "4b. held, Show off and on again",
+   "mode": "line",
+   "picked": "reference N\u0000",
+   "kind": null,
+   "shown": false,
+   "showOn": true,
+   "nudge": {
+    "dx": 5,
+    "dz": 0,
+    "dy": 0,
+    "yawDeg": 0
+   },
+   "error": null,
+   "readout": "reference N: it has no AI line, so Line has nothing to draw. Road draws it, placed by the start its kn5 names.",
+   "drawn": null,
+   "select": {
+    "value": "reference N\u0000",
+    "selectedIndex": 2,
+    "text": "reference N (no AI line)",
+    "disabled": true,
+    "colour": "rgb(235, 230, 220)"
+   },
+   "calls": []
+  },
+  {
+   "label": "4c. mode change 1 of 2: Road",
+   "mode": "road",
+   "picked": "reference N\u0000",
+   "kind": "road",
+   "shown": true,
+   "showOn": true,
+   "nudge": {
+    "dx": 5,
+    "dz": 0,
+    "dy": 0,
+    "yawDeg": 0
+   },
+   "error": null,
+   "readout": "26,218 triangles of road from its kn5, placed by its kn5's start (its first grid slot): it has no AI line · read 4 ms, built 2 ms",
+   "drawn": "line",
+   "select": {
+    "value": "reference N\u0000",
+    "selectedIndex": 2,
+    "text": "reference N (no AI line: placed by its start)",
+    "disabled": false,
+    "colour": "rgb(235, 230, 220)"
+   },
+   "calls": [
+    "read_reference_road N"
+   ]
+  },
+  {
+   "label": "4c. mode change 2 of 2: Line",
+   "mode": "line",
+   "picked": "reference N\u0000",
+   "kind": null,
+   "shown": false,
+   "showOn": true,
+   "nudge": {
+    "dx": 5,
+    "dz": 0,
+    "dy": 0,
+    "yawDeg": 0
+   },
+   "error": null,
+   "readout": "reference N: it has no AI line, so Line has nothing to draw. Road draws it, placed by the start its kn5 names.",
+   "drawn": null,
+   "select": {
+    "value": "reference N\u0000",
+    "selectedIndex": 2,
+    "text": "reference N (no AI line)",
+    "disabled": true,
+    "colour": "rgb(235, 230, 220)"
+   },
+   "calls": []
+  },
+  {
+   "label": "4c. and Road again",
+   "mode": "road",
+   "picked": "reference N\u0000",
+   "kind": "road",
+   "shown": true,
+   "showOn": true,
+   "nudge": {
+    "dx": 5,
+    "dz": 0,
+    "dy": 0,
+    "yawDeg": 0
+   },
+   "error": null,
+   "readout": "26,218 triangles of road from its kn5, placed by its kn5's start (its first grid slot): it has no AI line · read 5 ms, built 2 ms",
+   "drawn": "line",
+   "select": {
+    "value": "reference N\u0000",
+    "selectedIndex": 2,
+    "text": "reference N (no AI line: placed by its start)",
+    "disabled": false,
+    "colour": "rgb(235, 230, 220)"
+   },
+   "calls": [
+    "read_reference_road N"
+   ]
+  },
+  {
+   "label": "4d. held",
+   "mode": "line",
+   "picked": "reference N\u0000",
+   "kind": null,
+   "shown": false,
+   "showOn": true,
+   "nudge": {
+    "dx": 5,
+    "dz": 0,
+    "dy": 0,
+    "yawDeg": 0
+   },
+   "error": null,
+   "readout": "reference N: it has no AI line, so Line has nothing to draw. Road draws it, placed by the start its kn5 names.",
+   "drawn": null,
+   "select": {
+    "value": "reference N\u0000",
+    "selectedIndex": 2,
+    "text": "reference N (no AI line)",
+    "disabled": true,
+    "colour": "rgb(235, 230, 220)"
+   },
+   "calls": []
+  },
+  {
+   "label": "4d. R picked while N held: its line refused",
+   "mode": "line",
+   "picked": null,
+   "kind": null,
+   "shown": false,
+   "showOn": true,
+   "nudge": {
+    "dx": 5,
+    "dz": 0,
+    "dy": 0,
+    "yawDeg": 0
+   },
+   "error": "reference R: Not drawn: the AI line ends at 382736 bytes; its 4160 points need 382744. What does not read whole is never drawn in part.",
+   "readout": "reference R: Not drawn: the AI line ends at 382736 bytes; its 4160 points need 382744. What does not read whole is never drawn in part.",
+   "drawn": null,
+   "select": {
+    "value": "",
+    "selectedIndex": 0,
+    "text": "None",
+    "disabled": false,
+    "colour": "rgb(235, 230, 220)"
+   },
+   "calls": [
+    "read_reference_line R"
+   ]
+  },
+  {
+   "label": "4d. then Road",
+   "mode": "road",
+   "picked": null,
+   "kind": null,
+   "shown": false,
+   "showOn": true,
+   "nudge": {
+    "dx": 5,
+    "dz": 0,
+    "dy": 0,
+    "yawDeg": 0
+   },
+   "error": "reference R: Not drawn: the AI line ends at 382736 bytes; its 4160 points need 382744. What does not read whole is never drawn in part.",
+   "readout": "reference R: Not drawn: the AI line ends at 382736 bytes; its 4160 points need 382744. What does not read whole is never drawn in part.",
+   "drawn": null,
+   "select": {
+    "value": "",
+    "selectedIndex": 0,
+    "text": "None",
+    "disabled": false,
+    "colour": "rgb(235, 230, 220)"
+   },
+   "calls": []
+  },
+  {
+   "label": "4e. N held",
+   "mode": "line",
+   "picked": "reference N\u0000",
+   "kind": null,
+   "shown": false,
+   "showOn": true,
+   "nudge": {
+    "dx": 5,
+    "dz": 0,
+    "dy": 0,
+    "yawDeg": 0
+   },
+   "error": null,
+   "readout": "reference N: it has no AI line, so Line has nothing to draw. Road draws it, placed by the start its kn5 names.",
+   "drawn": null,
+   "select": {
+    "value": "reference N\u0000",
+    "selectedIndex": 2,
+    "text": "reference N (no AI line)",
+    "disabled": true,
+    "colour": "rgb(235, 230, 220)"
+   },
+   "calls": [
+    "read_reference_road N"
+   ]
+  },
+  {
+   "label": "4e. A picked while N held",
+   "mode": "line",
+   "picked": "reference A\u0000",
+   "kind": "line",
+   "shown": true,
+   "showOn": true,
+   "nudge": {
+    "dx": 5,
+    "dz": 0,
+    "dy": 0,
+    "yawDeg": 0
+   },
+   "error": null,
+   "readout": "4,591 m along its line · 12.3 m wide (11.1 to 20) · read 16 ms, built 0 ms",
+   "drawn": "line",
+   "select": {
+    "value": "reference A\u0000",
+    "selectedIndex": 1,
+    "text": "reference A",
+    "disabled": false,
+    "colour": "rgb(235, 230, 220)"
+   },
+   "calls": [
+    "read_reference_line A"
+   ]
+  },
+  {
+   "label": "4e. then Road",
+   "mode": "road",
+   "picked": "reference A\u0000",
+   "kind": "road",
+   "shown": true,
+   "showOn": true,
+   "nudge": {
+    "dx": 5,
+    "dz": 0,
+    "dy": 0,
+    "yawDeg": 0
+   },
+   "error": null,
+   "readout": "14,765 triangles of road from its kn5, placed by its 4,591 m AI line · read 14 ms, built 1 ms",
+   "drawn": "line",
+   "select": {
+    "value": "reference A\u0000",
+    "selectedIndex": 1,
+    "text": "reference A",
+    "disabled": false,
+    "colour": "rgb(235, 230, 220)"
+   },
+   "calls": [
+    "read_reference_line A",
+    "read_reference_road A"
+   ]
+  },
+  {
+   "label": "4f. N held",
+   "mode": "line",
+   "picked": "reference N\u0000",
+   "kind": null,
+   "shown": false,
+   "showOn": true,
+   "nudge": {
+    "dx": 5,
+    "dz": 0,
+    "dy": 0,
+    "yawDeg": 0
+   },
+   "error": null,
+   "readout": "reference N: it has no AI line, so Line has nothing to draw. Road draws it, placed by the start its kn5 names.",
+   "drawn": null,
+   "select": {
+    "value": "reference N\u0000",
+    "selectedIndex": 2,
+    "text": "reference N (no AI line)",
+    "disabled": true,
+    "colour": "rgb(235, 230, 220)"
+   },
+   "calls": [
+    "read_reference_road N"
+   ]
+  },
+  {
+   "label": "4f. Clear while held",
+   "mode": "line",
+   "picked": null,
+   "kind": null,
+   "shown": false,
+   "showOn": true,
+   "nudge": {
+    "dx": 0,
+    "dz": 0,
+    "dy": 0,
+    "yawDeg": 0
+   },
+   "error": null,
+   "readout": "1 of 3 layouts have an AI line to show (1 cannot be read).",
+   "drawn": null,
+   "select": {
+    "value": "",
+    "selectedIndex": 0,
+    "text": "None",
+    "disabled": false,
+    "colour": "rgb(235, 230, 220)"
+   },
+   "calls": []
+  },
+  {
+   "label": "4f. then Road",
+   "mode": "road",
+   "picked": null,
+   "kind": null,
+   "shown": false,
+   "showOn": true,
+   "nudge": {
+    "dx": 0,
+    "dz": 0,
+    "dy": 0,
+    "yawDeg": 0
+   },
+   "error": null,
+   "readout": "2 of 3 layouts to show as road (1 with no AI line, placed by the start its kn5 names); 1 cannot be read.",
+   "drawn": null,
+   "select": {
+    "value": "",
+    "selectedIndex": 0,
+    "text": "None",
+    "disabled": false,
+    "colour": "rgb(235, 230, 220)"
+   },
+   "calls": []
+  }
+ ],
+ "errors": [],
+ "optionsLine": [
+  {
+   "text": "None",
+   "disabled": false
+  },
+  {
+   "text": "reference A",
+   "disabled": false
+  },
+  {
+   "text": "reference N (no AI line)",
+   "disabled": true
+  },
+  {
+   "text": "reference R",
+   "disabled": false
+  }
+ ],
+ "optionsRoad": [
+  {
+   "text": "None",
+   "disabled": false
+  },
+  {
+   "text": "reference A",
+   "disabled": false
+  },
+  {
+   "text": "reference N (no AI line: placed by its start)",
+   "disabled": false
+  },
+  {
+   "text": "reference R",
+   "disabled": false
+  }
+ ],
+ "title": "zz-headless-test"
+}
