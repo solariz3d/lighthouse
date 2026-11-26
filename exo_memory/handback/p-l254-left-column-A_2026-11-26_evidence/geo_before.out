@@ -1,0 +1,929 @@
+{
+ "chrome": "Chrome/158.0.8127.37",
+ "rows": [
+  {
+   "look": "sigil",
+   "size": "1400x860",
+   "theme": null,
+   "header": [
+    0,
+    0,
+    1400,
+    44
+   ],
+   "banner": [
+    0,
+    44,
+    1400,
+    44
+   ],
+   "left": [
+    12,
+    56,
+    260,
+    644.5
+   ],
+   "leftScrollH": 586,
+   "leftClientW": 238,
+   "margin": "12px 0px 12px 12px",
+   "radius": "0px",
+   "opacity": "1",
+   "clip": "none",
+   "maxH": "calc(100% - 24px)",
+   "cols": "260px 1140px",
+   "hud": [
+    274,
+    114,
+    479.1,
+    132
+   ],
+   "hudText": "Build view · plain road (L)",
+   "hudTop": "",
+   "values": [
+    332.3,
+    52,
+    1067.7,
+    108.2
+   ],
+   "guideOpen": [
+    1271.2,
+    56,
+    1388,
+    84
+   ],
+   "guideCard": null,
+   "cameraBar": [
+    541.2,
+    694.6,
+    858.8,
+    736.6
+   ],
+   "cameraKeys": [
+    689,
+    824,
+    711,
+    846
+   ],
+   "canvas": [
+    0,
+    44,
+    1400,
+    860
+   ],
+   "exportBanner": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "openSupported": true
+  },
+  {
+   "look": "sigil",
+   "size": "1000x700",
+   "theme": null,
+   "header": [
+    0,
+    0,
+    1000,
+    44
+   ],
+   "banner": [
+    0,
+    44,
+    1000,
+    44
+   ],
+   "left": [
+    12,
+    56,
+    260,
+    644.5
+   ],
+   "leftScrollH": 586,
+   "leftClientW": 238,
+   "margin": "12px 0px 12px 12px",
+   "radius": "0px",
+   "opacity": "1",
+   "clip": "none",
+   "maxH": "calc(100% - 24px)",
+   "cols": "260px 740px",
+   "hud": [
+    274,
+    129,
+    479.1,
+    147
+   ],
+   "hudText": "Build view · plain road (L)",
+   "hudTop": "",
+   "values": [
+    216.8,
+    52,
+    783.2,
+    123.1
+   ],
+   "guideOpen": [
+    871.2,
+    56,
+    988,
+    84
+   ],
+   "guideCard": null,
+   "cameraBar": [
+    341.2,
+    534.6,
+    658.8,
+    576.6
+   ],
+   "cameraKeys": [
+    489,
+    664,
+    511,
+    686
+   ],
+   "canvas": [
+    0,
+    44,
+    1000,
+    700
+   ],
+   "exportBanner": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "openSupported": true
+  },
+  {
+   "look": "glass",
+   "size": "1400x860",
+   "theme": "glass",
+   "header": [
+    0,
+    0,
+    1400,
+    44
+   ],
+   "banner": [
+    0,
+    44,
+    1400,
+    44
+   ],
+   "left": [
+    12,
+    56,
+    260,
+    644.5
+   ],
+   "leftScrollH": 586,
+   "leftClientW": 238,
+   "margin": "12px 0px 12px 12px",
+   "radius": "0px",
+   "opacity": "1",
+   "clip": "polygon(0px 0px, calc(100% - 22px) 0px, 100% 22px, 100% 100%, 0px 100%)",
+   "maxH": "calc(100% - 24px)",
+   "cols": "260px 1140px",
+   "hud": [
+    274,
+    114,
+    479.1,
+    132
+   ],
+   "hudText": "Build view · plain road (L)",
+   "hudTop": "",
+   "values": [
+    332.3,
+    52,
+    1067.7,
+    108.2
+   ],
+   "guideOpen": [
+    1271.2,
+    56,
+    1388,
+    84
+   ],
+   "guideCard": null,
+   "cameraBar": [
+    541.2,
+    694.6,
+    858.8,
+    736.6
+   ],
+   "cameraKeys": [
+    689,
+    824,
+    711,
+    846
+   ],
+   "canvas": [
+    0,
+    44,
+    1400,
+    860
+   ],
+   "exportBanner": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "openSupported": true
+  },
+  {
+   "look": "glass",
+   "size": "1000x700",
+   "theme": "glass",
+   "header": [
+    0,
+    0,
+    1000,
+    44
+   ],
+   "banner": [
+    0,
+    44,
+    1000,
+    44
+   ],
+   "left": [
+    12,
+    56,
+    260,
+    644.5
+   ],
+   "leftScrollH": 586,
+   "leftClientW": 238,
+   "margin": "12px 0px 12px 12px",
+   "radius": "0px",
+   "opacity": "1",
+   "clip": "polygon(0px 0px, calc(100% - 22px) 0px, 100% 22px, 100% 100%, 0px 100%)",
+   "maxH": "calc(100% - 24px)",
+   "cols": "260px 740px",
+   "hud": [
+    274,
+    129,
+    479.1,
+    147
+   ],
+   "hudText": "Build view · plain road (L)",
+   "hudTop": "",
+   "values": [
+    216.8,
+    52,
+    783.2,
+    123.1
+   ],
+   "guideOpen": [
+    871.2,
+    56,
+    988,
+    84
+   ],
+   "guideCard": null,
+   "cameraBar": [
+    341.2,
+    534.6,
+    658.8,
+    576.6
+   ],
+   "cameraKeys": [
+    489,
+    664,
+    511,
+    686
+   ],
+   "canvas": [
+    0,
+    44,
+    1000,
+    700
+   ],
+   "exportBanner": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "openSupported": true
+  },
+  {
+   "look": "aqua",
+   "size": "1400x860",
+   "theme": "aqua",
+   "header": [
+    0,
+    0,
+    1400,
+    44
+   ],
+   "banner": [
+    0,
+    44,
+    1400,
+    44
+   ],
+   "left": [
+    12,
+    56,
+    260,
+    644.5
+   ],
+   "leftScrollH": 586,
+   "leftClientW": 238,
+   "margin": "12px 0px 12px 12px",
+   "radius": "0px",
+   "opacity": "1",
+   "clip": "none",
+   "maxH": "calc(100% - 24px)",
+   "cols": "260px 1140px",
+   "hud": [
+    274,
+    114,
+    479.1,
+    132
+   ],
+   "hudText": "Build view · plain road (L)",
+   "hudTop": "",
+   "values": [
+    332.3,
+    52,
+    1067.7,
+    108.2
+   ],
+   "guideOpen": [
+    1271.2,
+    56,
+    1388,
+    84
+   ],
+   "guideCard": null,
+   "cameraBar": [
+    541.2,
+    694.6,
+    858.8,
+    736.6
+   ],
+   "cameraKeys": [
+    689,
+    824,
+    711,
+    846
+   ],
+   "canvas": [
+    0,
+    44,
+    1400,
+    860
+   ],
+   "exportBanner": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "openSupported": true
+  },
+  {
+   "look": "aqua",
+   "size": "1000x700",
+   "theme": "aqua",
+   "header": [
+    0,
+    0,
+    1000,
+    44
+   ],
+   "banner": [
+    0,
+    44,
+    1000,
+    44
+   ],
+   "left": [
+    12,
+    56,
+    260,
+    644.5
+   ],
+   "leftScrollH": 586,
+   "leftClientW": 238,
+   "margin": "12px 0px 12px 12px",
+   "radius": "0px",
+   "opacity": "1",
+   "clip": "none",
+   "maxH": "calc(100% - 24px)",
+   "cols": "260px 740px",
+   "hud": [
+    274,
+    129,
+    479.1,
+    147
+   ],
+   "hudText": "Build view · plain road (L)",
+   "hudTop": "",
+   "values": [
+    216.8,
+    52,
+    783.2,
+    123.1
+   ],
+   "guideOpen": [
+    871.2,
+    56,
+    988,
+    84
+   ],
+   "guideCard": null,
+   "cameraBar": [
+    341.2,
+    534.6,
+    658.8,
+    576.6
+   ],
+   "cameraKeys": [
+    489,
+    664,
+    511,
+    686
+   ],
+   "canvas": [
+    0,
+    44,
+    1000,
+    700
+   ],
+   "exportBanner": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "openSupported": true
+  },
+  {
+   "look": "aurora",
+   "size": "1400x860",
+   "theme": "aurora",
+   "header": [
+    0,
+    0,
+    1400,
+    44
+   ],
+   "banner": [
+    0,
+    44,
+    1400,
+    44
+   ],
+   "left": [
+    12,
+    56,
+    260,
+    644.5
+   ],
+   "leftScrollH": 586,
+   "leftClientW": 238,
+   "margin": "12px 0px 12px 12px",
+   "radius": "0px",
+   "opacity": "1",
+   "clip": "none",
+   "maxH": "calc(100% - 24px)",
+   "cols": "260px 1140px",
+   "hud": [
+    274,
+    114,
+    479.1,
+    132
+   ],
+   "hudText": "Build view · plain road (L)",
+   "hudTop": "",
+   "values": [
+    332.3,
+    52,
+    1067.7,
+    108.2
+   ],
+   "guideOpen": [
+    1271.2,
+    56,
+    1388,
+    84
+   ],
+   "guideCard": null,
+   "cameraBar": [
+    541.2,
+    694.6,
+    858.8,
+    736.6
+   ],
+   "cameraKeys": [
+    689,
+    824,
+    711,
+    846
+   ],
+   "canvas": [
+    0,
+    44,
+    1400,
+    860
+   ],
+   "exportBanner": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "openSupported": true
+  },
+  {
+   "look": "aurora",
+   "size": "1000x700",
+   "theme": "aurora",
+   "header": [
+    0,
+    0,
+    1000,
+    44
+   ],
+   "banner": [
+    0,
+    44,
+    1000,
+    44
+   ],
+   "left": [
+    12,
+    56,
+    260,
+    644.5
+   ],
+   "leftScrollH": 586,
+   "leftClientW": 238,
+   "margin": "12px 0px 12px 12px",
+   "radius": "0px",
+   "opacity": "1",
+   "clip": "none",
+   "maxH": "calc(100% - 24px)",
+   "cols": "260px 740px",
+   "hud": [
+    274,
+    129,
+    479.1,
+    147
+   ],
+   "hudText": "Build view · plain road (L)",
+   "hudTop": "",
+   "values": [
+    216.8,
+    52,
+    783.2,
+    123.1
+   ],
+   "guideOpen": [
+    871.2,
+    56,
+    988,
+    84
+   ],
+   "guideCard": null,
+   "cameraBar": [
+    341.2,
+    534.6,
+    658.8,
+    576.6
+   ],
+   "cameraKeys": [
+    489,
+    664,
+    511,
+    686
+   ],
+   "canvas": [
+    0,
+    44,
+    1000,
+    700
+   ],
+   "exportBanner": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "openSupported": true
+  },
+  {
+   "look": "skyline",
+   "size": "1400x860",
+   "theme": "skyline",
+   "header": [
+    0,
+    0,
+    1400,
+    44
+   ],
+   "banner": [
+    0,
+    44,
+    1400,
+    44
+   ],
+   "left": [
+    12,
+    56,
+    260,
+    644.5
+   ],
+   "leftScrollH": 586,
+   "leftClientW": 238,
+   "margin": "12px 0px 12px 12px",
+   "radius": "0px",
+   "opacity": "1",
+   "clip": "none",
+   "maxH": "calc(100% - 24px)",
+   "cols": "260px 1140px",
+   "hud": [
+    274,
+    114,
+    479.1,
+    132
+   ],
+   "hudText": "Build view · plain road (L)",
+   "hudTop": "",
+   "values": [
+    332.3,
+    52,
+    1067.7,
+    108.2
+   ],
+   "guideOpen": [
+    1271.2,
+    56,
+    1388,
+    84
+   ],
+   "guideCard": null,
+   "cameraBar": [
+    541.2,
+    694.6,
+    858.8,
+    736.6
+   ],
+   "cameraKeys": [
+    689,
+    824,
+    711,
+    846
+   ],
+   "canvas": [
+    0,
+    44,
+    1400,
+    860
+   ],
+   "exportBanner": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "openSupported": true
+  },
+  {
+   "look": "skyline",
+   "size": "1000x700",
+   "theme": "skyline",
+   "header": [
+    0,
+    0,
+    1000,
+    44
+   ],
+   "banner": [
+    0,
+    44,
+    1000,
+    44
+   ],
+   "left": [
+    12,
+    56,
+    260,
+    644.5
+   ],
+   "leftScrollH": 586,
+   "leftClientW": 238,
+   "margin": "12px 0px 12px 12px",
+   "radius": "0px",
+   "opacity": "1",
+   "clip": "none",
+   "maxH": "calc(100% - 24px)",
+   "cols": "260px 740px",
+   "hud": [
+    274,
+    129,
+    479.1,
+    147
+   ],
+   "hudText": "Build view · plain road (L)",
+   "hudTop": "",
+   "values": [
+    216.8,
+    52,
+    783.2,
+    123.1
+   ],
+   "guideOpen": [
+    871.2,
+    56,
+    988,
+    84
+   ],
+   "guideCard": null,
+   "cameraBar": [
+    341.2,
+    534.6,
+    658.8,
+    576.6
+   ],
+   "cameraKeys": [
+    489,
+    664,
+    511,
+    686
+   ],
+   "canvas": [
+    0,
+    44,
+    1000,
+    700
+   ],
+   "exportBanner": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "openSupported": true
+  },
+  {
+   "look": "skyline-night",
+   "size": "1400x860",
+   "theme": "skyline-night",
+   "header": [
+    0,
+    0,
+    1400,
+    44
+   ],
+   "banner": [
+    0,
+    44,
+    1400,
+    44
+   ],
+   "left": [
+    12,
+    56,
+    260,
+    644.5
+   ],
+   "leftScrollH": 586,
+   "leftClientW": 238,
+   "margin": "12px 0px 12px 12px",
+   "radius": "0px",
+   "opacity": "1",
+   "clip": "none",
+   "maxH": "calc(100% - 24px)",
+   "cols": "260px 1140px",
+   "hud": [
+    274,
+    114,
+    479.1,
+    132
+   ],
+   "hudText": "Build view · plain road (L)",
+   "hudTop": "",
+   "values": [
+    332.3,
+    52,
+    1067.7,
+    108.2
+   ],
+   "guideOpen": [
+    1271.2,
+    56,
+    1388,
+    84
+   ],
+   "guideCard": null,
+   "cameraBar": [
+    541.2,
+    694.6,
+    858.8,
+    736.6
+   ],
+   "cameraKeys": [
+    689,
+    824,
+    711,
+    846
+   ],
+   "canvas": [
+    0,
+    44,
+    1400,
+    860
+   ],
+   "exportBanner": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "openSupported": true
+  },
+  {
+   "look": "skyline-night",
+   "size": "1000x700",
+   "theme": "skyline-night",
+   "header": [
+    0,
+    0,
+    1000,
+    44
+   ],
+   "banner": [
+    0,
+    44,
+    1000,
+    44
+   ],
+   "left": [
+    12,
+    56,
+    260,
+    644.5
+   ],
+   "leftScrollH": 586,
+   "leftClientW": 238,
+   "margin": "12px 0px 12px 12px",
+   "radius": "0px",
+   "opacity": "1",
+   "clip": "none",
+   "maxH": "calc(100% - 24px)",
+   "cols": "260px 740px",
+   "hud": [
+    274,
+    129,
+    479.1,
+    147
+   ],
+   "hudText": "Build view · plain road (L)",
+   "hudTop": "",
+   "values": [
+    216.8,
+    52,
+    783.2,
+    123.1
+   ],
+   "guideOpen": [
+    871.2,
+    56,
+    988,
+    84
+   ],
+   "guideCard": null,
+   "cameraBar": [
+    341.2,
+    534.6,
+    658.8,
+    576.6
+   ],
+   "cameraKeys": [
+    489,
+    664,
+    511,
+    686
+   ],
+   "canvas": [
+    0,
+    44,
+    1000,
+    700
+   ],
+   "exportBanner": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "openSupported": true
+  }
+ ]
+}

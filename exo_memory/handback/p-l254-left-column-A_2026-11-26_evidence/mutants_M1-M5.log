@@ -1,0 +1,20 @@
+{"mutant":"M1 no swallow in the fade","red":["row 5"],"green":[],"caught":true,"s":5}
+{"mutant":"M2 keyboard focus does not hold","red":["row 6","row 8"],"green":[],"caught":true,"s":8}
+{"mutant":"M3 a press does not hold","red":["row 6"],"green":[],"caught":true,"s":7}
+{"mutant":"M4 the ghost row does not hold","red":["row 7"],"green":[],"caught":true,"s":5}
+{"mutant":"M5 no return strip","red":["row 3","row 4"],"green":[],"caught":true,"s":33}
+C:\Users\zackn\AppData\Local\Temp\claude\4589df4838997b56\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\l254\mutate.js:30
+  for (const [a, b] of m.edits || [[m.from, m.to]]) { const n = s.split(a).length - 1; if (n !== 1) throw new Error(`${m.id}: ${n} matches for ${JSON.stringify(a)}`); s = s.replace(a, () => b); }
+                                                                                                    ^
+
+Error: M6 a cleared column still takes clicks: 0 matches for "  #left.cleared, #left.cleared * { pointer-events: none !important; }\n"
+    at Object.<anonymous> (C:\Users\zackn\AppData\Local\Temp\claude\4589df4838997b56\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\l254\mutate.js:30:107)
+[90m    at Module._compile (node:internal/modules/cjs/loader:1871:14)[39m
+[90m    at Object..js (node:internal/modules/cjs/loader:2002:10)[39m
+[90m    at Module.load (node:internal/modules/cjs/loader:1594:32)[39m
+[90m    at Module._load (node:internal/modules/cjs/loader:1396:12)[39m
+[90m    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)[39m
+[90m    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)[39m
+[90m    at node:internal/main/run_main_module:33:47[39m
+
+Node.js v24.18.0

@@ -1,0 +1,10 @@
+{"mutant":"M6 a cleared column still takes clicks","red":["row 4"],"green":[],"caught":true,"s":4}
+{"mutant":"M7 no delay","red":["row 3"],"green":[],"caught":true,"s":30}
+{"mutant":"M8 a fast cross is not cancelled","red":[],"green":["row 3"],"caught":false,"s":29}
+{"mutant":"M9 a fade under reduced motion","red":["row 9"],"green":[],"caught":true,"s":4}
+{"mutant":"M10 the view tag left where it was","red":["row 2"],"green":[],"caught":true,"s":9}
+{"mutant":"M11 the view tag level with the docked top","red":["row 2"],"green":[],"caught":true,"s":8}
+{"mutant":"M12 the column still 12 px in","red":["row 1"],"green":[],"caught":true,"s":15}
+{"mutant":"M13 cleared from the first move (not armed)","red":["row 10"],"green":[],"caught":true,"s":4}
+{"mutant":"M14 the guide does not hold","red":["row 11"],"green":[],"caught":true,"s":5}
+8 of 9 mutants caught
