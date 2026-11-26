@@ -1,0 +1,195 @@
+TAP version 13
+# Subtest: row 13 (L249): the corners are the spec's scale times each look's factor (a panel button, a menu, the left column, Export, a dialog), and focus is a 2 px ring in the accent
+not ok 1 - row 13 (L249): the corners are the spec's scale times each look's factor (a panel button, a menu, the left column, Export, a dialog), and focus is a 2 px ring in the accent
+  ---
+  duration_ms: 16066.1567
+  type: 'test'
+  location: 'C:\\Consonance\\t180-wt-colours\\app\\test\\texture-page.test.js:403:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    computed corners: [panel button, menu, left column, Export, dialog] per look
+    [32m+ actual[39m [31m- expected[39m
+    ... Skipped lines
+    
+    [39m  {
+    [39m    'skyline-night': [
+    [32m+[39m     '13px',
+    [32m+[39m     '14px',
+    [32m+[39m     '16px',
+    [32m+[39m     '13px',
+    [32m+[39m     '16px'
+    [31m-[39m     '4px',
+    [31m-[39m     '8px',
+    [31m-[39m     '0px',
+    [31m-[39m     '999px',
+    [31m-[39m     '12px'
+    [39m    ],
+    [39m    aqua: [
+    [31m-[39m     '4px',
+    [31m-[39m     '8px',
+    [31m-[39m     '0px',
+    [39m      '999px',
+    [32m+[39m     '18px',
+    [32m+[39m     '18px',
+    [32m+[39m     '999px',
+    [32m+[39m     '18px'
+    [31m-[39m     '12px'
+    [39m    ],
+    [39m    aurora: [
+    [32m+[39m     '10px',
+    [32m+[39m     '14px',
+    [32m+[39m     '16px',
+    [32m+[39m     '10px',
+    [32m+[39m     '16px'
+    [31m-[39m     '3px',
+    [31m-[39m     '6px',
+    [31m-[39m     '0px',
+    [31m-[39m     '3px',
+    [31m-[39m     '9px'
+    [39m    ],
+    [39m    glass: [
+    [39m      '0px',
+    [39m      '0px',
+    [39m      '0px',
+    [34m...[39m
+    [39m      '2px',
+    [32m+[39m     '6px',
+    [31m-[39m     '4px',
+    [39m      '0px',
+    [39m      '2px',
+    [32m+[39m     '0px'
+    [31m-[39m     '6px'
+    [39m    ],
+    [39m    skyline: [
+    [32m+[39m     '13px',
+    [32m+[39m     '14px',
+    [32m+[39m     '16px',
+    [32m+[39m     '13px',
+    [32m+[39m     '16px'
+    [31m-[39m     '4px',
+    [31m-[39m     '8px',
+    [31m-[39m     '0px',
+    [31m-[39m     '999px',
+    [31m-[39m     '12px'
+    [39m    ]
+    [39m  }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    sigil:
+      0: '2px'
+      1: '4px'
+      2: '0px'
+      3: '2px'
+      4: '6px'
+    aqua:
+      0: '4px'
+      1: '8px'
+      2: '0px'
+      3: '999px'
+      4: '12px'
+    skyline:
+      0: '4px'
+      1: '8px'
+      2: '0px'
+      3: '999px'
+      4: '12px'
+    glass:
+      0: '0px'
+      1: '0px'
+      2: '0px'
+      3: '0px'
+      4: '0px'
+    aurora:
+      0: '3px'
+      1: '6px'
+      2: '0px'
+      3: '3px'
+      4: '9px'
+    skyline-night:
+      0: '4px'
+      1: '8px'
+      2: '0px'
+      3: '999px'
+      4: '12px'
+  actual:
+    sigil:
+      0: '2px'
+      1: '6px'
+      2: '0px'
+      3: '2px'
+      4: '0px'
+    aqua:
+      0: '999px'
+      1: '18px'
+      2: '18px'
+      3: '999px'
+      4: '18px'
+    skyline:
+      0: '13px'
+      1: '14px'
+      2: '16px'
+      3: '13px'
+      4: '16px'
+    glass:
+      0: '0px'
+      1: '0px'
+      2: '0px'
+      3: '0px'
+      4: '0px'
+    aurora:
+      0: '10px'
+      1: '14px'
+      2: '16px'
+      3: '10px'
+      4: '16px'
+    skyline-night:
+      0: '13px'
+      1: '14px'
+      2: '16px'
+      3: '13px'
+      4: '16px'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Consonance\t180-wt-colours\app\test\texture-page.test.js:420:10)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3)
+  ...
+# Subtest: row 14 (L249): a hovered menu row, a hovered Export and a hovered panel button read 4.5:1 or more on their own pixels in every look
+not ok 2 - row 14 (L249): a hovered menu row, a hovered Export and a hovered panel button read 4.5:1 or more on their own pixels in every look
+  ---
+  duration_ms: 33267.8097
+  type: 'test'
+  location: 'C:\\Consonance\\t180-wt-colours\\app\\test\\texture-page.test.js:428:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    hovered texts under 4.5:1 on their own pixels
+    [32m+ actual[39m [31m- expected[39m
+    
+    [32m+[39m [
+    [32m+[39m   'skyline-night panel button: 4.48'
+    [32m+[39m ]
+    [31m-[39m []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'skyline-night panel button: 4.48'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Consonance\t180-wt-colours\app\test\texture-page.test.js:458:10)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# sigil: menu row 12.34, Export 8.47, panel button 8.63; aqua: menu row 8.74, Export 10.77, panel button 10.77; skyline: menu row 11.27, Export 4.79, panel button 5.41; glass: menu row 14.25, Export 12.78, panel button 12.24; aurora: menu row 11.86, Export 9.18, panel button 9.93; skyline-night: menu row 10.52, Export 5.44, panel button 4.48
+1..2
+# tests 2
+# suites 0
+# pass 0
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 49910.5646

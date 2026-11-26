@@ -1,0 +1,271 @@
+TAP version 13
+# Subtest: W1: each look's window takes that look's own font and corner radius (read from its tokens, drawn)
+ok 1 - W1: each look's window takes that look's own font and corner radius (read from its tokens, drawn)
+  ---
+  duration_ms: 9.6367
+  type: 'test'
+  ...
+# Subtest: W2: a page with no window tokens draws today's box: square, the veil, a 1.5 px edge in the mark's colour, bold 12px system-ui, the words at +6 px
+ok 2 - W2: a page with no window tokens draws today's box: square, the veil, a 1.5 px edge in the mark's colour, bold 12px system-ui, the words at +6 px
+  ---
+  duration_ms: 0.2
+  type: 'test'
+  ...
+# Subtest: W3: a look that sets no mark colours draws today's; a --mark-<field> token is what the field, its extra handles and its corner kind draw
+ok 3 - W3: a look that sets no mark colours draws today's; a --mark-<field> token is what the field, its extra handles and its corner kind draw
+  ---
+  duration_ms: 0.3088
+  type: 'test'
+  ...
+# Subtest: W4: on every look, bank and turn are told apart (their colours at least 60 apart in RGB), and each window's words read on its fill (contrast 4.5:1 or better)
+ok 4 - W4: on every look, bank and turn are told apart (their colours at least 60 apart in RGB), and each window's words read on its fill (contrast 4.5:1 or better)
+  ---
+  duration_ms: 3.1722
+  type: 'test'
+  ...
+# Subtest: W5: every look sets its own colour for each field, no two fields within 60 of each other (W4's unit), and each 60 or more off that look's road edges, grid, fog and sky
+ok 5 - W5: every look sets its own colour for each field, no two fields within 60 of each other (W4's unit), and each 60 or more off that look's road edges, grid, fog and sky
+  ---
+  duration_ms: 5.4068
+  type: 'test'
+  ...
+# Subtest: W6: a field's hue, wherever it comes from (Build, the landing, the Sculpt brush and Smooth's channel, the dots' rows), draws as the look's colour for that field; a hue with no field, and every hue on a page with no tokens, as it is
+ok 6 - W6: a field's hue, wherever it comes from (Build, the landing, the Sculpt brush and Smooth's channel, the dots' rows), draws as the look's colour for that field; a hue with no field, and every hue on a page with no tokens, as it is
+  ---
+  duration_ms: 2.8837
+  type: 'test'
+  ...
+# Subtest: W7: each look's window corner is the chrome scale's r1 (2 px) times that look's radius factor, written as a plain number
+not ok 7 - W7: each look's window corner is the chrome scale's r1 (2 px) times that look's radius factor, written as a plain number
+  ---
+  duration_ms: 0.8885
+  type: 'test'
+  location: 'C:\\Consonance\\t180-wt-colours\\app\\test\\markwindow.test.js:130:1'
+  failureType: 'testCodeFailure'
+  error: 'sigil sets its --radius-factor'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: 'undefined'
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (C:\Consonance\t180-wt-colours\app\test\markwindow.test.js:135:12)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: each melody sets its own skin on <html data-theme>; an unknown or missing melody leaves SIGIL
+ok 8 - each melody sets its own skin on <html data-theme>; an unknown or missing melody leaves SIGIL
+  ---
+  duration_ms: 1.0174
+  type: 'test'
+  ...
+# Subtest: the page sets the skin in its head, before the first paint, from the same number the player draws its melody from
+ok 9 - the page sets the skin in its head, before the first paint, from the same number the player draws its melody from
+  ---
+  duration_ms: 3.259
+  type: 'test'
+  ...
+# Subtest: D394: Settings ▸ Theme has seven choices: music follows the melody, each of the four is its own skin, Skyline Night is its own, sigil is none
+ok 10 - D394: Settings ▸ Theme has seven choices: music follows the melody, each of the four is its own skin, Skyline Night is its own, sigil is none
+  ---
+  duration_ms: 0.1733
+  type: 'test'
+  ...
+# Subtest: D394: the head reads the saved theme: a fixed theme sets its own skin AND melody; music keeps the random pick; nothing saved and broken saved text start on SIGIL; sigil plays its own melody under SIGIL
+ok 11 - D394: the head reads the saved theme: a fixed theme sets its own skin AND melody; music keeps the random pick; nothing saved and broken saved text start on SIGIL; sigil plays its own melody under SIGIL
+  ---
+  duration_ms: 21.0423
+  type: 'test'
+  ...
+# Subtest: D405: Skyline Night is a sixth look on Skyline's melody: its own skin, chosen by name or by the random pick, kept by the boot
+ok 12 - D405: Skyline Night is a sixth look on Skyline's melody: its own skin, chosen by name or by the random pick, kept by the boot
+  ---
+  duration_ms: 5.0248
+  type: 'test'
+  ...
+# Subtest: the reader understands every colour form a skin may write
+ok 13 - the reader understands every colour form a skin may write
+  ---
+  duration_ms: 1.2464
+  type: 'test'
+  ...
+# Subtest: the reader falls back to today's literal where the page has no such token or cannot read it, and says so once per token
+ok 14 - the reader falls back to today's literal where the page has no such token or cannot read it, and says so once per token
+  ---
+  duration_ms: 0.4074
+  type: 'test'
+  ...
+# Subtest: the reader reads again when data-theme changes, and tells whoever listens
+ok 15 - the reader reads again when data-theme changes, and tells whoever listens
+  ---
+  duration_ms: 0.2972
+  type: 'test'
+  ...
+# Subtest: SIGIL's tokens are today's literals, so SIGIL draws exactly as before
+ok 16 - SIGIL's tokens are today's literals, so SIGIL draws exactly as before
+  ---
+  duration_ms: 1.3727
+  type: 'test'
+  ...
+# Subtest: SIGIL's 3D frame is the same, call for call, with its tokens applied; a skin's tokens change it
+ok 17 - SIGIL's 3D frame is the same, call for call, with its tokens applied; a skin's tokens change it
+  ---
+  duration_ms: 2.1093
+  type: 'test'
+  ...
+# Subtest: a skin is styling only: no theme file sets a property that moves or sizes a box, and each skin the page links is a look's
+ok 18 - a skin is styling only: no theme file sets a property that moves or sizes a box, and each skin the page links is a look's
+  ---
+  duration_ms: 1.6821
+  type: 'test'
+  ...
+# Subtest: the canvas layers and overlays name no chrome colour of their own: they read the tokens (the meaning colours stay literal)
+ok 19 - the canvas layers and overlays name no chrome colour of their own: they read the tokens (the meaning colours stay literal)
+  ---
+  duration_ms: 9.3185
+  type: 'test'
+  ...
+# Subtest: L249 the glow budget is 0: no box-shadow or text-shadow in the chrome is a centred blur (a glow or a halo), and every blurred shadow outside a box is black, blur 12 px or less, alpha 0.12 or less
+not ok 20 - L249 the glow budget is 0: no box-shadow or text-shadow in the chrome is a centred blur (a glow or a halo), and every blurred shadow outside a box is black, blur 12 px or less, alpha 0.12 or less
+  ---
+  duration_ms: 8.3204
+  type: 'test'
+  location: 'C:\\Consonance\\t180-wt-colours\\app\\test\\theme.test.js:323:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    a centred blur is a glow (spec §5: hover, open and pressed are a fill or a border, focus a ring, no glowing words, dots or halos)
+    [32m+ actual[39m [31m- expected[39m
+    
+    [32m+[39m [
+    [32m+[39m   'themes/aqua.css:42 [data-theme="aqua"] header h1::before box-shadow: 0 0 10px rgba(63, 224, 245, .8)',
+    [32m+[39m   'themes/aqua.css:47 [data-theme="aqua"] header h1 text-shadow: 0 0 14px rgba(63, 224, 245, .5)',
+    [32m+[39m   'themes/aqua.css:56 [data-theme="aqua"] button:hover:not([disabled]), [data-theme="aqua"] .more > summary:hover box-shadow: 0 0 10px rgba(63, 224, 245, .8)',
+    [32m+[39m   'themes/aqua.css:61 [data-theme="aqua"] .more[open] > summary box-shadow: 0 0 8px rgba(63, 224, 245, .85)',
+    [32m+[39m   'themes/aqua.css:82 [data-theme="aqua"] input:focus, [data-theme="aqua"] select:focus, [data-theme="aqua"] textarea:focus box-shadow: 0 0 10px rgba(63, 224, 245, .7)',
+    [32m+[39m   'themes/aqua.css:134 [data-theme="aqua"] .ask-card box-shadow: 0 0 40px rgba(63, 224, 245, .25)',
+    [32m+[39m   'themes/aqua.css:142 [data-theme="aqua"] .ask-row .ask-main box-shadow: 0 0 10px rgba(63, 224, 245, .8)',
+    [32m+[39m   'themes/skyline.css:34 [data-theme="skyline"] header h1::before box-shadow: 0 0 8px var(--glow)',
+    [32m+[39m   'themes/skyline.css:39 [data-theme="skyline"] button:hover:not([disabled]), [data-theme="skyline"] .more > summary:hover box-shadow: 0 0 10px var(--glow)',
+    [32m+[39m   'themes/skyline.css:41 [data-theme="skyline"] .more[open] > summary, [data-theme="skyline"] header #install > button box-shadow: 0 0 12px var(--glow)',
+    [32m+[39m   'themes/skyline.css:86 [data-theme="skyline"] #camera [role="toolbar"] button[aria-pressed="true"], [data-theme="skyline"] #camera [role="toolbar"] button.on box-shadow: 0 0 10px var(--glow)',
+    [32m+[39m   'themes/glass.css:37 [data-theme="glass"] header h1::before box-shadow: 0 0 10px rgba(143, 230, 255, .75)',
+    [32m+[39m   'themes/glass.css:42 [data-theme="glass"] header h1 text-shadow: 0 0 12px rgba(143, 230, 255, .55)',
+    [32m+[39m   'themes/glass.css:50 [data-theme="glass"] button:hover:not([disabled]), [data-theme="glass"] .more > summary:hover box-shadow: 0 0 6px rgba(143, 230, 255, .45)',
+    [32m+[39m   'themes/glass.css:54 [data-theme="glass"] .more[open] > summary box-shadow: 0 0 6px rgba(143, 230, 255, .5)',
+    [32m+[39m   'themes/glass.css:69 [data-theme="glass"] input:focus, [data-theme="glass"] select:focus, [data-theme="glass"] textarea:focus box-shadow: 0 0 12px rgba(143, 230, 255, .45)',
+    [32m+[39m   'themes/glass.css:108 [data-theme="glass"] #camera [role="toolbar"] button[aria-pressed="true"], [data-theme="glass"] #camera [role="toolbar"] button.on text-shadow: 0 0 10px rgba(143, 230, 255, .9)',
+    [32m+[39m   'themes/glass.css:117 [data-theme="glass"] .ask-card box-shadow: 0 0 40px rgba(110, 200, 255, .2)',
+    [32m+[39m   'themes/aurora.css:38 [data-theme="aurora"] header h1 text-shadow: 0 0 10px var(--green-glow)',
+    [32m+[39m   'themes/aurora.css:38 [data-theme="aurora"] header h1 text-shadow: 0 0 22px var(--violet-glow)',
+    [32m+[39m   'themes/aurora.css:39 [data-theme="aurora"] header h1::before box-shadow: 0 0 10px var(--green-glow)',
+    [32m+[39m   'themes/aurora.css:39 [data-theme="aurora"] header h1::before box-shadow: 0 0 18px var(--violet-glow)',
+    [32m+[39m   'themes/aurora.css:44 [data-theme="aurora"] button:hover:not([disabled]), [data-theme="aurora"] .more > summary:hover box-shadow: 0 0 12px var(--green-glow)',
+    [32m+[39m   'themes/aurora.css:44 [data-theme="aurora"] button:hover:not([disabled]), [data-theme="aurora"] .more > summary:hover box-shadow: inset 0 0 10px rgba(111, 245, 192, .12)',
+    [32m+[39m   'themes/aurora.css:46 [data-theme="aurora"] .more[open] > summary box-shadow: 0 0 14px var(--violet-glow)',
+    [32m+[39m   'themes/aurora.css:46 [data-theme="aurora"] .more[open] > summary box-shadow: 0 0 26px rgba(111, 245, 192, .22)',
+    [32m+[39m   'themes/aurora.css:48 [data-theme="aurora"] header #install > button box-shadow: 0 0 14px var(--green-glow)',
+    [32m+[39m   'themes/aurora.css:48 [data-theme="aurora"] header #install > button box-shadow: 0 0 26px var(--violet-glow)',
+    [32m+[39m   'themes/aurora.css:65 [data-theme="aurora"] input:focus, [data-theme="aurora"] select:focus, [data-theme="aurora"] textarea:focus box-shadow: 0 0 12px var(--green-glow)',
+    [32m+[39m   'themes/aurora.css:82 [data-theme="aurora"] h3 text-shadow: 0 0 8px rgba(111, 245, 192, .35)',
+    [32m+[39m   'themes/aurora.css:90 [data-theme="aurora"] #camera [role="toolbar"] button[aria-pressed="true"], [data-theme="aurora"] #camera [role="toolbar"] button.on box-shadow: 0 0 12px rgba(111, 245, 192, .3)',
+    [32m+[39m   'themes/aurora.css:90 [data-theme="aurora"] #camera [role="toolbar"] button[aria-pressed="true"], [data-theme="aurora"] #camera [role="toolbar"] button.on text-shadow: 0 0 8px var(--green-glow)',
+    [32m+[39m   'themes/aurora.css:102 [data-theme="aurora"] .ask-card box-shadow: 0 0 30px rgba(120, 90, 255, .3)',
+    [32m+[39m   'themes/skyline-night.css:31 [data-theme="skyline-night"] header h1 text-shadow: 0 0 8px rgba(124, 200, 255, .35)',
+    [32m+[39m   'themes/skyline-night.css:32 [data-theme="skyline-night"] header h1::before box-shadow: 0 0 8px var(--glow)',
+    [32m+[39m   'themes/skyline-night.css:37 [data-theme="skyline-night"] button:hover:not([disabled]), [data-theme="skyline-night"] .more > summary:hover box-shadow: 0 0 10px var(--glow)',
+    [32m+[39m   'themes/skyline-night.css:39 [data-theme="skyline-night"] .more[open] > summary, [data-theme="skyline-night"] header #install > button box-shadow: 0 0 12px var(--glow)',
+    [32m+[39m   'themes/skyline-night.css:83 [data-theme="skyline-night"] #camera [role="toolbar"] button[aria-pressed="true"], [data-theme="skyline-night"] #camera [role="toolbar"] button.on box-shadow: 0 0 10px var(--glow)'
+    [32m+[39m ]
+    [31m-[39m []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'themes/aqua.css:42 [data-theme="aqua"] header h1::before box-shadow: 0 0 10px rgba(63, 224, 245, .8)'
+    1: 'themes/aqua.css:47 [data-theme="aqua"] header h1 text-shadow: 0 0 14px rgba(63, 224, 245, .5)'
+    2: 'themes/aqua.css:56 [data-theme="aqua"] button:hover:not([disabled]), [data-theme="aqua"] .more > summary:hover box-shadow: 0 0 10px rgba(63, 224, 245, .8)'
+    3: 'themes/aqua.css:61 [data-theme="aqua"] .more[open] > summary box-shadow: 0 0 8px rgba(63, 224, 245, .85)'
+    4: 'themes/aqua.css:82 [data-theme="aqua"] input:focus, [data-theme="aqua"] select:focus, [data-theme="aqua"] textarea:focus box-shadow: 0 0 10px rgba(63, 224, 245, .7)'
+    5: 'themes/aqua.css:134 [data-theme="aqua"] .ask-card box-shadow: 0 0 40px rgba(63, 224, 245, .25)'
+    6: 'themes/aqua.css:142 [data-theme="aqua"] .ask-row .ask-main box-shadow: 0 0 10px rgba(63, 224, 245, .8)'
+    7: 'themes/skyline.css:34 [data-theme="skyline"] header h1::before box-shadow: 0 0 8px var(--glow)'
+    8: 'themes/skyline.css:39 [data-theme="skyline"] button:hover:not([disabled]), [data-theme="skyline"] .more > summary:hover box-shadow: 0 0 10px var(--glow)'
+    9: 'themes/skyline.css:41 [data-theme="skyline"] .more[open] > summary, [data-theme="skyline"] header #install > button box-shadow: 0 0 12px var(--glow)'
+    10: 'themes/skyline.css:86 [data-theme="skyline"] #camera [role="toolbar"] button[aria-pressed="true"], [data-theme="skyline"] #camera [role="toolbar"] button.on box-shadow: 0 0 10px var(--glow)'
+    11: 'themes/glass.css:37 [data-theme="glass"] header h1::before box-shadow: 0 0 10px rgba(143, 230, 255, .75)'
+    12: 'themes/glass.css:42 [data-theme="glass"] header h1 text-shadow: 0 0 12px rgba(143, 230, 255, .55)'
+    13: 'themes/glass.css:50 [data-theme="glass"] button:hover:not([disabled]), [data-theme="glass"] .more > summary:hover box-shadow: 0 0 6px rgba(143, 230, 255, .45)'
+    14: 'themes/glass.css:54 [data-theme="glass"] .more[open] > summary box-shadow: 0 0 6px rgba(143, 230, 255, .5)'
+    15: 'themes/glass.css:69 [data-theme="glass"] input:focus, [data-theme="glass"] select:focus, [data-theme="glass"] textarea:focus box-shadow: 0 0 12px rgba(143, 230, 255, .45)'
+    16: 'themes/glass.css:108 [data-theme="glass"] #camera [role="toolbar"] button[aria-pressed="true"], [data-theme="glass"] #camera [role="toolbar"] button.on text-shadow: 0 0 10px rgba(143, 230, 255, .9)'
+    17: 'themes/glass.css:117 [data-theme="glass"] .ask-card box-shadow: 0 0 40px rgba(110, 200, 255, .2)'
+    18: 'themes/aurora.css:38 [data-theme="aurora"] header h1 text-shadow: 0 0 10px var(--green-glow)'
+    19: 'themes/aurora.css:38 [data-theme="aurora"] header h1 text-shadow: 0 0 22px var(--violet-glow)'
+    20: 'themes/aurora.css:39 [data-theme="aurora"] header h1::before box-shadow: 0 0 10px var(--green-glow)'
+    21: 'themes/aurora.css:39 [data-theme="aurora"] header h1::before box-shadow: 0 0 18px var(--violet-glow)'
+    22: 'themes/aurora.css:44 [data-theme="aurora"] button:hover:not([disabled]), [data-theme="aurora"] .more > summary:hover box-shadow: 0 0 12px var(--green-glow)'
+    23: 'themes/aurora.css:44 [data-theme="aurora"] button:hover:not([disabled]), [data-theme="aurora"] .more > summary:hover box-shadow: inset 0 0 10px rgba(111, 245, 192, .12)'
+    24: 'themes/aurora.css:46 [data-theme="aurora"] .more[open] > summary box-shadow: 0 0 14px var(--violet-glow)'
+    25: 'themes/aurora.css:46 [data-theme="aurora"] .more[open] > summary box-shadow: 0 0 26px rgba(111, 245, 192, .22)'
+    26: 'themes/aurora.css:48 [data-theme="aurora"] header #install > button box-shadow: 0 0 14px var(--green-glow)'
+    27: 'themes/aurora.css:48 [data-theme="aurora"] header #install > button box-shadow: 0 0 26px var(--violet-glow)'
+    28: 'themes/aurora.css:65 [data-theme="aurora"] input:focus, [data-theme="aurora"] select:focus, [data-theme="aurora"] textarea:focus box-shadow: 0 0 12px var(--green-glow)'
+    29: 'themes/aurora.css:82 [data-theme="aurora"] h3 text-shadow: 0 0 8px rgba(111, 245, 192, .35)'
+    30: 'themes/aurora.css:90 [data-theme="aurora"] #camera [role="toolbar"] button[aria-pressed="true"], [data-theme="aurora"] #camera [role="toolbar"] button.on box-shadow: 0 0 12px rgba(111, 245, 192, .3)'
+    31: 'themes/aurora.css:90 [data-theme="aurora"] #camera [role="toolbar"] button[aria-pressed="true"], [data-theme="aurora"] #camera [role="toolbar"] button.on text-shadow: 0 0 8px var(--green-glow)'
+    32: 'themes/aurora.css:102 [data-theme="aurora"] .ask-card box-shadow: 0 0 30px rgba(120, 90, 255, .3)'
+    33: 'themes/skyline-night.css:31 [data-theme="skyline-night"] header h1 text-shadow: 0 0 8px rgba(124, 200, 255, .35)'
+    34: 'themes/skyline-night.css:32 [data-theme="skyline-night"] header h1::before box-shadow: 0 0 8px var(--glow)'
+    35: 'themes/skyline-night.css:37 [data-theme="skyline-night"] button:hover:not([disabled]), [data-theme="skyline-night"] .more > summary:hover box-shadow: 0 0 10px var(--glow)'
+    36: 'themes/skyline-night.css:39 [data-theme="skyline-night"] .more[open] > summary, [data-theme="skyline-night"] header #install > button box-shadow: 0 0 12px var(--glow)'
+    37: 'themes/skyline-night.css:83 [data-theme="skyline-night"] #camera [role="toolbar"] button[aria-pressed="true"], [data-theme="skyline-night"] #camera [role="toolbar"] button.on box-shadow: 0 0 10px var(--glow)'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Consonance\t180-wt-colours\app\test\theme.test.js:331:10)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: L249 one radius scale: SIGIL sets the factor .5 and r1..r4 (2, 4, 8, 12 px times it), each skin sets only its own factor and its two hover steps; no corner in the chrome is a literal over 12 px but Export's capsule and the circles
+not ok 21 - L249 one radius scale: SIGIL sets the factor .5 and r1..r4 (2, 4, 8, 12 px times it), each skin sets only its own factor and its two hover steps; no corner in the chrome is a literal over 12 px but Export's capsule and the circles
+  ---
+  duration_ms: 0.3496
+  type: 'test'
+  location: 'C:\\Consonance\\t180-wt-colours\\app\\test\\theme.test.js:335:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    SIGIL's factor
+    
+    NaN !== 0.5
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0.5
+  actual: NaN
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Consonance\t180-wt-colours\app\test\theme.test.js:337:10)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+1..21
+# tests 21
+# suites 0
+# pass 18
+# fail 3
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 158.9373

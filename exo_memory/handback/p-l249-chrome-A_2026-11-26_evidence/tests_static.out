@@ -1,0 +1,136 @@
+TAP version 13
+# Subtest: W1: each look's window takes that look's own font and corner radius (read from its tokens, drawn)
+ok 1 - W1: each look's window takes that look's own font and corner radius (read from its tokens, drawn)
+  ---
+  duration_ms: 24.3941
+  type: 'test'
+  ...
+# Subtest: W2: a page with no window tokens draws today's box: square, the veil, a 1.5 px edge in the mark's colour, bold 12px system-ui, the words at +6 px
+ok 2 - W2: a page with no window tokens draws today's box: square, the veil, a 1.5 px edge in the mark's colour, bold 12px system-ui, the words at +6 px
+  ---
+  duration_ms: 0.2575
+  type: 'test'
+  ...
+# Subtest: W3: a look that sets no mark colours draws today's; a --mark-<field> token is what the field, its extra handles and its corner kind draw
+ok 3 - W3: a look that sets no mark colours draws today's; a --mark-<field> token is what the field, its extra handles and its corner kind draw
+  ---
+  duration_ms: 0.4168
+  type: 'test'
+  ...
+# Subtest: W4: on every look, bank and turn are told apart (their colours at least 60 apart in RGB), and each window's words read on its fill (contrast 4.5:1 or better)
+ok 4 - W4: on every look, bank and turn are told apart (their colours at least 60 apart in RGB), and each window's words read on its fill (contrast 4.5:1 or better)
+  ---
+  duration_ms: 10.2163
+  type: 'test'
+  ...
+# Subtest: W5: every look sets its own colour for each field, no two fields within 60 of each other (W4's unit), and each 60 or more off that look's road edges, grid, fog and sky
+ok 5 - W5: every look sets its own colour for each field, no two fields within 60 of each other (W4's unit), and each 60 or more off that look's road edges, grid, fog and sky
+  ---
+  duration_ms: 20.453
+  type: 'test'
+  ...
+# Subtest: W6: a field's hue, wherever it comes from (Build, the landing, the Sculpt brush and Smooth's channel, the dots' rows), draws as the look's colour for that field; a hue with no field, and every hue on a page with no tokens, as it is
+ok 6 - W6: a field's hue, wherever it comes from (Build, the landing, the Sculpt brush and Smooth's channel, the dots' rows), draws as the look's colour for that field; a hue with no field, and every hue on a page with no tokens, as it is
+  ---
+  duration_ms: 2.5441
+  type: 'test'
+  ...
+# Subtest: W7: each look's window corner is the chrome scale's r1 (2 px) times that look's radius factor, written as a plain number
+ok 7 - W7: each look's window corner is the chrome scale's r1 (2 px) times that look's radius factor, written as a plain number
+  ---
+  duration_ms: 10.6374
+  type: 'test'
+  ...
+# Subtest: each melody sets its own skin on <html data-theme>; an unknown or missing melody leaves SIGIL
+ok 8 - each melody sets its own skin on <html data-theme>; an unknown or missing melody leaves SIGIL
+  ---
+  duration_ms: 1.1568
+  type: 'test'
+  ...
+# Subtest: the page sets the skin in its head, before the first paint, from the same number the player draws its melody from
+ok 9 - the page sets the skin in its head, before the first paint, from the same number the player draws its melody from
+  ---
+  duration_ms: 3.3643
+  type: 'test'
+  ...
+# Subtest: D394: Settings ▸ Theme has seven choices: music follows the melody, each of the four is its own skin, Skyline Night is its own, sigil is none
+ok 10 - D394: Settings ▸ Theme has seven choices: music follows the melody, each of the four is its own skin, Skyline Night is its own, sigil is none
+  ---
+  duration_ms: 0.1668
+  type: 'test'
+  ...
+# Subtest: D394: the head reads the saved theme: a fixed theme sets its own skin AND melody; music keeps the random pick; nothing saved and broken saved text start on SIGIL; sigil plays its own melody under SIGIL
+ok 11 - D394: the head reads the saved theme: a fixed theme sets its own skin AND melody; music keeps the random pick; nothing saved and broken saved text start on SIGIL; sigil plays its own melody under SIGIL
+  ---
+  duration_ms: 21.6745
+  type: 'test'
+  ...
+# Subtest: D405: Skyline Night is a sixth look on Skyline's melody: its own skin, chosen by name or by the random pick, kept by the boot
+ok 12 - D405: Skyline Night is a sixth look on Skyline's melody: its own skin, chosen by name or by the random pick, kept by the boot
+  ---
+  duration_ms: 5.0195
+  type: 'test'
+  ...
+# Subtest: the reader understands every colour form a skin may write
+ok 13 - the reader understands every colour form a skin may write
+  ---
+  duration_ms: 0.9565
+  type: 'test'
+  ...
+# Subtest: the reader falls back to today's literal where the page has no such token or cannot read it, and says so once per token
+ok 14 - the reader falls back to today's literal where the page has no such token or cannot read it, and says so once per token
+  ---
+  duration_ms: 0.413
+  type: 'test'
+  ...
+# Subtest: the reader reads again when data-theme changes, and tells whoever listens
+ok 15 - the reader reads again when data-theme changes, and tells whoever listens
+  ---
+  duration_ms: 1.2608
+  type: 'test'
+  ...
+# Subtest: SIGIL's tokens are today's literals, so SIGIL draws exactly as before
+ok 16 - SIGIL's tokens are today's literals, so SIGIL draws exactly as before
+  ---
+  duration_ms: 0.5152
+  type: 'test'
+  ...
+# Subtest: SIGIL's 3D frame is the same, call for call, with its tokens applied; a skin's tokens change it
+ok 17 - SIGIL's 3D frame is the same, call for call, with its tokens applied; a skin's tokens change it
+  ---
+  duration_ms: 1.7314
+  type: 'test'
+  ...
+# Subtest: a skin is styling only: no theme file sets a property that moves or sizes a box, and each skin the page links is a look's
+ok 18 - a skin is styling only: no theme file sets a property that moves or sizes a box, and each skin the page links is a look's
+  ---
+  duration_ms: 3.7215
+  type: 'test'
+  ...
+# Subtest: the canvas layers and overlays name no chrome colour of their own: they read the tokens (the meaning colours stay literal)
+ok 19 - the canvas layers and overlays name no chrome colour of their own: they read the tokens (the meaning colours stay literal)
+  ---
+  duration_ms: 10.9733
+  type: 'test'
+  ...
+# Subtest: L249 the glow budget is 0: no box-shadow or text-shadow in the chrome is a centred blur (a glow or a halo), and every blurred shadow outside a box is black, blur 12 px or less, alpha 0.12 or less
+ok 20 - L249 the glow budget is 0: no box-shadow or text-shadow in the chrome is a centred blur (a glow or a halo), and every blurred shadow outside a box is black, blur 12 px or less, alpha 0.12 or less
+  ---
+  duration_ms: 10.7719
+  type: 'test'
+  ...
+# Subtest: L249 one radius scale: SIGIL sets the factor .5 and r1..r4 (2, 4, 8, 12 px times it), each skin sets only its own factor and its two hover steps; no corner in the chrome is a literal over 12 px but Export's capsule and the circles
+ok 21 - L249 one radius scale: SIGIL sets the factor .5 and r1..r4 (2, 4, 8, 12 px times it), each skin sets only its own factor and its two hover steps; no corner in the chrome is a literal over 12 px but Export's capsule and the circles
+  ---
+  duration_ms: 11.4687
+  type: 'test'
+  ...
+1..21
+# tests 21
+# suites 0
+# pass 21
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 180.1689

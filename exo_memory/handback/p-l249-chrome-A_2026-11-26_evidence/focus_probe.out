@@ -1,0 +1,83 @@
+{
+ "chrome": "Chrome/158.0.8127.37",
+ "looks": {
+  "sigil": {
+   "v1_asTheRow": {
+    "active": "Extend",
+    "focus": false,
+    "focusVisible": false,
+    "outline": "none 3px 0px rgb(235, 230, 220)"
+   },
+   "v2_noDialog": {
+    "active": "Extend",
+    "focus": false,
+    "focusVisible": false,
+    "outline": "none 3px 0px rgb(235, 230, 220)"
+   },
+   "v3_plainFocus": {
+    "active": "Extend",
+    "focus": false,
+    "focusVisible": false,
+    "outline": "none 3px 0px rgb(235, 230, 220)"
+   },
+   "v4_tab": {
+    "presses": 81,
+    "active": "BODY",
+    "focus": false,
+    "focusVisible": false,
+    "outline": "none 3px 0px rgb(235, 230, 220)"
+   },
+   "rulesWithOutline": [
+    ":focus-visible { outline-color: -webkit-focus-ring-color; outline-style: auto; outline-width: 1px }",
+    ":focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; outline-offset: 1px }",
+    ":is(button, input, select, textarea, summary):focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; outline-offset: 1px }"
+   ],
+   "forced": {
+    "forced": true,
+    "active": "BODY",
+    "focus": true,
+    "focusVisible": true,
+    "outline": "solid 2px 1px rgb(185, 168, 255)"
+   }
+  },
+  "aqua": {
+   "v1_asTheRow": {
+    "active": "Extend",
+    "focus": false,
+    "focusVisible": false,
+    "outline": "none 3px 0px rgb(1, 48, 60)"
+   },
+   "v2_noDialog": {
+    "active": "Extend",
+    "focus": false,
+    "focusVisible": false,
+    "outline": "none 3px 0px rgb(1, 48, 60)"
+   },
+   "v3_plainFocus": {
+    "active": "Extend",
+    "focus": false,
+    "focusVisible": false,
+    "outline": "none 3px 0px rgb(1, 48, 60)"
+   },
+   "v4_tab": {
+    "presses": 81,
+    "active": "BODY",
+    "focus": false,
+    "focusVisible": false,
+    "outline": "none 3px 0px rgb(1, 48, 60)"
+   },
+   "rulesWithOutline": [
+    ":focus-visible { outline-color: -webkit-focus-ring-color; outline-style: auto; outline-width: 1px }",
+    ":focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; outline-offset: 1px }",
+    ":is(button, input, select, textarea, summary):focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; outline-offset: 1px }"
+   ],
+   "forced": {
+    "forced": true,
+    "active": "BODY",
+    "focus": true,
+    "focusVisible": true,
+    "outline": "solid 2px 1px rgb(63, 224, 245)"
+   }
+  }
+ }
+}

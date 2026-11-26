@@ -1,0 +1,8 @@
+2026-11-26T11:21:15.186Z start tip 40e931e8512410a43a36bd4610a766b8609b4bec status-lines 0; before c9fe4f1f0ced89b8de238a49ef1302b9180cf5a8
+2026-11-26T11:21:20.788Z leftovers_before exit 0 in 6 s
+2026-11-26T11:21:21.130Z tests_static exit 0 in 0 s
+2026-11-26T11:27:17.339Z tests_texture_page exit 1 in 356 s
+2026-11-26T11:31:23.012Z shots exit 0 in 246 s
+2026-11-26T11:31:23.239Z page exit 0 in 0 s
+2026-11-26T11:31:28.871Z leftovers_after exit 0 in 6 s
+2026-11-26T11:31:28.924Z end tip 40e931e8512410a43a36bd4610a766b8609b4bec status-lines 0
