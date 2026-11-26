@@ -1,0 +1,63 @@
+/* refactor_override.css (pane C, L248): the spec draft (exo_memory/briefs/t180_ui_refactor_spec.md) as ONE stylesheet laid over builder 0ab6cc8's real page
+   in headless Chrome, for pictures only. Nothing here is a builder change. Every rule is !important and prefixed html:root body so it outranks the
+   theme files' [data-theme] rules (a mock can't edit them); a real refactor would put these values in the tokens and theme files instead.
+   Spec sections are named beside each block: R = radius, C = concentric, P = capsule, G = glow, S = shadow, F = focus, L = labels on the road. */
+
+/* R1, R2: one scale, one factor per look (the research's proposed scale, research §5.1 :410-418; Radix's factor model, :135-139) */
+:root { --rf: .5; }                                             /* SIGIL */
+:root[data-theme="glass"] { --rf: 0; }
+:root[data-theme="aurora"] { --rf: .75; }
+:root[data-theme="aqua"], :root[data-theme="skyline"], :root[data-theme="skyline-night"] { --rf: 1; }
+:root { --r1: calc(2px * var(--rf)); --r2: calc(4px * var(--rf)); --r3: calc(8px * var(--rf)); --r4: calc(12px * var(--rf)); --menu-pad: 8px; }
+
+/* R3: under 32 px tall (labels, chips, small fields): r1 */
+html:root body :is(header input, header select, .author-row input, .ask-layouts input[type="text"], .picker select, .save-piece input, input[type="number"], input[type="text"], input:not([type]), textarea, .track li, #camera p) { border-radius: var(--r1) !important; }
+/* R3: controls: r2 */
+html:root body :is(button, .more > summary) { border-radius: var(--r2) !important; }
+/* R3: the HUD strip and the camera dock (fixed over the view): r2; menus and the guide card: r3; dialogs: r4 */
+html:root body :is(.preview-hud, #camera [role="toolbar"]) { border-radius: var(--r2) !important; }
+html:root body :is(.more-menu, .guide-card, header select::picker(select)) { border-radius: var(--r3) !important; }
+html:root body .ask-card { border-radius: var(--r4) !important; }
+/* R4: a surface that reaches the window's edge is square (Fluent, research :56): the left column, docked as now, and the header */
+html:root body :is(#left, header) { border-radius: 0 !important; }
+/* R5: circles stay circles (Fluent's Circle, research :57, :419-420): the camera keys and the dot before the name */
+html:root body :is(#camera .camera-keys > button, header h1::before, .ask-card h2::before) { border-radius: 50% !important; }
+/* the window buttons at the top right stay square in every look (they reach the edge) */
+html:root body #winctl button { border-radius: 0 !important; }
+
+/* C1: concentric: what sits inside a menu takes the menu's radius minus the menu's padding, never below 0 (Apple, research :96, :195-196) */
+html:root body .more-menu :is(button, .menu-row, .menu-list-head, input, select) { border-radius: max(0px, calc(var(--r3) - var(--menu-pad))) !important; }
+/* inside a dialog (22 px / 24 px padding): r4 - 22 is below 0, so the dialog's buttons are square by the rule */
+html:root body .ask-card button { border-radius: max(0px, calc(var(--r4) - 22px)) !important; }
+
+/* P1: at most one capsule: the standout action, Export to Assetto Corsa, and only in the looks at factor 1 (Apple, research :97-98, :386) */
+html:root[data-theme="aqua"] body header #install > button, html:root[data-theme="skyline"] body header #install > button, html:root[data-theme="skyline-night"] body header #install > button { border-radius: 999px !important; }
+
+/* G1: no coloured glow on any control state: hover, open, focus and the dialog's main button take the look's own resting shadow (research §5.2 :427-446) */
+html:root[data-theme="aqua"] body :is(button:hover:not([disabled]), .more[open] > summary, .ask-row .ask-main, header #install > button) { box-shadow: inset 0 1px 0 #ffffff, inset 0 -2px 0 rgba(0, 120, 150, .35), 0 1px 0 rgba(0, 30, 40, .5) !important; }
+html:root[data-theme="glass"] body :is(button:hover:not([disabled]), .more[open] > summary) { box-shadow: inset 0 1px 0 rgba(255, 255, 255, .42), inset 0 -1px 0 rgba(0, 20, 40, .45) !important; }
+html:root[data-theme="aurora"] body :is(button:hover:not([disabled]), .more[open] > summary, header #install > button) { box-shadow: inset 0 1px 0 rgba(200, 240, 255, .08) !important; }
+html:root[data-theme="skyline"] body :is(button:hover:not([disabled]), .more[open] > summary) { box-shadow: 0 1px 0 rgba(20, 80, 160, .22), inset 0 1px 0 rgba(255, 255, 255, .9) !important; }
+html:root[data-theme="skyline-night"] body :is(button:hover:not([disabled]), .more[open] > summary) { box-shadow: 0 1px 0 rgba(0, 0, 0, .4), inset 0 1px 0 rgba(170, 215, 255, .25) !important; }
+html:root body #camera [role="toolbar"] button[aria-pressed="true"] { box-shadow: inset 0 -2px 0 var(--accent) !important; text-shadow: none !important; }
+/* G2: no glowing words or dots: the name, the open menu's title, the panel headings */
+html:root body :is(header h1, h3, .more[open] > summary, h2) { text-shadow: none !important; }
+html:root body :is(header h1::before, .ask-card h2::before) { box-shadow: none !important; }
+/* G3: fields: focus is a ring (F1 below), not a glow */
+html:root body :is(input:focus, select:focus, textarea:focus) { box-shadow: none !important; }
+
+/* S1: shadows say "this floats", small and neutral (Zed, research :285-288): a dialog and a menu, no halo */
+html:root body .ask-card { box-shadow: inset 0 1px 0 var(--hair), 0 2px 3px rgba(0, 0, 0, .12), 0 8px 12px rgba(0, 0, 0, .12) !important; }
+html:root body .more-menu { box-shadow: inset 0 1px 0 var(--hair), 0 2px 3px rgba(0, 0, 0, .12), 0 6px 12px rgba(0, 0, 0, .10) !important; }
+
+/* F1: focus is a solid ring in the accent (Radix step 8, research :144; Atlassian's ring, :161) */
+html:root body :is(button, input, select, textarea, summary):focus-visible { outline: 2px solid var(--accent) !important; outline-offset: 1px !important; }
+
+/* L1: the labels on the road (canvas windows, app/core/markwindow.js reads these): no glow, the under-32 radius, plain (research §5.3 :460-465) */
+:root { --mark-win-glow: 0 !important; --mark-win-radius: 1 !important; }
+:root[data-theme="glass"] { --mark-win-radius: 0 !important; }
+:root[data-theme="aurora"] { --mark-win-radius: 1.5 !important; }
+:root[data-theme="aqua"], :root[data-theme="skyline"], :root[data-theme="skyline-night"] { --mark-win-radius: 2 !important; }
+
+/* LAYOUT, shown not asked (packet §3): html.c-float lifts the left column off the edge to float over the view, at the floating radius r4 */
+html.c-float:root body #left { margin: 10px 0 10px 10px !important; border-radius: var(--r4) !important; border-width: 1px !important; border-style: solid !important; box-shadow: inset 0 1px 0 var(--hair), 0 2px 3px rgba(0, 0, 0, .12), 0 8px 12px rgba(0, 0, 0, .12) !important; }

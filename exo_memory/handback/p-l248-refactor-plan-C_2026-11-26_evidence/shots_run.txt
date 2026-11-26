@@ -1,0 +1,6 @@
+﻿{"look":"sigil","themeOn":"sigil","probe":{"rf":".5","button":"2px","menu":"4px","left":"0px","exportBtn":"2px","title":"zz-headless-test"},"pageErrors":[]}
+{"look":"glass","themeOn":"glass","probe":{"rf":"0","button":"0px","menu":"0px","left":"0px","exportBtn":"0px","title":"zz-headless-test"},"pageErrors":[]}
+{"look":"aqua","themeOn":"aqua","probe":{"rf":"1","button":"4px","menu":"8px","left":"0px","exportBtn":"999px","title":"zz-headless-test"},"pageErrors":[]}
+{"look":"aurora","themeOn":"aurora","probe":{"rf":".75","button":"3px","menu":"6px","left":"0px","exportBtn":"3px","title":"zz-headless-test"},"pageErrors":[]}
+{"look":"skyline","themeOn":"skyline","probe":{"rf":"1","button":"4px","menu":"8px","left":"0px","exportBtn":"999px","title":"zz-headless-test"},"pageErrors":[]}
+{"look":"skyline-night","themeOn":"skyline-night","probe":{"rf":"1","button":"4px","menu":"8px","left":"12px","exportBtn":"999px","title":"zz-headless-test"},"pageErrors":[]}

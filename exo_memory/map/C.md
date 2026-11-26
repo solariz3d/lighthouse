@@ -2021,3 +2021,7 @@ Claim (could be wrong): his 08:19 crash was Export to Assetto Corsa: `v8-oom-sta
 ## 2026-11-26 — L245: the five looks' left-panel blur shown on A's real pictures as HTML windows (evidence/blur_mock.html, for the librarian to publish; no Artifact tool here); the panel glass is 80-95% opaque, so the blur shows only as a faint smear even over the road; a blurred label over a 1500x900 WebGL canvas costs no frame at 240 fps on this RTX 5070 Ti, and #left already blurs over the 3D view in every look
 - Evidence: `exo_memory/handback/p-l245-blur-mock-C_2026-11-26_evidence/make_run.txt`, `blur_cost.txt`, `shots/` (uncommitted, with the page).
 - Hand-back: `exo_memory/handback/p-l245-blur-mock-C_2026-11-26.md`
+
+## 2026-11-26 — L248: the research carries a chrome spec (one 2/4/8/12 radius scale × one factor per look, concentric nesting, one capsule, glass on the control layer only, 0 coloured glows, Radix's 12 roles with steps 4 and 10 missing today); laid over 0ab6cc8 as one CSS override, it needs no markup change (every selector exists); the 3D overlay layer stays open questions
+- Evidence: `exo_memory/handback/p-l248-refactor-plan-C_2026-11-26_evidence/shots_run.txt`, `refactor_override.css`, `radius_rules_0ab6cc8.txt`; the spec `exo_memory/briefs/t180_ui_refactor_spec.md`.
+- Hand-back: `exo_memory/handback/p-l248-refactor-plan-C_2026-11-26.md`
