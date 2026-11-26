@@ -2058,3 +2058,7 @@ Claim (could be wrong): his 08:19 crash was Export to Assetto Corsa: `v8-oom-sta
 ## 2026-11-26 — O1 read: E's bfa6732 probes a turn or climb change as if it ended where the first ramp ends (extend.js routePeak :505-519, asked with the span to the next mark at :619), so a change in the ramp's own direction followed by another change is laid over the bar on the built road, 35 of 67 newly laid cases, worst 1.287 (turn and climb alike), all refused at ceb21f5; the probe's bar (1.3 survives) and the named shortest are unpinned; R1c bytes and the 7 failures hold; NOT CLEAN
 - Evidence: `exo_memory/handback/p-o1-read-C_2026-11-26_evidence/sweep_tip.jsonl`, `sweep_base.jsonl`, `holds.js`, `kv.js`, `mutants3.txt` (applied 9 / caught 0 / NOT APPLIED 0), `mutprobe.txt`, `r1d_cap_restored.txt`.
 - Hand-back: `exo_memory/handback/p-o1-read-C_2026-11-26.md`
+
+## 2026-11-26 — O1 re-read: at builder eee621f the probe lays a change from its mark to its end, so 0 of my 67 turn cases and 0 of the 184-case sweep read over 1.05 (the F rows red at bfa6732, N3/N8/N9 now caught); but the panel's default marks and drag range still ask the shortest without the end (coreshell.js:796), so blank marks ceb21f5 laid are refused, and a routePeak memo key without end (extend.js:510) survives every row and lays 4 cases at up to 1.086; NOT CLEAN
+- Evidence: `exo_memory/handback/p-o1-read-C_2026-11-26_evidence/reread/cmp67_eee621f.txt`, `panelmarks.txt`, `mutants4.txt`, `mutsweep.txt`, `bank_sweep.txt`.
+- Hand-back: `exo_memory/handback/p-o1-read-C_2026-11-26.md` (section "Re-read")

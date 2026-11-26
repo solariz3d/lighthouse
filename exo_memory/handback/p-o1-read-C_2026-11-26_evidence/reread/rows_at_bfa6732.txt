@@ -1,0 +1,92 @@
+✔ O1 R1a: a turn change −80 → −60 °/100m over 103 m on a 300 m piece whose first ramp (0 → −80) runs under it is laid (the capped ceiling asked 205.9 m), reaching −60 with its built turn changing under the bar (× 1.05) (20.0496ms)
+✔ O1 R1a climb: a climb change −30 → −20 °/100m over 80 m on a 300 m piece whose first ramp (0 → −30) runs under it is laid (the capped ceiling asked 102.9 m), reaching −20 with its built climb changing under the bar (× 1.05) (8.4551ms)
+✔ O1 R1b: a turn change −80 → −75 over 13 m on that moving ramp is still refused, naming a shortest under the capped 51.5 m and never under its own 25.7 m; laid there, its built turn changes under the bar (× 1.05) (6.5181ms)
+✔ O1 R1b sharp ramp: where the first ramp itself changes the turn faster than the bar near the mark (0 → −80 over 120 m), a span between the change's own shortest and the ceiling is refused, naming the ceiling (2.9495ms)
+✔ O1 R1c: with no first ramp under the change, the refusals and the laid documents are today's, byte for byte (turn and climb) (2.6817ms)
+✔ O1 R1e: a change at or past the closed-form ceiling over a moving first ramp lays today's document, byte for byte (turn and climb) (0.9796ms)
+✖ O1 F1 kh: a change −80 → −95 from 120 m to the next mark at 200 m (then −90), on a 0 → −80 ramp over 300 m, is refused, and laid at the mark it names its built rate changes under the bar (× 1.05) (1.3069ms)
+✖ O1 F1 kv: a change −80 → −95 from 120 m to the next mark at 200 m (then −90), on a 0 → −80 ramp over 300 m, is refused, and laid at the mark it names its built rate changes under the bar (× 1.05) (1.0772ms)
+✖ O1 F2 kh: the probe's bar and the shortest it names: −80 → −95 ending at the next mark (200 m) on a 0 → −80 ramp needs 148.3 m; laid there it is under the bar, a metre shorter it is refused (2.7036ms)
+✖ O1 F2 kv: the probe's bar and the shortest it names: −80 → −95 ending at the next mark (200 m) on a 0 → −80 ramp needs 148.3 m; laid there it is under the bar, a metre shorter it is refused (2.8824ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 6
+ℹ fail 4
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 116.2801
+
+✖ failing tests:
+
+test at test\core_turn_share_built.test.js:106:3
+✖ O1 F1 kh: a change −80 → −95 from 120 m to the next mark at 200 m (then −90), on a 0 → −80 ramp over 300 m, is refused, and laid at the mark it names its built rate changes under the bar (× 1.05) (1.3069ms)
+  AssertionError [ERR_ASSERTION]: refused by name: laid
+      at TestContext.<anonymous> (G:\consonance-scratch\t180-o1-c\test\core_turn_share_built.test.js:109:12)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+      at Test.postRun (node:internal/test_runner/test:1247:19)
+      at Test.run (node:internal/test_runner/test:1175:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:787:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at test\core_turn_share_built.test.js:106:3
+✖ O1 F1 kv: a change −80 → −95 from 120 m to the next mark at 200 m (then −90), on a 0 → −80 ramp over 300 m, is refused, and laid at the mark it names its built rate changes under the bar (× 1.05) (1.0772ms)
+  AssertionError [ERR_ASSERTION]: refused by name: laid
+      at TestContext.<anonymous> (G:\consonance-scratch\t180-o1-c\test\core_turn_share_built.test.js:109:12)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+      at Test.postRun (node:internal/test_runner/test:1247:19)
+      at Test.run (node:internal/test_runner/test:1175:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:787:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at test\core_turn_share_built.test.js:119:3
+✖ O1 F2 kh: the probe's bar and the shortest it names: −80 → −95 ending at the next mark (200 m) on a 0 → −80 ramp needs 148.3 m; laid there it is under the bar, a metre shorter it is refused (2.7036ms)
+  AssertionError [ERR_ASSERTION]: secondMinM names 80.3
+      at TestContext.<anonymous> (G:\consonance-scratch\t180-o1-c\test\core_turn_share_built.test.js:121:12)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+      at Test.postRun (node:internal/test_runner/test:1247:19)
+      at Test.run (node:internal/test_runner/test:1175:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:787:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at test\core_turn_share_built.test.js:119:3
+✖ O1 F2 kv: the probe's bar and the shortest it names: −80 → −95 ending at the next mark (200 m) on a 0 → −80 ramp needs 148.3 m; laid there it is under the bar, a metre shorter it is refused (2.8824ms)
+  AssertionError [ERR_ASSERTION]: secondMinM names 80.3
+      at TestContext.<anonymous> (G:\consonance-scratch\t180-o1-c\test\core_turn_share_built.test.js:121:12)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+      at Test.postRun (node:internal/test_runner/test:1247:19)
+      at Test.run (node:internal/test_runner/test:1175:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:787:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

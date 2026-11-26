@@ -1,0 +1,39 @@
+N1-window-starts-at-the-mark applied
+  SURVIVED
+N2-window-ends-at-the-change-end applied
+  SURVIVED
+N3-no-step-back-by-the-metre applied
+  caught by: ✖ O1 F2 kh: the probe's bar and the shortest it names: −80 → −
+  caught by: ✖ O1 F2 kv: the probe's bar and the shortest it names: −80 → −
+N4-turn-and-climb-share-a-memo applied
+  SURVIVED
+N5-probe-base-not-keyed-by-field applied
+  caught by: ✖ O1 F1 kv: a change −80 → −95 from 120 m to the next mark at 
+  caught by: ✖ O1 F2 kv: the probe's bar and the shortest it names: −80 → −
+N6-no-ceiling-short-circuit applied
+  SURVIVED
+N7-search-cap-without-the-floor applied
+  SURVIVED
+N8-search-steps-up-by-50 applied
+  caught by: ✖ O1 F2 kh: the probe's bar and the shortest it names: −80 → −
+  caught by: ✖ O1 F2 kv: the probe's bar and the shortest it names: −80 → −
+N9-spanHolds-bar-1.3 applied
+  caught by: ✖ O1 F1 kh: a change −80 → −95 from 120 m to the next mark at 
+  caught by: ✖ O1 F1 kv: a change −80 → −95 from 120 m to the next mark at 
+  caught by: ✖ O1 F2 kh: the probe's bar and the shortest it names: −80 → −
+  caught by: ✖ O1 F2 kv: the probe's bar and the shortest it names: −80 → −
+N10-routeMin-bar-1.3 applied
+  caught by: ✖ O1 F1 kh: a change −80 → −95 from 120 m to the next mark at 
+  caught by: ✖ O1 F1 kv: a change −80 → −95 from 120 m to the next mark at 
+  caught by: ✖ O1 F2 kh: the probe's bar and the shortest it names: −80 → −
+  caught by: ✖ O1 F2 kv: the probe's bar and the shortest it names: −80 → −
+N11-routeMin-memo-forgets-end applied
+  SURVIVED
+N12-routePeak-memo-forgets-end applied
+  SURVIVED
+N13-change-runs-on-past-its-end applied
+  SURVIVED
+N14-refusal-loop-forgets-end applied
+  SURVIVED
+N15-panel-forgets-end applied
+N16-shell-forgets-end applied
