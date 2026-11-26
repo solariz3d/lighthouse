@@ -3279,3 +3279,6 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 
 ## 2026-11-25 02:2x local (L) · L231 the dream runner is sound; L is shut down (Fast Startup, no wake programmed, 13 of 15 closes since 11-01) so 10:30/16:30/22:30 never run, and the 04:30 run and the boot catch-up both find him at the keyboard (guard 2 skips, 3 of 3 since the last dream); Razer Cortex's plan has wake timers at "important only" → `exo_memory/handback/p-l231-dream-skips-E_2026-11-25.md`
 - **Carry:** when a scheduled job "fires and skips", read the machine's power log (System 42/107) before the job's own code.
+
+## 2026-11-26 02:5x local (L) · L246 no written source supports "rounded = cheap" in general (every system read rounds; Carbon goes round in v12); what they support is radius too large for the element on a dense desktop (Apple: capsules only for standout actions; Fluent: 2 px under 32 px) and non-concentric nesting, and our four rounded looks break exactly those; the chrome can rest on Fluent 2 + Radix tokens + Apple materials, the 3D overlay layer has no written spec → `exo_memory/research/clean_ui_design_sources_2026-11-26.md`, `exo_memory/handback/p-l246-design-research-E_2026-11-26.md`
+- **Carry:** a reader subagent's fetch is a summary; re-fetch the load-bearing quotes and mark each [checked] or [reader].
