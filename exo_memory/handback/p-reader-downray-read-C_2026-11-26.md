@@ -158,7 +158,7 @@ past vertical, which the code and the CHANGELOG now name as a limit.
     1.05-1.06 m shortfall is the edge loss the passing cases show. Centre 0.72 m off (0.32 m at 49 m). inferred: the uphill side's lost
     arc moves the centre, but half the shortfall is 0.53 m, so 0.72 m is not fully explained. Named in the CHANGELOG and the comment as a limit.
     At dab271b the same cases read 13.40 m.
-  - 8 misses at 58°, unchanged from base and from my first read (the `above` = 2.5 m limit, `piecewise.cjs:127` then, now the `here()` line).
+  - 8 misses at 58°, unchanged from base and from my first read (the `above` = 2.5 m limit, `piecewise.cjs:127` at dab271b, :132 at a8e54b7).
   - A2 (a second road level with the cup's rim): 26.99 of 27, not taken.
 - B, the guard, unchanged: its code did not change (only the comment). B1 (12 m jump) and B2 (new deck 12 m over driven road) still fire;
   both stay latent with today's reader, as in the first read. B1b and B3 kept, as wanted.
