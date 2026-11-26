@@ -490,3 +490,12 @@ carry it, so this brief does.
   (Anthropic: "Tuning effort is often a better lever than switching models"; Fable's default effort is high; a user
   report calls Opus at max "garbage" and at high "goated"; the open tension is that Fable is reported weaker at
   catching review issues, which is this seat's job). Packet L247.
+- 02:56 (L): "but see, also an inconsistency i can see now catch earlier rather than before, laptop houses 4 builder
+  panes while desktop has 6 right? ... would it be easier to just give the laptop the extra builder panes to be in
+  sync? the reasoning behind why i limit it on the laptop is because I dont have as much ram here than i do on my
+  desktop, only 32gb here vs the 64gb on desktop". 02:57: "so u can add the panes for me on restart too?"
+- Measured on L at 02:5x: 31.8 GB total, 14.1 GB free while busy; the 7 claude seats total about 2.4 GB (about 350 MB
+  each). Heavy runs are capped at 2 by heavy-run.js whatever the pane count. A new pane comes from "+ Pane"
+  (`spawn_sibling`, main.rs:4077). It is born kept, as a committee pane, and takes the next letter never used.
+  `letters.json` on L uses A to N, so the next two are O and P, the same letters as D's. `seat_models` O and P were set
+  to opus at 03:0x (backup `~/.consonance.json.bak-20261126-before-OP`).
