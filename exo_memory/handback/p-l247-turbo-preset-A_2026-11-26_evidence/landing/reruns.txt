@@ -1,0 +1,11 @@
+Reruns after the landing suite (pane A, L, 2026-11-26 ~10:07Z), in C:\Consonance\lh-wt-l247.
+
+1. At the base 36f490f5 (git checkout --detach 36f490f5), heavy-run --status first (no hold, both slots free):
+   node --test --test-reporter=tap consonance/tools/actors.evidence.test.js
+     -> tests 7 · pass 5 · fail 2 (not ok 1 "the real board resolves ... REAL letters map";
+        not ok 3: "3d000000-...-3d00 (third-place) has a letter in letters.json: N") -- the same two as at 95e772a9
+   node --test --test-reporter=tap consonance/tools/second-vantage.test.js -> tests 43 · pass 43 · fail 0
+   node --test --test-reporter=tap consonance/tools/carrier-drift.test.js
+     -> tests 60 · pass 57 · fail 3, five CH4-DRIFT-ADDED research notes, the same five as at 95e772a9
+2. At the merge 95e772a9, second-vantage alone, twice: tests 43 · pass 43 · fail 0, both times.
+3. persist.log:2874 "1793777590 letter N -> pane=3d000000-0000-4000-8000-000000003d00"; 1793777590 = 2026-11-04T07:33:10Z.

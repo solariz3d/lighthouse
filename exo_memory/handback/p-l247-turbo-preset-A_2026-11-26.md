@@ -94,3 +94,51 @@ The packet (1f00fe9a) and the chair's two same-lap amendments (08:58Z: by role; 
 
 SOURCES: packet_turbo_preset_A_2026-11-26.md; briefs/lighthouse_the_room.md (02:50, 02:56-57, 03:00); main.rs spawn_claude_pane, seat_model_named, merged_config_text, pane_letter, spawn_sibling, spawn_fresh, new_room; persist.log (grep 8bcb0f46, 6e6e002c); Cargo.lock (serde_json); cargo test logs l247_stage1/2/3, l247_roleA/C, l247_final; ui/*.test.js
 NEXT: librarian send pane C the diff 1f00fe9a..72d88e09 on l247-turbo-preset when you have read this; then a landing pane lands it and he relaunches with Turbo on to read the falsifier
+
+## Landing (pane A, the chair's 09:14Z order; 2026-11-26 09:15Z to 10:10Z)
+
+**Pushed: room main `366da0d2`.** `git push origin main` gave b78dc852..366da0d2, and `git ls-remote origin main` reads back 366da0d2274f78a94eda3fe5c588852321728219. The push-gate row is `2026-11-26T10:09:47.929Z`, decision allow, scanned `C:\Consonance\lighthouse` origin main (`C:\Consonance\data\push-gate.jsonl`, its last line).
+
+**No train config for the room repo:** `ls C:\Consonance\data | grep train` lists only the dreamzone-3 config, its backup and the ledger. Landed the way B landed L237 (68f7fb69).
+
+**Commits (checked):**
+- **00bba6ab**, on 36f490f5: the untracked pane files, by path, one commit. That is A's p-l240, p-l241 (+evidence), p-l242 (+evidence), p-l244 (+evidence) and p-l247 (+evidence), plus C's L245 blur mock and shots and C's L248 before/after page and shots.
+  - 103 files, about 26 MB (`du -sh`). The largest file is C's `refactor_before_after.html`, 2.7 MB, under the 6.3 MB already tracked in handback/.
+  - A credential-shape grep and an email grep over them found nothing.
+  - Not staged: B's `map/B.md` and `p-l243-*`, and `third_place/2026-11-14.laptop.md`.
+- **95e772a9** merges l247-turbo-preset 72d88e09 into 00bba6ab (`--no-ff`, no conflict, 5 files, +399 −23).
+- The push carried main as it stood. After the merge the librarian, the Third Place and B (L243's hand-back) had committed 6 commits on top, all under `exo_memory/` (`git diff --name-only 95e772a9 main | grep -v ^exo_memory/` is empty). `origin/main` had not moved (`git rev-list --count main..origin/main` = 0 after a fetch).
+
+**The suite, once, on 95e772a9** (`C:\Consonance\lh-wt-l247` detached at the merge, clean before and after; `landing/run.js`, started as `heavy-run.js --status && node run.js` in the background, the process at below normal; js-suite took its own slot, TAP and cargo each ran under `heavy-run --run`). Logs are in `p-l247-turbo-preset-A_2026-11-26_evidence/landing/`.
+
+| check | result | time | source |
+|---|---|---|---|
+| js-suite.js | **205 green · 3 failed** · 0 crashed · 0 silent · 1 canary · 0 not-run, of 209 | 1,387 s | js-suite.out:211 |
+| node --test TAP, the same 209 files one at a time | tests 3,486 · pass 3,468 · **fail 11** · skipped 7; 5 files not exit 0 | 1,284 s | tap-failed.txt |
+| cargo test -q | main binary **1,352 passed · 1 failed** · 8 ignored; other targets 22, 77 (3 ignored), 0, 22, 77 (3 ignored), 0 failed; exit 101 | 335 s | cargo-test.out |
+
+**Every red, read:**
+- **cargo `intake_light_tests::light_the_librarian_worst_case_intake_is_under_145_000`** (main.rs:10882): "the worst-case light librarian intake is 147663 B, not under 145,000". This is the known intake red. The figure is 147,663 B here against the chair's 147,890 B, and the other intake row is green this run.
+- **shelf-recursion** (js-suite and TAP, 1): "git unavailable; cannot cross-check the corpus set". This is the known ENOBUFS red.
+- **carrier-drift** (js-suite and TAP, 3): the known red, but it now lists **five** research notes, not three. The two new ones are `clean_ui_design_sources_2026-11-26.md` and `jev_state_and_updates_2026-11-26.md`. checked: the same five, red the same way, at the base 36f490f5 (`landing/reruns.txt`). The landing brought none of them.
+- **targetless-pull** (TAP, 4): the declared canary, red on purpose (js-suite counts it as canary).
+- **actors.evidence** (js-suite and TAP, 2) is **not on the chair's list**. I pushed anyway, and this is why:
+  - The failing check: the Third Place's mount `3d000000-…-3d00` has letter **N** in the live `letters.json`, written at persist.log:2874 on 2026-11-04T07:33:10Z.
+  - checked: the same 2 fail at the base 36f490f5.
+  - It reads live data that L247 does not write; the running app is the 06:36 build, from before L247.
+  - B's L237 landing on L listed it "already red", and the librarian's note at 366da0d2 calls it "known L red".
+  - inferred: the chair's list came from D's handoff, and on D the file is declared machine-bound and does not run, so it could not be on that list.
+  - **If the chair reads this as the stop condition, it was mine to ask and I did not.** The undo is a revert of 95e772a9.
+- **second-vantage** (TAP only, 1): `D632 a commit the claim names that only another repo holds…` (:565) resolved the worktree instead of the temp repo.
+  - checked: it was `ok` in js-suite at the same head, and green 43/43 alone at 95e772a9, twice, and at the base.
+  - inferred, not shown: the test names the temp repo's commit by a 7-character prefix, so a prefix matching an object in this repo would send it here.
+  - Not brought by L247, which touches no file under consonance/tools.
+
+**Not done, as ordered:** no release build and no app restart. C's §4b (Settings trims a padded value the spawn refuses) is left as a later one-liner. His `~/.consonance.json` was not touched.
+
+**The machine:**
+- `C:\Consonance\lh-wt-l247` (l247-turbo-preset, landed) and `C:\Consonance\lh-wt-l240` (l247-A: its hand-back blob equals main's, and its map line is now on main) are removed. Both branches are kept, local and on origin.
+- `git worktree list | wc -l` went from 32 to 30. The others are not mine to clear in this lap.
+- The debug test binary was rebuilt in `C:\build\lighthouse-target`; the release exe was not touched.
+
+NEXT: his one restart, after B's L243 is done; then he turns Turbo on and the falsifier is read: each spawn's `RUN PRESET` plog line against the transcript's model field

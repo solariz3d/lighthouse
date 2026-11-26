@@ -1,0 +1,13 @@
+TAP files 209 · tests 3486 · pass 3468 · fail 11 · skipped 7 · todo 0 · cancelled 0 · not exit 0: 5
+failed:
+consonance\tools\actors.evidence.test.js fail 2
+consonance\tools\carrier-drift.test.js fail 3
+consonance\tools\second-vantage.test.js fail 1
+consonance\tools\shelf-recursion.test.js fail 1
+consonance\tools\targetless-pull.test.js fail 4
+not exit 0:
+consonance\tools\actors.evidence.test.js exit 1
+consonance\tools\carrier-drift.test.js exit 1
+consonance\tools\second-vantage.test.js exit 1
+consonance\tools\shelf-recursion.test.js exit 1
+consonance\tools\targetless-pull.test.js exit 1
