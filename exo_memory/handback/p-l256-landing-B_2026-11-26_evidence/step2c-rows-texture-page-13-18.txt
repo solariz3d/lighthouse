@@ -1,0 +1,18 @@
+[32m✔ row 13 (L249): the corners are the spec's scale times each look's factor (a panel button, a menu, the left column, Export, a dialog), and focus is a 2 px ring in the accent [90m(17216.5931ms)[39m[39m
+[32m✔ row 14 (L249): a hovered menu row, a hovered Export and a hovered panel button read 4.5:1 or more on their own pixels in every look [90m(32046.2395ms)[39m[39m
+[34mℹ sigil: menu row 13.27, Export 8.47, panel button 8.63; aqua: menu row 8.65, Export 10.77, panel button 10.77; skyline: menu row 11.65, Export 7.67, panel button 5.41; glass: menu row 12.89, Export 12.78, panel button 12.10; aurora: menu row 14.62, Export 14.31, panel button 11.85; skyline-night: menu row 10.81, Export 9.54, panel button 5.09[39m
+[32m✔ row 15 (L255): a real pointer over Export to Assetto Corsa changes its pixels in every look [90m(17716.7811ms)[39m[39m
+[34mℹ Export hovered, pixels changed: sigil 18.7%, aqua 80.3%, skyline 69.4%, glass 16.7%, aurora 71.5%, skyline-night 72.2%[39m
+[32m✔ row 16 (L255): a real pointer over the File menu's title changes its pixels in every look [90m(20167.3703ms)[39m[39m
+[34mℹ File title hovered, pixels changed: sigil 80.4%, aqua 79.0%, skyline 14.2%, glass 13.3%, aurora 80.5%, skyline-night 81.5%[39m
+[32m✔ row 17 (L255): every menu on the bar, opened, lies wholly inside the window at every width from 900 px, in every look [90m(77926.5018ms)[39m[39m
+[34mℹ the menus at 900 px, left..right: sigil m-file 158..418 m-edit 209..469 m-build 56..316 m-track 116..376 pieces 22..442 m-view 239..499 m-settings 313..573; aqua m-file 158..418 m-edit 209..469 m-build 56..316 m-track 116..376 pieces 22..442 m-view 239..499 m-settings 313..573; skyline m-file 158..418 m-edit 209..469 m-build 56..316 m-track 116..376 pieces 22..442 m-view 239..499 m-settings 313..573; glass m-file 158..418 m-edit 209..469 m-build 56..316 m-track 116..376 pieces 22..442 m-view 239..499 m-settings 313..573; aurora m-file 158..418 m-edit 209..469 m-build 56..316 m-track 116..376 pieces 22..442 m-view 239..499 m-settings 313..573; skyline-night m-file 158..418 m-edit 209..469 m-build 56..316 m-track 116..376 pieces 22..442 m-view 239..499 m-settings 313..573[39m
+[32m✔ row 18 (L255): a field clicked into wears one frame, the 2 px ring in the accent, and its border keeps its resting colour, in every look [90m(15884.7162ms)[39m[39m
+[34mℹ tests 6[39m
+[34mℹ suites 0[39m
+[34mℹ pass 6[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 181513.1159[39m

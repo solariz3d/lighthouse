@@ -1,0 +1,13 @@
+[32m✔ row 1: in every look the shown window blurs what is behind it with the look's own blur, is cornered at --mark-win-radius, lets the blur through its fill and takes no pointer event; under prefers-reduced-transparency its fill is solid and nothing is blurred [90m(18939.7119ms)[39m[39m
+[34mℹ the windows: {"sigil":"blur(10px) · 1px · rgba(11, 13, 17, 0.92)","aqua":"blur(14px) saturate(1.7) · 2px · rgba(3, 56, 70, 0.9)","skyline":"blur(18px) saturate(1.3) · 2px · rgba(255, 255, 255, 0.92)","glass":"blur(18px) saturate(1.6) brightness(1.08) · 0px · rgba(10, 28, 44, 0.8)","aurora":"blur(16px) saturate(1.4) · 1.5px · rgba(8, 10, 30, 0.86)","skyline-night":"blur(18px) saturate(1.2) · 2px · rgba(14, 30, 62, 0.88)"}[39m
+[32m✔ row 2: a press at a shown window's centre reaches what is under it, and a camera drag begun there turns the camera [90m(3842.6847ms)[39m[39m
+[32m✔ row 3: a 60-step drag of the length handle, its readout's words changing: no window element is made or removed, and their count is the same at every step [90m(5406.1198ms)[39m[39m
+[32m✔ row 4: the reference panel, opened before any readout was shown, is drawn over the handles' windows made after it [90m(4075.7317ms)[39m[39m
+[34mℹ tests 4[39m
+[34mℹ suites 0[39m
+[34mℹ pass 4[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 32873.6737[39m

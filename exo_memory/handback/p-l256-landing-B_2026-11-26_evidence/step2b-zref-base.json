@@ -1,0 +1,71 @@
+{
+ "results": {
+  "panelFirst": {
+   "hover": {
+    "at": [
+     700,
+     353
+    ],
+    "readoutsShown": 0
+   },
+   "tree": "canvas (before L251)",
+   "point": [
+    1240,
+    118
+   ],
+   "panelParent": "preview",
+   "panelZ": "6",
+   "panelIndex": 12,
+   "handles": {
+    "el": "CANVAS[canvas]",
+    "parent": "preview",
+    "z": "6",
+    "sameParentAsPanel": true,
+    "afterPanel": false
+   },
+   "labels": {
+    "el": "CANVAS[canvas]",
+    "parent": "preview",
+    "z": "4",
+    "sameParentAsPanel": true,
+    "afterPanel": false
+   },
+   "drag handles": "under the panel",
+   "later changes": "under the panel"
+  },
+  "handleFirst": {
+   "hover": {
+    "at": [
+     700,
+     353
+    ],
+    "readoutsShown": 0
+   },
+   "tree": "canvas (before L251)",
+   "point": [
+    1240,
+    118
+   ],
+   "panelParent": "preview",
+   "panelZ": "6",
+   "panelIndex": 12,
+   "handles": {
+    "el": "CANVAS[canvas]",
+    "parent": "preview",
+    "z": "6",
+    "sameParentAsPanel": true,
+    "afterPanel": false
+   },
+   "labels": {
+    "el": "CANVAS[canvas]",
+    "parent": "preview",
+    "z": "4",
+    "sameParentAsPanel": true,
+    "afterPanel": false
+   },
+   "drag handles": "under the panel",
+   "later changes": "under the panel"
+  }
+ },
+ "pageErrors": []
+}

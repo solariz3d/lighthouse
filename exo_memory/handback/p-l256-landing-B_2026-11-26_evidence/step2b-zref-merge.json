@@ -1,0 +1,71 @@
+{
+ "results": {
+  "panelFirst": {
+   "hover": {
+    "at": [
+     700,
+     353
+    ],
+    "readoutsShown": 1
+   },
+   "tree": "elements (L251)",
+   "point": [
+    1240,
+    118
+   ],
+   "panelParent": "preview",
+   "panelZ": "6",
+   "panelIndex": 12,
+   "handles": {
+    "el": "DIV[data-mark-windows]",
+    "parent": "preview",
+    "z": "6",
+    "sameParentAsPanel": true,
+    "afterPanel": true
+   },
+   "labels": {
+    "el": "CANVAS[canvas]",
+    "parent": "preview",
+    "z": "4",
+    "sameParentAsPanel": true,
+    "afterPanel": false
+   },
+   "drag handles": "WINDOW OVER THE PANEL",
+   "later changes": "no window layer yet"
+  },
+  "handleFirst": {
+   "hover": {
+    "at": [
+     700,
+     353
+    ],
+    "readoutsShown": 1
+   },
+   "tree": "elements (L251)",
+   "point": [
+    1240,
+    118
+   ],
+   "panelParent": "preview",
+   "panelZ": "6",
+   "panelIndex": 13,
+   "handles": {
+    "el": "DIV[data-mark-windows]",
+    "parent": "preview",
+    "z": "6",
+    "sameParentAsPanel": true,
+    "afterPanel": false
+   },
+   "labels": {
+    "el": "CANVAS[canvas]",
+    "parent": "preview",
+    "z": "4",
+    "sameParentAsPanel": true,
+    "afterPanel": false
+   },
+   "drag handles": "under the panel",
+   "later changes": "no window layer yet"
+  }
+ },
+ "pageErrors": []
+}

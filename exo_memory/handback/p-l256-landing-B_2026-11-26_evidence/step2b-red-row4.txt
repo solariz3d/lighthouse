@@ -1,0 +1,25 @@
+[31m✖ row 4: the reference panel, opened before any readout was shown, is drawn over the handles' windows made after it [90m(4446.4032ms)[39m[39m
+[34mℹ tests 1[39m
+[34mℹ suites 0[39m
+[34mℹ pass 0[39m
+[34mℹ fail 1[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 4931.7178[39m
+
+[31m✖ failing tests:[39m
+
+test at app\test\markwindow-page.test.js:137:1
+[31m✖ row 4: the reference panel, opened before any readout was shown, is drawn over the handles' windows made after it [90m(4446.4032ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: the panel is drawn over the handles' windows at (1240,118): the pixel there is 255,0,255; magenta is the windows' layer
+      at TestContext.<anonymous> [90m(C:\Consonance\t180-wt-landing-1126\[39mapp\test\markwindow-page.test.js:153:10[90m)[39m
+  [90m    at async Test.run (node:internal/test_runner/test:1332:7)[39m
+  [90m    at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
