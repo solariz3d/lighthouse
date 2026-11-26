@@ -433,3 +433,97 @@ extra-row floors were never the blocker either".
 
 **Also asked:** the codes of the three truncated refusals, re-run in full (`oneRows {n:4}` on 2,552-2,640, 3,891-3,967
 and 7,442-7,514 m, base ceb21f5).
+
+### M-C0 results (run 2026-11-26 20:19-20:20Z): the falsifier fired. The marks lay, and the zone still misses.
+
+Run as registered above (`5341c863`). The copies are `m-base` (ceb21f5), `m-rowfloor`, and `m-rowfloor-noasbuilt`. The
+third copy was laid only because the built-road bank check refused F2, as the registration allowed, and is labelled
+wherever it appears. The scripts are local: `mc0.js`, `mc0_all.sh` (log `mc0.log`), `mc0diag.js`, `mc0opts.js` and
+`bankring.js`. No branch was touched, and (b) was not touched.
+
+    checked: G:/consonance-scratch/a-t1-scratch/mc0.log (16 runs: 2 copies x F1|F2 x sections|inflect x JALL 0|1),
+             then T180=…/m-rowfloor-noasbuilt FORM=F2 CUT=sections|inflect JALL=0|1 node mc0.js
+
+| copy | form | cut | laid (refused bends merged) | position p95 | exit | bank p95 | pitch p95 |
+|---|---|---|---|---|---|---|---|
+| m-base | F1 | sections | 6 of 8 (3 CLIMB_TOO_SHORT) | 38.1-38.2 m | 21.2° | 20.8° | 14.1-16.2° |
+| m-base | F1 | inflections | 6 of 8 (3 CLIMB_TOO_SHORT) | 38.3-38.4 m | 21.2° | 19.6° | 15.0-15.2° |
+| m-base | F2 | both | 1 of 8 (8 BAD_SECOND, the zone merged into one 293 m piece) | 216-225 m | 47.0° | 38.5° | 14.8° |
+| **m-rowfloor** | **F1** | **sections** | **8 of 8** | **11.6-12.3 m** | **2.7°** | **20.1°** | **14.1-16.2°** |
+| **m-rowfloor** | **F1** | **inflections** | **8 of 8** | **9.9-11.4 m** | **3.5°** | **19.1°** | **15.0-15.2°** |
+| m-rowfloor | F2 | both | 1 of 8 (8 BAD_SECOND from the built-road check) | 216-225 m | 47.0° | 38.5° | 14.8° |
+| m-rowfloor-noasbuilt (labelled) | F2 | sections | 8 of 8 | 15.2-16.2 m | 2.2° | 91.4° | 20.1-20.3° |
+| m-rowfloor-noasbuilt (labelled) | F2 | inflections | 8 of 8 | 11.6-13.2 m | 2.9° | 93.2° | 17.9° |
+
+The ranges are over JALL 0 and 1. The bars are 3 m, 2°, 5° and 2°. Every run is "not", and every run also misses on
+width and cup.
+
+**What the floors refuse at ceb21f5:**
+- **F1:** the extra climb row on the three shortest bends (22.9-27.7 m long, the row 9.4-14.2 m), CLIMB_TOO_SHORT
+  "needs at least 21.0 m".
+- **F2:** the extra bank row on every bend. These are refused by the BUILT-ROAD check (`bankAsBuilt`), not the 26 m fit
+  floor. For example, bend 1: "needs more than 26.7 m … 137.4 m holds", and the span is over 26 m, so the fit floor
+  passed it.
+- In `m-rowfloor` the same F2 refusals stand word for word. Lowering BANK_FIT_FLOOR_M changed nothing there.
+
+**With the floors lowered, F1 lays every bend and still misses badly.** That is the unwelcome outcome as registered: "the
+marks lay and the zone still misses; the extra-row floors were never the blocker either".
+
+| form | position p95 | bank p95 | pitch p95 | exit |
+|---|---|---|---|---|
+| M-A0's one corner per bend, no marks | 13.8-20.6 m | 30-32° | 20-26° | 2.6-3.2° |
+| F1 with the floors lowered | 9.9-12.3 m | 19-20° | 14-16° | 2.7-3.5° |
+| bars | 3 m | 5° | 2° | 2° |
+
+The hand-back's best rate-piece form is still far closer: 3.7 m, 9.2° and 8.9° exit.
+
+**F2 with the built-road check also off shows what the floors are for.** The bank lists lay, but the document's own bank
+overshoots.
+
+    checked: mc0diag.js, the document's bank against the built path's, per piece
+
+| bend | reference bank | document lays | its bank row |
+|---|---|---|---|
+| 7 | 4.3-28.3° | 11-46° | a row of 4.8 m |
+| 8 | −0.9 to 5° | **−100 to 5°** | |
+
+That −100° is the 91-93° bank p95. It is carried into bend 8 from bend 7's head:
+
+    checked: bankring.js, synthetic, no track data
+
+- Bend 8's own bank list, laid from a level head on a straight, stays within 2.6-5.3° in both lowered copies.
+- At ceb21f5 the 26 m fit floor refuses that list ("needs at least 26.0 m").
+- `inferred:` a bank row of a few metres rings, and the next piece inherits the ringing. That is the case the 26 m
+  floor and the built-road check exist to refuse. They are doing their job here, not blocking a shape that would
+  otherwise lay true.
+
+**So:**
+- CLIMB_TOO_SHORT, the extra turn row's 21 m (the same `cornerChangeMinM`), and the 26 m bank fit floor all stay.
+- The switchback stays its own class: a bank reversal and a hump inside a short bend.
+- No floor-lowering route was found, and the best form found is still the hand-back's rate pieces.
+- `inferred:` the shape needs a bank that can reverse by about 37° inside 20-30 m without ringing. No row or floor
+  change measured here gives that.
+
+**The three truncated refusals, read in full:** all three are **TURN_TOO_SHORT**, the extra-turn-row floor (21.0 m),
+from `oneRows {n:4}`.
+
+    checked: T180=…/m-base node -e routes.tryRoute(a, b, 'oneRows', {n:4}), whole refusal text (561-586 characters)
+
+| section | the refusal |
+|---|---|
+| 2,552-2,640 | turn change 1, a corner of 3.0°: "from at most 24.4, got 25.1" |
+| 3,891-3,967 | turn change 2, a corner of 0.1°: "from at most 38.6, got 41.9" |
+| 7,442-7,514 | turn change 1, a corner of 27.2°: "from at most 13.8, got 19.3" |
+| 3,819-3,891 (the readable one, re-run as a check) | turn change 1, 11.0°: "from at most 17.0, got 21" |
+
+**A labelled extra, not registered and carrying no verdict:** the same four in `m-rowfloor` lay with no refusal, and
+none is made.
+
+| section | misses on |
+|---|---|
+| 2,552-2,640 | bank p95 14.0° |
+| 3,891-3,967 | position p95 5.2 m, width |
+| 7,442-7,514 | position p95 7.1 m, exit 3.8°, bank 8.1°, pitch 9.8° |
+| 3,819-3,891 | exit 7.4°, width |
+
+So these refusals do not hide a section that would otherwise be made by this form.
