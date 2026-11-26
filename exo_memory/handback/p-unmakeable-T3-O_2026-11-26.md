@@ -272,3 +272,27 @@ tolerances and their registration log are `tolerances.md` and `tolerances.regist
 | 118 | 21317 | 21720 | straight, flat, level | made | peak curvature 8.3 °/100m (tol 10.0) |  | A✗5.5 C✗3.6 D✗3.7 E✗5.5 F✗6.0 G15✗5.0 GW✓ |
 
 made 115 / 119 sections; 20354 / 21578 m of road
+
+## Amendment, 2026-11-26 ~19:45Z: both "panel gaps" above were wrong
+
+Found while planning the fix (`exo_memory/loop/plan_t180_panel_gaps_jump_apron_2026-11-26.md`). I looked for the controls only in
+`app/core/panel.js`. The app has two more places that reach them, and I did not try either route. The text above stays as written.
+
+- **102 (the helix) is made through the app.** **Track ▸ Edge apron** (`app/menubar/items.js:27-40` → `app/core/coreshell.js:1166`
+  `setEdgeApron`) sets the apron the pass check counts.
+  - At 0 m and at 1 m, typed there before laying, the panel lays the section: G8W worst 0.83 and G8 worst 0.76, both made. G15 laid with heading 3.1°.
+  - At 1.5 m, G8W and G8 are refused by `PASS_CLEARANCE` again.
+  - Checked: one run per setting (local `run.js` with `APRON=`).
+- **100 (the landing) is not changed by the landing length.** **Delete selected** on the clicked landing piece (`app/core/piecesui.js:64,183`)
+  leaves the flight as the end of the track, with the landing boxes still live. The section is then laid from the flight.
+  - The pitch is made: G8W, G15, G4W and K4 all pass on pitch.
+  - Position still fails by 6.0–6.8 m, the same residue as with the core's `landingM`.
+  - So a landing-length control would not make 100. What blocks it is not named. Inferred: the measuring across the gap. Aligning the smoothed frames turns
+    the residue into a constant 5.9 m along the section instead of a decay, which suggests the two roads' metres disagree by that much across the flight.
+    I have not resolved it. "This form did not."
+
+**The count corrected: 116 of 119 sections made; 21,091 of 21,578 m of road.** With the jump made, that is 21,233 of 21,720 m of the lap.
+
+What it means for the classes: no section of [T3] is blocked by a panel gap. The one section left beyond the bends' tenths of a degree is 100,
+and its blocker is unnamed. By the packet's falsifier this lap's two "panel gap" lines were refuted by routes the hand-back did
+not try. I did not write "cannot", but "panel gap" made the same claim.
