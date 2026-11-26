@@ -1,0 +1,26 @@
+test fresh_permission_tests::no_seat_models_key_keeps_todays_spawn ... ok
+test run_preset_tests::normal_gives_back_todays_argv ... ok
+test run_preset_tests::turbo_gives_each_seat_its_model_and_effort ... FAILED
+test config_merge_tests::the_owned_keys_are_exactly_configs_fields ... FAILED
+test run_preset_tests::an_unknown_value_runs_as_normal_and_is_refused ... FAILED
+test run_preset_tests::the_spawn_takes_the_launch_once ... ok
+test config_merge_tests::the_cfgmerge_helper_leaves_no_folder_behind ... ok
+test fresh_permission_tests::the_seat_model_is_passed_on_spawn_and_resume ... ok
+test config_merge_tests::an_owned_key_changes_as_asked ... ok
+test config_merge_tests::a_save_keeps_every_key_it_does_not_own ... ok
+test config_merge_tests::saving_the_run_preset_keeps_every_other_key_and_backs_up_first ... FAILED
+test config_merge_tests::a_bom_file_is_merged_not_refused ... ok
+test config_merge_tests::a_corrupt_file_is_refused_by_name_and_left_untouched ... ok
+test config_merge_tests::usb_mode_survives_a_save_and_a_fresh_machine_gets_the_tab_keys ... ok
+thread 'run_preset_tests::turbo_gives_each_seat_its_model_and_effort' (15900) panicked at src\main.rs:5953:9:
+  left: ["--model", "opus"]
+ right: ["--model", "fable", "--effort", "high"]
+thread 'config_merge_tests::the_owned_keys_are_exactly_configs_fields' (23728) panicked at src\main.rs:27763:9:
+  left: ["ambient_label", "ambient_lat", "ambient_lon", "ambient_tz", "data_dir", "instances_dir", "room_path", "run_preset", "usb_mode"]
+ right: ["ambient_label", "ambient_lat", "ambient_lon", "ambient_tz", "data_dir", "instances_dir", "room_path", "usb_mode"]
+thread 'run_preset_tests::an_unknown_value_runs_as_normal_and_is_refused' (8440) panicked at src\main.rs:5979:17:
+thread 'config_merge_tests::saving_the_run_preset_keeps_every_other_key_and_backs_up_first' (11772) panicked at src\main.rs:27734:9:
+  left: None
+ right: Some(String("turbo"))
+test result: FAILED. 10 passed; 4 failed; 0 ignored; 0 measured; 1345 filtered out; finished in 0.03s
+error: test failed, to rerun pass `--bin consonance`

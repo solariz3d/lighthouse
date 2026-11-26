@@ -1,0 +1,72 @@
+
+today
+  bank    #4d86ff  nearest mark edge      93   nearest backdrop --road-edge     193
+  turn    #b968ff  nearest mark bank     112   nearest backdrop --road-edge     146
+  climb   #ffd23d  nearest mark width    123   nearest backdrop --road-edge     166
+  width   #ff5a5a  nearest mark climb    123   nearest backdrop --road-edge     200
+  cup     #3ddc6e  nearest mark edge      92   nearest backdrop --ground-grid   166
+  length  #ffffff  nearest mark turn     166   nearest backdrop --road-edge      40
+  edge    #3fd0c9  nearest mark cup       92   nearest backdrop --road-edge     178
+  bank-turn 112
+
+sigil
+  bank    #6b95ff  nearest mark edge      72   nearest backdrop --road-edge     160
+  turn    #c58cff  nearest mark bank      90   nearest backdrop --road-edge     109
+  climb   #f2c14e  nearest mark length    91   nearest backdrop --road-edge     153
+  width   #f0644a  nearest mark climb     93   nearest backdrop --ground-grid   193
+  cup     #52d68a  nearest mark edge      79   nearest backdrop --ground-grid   172
+  length  #ffb3a7  nearest mark climb     91   nearest backdrop --road-edge      83
+  edge    #47c4d6  nearest mark bank      72   nearest backdrop --road-edge     171
+  bank-turn 90
+
+aqua
+  bank    #4fa8ff  nearest mark edge     122   nearest backdrop --road-edge     142
+  turn    #ff7ad9  nearest mark edge      90   nearest backdrop --road-edge     152
+  climb   #ffe066  nearest mark length    82   nearest backdrop --road-edge     169
+  width   #ff6b5a  nearest mark climb    118   nearest backdrop --road-edge     231
+  cup     #7dff9e  nearest mark length   134   nearest backdrop --road-edge     117
+  length  #ffe9b8  nearest mark climb     82   nearest backdrop --road-edge      98
+  edge    #c8b6ff  nearest mark turn      90   nearest backdrop --road-edge      74
+  bank-turn 186
+
+aurora
+  bank    #5ab4ff  nearest mark edge     113   nearest backdrop --road-edge     101
+  turn    #ff6ec7  nearest mark width     92   nearest backdrop --road-edge     185
+  climb   #ffd86b  nearest mark cup       84   nearest backdrop --road-edge     159
+  width   #ff6b6b  nearest mark turn      92   nearest backdrop --ground-grid   188
+  cup     #b6ff5c  nearest mark climb     84   nearest backdrop --road-edge     124
+  length  #f4f0ff  nearest mark edge      91   nearest backdrop --road-edge     115
+  edge    #c9a0ff  nearest mark length    91   nearest backdrop --road-edge     122
+  bank-turn 188
+
+glass
+  bank    #5fa8ff  nearest mark edge      77   nearest backdrop --road-edge     129
+  turn    #c77dff  nearest mark bank     113   nearest backdrop --road-edge     112
+  climb   #ffd75e  nearest mark length   103   nearest backdrop --road-edge     170
+  width   #ff6470  nearest mark climb    116   nearest backdrop --ground-grid   204
+  cup     #4ee39a  nearest mark edge     111   nearest backdrop --ground-grid   143
+  length  #ffe2c4  nearest mark climb    103   nearest backdrop --road-edge      79
+  edge    #7af0ff  nearest mark bank      77   nearest backdrop --road-edge      82
+  bank-turn 113
+
+skyline
+  bank    #0a4fff  nearest mark edge     126   nearest backdrop --sky           115
+  turn    #8a2be2  nearest mark bank     136   nearest backdrop --sky           124
+  climb   #d99400  nearest mark width    117   nearest backdrop --fog           261
+  width   #e0303c  nearest mark climb    117   nearest backdrop --sky           247
+  cup     #11a34a  nearest mark edge      81   nearest backdrop --sky           179
+  length  #2a2f3a  nearest mark cup      120   nearest backdrop --sky           216
+  edge    #0a9a9a  nearest mark cup       81   nearest backdrop --sky           117
+  bank-turn 136
+
+skyline-night
+  bank    #4f9dff  nearest mark edge      74   nearest backdrop --ground-grid   145
+  turn    #d77bff  nearest mark length   140   nearest backdrop --road-edge     121
+  climb   #ffc44d  nearest mark length    86   nearest backdrop --road-edge     185
+  width   #ff5f6d  nearest mark climb    106   nearest backdrop --fog           176
+  cup     #3ee08f  nearest mark edge      83   nearest backdrop --ground-grid   142
+  length  #ffd9a0  nearest mark climb     86   nearest backdrop --road-edge     100
+  edge    #4fe0e0  nearest mark bank      74   nearest backdrop --road-edge     160
+  bank-turn 140
+
+worst mark pair 72

@@ -1,0 +1,668 @@
+[
+ {
+  "bars": [
+   [
+    390,
+    300,
+    "#ffb3a7"
+   ],
+   [
+    608,
+    688,
+    "#f0644a"
+   ],
+   [
+    892,
+    688,
+    "#f0644a"
+   ],
+   [
+    647,
+    390,
+    "#6b95ff"
+   ],
+   [
+    702,
+    315,
+    "#6b95ff"
+   ],
+   [
+    710,
+    688,
+    "#52d68a"
+   ],
+   [
+    790,
+    688,
+    "#52d68a"
+   ],
+   [
+    344,
+    280,
+    "#c58cff"
+   ],
+   [
+    435,
+    320,
+    "#c58cff"
+   ],
+   [
+    675,
+    351,
+    "#f2c14e"
+   ],
+   [
+    678,
+    458,
+    "#c58cff"
+   ],
+   [
+    824,
+    417,
+    "#c58cff"
+   ],
+   [
+    566,
+    374,
+    "#6b95ff"
+   ],
+   [
+    588,
+    318,
+    "#6b95ff"
+   ],
+   [
+    640,
+    566,
+    "#f0644a"
+   ],
+   [
+    861,
+    557,
+    "#f0644a"
+   ]
+  ],
+  "hb": {
+   "left": 0,
+   "top": 44
+  },
+  "theme": "sigil",
+  "themeOn": "sigil",
+  "dots": 7,
+  "bankColour": "#6b95ff",
+  "turnColour": "#c58cff",
+  "hover": {
+   "x": 291.1836350854413,
+   "y": 294.215997182964
+  },
+  "drag": {
+   "x": 587.6450722566167,
+   "y": 296.03969044606555,
+   "colour": "#6b95ff"
+  },
+  "style": {
+   "--mark-win-font": "Bahnschrift, \"DIN Alternate\", \"Segoe UI\", system-ui, sans-serif",
+   "--mark-win-radius": "2",
+   "--mark-win-bg": "",
+   "--mark-win-glow": "",
+   "--mark-bank": "#6b95ff",
+   "--mark-turn": "#c58cff"
+  },
+  "pageErrors": []
+ },
+ {
+  "bars": [
+   [
+    390,
+    301,
+    "#ffe9b8"
+   ],
+   [
+    609,
+    690,
+    "#ff6b5a"
+   ],
+   [
+    891,
+    690,
+    "#ff6b5a"
+   ],
+   [
+    647,
+    391,
+    "#4fa8ff"
+   ],
+   [
+    702,
+    316,
+    "#4fa8ff"
+   ],
+   [
+    710,
+    690,
+    "#7dff9e"
+   ],
+   [
+    790,
+    690,
+    "#7dff9e"
+   ],
+   [
+    344,
+    281,
+    "#ff7ad9"
+   ],
+   [
+    435,
+    321,
+    "#ff7ad9"
+   ],
+   [
+    675,
+    352,
+    "#ffe066"
+   ],
+   [
+    678,
+    460,
+    "#ff7ad9"
+   ],
+   [
+    824,
+    419,
+    "#ff7ad9"
+   ],
+   [
+    566,
+    375,
+    "#4fa8ff"
+   ],
+   [
+    588,
+    319,
+    "#4fa8ff"
+   ],
+   [
+    640,
+    568,
+    "#ff6b5a"
+   ],
+   [
+    861,
+    559,
+    "#ff6b5a"
+   ]
+  ],
+  "hb": {
+   "left": 0,
+   "top": 44
+  },
+  "theme": "aqua",
+  "themeOn": "aqua",
+  "dots": 7,
+  "bankColour": "#4fa8ff",
+  "turnColour": "#ff7ad9",
+  "hover": {
+   "x": 291.5466857110444,
+   "y": 295.49060282673736
+  },
+  "drag": {
+   "x": 587.7602464678957,
+   "y": 297.23926484952784,
+   "colour": "#4fa8ff"
+  },
+  "style": {
+   "--mark-win-font": "\"Segoe UI Variable Text\", \"Segoe UI\", system-ui, sans-serif",
+   "--mark-win-radius": "10",
+   "--mark-win-bg": "rgba(3, 56, 70, .90)",
+   "--mark-win-glow": "9",
+   "--mark-bank": "#4fa8ff",
+   "--mark-turn": "#ff7ad9"
+  },
+  "pageErrors": []
+ },
+ {
+  "bars": [
+   [
+    390,
+    301,
+    "#2a2f3a"
+   ],
+   [
+    608,
+    689,
+    "#e0303c"
+   ],
+   [
+    892,
+    688,
+    "#e0303c"
+   ],
+   [
+    647,
+    390,
+    "#1a2fa0"
+   ],
+   [
+    702,
+    315,
+    "#1a2fa0"
+   ],
+   [
+    710,
+    689,
+    "#11a34a"
+   ],
+   [
+    790,
+    688,
+    "#11a34a"
+   ],
+   [
+    344,
+    280,
+    "#8a2be2"
+   ],
+   [
+    435,
+    321,
+    "#8a2be2"
+   ],
+   [
+    675,
+    351,
+    "#d99400"
+   ],
+   [
+    678,
+    459,
+    "#8a2be2"
+   ],
+   [
+    824,
+    418,
+    "#8a2be2"
+   ],
+   [
+    566,
+    375,
+    "#1a2fa0"
+   ],
+   [
+    588,
+    318,
+    "#1a2fa0"
+   ],
+   [
+    640,
+    567,
+    "#e0303c"
+   ],
+   [
+    861,
+    558,
+    "#e0303c"
+   ]
+  ],
+  "hb": {
+   "left": 0,
+   "top": 44
+  },
+  "theme": "skyline",
+  "themeOn": "skyline",
+  "dots": 7,
+  "bankColour": "#1a2fa0",
+  "turnColour": "#8a2be2",
+  "hover": {
+   "x": 291.3037395530765,
+   "y": 294.6376627395193
+  },
+  "drag": {
+   "x": 587.6831721171243,
+   "y": 296.4365123778553,
+   "colour": "#1a2fa0"
+  },
+  "style": {
+   "--mark-win-font": "\"Segoe UI Variable Text\", \"Segoe UI\", system-ui, sans-serif",
+   "--mark-win-radius": "12",
+   "--mark-win-bg": "rgba(255, 255, 255, .92)",
+   "--mark-win-glow": "0",
+   "--mark-bank": "#1a2fa0",
+   "--mark-turn": "#8a2be2"
+  },
+  "pageErrors": []
+ },
+ {
+  "bars": [
+   [
+    390,
+    298,
+    "#ffd9a0"
+   ],
+   [
+    608,
+    683,
+    "#ff5f6d"
+   ],
+   [
+    892,
+    683,
+    "#ff5f6d"
+   ],
+   [
+    646,
+    387,
+    "#4f9dff"
+   ],
+   [
+    702,
+    312,
+    "#4f9dff"
+   ],
+   [
+    710,
+    683,
+    "#3ee08f"
+   ],
+   [
+    790,
+    683,
+    "#3ee08f"
+   ],
+   [
+    343,
+    278,
+    "#d77bff"
+   ],
+   [
+    435,
+    318,
+    "#d77bff"
+   ],
+   [
+    675,
+    348,
+    "#ffc44d"
+   ],
+   [
+    678,
+    455,
+    "#d77bff"
+   ],
+   [
+    824,
+    414,
+    "#d77bff"
+   ],
+   [
+    566,
+    371,
+    "#4f9dff"
+   ],
+   [
+    587,
+    316,
+    "#4f9dff"
+   ],
+   [
+    640,
+    562,
+    "#ff5f6d"
+   ],
+   [
+    861,
+    553,
+    "#ff5f6d"
+   ]
+  ],
+  "hb": {
+   "left": 0,
+   "top": 44
+  },
+  "theme": "skyline-night",
+  "themeOn": "skyline-night",
+  "dots": 7,
+  "bankColour": "#4f9dff",
+  "turnColour": "#d77bff",
+  "hover": {
+   "x": 290.461954396558,
+   "y": 291.66028086024335
+  },
+  "drag": {
+   "x": 587.4163104527764,
+   "y": 293.6349839068217,
+   "colour": "#4f9dff"
+  },
+  "style": {
+   "--mark-win-font": "\"Segoe UI Variable Text\", \"Segoe UI\", system-ui, sans-serif",
+   "--mark-win-radius": "12",
+   "--mark-win-bg": "rgba(14, 30, 62, .88)",
+   "--mark-win-glow": "8",
+   "--mark-bank": "#4f9dff",
+   "--mark-turn": "#d77bff"
+  },
+  "pageErrors": []
+ },
+ {
+  "bars": [
+   [
+    390,
+    299,
+    "#ffe2c4"
+   ],
+   [
+    608,
+    684,
+    "#ff6470"
+   ],
+   [
+    892,
+    684,
+    "#ff6470"
+   ],
+   [
+    646,
+    388,
+    "#5fa8ff"
+   ],
+   [
+    702,
+    313,
+    "#5fa8ff"
+   ],
+   [
+    710,
+    684,
+    "#4ee39a"
+   ],
+   [
+    790,
+    684,
+    "#4ee39a"
+   ],
+   [
+    344,
+    279,
+    "#c77dff"
+   ],
+   [
+    435,
+    319,
+    "#c77dff"
+   ],
+   [
+    675,
+    349,
+    "#ffd75e"
+   ],
+   [
+    678,
+    456,
+    "#c77dff"
+   ],
+   [
+    824,
+    415,
+    "#c77dff"
+   ],
+   [
+    566,
+    372,
+    "#5fa8ff"
+   ],
+   [
+    587,
+    316,
+    "#5fa8ff"
+   ],
+   [
+    640,
+    563,
+    "#ff6470"
+   ],
+   [
+    861,
+    555,
+    "#ff6470"
+   ]
+  ],
+  "hb": {
+   "left": 0,
+   "top": 44
+  },
+  "theme": "glass",
+  "themeOn": "glass",
+  "dots": 7,
+  "bankColour": "#5fa8ff",
+  "turnColour": "#c77dff",
+  "hover": {
+   "x": 290.70872899342385,
+   "y": 292.5266740166265
+  },
+  "drag": {
+   "x": 587.4945695731329,
+   "y": 294.4500870232352,
+   "colour": "#5fa8ff"
+  },
+  "style": {
+   "--mark-win-font": "\"Segoe UI Variable Text\", \"Segoe UI\", system-ui, sans-serif",
+   "--mark-win-radius": "0",
+   "--mark-win-bg": "rgba(10, 28, 44, .80)",
+   "--mark-win-glow": "6",
+   "--mark-bank": "#5fa8ff",
+   "--mark-turn": "#c77dff"
+  },
+  "pageErrors": []
+ },
+ {
+  "bars": [
+   [
+    390,
+    299,
+    "#f4f0ff"
+   ],
+   [
+    608,
+    685,
+    "#ff6b6b"
+   ],
+   [
+    892,
+    685,
+    "#ff6b6b"
+   ],
+   [
+    646,
+    388,
+    "#5ab4ff"
+   ],
+   [
+    702,
+    314,
+    "#5ab4ff"
+   ],
+   [
+    710,
+    685,
+    "#b6ff5c"
+   ],
+   [
+    790,
+    685,
+    "#b6ff5c"
+   ],
+   [
+    344,
+    279,
+    "#ff6ec7"
+   ],
+   [
+    435,
+    319,
+    "#ff6ec7"
+   ],
+   [
+    675,
+    349,
+    "#ffd86b"
+   ],
+   [
+    678,
+    457,
+    "#ff6ec7"
+   ],
+   [
+    824,
+    416,
+    "#ff6ec7"
+   ],
+   [
+    566,
+    373,
+    "#5ab4ff"
+   ],
+   [
+    588,
+    317,
+    "#5ab4ff"
+   ],
+   [
+    640,
+    564,
+    "#ff6b6b"
+   ],
+   [
+    861,
+    555,
+    "#ff6b6b"
+   ]
+  ],
+  "hb": {
+   "left": 0,
+   "top": 44
+  },
+  "theme": "aurora",
+  "themeOn": "aurora",
+  "dots": 7,
+  "bankColour": "#5ab4ff",
+  "turnColour": "#ff6ec7",
+  "hover": {
+   "x": 290.82614756577254,
+   "y": 292.93891522219076
+  },
+  "drag": {
+   "x": 587.5318093436922,
+   "y": 294.83795563222566,
+   "colour": "#5ab4ff"
+  },
+  "style": {
+   "--mark-win-font": "Bahnschrift, \"DIN Alternate\", \"Segoe UI\", system-ui, sans-serif",
+   "--mark-win-radius": "8",
+   "--mark-win-bg": "rgba(8, 10, 30, .86)",
+   "--mark-win-glow": "12",
+   "--mark-bank": "#5ab4ff",
+   "--mark-turn": "#ff6ec7"
+  },
+  "pageErrors": []
+ }
+]
