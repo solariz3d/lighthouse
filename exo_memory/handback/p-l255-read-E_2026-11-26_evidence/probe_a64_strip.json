@@ -1,0 +1,45 @@
+{
+ "tree": "C:\\Consonance\\t180-wt-e-l255",
+ "parts": [
+  "strip"
+ ],
+ "strip": [
+  {
+   "look": "sigil",
+   "r3": "4px",
+   "strip": "4px",
+   "inline": "border-radius: var(--r3)"
+  },
+  {
+   "look": "aqua",
+   "r3": "8px",
+   "strip": "8px",
+   "inline": "border-radius: var(--r3)"
+  },
+  {
+   "look": "skyline",
+   "r3": "8px",
+   "strip": "8px",
+   "inline": "border-radius: var(--r3)"
+  },
+  {
+   "look": "glass",
+   "r3": "0px",
+   "strip": "0px",
+   "inline": "border-radius: var(--r3)"
+  },
+  {
+   "look": "aurora",
+   "r3": "6px",
+   "strip": "6px",
+   "inline": "border-radius: var(--r3)"
+  },
+  {
+   "look": "skyline-night",
+   "r3": "8px",
+   "strip": "8px",
+   "inline": "border-radius: var(--r3)"
+  }
+ ],
+ "title": "zz-headless-test"
+}

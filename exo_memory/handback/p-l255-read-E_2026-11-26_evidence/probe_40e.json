@@ -1,0 +1,4870 @@
+{
+ "tree": "C:\\Consonance\\t180-wt-e-l255b",
+ "parts": [
+  "fields",
+  "selects",
+  "menus",
+  "export",
+  "titles",
+  "strip",
+  "longfile",
+  "settings"
+ ],
+ "fields": [
+  {
+   "look": "sigil",
+   "field": "name (bar)",
+   "mode": "tab",
+   "focused": false,
+   "focusVisible": false,
+   "pointerOnIt": false,
+   "ring": "none 3px rgb(235, 230, 220) 0px",
+   "ringSidesDrawn": 0,
+   "sides": {
+    "top": false,
+    "bottom": false,
+    "left": false,
+    "right": false
+   },
+   "borderRest": "rgba(235, 230, 220, 0.14)",
+   "borderFocused": "rgba(235, 230, 220, 0.14)",
+   "borderChanged": false,
+   "shadowRest": "none",
+   "shadowFocused": "none",
+   "frames": 0
+  },
+  {
+   "look": "sigil",
+   "field": "name (bar)",
+   "mode": "click",
+   "focused": true,
+   "focusVisible": true,
+   "pointerOnIt": true,
+   "ring": "solid 2px rgb(185, 168, 255) 1px",
+   "ringSidesDrawn": 4,
+   "sides": {
+    "top": true,
+    "bottom": true,
+    "left": true,
+    "right": true
+   },
+   "borderRest": "rgba(235, 230, 220, 0.14)",
+   "borderFocused": "rgb(185, 168, 255)",
+   "borderChanged": true,
+   "shadowRest": "none",
+   "shadowFocused": "none",
+   "frames": 2
+  },
+  {
+   "look": "sigil",
+   "field": "first field in the column",
+   "mode": "tab",
+   "focused": true,
+   "focusVisible": true,
+   "pointerOnIt": false,
+   "ring": "solid 2px rgb(185, 168, 255) 1px",
+   "ringSidesDrawn": 4,
+   "sides": {
+    "top": true,
+    "bottom": true,
+    "left": true,
+    "right": true
+   },
+   "borderRest": "rgba(235, 230, 220, 0.14)",
+   "borderFocused": "rgb(185, 168, 255)",
+   "borderChanged": true,
+   "shadowRest": "none",
+   "shadowFocused": "none",
+   "frames": 2
+  },
+  {
+   "look": "sigil",
+   "field": "first field in the column",
+   "mode": "click",
+   "focused": true,
+   "focusVisible": true,
+   "pointerOnIt": true,
+   "ring": "solid 2px rgb(185, 168, 255) 1px",
+   "ringSidesDrawn": 4,
+   "sides": {
+    "top": true,
+    "bottom": true,
+    "left": true,
+    "right": true
+   },
+   "borderRest": "rgba(235, 230, 220, 0.14)",
+   "borderFocused": "rgb(185, 168, 255)",
+   "borderChanged": true,
+   "shadowRest": "none",
+   "shadowFocused": "none",
+   "frames": 2
+  },
+  {
+   "look": "sigil",
+   "field": "a field in Settings",
+   "mode": "tab",
+   "focused": true,
+   "focusVisible": true,
+   "pointerOnIt": false,
+   "ring": "solid 2px rgb(185, 168, 255) 1px",
+   "ringSidesDrawn": 4,
+   "sides": {
+    "top": true,
+    "bottom": true,
+    "left": true,
+    "right": true
+   },
+   "borderRest": "rgba(235, 230, 220, 0.14)",
+   "borderFocused": "rgb(185, 168, 255)",
+   "borderChanged": true,
+   "shadowRest": "none",
+   "shadowFocused": "none",
+   "frames": 2
+  },
+  {
+   "look": "sigil",
+   "field": "a field in Settings",
+   "mode": "click",
+   "focused": true,
+   "focusVisible": true,
+   "pointerOnIt": true,
+   "ring": "solid 2px rgb(185, 168, 255) 1px",
+   "ringSidesDrawn": 4,
+   "sides": {
+    "top": true,
+    "bottom": true,
+    "left": true,
+    "right": true
+   },
+   "borderRest": "rgba(235, 230, 220, 0.14)",
+   "borderFocused": "rgb(185, 168, 255)",
+   "borderChanged": true,
+   "shadowRest": "none",
+   "shadowFocused": "none",
+   "frames": 2
+  },
+  {
+   "look": "aqua",
+   "field": "name (bar)",
+   "mode": "tab",
+   "focused": false,
+   "focusVisible": false,
+   "pointerOnIt": false,
+   "ring": "none 3px rgb(242, 253, 255) 0px",
+   "ringSidesDrawn": 0,
+   "sides": {
+    "top": false,
+    "bottom": false,
+    "left": false,
+    "right": false
+   },
+   "borderRest": "rgba(120, 230, 245, 0.55)",
+   "borderFocused": "rgba(120, 230, 245, 0.55)",
+   "borderChanged": false,
+   "shadowRest": "rgba(0, 0, 0, 0.45) 0px 2px 0px 0px inset, rgba(160, 245, 255, 0.18) 0px 1px 0px 0px",
+   "shadowFocused": "rgba(0, 0, 0, 0.45) 0px 2px 0px 0px inset, rgba(160, 245, 255, 0.18) 0px 1px 0px 0px",
+   "frames": 0
+  },
+  {
+   "look": "aqua",
+   "field": "name (bar)",
+   "mode": "click",
+   "focused": true,
+   "focusVisible": true,
+   "pointerOnIt": true,
+   "ring": "solid 2px rgb(63, 224, 245) 1px",
+   "ringSidesDrawn": 4,
+   "sides": {
+    "top": true,
+    "bottom": true,
+    "left": true,
+    "right": true
+   },
+   "borderRest": "rgba(120, 230, 245, 0.55)",
+   "borderFocused": "rgb(63, 224, 245)",
+   "borderChanged": true,
+   "shadowRest": "rgba(0, 0, 0, 0.45) 0px 2px 0px 0px inset, rgba(160, 245, 255, 0.18) 0px 1px 0px 0px",
+   "shadowFocused": "rgba(0, 0, 0, 0.45) 0px 2px 4px 0px inset",
+   "frames": 2
+  },
+  {
+   "look": "aqua",
+   "field": "first field in the column",
+   "mode": "tab",
+   "focused": true,
+   "focusVisible": true,
+   "pointerOnIt": false,
+   "ring": "solid 2px rgb(63, 224, 245) 1px",
+   "ringSidesDrawn": 4,
+   "sides": {
+    "top": true,
+    "bottom": true,
+    "left": true,
+    "right": true
+   },
+   "borderRest": "rgba(120, 230, 245, 0.55)",
+   "borderFocused": "rgb(63, 224, 245)",
+   "borderChanged": true,
+   "shadowRest": "rgba(0, 0, 0, 0.45) 0px 2px 0px 0px inset, rgba(160, 245, 255, 0.18) 0px 1px 0px 0px",
+   "shadowFocused": "rgba(0, 0, 0, 0.45) 0px 2px 4px 0px inset",
+   "frames": 2
+  },
+  {
+   "look": "aqua",
+   "field": "first field in the column",
+   "mode": "click",
+   "focused": true,
+   "focusVisible": true,
+   "pointerOnIt": true,
+   "ring": "solid 2px rgb(63, 224, 245) 1px",
+   "ringSidesDrawn": 4,
+   "sides": {
+    "top": true,
+    "bottom": true,
+    "left": true,
+    "right": true
+   },
+   "borderRest": "rgba(120, 230, 245, 0.55)",
+   "borderFocused": "rgb(63, 224, 245)",
+   "borderChanged": true,
+   "shadowRest": "rgba(0, 0, 0, 0.45) 0px 2px 0px 0px inset, rgba(160, 245, 255, 0.18) 0px 1px 0px 0px",
+   "shadowFocused": "rgba(0, 0, 0, 0.45) 0px 2px 4px 0px inset",
+   "frames": 2
+  },
+  {
+   "look": "aqua",
+   "field": "a field in Settings",
+   "mode": "tab",
+   "focused": true,
+   "focusVisible": true,
+   "pointerOnIt": false,
+   "ring": "solid 2px rgb(63, 224, 245) 1px",
+   "ringSidesDrawn": 4,
+   "sides": {
+    "top": true,
+    "bottom": true,
+    "left": true,
+    "right": true
+   },
+   "borderRest": "rgba(120, 230, 245, 0.55)",
+   "borderFocused": "rgb(63, 224, 245)",
+   "borderChanged": true,
+   "shadowRest": "rgba(0, 0, 0, 0.45) 0px 2px 0px 0px inset, rgba(160, 245, 255, 0.18) 0px 1px 0px 0px",
+   "shadowFocused": "rgba(0, 0, 0, 0.45) 0px 2px 4px 0px inset",
+   "frames": 2
+  },
+  {
+   "look": "aqua",
+   "field": "a field in Settings",
+   "mode": "click",
+   "focused": true,
+   "focusVisible": true,
+   "pointerOnIt": true,
+   "ring": "solid 2px rgb(63, 224, 245) 1px",
+   "ringSidesDrawn": 4,
+   "sides": {
+    "top": true,
+    "bottom": true,
+    "left": true,
+    "right": true
+   },
+   "borderRest": "rgba(120, 230, 245, 0.55)",
+   "borderFocused": "rgb(63, 224, 245)",
+   "borderChanged": true,
+   "shadowRest": "rgba(0, 0, 0, 0.45) 0px 2px 0px 0px inset, rgba(160, 245, 255, 0.18) 0px 1px 0px 0px",
+   "shadowFocused": "rgba(0, 0, 0, 0.45) 0px 2px 4px 0px inset",
+   "frames": 2
+  },
+  {
+   "look": "skyline",
+   "field": "name (bar)",
+   "mode": "tab",
+   "focused": false,
+   "focusVisible": false,
+   "pointerOnIt": false,
+   "ring": "none 3px rgb(11, 39, 71) 0px",
+   "ringSidesDrawn": 0,
+   "sides": {
+    "top": false,
+    "bottom": false,
+    "left": false,
+    "right": false
+   },
+   "borderRest": "rgb(166, 200, 234)",
+   "borderFocused": "rgb(166, 200, 234)",
+   "borderChanged": false,
+   "shadowRest": "rgba(20, 80, 160, 0.14) 0px 1px 0px 0px inset",
+   "shadowFocused": "rgba(20, 80, 160, 0.14) 0px 1px 0px 0px inset",
+   "frames": 0
+  },
+  {
+   "look": "skyline",
+   "field": "name (bar)",
+   "mode": "click",
+   "focused": true,
+   "focusVisible": true,
+   "pointerOnIt": true,
+   "ring": "solid 2px rgb(7, 87, 179) 1px",
+   "ringSidesDrawn": 4,
+   "sides": {
+    "top": true,
+    "bottom": true,
+    "left": true,
+    "right": true
+   },
+   "borderRest": "rgb(166, 200, 234)",
+   "borderFocused": "rgb(7, 87, 179)",
+   "borderChanged": true,
+   "shadowRest": "rgba(20, 80, 160, 0.14) 0px 1px 0px 0px inset",
+   "shadowFocused": "rgba(20, 80, 160, 0.14) 0px 1px 0px 0px inset",
+   "frames": 2
+  },
+  {
+   "look": "skyline",
+   "field": "first field in the column",
+   "mode": "tab",
+   "focused": true,
+   "focusVisible": true,
+   "pointerOnIt": false,
+   "ring": "solid 2px rgb(7, 87, 179) 1px",
+   "ringSidesDrawn": 4,
+   "sides": {
+    "top": true,
+    "bottom": true,
+    "left": true,
+    "right": true
+   },
+   "borderRest": "rgb(166, 200, 234)",
+   "borderFocused": "rgb(7, 87, 179)",
+   "borderChanged": true,
+   "shadowRest": "rgba(20, 80, 160, 0.14) 0px 1px 0px 0px inset",
+   "shadowFocused": "rgba(20, 80, 160, 0.14) 0px 1px 0px 0px inset",
+   "frames": 2
+  },
+  {
+   "look": "skyline",
+   "field": "first field in the column",
+   "mode": "click",
+   "focused": true,
+   "focusVisible": true,
+   "pointerOnIt": true,
+   "ring": "solid 2px rgb(7, 87, 179) 1px",
+   "ringSidesDrawn": 4,
+   "sides": {
+    "top": true,
+    "bottom": true,
+    "left": true,
+    "right": true
+   },
+   "borderRest": "rgb(166, 200, 234)",
+   "borderFocused": "rgb(7, 87, 179)",
+   "borderChanged": true,
+   "shadowRest": "rgba(20, 80, 160, 0.14) 0px 1px 0px 0px inset",
+   "shadowFocused": "rgba(20, 80, 160, 0.14) 0px 1px 0px 0px inset",
+   "frames": 2
+  },
+  {
+   "look": "skyline",
+   "field": "a field in Settings",
+   "mode": "tab",
+   "focused": true,
+   "focusVisible": true,
+   "pointerOnIt": false,
+   "ring": "solid 2px rgb(7, 87, 179) 1px",
+   "ringSidesDrawn": 4,
+   "sides": {
+    "top": true,
+    "bottom": true,
+    "left": true,
+    "right": true
+   },
+   "borderRest": "rgb(166, 200, 234)",
+   "borderFocused": "rgb(7, 87, 179)",
+   "borderChanged": true,
+   "shadowRest": "rgba(20, 80, 160, 0.14) 0px 1px 0px 0px inset",
+   "shadowFocused": "rgba(20, 80, 160, 0.14) 0px 1px 0px 0px inset",
+   "frames": 2
+  },
+  {
+   "look": "skyline",
+   "field": "a field in Settings",
+   "mode": "click",
+   "focused": true,
+   "focusVisible": true,
+   "pointerOnIt": true,
+   "ring": "solid 2px rgb(7, 87, 179) 1px",
+   "ringSidesDrawn": 4,
+   "sides": {
+    "top": true,
+    "bottom": true,
+    "left": true,
+    "right": true
+   },
+   "borderRest": "rgb(166, 200, 234)",
+   "borderFocused": "rgb(7, 87, 179)",
+   "borderChanged": true,
+   "shadowRest": "rgba(20, 80, 160, 0.14) 0px 1px 0px 0px inset",
+   "shadowFocused": "rgba(20, 80, 160, 0.14) 0px 1px 0px 0px inset",
+   "frames": 2
+  },
+  {
+   "look": "glass",
+   "field": "name (bar)",
+   "mode": "tab",
+   "focused": false,
+   "focusVisible": false,
+   "pointerOnIt": false,
+   "ring": "none 3px rgb(240, 249, 255) 0px",
+   "ringSidesDrawn": 0,
+   "sides": {
+    "top": false,
+    "bottom": false,
+    "left": false,
+    "right": false
+   },
+   "borderRest": "rgba(190, 235, 255, 0.4)",
+   "borderFocused": "rgba(190, 235, 255, 0.4)",
+   "borderChanged": false,
+   "shadowRest": "rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset",
+   "shadowFocused": "rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset",
+   "frames": 0
+  },
+  {
+   "look": "glass",
+   "field": "name (bar)",
+   "mode": "click",
+   "focused": true,
+   "focusVisible": true,
+   "pointerOnIt": true,
+   "ring": "solid 2px rgb(143, 230, 255) 1px",
+   "ringSidesDrawn": 4,
+   "sides": {
+    "top": true,
+    "bottom": true,
+    "left": true,
+    "right": true
+   },
+   "borderRest": "rgba(190, 235, 255, 0.4)",
+   "borderFocused": "rgb(143, 230, 255)",
+   "borderChanged": true,
+   "shadowRest": "rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset",
+   "shadowFocused": "rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset",
+   "frames": 2
+  },
+  {
+   "look": "glass",
+   "field": "first field in the column",
+   "mode": "tab",
+   "focused": true,
+   "focusVisible": true,
+   "pointerOnIt": false,
+   "ring": "solid 2px rgb(143, 230, 255) 1px",
+   "ringSidesDrawn": 4,
+   "sides": {
+    "top": true,
+    "bottom": true,
+    "left": true,
+    "right": true
+   },
+   "borderRest": "rgba(190, 235, 255, 0.4)",
+   "borderFocused": "rgb(143, 230, 255)",
+   "borderChanged": true,
+   "shadowRest": "rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset",
+   "shadowFocused": "rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset",
+   "frames": 2
+  },
+  {
+   "look": "glass",
+   "field": "first field in the column",
+   "mode": "click",
+   "focused": true,
+   "focusVisible": true,
+   "pointerOnIt": true,
+   "ring": "solid 2px rgb(143, 230, 255) 1px",
+   "ringSidesDrawn": 4,
+   "sides": {
+    "top": true,
+    "bottom": true,
+    "left": true,
+    "right": true
+   },
+   "borderRest": "rgba(190, 235, 255, 0.4)",
+   "borderFocused": "rgb(143, 230, 255)",
+   "borderChanged": true,
+   "shadowRest": "rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset",
+   "shadowFocused": "rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset",
+   "frames": 2
+  },
+  {
+   "look": "glass",
+   "field": "a field in Settings",
+   "mode": "tab",
+   "focused": true,
+   "focusVisible": true,
+   "pointerOnIt": false,
+   "ring": "solid 2px rgb(143, 230, 255) 1px",
+   "ringSidesDrawn": 4,
+   "sides": {
+    "top": true,
+    "bottom": true,
+    "left": true,
+    "right": true
+   },
+   "borderRest": "rgba(190, 235, 255, 0.4)",
+   "borderFocused": "rgb(143, 230, 255)",
+   "borderChanged": true,
+   "shadowRest": "rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset",
+   "shadowFocused": "rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset",
+   "frames": 2
+  },
+  {
+   "look": "glass",
+   "field": "a field in Settings",
+   "mode": "click",
+   "focused": true,
+   "focusVisible": true,
+   "pointerOnIt": true,
+   "ring": "solid 2px rgb(143, 230, 255) 1px",
+   "ringSidesDrawn": 4,
+   "sides": {
+    "top": true,
+    "bottom": true,
+    "left": true,
+    "right": true
+   },
+   "borderRest": "rgba(190, 235, 255, 0.4)",
+   "borderFocused": "rgb(143, 230, 255)",
+   "borderChanged": true,
+   "shadowRest": "rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset",
+   "shadowFocused": "rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset",
+   "frames": 2
+  },
+  {
+   "look": "aurora",
+   "field": "name (bar)",
+   "mode": "tab",
+   "focused": false,
+   "focusVisible": false,
+   "pointerOnIt": false,
+   "ring": "none 3px rgb(234, 246, 255) 0px",
+   "ringSidesDrawn": 0,
+   "sides": {
+    "top": false,
+    "bottom": false,
+    "left": false,
+    "right": false
+   },
+   "borderRest": "rgba(150, 200, 255, 0.24)",
+   "borderFocused": "rgba(150, 200, 255, 0.24)",
+   "borderChanged": false,
+   "shadowRest": "none",
+   "shadowFocused": "none",
+   "frames": 0
+  },
+  {
+   "look": "aurora",
+   "field": "name (bar)",
+   "mode": "click",
+   "focused": true,
+   "focusVisible": true,
+   "pointerOnIt": true,
+   "ring": "solid 2px rgb(111, 245, 192) 1px",
+   "ringSidesDrawn": 4,
+   "sides": {
+    "top": true,
+    "bottom": true,
+    "left": true,
+    "right": true
+   },
+   "borderRest": "rgba(150, 200, 255, 0.24)",
+   "borderFocused": "rgb(111, 245, 192)",
+   "borderChanged": true,
+   "shadowRest": "none",
+   "shadowFocused": "none",
+   "frames": 2
+  },
+  {
+   "look": "aurora",
+   "field": "first field in the column",
+   "mode": "tab",
+   "focused": true,
+   "focusVisible": true,
+   "pointerOnIt": false,
+   "ring": "solid 2px rgb(111, 245, 192) 1px",
+   "ringSidesDrawn": 4,
+   "sides": {
+    "top": true,
+    "bottom": true,
+    "left": true,
+    "right": true
+   },
+   "borderRest": "rgba(150, 200, 255, 0.24)",
+   "borderFocused": "rgb(111, 245, 192)",
+   "borderChanged": true,
+   "shadowRest": "none",
+   "shadowFocused": "none",
+   "frames": 2
+  },
+  {
+   "look": "aurora",
+   "field": "first field in the column",
+   "mode": "click",
+   "focused": true,
+   "focusVisible": true,
+   "pointerOnIt": true,
+   "ring": "solid 2px rgb(111, 245, 192) 1px",
+   "ringSidesDrawn": 4,
+   "sides": {
+    "top": true,
+    "bottom": true,
+    "left": true,
+    "right": true
+   },
+   "borderRest": "rgba(150, 200, 255, 0.24)",
+   "borderFocused": "rgb(111, 245, 192)",
+   "borderChanged": true,
+   "shadowRest": "none",
+   "shadowFocused": "none",
+   "frames": 2
+  },
+  {
+   "look": "aurora",
+   "field": "a field in Settings",
+   "mode": "tab",
+   "focused": true,
+   "focusVisible": true,
+   "pointerOnIt": false,
+   "ring": "solid 2px rgb(111, 245, 192) 1px",
+   "ringSidesDrawn": 4,
+   "sides": {
+    "top": true,
+    "bottom": true,
+    "left": true,
+    "right": true
+   },
+   "borderRest": "rgba(150, 200, 255, 0.24)",
+   "borderFocused": "rgb(111, 245, 192)",
+   "borderChanged": true,
+   "shadowRest": "none",
+   "shadowFocused": "none",
+   "frames": 2
+  },
+  {
+   "look": "aurora",
+   "field": "a field in Settings",
+   "mode": "click",
+   "focused": true,
+   "focusVisible": true,
+   "pointerOnIt": true,
+   "ring": "solid 2px rgb(111, 245, 192) 1px",
+   "ringSidesDrawn": 4,
+   "sides": {
+    "top": true,
+    "bottom": true,
+    "left": true,
+    "right": true
+   },
+   "borderRest": "rgba(150, 200, 255, 0.24)",
+   "borderFocused": "rgb(111, 245, 192)",
+   "borderChanged": true,
+   "shadowRest": "none",
+   "shadowFocused": "none",
+   "frames": 2
+  },
+  {
+   "look": "skyline-night",
+   "field": "name (bar)",
+   "mode": "tab",
+   "focused": false,
+   "focusVisible": false,
+   "pointerOnIt": false,
+   "ring": "none 3px rgb(232, 242, 255) 0px",
+   "ringSidesDrawn": 0,
+   "sides": {
+    "top": false,
+    "bottom": false,
+    "left": false,
+    "right": false
+   },
+   "borderRest": "rgb(52, 89, 143)",
+   "borderFocused": "rgb(52, 89, 143)",
+   "borderChanged": false,
+   "shadowRest": "rgba(0, 0, 0, 0.4) 0px 1px 0px 0px inset",
+   "shadowFocused": "rgba(0, 0, 0, 0.4) 0px 1px 0px 0px inset",
+   "frames": 0
+  },
+  {
+   "look": "skyline-night",
+   "field": "name (bar)",
+   "mode": "click",
+   "focused": true,
+   "focusVisible": true,
+   "pointerOnIt": true,
+   "ring": "solid 2px rgb(124, 200, 255) 1px",
+   "ringSidesDrawn": 4,
+   "sides": {
+    "top": true,
+    "bottom": true,
+    "left": true,
+    "right": true
+   },
+   "borderRest": "rgb(52, 89, 143)",
+   "borderFocused": "rgb(124, 200, 255)",
+   "borderChanged": true,
+   "shadowRest": "rgba(0, 0, 0, 0.4) 0px 1px 0px 0px inset",
+   "shadowFocused": "rgba(0, 0, 0, 0.4) 0px 1px 0px 0px inset",
+   "frames": 2
+  },
+  {
+   "look": "skyline-night",
+   "field": "first field in the column",
+   "mode": "tab",
+   "focused": true,
+   "focusVisible": true,
+   "pointerOnIt": false,
+   "ring": "solid 2px rgb(124, 200, 255) 1px",
+   "ringSidesDrawn": 4,
+   "sides": {
+    "top": true,
+    "bottom": true,
+    "left": true,
+    "right": true
+   },
+   "borderRest": "rgb(52, 89, 143)",
+   "borderFocused": "rgb(124, 200, 255)",
+   "borderChanged": true,
+   "shadowRest": "rgba(0, 0, 0, 0.4) 0px 1px 0px 0px inset",
+   "shadowFocused": "rgba(0, 0, 0, 0.4) 0px 1px 0px 0px inset",
+   "frames": 2
+  },
+  {
+   "look": "skyline-night",
+   "field": "first field in the column",
+   "mode": "click",
+   "focused": true,
+   "focusVisible": true,
+   "pointerOnIt": true,
+   "ring": "solid 2px rgb(124, 200, 255) 1px",
+   "ringSidesDrawn": 4,
+   "sides": {
+    "top": true,
+    "bottom": true,
+    "left": true,
+    "right": true
+   },
+   "borderRest": "rgb(52, 89, 143)",
+   "borderFocused": "rgb(124, 200, 255)",
+   "borderChanged": true,
+   "shadowRest": "rgba(0, 0, 0, 0.4) 0px 1px 0px 0px inset",
+   "shadowFocused": "rgba(0, 0, 0, 0.4) 0px 1px 0px 0px inset",
+   "frames": 2
+  },
+  {
+   "look": "skyline-night",
+   "field": "a field in Settings",
+   "mode": "tab",
+   "focused": true,
+   "focusVisible": true,
+   "pointerOnIt": false,
+   "ring": "solid 2px rgb(124, 200, 255) 1px",
+   "ringSidesDrawn": 4,
+   "sides": {
+    "top": true,
+    "bottom": true,
+    "left": true,
+    "right": true
+   },
+   "borderRest": "rgb(52, 89, 143)",
+   "borderFocused": "rgb(124, 200, 255)",
+   "borderChanged": true,
+   "shadowRest": "rgba(0, 0, 0, 0.4) 0px 1px 0px 0px inset",
+   "shadowFocused": "rgba(0, 0, 0, 0.4) 0px 1px 0px 0px inset",
+   "frames": 2
+  },
+  {
+   "look": "skyline-night",
+   "field": "a field in Settings",
+   "mode": "click",
+   "focused": true,
+   "focusVisible": true,
+   "pointerOnIt": true,
+   "ring": "solid 2px rgb(124, 200, 255) 1px",
+   "ringSidesDrawn": 4,
+   "sides": {
+    "top": true,
+    "bottom": true,
+    "left": true,
+    "right": true
+   },
+   "borderRest": "rgb(52, 89, 143)",
+   "borderFocused": "rgb(124, 200, 255)",
+   "borderChanged": true,
+   "shadowRest": "rgba(0, 0, 0, 0.4) 0px 1px 0px 0px inset",
+   "shadowFocused": "rgba(0, 0, 0, 0.4) 0px 1px 0px 0px inset",
+   "frames": 2
+  }
+ ],
+ "selects": [
+  {
+   "look": "sigil",
+   "select": "width like a measured road",
+   "rest": {
+    "focused": false,
+    "fv": false,
+    "open": false,
+    "appearance": "none",
+    "border": "rgba(235, 230, 220, 0.14)",
+    "outline": "none 3px",
+    "value": ""
+   },
+   "openedByMouse": {
+    "focused": true,
+    "fv": true,
+    "open": true,
+    "appearance": "none",
+    "border": "rgba(235, 230, 220, 0.14)",
+    "outline": "solid 2px",
+    "value": ""
+   },
+   "afterEscape": {
+    "focused": true,
+    "fv": true,
+    "open": false,
+    "appearance": "none",
+    "border": "rgba(235, 230, 220, 0.14)",
+    "outline": "solid 2px",
+    "value": ""
+   },
+   "afterEscapePointerOff": {
+    "focused": true,
+    "fv": true,
+    "open": false,
+    "appearance": "none",
+    "border": "rgba(235, 230, 220, 0.14)",
+    "outline": "solid 2px",
+    "value": ""
+   }
+  },
+  {
+   "look": "sigil",
+   "select": "grip like a measured road",
+   "rest": {
+    "focused": false,
+    "fv": false,
+    "open": false,
+    "appearance": "none",
+    "border": "rgba(235, 230, 220, 0.14)",
+    "outline": "none 3px",
+    "value": ""
+   },
+   "openedByMouse": {
+    "focused": true,
+    "fv": true,
+    "open": true,
+    "appearance": "none",
+    "border": "rgba(235, 230, 220, 0.14)",
+    "outline": "solid 2px",
+    "value": ""
+   },
+   "afterEscape": {
+    "focused": true,
+    "fv": true,
+    "open": false,
+    "appearance": "none",
+    "border": "rgba(235, 230, 220, 0.14)",
+    "outline": "solid 2px",
+    "value": ""
+   },
+   "afterEscapePointerOff": {
+    "focused": true,
+    "fv": true,
+    "open": false,
+    "appearance": "none",
+    "border": "rgba(235, 230, 220, 0.14)",
+    "outline": "solid 2px",
+    "value": ""
+   }
+  },
+  {
+   "look": "aqua",
+   "select": "width like a measured road",
+   "rest": {
+    "focused": false,
+    "fv": false,
+    "open": false,
+    "appearance": "none",
+    "border": "rgba(120, 230, 245, 0.55)",
+    "outline": "none 3px",
+    "value": ""
+   },
+   "openedByMouse": {
+    "focused": true,
+    "fv": true,
+    "open": true,
+    "appearance": "none",
+    "border": "rgb(63, 224, 245)",
+    "outline": "solid 2px",
+    "value": ""
+   },
+   "afterEscape": {
+    "focused": true,
+    "fv": true,
+    "open": false,
+    "appearance": "none",
+    "border": "rgb(63, 224, 245)",
+    "outline": "solid 2px",
+    "value": ""
+   },
+   "afterEscapePointerOff": {
+    "focused": true,
+    "fv": true,
+    "open": false,
+    "appearance": "none",
+    "border": "rgb(63, 224, 245)",
+    "outline": "solid 2px",
+    "value": ""
+   }
+  },
+  {
+   "look": "aqua",
+   "select": "grip like a measured road",
+   "rest": {
+    "focused": false,
+    "fv": false,
+    "open": false,
+    "appearance": "none",
+    "border": "rgba(120, 230, 245, 0.55)",
+    "outline": "none 3px",
+    "value": ""
+   },
+   "openedByMouse": {
+    "focused": true,
+    "fv": true,
+    "open": true,
+    "appearance": "none",
+    "border": "rgb(63, 224, 245)",
+    "outline": "solid 2px",
+    "value": ""
+   },
+   "afterEscape": {
+    "focused": true,
+    "fv": true,
+    "open": false,
+    "appearance": "none",
+    "border": "rgb(63, 224, 245)",
+    "outline": "solid 2px",
+    "value": ""
+   },
+   "afterEscapePointerOff": {
+    "focused": true,
+    "fv": true,
+    "open": false,
+    "appearance": "none",
+    "border": "rgb(63, 224, 245)",
+    "outline": "solid 2px",
+    "value": ""
+   }
+  },
+  {
+   "look": "skyline",
+   "select": "width like a measured road",
+   "rest": {
+    "focused": false,
+    "fv": false,
+    "open": false,
+    "appearance": "none",
+    "border": "rgb(166, 200, 234)",
+    "outline": "none 3px",
+    "value": ""
+   },
+   "openedByMouse": {
+    "focused": true,
+    "fv": true,
+    "open": true,
+    "appearance": "none",
+    "border": "rgb(7, 87, 179)",
+    "outline": "solid 2px",
+    "value": ""
+   },
+   "afterEscape": {
+    "focused": true,
+    "fv": true,
+    "open": false,
+    "appearance": "none",
+    "border": "rgb(7, 87, 179)",
+    "outline": "solid 2px",
+    "value": ""
+   },
+   "afterEscapePointerOff": {
+    "focused": true,
+    "fv": true,
+    "open": false,
+    "appearance": "none",
+    "border": "rgb(7, 87, 179)",
+    "outline": "solid 2px",
+    "value": ""
+   }
+  },
+  {
+   "look": "skyline",
+   "select": "grip like a measured road",
+   "rest": {
+    "focused": false,
+    "fv": false,
+    "open": false,
+    "appearance": "none",
+    "border": "rgb(166, 200, 234)",
+    "outline": "none 3px",
+    "value": ""
+   },
+   "openedByMouse": {
+    "focused": true,
+    "fv": true,
+    "open": true,
+    "appearance": "none",
+    "border": "rgb(7, 87, 179)",
+    "outline": "solid 2px",
+    "value": ""
+   },
+   "afterEscape": {
+    "focused": true,
+    "fv": true,
+    "open": false,
+    "appearance": "none",
+    "border": "rgb(7, 87, 179)",
+    "outline": "solid 2px",
+    "value": ""
+   },
+   "afterEscapePointerOff": {
+    "focused": true,
+    "fv": true,
+    "open": false,
+    "appearance": "none",
+    "border": "rgb(7, 87, 179)",
+    "outline": "solid 2px",
+    "value": ""
+   }
+  },
+  {
+   "look": "glass",
+   "select": "width like a measured road",
+   "rest": {
+    "focused": false,
+    "fv": false,
+    "open": false,
+    "appearance": "none",
+    "border": "rgba(190, 235, 255, 0.4)",
+    "outline": "none 3px",
+    "value": ""
+   },
+   "openedByMouse": {
+    "focused": true,
+    "fv": true,
+    "open": true,
+    "appearance": "none",
+    "border": "rgb(143, 230, 255)",
+    "outline": "solid 2px",
+    "value": ""
+   },
+   "afterEscape": {
+    "focused": true,
+    "fv": true,
+    "open": false,
+    "appearance": "none",
+    "border": "rgb(143, 230, 255)",
+    "outline": "solid 2px",
+    "value": ""
+   },
+   "afterEscapePointerOff": {
+    "focused": true,
+    "fv": true,
+    "open": false,
+    "appearance": "none",
+    "border": "rgb(143, 230, 255)",
+    "outline": "solid 2px",
+    "value": ""
+   }
+  },
+  {
+   "look": "glass",
+   "select": "grip like a measured road",
+   "rest": {
+    "focused": false,
+    "fv": false,
+    "open": false,
+    "appearance": "none",
+    "border": "rgba(190, 235, 255, 0.4)",
+    "outline": "none 3px",
+    "value": ""
+   },
+   "openedByMouse": {
+    "focused": true,
+    "fv": true,
+    "open": true,
+    "appearance": "none",
+    "border": "rgb(143, 230, 255)",
+    "outline": "solid 2px",
+    "value": ""
+   },
+   "afterEscape": {
+    "focused": true,
+    "fv": true,
+    "open": false,
+    "appearance": "none",
+    "border": "rgb(143, 230, 255)",
+    "outline": "solid 2px",
+    "value": ""
+   },
+   "afterEscapePointerOff": {
+    "focused": true,
+    "fv": true,
+    "open": false,
+    "appearance": "none",
+    "border": "rgb(143, 230, 255)",
+    "outline": "solid 2px",
+    "value": ""
+   }
+  },
+  {
+   "look": "aurora",
+   "select": "width like a measured road",
+   "rest": {
+    "focused": false,
+    "fv": false,
+    "open": false,
+    "appearance": "none",
+    "border": "rgba(150, 200, 255, 0.24)",
+    "outline": "none 3px",
+    "value": ""
+   },
+   "openedByMouse": {
+    "focused": true,
+    "fv": true,
+    "open": true,
+    "appearance": "none",
+    "border": "rgb(111, 245, 192)",
+    "outline": "solid 2px",
+    "value": ""
+   },
+   "afterEscape": {
+    "focused": true,
+    "fv": true,
+    "open": false,
+    "appearance": "none",
+    "border": "rgb(111, 245, 192)",
+    "outline": "solid 2px",
+    "value": ""
+   },
+   "afterEscapePointerOff": {
+    "focused": true,
+    "fv": true,
+    "open": false,
+    "appearance": "none",
+    "border": "rgb(111, 245, 192)",
+    "outline": "solid 2px",
+    "value": ""
+   }
+  },
+  {
+   "look": "aurora",
+   "select": "grip like a measured road",
+   "rest": {
+    "focused": false,
+    "fv": false,
+    "open": false,
+    "appearance": "none",
+    "border": "rgba(150, 200, 255, 0.24)",
+    "outline": "none 3px",
+    "value": ""
+   },
+   "openedByMouse": {
+    "focused": true,
+    "fv": true,
+    "open": true,
+    "appearance": "none",
+    "border": "rgb(111, 245, 192)",
+    "outline": "solid 2px",
+    "value": ""
+   },
+   "afterEscape": {
+    "focused": true,
+    "fv": true,
+    "open": false,
+    "appearance": "none",
+    "border": "rgb(111, 245, 192)",
+    "outline": "solid 2px",
+    "value": ""
+   },
+   "afterEscapePointerOff": {
+    "focused": true,
+    "fv": true,
+    "open": false,
+    "appearance": "none",
+    "border": "rgb(111, 245, 192)",
+    "outline": "solid 2px",
+    "value": ""
+   }
+  },
+  {
+   "look": "skyline-night",
+   "select": "width like a measured road",
+   "rest": {
+    "focused": false,
+    "fv": false,
+    "open": false,
+    "appearance": "none",
+    "border": "rgb(52, 89, 143)",
+    "outline": "none 3px",
+    "value": ""
+   },
+   "openedByMouse": {
+    "focused": true,
+    "fv": true,
+    "open": true,
+    "appearance": "none",
+    "border": "rgb(124, 200, 255)",
+    "outline": "solid 2px",
+    "value": ""
+   },
+   "afterEscape": {
+    "focused": true,
+    "fv": true,
+    "open": false,
+    "appearance": "none",
+    "border": "rgb(124, 200, 255)",
+    "outline": "solid 2px",
+    "value": ""
+   },
+   "afterEscapePointerOff": {
+    "focused": true,
+    "fv": true,
+    "open": false,
+    "appearance": "none",
+    "border": "rgb(124, 200, 255)",
+    "outline": "solid 2px",
+    "value": ""
+   }
+  },
+  {
+   "look": "skyline-night",
+   "select": "grip like a measured road",
+   "rest": {
+    "focused": false,
+    "fv": false,
+    "open": false,
+    "appearance": "none",
+    "border": "rgb(52, 89, 143)",
+    "outline": "none 3px",
+    "value": ""
+   },
+   "openedByMouse": {
+    "focused": true,
+    "fv": true,
+    "open": true,
+    "appearance": "none",
+    "border": "rgb(124, 200, 255)",
+    "outline": "solid 2px",
+    "value": ""
+   },
+   "afterEscape": {
+    "focused": true,
+    "fv": true,
+    "open": false,
+    "appearance": "none",
+    "border": "rgb(124, 200, 255)",
+    "outline": "solid 2px",
+    "value": ""
+   },
+   "afterEscapePointerOff": {
+    "focused": true,
+    "fv": true,
+    "open": false,
+    "appearance": "none",
+    "border": "rgb(124, 200, 255)",
+    "outline": "solid 2px",
+    "value": ""
+   }
+  }
+ ],
+ "menus": [
+  {
+   "look": "sigil",
+   "w": 900,
+   "h": 860,
+   "inner": [
+    900,
+    860
+   ],
+   "off": [
+    "m-file -55..205",
+    "m-edit -2..258"
+   ],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file -55..205 b582 title 158..205",
+    "m-edit -2..258 b339 title 209..258",
+    "m-build 56..316 b449 title 262..316",
+    "m-track 116..376 b318 title 320..376",
+    "pieces 22..442 b115 title 380..442",
+    "m-view 239..499 b155 title 446..499",
+    "m-settings 313..573 b893 title 503..573"
+   ]
+  },
+  {
+   "look": "sigil",
+   "w": 950,
+   "h": 860,
+   "inner": [
+    950,
+    860
+   ],
+   "off": [
+    "m-file -5..255"
+   ],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file -5..255 b582 title 208..255",
+    "m-edit 48..308 b339 title 259..308",
+    "m-build 106..366 b449 title 312..366",
+    "m-track 166..426 b318 title 370..426",
+    "pieces 72..492 b115 title 430..492",
+    "m-view 289..549 b155 title 496..549",
+    "m-settings 363..623 b893 title 553..623"
+   ]
+  },
+  {
+   "look": "sigil",
+   "w": 990,
+   "h": 860,
+   "inner": [
+    990,
+    860
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 35..295 b582 title 248..295",
+    "m-edit 88..348 b339 title 299..348",
+    "m-build 146..406 b449 title 352..406",
+    "m-track 206..466 b318 title 410..466",
+    "pieces 112..532 b115 title 470..532",
+    "m-view 329..589 b155 title 536..589",
+    "m-settings 403..663 b893 title 593..663"
+   ]
+  },
+  {
+   "look": "sigil",
+   "w": 1000,
+   "h": 860,
+   "inner": [
+    1000,
+    860
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 45..305 b582 title 258..305",
+    "m-edit 98..358 b339 title 309..358",
+    "m-build 156..416 b449 title 362..416",
+    "m-track 216..476 b318 title 420..476",
+    "pieces 122..542 b115 title 480..542",
+    "m-view 339..599 b155 title 546..599",
+    "m-settings 413..673 b893 title 603..673"
+   ]
+  },
+  {
+   "look": "sigil",
+   "w": 1010,
+   "h": 860,
+   "inner": [
+    1010,
+    860
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 55..315 b582 title 268..315",
+    "m-edit 108..368 b339 title 319..368",
+    "m-build 166..426 b449 title 372..426",
+    "m-track 226..486 b318 title 430..486",
+    "pieces 132..552 b115 title 490..552",
+    "m-view 349..609 b155 title 556..609",
+    "m-settings 423..683 b893 title 613..683"
+   ]
+  },
+  {
+   "look": "sigil",
+   "w": 900,
+   "h": 600,
+   "inner": [
+    900,
+    600
+   ],
+   "off": [
+    "m-file -55..205",
+    "m-edit -2..258"
+   ],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file -55..205 b582 title 158..205",
+    "m-edit -2..258 b339 title 209..258",
+    "m-build 56..316 b449 title 262..316",
+    "m-track 116..376 b318 title 320..376",
+    "pieces 22..442 b115 title 380..442",
+    "m-view 239..499 b155 title 446..499",
+    "m-settings 313..573 b893 title 503..573"
+   ]
+  },
+  {
+   "look": "sigil",
+   "w": 950,
+   "h": 600,
+   "inner": [
+    950,
+    600
+   ],
+   "off": [
+    "m-file -5..255"
+   ],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file -5..255 b582 title 208..255",
+    "m-edit 48..308 b339 title 259..308",
+    "m-build 106..366 b449 title 312..366",
+    "m-track 166..426 b318 title 370..426",
+    "pieces 72..492 b115 title 430..492",
+    "m-view 289..549 b155 title 496..549",
+    "m-settings 363..623 b893 title 553..623"
+   ]
+  },
+  {
+   "look": "sigil",
+   "w": 990,
+   "h": 600,
+   "inner": [
+    990,
+    600
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 35..295 b582 title 248..295",
+    "m-edit 88..348 b339 title 299..348",
+    "m-build 146..406 b449 title 352..406",
+    "m-track 206..466 b318 title 410..466",
+    "pieces 112..532 b115 title 470..532",
+    "m-view 329..589 b155 title 536..589",
+    "m-settings 403..663 b893 title 593..663"
+   ]
+  },
+  {
+   "look": "sigil",
+   "w": 1000,
+   "h": 600,
+   "inner": [
+    1000,
+    600
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 45..305 b582 title 258..305",
+    "m-edit 98..358 b339 title 309..358",
+    "m-build 156..416 b449 title 362..416",
+    "m-track 216..476 b318 title 420..476",
+    "pieces 122..542 b115 title 480..542",
+    "m-view 339..599 b155 title 546..599",
+    "m-settings 413..673 b893 title 603..673"
+   ]
+  },
+  {
+   "look": "sigil",
+   "w": 1010,
+   "h": 600,
+   "inner": [
+    1010,
+    600
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 55..315 b582 title 268..315",
+    "m-edit 108..368 b339 title 319..368",
+    "m-build 166..426 b449 title 372..426",
+    "m-track 226..486 b318 title 430..486",
+    "pieces 132..552 b115 title 490..552",
+    "m-view 349..609 b155 title 556..609",
+    "m-settings 423..683 b893 title 613..683"
+   ]
+  },
+  {
+   "look": "aqua",
+   "w": 900,
+   "h": 860,
+   "inner": [
+    900,
+    860
+   ],
+   "off": [
+    "m-file -55..205",
+    "m-edit -2..258"
+   ],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file -55..205 b582 title 158..205",
+    "m-edit -2..258 b339 title 209..258",
+    "m-build 56..316 b449 title 262..316",
+    "m-track 116..376 b318 title 320..376",
+    "pieces 22..442 b115 title 380..442",
+    "m-view 239..499 b155 title 446..499",
+    "m-settings 313..573 b893 title 503..573"
+   ]
+  },
+  {
+   "look": "aqua",
+   "w": 950,
+   "h": 860,
+   "inner": [
+    950,
+    860
+   ],
+   "off": [
+    "m-file -5..255"
+   ],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file -5..255 b582 title 208..255",
+    "m-edit 48..308 b339 title 259..308",
+    "m-build 106..366 b449 title 312..366",
+    "m-track 166..426 b318 title 370..426",
+    "pieces 72..492 b115 title 430..492",
+    "m-view 289..549 b155 title 496..549",
+    "m-settings 363..623 b893 title 553..623"
+   ]
+  },
+  {
+   "look": "aqua",
+   "w": 990,
+   "h": 860,
+   "inner": [
+    990,
+    860
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 35..295 b582 title 248..295",
+    "m-edit 88..348 b339 title 299..348",
+    "m-build 146..406 b449 title 352..406",
+    "m-track 206..466 b318 title 410..466",
+    "pieces 112..532 b115 title 470..532",
+    "m-view 329..589 b155 title 536..589",
+    "m-settings 403..663 b893 title 593..663"
+   ]
+  },
+  {
+   "look": "aqua",
+   "w": 1000,
+   "h": 860,
+   "inner": [
+    1000,
+    860
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 45..305 b582 title 258..305",
+    "m-edit 98..358 b339 title 309..358",
+    "m-build 156..416 b449 title 362..416",
+    "m-track 216..476 b318 title 420..476",
+    "pieces 122..542 b115 title 480..542",
+    "m-view 339..599 b155 title 546..599",
+    "m-settings 413..673 b893 title 603..673"
+   ]
+  },
+  {
+   "look": "aqua",
+   "w": 1010,
+   "h": 860,
+   "inner": [
+    1010,
+    860
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 55..315 b582 title 268..315",
+    "m-edit 108..368 b339 title 319..368",
+    "m-build 166..426 b449 title 372..426",
+    "m-track 226..486 b318 title 430..486",
+    "pieces 132..552 b115 title 490..552",
+    "m-view 349..609 b155 title 556..609",
+    "m-settings 423..683 b893 title 613..683"
+   ]
+  },
+  {
+   "look": "aqua",
+   "w": 900,
+   "h": 600,
+   "inner": [
+    900,
+    600
+   ],
+   "off": [
+    "m-file -55..205",
+    "m-edit -2..258"
+   ],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file -55..205 b582 title 158..205",
+    "m-edit -2..258 b339 title 209..258",
+    "m-build 56..316 b449 title 262..316",
+    "m-track 116..376 b318 title 320..376",
+    "pieces 22..442 b115 title 380..442",
+    "m-view 239..499 b155 title 446..499",
+    "m-settings 313..573 b893 title 503..573"
+   ]
+  },
+  {
+   "look": "aqua",
+   "w": 950,
+   "h": 600,
+   "inner": [
+    950,
+    600
+   ],
+   "off": [
+    "m-file -5..255"
+   ],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file -5..255 b582 title 208..255",
+    "m-edit 48..308 b339 title 259..308",
+    "m-build 106..366 b449 title 312..366",
+    "m-track 166..426 b318 title 370..426",
+    "pieces 72..492 b115 title 430..492",
+    "m-view 289..549 b155 title 496..549",
+    "m-settings 363..623 b893 title 553..623"
+   ]
+  },
+  {
+   "look": "aqua",
+   "w": 990,
+   "h": 600,
+   "inner": [
+    990,
+    600
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 35..295 b582 title 248..295",
+    "m-edit 88..348 b339 title 299..348",
+    "m-build 146..406 b449 title 352..406",
+    "m-track 206..466 b318 title 410..466",
+    "pieces 112..532 b115 title 470..532",
+    "m-view 329..589 b155 title 536..589",
+    "m-settings 403..663 b893 title 593..663"
+   ]
+  },
+  {
+   "look": "aqua",
+   "w": 1000,
+   "h": 600,
+   "inner": [
+    1000,
+    600
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 45..305 b582 title 258..305",
+    "m-edit 98..358 b339 title 309..358",
+    "m-build 156..416 b449 title 362..416",
+    "m-track 216..476 b318 title 420..476",
+    "pieces 122..542 b115 title 480..542",
+    "m-view 339..599 b155 title 546..599",
+    "m-settings 413..673 b893 title 603..673"
+   ]
+  },
+  {
+   "look": "aqua",
+   "w": 1010,
+   "h": 600,
+   "inner": [
+    1010,
+    600
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 55..315 b582 title 268..315",
+    "m-edit 108..368 b339 title 319..368",
+    "m-build 166..426 b449 title 372..426",
+    "m-track 226..486 b318 title 430..486",
+    "pieces 132..552 b115 title 490..552",
+    "m-view 349..609 b155 title 556..609",
+    "m-settings 423..683 b893 title 613..683"
+   ]
+  },
+  {
+   "look": "skyline",
+   "w": 900,
+   "h": 860,
+   "inner": [
+    900,
+    860
+   ],
+   "off": [
+    "m-file -55..205",
+    "m-edit -2..258"
+   ],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file -55..205 b582 title 158..205",
+    "m-edit -2..258 b339 title 209..258",
+    "m-build 56..316 b449 title 262..316",
+    "m-track 116..376 b318 title 320..376",
+    "pieces 22..442 b115 title 380..442",
+    "m-view 239..499 b155 title 446..499",
+    "m-settings 313..573 b893 title 503..573"
+   ]
+  },
+  {
+   "look": "skyline",
+   "w": 950,
+   "h": 860,
+   "inner": [
+    950,
+    860
+   ],
+   "off": [
+    "m-file -5..255"
+   ],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file -5..255 b582 title 208..255",
+    "m-edit 48..308 b339 title 259..308",
+    "m-build 106..366 b449 title 312..366",
+    "m-track 166..426 b318 title 370..426",
+    "pieces 72..492 b115 title 430..492",
+    "m-view 289..549 b155 title 496..549",
+    "m-settings 363..623 b893 title 553..623"
+   ]
+  },
+  {
+   "look": "skyline",
+   "w": 990,
+   "h": 860,
+   "inner": [
+    990,
+    860
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 35..295 b582 title 248..295",
+    "m-edit 88..348 b339 title 299..348",
+    "m-build 146..406 b449 title 352..406",
+    "m-track 206..466 b318 title 410..466",
+    "pieces 112..532 b115 title 470..532",
+    "m-view 329..589 b155 title 536..589",
+    "m-settings 403..663 b893 title 593..663"
+   ]
+  },
+  {
+   "look": "skyline",
+   "w": 1000,
+   "h": 860,
+   "inner": [
+    1000,
+    860
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 45..305 b582 title 258..305",
+    "m-edit 98..358 b339 title 309..358",
+    "m-build 156..416 b449 title 362..416",
+    "m-track 216..476 b318 title 420..476",
+    "pieces 122..542 b115 title 480..542",
+    "m-view 339..599 b155 title 546..599",
+    "m-settings 413..673 b893 title 603..673"
+   ]
+  },
+  {
+   "look": "skyline",
+   "w": 1010,
+   "h": 860,
+   "inner": [
+    1010,
+    860
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 55..315 b582 title 268..315",
+    "m-edit 108..368 b339 title 319..368",
+    "m-build 166..426 b449 title 372..426",
+    "m-track 226..486 b318 title 430..486",
+    "pieces 132..552 b115 title 490..552",
+    "m-view 349..609 b155 title 556..609",
+    "m-settings 423..683 b893 title 613..683"
+   ]
+  },
+  {
+   "look": "skyline",
+   "w": 900,
+   "h": 600,
+   "inner": [
+    900,
+    600
+   ],
+   "off": [
+    "m-file -55..205",
+    "m-edit -2..258"
+   ],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file -55..205 b582 title 158..205",
+    "m-edit -2..258 b339 title 209..258",
+    "m-build 56..316 b449 title 262..316",
+    "m-track 116..376 b318 title 320..376",
+    "pieces 22..442 b115 title 380..442",
+    "m-view 239..499 b155 title 446..499",
+    "m-settings 313..573 b893 title 503..573"
+   ]
+  },
+  {
+   "look": "skyline",
+   "w": 950,
+   "h": 600,
+   "inner": [
+    950,
+    600
+   ],
+   "off": [
+    "m-file -5..255"
+   ],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file -5..255 b582 title 208..255",
+    "m-edit 48..308 b339 title 259..308",
+    "m-build 106..366 b449 title 312..366",
+    "m-track 166..426 b318 title 370..426",
+    "pieces 72..492 b115 title 430..492",
+    "m-view 289..549 b155 title 496..549",
+    "m-settings 363..623 b893 title 553..623"
+   ]
+  },
+  {
+   "look": "skyline",
+   "w": 990,
+   "h": 600,
+   "inner": [
+    990,
+    600
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 35..295 b582 title 248..295",
+    "m-edit 88..348 b339 title 299..348",
+    "m-build 146..406 b449 title 352..406",
+    "m-track 206..466 b318 title 410..466",
+    "pieces 112..532 b115 title 470..532",
+    "m-view 329..589 b155 title 536..589",
+    "m-settings 403..663 b893 title 593..663"
+   ]
+  },
+  {
+   "look": "skyline",
+   "w": 1000,
+   "h": 600,
+   "inner": [
+    1000,
+    600
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 45..305 b582 title 258..305",
+    "m-edit 98..358 b339 title 309..358",
+    "m-build 156..416 b449 title 362..416",
+    "m-track 216..476 b318 title 420..476",
+    "pieces 122..542 b115 title 480..542",
+    "m-view 339..599 b155 title 546..599",
+    "m-settings 413..673 b893 title 603..673"
+   ]
+  },
+  {
+   "look": "skyline",
+   "w": 1010,
+   "h": 600,
+   "inner": [
+    1010,
+    600
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 55..315 b582 title 268..315",
+    "m-edit 108..368 b339 title 319..368",
+    "m-build 166..426 b449 title 372..426",
+    "m-track 226..486 b318 title 430..486",
+    "pieces 132..552 b115 title 490..552",
+    "m-view 349..609 b155 title 556..609",
+    "m-settings 423..683 b893 title 613..683"
+   ]
+  },
+  {
+   "look": "glass",
+   "w": 900,
+   "h": 860,
+   "inner": [
+    900,
+    860
+   ],
+   "off": [
+    "m-file -55..205",
+    "m-edit -2..258"
+   ],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file -55..205 b582 title 158..205",
+    "m-edit -2..258 b339 title 209..258",
+    "m-build 56..316 b449 title 262..316",
+    "m-track 116..376 b318 title 320..376",
+    "pieces 22..442 b115 title 380..442",
+    "m-view 239..499 b155 title 446..499",
+    "m-settings 313..573 b893 title 503..573"
+   ]
+  },
+  {
+   "look": "glass",
+   "w": 950,
+   "h": 860,
+   "inner": [
+    950,
+    860
+   ],
+   "off": [
+    "m-file -5..255"
+   ],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file -5..255 b582 title 208..255",
+    "m-edit 48..308 b339 title 259..308",
+    "m-build 106..366 b449 title 312..366",
+    "m-track 166..426 b318 title 370..426",
+    "pieces 72..492 b115 title 430..492",
+    "m-view 289..549 b155 title 496..549",
+    "m-settings 363..623 b893 title 553..623"
+   ]
+  },
+  {
+   "look": "glass",
+   "w": 990,
+   "h": 860,
+   "inner": [
+    990,
+    860
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 35..295 b582 title 248..295",
+    "m-edit 88..348 b339 title 299..348",
+    "m-build 146..406 b449 title 352..406",
+    "m-track 206..466 b318 title 410..466",
+    "pieces 112..532 b115 title 470..532",
+    "m-view 329..589 b155 title 536..589",
+    "m-settings 403..663 b893 title 593..663"
+   ]
+  },
+  {
+   "look": "glass",
+   "w": 1000,
+   "h": 860,
+   "inner": [
+    1000,
+    860
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 45..305 b582 title 258..305",
+    "m-edit 98..358 b339 title 309..358",
+    "m-build 156..416 b449 title 362..416",
+    "m-track 216..476 b318 title 420..476",
+    "pieces 122..542 b115 title 480..542",
+    "m-view 339..599 b155 title 546..599",
+    "m-settings 413..673 b893 title 603..673"
+   ]
+  },
+  {
+   "look": "glass",
+   "w": 1010,
+   "h": 860,
+   "inner": [
+    1010,
+    860
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 55..315 b582 title 268..315",
+    "m-edit 108..368 b339 title 319..368",
+    "m-build 166..426 b449 title 372..426",
+    "m-track 226..486 b318 title 430..486",
+    "pieces 132..552 b115 title 490..552",
+    "m-view 349..609 b155 title 556..609",
+    "m-settings 423..683 b893 title 613..683"
+   ]
+  },
+  {
+   "look": "glass",
+   "w": 900,
+   "h": 600,
+   "inner": [
+    900,
+    600
+   ],
+   "off": [
+    "m-file -55..205",
+    "m-edit -2..258"
+   ],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file -55..205 b582 title 158..205",
+    "m-edit -2..258 b339 title 209..258",
+    "m-build 56..316 b449 title 262..316",
+    "m-track 116..376 b318 title 320..376",
+    "pieces 22..442 b115 title 380..442",
+    "m-view 239..499 b155 title 446..499",
+    "m-settings 313..573 b893 title 503..573"
+   ]
+  },
+  {
+   "look": "glass",
+   "w": 950,
+   "h": 600,
+   "inner": [
+    950,
+    600
+   ],
+   "off": [
+    "m-file -5..255"
+   ],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file -5..255 b582 title 208..255",
+    "m-edit 48..308 b339 title 259..308",
+    "m-build 106..366 b449 title 312..366",
+    "m-track 166..426 b318 title 370..426",
+    "pieces 72..492 b115 title 430..492",
+    "m-view 289..549 b155 title 496..549",
+    "m-settings 363..623 b893 title 553..623"
+   ]
+  },
+  {
+   "look": "glass",
+   "w": 990,
+   "h": 600,
+   "inner": [
+    990,
+    600
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 35..295 b582 title 248..295",
+    "m-edit 88..348 b339 title 299..348",
+    "m-build 146..406 b449 title 352..406",
+    "m-track 206..466 b318 title 410..466",
+    "pieces 112..532 b115 title 470..532",
+    "m-view 329..589 b155 title 536..589",
+    "m-settings 403..663 b893 title 593..663"
+   ]
+  },
+  {
+   "look": "glass",
+   "w": 1000,
+   "h": 600,
+   "inner": [
+    1000,
+    600
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 45..305 b582 title 258..305",
+    "m-edit 98..358 b339 title 309..358",
+    "m-build 156..416 b449 title 362..416",
+    "m-track 216..476 b318 title 420..476",
+    "pieces 122..542 b115 title 480..542",
+    "m-view 339..599 b155 title 546..599",
+    "m-settings 413..673 b893 title 603..673"
+   ]
+  },
+  {
+   "look": "glass",
+   "w": 1010,
+   "h": 600,
+   "inner": [
+    1010,
+    600
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 55..315 b582 title 268..315",
+    "m-edit 108..368 b339 title 319..368",
+    "m-build 166..426 b449 title 372..426",
+    "m-track 226..486 b318 title 430..486",
+    "pieces 132..552 b115 title 490..552",
+    "m-view 349..609 b155 title 556..609",
+    "m-settings 423..683 b893 title 613..683"
+   ]
+  },
+  {
+   "look": "aurora",
+   "w": 900,
+   "h": 860,
+   "inner": [
+    900,
+    860
+   ],
+   "off": [
+    "m-file -55..205",
+    "m-edit -2..258"
+   ],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file -55..205 b582 title 158..205",
+    "m-edit -2..258 b339 title 209..258",
+    "m-build 56..316 b449 title 262..316",
+    "m-track 116..376 b318 title 320..376",
+    "pieces 22..442 b115 title 380..442",
+    "m-view 239..499 b155 title 446..499",
+    "m-settings 313..573 b893 title 503..573"
+   ]
+  },
+  {
+   "look": "aurora",
+   "w": 950,
+   "h": 860,
+   "inner": [
+    950,
+    860
+   ],
+   "off": [
+    "m-file -5..255"
+   ],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file -5..255 b582 title 208..255",
+    "m-edit 48..308 b339 title 259..308",
+    "m-build 106..366 b449 title 312..366",
+    "m-track 166..426 b318 title 370..426",
+    "pieces 72..492 b115 title 430..492",
+    "m-view 289..549 b155 title 496..549",
+    "m-settings 363..623 b893 title 553..623"
+   ]
+  },
+  {
+   "look": "aurora",
+   "w": 990,
+   "h": 860,
+   "inner": [
+    990,
+    860
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 35..295 b582 title 248..295",
+    "m-edit 88..348 b339 title 299..348",
+    "m-build 146..406 b449 title 352..406",
+    "m-track 206..466 b318 title 410..466",
+    "pieces 112..532 b115 title 470..532",
+    "m-view 329..589 b155 title 536..589",
+    "m-settings 403..663 b893 title 593..663"
+   ]
+  },
+  {
+   "look": "aurora",
+   "w": 1000,
+   "h": 860,
+   "inner": [
+    1000,
+    860
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 45..305 b582 title 258..305",
+    "m-edit 98..358 b339 title 309..358",
+    "m-build 156..416 b449 title 362..416",
+    "m-track 216..476 b318 title 420..476",
+    "pieces 122..542 b115 title 480..542",
+    "m-view 339..599 b155 title 546..599",
+    "m-settings 413..673 b893 title 603..673"
+   ]
+  },
+  {
+   "look": "aurora",
+   "w": 1010,
+   "h": 860,
+   "inner": [
+    1010,
+    860
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 55..315 b582 title 268..315",
+    "m-edit 108..368 b339 title 319..368",
+    "m-build 166..426 b449 title 372..426",
+    "m-track 226..486 b318 title 430..486",
+    "pieces 132..552 b115 title 490..552",
+    "m-view 349..609 b155 title 556..609",
+    "m-settings 423..683 b893 title 613..683"
+   ]
+  },
+  {
+   "look": "aurora",
+   "w": 900,
+   "h": 600,
+   "inner": [
+    900,
+    600
+   ],
+   "off": [
+    "m-file -55..205",
+    "m-edit -2..258"
+   ],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file -55..205 b582 title 158..205",
+    "m-edit -2..258 b339 title 209..258",
+    "m-build 56..316 b449 title 262..316",
+    "m-track 116..376 b318 title 320..376",
+    "pieces 22..442 b115 title 380..442",
+    "m-view 239..499 b155 title 446..499",
+    "m-settings 313..573 b893 title 503..573"
+   ]
+  },
+  {
+   "look": "aurora",
+   "w": 950,
+   "h": 600,
+   "inner": [
+    950,
+    600
+   ],
+   "off": [
+    "m-file -5..255"
+   ],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file -5..255 b582 title 208..255",
+    "m-edit 48..308 b339 title 259..308",
+    "m-build 106..366 b449 title 312..366",
+    "m-track 166..426 b318 title 370..426",
+    "pieces 72..492 b115 title 430..492",
+    "m-view 289..549 b155 title 496..549",
+    "m-settings 363..623 b893 title 553..623"
+   ]
+  },
+  {
+   "look": "aurora",
+   "w": 990,
+   "h": 600,
+   "inner": [
+    990,
+    600
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 35..295 b582 title 248..295",
+    "m-edit 88..348 b339 title 299..348",
+    "m-build 146..406 b449 title 352..406",
+    "m-track 206..466 b318 title 410..466",
+    "pieces 112..532 b115 title 470..532",
+    "m-view 329..589 b155 title 536..589",
+    "m-settings 403..663 b893 title 593..663"
+   ]
+  },
+  {
+   "look": "aurora",
+   "w": 1000,
+   "h": 600,
+   "inner": [
+    1000,
+    600
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 45..305 b582 title 258..305",
+    "m-edit 98..358 b339 title 309..358",
+    "m-build 156..416 b449 title 362..416",
+    "m-track 216..476 b318 title 420..476",
+    "pieces 122..542 b115 title 480..542",
+    "m-view 339..599 b155 title 546..599",
+    "m-settings 413..673 b893 title 603..673"
+   ]
+  },
+  {
+   "look": "aurora",
+   "w": 1010,
+   "h": 600,
+   "inner": [
+    1010,
+    600
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 55..315 b582 title 268..315",
+    "m-edit 108..368 b339 title 319..368",
+    "m-build 166..426 b449 title 372..426",
+    "m-track 226..486 b318 title 430..486",
+    "pieces 132..552 b115 title 490..552",
+    "m-view 349..609 b155 title 556..609",
+    "m-settings 423..683 b893 title 613..683"
+   ]
+  },
+  {
+   "look": "skyline-night",
+   "w": 900,
+   "h": 860,
+   "inner": [
+    900,
+    860
+   ],
+   "off": [
+    "m-file -55..205",
+    "m-edit -2..258"
+   ],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file -55..205 b582 title 158..205",
+    "m-edit -2..258 b339 title 209..258",
+    "m-build 56..316 b449 title 262..316",
+    "m-track 116..376 b318 title 320..376",
+    "pieces 22..442 b115 title 380..442",
+    "m-view 239..499 b155 title 446..499",
+    "m-settings 313..573 b893 title 503..573"
+   ]
+  },
+  {
+   "look": "skyline-night",
+   "w": 950,
+   "h": 860,
+   "inner": [
+    950,
+    860
+   ],
+   "off": [
+    "m-file -5..255"
+   ],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file -5..255 b582 title 208..255",
+    "m-edit 48..308 b339 title 259..308",
+    "m-build 106..366 b449 title 312..366",
+    "m-track 166..426 b318 title 370..426",
+    "pieces 72..492 b115 title 430..492",
+    "m-view 289..549 b155 title 496..549",
+    "m-settings 363..623 b893 title 553..623"
+   ]
+  },
+  {
+   "look": "skyline-night",
+   "w": 990,
+   "h": 860,
+   "inner": [
+    990,
+    860
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 35..295 b582 title 248..295",
+    "m-edit 88..348 b339 title 299..348",
+    "m-build 146..406 b449 title 352..406",
+    "m-track 206..466 b318 title 410..466",
+    "pieces 112..532 b115 title 470..532",
+    "m-view 329..589 b155 title 536..589",
+    "m-settings 403..663 b893 title 593..663"
+   ]
+  },
+  {
+   "look": "skyline-night",
+   "w": 1000,
+   "h": 860,
+   "inner": [
+    1000,
+    860
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 45..305 b582 title 258..305",
+    "m-edit 98..358 b339 title 309..358",
+    "m-build 156..416 b449 title 362..416",
+    "m-track 216..476 b318 title 420..476",
+    "pieces 122..542 b115 title 480..542",
+    "m-view 339..599 b155 title 546..599",
+    "m-settings 413..673 b893 title 603..673"
+   ]
+  },
+  {
+   "look": "skyline-night",
+   "w": 1010,
+   "h": 860,
+   "inner": [
+    1010,
+    860
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 55..315 b582 title 268..315",
+    "m-edit 108..368 b339 title 319..368",
+    "m-build 166..426 b449 title 372..426",
+    "m-track 226..486 b318 title 430..486",
+    "pieces 132..552 b115 title 490..552",
+    "m-view 349..609 b155 title 556..609",
+    "m-settings 423..683 b893 title 613..683"
+   ]
+  },
+  {
+   "look": "skyline-night",
+   "w": 900,
+   "h": 600,
+   "inner": [
+    900,
+    600
+   ],
+   "off": [
+    "m-file -55..205",
+    "m-edit -2..258"
+   ],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file -55..205 b582 title 158..205",
+    "m-edit -2..258 b339 title 209..258",
+    "m-build 56..316 b449 title 262..316",
+    "m-track 116..376 b318 title 320..376",
+    "pieces 22..442 b115 title 380..442",
+    "m-view 239..499 b155 title 446..499",
+    "m-settings 313..573 b893 title 503..573"
+   ]
+  },
+  {
+   "look": "skyline-night",
+   "w": 950,
+   "h": 600,
+   "inner": [
+    950,
+    600
+   ],
+   "off": [
+    "m-file -5..255"
+   ],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file -5..255 b582 title 208..255",
+    "m-edit 48..308 b339 title 259..308",
+    "m-build 106..366 b449 title 312..366",
+    "m-track 166..426 b318 title 370..426",
+    "pieces 72..492 b115 title 430..492",
+    "m-view 289..549 b155 title 496..549",
+    "m-settings 363..623 b893 title 553..623"
+   ]
+  },
+  {
+   "look": "skyline-night",
+   "w": 990,
+   "h": 600,
+   "inner": [
+    990,
+    600
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 35..295 b582 title 248..295",
+    "m-edit 88..348 b339 title 299..348",
+    "m-build 146..406 b449 title 352..406",
+    "m-track 206..466 b318 title 410..466",
+    "pieces 112..532 b115 title 470..532",
+    "m-view 329..589 b155 title 536..589",
+    "m-settings 403..663 b893 title 593..663"
+   ]
+  },
+  {
+   "look": "skyline-night",
+   "w": 1000,
+   "h": 600,
+   "inner": [
+    1000,
+    600
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 45..305 b582 title 258..305",
+    "m-edit 98..358 b339 title 309..358",
+    "m-build 156..416 b449 title 362..416",
+    "m-track 216..476 b318 title 420..476",
+    "pieces 122..542 b115 title 480..542",
+    "m-view 339..599 b155 title 546..599",
+    "m-settings 413..673 b893 title 603..673"
+   ]
+  },
+  {
+   "look": "skyline-night",
+   "w": 1010,
+   "h": 600,
+   "inner": [
+    1010,
+    600
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 55..315 b582 title 268..315",
+    "m-edit 108..368 b339 title 319..368",
+    "m-build 166..426 b449 title 372..426",
+    "m-track 226..486 b318 title 430..486",
+    "pieces 132..552 b115 title 490..552",
+    "m-view 349..609 b155 title 556..609",
+    "m-settings 423..683 b893 title 613..683"
+   ]
+  }
+ ],
+ "export": [
+  {
+   "look": "sigil",
+   "rest": {
+    "bg": "rgba(0, 0, 0, 0)",
+    "img": "none",
+    "color": "rgb(235, 230, 220)",
+    "border": "rgba(235, 230, 220, 0.14)",
+    "radius": "2px",
+    "shadow": "none",
+    "textShadow": "none",
+    "hover": false,
+    "active": false,
+    "disabled": false,
+    "contrastOnFill": 14.15,
+    "fillLo": [
+     10,
+     10,
+     9
+    ],
+    "fillHi": [
+     25,
+     25,
+     24
+    ]
+   },
+   "hovered": {
+    "bg": "rgba(0, 0, 0, 0)",
+    "img": "none",
+    "color": "rgb(185, 168, 255)",
+    "border": "rgb(185, 168, 255)",
+    "radius": "2px",
+    "shadow": "none",
+    "textShadow": "none",
+    "hover": true,
+    "active": false,
+    "disabled": false,
+    "contrastOnFill": 8.47,
+    "fillLo": [
+     10,
+     10,
+     9
+    ],
+    "fillHi": [
+     25,
+     25,
+     24
+    ]
+   },
+   "pressed": {
+    "bg": "rgba(185, 168, 255, 0.16)",
+    "img": "none",
+    "color": "rgb(185, 168, 255)",
+    "border": "rgb(185, 168, 255)",
+    "radius": "2px",
+    "shadow": "none",
+    "textShadow": "none",
+    "hover": true,
+    "active": true,
+    "disabled": false,
+    "contrastOnFill": 6.2,
+    "fillLo": [
+     38,
+     35,
+     49
+    ],
+    "fillHi": [
+     51,
+     48,
+     61
+    ]
+   },
+   "pixelsChangedHover": 18.3,
+   "pixelsChangedPressVsHover": 89.9,
+   "radiusAtFactor075": "3px",
+   "r2": "2px",
+   "errors": []
+  },
+  {
+   "look": "aqua",
+   "rest": {
+    "bg": "rgba(0, 0, 0, 0)",
+    "img": "linear-gradient(rgb(241, 254, 255) 0%, rgb(185, 244, 252) 46%, rgb(79, 215, 237)",
+    "color": "rgb(1, 48, 60)",
+    "border": "rgb(10, 125, 149)",
+    "radius": "999px",
+    "shadow": "rgb(255, 255, 255) 0px 1px 0px 0px inset, rgba(0, 120, 150, ",
+    "textShadow": "none",
+    "hover": false,
+    "active": false,
+    "disabled": false,
+    "contrastOnFill": 8.33,
+    "fillLo": [
+     82,
+     216,
+     237
+    ],
+    "fillHi": [
+     220,
+     251,
+     254
+    ]
+   },
+   "hovered": {
+    "bg": "rgba(0, 0, 0, 0)",
+    "img": "linear-gradient(rgb(255, 255, 255) 0%, rgb(210, 249, 255) 46%, rgb(106, 228, 245",
+    "color": "rgb(0, 37, 47)",
+    "border": "rgb(255, 255, 255)",
+    "radius": "999px",
+    "shadow": "rgb(255, 255, 255) 0px 1px 0px 0px inset, rgba(0, 120, 150, ",
+    "textShadow": "none",
+    "hover": true,
+    "active": false,
+    "disabled": false,
+    "contrastOnFill": 10.77,
+    "fillLo": [
+     109,
+     228,
+     245
+    ],
+    "fillHi": [
+     238,
+     253,
+     255
+    ]
+   },
+   "pressed": {
+    "bg": "rgba(0, 0, 0, 0)",
+    "img": "linear-gradient(rgb(127, 232, 247) 0%, rgb(63, 208, 232) 50%, rgb(158, 240, 251)",
+    "color": "rgb(0, 37, 47)",
+    "border": "rgb(255, 255, 255)",
+    "radius": "999px",
+    "shadow": "rgb(255, 255, 255) 0px 1px 0px 0px inset, rgba(0, 120, 150, ",
+    "textShadow": "none",
+    "hover": true,
+    "active": true,
+    "disabled": false,
+    "contrastOnFill": 8.82,
+    "fillLo": [
+     66,
+     209,
+     232
+    ],
+    "fillHi": [
+     110,
+     224,
+     241
+    ]
+   },
+   "pixelsChangedHover": 90.8,
+   "pixelsChangedPressVsHover": 84.8,
+   "radiusAtFactor075": "3px",
+   "r2": "4px",
+   "errors": []
+  },
+  {
+   "look": "skyline",
+   "rest": {
+    "bg": "rgba(0, 0, 0, 0)",
+    "img": "linear-gradient(rgb(42, 120, 216) 0%, rgb(26, 99, 201) 49%, rgb(11, 79, 168) 51%",
+    "color": "rgb(255, 255, 255)",
+    "border": "rgb(23, 87, 184)",
+    "radius": "999px",
+    "shadow": "rgba(20, 80, 160, 0.22) 0px 1px 0px 0px, rgba(255, 255, 255,",
+    "textShadow": "rgba(0, 40, 100, 0.5) 0px 1px 1px",
+    "hover": false,
+    "active": false,
+    "disabled": false,
+    "contrastOnFill": 4.79,
+    "fillLo": [
+     11,
+     79,
+     168
+    ],
+    "fillHi": [
+     37,
+     113,
+     211
+    ]
+   },
+   "hovered": {
+    "bg": "rgba(0, 0, 0, 0)",
+    "img": "linear-gradient(rgb(42, 120, 216) 0%, rgb(26, 99, 201) 49%, rgb(11, 79, 168) 51%",
+    "color": "rgb(255, 255, 255)",
+    "border": "rgb(23, 87, 184)",
+    "radius": "999px",
+    "shadow": "rgba(20, 80, 160, 0.22) 0px 1px 0px 0px, rgba(255, 255, 255,",
+    "textShadow": "rgba(0, 40, 100, 0.5) 0px 1px 1px",
+    "hover": true,
+    "active": false,
+    "disabled": false,
+    "contrastOnFill": 4.79,
+    "fillLo": [
+     11,
+     79,
+     168
+    ],
+    "fillHi": [
+     37,
+     113,
+     211
+    ]
+   },
+   "pressed": {
+    "bg": "rgba(0, 0, 0, 0)",
+    "img": "linear-gradient(rgb(42, 120, 216) 0%, rgb(26, 99, 201) 49%, rgb(11, 79, 168) 51%",
+    "color": "rgb(255, 255, 255)",
+    "border": "rgb(23, 87, 184)",
+    "radius": "999px",
+    "shadow": "rgba(20, 80, 160, 0.22) 0px 1px 0px 0px, rgba(255, 255, 255,",
+    "textShadow": "rgba(0, 40, 100, 0.5) 0px 1px 1px",
+    "hover": true,
+    "active": true,
+    "disabled": false,
+    "contrastOnFill": 4.79,
+    "fillLo": [
+     11,
+     79,
+     168
+    ],
+    "fillHi": [
+     37,
+     113,
+     211
+    ]
+   },
+   "pixelsChangedHover": 0,
+   "pixelsChangedPressVsHover": 0,
+   "radiusAtFactor075": "999px",
+   "r2": "4px",
+   "errors": []
+  },
+  {
+   "look": "glass",
+   "rest": {
+    "bg": "rgba(4, 16, 28, 0.55)",
+    "img": "linear-gradient(160deg, rgba(255, 255, 255, 0.11) 0%, rgba(210, 240, 255, 0.05) ",
+    "color": "rgb(240, 249, 255)",
+    "border": "rgba(190, 235, 255, 0.48)",
+    "radius": "0px",
+    "shadow": "rgba(255, 255, 255, 0.42) 0px 1px 0px 0px inset, rgba(0, 20,",
+    "textShadow": "none",
+    "hover": false,
+    "active": false,
+    "disabled": false,
+    "contrastOnFill": 11.97,
+    "fillLo": [
+     12,
+     28,
+     41
+    ],
+    "fillHi": [
+     38,
+     52,
+     63
+    ]
+   },
+   "hovered": {
+    "bg": "rgba(4, 16, 28, 0.55)",
+    "img": "linear-gradient(160deg, rgba(255, 255, 255, 0.11) 0%, rgba(210, 240, 255, 0.05) ",
+    "color": "rgb(255, 255, 255)",
+    "border": "rgb(143, 230, 255)",
+    "radius": "0px",
+    "shadow": "rgba(255, 255, 255, 0.42) 0px 1px 0px 0px inset, rgba(0, 20,",
+    "textShadow": "none",
+    "hover": true,
+    "active": false,
+    "disabled": false,
+    "contrastOnFill": 12.76,
+    "fillLo": [
+     13,
+     28,
+     42
+    ],
+    "fillHi": [
+     38,
+     52,
+     63
+    ]
+   },
+   "pressed": {
+    "bg": "rgba(0, 0, 0, 0)",
+    "img": "linear-gradient(160deg, rgba(143, 230, 255, 0.34), rgba(143, 230, 255, 0.14))",
+    "color": "rgb(255, 255, 255)",
+    "border": "rgb(143, 230, 255)",
+    "radius": "0px",
+    "shadow": "rgba(255, 255, 255, 0.42) 0px 1px 0px 0px inset, rgba(0, 20,",
+    "textShadow": "none",
+    "hover": true,
+    "active": true,
+    "disabled": false,
+    "contrastOnFill": 5.75,
+    "fillLo": [
+     41,
+     72,
+     87
+    ],
+    "fillHi": [
+     70,
+     107,
+     124
+    ]
+   },
+   "pixelsChangedHover": 15.9,
+   "pixelsChangedPressVsHover": 90,
+   "radiusAtFactor075": "3px",
+   "r2": "0px",
+   "errors": []
+  },
+  {
+   "look": "aurora",
+   "rest": {
+    "bg": "rgba(0, 0, 0, 0)",
+    "img": "linear-gradient(100deg, rgb(124, 247, 198) 0%, rgb(111, 227, 216) 45%, rgb(185, ",
+    "color": "rgb(3, 19, 13)",
+    "border": "rgb(157, 255, 217)",
+    "radius": "3px",
+    "shadow": "none",
+    "textShadow": "none",
+    "hover": false,
+    "active": false,
+    "disabled": false,
+    "contrastOnFill": 9.18,
+    "fillLo": [
+     173,
+     173,
+     249
+    ],
+    "fillHi": [
+     121,
+     243,
+     201
+    ]
+   },
+   "hovered": {
+    "bg": "rgba(0, 0, 0, 0)",
+    "img": "linear-gradient(100deg, rgb(124, 247, 198) 0%, rgb(111, 227, 216) 45%, rgb(185, ",
+    "color": "rgb(3, 19, 13)",
+    "border": "rgb(157, 255, 217)",
+    "radius": "3px",
+    "shadow": "none",
+    "textShadow": "none",
+    "hover": true,
+    "active": false,
+    "disabled": false,
+    "contrastOnFill": 9.18,
+    "fillLo": [
+     173,
+     173,
+     249
+    ],
+    "fillHi": [
+     121,
+     243,
+     201
+    ]
+   },
+   "pressed": {
+    "bg": "rgba(0, 0, 0, 0)",
+    "img": "linear-gradient(100deg, rgb(124, 247, 198) 0%, rgb(111, 227, 216) 45%, rgb(185, ",
+    "color": "rgb(3, 19, 13)",
+    "border": "rgb(157, 255, 217)",
+    "radius": "3px",
+    "shadow": "none",
+    "textShadow": "none",
+    "hover": true,
+    "active": true,
+    "disabled": false,
+    "contrastOnFill": 9.18,
+    "fillLo": [
+     173,
+     173,
+     249
+    ],
+    "fillHi": [
+     121,
+     243,
+     201
+    ]
+   },
+   "pixelsChangedHover": 0,
+   "pixelsChangedPressVsHover": 0,
+   "radiusAtFactor075": "3px",
+   "r2": "3px",
+   "errors": []
+  },
+  {
+   "look": "skyline-night",
+   "rest": {
+    "bg": "rgba(0, 0, 0, 0)",
+    "img": "linear-gradient(rgb(154, 216, 255) 0%, rgb(102, 189, 245) 49%, rgb(63, 155, 224)",
+    "color": "rgb(4, 32, 63)",
+    "border": "rgb(124, 200, 255)",
+    "radius": "999px",
+    "shadow": "rgba(0, 0, 0, 0.4) 0px 1px 0px 0px, rgba(255, 255, 255, 0.55",
+    "textShadow": "rgba(255, 255, 255, 0.35) 0px 1px 0px",
+    "hover": false,
+    "active": false,
+    "disabled": false,
+    "contrastOnFill": 5.44,
+    "fillLo": [
+     63,
+     155,
+     224
+    ],
+    "fillHi": [
+     136,
+     207,
+     252
+    ]
+   },
+   "hovered": {
+    "bg": "rgba(0, 0, 0, 0)",
+    "img": "linear-gradient(rgb(154, 216, 255) 0%, rgb(102, 189, 245) 49%, rgb(63, 155, 224)",
+    "color": "rgb(4, 32, 63)",
+    "border": "rgb(124, 200, 255)",
+    "radius": "999px",
+    "shadow": "rgba(0, 0, 0, 0.4) 0px 1px 0px 0px, rgba(255, 255, 255, 0.55",
+    "textShadow": "rgba(255, 255, 255, 0.35) 0px 1px 0px",
+    "hover": true,
+    "active": false,
+    "disabled": false,
+    "contrastOnFill": 5.44,
+    "fillLo": [
+     63,
+     155,
+     224
+    ],
+    "fillHi": [
+     136,
+     207,
+     252
+    ]
+   },
+   "pressed": {
+    "bg": "rgba(0, 0, 0, 0)",
+    "img": "linear-gradient(rgb(154, 216, 255) 0%, rgb(102, 189, 245) 49%, rgb(63, 155, 224)",
+    "color": "rgb(4, 32, 63)",
+    "border": "rgb(124, 200, 255)",
+    "radius": "999px",
+    "shadow": "rgba(0, 0, 0, 0.4) 0px 1px 0px 0px, rgba(255, 255, 255, 0.55",
+    "textShadow": "rgba(255, 255, 255, 0.35) 0px 1px 0px",
+    "hover": true,
+    "active": true,
+    "disabled": false,
+    "contrastOnFill": 5.44,
+    "fillLo": [
+     63,
+     155,
+     224
+    ],
+    "fillHi": [
+     136,
+     207,
+     252
+    ]
+   },
+   "pixelsChangedHover": 0,
+   "pixelsChangedPressVsHover": 0,
+   "radiusAtFactor075": "999px",
+   "r2": "4px",
+   "errors": []
+  }
+ ],
+ "titles": [
+  {
+   "look": "sigil",
+   "m-file": "0.0% (rgba(0, 0, 0, 0))",
+   "m-edit": "0.0% (rgba(0, 0, 0, 0))",
+   "m-build": "0.0% (rgba(0, 0, 0, 0))",
+   "m-track": "0.0% (rgba(0, 0, 0, 0))",
+   "pieces": "0.0% (rgba(0, 0, 0, 0))",
+   "m-view": "0.0% (rgba(0, 0, 0, 0))",
+   "m-settings": "0.0% (rgba(0, 0, 0, 0))"
+  },
+  {
+   "look": "aqua",
+   "m-file": "76.7% (rgba(0, 0, 0, 0))",
+   "m-edit": "76.9% (rgba(0, 0, 0, 0))",
+   "m-build": "76.1% (rgba(0, 0, 0, 0))",
+   "m-track": "77.5% (rgba(0, 0, 0, 0))",
+   "pieces": "77.9% (rgba(0, 0, 0, 0))",
+   "m-view": "76.0% (rgba(0, 0, 0, 0))",
+   "m-settings": "78.3% (rgba(0, 0, 0, 0))"
+  },
+  {
+   "look": "skyline",
+   "m-file": "13.8% (rgba(0, 0, 0, 0))",
+   "m-edit": "14.7% (rgba(0, 0, 0, 0))",
+   "m-build": "15.5% (rgba(0, 0, 0, 0))",
+   "m-track": "14.1% (rgba(0, 0, 0, 0))",
+   "pieces": "14.7% (rgba(0, 0, 0, 0))",
+   "m-view": "14.2% (rgba(0, 0, 0, 0))",
+   "m-settings": "15.7% (rgba(0, 0, 0, 0))"
+  },
+  {
+   "look": "glass",
+   "m-file": "13.0% (rgba(4, 16, 28, 0.55))",
+   "m-edit": "13.2% (rgba(4, 16, 28, 0.55))",
+   "m-build": "13.5% (rgba(4, 16, 28, 0.55))",
+   "m-track": "12.6% (rgba(4, 16, 28, 0.55))",
+   "pieces": "13.8% (rgba(4, 16, 28, 0.55))",
+   "m-view": "13.3% (rgba(4, 16, 28, 0.55))",
+   "m-settings": "15.0% (rgba(4, 16, 28, 0.55))"
+  },
+  {
+   "look": "aurora",
+   "m-file": "78.2% (rgb(27, 31, 60))",
+   "m-edit": "78.4% (rgb(27, 31, 60))",
+   "m-build": "77.8% (rgb(27, 31, 60))",
+   "m-track": "78.7% (rgb(27, 31, 60))",
+   "pieces": "79.8% (rgb(27, 31, 60))",
+   "m-view": "77.8% (rgb(27, 31, 60))",
+   "m-settings": "80.4% (rgb(27, 31, 60))"
+  },
+  {
+   "look": "skyline-night",
+   "m-file": "79.1% (rgba(0, 0, 0, 0))",
+   "m-edit": "79.3% (rgba(0, 0, 0, 0))",
+   "m-build": "78.6% (rgba(0, 0, 0, 0))",
+   "m-track": "79.9% (rgba(0, 0, 0, 0))",
+   "pieces": "80.4% (rgba(0, 0, 0, 0))",
+   "m-view": "78.4% (rgba(0, 0, 0, 0))",
+   "m-settings": "80.9% (rgba(0, 0, 0, 0))"
+  }
+ ],
+ "strip": [
+  {
+   "look": "sigil",
+   "r3": "4px",
+   "strip": "8px",
+   "inline": "border-radius: 8px"
+  },
+  {
+   "look": "aqua",
+   "r3": "8px",
+   "strip": "8px",
+   "inline": "border-radius: 8px"
+  },
+  {
+   "look": "skyline",
+   "r3": "8px",
+   "strip": "8px",
+   "inline": "border-radius: 8px"
+  },
+  {
+   "look": "glass",
+   "r3": "0px",
+   "strip": "8px",
+   "inline": "border-radius: 8px"
+  },
+  {
+   "look": "aurora",
+   "r3": "6px",
+   "strip": "8px",
+   "inline": "border-radius: 8px"
+  },
+  {
+   "look": "skyline-night",
+   "r3": "8px",
+   "strip": "8px",
+   "inline": "border-radius: 8px"
+  }
+ ],
+ "longfile": [
+  {
+   "look": "sigil",
+   "w": 900,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    -172,
+    205
+   ],
+   "inner": 900,
+   "off": true
+  },
+  {
+   "look": "sigil",
+   "w": 910,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    -162,
+    215
+   ],
+   "inner": 910,
+   "off": true
+  },
+  {
+   "look": "sigil",
+   "w": 920,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    -152,
+    225
+   ],
+   "inner": 920,
+   "off": true
+  },
+  {
+   "look": "sigil",
+   "w": 930,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    -142,
+    235
+   ],
+   "inner": 930,
+   "off": true
+  },
+  {
+   "look": "sigil",
+   "w": 940,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    -132,
+    245
+   ],
+   "inner": 940,
+   "off": true
+  },
+  {
+   "look": "sigil",
+   "w": 950,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    -122,
+    255
+   ],
+   "inner": 950,
+   "off": true
+  },
+  {
+   "look": "sigil",
+   "w": 960,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    -112,
+    265
+   ],
+   "inner": 960,
+   "off": true
+  },
+  {
+   "look": "sigil",
+   "w": 970,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    -102,
+    275
+   ],
+   "inner": 970,
+   "off": true
+  },
+  {
+   "look": "sigil",
+   "w": 980,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    -92,
+    285
+   ],
+   "inner": 980,
+   "off": true
+  },
+  {
+   "look": "sigil",
+   "w": 990,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    -82,
+    295
+   ],
+   "inner": 990,
+   "off": true
+  },
+  {
+   "look": "sigil",
+   "w": 1000,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    -72,
+    305
+   ],
+   "inner": 1000,
+   "off": true
+  },
+  {
+   "look": "sigil",
+   "w": 1010,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    -62,
+    315
+   ],
+   "inner": 1010,
+   "off": true
+  },
+  {
+   "look": "sigil",
+   "w": 1020,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    -52,
+    325
+   ],
+   "inner": 1020,
+   "off": true
+  },
+  {
+   "look": "sigil",
+   "w": 1030,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    -42,
+    335
+   ],
+   "inner": 1030,
+   "off": true
+  },
+  {
+   "look": "sigil",
+   "w": 1040,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    -32,
+    345
+   ],
+   "inner": 1040,
+   "off": true
+  },
+  {
+   "look": "sigil",
+   "w": 1050,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    -22,
+    355
+   ],
+   "inner": 1050,
+   "off": true
+  },
+  {
+   "look": "sigil",
+   "w": 1060,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    -12,
+    365
+   ],
+   "inner": 1060,
+   "off": true
+  },
+  {
+   "look": "sigil",
+   "w": 1070,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    -2,
+    375
+   ],
+   "inner": 1070,
+   "off": true
+  },
+  {
+   "look": "sigil",
+   "w": 1080,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    8,
+    385
+   ],
+   "inner": 1080,
+   "off": false
+  },
+  {
+   "look": "sigil",
+   "w": 1090,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    18,
+    395
+   ],
+   "inner": 1090,
+   "off": false
+  },
+  {
+   "look": "sigil",
+   "w": 1100,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    -40,
+    337
+   ],
+   "inner": 1100,
+   "off": true
+  },
+  {
+   "look": "sigil",
+   "w": 1110,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    -30,
+    347
+   ],
+   "inner": 1110,
+   "off": true
+  },
+  {
+   "look": "sigil",
+   "w": 1120,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    -20,
+    357
+   ],
+   "inner": 1120,
+   "off": true
+  },
+  {
+   "look": "sigil",
+   "w": 1130,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    -10,
+    367
+   ],
+   "inner": 1130,
+   "off": true
+  },
+  {
+   "look": "sigil",
+   "w": 1140,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    0,
+    377
+   ],
+   "inner": 1140,
+   "off": false
+  },
+  {
+   "look": "sigil",
+   "w": 1150,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    10,
+    387
+   ],
+   "inner": 1150,
+   "off": false
+  },
+  {
+   "look": "sigil",
+   "w": 1160,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    20,
+    397
+   ],
+   "inner": 1160,
+   "off": false
+  },
+  {
+   "look": "sigil",
+   "w": 1170,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    30,
+    407
+   ],
+   "inner": 1170,
+   "off": false
+  },
+  {
+   "look": "sigil",
+   "w": 1180,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    40,
+    417
+   ],
+   "inner": 1180,
+   "off": false
+  },
+  {
+   "look": "sigil",
+   "w": 1190,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    50,
+    427
+   ],
+   "inner": 1190,
+   "off": false
+  },
+  {
+   "look": "sigil",
+   "w": 1200,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    60,
+    437
+   ],
+   "inner": 1200,
+   "off": false
+  },
+  {
+   "look": "sigil",
+   "w": 1210,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    70,
+    447
+   ],
+   "inner": 1210,
+   "off": false
+  },
+  {
+   "look": "sigil",
+   "w": 1220,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    80,
+    457
+   ],
+   "inner": 1220,
+   "off": false
+  },
+  {
+   "look": "sigil",
+   "w": 1230,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    90,
+    467
+   ],
+   "inner": 1230,
+   "off": false
+  },
+  {
+   "look": "sigil",
+   "w": 1240,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    100,
+    477
+   ],
+   "inner": 1240,
+   "off": false
+  },
+  {
+   "look": "sigil",
+   "w": 1250,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    110,
+    487
+   ],
+   "inner": 1250,
+   "off": false
+  },
+  {
+   "look": "sigil",
+   "w": 1260,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    120,
+    497
+   ],
+   "inner": 1260,
+   "off": false
+  },
+  {
+   "look": "sigil",
+   "w": 1270,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    130,
+    507
+   ],
+   "inner": 1270,
+   "off": false
+  },
+  {
+   "look": "sigil",
+   "w": 1280,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    140,
+    517
+   ],
+   "inner": 1280,
+   "off": false
+  },
+  {
+   "look": "sigil",
+   "w": 1290,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    150,
+    527
+   ],
+   "inner": 1290,
+   "off": false
+  },
+  {
+   "look": "sigil",
+   "w": 1300,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    160,
+    537
+   ],
+   "inner": 1300,
+   "off": false
+  },
+  {
+   "look": "sigil",
+   "w": 1310,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    170,
+    547
+   ],
+   "inner": 1310,
+   "off": false
+  },
+  {
+   "look": "sigil",
+   "w": 1320,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    180,
+    557
+   ],
+   "inner": 1320,
+   "off": false
+  },
+  {
+   "look": "sigil",
+   "w": 1330,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    190,
+    567
+   ],
+   "inner": 1330,
+   "off": false
+  },
+  {
+   "look": "sigil",
+   "w": 1340,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    200,
+    577
+   ],
+   "inner": 1340,
+   "off": false
+  },
+  {
+   "look": "sigil",
+   "w": 1350,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    210,
+    587
+   ],
+   "inner": 1350,
+   "off": false
+  },
+  {
+   "look": "sigil",
+   "w": 1360,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    220,
+    597
+   ],
+   "inner": 1360,
+   "off": false
+  },
+  {
+   "look": "sigil",
+   "w": 1370,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    230,
+    607
+   ],
+   "inner": 1370,
+   "off": false
+  },
+  {
+   "look": "sigil",
+   "w": 1380,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    240,
+    617
+   ],
+   "inner": 1380,
+   "off": false
+  },
+  {
+   "look": "sigil",
+   "w": 1390,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    250,
+    627
+   ],
+   "inner": 1390,
+   "off": false
+  },
+  {
+   "look": "sigil",
+   "w": 1400,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    260,
+    637
+   ],
+   "inner": 1400,
+   "off": false
+  },
+  {
+   "look": "sigil",
+   "errors": []
+  },
+  {
+   "look": "skyline",
+   "w": 900,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    -172,
+    205
+   ],
+   "inner": 900,
+   "off": true
+  },
+  {
+   "look": "skyline",
+   "w": 910,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    -162,
+    215
+   ],
+   "inner": 910,
+   "off": true
+  },
+  {
+   "look": "skyline",
+   "w": 920,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    -152,
+    225
+   ],
+   "inner": 920,
+   "off": true
+  },
+  {
+   "look": "skyline",
+   "w": 930,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    -142,
+    235
+   ],
+   "inner": 930,
+   "off": true
+  },
+  {
+   "look": "skyline",
+   "w": 940,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    -132,
+    245
+   ],
+   "inner": 940,
+   "off": true
+  },
+  {
+   "look": "skyline",
+   "w": 950,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    -122,
+    255
+   ],
+   "inner": 950,
+   "off": true
+  },
+  {
+   "look": "skyline",
+   "w": 960,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    -112,
+    265
+   ],
+   "inner": 960,
+   "off": true
+  },
+  {
+   "look": "skyline",
+   "w": 970,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    -102,
+    275
+   ],
+   "inner": 970,
+   "off": true
+  },
+  {
+   "look": "skyline",
+   "w": 980,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    -92,
+    285
+   ],
+   "inner": 980,
+   "off": true
+  },
+  {
+   "look": "skyline",
+   "w": 990,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    -82,
+    295
+   ],
+   "inner": 990,
+   "off": true
+  },
+  {
+   "look": "skyline",
+   "w": 1000,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    -72,
+    305
+   ],
+   "inner": 1000,
+   "off": true
+  },
+  {
+   "look": "skyline",
+   "w": 1010,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    -62,
+    315
+   ],
+   "inner": 1010,
+   "off": true
+  },
+  {
+   "look": "skyline",
+   "w": 1020,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    -52,
+    325
+   ],
+   "inner": 1020,
+   "off": true
+  },
+  {
+   "look": "skyline",
+   "w": 1030,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    -42,
+    335
+   ],
+   "inner": 1030,
+   "off": true
+  },
+  {
+   "look": "skyline",
+   "w": 1040,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    -32,
+    345
+   ],
+   "inner": 1040,
+   "off": true
+  },
+  {
+   "look": "skyline",
+   "w": 1050,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    -22,
+    355
+   ],
+   "inner": 1050,
+   "off": true
+  },
+  {
+   "look": "skyline",
+   "w": 1060,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    -12,
+    365
+   ],
+   "inner": 1060,
+   "off": true
+  },
+  {
+   "look": "skyline",
+   "w": 1070,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    -2,
+    375
+   ],
+   "inner": 1070,
+   "off": true
+  },
+  {
+   "look": "skyline",
+   "w": 1080,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    8,
+    385
+   ],
+   "inner": 1080,
+   "off": false
+  },
+  {
+   "look": "skyline",
+   "w": 1090,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    18,
+    395
+   ],
+   "inner": 1090,
+   "off": false
+  },
+  {
+   "look": "skyline",
+   "w": 1100,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    -40,
+    337
+   ],
+   "inner": 1100,
+   "off": true
+  },
+  {
+   "look": "skyline",
+   "w": 1110,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    -30,
+    347
+   ],
+   "inner": 1110,
+   "off": true
+  },
+  {
+   "look": "skyline",
+   "w": 1120,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    -20,
+    357
+   ],
+   "inner": 1120,
+   "off": true
+  },
+  {
+   "look": "skyline",
+   "w": 1130,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    -10,
+    367
+   ],
+   "inner": 1130,
+   "off": true
+  },
+  {
+   "look": "skyline",
+   "w": 1140,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    0,
+    377
+   ],
+   "inner": 1140,
+   "off": false
+  },
+  {
+   "look": "skyline",
+   "w": 1150,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    10,
+    387
+   ],
+   "inner": 1150,
+   "off": false
+  },
+  {
+   "look": "skyline",
+   "w": 1160,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    20,
+    397
+   ],
+   "inner": 1160,
+   "off": false
+  },
+  {
+   "look": "skyline",
+   "w": 1170,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    30,
+    407
+   ],
+   "inner": 1170,
+   "off": false
+  },
+  {
+   "look": "skyline",
+   "w": 1180,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    40,
+    417
+   ],
+   "inner": 1180,
+   "off": false
+  },
+  {
+   "look": "skyline",
+   "w": 1190,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    50,
+    427
+   ],
+   "inner": 1190,
+   "off": false
+  },
+  {
+   "look": "skyline",
+   "w": 1200,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    60,
+    437
+   ],
+   "inner": 1200,
+   "off": false
+  },
+  {
+   "look": "skyline",
+   "w": 1210,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    70,
+    447
+   ],
+   "inner": 1210,
+   "off": false
+  },
+  {
+   "look": "skyline",
+   "w": 1220,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    80,
+    457
+   ],
+   "inner": 1220,
+   "off": false
+  },
+  {
+   "look": "skyline",
+   "w": 1230,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    90,
+    467
+   ],
+   "inner": 1230,
+   "off": false
+  },
+  {
+   "look": "skyline",
+   "w": 1240,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    100,
+    477
+   ],
+   "inner": 1240,
+   "off": false
+  },
+  {
+   "look": "skyline",
+   "w": 1250,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    110,
+    487
+   ],
+   "inner": 1250,
+   "off": false
+  },
+  {
+   "look": "skyline",
+   "w": 1260,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    120,
+    497
+   ],
+   "inner": 1260,
+   "off": false
+  },
+  {
+   "look": "skyline",
+   "w": 1270,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    130,
+    507
+   ],
+   "inner": 1270,
+   "off": false
+  },
+  {
+   "look": "skyline",
+   "w": 1280,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    140,
+    517
+   ],
+   "inner": 1280,
+   "off": false
+  },
+  {
+   "look": "skyline",
+   "w": 1290,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    150,
+    527
+   ],
+   "inner": 1290,
+   "off": false
+  },
+  {
+   "look": "skyline",
+   "w": 1300,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    160,
+    537
+   ],
+   "inner": 1300,
+   "off": false
+  },
+  {
+   "look": "skyline",
+   "w": 1310,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    170,
+    547
+   ],
+   "inner": 1310,
+   "off": false
+  },
+  {
+   "look": "skyline",
+   "w": 1320,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    180,
+    557
+   ],
+   "inner": 1320,
+   "off": false
+  },
+  {
+   "look": "skyline",
+   "w": 1330,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    190,
+    567
+   ],
+   "inner": 1330,
+   "off": false
+  },
+  {
+   "look": "skyline",
+   "w": 1340,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    200,
+    577
+   ],
+   "inner": 1340,
+   "off": false
+  },
+  {
+   "look": "skyline",
+   "w": 1350,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    210,
+    587
+   ],
+   "inner": 1350,
+   "off": false
+  },
+  {
+   "look": "skyline",
+   "w": 1360,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    220,
+    597
+   ],
+   "inner": 1360,
+   "off": false
+  },
+  {
+   "look": "skyline",
+   "w": 1370,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    230,
+    607
+   ],
+   "inner": 1370,
+   "off": false
+  },
+  {
+   "look": "skyline",
+   "w": 1380,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    240,
+    617
+   ],
+   "inner": 1380,
+   "off": false
+  },
+  {
+   "look": "skyline",
+   "w": 1390,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    250,
+    627
+   ],
+   "inner": 1390,
+   "off": false
+  },
+  {
+   "look": "skyline",
+   "w": 1400,
+   "open": true,
+   "rows": [
+    61,
+    5
+   ],
+   "box": [
+    260,
+    637
+   ],
+   "inner": 1400,
+   "off": false
+  },
+  {
+   "look": "skyline",
+   "errors": []
+  }
+ ],
+ "settings": [
+  {
+   "look": "sigil",
+   "w": 1400,
+   "h": 860,
+   "bottom": 893,
+   "inner": 860,
+   "overflowY": "visible",
+   "maxHeight": "none",
+   "pageScrolls": false,
+   "past": []
+  },
+  {
+   "look": "sigil",
+   "w": 900,
+   "h": 600,
+   "bottom": 893,
+   "inner": 600,
+   "overflowY": "visible",
+   "maxHeight": "none",
+   "pageScrolls": false,
+   "past": [
+    "Checker",
+    "Wall raycasting (CSP)",
+    "INPUT",
+    "Assetto Corsa",
+    "Author name",
+    "author name",
+    "Assetto Corsa folder…",
+    "See it in Assetto (launches th",
+    "INPUT",
+    "Blender",
+    "Blender…",
+    "Reset the guide"
+   ]
+  },
+  {
+   "look": "sigil",
+   "w": 1920,
+   "h": 1080,
+   "bottom": 893,
+   "inner": 1080,
+   "overflowY": "visible",
+   "maxHeight": "none",
+   "pageScrolls": false,
+   "past": []
+  },
+  {
+   "look": "skyline",
+   "w": 1400,
+   "h": 860,
+   "bottom": 893,
+   "inner": 860,
+   "overflowY": "visible",
+   "maxHeight": "none",
+   "pageScrolls": false,
+   "past": []
+  },
+  {
+   "look": "skyline",
+   "w": 900,
+   "h": 600,
+   "bottom": 893,
+   "inner": 600,
+   "overflowY": "visible",
+   "maxHeight": "none",
+   "pageScrolls": false,
+   "past": [
+    "Checker",
+    "Wall raycasting (CSP)",
+    "INPUT",
+    "Assetto Corsa",
+    "Author name",
+    "author name",
+    "Assetto Corsa folder…",
+    "See it in Assetto (launches th",
+    "INPUT",
+    "Blender",
+    "Blender…",
+    "Reset the guide"
+   ]
+  },
+  {
+   "look": "skyline",
+   "w": 1920,
+   "h": 1080,
+   "bottom": 893,
+   "inner": 1080,
+   "overflowY": "visible",
+   "maxHeight": "none",
+   "pageScrolls": false,
+   "past": []
+  }
+ ],
+ "title": "zz-headless-test"
+}

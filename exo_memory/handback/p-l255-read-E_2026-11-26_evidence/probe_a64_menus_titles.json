@@ -1,0 +1,1392 @@
+{
+ "tree": "C:\\Consonance\\t180-wt-e-l255",
+ "parts": [
+  "menus",
+  "titles"
+ ],
+ "menus": [
+  {
+   "look": "sigil",
+   "w": 900,
+   "h": 860,
+   "inner": [
+    900,
+    860
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 158..418 b582 title 158..205",
+    "m-edit 209..469 b339 title 209..258",
+    "m-build 56..316 b449 title 262..316",
+    "m-track 116..376 b318 title 320..376",
+    "pieces 22..442 b115 title 380..442",
+    "m-view 239..499 b155 title 446..499",
+    "m-settings 313..573 b893 title 503..573"
+   ]
+  },
+  {
+   "look": "sigil",
+   "w": 950,
+   "h": 860,
+   "inner": [
+    950,
+    860
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 208..468 b582 title 208..255",
+    "m-edit 259..519 b339 title 259..308",
+    "m-build 106..366 b449 title 312..366",
+    "m-track 166..426 b318 title 370..426",
+    "pieces 72..492 b115 title 430..492",
+    "m-view 289..549 b155 title 496..549",
+    "m-settings 363..623 b893 title 553..623"
+   ]
+  },
+  {
+   "look": "sigil",
+   "w": 990,
+   "h": 860,
+   "inner": [
+    990,
+    860
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 248..508 b582 title 248..295",
+    "m-edit 299..559 b339 title 299..348",
+    "m-build 146..406 b449 title 352..406",
+    "m-track 206..466 b318 title 410..466",
+    "pieces 112..532 b115 title 470..532",
+    "m-view 329..589 b155 title 536..589",
+    "m-settings 403..663 b893 title 593..663"
+   ]
+  },
+  {
+   "look": "sigil",
+   "w": 1000,
+   "h": 860,
+   "inner": [
+    1000,
+    860
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 45..305 b582 title 258..305",
+    "m-edit 98..358 b339 title 309..358",
+    "m-build 156..416 b449 title 362..416",
+    "m-track 216..476 b318 title 420..476",
+    "pieces 122..542 b115 title 480..542",
+    "m-view 339..599 b155 title 546..599",
+    "m-settings 413..673 b893 title 603..673"
+   ]
+  },
+  {
+   "look": "sigil",
+   "w": 1010,
+   "h": 860,
+   "inner": [
+    1010,
+    860
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 55..315 b582 title 268..315",
+    "m-edit 108..368 b339 title 319..368",
+    "m-build 166..426 b449 title 372..426",
+    "m-track 226..486 b318 title 430..486",
+    "pieces 132..552 b115 title 490..552",
+    "m-view 349..609 b155 title 556..609",
+    "m-settings 423..683 b893 title 613..683"
+   ]
+  },
+  {
+   "look": "sigil",
+   "w": 900,
+   "h": 600,
+   "inner": [
+    900,
+    600
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 158..418 b582 title 158..205",
+    "m-edit 209..469 b339 title 209..258",
+    "m-build 56..316 b449 title 262..316",
+    "m-track 116..376 b318 title 320..376",
+    "pieces 22..442 b115 title 380..442",
+    "m-view 239..499 b155 title 446..499",
+    "m-settings 313..573 b893 title 503..573"
+   ]
+  },
+  {
+   "look": "sigil",
+   "w": 950,
+   "h": 600,
+   "inner": [
+    950,
+    600
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 208..468 b582 title 208..255",
+    "m-edit 259..519 b339 title 259..308",
+    "m-build 106..366 b449 title 312..366",
+    "m-track 166..426 b318 title 370..426",
+    "pieces 72..492 b115 title 430..492",
+    "m-view 289..549 b155 title 496..549",
+    "m-settings 363..623 b893 title 553..623"
+   ]
+  },
+  {
+   "look": "sigil",
+   "w": 990,
+   "h": 600,
+   "inner": [
+    990,
+    600
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 248..508 b582 title 248..295",
+    "m-edit 299..559 b339 title 299..348",
+    "m-build 146..406 b449 title 352..406",
+    "m-track 206..466 b318 title 410..466",
+    "pieces 112..532 b115 title 470..532",
+    "m-view 329..589 b155 title 536..589",
+    "m-settings 403..663 b893 title 593..663"
+   ]
+  },
+  {
+   "look": "sigil",
+   "w": 1000,
+   "h": 600,
+   "inner": [
+    1000,
+    600
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 45..305 b582 title 258..305",
+    "m-edit 98..358 b339 title 309..358",
+    "m-build 156..416 b449 title 362..416",
+    "m-track 216..476 b318 title 420..476",
+    "pieces 122..542 b115 title 480..542",
+    "m-view 339..599 b155 title 546..599",
+    "m-settings 413..673 b893 title 603..673"
+   ]
+  },
+  {
+   "look": "sigil",
+   "w": 1010,
+   "h": 600,
+   "inner": [
+    1010,
+    600
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 55..315 b582 title 268..315",
+    "m-edit 108..368 b339 title 319..368",
+    "m-build 166..426 b449 title 372..426",
+    "m-track 226..486 b318 title 430..486",
+    "pieces 132..552 b115 title 490..552",
+    "m-view 349..609 b155 title 556..609",
+    "m-settings 423..683 b893 title 613..683"
+   ]
+  },
+  {
+   "look": "aqua",
+   "w": 900,
+   "h": 860,
+   "inner": [
+    900,
+    860
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 158..418 b582 title 158..205",
+    "m-edit 209..469 b339 title 209..258",
+    "m-build 56..316 b449 title 262..316",
+    "m-track 116..376 b318 title 320..376",
+    "pieces 22..442 b115 title 380..442",
+    "m-view 239..499 b155 title 446..499",
+    "m-settings 313..573 b893 title 503..573"
+   ]
+  },
+  {
+   "look": "aqua",
+   "w": 950,
+   "h": 860,
+   "inner": [
+    950,
+    860
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 208..468 b582 title 208..255",
+    "m-edit 259..519 b339 title 259..308",
+    "m-build 106..366 b449 title 312..366",
+    "m-track 166..426 b318 title 370..426",
+    "pieces 72..492 b115 title 430..492",
+    "m-view 289..549 b155 title 496..549",
+    "m-settings 363..623 b893 title 553..623"
+   ]
+  },
+  {
+   "look": "aqua",
+   "w": 990,
+   "h": 860,
+   "inner": [
+    990,
+    860
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 248..508 b582 title 248..295",
+    "m-edit 299..559 b339 title 299..348",
+    "m-build 146..406 b449 title 352..406",
+    "m-track 206..466 b318 title 410..466",
+    "pieces 112..532 b115 title 470..532",
+    "m-view 329..589 b155 title 536..589",
+    "m-settings 403..663 b893 title 593..663"
+   ]
+  },
+  {
+   "look": "aqua",
+   "w": 1000,
+   "h": 860,
+   "inner": [
+    1000,
+    860
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 45..305 b582 title 258..305",
+    "m-edit 98..358 b339 title 309..358",
+    "m-build 156..416 b449 title 362..416",
+    "m-track 216..476 b318 title 420..476",
+    "pieces 122..542 b115 title 480..542",
+    "m-view 339..599 b155 title 546..599",
+    "m-settings 413..673 b893 title 603..673"
+   ]
+  },
+  {
+   "look": "aqua",
+   "w": 1010,
+   "h": 860,
+   "inner": [
+    1010,
+    860
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 55..315 b582 title 268..315",
+    "m-edit 108..368 b339 title 319..368",
+    "m-build 166..426 b449 title 372..426",
+    "m-track 226..486 b318 title 430..486",
+    "pieces 132..552 b115 title 490..552",
+    "m-view 349..609 b155 title 556..609",
+    "m-settings 423..683 b893 title 613..683"
+   ]
+  },
+  {
+   "look": "aqua",
+   "w": 900,
+   "h": 600,
+   "inner": [
+    900,
+    600
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 158..418 b582 title 158..205",
+    "m-edit 209..469 b339 title 209..258",
+    "m-build 56..316 b449 title 262..316",
+    "m-track 116..376 b318 title 320..376",
+    "pieces 22..442 b115 title 380..442",
+    "m-view 239..499 b155 title 446..499",
+    "m-settings 313..573 b893 title 503..573"
+   ]
+  },
+  {
+   "look": "aqua",
+   "w": 950,
+   "h": 600,
+   "inner": [
+    950,
+    600
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 208..468 b582 title 208..255",
+    "m-edit 259..519 b339 title 259..308",
+    "m-build 106..366 b449 title 312..366",
+    "m-track 166..426 b318 title 370..426",
+    "pieces 72..492 b115 title 430..492",
+    "m-view 289..549 b155 title 496..549",
+    "m-settings 363..623 b893 title 553..623"
+   ]
+  },
+  {
+   "look": "aqua",
+   "w": 990,
+   "h": 600,
+   "inner": [
+    990,
+    600
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 248..508 b582 title 248..295",
+    "m-edit 299..559 b339 title 299..348",
+    "m-build 146..406 b449 title 352..406",
+    "m-track 206..466 b318 title 410..466",
+    "pieces 112..532 b115 title 470..532",
+    "m-view 329..589 b155 title 536..589",
+    "m-settings 403..663 b893 title 593..663"
+   ]
+  },
+  {
+   "look": "aqua",
+   "w": 1000,
+   "h": 600,
+   "inner": [
+    1000,
+    600
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 45..305 b582 title 258..305",
+    "m-edit 98..358 b339 title 309..358",
+    "m-build 156..416 b449 title 362..416",
+    "m-track 216..476 b318 title 420..476",
+    "pieces 122..542 b115 title 480..542",
+    "m-view 339..599 b155 title 546..599",
+    "m-settings 413..673 b893 title 603..673"
+   ]
+  },
+  {
+   "look": "aqua",
+   "w": 1010,
+   "h": 600,
+   "inner": [
+    1010,
+    600
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 55..315 b582 title 268..315",
+    "m-edit 108..368 b339 title 319..368",
+    "m-build 166..426 b449 title 372..426",
+    "m-track 226..486 b318 title 430..486",
+    "pieces 132..552 b115 title 490..552",
+    "m-view 349..609 b155 title 556..609",
+    "m-settings 423..683 b893 title 613..683"
+   ]
+  },
+  {
+   "look": "skyline",
+   "w": 900,
+   "h": 860,
+   "inner": [
+    900,
+    860
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 158..418 b582 title 158..205",
+    "m-edit 209..469 b339 title 209..258",
+    "m-build 56..316 b449 title 262..316",
+    "m-track 116..376 b318 title 320..376",
+    "pieces 22..442 b115 title 380..442",
+    "m-view 239..499 b155 title 446..499",
+    "m-settings 313..573 b893 title 503..573"
+   ]
+  },
+  {
+   "look": "skyline",
+   "w": 950,
+   "h": 860,
+   "inner": [
+    950,
+    860
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 208..468 b582 title 208..255",
+    "m-edit 259..519 b339 title 259..308",
+    "m-build 106..366 b449 title 312..366",
+    "m-track 166..426 b318 title 370..426",
+    "pieces 72..492 b115 title 430..492",
+    "m-view 289..549 b155 title 496..549",
+    "m-settings 363..623 b893 title 553..623"
+   ]
+  },
+  {
+   "look": "skyline",
+   "w": 990,
+   "h": 860,
+   "inner": [
+    990,
+    860
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 248..508 b582 title 248..295",
+    "m-edit 299..559 b339 title 299..348",
+    "m-build 146..406 b449 title 352..406",
+    "m-track 206..466 b318 title 410..466",
+    "pieces 112..532 b115 title 470..532",
+    "m-view 329..589 b155 title 536..589",
+    "m-settings 403..663 b893 title 593..663"
+   ]
+  },
+  {
+   "look": "skyline",
+   "w": 1000,
+   "h": 860,
+   "inner": [
+    1000,
+    860
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 45..305 b582 title 258..305",
+    "m-edit 98..358 b339 title 309..358",
+    "m-build 156..416 b449 title 362..416",
+    "m-track 216..476 b318 title 420..476",
+    "pieces 122..542 b115 title 480..542",
+    "m-view 339..599 b155 title 546..599",
+    "m-settings 413..673 b893 title 603..673"
+   ]
+  },
+  {
+   "look": "skyline",
+   "w": 1010,
+   "h": 860,
+   "inner": [
+    1010,
+    860
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 55..315 b582 title 268..315",
+    "m-edit 108..368 b339 title 319..368",
+    "m-build 166..426 b449 title 372..426",
+    "m-track 226..486 b318 title 430..486",
+    "pieces 132..552 b115 title 490..552",
+    "m-view 349..609 b155 title 556..609",
+    "m-settings 423..683 b893 title 613..683"
+   ]
+  },
+  {
+   "look": "skyline",
+   "w": 900,
+   "h": 600,
+   "inner": [
+    900,
+    600
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 158..418 b582 title 158..205",
+    "m-edit 209..469 b339 title 209..258",
+    "m-build 56..316 b449 title 262..316",
+    "m-track 116..376 b318 title 320..376",
+    "pieces 22..442 b115 title 380..442",
+    "m-view 239..499 b155 title 446..499",
+    "m-settings 313..573 b893 title 503..573"
+   ]
+  },
+  {
+   "look": "skyline",
+   "w": 950,
+   "h": 600,
+   "inner": [
+    950,
+    600
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 208..468 b582 title 208..255",
+    "m-edit 259..519 b339 title 259..308",
+    "m-build 106..366 b449 title 312..366",
+    "m-track 166..426 b318 title 370..426",
+    "pieces 72..492 b115 title 430..492",
+    "m-view 289..549 b155 title 496..549",
+    "m-settings 363..623 b893 title 553..623"
+   ]
+  },
+  {
+   "look": "skyline",
+   "w": 990,
+   "h": 600,
+   "inner": [
+    990,
+    600
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 248..508 b582 title 248..295",
+    "m-edit 299..559 b339 title 299..348",
+    "m-build 146..406 b449 title 352..406",
+    "m-track 206..466 b318 title 410..466",
+    "pieces 112..532 b115 title 470..532",
+    "m-view 329..589 b155 title 536..589",
+    "m-settings 403..663 b893 title 593..663"
+   ]
+  },
+  {
+   "look": "skyline",
+   "w": 1000,
+   "h": 600,
+   "inner": [
+    1000,
+    600
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 45..305 b582 title 258..305",
+    "m-edit 98..358 b339 title 309..358",
+    "m-build 156..416 b449 title 362..416",
+    "m-track 216..476 b318 title 420..476",
+    "pieces 122..542 b115 title 480..542",
+    "m-view 339..599 b155 title 546..599",
+    "m-settings 413..673 b893 title 603..673"
+   ]
+  },
+  {
+   "look": "skyline",
+   "w": 1010,
+   "h": 600,
+   "inner": [
+    1010,
+    600
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 55..315 b582 title 268..315",
+    "m-edit 108..368 b339 title 319..368",
+    "m-build 166..426 b449 title 372..426",
+    "m-track 226..486 b318 title 430..486",
+    "pieces 132..552 b115 title 490..552",
+    "m-view 349..609 b155 title 556..609",
+    "m-settings 423..683 b893 title 613..683"
+   ]
+  },
+  {
+   "look": "glass",
+   "w": 900,
+   "h": 860,
+   "inner": [
+    900,
+    860
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 158..418 b582 title 158..205",
+    "m-edit 209..469 b339 title 209..258",
+    "m-build 56..316 b449 title 262..316",
+    "m-track 116..376 b318 title 320..376",
+    "pieces 22..442 b115 title 380..442",
+    "m-view 239..499 b155 title 446..499",
+    "m-settings 313..573 b893 title 503..573"
+   ]
+  },
+  {
+   "look": "glass",
+   "w": 950,
+   "h": 860,
+   "inner": [
+    950,
+    860
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 208..468 b582 title 208..255",
+    "m-edit 259..519 b339 title 259..308",
+    "m-build 106..366 b449 title 312..366",
+    "m-track 166..426 b318 title 370..426",
+    "pieces 72..492 b115 title 430..492",
+    "m-view 289..549 b155 title 496..549",
+    "m-settings 363..623 b893 title 553..623"
+   ]
+  },
+  {
+   "look": "glass",
+   "w": 990,
+   "h": 860,
+   "inner": [
+    990,
+    860
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 248..508 b582 title 248..295",
+    "m-edit 299..559 b339 title 299..348",
+    "m-build 146..406 b449 title 352..406",
+    "m-track 206..466 b318 title 410..466",
+    "pieces 112..532 b115 title 470..532",
+    "m-view 329..589 b155 title 536..589",
+    "m-settings 403..663 b893 title 593..663"
+   ]
+  },
+  {
+   "look": "glass",
+   "w": 1000,
+   "h": 860,
+   "inner": [
+    1000,
+    860
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 45..305 b582 title 258..305",
+    "m-edit 98..358 b339 title 309..358",
+    "m-build 156..416 b449 title 362..416",
+    "m-track 216..476 b318 title 420..476",
+    "pieces 122..542 b115 title 480..542",
+    "m-view 339..599 b155 title 546..599",
+    "m-settings 413..673 b893 title 603..673"
+   ]
+  },
+  {
+   "look": "glass",
+   "w": 1010,
+   "h": 860,
+   "inner": [
+    1010,
+    860
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 55..315 b582 title 268..315",
+    "m-edit 108..368 b339 title 319..368",
+    "m-build 166..426 b449 title 372..426",
+    "m-track 226..486 b318 title 430..486",
+    "pieces 132..552 b115 title 490..552",
+    "m-view 349..609 b155 title 556..609",
+    "m-settings 423..683 b893 title 613..683"
+   ]
+  },
+  {
+   "look": "glass",
+   "w": 900,
+   "h": 600,
+   "inner": [
+    900,
+    600
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 158..418 b582 title 158..205",
+    "m-edit 209..469 b339 title 209..258",
+    "m-build 56..316 b449 title 262..316",
+    "m-track 116..376 b318 title 320..376",
+    "pieces 22..442 b115 title 380..442",
+    "m-view 239..499 b155 title 446..499",
+    "m-settings 313..573 b893 title 503..573"
+   ]
+  },
+  {
+   "look": "glass",
+   "w": 950,
+   "h": 600,
+   "inner": [
+    950,
+    600
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 208..468 b582 title 208..255",
+    "m-edit 259..519 b339 title 259..308",
+    "m-build 106..366 b449 title 312..366",
+    "m-track 166..426 b318 title 370..426",
+    "pieces 72..492 b115 title 430..492",
+    "m-view 289..549 b155 title 496..549",
+    "m-settings 363..623 b893 title 553..623"
+   ]
+  },
+  {
+   "look": "glass",
+   "w": 990,
+   "h": 600,
+   "inner": [
+    990,
+    600
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 248..508 b582 title 248..295",
+    "m-edit 299..559 b339 title 299..348",
+    "m-build 146..406 b449 title 352..406",
+    "m-track 206..466 b318 title 410..466",
+    "pieces 112..532 b115 title 470..532",
+    "m-view 329..589 b155 title 536..589",
+    "m-settings 403..663 b893 title 593..663"
+   ]
+  },
+  {
+   "look": "glass",
+   "w": 1000,
+   "h": 600,
+   "inner": [
+    1000,
+    600
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 45..305 b582 title 258..305",
+    "m-edit 98..358 b339 title 309..358",
+    "m-build 156..416 b449 title 362..416",
+    "m-track 216..476 b318 title 420..476",
+    "pieces 122..542 b115 title 480..542",
+    "m-view 339..599 b155 title 546..599",
+    "m-settings 413..673 b893 title 603..673"
+   ]
+  },
+  {
+   "look": "glass",
+   "w": 1010,
+   "h": 600,
+   "inner": [
+    1010,
+    600
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 55..315 b582 title 268..315",
+    "m-edit 108..368 b339 title 319..368",
+    "m-build 166..426 b449 title 372..426",
+    "m-track 226..486 b318 title 430..486",
+    "pieces 132..552 b115 title 490..552",
+    "m-view 349..609 b155 title 556..609",
+    "m-settings 423..683 b893 title 613..683"
+   ]
+  },
+  {
+   "look": "aurora",
+   "w": 900,
+   "h": 860,
+   "inner": [
+    900,
+    860
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 158..418 b582 title 158..205",
+    "m-edit 209..469 b339 title 209..258",
+    "m-build 56..316 b449 title 262..316",
+    "m-track 116..376 b318 title 320..376",
+    "pieces 22..442 b115 title 380..442",
+    "m-view 239..499 b155 title 446..499",
+    "m-settings 313..573 b893 title 503..573"
+   ]
+  },
+  {
+   "look": "aurora",
+   "w": 950,
+   "h": 860,
+   "inner": [
+    950,
+    860
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 208..468 b582 title 208..255",
+    "m-edit 259..519 b339 title 259..308",
+    "m-build 106..366 b449 title 312..366",
+    "m-track 166..426 b318 title 370..426",
+    "pieces 72..492 b115 title 430..492",
+    "m-view 289..549 b155 title 496..549",
+    "m-settings 363..623 b893 title 553..623"
+   ]
+  },
+  {
+   "look": "aurora",
+   "w": 990,
+   "h": 860,
+   "inner": [
+    990,
+    860
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 248..508 b582 title 248..295",
+    "m-edit 299..559 b339 title 299..348",
+    "m-build 146..406 b449 title 352..406",
+    "m-track 206..466 b318 title 410..466",
+    "pieces 112..532 b115 title 470..532",
+    "m-view 329..589 b155 title 536..589",
+    "m-settings 403..663 b893 title 593..663"
+   ]
+  },
+  {
+   "look": "aurora",
+   "w": 1000,
+   "h": 860,
+   "inner": [
+    1000,
+    860
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 45..305 b582 title 258..305",
+    "m-edit 98..358 b339 title 309..358",
+    "m-build 156..416 b449 title 362..416",
+    "m-track 216..476 b318 title 420..476",
+    "pieces 122..542 b115 title 480..542",
+    "m-view 339..599 b155 title 546..599",
+    "m-settings 413..673 b893 title 603..673"
+   ]
+  },
+  {
+   "look": "aurora",
+   "w": 1010,
+   "h": 860,
+   "inner": [
+    1010,
+    860
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 55..315 b582 title 268..315",
+    "m-edit 108..368 b339 title 319..368",
+    "m-build 166..426 b449 title 372..426",
+    "m-track 226..486 b318 title 430..486",
+    "pieces 132..552 b115 title 490..552",
+    "m-view 349..609 b155 title 556..609",
+    "m-settings 423..683 b893 title 613..683"
+   ]
+  },
+  {
+   "look": "aurora",
+   "w": 900,
+   "h": 600,
+   "inner": [
+    900,
+    600
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 158..418 b582 title 158..205",
+    "m-edit 209..469 b339 title 209..258",
+    "m-build 56..316 b449 title 262..316",
+    "m-track 116..376 b318 title 320..376",
+    "pieces 22..442 b115 title 380..442",
+    "m-view 239..499 b155 title 446..499",
+    "m-settings 313..573 b893 title 503..573"
+   ]
+  },
+  {
+   "look": "aurora",
+   "w": 950,
+   "h": 600,
+   "inner": [
+    950,
+    600
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 208..468 b582 title 208..255",
+    "m-edit 259..519 b339 title 259..308",
+    "m-build 106..366 b449 title 312..366",
+    "m-track 166..426 b318 title 370..426",
+    "pieces 72..492 b115 title 430..492",
+    "m-view 289..549 b155 title 496..549",
+    "m-settings 363..623 b893 title 553..623"
+   ]
+  },
+  {
+   "look": "aurora",
+   "w": 990,
+   "h": 600,
+   "inner": [
+    990,
+    600
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 248..508 b582 title 248..295",
+    "m-edit 299..559 b339 title 299..348",
+    "m-build 146..406 b449 title 352..406",
+    "m-track 206..466 b318 title 410..466",
+    "pieces 112..532 b115 title 470..532",
+    "m-view 329..589 b155 title 536..589",
+    "m-settings 403..663 b893 title 593..663"
+   ]
+  },
+  {
+   "look": "aurora",
+   "w": 1000,
+   "h": 600,
+   "inner": [
+    1000,
+    600
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 45..305 b582 title 258..305",
+    "m-edit 98..358 b339 title 309..358",
+    "m-build 156..416 b449 title 362..416",
+    "m-track 216..476 b318 title 420..476",
+    "pieces 122..542 b115 title 480..542",
+    "m-view 339..599 b155 title 546..599",
+    "m-settings 413..673 b893 title 603..673"
+   ]
+  },
+  {
+   "look": "aurora",
+   "w": 1010,
+   "h": 600,
+   "inner": [
+    1010,
+    600
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 55..315 b582 title 268..315",
+    "m-edit 108..368 b339 title 319..368",
+    "m-build 166..426 b449 title 372..426",
+    "m-track 226..486 b318 title 430..486",
+    "pieces 132..552 b115 title 490..552",
+    "m-view 349..609 b155 title 556..609",
+    "m-settings 423..683 b893 title 613..683"
+   ]
+  },
+  {
+   "look": "skyline-night",
+   "w": 900,
+   "h": 860,
+   "inner": [
+    900,
+    860
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 158..418 b582 title 158..205",
+    "m-edit 209..469 b339 title 209..258",
+    "m-build 56..316 b449 title 262..316",
+    "m-track 116..376 b318 title 320..376",
+    "pieces 22..442 b115 title 380..442",
+    "m-view 239..499 b155 title 446..499",
+    "m-settings 313..573 b893 title 503..573"
+   ]
+  },
+  {
+   "look": "skyline-night",
+   "w": 950,
+   "h": 860,
+   "inner": [
+    950,
+    860
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 208..468 b582 title 208..255",
+    "m-edit 259..519 b339 title 259..308",
+    "m-build 106..366 b449 title 312..366",
+    "m-track 166..426 b318 title 370..426",
+    "pieces 72..492 b115 title 430..492",
+    "m-view 289..549 b155 title 496..549",
+    "m-settings 363..623 b893 title 553..623"
+   ]
+  },
+  {
+   "look": "skyline-night",
+   "w": 990,
+   "h": 860,
+   "inner": [
+    990,
+    860
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 248..508 b582 title 248..295",
+    "m-edit 299..559 b339 title 299..348",
+    "m-build 146..406 b449 title 352..406",
+    "m-track 206..466 b318 title 410..466",
+    "pieces 112..532 b115 title 470..532",
+    "m-view 329..589 b155 title 536..589",
+    "m-settings 403..663 b893 title 593..663"
+   ]
+  },
+  {
+   "look": "skyline-night",
+   "w": 1000,
+   "h": 860,
+   "inner": [
+    1000,
+    860
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 45..305 b582 title 258..305",
+    "m-edit 98..358 b339 title 309..358",
+    "m-build 156..416 b449 title 362..416",
+    "m-track 216..476 b318 title 420..476",
+    "pieces 122..542 b115 title 480..542",
+    "m-view 339..599 b155 title 546..599",
+    "m-settings 413..673 b893 title 603..673"
+   ]
+  },
+  {
+   "look": "skyline-night",
+   "w": 1010,
+   "h": 860,
+   "inner": [
+    1010,
+    860
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 55..315 b582 title 268..315",
+    "m-edit 108..368 b339 title 319..368",
+    "m-build 166..426 b449 title 372..426",
+    "m-track 226..486 b318 title 430..486",
+    "pieces 132..552 b115 title 490..552",
+    "m-view 349..609 b155 title 556..609",
+    "m-settings 423..683 b893 title 613..683"
+   ]
+  },
+  {
+   "look": "skyline-night",
+   "w": 900,
+   "h": 600,
+   "inner": [
+    900,
+    600
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 158..418 b582 title 158..205",
+    "m-edit 209..469 b339 title 209..258",
+    "m-build 56..316 b449 title 262..316",
+    "m-track 116..376 b318 title 320..376",
+    "pieces 22..442 b115 title 380..442",
+    "m-view 239..499 b155 title 446..499",
+    "m-settings 313..573 b893 title 503..573"
+   ]
+  },
+  {
+   "look": "skyline-night",
+   "w": 950,
+   "h": 600,
+   "inner": [
+    950,
+    600
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 208..468 b582 title 208..255",
+    "m-edit 259..519 b339 title 259..308",
+    "m-build 106..366 b449 title 312..366",
+    "m-track 166..426 b318 title 370..426",
+    "pieces 72..492 b115 title 430..492",
+    "m-view 289..549 b155 title 496..549",
+    "m-settings 363..623 b893 title 553..623"
+   ]
+  },
+  {
+   "look": "skyline-night",
+   "w": 990,
+   "h": 600,
+   "inner": [
+    990,
+    600
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 248..508 b582 title 248..295",
+    "m-edit 299..559 b339 title 299..348",
+    "m-build 146..406 b449 title 352..406",
+    "m-track 206..466 b318 title 410..466",
+    "pieces 112..532 b115 title 470..532",
+    "m-view 329..589 b155 title 536..589",
+    "m-settings 403..663 b893 title 593..663"
+   ]
+  },
+  {
+   "look": "skyline-night",
+   "w": 1000,
+   "h": 600,
+   "inner": [
+    1000,
+    600
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 45..305 b582 title 258..305",
+    "m-edit 98..358 b339 title 309..358",
+    "m-build 156..416 b449 title 362..416",
+    "m-track 216..476 b318 title 420..476",
+    "pieces 122..542 b115 title 480..542",
+    "m-view 339..599 b155 title 546..599",
+    "m-settings 413..673 b893 title 603..673"
+   ]
+  },
+  {
+   "look": "skyline-night",
+   "w": 1010,
+   "h": 600,
+   "inner": [
+    1010,
+    600
+   ],
+   "off": [],
+   "below": [
+    "m-settings bottom 893 (visible)"
+   ],
+   "boxes": [
+    "m-file 55..315 b582 title 268..315",
+    "m-edit 108..368 b339 title 319..368",
+    "m-build 166..426 b449 title 372..426",
+    "m-track 226..486 b318 title 430..486",
+    "pieces 132..552 b115 title 490..552",
+    "m-view 349..609 b155 title 556..609",
+    "m-settings 423..683 b893 title 613..683"
+   ]
+  }
+ ],
+ "titles": [
+  {
+   "look": "sigil",
+   "m-file": "78.1% (color(srgb 0.121647 0.120471 0.114431))",
+   "m-edit": "78.0% (color(srgb 0.121647 0.120471 0.114431))",
+   "m-build": "77.5% (color(srgb 0.121647 0.120471 0.114431))",
+   "m-track": "78.7% (color(srgb 0.121647 0.120471 0.114431))",
+   "pieces": "78.8% (color(srgb 0.121647 0.120471 0.114431))",
+   "m-view": "77.6% (color(srgb 0.121647 0.120471 0.114431))",
+   "m-settings": "78.9% (color(srgb 0.121647 0.120471 0.114431))"
+  },
+  {
+   "look": "aqua",
+   "m-file": "76.7% (rgba(0, 0, 0, 0))",
+   "m-edit": "76.9% (rgba(0, 0, 0, 0))",
+   "m-build": "76.1% (rgba(0, 0, 0, 0))",
+   "m-track": "77.5% (rgba(0, 0, 0, 0))",
+   "pieces": "77.9% (rgba(0, 0, 0, 0))",
+   "m-view": "76.0% (rgba(0, 0, 0, 0))",
+   "m-settings": "78.3% (rgba(0, 0, 0, 0))"
+  },
+  {
+   "look": "skyline",
+   "m-file": "13.8% (rgba(0, 0, 0, 0))",
+   "m-edit": "14.7% (rgba(0, 0, 0, 0))",
+   "m-build": "15.5% (rgba(0, 0, 0, 0))",
+   "m-track": "14.1% (rgba(0, 0, 0, 0))",
+   "pieces": "14.7% (rgba(0, 0, 0, 0))",
+   "m-view": "14.2% (rgba(0, 0, 0, 0))",
+   "m-settings": "15.7% (rgba(0, 0, 0, 0))"
+  },
+  {
+   "look": "glass",
+   "m-file": "13.0% (rgba(4, 16, 28, 0.55))",
+   "m-edit": "13.2% (rgba(4, 16, 28, 0.55))",
+   "m-build": "13.5% (rgba(4, 16, 28, 0.55))",
+   "m-track": "12.6% (rgba(4, 16, 28, 0.55))",
+   "pieces": "13.8% (rgba(4, 16, 28, 0.55))",
+   "m-view": "13.3% (rgba(4, 16, 28, 0.55))",
+   "m-settings": "15.0% (rgba(4, 16, 28, 0.55))"
+  },
+  {
+   "look": "aurora",
+   "m-file": "78.2% (rgb(27, 31, 60))",
+   "m-edit": "78.4% (rgb(27, 31, 60))",
+   "m-build": "77.8% (rgb(27, 31, 60))",
+   "m-track": "78.7% (rgb(27, 31, 60))",
+   "pieces": "79.8% (rgb(27, 31, 60))",
+   "m-view": "77.8% (rgb(27, 31, 60))",
+   "m-settings": "80.4% (rgb(27, 31, 60))"
+  },
+  {
+   "look": "skyline-night",
+   "m-file": "79.1% (rgba(0, 0, 0, 0))",
+   "m-edit": "79.3% (rgba(0, 0, 0, 0))",
+   "m-build": "78.6% (rgba(0, 0, 0, 0))",
+   "m-track": "79.9% (rgba(0, 0, 0, 0))",
+   "pieces": "80.4% (rgba(0, 0, 0, 0))",
+   "m-view": "78.4% (rgba(0, 0, 0, 0))",
+   "m-settings": "80.9% (rgba(0, 0, 0, 0))"
+  }
+ ],
+ "title": "zz-headless-test"
+}
