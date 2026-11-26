@@ -2017,3 +2017,7 @@ Claim (could be wrong): his 08:19 crash was Export to Assetto Corsa: `v8-oom-sta
 ## 2026-11-26 — L242 read: at builder 0ab6cc8 a page with no theme tokens draws the mark layer, a handle's readout and the brush box call-for-call as 13faa9d (N1-N3, control N0), a theme switched while a window shows redraws it in the new look (T1, T2), and D642 is no worse (5 of 12 red at base, 6 of 12 at tip, rolling p95 8.40 vs 8.45 ms); CLEAN. Record: handles.js sees a theme only through --ink (T3)
 - Evidence: `exo_memory/handback/p-l242-read-C_2026-11-26_evidence/run_0ab6cc8.txt`, `d642_summary.txt`, `touched_tests_0ab6cc8.txt`.
 - Hand-back: `exo_memory/handback/p-l242-read-C_2026-11-26.md`
+
+## 2026-11-26 — L245: the five looks' left-panel blur shown on A's real pictures as HTML windows (evidence/blur_mock.html, for the librarian to publish; no Artifact tool here); the panel glass is 80-95% opaque, so the blur shows only as a faint smear even over the road; a blurred label over a 1500x900 WebGL canvas costs no frame at 240 fps on this RTX 5070 Ti, and #left already blurs over the 3D view in every look
+- Evidence: `exo_memory/handback/p-l245-blur-mock-C_2026-11-26_evidence/make_run.txt`, `blur_cost.txt`, `shots/` (uncommitted, with the page).
+- Hand-back: `exo_memory/handback/p-l245-blur-mock-C_2026-11-26.md`

@@ -1,0 +1,12 @@
+glass: window box x 283-486, y 189-232 (fill 0.13, 1134 px of 29 changed regions); crop at 65,119
+aqua: window box x 283-487, y 189-232 (fill 0.23, 2031 px of 29 changed regions); crop at 65,119
+aurora: window box x 281-483, y 179-222 (fill 0.11, 939 px of 32 changed regions); crop at 62,109
+skyline: window box x 282-486, y 187-230 (fill 0.92, 8309 px of 6 changed regions); crop at 64,117
+skyline-night: window box x 283-487, y 189-232 (fill 0.98, 8864 px of 7 changed regions); crop at 65,119
+blur_mock.html: 2285712 bytes
+glass: computed backdrop-filter "blur(18px) saturate(1.6) brightness(1.08)", radius 0px, font "Segoe UI Variable Text", "Segoe UI", system-ui, sans-serif
+aqua: computed backdrop-filter "blur(14px) saturate(1.7)", radius 18px, font "Segoe UI Variable Text", "Segoe UI", system-ui, sans-serif
+aurora: computed backdrop-filter "blur(16px) saturate(1.4)", radius 16px, font Bahnschrift, "DIN Alternate", "Segoe UI", system-ui, sans-serif
+skyline: computed backdrop-filter "blur(18px) saturate(1.3)", radius 16px, font "Segoe UI Variable Text", "Segoe UI", system-ui, sans-serif
+skyline-night: computed backdrop-filter "blur(18px) saturate(1.2)", radius 16px, font "Segoe UI Variable Text", "Segoe UI", system-ui, sans-serif
+page errors: 0
