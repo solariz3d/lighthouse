@@ -1,0 +1,16 @@
+TAP version 13
+# Subtest: row 3: in every look the pointer off the column clears it after the delay (opacity 0, --left-cleared); the return strip brings it back; a fast cross never clears it
+ok 1 - row 3: in every look the pointer off the column clears it after the delay (opacity 0, --left-cleared); the return strip brings it back; a fast cross never clears it
+  ---
+  duration_ms: 28393.4128
+  type: 'test'
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 1
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 28951.5769

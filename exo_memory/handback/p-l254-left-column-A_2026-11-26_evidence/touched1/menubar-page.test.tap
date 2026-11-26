@@ -1,0 +1,142 @@
+TAP version 13
+# Subtest: row 1: the bar reads File, Edit, Build, Track, Pieces, View, Settings, then Export to Assetto Corsa; the ⋯ menu is gone and every control keeps its id
+ok 1 - row 1: the bar reads File, Edit, Build, Track, Pieces, View, Settings, then Export to Assetto Corsa; the ⋯ menu is gone and every control keeps its id
+  ---
+  duration_ms: 2300.2831
+  type: 'test'
+  ...
+# Subtest: row 2: one menu open at a time; Esc, a press outside it and a command each close it
+ok 2 - row 2: one menu open at a time; Esc, a press outside it and a command each close it
+  ---
+  duration_ms: 2249.9825
+  type: 'test'
+  ...
+# Subtest: row 3: the moved controls work from their new place
+ok 3 - row 3: the moved controls work from their new place
+  ---
+  duration_ms: 2403.4302
+  type: 'test'
+  ...
+# Subtest: row 4: a choice in Settings and a tick in View survive a reload, saved as t180.settings.<key>
+ok 4 - row 4: a choice in Settings and a tick in View survive a reload, saved as t180.settings.<key>
+  ---
+  duration_ms: 3550.3609
+  type: 'test'
+  ...
+# Subtest: row 5: with localStorage refused, the page starts, the menus open, and a setting holds for the session
+ok 5 - row 5: with localStorage refused, the page starts, the menus open, and a setting holds for the session
+  ---
+  duration_ms: 1553.8799
+  type: 'test'
+  ...
+# Subtest: row 6: Reset the guide forgets that the guide was finished
+ok 6 - row 6: Reset the guide forgets that the guide was finished
+  ---
+  duration_ms: 1930.5749
+  type: 'test'
+  ...
+# Subtest: row 7: Build and Track open and say something, never an error
+ok 7 - row 7: Build and Track open and say something, never an error
+  ---
+  duration_ms: 1901.1546
+  type: 'test'
+  ...
+# Subtest: row 8: the bar fits at 1400 px: the seven menus and Export to Assetto Corsa each on one line and inside the window, the status and install note giving way
+ok 8 - row 8: the bar fits at 1400 px: the seven menus and Export to Assetto Corsa each on one line and inside the window, the status and install note giving way
+  ---
+  duration_ms: 1644.2269
+  type: 'test'
+  ...
+# Subtest: row 9: Settings ▸ Wall raycasting and the checker's CSP box follow each other both ways, and the choice survives a reload
+ok 9 - row 9: Settings ▸ Wall raycasting and the checker's CSP box follow each other both ways, and the choice survives a reload
+  ---
+  duration_ms: 3129.7026
+  type: 'test'
+  ...
+# Subtest: row 10: with the Track part, the road surface has one controller, alive before the Track menu is opened
+ok 10 - row 10: with the Track part, the road surface has one controller, alive before the Track menu is opened
+  ---
+  duration_ms: 1487.8335
+  type: 'test'
+  ...
+# Subtest: row 11: Build ▸ Sculpt mode shows the Sculpt strip under the bar, keeps it there across an edit, and hides it again
+ok 11 - row 11: Build ▸ Sculpt mode shows the Sculpt strip under the bar, keeps it there across an edit, and hides it again
+  ---
+  duration_ms: 2406.4986
+  type: 'test'
+  ...
+# Subtest: row 12: with the Track part, a menu panel gives its controls back when the menu closes
+ok 12 - row 12: with the Track part, a menu panel gives its controls back when the menu closes
+  ---
+  duration_ms: 1854.3534
+  type: 'test'
+  ...
+# Subtest: row 13: a part that fails to load says why in its menu, and the other menus still work
+ok 13 - row 13: a part that fails to load says why in its menu, and the other menus still work
+  ---
+  duration_ms: 1691.9736
+  type: 'test'
+  ...
+# Subtest: row 14: File holds Export layouts…, its modules load on the page, and off the app it says it needs the native side instead of doing nothing
+ok 14 - row 14: File holds Export layouts…, its modules load on the page, and off the app it says it needs the native side instead of doing nothing
+  ---
+  duration_ms: 1673.6186
+  type: 'test'
+  ...
+# Subtest: row 15: Settings ▸ Sound: the volume slider shows 45 on a fresh start, and a saved volume shows as saved
+ok 15 - row 15: Settings ▸ Sound: the volume slider shows 45 on a fresh start, and a saved volume shows as saved
+  ---
+  duration_ms: 2970.6913
+  type: 'test'
+  ...
+# Subtest: row 16 (D394): Settings ▸ Theme: a fixed theme sets the look at once and fetches its own melody's two files; it survives a reload as that look and melody; SIGIL plays its own, Obsidian (D402)
+ok 16 - row 16 (D394): Settings ▸ Theme: a fixed theme sets the look at once and fetches its own melody's two files; it survives a reload as that look and melody; SIGIL plays its own, Obsidian (D402)
+  ---
+  duration_ms: 3892.7697
+  type: 'test'
+  ...
+# Subtest: row 17 (D396): the bar fits at 900, 1100, 1280 and 1400 px and on both sides of each fold: no overflow, the window buttons wholly inside the window, a grab strip of at least 24 px, every menu and Export on one line left of them; at 125% scaling too, where a window can be a fraction of a pixel wide
+ok 17 - row 17 (D396): the bar fits at 900, 1100, 1280 and 1400 px and on both sides of each fold: no overflow, the window buttons wholly inside the window, a grab strip of at least 24 px, every menu and Export on one line left of them; at 125% scaling too, where a window can be a fraction of a pixel wide
+  ---
+  duration_ms: 30443.783
+  type: 'test'
+  ...
+# Subtest: row 18 (D401, AMENDED): Settings ▸ Theme offers Random, not Music, after the named looks; a fresh start is Sigil; with Random saved, choosing it picks another look at once and that look's melody follows; a saved music loads as Random
+ok 18 - row 18 (D401, AMENDED): Settings ▸ Theme offers Random, not Music, after the named looks; a fresh start is Sigil; with Random saved, choosing it picks another look at once and that look's melody follows; a saved music loads as Random
+  ---
+  duration_ms: 4480.4706
+  type: 'test'
+  ...
+# Subtest: row 18b (D401, B's D408 probe): the same with Math.random pinned, so both branches run every time: at 0.1 the start look is the pick (its files already in), at 0.5 it is not
+ok 19 - row 18b (D401, B's D408 probe): the same with Math.random pinned, so both branches run every time: at 0.1 the start look is the pick (its files already in), at 0.5 it is not
+  ---
+  duration_ms: 9191.8182
+  type: 'test'
+  ...
+# Subtest: row 19 (D401, A's read §8, AMENDED): Random saved and ticked: one click on Random picks another look and its melody, and so does the next
+ok 20 - row 19 (D401, A's read §8, AMENDED): Random saved and ticked: one click on Random picks another look and its melody, and so does the next
+  ---
+  duration_ms: 3280.0948
+  type: 'test'
+  ...
+# Subtest: row 19b (D401, AMENDED): on a fresh install, Sigil; the first click on Random picks once, not twice: with Math.random at 0.4, Sigil becomes Glass, then Aurora
+ok 21 - row 19b (D401, AMENDED): on a fresh install, Sigil; the first click on Random picks once, not twice: with Math.random at 0.4, Sigil becomes Glass, then Aurora
+  ---
+  duration_ms: 1790.2651
+  type: 'test'
+  ...
+# Subtest: row 20: File ▸ Open… is a list the page draws: no select in any menu, its rows are the saved tracks, a click opens one, Esc closes it
+ok 22 - row 20: File ▸ Open… is a list the page draws: no select in any menu, its rows are the saved tracks, a click opens one, Esc closes it
+  ---
+  duration_ms: 4256.2881
+  type: 'test'
+  ...
+1..22
+# tests 22
+# suites 0
+# pass 22
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 90627.479

@@ -1,0 +1,40 @@
+TAP version 13
+# Subtest: row 1: the labels hold the head's readout while a sculpt drag is open, and read the let-go track in the next frame
+ok 1 - row 1: the labels hold the head's readout while a sculpt drag is open, and read the let-go track in the next frame
+  ---
+  duration_ms: 335.664
+  type: 'test'
+  ...
+# Subtest: row 2: the start-and-grid marks are not asked for during a sculpt drag nor in its release, and are the let-go track's own in the next frame
+ok 2 - row 2: the start-and-grid marks are not asked for during a sculpt drag nor in its release, and are the let-go track's own in the next frame
+  ---
+  duration_ms: 225.757
+  type: 'test'
+  ...
+# Subtest: row 2b: the start's hover (app/core/spawndrag.js) does not ask for spawnsInfo while a sculpt drag owns the pointer, and does again once it is let go
+ok 3 - row 2b: the start's hover (app/core/spawndrag.js) does not ask for spawnsInfo while a sculpt drag owns the pointer, and does again once it is let go
+  ---
+  duration_ms: 212.1746
+  type: 'test'
+  ...
+# Subtest: row 4: the labels do not ask the preview for the piece under the pointer while a sculpt drag is open, and ask once for the let-go track
+ok 4 - row 4: the labels do not ask the preview for the piece under the pointer while a sculpt drag is open, and ask once for the let-go track
+  ---
+  duration_ms: 200.2005
+  type: 'test'
+  ...
+# Subtest: row 3: outside a drag nothing waits: a placement shows in both layers in the very next frame
+ok 5 - row 3: outside a drag nothing waits: a placement shows in both layers in the very next frame
+  ---
+  duration_ms: 169.8753
+  type: 'test'
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 5
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1299.5481

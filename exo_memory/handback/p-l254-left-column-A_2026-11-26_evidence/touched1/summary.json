@@ -1,0 +1,114 @@
+[
+ {
+  "file": "app/test/leftcolumn-page.test.js",
+  "exit": 0,
+  "tests": 9,
+  "pass": 9,
+  "fail": 0,
+  "skipped": 0,
+  "todo": 0,
+  "s": 74,
+  "failed": []
+ },
+ {
+  "file": "app/test/layout-css.test.js",
+  "exit": 0,
+  "tests": 3,
+  "pass": 3,
+  "fail": 0,
+  "skipped": 0,
+  "todo": 0,
+  "s": 0,
+  "failed": []
+ },
+ {
+  "file": "app/test/shell-layout.test.js",
+  "exit": 0,
+  "tests": 3,
+  "pass": 3,
+  "fail": 0,
+  "skipped": 0,
+  "todo": 0,
+  "s": 0,
+  "failed": []
+ },
+ {
+  "file": "app/test/theme.test.js",
+  "exit": 0,
+  "tests": 14,
+  "pass": 14,
+  "fail": 0,
+  "skipped": 0,
+  "todo": 0,
+  "s": 0,
+  "failed": []
+ },
+ {
+  "file": "app/test/markwindow.test.js",
+  "exit": 0,
+  "tests": 7,
+  "pass": 7,
+  "fail": 0,
+  "skipped": 0,
+  "todo": 0,
+  "s": 0,
+  "failed": []
+ },
+ {
+  "file": "app/test/core-pieces-ui.test.js",
+  "exit": 0,
+  "tests": 55,
+  "pass": 55,
+  "fail": 0,
+  "skipped": 0,
+  "todo": 0,
+  "s": 27,
+  "failed": []
+ },
+ {
+  "file": "app/test/sculpt-cues.test.js",
+  "exit": 0,
+  "tests": 6,
+  "pass": 6,
+  "fail": 0,
+  "skipped": 0,
+  "todo": 0,
+  "s": 0,
+  "failed": []
+ },
+ {
+  "file": "app/test/sculpt-subscribers.test.js",
+  "exit": 0,
+  "tests": 5,
+  "pass": 5,
+  "fail": 0,
+  "skipped": 0,
+  "todo": 0,
+  "s": 1,
+  "failed": []
+ },
+ {
+  "file": "app/test/menubar-page.test.js",
+  "exit": 0,
+  "tests": 22,
+  "pass": 22,
+  "fail": 0,
+  "skipped": 0,
+  "todo": 0,
+  "s": 91,
+  "failed": []
+ },
+ {
+  "file": "app/test/texture-page.test.js",
+  "exit": 1,
+  "tests": 13,
+  "pass": 12,
+  "fail": 1,
+  "skipped": 0,
+  "todo": 0,
+  "s": 353,
+  "failed": [
+   "row 7 (D417): the first actions row is Extend, Straight, Undo, Redo, and Extend sits above \"Extend at the head\", in every look"
+  ]
+ }
+]

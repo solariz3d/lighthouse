@@ -1,0 +1,33 @@
+TAP version 13
+# Subtest: row 4: cleared, a click over the old column outside the strip reaches the preview's canvas and presses nothing in the column; the strip is 5 px in, not 30
+not ok 1 - row 4: cleared, a click over the old column outside the strip reaches the preview's canvas and presses nothing in the column; the strip is 5 px in, not 30
+  ---
+  duration_ms: 3788.9267
+  type: 'test'
+  location: 'C:\\Consonance\\t180-wt-l254-mut\\app\\test\\leftcolumn-page.test.js:140:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    the point over Extend (37, 98) is the preview's canvas while cleared (BUTTON in #left)
+    [32mactual[39m [31mexpected[39m
+    
+    [39m'[39m[32mB[39m[32mU[39m[32mT[39m[32mT[39m[32mO[39m[31mC[39m[31mA[39m[39mN[39m[32m [39m[32mi[39m[32mn[39m[32m [39m[32m#[39m[32ml[39m[32me[39m[32mf[39m[32mt[39m[31mV[39m[31mA[39m[31mS[39m[39m'[39m
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'CANVAS'
+  actual: 'BUTTON in #left'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Consonance\t180-wt-l254-mut\app\test\leftcolumn-page.test.js:150:10)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3)
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 4261.1619

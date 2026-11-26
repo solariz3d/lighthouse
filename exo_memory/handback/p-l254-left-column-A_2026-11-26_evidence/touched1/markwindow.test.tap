@@ -1,0 +1,52 @@
+TAP version 13
+# Subtest: W1: each look's window takes that look's own font and corner radius (read from its tokens, drawn)
+ok 1 - W1: each look's window takes that look's own font and corner radius (read from its tokens, drawn)
+  ---
+  duration_ms: 8.4145
+  type: 'test'
+  ...
+# Subtest: W2: a page with no window tokens draws today's box: square, the veil, a 1.5 px edge in the mark's colour, bold 12px system-ui, the words at +6 px
+ok 2 - W2: a page with no window tokens draws today's box: square, the veil, a 1.5 px edge in the mark's colour, bold 12px system-ui, the words at +6 px
+  ---
+  duration_ms: 0.19
+  type: 'test'
+  ...
+# Subtest: W3: a look that sets no mark colours draws today's; a --mark-<field> token is what the field, its extra handles and its corner kind draw
+ok 3 - W3: a look that sets no mark colours draws today's; a --mark-<field> token is what the field, its extra handles and its corner kind draw
+  ---
+  duration_ms: 0.2976
+  type: 'test'
+  ...
+# Subtest: W4: on every look, bank and turn are told apart (their colours at least 60 apart in RGB), and each window's words read on its fill (contrast 4.5:1 or better)
+ok 4 - W4: on every look, bank and turn are told apart (their colours at least 60 apart in RGB), and each window's words read on its fill (contrast 4.5:1 or better)
+  ---
+  duration_ms: 2.7693
+  type: 'test'
+  ...
+# Subtest: W5: every look sets its own colour for each field, no two fields within 60 of each other (W4's unit), and each 60 or more off that look's road edges, grid, fog and sky
+ok 5 - W5: every look sets its own colour for each field, no two fields within 60 of each other (W4's unit), and each 60 or more off that look's road edges, grid, fog and sky
+  ---
+  duration_ms: 5.5443
+  type: 'test'
+  ...
+# Subtest: W6: a field's hue, wherever it comes from (Build, the landing, the Sculpt brush and Smooth's channel, the dots' rows), draws as the look's colour for that field; a hue with no field, and every hue on a page with no tokens, as it is
+ok 6 - W6: a field's hue, wherever it comes from (Build, the landing, the Sculpt brush and Smooth's channel, the dots' rows), draws as the look's colour for that field; a hue with no field, and every hue on a page with no tokens, as it is
+  ---
+  duration_ms: 2.2185
+  type: 'test'
+  ...
+# Subtest: W7: each look's window corner is the chrome scale's r1 (2 px) times that look's radius factor, written as a plain number
+ok 7 - W7: each look's window corner is the chrome scale's r1 (2 px) times that look's radius factor, written as a plain number
+  ---
+  duration_ms: 2.8357
+  type: 'test'
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 7
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 91.0854

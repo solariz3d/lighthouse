@@ -1,0 +1,59 @@
+TAP version 13
+# Subtest: row 3: in every look the pointer off the column clears it after the delay (opacity 0, --left-cleared); the return strip brings it back; a fast cross never clears it
+not ok 1 - row 3: in every look the pointer off the column clears it after the delay (opacity 0, --left-cleared); the return strip brings it back; a fast cross never clears it
+  ---
+  duration_ms: 29422.6392
+  type: 'test'
+  location: 'C:\\Consonance\\t180-wt-l254-mut\\app\\test\\leftcolumn-page.test.js:118:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    the column does not clear and come back as asked
+    [32m+ actual[39m [31m- expected[39m
+    
+    [32m+[39m [
+    [32m+[39m   'sigil: 0.0558225 150 ms after the pointer left (the delay is 400 ms)',
+    [32m+[39m   'sigil: off and back within 400 ms, opacity 0',
+    [32m+[39m   'aqua: 0.047248 150 ms after the pointer left (the delay is 400 ms)',
+    [32m+[39m   'aqua: off and back within 400 ms, opacity 0',
+    [32m+[39m   'skyline: 0.0556646 150 ms after the pointer left (the delay is 400 ms)',
+    [32m+[39m   'skyline: off and back within 400 ms, opacity 0',
+    [32m+[39m   'glass: 0.0555474 150 ms after the pointer left (the delay is 400 ms)',
+    [32m+[39m   'glass: off and back within 400 ms, opacity 0',
+    [32m+[39m   'aurora: 0.0326741 150 ms after the pointer left (the delay is 400 ms)',
+    [32m+[39m   'aurora: off and back within 400 ms, opacity 0',
+    [32m+[39m   'skyline-night: 0.0472865 150 ms after the pointer left (the delay is 400 ms)',
+    [32m+[39m   'skyline-night: off and back within 400 ms, opacity 0'
+    [32m+[39m ]
+    [31m-[39m []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'sigil: 0.0558225 150 ms after the pointer left (the delay is 400 ms)'
+    1: 'sigil: off and back within 400 ms, opacity 0'
+    2: 'aqua: 0.047248 150 ms after the pointer left (the delay is 400 ms)'
+    3: 'aqua: off and back within 400 ms, opacity 0'
+    4: 'skyline: 0.0556646 150 ms after the pointer left (the delay is 400 ms)'
+    5: 'skyline: off and back within 400 ms, opacity 0'
+    6: 'glass: 0.0555474 150 ms after the pointer left (the delay is 400 ms)'
+    7: 'glass: off and back within 400 ms, opacity 0'
+    8: 'aurora: 0.0326741 150 ms after the pointer left (the delay is 400 ms)'
+    9: 'aurora: off and back within 400 ms, opacity 0'
+    10: 'skyline-night: 0.0472865 150 ms after the pointer left (the delay is 400 ms)'
+    11: 'skyline-night: off and back within 400 ms, opacity 0'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Consonance\t180-wt-l254-mut\app\test\leftcolumn-page.test.js:137:10)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3)
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 29991.5457

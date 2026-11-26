@@ -1,0 +1,71 @@
+TAP version 13
+# Subtest: row 1: in every look the column is flush: x 0, from the header's bottom to the window's bottom, corners 0
+not ok 1 - row 1: in every look the column is flush: x 0, from the header's bottom to the window's bottom, corners 0
+  ---
+  duration_ms: 13888.7335
+  type: 'test'
+  location: 'C:\\Consonance\\t180-wt-l254-mut\\app\\test\\leftcolumn-page.test.js:86:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    the column is not flush in every look
+    [32m+ actual[39m [31m- expected[39m
+    
+    [32m+[39m [
+    [32m+[39m   'sigil: left 12',
+    [32m+[39m   "sigil: top 56, the header's bottom 44",
+    [32m+[39m   "sigil: bottom 848, the window's 860",
+    [32m+[39m   'aqua: left 12',
+    [32m+[39m   "aqua: top 56, the header's bottom 44",
+    [32m+[39m   "aqua: bottom 848, the window's 860",
+    [32m+[39m   'skyline: left 12',
+    [32m+[39m   "skyline: top 56, the header's bottom 44",
+    [32m+[39m   "skyline: bottom 848, the window's 860",
+    [32m+[39m   'glass: left 12',
+    [32m+[39m   "glass: top 56, the header's bottom 44",
+    [32m+[39m   "glass: bottom 848, the window's 860",
+    [32m+[39m   'aurora: left 12',
+    [32m+[39m   "aurora: top 56, the header's bottom 44",
+    [32m+[39m   "aurora: bottom 848, the window's 860",
+    [32m+[39m   'skyline-night: left 12',
+    [32m+[39m   "skyline-night: top 56, the header's bottom 44",
+    [32m+[39m   "skyline-night: bottom 848, the window's 860"
+    [32m+[39m ]
+    [31m-[39m []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'sigil: left 12'
+    1: "sigil: top 56, the header's bottom 44"
+    2: "sigil: bottom 848, the window's 860"
+    3: 'aqua: left 12'
+    4: "aqua: top 56, the header's bottom 44"
+    5: "aqua: bottom 848, the window's 860"
+    6: 'skyline: left 12'
+    7: "skyline: top 56, the header's bottom 44"
+    8: "skyline: bottom 848, the window's 860"
+    9: 'glass: left 12'
+    10: "glass: top 56, the header's bottom 44"
+    11: "glass: bottom 848, the window's 860"
+    12: 'aurora: left 12'
+    13: "aurora: top 56, the header's bottom 44"
+    14: "aurora: bottom 848, the window's 860"
+    15: 'skyline-night: left 12'
+    16: "skyline-night: top 56, the header's bottom 44"
+    17: "skyline-night: bottom 848, the window's 860"
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Consonance\t180-wt-l254-mut\app\test\leftcolumn-page.test.js:98:10)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3)
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 14551.6628

@@ -1,0 +1,13 @@
+[
+ {
+  "file": "app/test/leftcolumn-page.test.js",
+  "exit": 0,
+  "tests": 11,
+  "pass": 11,
+  "fail": 0,
+  "skipped": 0,
+  "todo": 0,
+  "s": 80,
+  "failed": []
+ }
+]

@@ -1,0 +1,32 @@
+TAP version 13
+# Subtest: row 7: a saved piece's ghost with its Place piece row up keeps the column shown with the pointer off it; Cancel piece lets it clear
+not ok 1 - row 7: a saved piece's ghost with its Place piece row up keeps the column shown with the pointer off it; Cancel piece lets it clear
+  ---
+  duration_ms: 4385.9721
+  type: 'test'
+  location: 'C:\\Consonance\\t180-wt-l254-mut\\app\\test\\leftcolumn-page.test.js:194:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    the column stays shown while the ghost's row is up
+    
+    '0' !== '1'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: '1'
+  actual: '0'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Consonance\t180-wt-l254-mut\app\test\leftcolumn-page.test.js:209:12)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3)
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 4835.4885

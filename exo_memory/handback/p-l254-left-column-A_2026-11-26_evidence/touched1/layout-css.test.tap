@@ -1,0 +1,28 @@
+TAP version 13
+# Subtest: the .picker grid's field column is minmax(0, 1fr), so a field can shrink to the column and never runs under the scroll bar
+ok 1 - the .picker grid's field column is minmax(0, 1fr), so a field can shrink to the column and never runs under the scroll bar
+  ---
+  duration_ms: 0.7423
+  type: 'test'
+  ...
+# Subtest: every field and select in a .picker row is held to its track (min-width 0, at most the track, border-box)
+ok 2 - every field and select in a .picker row is held to its track (min-width 0, at most the track, border-box)
+  ---
+  duration_ms: 0.1984
+  type: 'test'
+  ...
+# Subtest: the left column still scrolls up and down only and reserves the scroll bar's gutter, so the fields' usable edge is the content box
+ok 3 - the left column still scrolls up and down only and reserves the scroll bar's gutter, so the fields' usable edge is the content box
+  ---
+  duration_ms: 0.1917
+  type: 'test'
+  ...
+1..3
+# tests 3
+# suites 0
+# pass 3
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 61.3358

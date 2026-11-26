@@ -1,0 +1,11 @@
+[
+ {
+  "mutant": "M8b M8 and no class observer",
+  "red": [
+   "row 3"
+  ],
+  "green": [],
+  "caught": true,
+  "s": 29
+ }
+]
