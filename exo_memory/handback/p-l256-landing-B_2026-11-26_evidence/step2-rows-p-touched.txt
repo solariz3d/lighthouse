@@ -1,0 +1,102 @@
+[32m✔ row 1c: on a CLOSED lap a shift-click across the start line takes the SHORT way: the pieces either side of the line; Save keeps them, Delete says CLOSED [90m(269.3271ms)[39m[39m
+[32m✔ row 1d: where the run across the start line CANNOT be saved (a cup at one side of it, a plain piece at the other) and the inside run can, the inside run is selected and the line says why [90m(229.9899ms)[39m[39m
+[32m✔ row 1e: a tie stays inside the lap even when the lengths are decimals whose sums differ in the last bit (A's tiefloat case) [90m(4.7563ms)[39m[39m
+[32m✔ row 1: select a piece, shift-click a run (the first piece selected stays the anchor), an out-of-range piece is refused, and any change of the document drops the selection [90m(154.0338ms)[39m[39m
+[32m✔ row 2: Save as piece stores exactly the core's text; a name already used is refused and the stored piece untouched; a bad name and a mixed run are refused by name [90m(116.7549ms)[39m[39m
+[32m✔ row 3: the library lists name, length, turn, climb and a thumbnail; an unreadable file and a whole track are LISTED with the reason [90m(69.7874ms)[39m[39m
+[32m✔ row 4: Add at head is the core's insert as ONE undo step, mirrored on request; closed, missing and damaged are refused by name with nothing changed [90m(160.1506ms)[39m[39m
+[32m✔ row 5 (REQUIRED, through the app): a track built by saving a run and adding it back through the shell is the SAME DOCUMENT and exports the SAME BYTES [90m(4095.504ms)[39m[39m
+[32m✔ row 6: rename (the new name must be free; the file's own name changes) and delete of a saved piece [90m(67.7367ms)[39m[39m
+[32m✔ row 6b: a CASE-ONLY rename (Run to run) works where names are case-blind (C, look F2), on a case-sensitive store too, and a failure on the way never loses the piece [90m(103.3235ms)[39m[39m
+[32m✔ row 7: delete at the open end is simple (one undo step, ids kept); a closed track refuses by name [90m(149.6005ms)[39m[39m
+[32m✔ row 8: delete in the MIDDLE is previewed (displacement, overlap check); Apply writes the backup FIRST and is one undo step; a failed copy refuses; Cancel, a stale preview, and DELETE_REJOIN [90m(1687.6927ms)[39m[39m
+[32m✔ row 8b: the delete preview's overlap check finds a road running into itself (a two-circle coil, as TEST 1 stacked) and reports where [90m(4296.9557ms)[39m[39m
+[32m✔ row 9: the preview shows a delete's proposal as a ghost (dropped on Cancel and on Apply), and the selection highlight lands where the preview's own pick says the piece is [90m(549.1725ms)[39m[39m
+[32m✔ row 10: the panel: a click selects the piece under it and a shift-click the run; a drag, an armed brush and a click on nothing do not select; Save as piece, the list, Add at head with Mirror, Rename, Delete with its confirm [90m(224.2025ms)[39m[39m
+[32m✔ row 10b: the panel: a middle delete shows the preview in words (what moves, the overlap check) with Apply and Cancel; a mixed run says why it cannot be saved [90m(693.5687ms)[39m[39m
+[32m✔ row 11d (D331 B, amended): as corners the ghost has the corner handles, turnDeg and climbDeg, labelled in degrees, even with the fields blank; "turn & climb as" rate gives the rate handles back [90m(112.7914ms)[39m[39m
+[32m✔ row 11e (D331): as a corner, a Shift drag of 37 px on the turn handle is 37 × 0.01° of corner, and the placed piece turns exactly that and ends at rate 0 [90m(168.4817ms)[39m[39m
+[32m✔ row 11e (D331): as a corner, a Shift drag of 23 px on the climb handle is 23 × 0.01° of corner, and the placed piece climbs exactly that and ends at rate 0 [90m(157.6285ms)[39m[39m
+[32m✔ row 11: Extend's handles: on the ghost and only while there is one; a drag types into the matching field and reaches no document until Extend; mirrored handles change the same field; Extend places what was dragged [90m(344.1733ms)[39m[39m
+[32m✔ row 11b: no ghost, no handles; a press ON a handle is the handle's and the camera keeps a press anywhere else (in Build no press is a brush); the cup's handles go with the cup field; the switch turns them off [90m(185.8212ms)[39m[39m
+[32m✔ row 11c: the preview mounts AFTER the panel, so the first ask for the ghost can go to nobody: the handles ask again about every half second and appear once it listens (found in the real window) [90m(497.038ms)[39m[39m
+[32m✔ row 12: Sculpt through the panel: the strip offers the tools; ONE selected piece gets its handles; a drag reshapes that piece, is ONE undo step and the centreline does not move; Undo gives it back [90m(349.8265ms)[39m[39m
+[32m✔ row 13: the preview's ghostInfo (what the handles read): none without a ghost, the path's samples and where the new piece starts with one, none for a delete preview's ghost, none after clearGhost [90m(349.0454ms)[39m[39m
+[32m✔ row 14: the Jump button (D258, the free jump): beside Extend; the old Add-jump fields are gone; hover shows a jump ghost with no Extend handles on it; a click is ONE undo step with the note; a refusal says why; Undo gives the fields back [90m(988.9036ms)[39m[39m
+[32m✔ row 14b: the landing boxes appear while a landing is the head, show the pose in metres and degrees, a typed value is ONE undo step, a refusal says why in words, and an Extend fixes the landing [90m(343.5156ms)[39m[39m
+[32m✔ row 14c: the landing's four handles (D278: BESIDE the Extend ghost's, where D258 had them replace it: row 14d); a drag moves the number of its box in ONE undo step; Shift is one step a pixel (D330), Ctrl snaps; two quick presses reset one; an Extend takes them away [90m(880.2926ms)[39m[39m
+[32m✔ row 14d (D278, the user: "after placing jump piece, it doesnt go back to regular track manipulation with the base equation, it stays the heading, sideways, and height"): right after Jump the Extend ghost's handles are up BESIDE the landing's four; an Extend handle types into its field and edits no document; a landing handle still moves the landing in ONE undo step; Extend fixes the landing, and its handles go [90m(3423.7519ms)[39m[39m
+[32m✔ row 14e (D278): a hover on Jump shows the jump ghost with no Extend handles on it, while a landing's own handles stay; a hover on Extend with a landing as the head shows the Extend ghost's handles; Sculpt takes the landing's handles away as before [90m(2079.5235ms)[39m[39m
+[32m✔ row 16: the Grip field in Extend (D261): it shows the head's grip, "grip like…" fills it from a known track, a changed value is the new piece's grip and the next piece keeps it, the words say untested outside 60 to 110 and that the checker does not model grip; 49, 151 and 100.5 are refused; Undo gives the head's back [90m(267.8499ms)[39m[39m
+[32m✔ row 16b: the selected pieces' grip (D261): the box shows the pieces' grip (blank where they differ), Set grip is ONE undo step on the road pieces and keeps the selection, "grip like…" fills the box, 49/151/100.5 are refused in words, 100 writes no grip, a flight alone is refused, Undo restores [90m(320.9075ms)[39m[39m
+[32m✔ row 16c: the track coloured by grip (D261): blue below 100, white at 100, orange above; the layer draws each road piece in its colour only while "colour by grip" is ticked; the hover label says "grip 85%" for a piece off 100 (always while the view is on) and nothing for a plain piece [90m(200.1091ms)[39m[39m
+[32m✔ row 17: the grip UI modules load in the webview loader with NO node built-in (D263: piecesui and griplayer required src/core/document.js, which pulls tools/piecewise.cjs and node's fs, and the panel failed to load), and their copy of the grip numbers is the core's [90m(59.6216ms)[39m[39m
+[32m✔ row 18: the CHEAP ghost while a handle is dragged (D266 item 2): every step of a drag asks the preview for a cheap ghost, the release asks for the full one, typing in a field and hovering Extend ask for the full one [90m(140.2154ms)[39m[39m
+[32m✔ row 19: no help paragraph stays in the left column (D267): the tube width, the grip, the turn-0 hint, the jump and the landing show only a few words or nothing, and the words are tooltips [90m(225.4627ms)[39m[39m
+[32m✔ row 19b: the values of the piece being edited are drawn LARGE over the 3D view (D267): length, turn, climb, bank and width, updated as a handle is dragged or a field is typed, hidden on a closed loop [90m(569.2446ms)[39m[39m
+[32m✔ row 19c: the share codes are in the File menu as "Copy track code" and "Paste track code…" (D267; D355 moved them from the ⋯ menu), not a section of the left column; the code itself is unchanged [90m(86.3724ms)[39m[39m
+[32m✔ row 20: the saved pieces are a drop-down bin in the top bar, not a section of the left column (D269): a row per piece with its thumbnail, name and summary; Add at head, Add mirrored, Rename and Delete; a click on the row adds it; the empty words are in the menu; Save as piece stays with the selection [90m(223.7561ms)[39m[39m
+[32m✔ row 20b: the Pieces menu opens and closes: it lists the pieces when opened, Esc closes it, a press outside closes it, a press inside does not; Esc with it closed does nothing; the top bar has the button beside Open… and Previous versions… [90m(140.1738ms)[39m[39m
+[32m✔ row 15: the preview's ghostInfo says whether the ghost is a jump's and carries its segments (what the handles and the flight overlay read) [90m(109.6496ms)[39m[39m
+[32m✔ D259: a typed 300 stays 300 (one full turn either way is allowed), and a typed 400 becomes 40; the field shows them so [90m(196.875ms)[39m[39m
+[32m✔ D259: dragging the bank handle from 350 by about +20 gives about 10 (not 370), and from -350 by about -20 gives about -10; Extend applies what the field shows [90m(423.6162ms)[39m[39m
+[32m✔ row 18b: a length drag previews whole 2 m, and the release previews the exact length the field shows [90m(128.6009ms)[39m[39m
+[32m✔ row 18c: a ghost whose sliced build needs more frames than the retry is still shown: the handles do not ask again while the preview is building one (D426) [90m(190.72ms)[39m[39m
+[32m✔ row 22 (D430): an EMPTIED turn, climb, bank or cup is 0, not the head's value: the new piece eases to 0, and the box shows 0 once the change is committed [90m(238.1965ms)[39m[39m
+[32m✔ row 22b (D430): a field left as shown still continues the head; an emptied width keeps its old meaning (blank: the head's; 0 is no width) [90m(212.2058ms)[39m[39m
+[32m✔ row 22c (D430): as a corner the turn and climb fields rest blank, so a blank there is untouched: the track keeps turning, it does not ease to straight [90m(214.6823ms)[39m[39m
+[32m✔ a selected piece lends its values to the Extend fields: Extend places a piece like it; a run lends nothing; clearing shows the head [90m(107.6284ms)[39m[39m
+[32m✔ D331 B: with the turn read as a corner (the default), a selected piece lends the degrees it turns, and Extend places a piece that turns them and ends straight [90m(120.417ms)[39m[39m
+[32m✔ row 16 (D335): a steady bank drag on a placed piece's sculpt mark, the pointer following the mark as the road rolls, rises all the way, lands on 180 and never goes back (the axis fixed at the grab stalled it near 165) [90m(9009.447ms)[39m[39m
+[32m✔ row 16b (D335): a slow bank drag on a sculpt mark is 0.01 degree a pixel with no key, and the piece reads what the handle says [90m(2200.9967ms)[39m[39m
+[32m✔ row 21: in Sculpt, a Tube sweep drag on a closed tube is refused in plain words: "Sculpt can't change the sweep of a closed tube…", not the core's [90m(155.6644ms)[39m[39m
+[32m✔ row D464: Sculpt's how-to line and value line read as instructions, not errors: class hint, painted in the text colour [90m(104.0522ms)[39m[39m
+[32m✔ row 25 (D519, amended D520): Grab on the road: the pressed point follows the pointer and a rim keeps the far rim (built again and read), a dot opens at its own station, off the road is Grab as before [90m(273.2681ms)[39m[39m
+[32m✔ row 25b (D519): with another key the press keeps that key's one channel wherever it lands; the shell says what the piece is and why a channel would be refused [90m(85.1086ms)[39m[39m
+[32m✔ the .picker grid's field column is minmax(0, 1fr), so a field can shrink to the column and never runs under the scroll bar [90m(0.8359ms)[39m[39m
+[32m✔ every field and select in a .picker row is held to its track (min-width 0, at most the track, border-box) [90m(0.222ms)[39m[39m
+[32m✔ the left column still scrolls up and down only and reserves the scroll bar's gutter, so the fields' usable edge is the content box [90m(0.2173ms)[39m[39m
+[32m✔ row 1: the bar reads File, Edit, Build, Track, Pieces, View, Settings, then Export to Assetto Corsa; the ⋯ menu is gone and every control keeps its id [90m(2487.9946ms)[39m[39m
+[32m✔ row 2: one menu open at a time; Esc, a press outside it and a command each close it [90m(2484.4426ms)[39m[39m
+[32m✔ row 3: the moved controls work from their new place [90m(2762.0018ms)[39m[39m
+[32m✔ row 4: a choice in Settings and a tick in View survive a reload, saved as t180.settings.<key> [90m(3789.9335ms)[39m[39m
+[32m✔ row 5: with localStorage refused, the page starts, the menus open, and a setting holds for the session [90m(1982.1945ms)[39m[39m
+[32m✔ row 6: Reset the guide forgets that the guide was finished [90m(1935.1762ms)[39m[39m
+[32m✔ row 7: Build and Track open and say something, never an error [90m(1914.7144ms)[39m[39m
+[32m✔ row 8: the bar fits at 1400 px: the seven menus and Export to Assetto Corsa each on one line and inside the window, the status and install note giving way [90m(1837.2675ms)[39m[39m
+[32m✔ row 9: Settings ▸ Wall raycasting and the checker's CSP box follow each other both ways, and the choice survives a reload [90m(3568.5573ms)[39m[39m
+[32m✔ row 10: with the Track part, the road surface has one controller, alive before the Track menu is opened [90m(1932.6567ms)[39m[39m
+[32m✔ row 11: Build ▸ Sculpt mode shows the Sculpt strip under the bar, keeps it there across an edit, and hides it again [90m(2994.3802ms)[39m[39m
+[32m✔ row 12: with the Track part, a menu panel gives its controls back when the menu closes [90m(2593.7763ms)[39m[39m
+[32m✔ row 13: a part that fails to load says why in its menu, and the other menus still work [90m(2121.553ms)[39m[39m
+[32m✔ row 14: File holds Export layouts…, its modules load on the page, and off the app it says it needs the native side instead of doing nothing [90m(2505.8159ms)[39m[39m
+[32m✔ row 15: Settings ▸ Sound: the volume slider shows 45 on a fresh start, and a saved volume shows as saved [90m(3190.6685ms)[39m[39m
+[32m✔ row 16 (D394): Settings ▸ Theme: a fixed theme sets the look at once and fetches its own melody's two files; it survives a reload as that look and melody; SIGIL plays its own, Obsidian (D402) [90m(4935.2911ms)[39m[39m
+[32m✔ row 17 (D396): the bar fits at 900, 1100, 1280 and 1400 px and on both sides of each fold: no overflow, the window buttons wholly inside the window, a grab strip of at least 24 px, every menu and Export on one line left of them; at 125% scaling too, where a window can be a fraction of a pixel wide [90m(33510.3053ms)[39m[39m
+[32m✔ row 18 (D401, AMENDED): Settings ▸ Theme offers Random, not Music, after the named looks; a fresh start is Sigil; with Random saved, choosing it picks another look at once and that look's melody follows; a saved music loads as Random [90m(5310.4167ms)[39m[39m
+[32m✔ row 18b (D401, B's D408 probe): the same with Math.random pinned, so both branches run every time: at 0.1 the start look is the pick (its files already in), at 0.5 it is not [90m(11868.7548ms)[39m[39m
+[32m✔ row 19 (D401, A's read §8, AMENDED): Random saved and ticked: one click on Random picks another look and its melody, and so does the next [90m(4142.5205ms)[39m[39m
+[32m✔ row 19b (D401, AMENDED): on a fresh install, Sigil; the first click on Random picks once, not twice: with Math.random at 0.4, Sigil becomes Glass, then Aurora [90m(2008.6854ms)[39m[39m
+[32m✔ row 20: File ▸ Open… is a list the page draws: no select in any menu, its rows are the saved tracks, a click opens one, Esc closes it [90m(5142.8385ms)[39m[39m
+[32m✔ row 1: the band is worked out once while nothing it reads changes, and again when the camera, the band or the track does [90m(1.4103ms)[39m[39m
+[32m✔ row 2: the reach's end marks sit at s0 − r and s0 + r, a tick across the road; past an open lap's end there is none, round a closed lap's start it wraps [90m(1.0105ms)[39m[39m
+[32m✔ row 3: Stretch's reach is the piece holding the station, from its first joint to its last [90m(0.2402ms)[39m[39m
+[32m✔ row 4: the brush glyph stands on the road at its station and is never hit, so a press on it is the tool's, not a handle's [90m(0.3594ms)[39m[39m
+[32m✔ row 5: one format for the road and the strip: the channel's name, a sign, two decimals, its unit; and the words for each way [90m(0.2775ms)[39m[39m
+[32m✔ row 6: in Sculpt the big overlay has four cells, the tool, the value under its channel's name, the radius and what moves [90m(0.185ms)[39m[39m
+[32m✔ row 1: the labels hold the head's readout while a sculpt drag is open, and read the let-go track in the next frame [90m(559.5473ms)[39m[39m
+[32m✔ row 2: the start-and-grid marks are not asked for during a sculpt drag nor in its release, and are the let-go track's own in the next frame [90m(352.9679ms)[39m[39m
+[32m✔ row 2b: the start's hover (app/core/spawndrag.js) does not ask for spawnsInfo while a sculpt drag owns the pointer, and does again once it is let go [90m(288.7909ms)[39m[39m
+[32m✔ row 4: the labels do not ask the preview for the piece under the pointer while a sculpt drag is open, and ask once for the let-go track [90m(299.9058ms)[39m[39m
+[32m✔ row 3: outside a drag nothing waits: a placement shows in both layers in the very next frame [90m(263.568ms)[39m[39m
+[32m✔ the page itself never scrolls: the body clips, and the grid rows and columns may shrink to fit [90m(1.3191ms)[39m[39m
+[32m✔ the side sections never scroll sideways: they clip, the column reserves its scrollbar, and media hold to its width [90m(0.4741ms)[39m[39m
+[32m✔ two columns: the side sections live in the left column under the controls, and the preview takes the rest [90m(0.3746ms)[39m[39m
+[34mℹ tests 94[39m
+[34mℹ suites 0[39m
+[34mℹ pass 94[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 146919.1103[39m

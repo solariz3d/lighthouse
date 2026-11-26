@@ -1,0 +1,3473 @@
+{
+ "results": [
+  {
+   "look": "sigil",
+   "size": "1400x860",
+   "shown": {
+    "cleared": false,
+    "leftOpacity": "1",
+    "leftPE": "auto",
+    "left": {
+     "x": 0,
+     "y": 44,
+     "right": 248,
+     "bottom": 860
+    },
+    "panel": {
+     "x": 1090,
+     "y": 88,
+     "right": 1390,
+     "bottom": 451
+    },
+    "panelShown": true,
+    "panelOpacity": "1",
+    "gapPanelToColumn": 842,
+    "overlapColumn": false,
+    "overlapHud": false,
+    "overlapBand": false,
+    "hud": {
+     "x": 262,
+     "y": 114,
+     "right": 467,
+     "bottom": 132
+    },
+    "band": {
+     "x": 332,
+     "y": 52,
+     "right": 1068,
+     "bottom": 108
+    },
+    "centre": {
+     "x": 1240,
+     "y": 269,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "DIV.rp-nudge"
+    },
+    "pick": {
+     "x": 1240,
+     "y": 140,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "SELECT.rp-pick"
+    },
+    "clear": {
+     "x": 1309,
+     "y": 170,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "BUTTON"
+    },
+    "active": "BODY."
+   },
+   "clearedState": {
+    "cleared": true,
+    "leftOpacity": "0",
+    "leftPE": "none",
+    "left": {
+     "x": 0,
+     "y": 44,
+     "right": 248,
+     "bottom": 860
+    },
+    "panel": {
+     "x": 1090,
+     "y": 88,
+     "right": 1390,
+     "bottom": 451
+    },
+    "panelShown": true,
+    "panelOpacity": "1",
+    "gapPanelToColumn": 842,
+    "overlapColumn": false,
+    "overlapHud": false,
+    "overlapBand": false,
+    "hud": {
+     "x": 262,
+     "y": 114,
+     "right": 467,
+     "bottom": 132
+    },
+    "band": {
+     "x": 332,
+     "y": 52,
+     "right": 1068,
+     "bottom": 108
+    },
+    "centre": {
+     "x": 1240,
+     "y": 269,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "DIV.rp-nudge"
+    },
+    "pick": {
+     "x": 1240,
+     "y": 140,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "SELECT.rp-pick"
+    },
+    "clear": {
+     "x": 1309,
+     "y": 170,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "BUTTON"
+    },
+    "active": "BODY."
+   },
+   "pointerOnPanel": {
+    "cleared": true,
+    "leftOpacity": "0",
+    "leftPE": "none",
+    "left": {
+     "x": 0,
+     "y": 44,
+     "right": 248,
+     "bottom": 860
+    },
+    "panel": {
+     "x": 1090,
+     "y": 88,
+     "right": 1390,
+     "bottom": 451
+    },
+    "panelShown": true,
+    "panelOpacity": "1",
+    "gapPanelToColumn": 842,
+    "overlapColumn": false,
+    "overlapHud": false,
+    "overlapBand": false,
+    "hud": {
+     "x": 262,
+     "y": 114,
+     "right": 467,
+     "bottom": 132
+    },
+    "band": {
+     "x": 332,
+     "y": 52,
+     "right": 1068,
+     "bottom": 108
+    },
+    "centre": {
+     "x": 1240,
+     "y": 269,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "DIV.rp-nudge"
+    },
+    "pick": {
+     "x": 1240,
+     "y": 140,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "SELECT.rp-pick"
+    },
+    "clear": {
+     "x": 1309,
+     "y": 170,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "BUTTON"
+    },
+    "active": "BODY."
+   },
+   "focusInPanel": {
+    "cleared": true,
+    "leftOpacity": "0",
+    "leftPE": "none",
+    "left": {
+     "x": 0,
+     "y": 44,
+     "right": 248,
+     "bottom": 860
+    },
+    "panel": {
+     "x": 1090,
+     "y": 88,
+     "right": 1390,
+     "bottom": 451
+    },
+    "panelShown": true,
+    "panelOpacity": "1",
+    "gapPanelToColumn": 842,
+    "overlapColumn": false,
+    "overlapHud": false,
+    "overlapBand": false,
+    "hud": {
+     "x": 262,
+     "y": 114,
+     "right": 467,
+     "bottom": 132
+    },
+    "band": {
+     "x": 332,
+     "y": 52,
+     "right": 1068,
+     "bottom": 108
+    },
+    "centre": {
+     "x": 1240,
+     "y": 269,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "DIV.rp-nudge"
+    },
+    "pick": {
+     "x": 1240,
+     "y": 140,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "SELECT.rp-pick"
+    },
+    "clear": {
+     "x": 1309,
+     "y": 170,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "BUTTON"
+    },
+    "active": "SELECT.rp-pick"
+   },
+   "onStrip": {
+    "cleared": false,
+    "leftOpacity": "1",
+    "leftPE": "auto",
+    "left": {
+     "x": 0,
+     "y": 44,
+     "right": 248,
+     "bottom": 860
+    },
+    "panel": {
+     "x": 1090,
+     "y": 88,
+     "right": 1390,
+     "bottom": 451
+    },
+    "panelShown": true,
+    "panelOpacity": "1",
+    "gapPanelToColumn": 842,
+    "overlapColumn": false,
+    "overlapHud": false,
+    "overlapBand": false,
+    "hud": {
+     "x": 262,
+     "y": 114,
+     "right": 467,
+     "bottom": 132
+    },
+    "band": {
+     "x": 332,
+     "y": 52,
+     "right": 1068,
+     "bottom": 108
+    },
+    "centre": {
+     "x": 1240,
+     "y": 269,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "DIV.rp-nudge"
+    },
+    "pick": {
+     "x": 1240,
+     "y": 140,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "SELECT.rp-pick"
+    },
+    "clear": {
+     "x": 1309,
+     "y": 170,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "BUTTON"
+    },
+    "active": "BODY."
+   }
+  },
+  {
+   "look": "aqua",
+   "size": "1400x860",
+   "shown": {
+    "cleared": false,
+    "leftOpacity": "1",
+    "leftPE": "auto",
+    "left": {
+     "x": 0,
+     "y": 44,
+     "right": 248,
+     "bottom": 860
+    },
+    "panel": {
+     "x": 1090,
+     "y": 88,
+     "right": 1390,
+     "bottom": 451
+    },
+    "panelShown": true,
+    "panelOpacity": "1",
+    "gapPanelToColumn": 842,
+    "overlapColumn": false,
+    "overlapHud": false,
+    "overlapBand": false,
+    "hud": {
+     "x": 262,
+     "y": 114,
+     "right": 467,
+     "bottom": 132
+    },
+    "band": {
+     "x": 332,
+     "y": 52,
+     "right": 1068,
+     "bottom": 108
+    },
+    "centre": {
+     "x": 1240,
+     "y": 269,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "DIV.rp-nudge"
+    },
+    "pick": {
+     "x": 1240,
+     "y": 140,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "SELECT.rp-pick"
+    },
+    "clear": {
+     "x": 1309,
+     "y": 170,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "BUTTON"
+    },
+    "active": "BODY."
+   },
+   "clearedState": {
+    "cleared": true,
+    "leftOpacity": "0",
+    "leftPE": "none",
+    "left": {
+     "x": 0,
+     "y": 44,
+     "right": 248,
+     "bottom": 860
+    },
+    "panel": {
+     "x": 1090,
+     "y": 88,
+     "right": 1390,
+     "bottom": 451
+    },
+    "panelShown": true,
+    "panelOpacity": "1",
+    "gapPanelToColumn": 842,
+    "overlapColumn": false,
+    "overlapHud": false,
+    "overlapBand": false,
+    "hud": {
+     "x": 262,
+     "y": 114,
+     "right": 467,
+     "bottom": 132
+    },
+    "band": {
+     "x": 332,
+     "y": 52,
+     "right": 1068,
+     "bottom": 108
+    },
+    "centre": {
+     "x": 1240,
+     "y": 269,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "DIV.rp-nudge"
+    },
+    "pick": {
+     "x": 1240,
+     "y": 140,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "SELECT.rp-pick"
+    },
+    "clear": {
+     "x": 1309,
+     "y": 170,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "BUTTON"
+    },
+    "active": "BODY."
+   },
+   "pointerOnPanel": {
+    "cleared": true,
+    "leftOpacity": "0",
+    "leftPE": "none",
+    "left": {
+     "x": 0,
+     "y": 44,
+     "right": 248,
+     "bottom": 860
+    },
+    "panel": {
+     "x": 1090,
+     "y": 88,
+     "right": 1390,
+     "bottom": 451
+    },
+    "panelShown": true,
+    "panelOpacity": "1",
+    "gapPanelToColumn": 842,
+    "overlapColumn": false,
+    "overlapHud": false,
+    "overlapBand": false,
+    "hud": {
+     "x": 262,
+     "y": 114,
+     "right": 467,
+     "bottom": 132
+    },
+    "band": {
+     "x": 332,
+     "y": 52,
+     "right": 1068,
+     "bottom": 108
+    },
+    "centre": {
+     "x": 1240,
+     "y": 269,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "DIV.rp-nudge"
+    },
+    "pick": {
+     "x": 1240,
+     "y": 140,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "SELECT.rp-pick"
+    },
+    "clear": {
+     "x": 1309,
+     "y": 170,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "BUTTON"
+    },
+    "active": "BODY."
+   },
+   "focusInPanel": {
+    "cleared": true,
+    "leftOpacity": "0",
+    "leftPE": "none",
+    "left": {
+     "x": 0,
+     "y": 44,
+     "right": 248,
+     "bottom": 860
+    },
+    "panel": {
+     "x": 1090,
+     "y": 88,
+     "right": 1390,
+     "bottom": 451
+    },
+    "panelShown": true,
+    "panelOpacity": "1",
+    "gapPanelToColumn": 842,
+    "overlapColumn": false,
+    "overlapHud": false,
+    "overlapBand": false,
+    "hud": {
+     "x": 262,
+     "y": 114,
+     "right": 467,
+     "bottom": 132
+    },
+    "band": {
+     "x": 332,
+     "y": 52,
+     "right": 1068,
+     "bottom": 108
+    },
+    "centre": {
+     "x": 1240,
+     "y": 269,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "DIV.rp-nudge"
+    },
+    "pick": {
+     "x": 1240,
+     "y": 140,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "SELECT.rp-pick"
+    },
+    "clear": {
+     "x": 1309,
+     "y": 170,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "BUTTON"
+    },
+    "active": "SELECT.rp-pick"
+   },
+   "onStrip": {
+    "cleared": false,
+    "leftOpacity": "1",
+    "leftPE": "auto",
+    "left": {
+     "x": 0,
+     "y": 44,
+     "right": 248,
+     "bottom": 860
+    },
+    "panel": {
+     "x": 1090,
+     "y": 88,
+     "right": 1390,
+     "bottom": 451
+    },
+    "panelShown": true,
+    "panelOpacity": "1",
+    "gapPanelToColumn": 842,
+    "overlapColumn": false,
+    "overlapHud": false,
+    "overlapBand": false,
+    "hud": {
+     "x": 262,
+     "y": 114,
+     "right": 467,
+     "bottom": 132
+    },
+    "band": {
+     "x": 332,
+     "y": 52,
+     "right": 1068,
+     "bottom": 108
+    },
+    "centre": {
+     "x": 1240,
+     "y": 269,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "DIV.rp-nudge"
+    },
+    "pick": {
+     "x": 1240,
+     "y": 140,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "SELECT.rp-pick"
+    },
+    "clear": {
+     "x": 1309,
+     "y": 170,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "BUTTON"
+    },
+    "active": "BODY."
+   }
+  },
+  {
+   "look": "aurora",
+   "size": "1400x860",
+   "shown": {
+    "cleared": false,
+    "leftOpacity": "1",
+    "leftPE": "auto",
+    "left": {
+     "x": 0,
+     "y": 44,
+     "right": 248,
+     "bottom": 860
+    },
+    "panel": {
+     "x": 1090,
+     "y": 88,
+     "right": 1390,
+     "bottom": 451
+    },
+    "panelShown": true,
+    "panelOpacity": "1",
+    "gapPanelToColumn": 842,
+    "overlapColumn": false,
+    "overlapHud": false,
+    "overlapBand": false,
+    "hud": {
+     "x": 262,
+     "y": 114,
+     "right": 467,
+     "bottom": 132
+    },
+    "band": {
+     "x": 332,
+     "y": 52,
+     "right": 1068,
+     "bottom": 108
+    },
+    "centre": {
+     "x": 1240,
+     "y": 269,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "DIV.rp-nudge"
+    },
+    "pick": {
+     "x": 1240,
+     "y": 140,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "SELECT.rp-pick"
+    },
+    "clear": {
+     "x": 1309,
+     "y": 170,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "BUTTON"
+    },
+    "active": "BODY."
+   },
+   "clearedState": {
+    "cleared": true,
+    "leftOpacity": "0",
+    "leftPE": "none",
+    "left": {
+     "x": 0,
+     "y": 44,
+     "right": 248,
+     "bottom": 860
+    },
+    "panel": {
+     "x": 1090,
+     "y": 88,
+     "right": 1390,
+     "bottom": 451
+    },
+    "panelShown": true,
+    "panelOpacity": "1",
+    "gapPanelToColumn": 842,
+    "overlapColumn": false,
+    "overlapHud": false,
+    "overlapBand": false,
+    "hud": {
+     "x": 262,
+     "y": 114,
+     "right": 467,
+     "bottom": 132
+    },
+    "band": {
+     "x": 332,
+     "y": 52,
+     "right": 1068,
+     "bottom": 108
+    },
+    "centre": {
+     "x": 1240,
+     "y": 269,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "DIV.rp-nudge"
+    },
+    "pick": {
+     "x": 1240,
+     "y": 140,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "SELECT.rp-pick"
+    },
+    "clear": {
+     "x": 1309,
+     "y": 170,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "BUTTON"
+    },
+    "active": "BODY."
+   },
+   "pointerOnPanel": {
+    "cleared": true,
+    "leftOpacity": "0",
+    "leftPE": "none",
+    "left": {
+     "x": 0,
+     "y": 44,
+     "right": 248,
+     "bottom": 860
+    },
+    "panel": {
+     "x": 1090,
+     "y": 88,
+     "right": 1390,
+     "bottom": 451
+    },
+    "panelShown": true,
+    "panelOpacity": "1",
+    "gapPanelToColumn": 842,
+    "overlapColumn": false,
+    "overlapHud": false,
+    "overlapBand": false,
+    "hud": {
+     "x": 262,
+     "y": 114,
+     "right": 467,
+     "bottom": 132
+    },
+    "band": {
+     "x": 332,
+     "y": 52,
+     "right": 1068,
+     "bottom": 108
+    },
+    "centre": {
+     "x": 1240,
+     "y": 269,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "DIV.rp-nudge"
+    },
+    "pick": {
+     "x": 1240,
+     "y": 140,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "SELECT.rp-pick"
+    },
+    "clear": {
+     "x": 1309,
+     "y": 170,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "BUTTON"
+    },
+    "active": "BODY."
+   },
+   "focusInPanel": {
+    "cleared": true,
+    "leftOpacity": "0",
+    "leftPE": "none",
+    "left": {
+     "x": 0,
+     "y": 44,
+     "right": 248,
+     "bottom": 860
+    },
+    "panel": {
+     "x": 1090,
+     "y": 88,
+     "right": 1390,
+     "bottom": 451
+    },
+    "panelShown": true,
+    "panelOpacity": "1",
+    "gapPanelToColumn": 842,
+    "overlapColumn": false,
+    "overlapHud": false,
+    "overlapBand": false,
+    "hud": {
+     "x": 262,
+     "y": 114,
+     "right": 467,
+     "bottom": 132
+    },
+    "band": {
+     "x": 332,
+     "y": 52,
+     "right": 1068,
+     "bottom": 108
+    },
+    "centre": {
+     "x": 1240,
+     "y": 269,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "DIV.rp-nudge"
+    },
+    "pick": {
+     "x": 1240,
+     "y": 140,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "SELECT.rp-pick"
+    },
+    "clear": {
+     "x": 1309,
+     "y": 170,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "BUTTON"
+    },
+    "active": "SELECT.rp-pick"
+   },
+   "onStrip": {
+    "cleared": false,
+    "leftOpacity": "1",
+    "leftPE": "auto",
+    "left": {
+     "x": 0,
+     "y": 44,
+     "right": 248,
+     "bottom": 860
+    },
+    "panel": {
+     "x": 1090,
+     "y": 88,
+     "right": 1390,
+     "bottom": 451
+    },
+    "panelShown": true,
+    "panelOpacity": "1",
+    "gapPanelToColumn": 842,
+    "overlapColumn": false,
+    "overlapHud": false,
+    "overlapBand": false,
+    "hud": {
+     "x": 262,
+     "y": 114,
+     "right": 467,
+     "bottom": 132
+    },
+    "band": {
+     "x": 332,
+     "y": 52,
+     "right": 1068,
+     "bottom": 108
+    },
+    "centre": {
+     "x": 1240,
+     "y": 269,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "DIV.rp-nudge"
+    },
+    "pick": {
+     "x": 1240,
+     "y": 140,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "SELECT.rp-pick"
+    },
+    "clear": {
+     "x": 1309,
+     "y": 170,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "BUTTON"
+    },
+    "active": "BODY."
+   }
+  },
+  {
+   "look": "glass",
+   "size": "1400x860",
+   "shown": {
+    "cleared": false,
+    "leftOpacity": "1",
+    "leftPE": "auto",
+    "left": {
+     "x": 0,
+     "y": 44,
+     "right": 248,
+     "bottom": 860
+    },
+    "panel": {
+     "x": 1090,
+     "y": 88,
+     "right": 1390,
+     "bottom": 451
+    },
+    "panelShown": true,
+    "panelOpacity": "1",
+    "gapPanelToColumn": 842,
+    "overlapColumn": false,
+    "overlapHud": false,
+    "overlapBand": false,
+    "hud": {
+     "x": 262,
+     "y": 114,
+     "right": 467,
+     "bottom": 132
+    },
+    "band": {
+     "x": 332,
+     "y": 52,
+     "right": 1068,
+     "bottom": 108
+    },
+    "centre": {
+     "x": 1240,
+     "y": 269,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "DIV.rp-nudge"
+    },
+    "pick": {
+     "x": 1240,
+     "y": 140,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "SELECT.rp-pick"
+    },
+    "clear": {
+     "x": 1309,
+     "y": 170,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "BUTTON"
+    },
+    "active": "BODY."
+   },
+   "clearedState": {
+    "cleared": true,
+    "leftOpacity": "0",
+    "leftPE": "none",
+    "left": {
+     "x": 0,
+     "y": 44,
+     "right": 248,
+     "bottom": 860
+    },
+    "panel": {
+     "x": 1090,
+     "y": 88,
+     "right": 1390,
+     "bottom": 451
+    },
+    "panelShown": true,
+    "panelOpacity": "1",
+    "gapPanelToColumn": 842,
+    "overlapColumn": false,
+    "overlapHud": false,
+    "overlapBand": false,
+    "hud": {
+     "x": 262,
+     "y": 114,
+     "right": 467,
+     "bottom": 132
+    },
+    "band": {
+     "x": 332,
+     "y": 52,
+     "right": 1068,
+     "bottom": 108
+    },
+    "centre": {
+     "x": 1240,
+     "y": 269,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "DIV.rp-nudge"
+    },
+    "pick": {
+     "x": 1240,
+     "y": 140,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "SELECT.rp-pick"
+    },
+    "clear": {
+     "x": 1309,
+     "y": 170,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "BUTTON"
+    },
+    "active": "BODY."
+   },
+   "pointerOnPanel": {
+    "cleared": true,
+    "leftOpacity": "0",
+    "leftPE": "none",
+    "left": {
+     "x": 0,
+     "y": 44,
+     "right": 248,
+     "bottom": 860
+    },
+    "panel": {
+     "x": 1090,
+     "y": 88,
+     "right": 1390,
+     "bottom": 451
+    },
+    "panelShown": true,
+    "panelOpacity": "1",
+    "gapPanelToColumn": 842,
+    "overlapColumn": false,
+    "overlapHud": false,
+    "overlapBand": false,
+    "hud": {
+     "x": 262,
+     "y": 114,
+     "right": 467,
+     "bottom": 132
+    },
+    "band": {
+     "x": 332,
+     "y": 52,
+     "right": 1068,
+     "bottom": 108
+    },
+    "centre": {
+     "x": 1240,
+     "y": 269,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "DIV.rp-nudge"
+    },
+    "pick": {
+     "x": 1240,
+     "y": 140,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "SELECT.rp-pick"
+    },
+    "clear": {
+     "x": 1309,
+     "y": 170,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "BUTTON"
+    },
+    "active": "BODY."
+   },
+   "focusInPanel": {
+    "cleared": true,
+    "leftOpacity": "0",
+    "leftPE": "none",
+    "left": {
+     "x": 0,
+     "y": 44,
+     "right": 248,
+     "bottom": 860
+    },
+    "panel": {
+     "x": 1090,
+     "y": 88,
+     "right": 1390,
+     "bottom": 451
+    },
+    "panelShown": true,
+    "panelOpacity": "1",
+    "gapPanelToColumn": 842,
+    "overlapColumn": false,
+    "overlapHud": false,
+    "overlapBand": false,
+    "hud": {
+     "x": 262,
+     "y": 114,
+     "right": 467,
+     "bottom": 132
+    },
+    "band": {
+     "x": 332,
+     "y": 52,
+     "right": 1068,
+     "bottom": 108
+    },
+    "centre": {
+     "x": 1240,
+     "y": 269,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "DIV.rp-nudge"
+    },
+    "pick": {
+     "x": 1240,
+     "y": 140,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "SELECT.rp-pick"
+    },
+    "clear": {
+     "x": 1309,
+     "y": 170,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "BUTTON"
+    },
+    "active": "SELECT.rp-pick"
+   },
+   "onStrip": {
+    "cleared": false,
+    "leftOpacity": "1",
+    "leftPE": "auto",
+    "left": {
+     "x": 0,
+     "y": 44,
+     "right": 248,
+     "bottom": 860
+    },
+    "panel": {
+     "x": 1090,
+     "y": 88,
+     "right": 1390,
+     "bottom": 451
+    },
+    "panelShown": true,
+    "panelOpacity": "1",
+    "gapPanelToColumn": 842,
+    "overlapColumn": false,
+    "overlapHud": false,
+    "overlapBand": false,
+    "hud": {
+     "x": 262,
+     "y": 114,
+     "right": 467,
+     "bottom": 132
+    },
+    "band": {
+     "x": 332,
+     "y": 52,
+     "right": 1068,
+     "bottom": 108
+    },
+    "centre": {
+     "x": 1240,
+     "y": 269,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "DIV.rp-nudge"
+    },
+    "pick": {
+     "x": 1240,
+     "y": 140,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "SELECT.rp-pick"
+    },
+    "clear": {
+     "x": 1309,
+     "y": 170,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "BUTTON"
+    },
+    "active": "BODY."
+   }
+  },
+  {
+   "look": "skyline",
+   "size": "1400x860",
+   "shown": {
+    "cleared": false,
+    "leftOpacity": "1",
+    "leftPE": "auto",
+    "left": {
+     "x": 0,
+     "y": 44,
+     "right": 248,
+     "bottom": 860
+    },
+    "panel": {
+     "x": 1090,
+     "y": 88,
+     "right": 1390,
+     "bottom": 451
+    },
+    "panelShown": true,
+    "panelOpacity": "1",
+    "gapPanelToColumn": 842,
+    "overlapColumn": false,
+    "overlapHud": false,
+    "overlapBand": false,
+    "hud": {
+     "x": 262,
+     "y": 114,
+     "right": 467,
+     "bottom": 132
+    },
+    "band": {
+     "x": 332,
+     "y": 52,
+     "right": 1068,
+     "bottom": 108
+    },
+    "centre": {
+     "x": 1240,
+     "y": 269,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "DIV.rp-nudge"
+    },
+    "pick": {
+     "x": 1240,
+     "y": 140,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "SELECT.rp-pick"
+    },
+    "clear": {
+     "x": 1309,
+     "y": 170,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "BUTTON"
+    },
+    "active": "BODY."
+   },
+   "clearedState": {
+    "cleared": true,
+    "leftOpacity": "0",
+    "leftPE": "none",
+    "left": {
+     "x": 0,
+     "y": 44,
+     "right": 248,
+     "bottom": 860
+    },
+    "panel": {
+     "x": 1090,
+     "y": 88,
+     "right": 1390,
+     "bottom": 451
+    },
+    "panelShown": true,
+    "panelOpacity": "1",
+    "gapPanelToColumn": 842,
+    "overlapColumn": false,
+    "overlapHud": false,
+    "overlapBand": false,
+    "hud": {
+     "x": 262,
+     "y": 114,
+     "right": 467,
+     "bottom": 132
+    },
+    "band": {
+     "x": 332,
+     "y": 52,
+     "right": 1068,
+     "bottom": 108
+    },
+    "centre": {
+     "x": 1240,
+     "y": 269,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "DIV.rp-nudge"
+    },
+    "pick": {
+     "x": 1240,
+     "y": 140,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "SELECT.rp-pick"
+    },
+    "clear": {
+     "x": 1309,
+     "y": 170,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "BUTTON"
+    },
+    "active": "BODY."
+   },
+   "pointerOnPanel": {
+    "cleared": true,
+    "leftOpacity": "0",
+    "leftPE": "none",
+    "left": {
+     "x": 0,
+     "y": 44,
+     "right": 248,
+     "bottom": 860
+    },
+    "panel": {
+     "x": 1090,
+     "y": 88,
+     "right": 1390,
+     "bottom": 451
+    },
+    "panelShown": true,
+    "panelOpacity": "1",
+    "gapPanelToColumn": 842,
+    "overlapColumn": false,
+    "overlapHud": false,
+    "overlapBand": false,
+    "hud": {
+     "x": 262,
+     "y": 114,
+     "right": 467,
+     "bottom": 132
+    },
+    "band": {
+     "x": 332,
+     "y": 52,
+     "right": 1068,
+     "bottom": 108
+    },
+    "centre": {
+     "x": 1240,
+     "y": 269,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "DIV.rp-nudge"
+    },
+    "pick": {
+     "x": 1240,
+     "y": 140,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "SELECT.rp-pick"
+    },
+    "clear": {
+     "x": 1309,
+     "y": 170,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "BUTTON"
+    },
+    "active": "BODY."
+   },
+   "focusInPanel": {
+    "cleared": true,
+    "leftOpacity": "0",
+    "leftPE": "none",
+    "left": {
+     "x": 0,
+     "y": 44,
+     "right": 248,
+     "bottom": 860
+    },
+    "panel": {
+     "x": 1090,
+     "y": 88,
+     "right": 1390,
+     "bottom": 451
+    },
+    "panelShown": true,
+    "panelOpacity": "1",
+    "gapPanelToColumn": 842,
+    "overlapColumn": false,
+    "overlapHud": false,
+    "overlapBand": false,
+    "hud": {
+     "x": 262,
+     "y": 114,
+     "right": 467,
+     "bottom": 132
+    },
+    "band": {
+     "x": 332,
+     "y": 52,
+     "right": 1068,
+     "bottom": 108
+    },
+    "centre": {
+     "x": 1240,
+     "y": 269,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "DIV.rp-nudge"
+    },
+    "pick": {
+     "x": 1240,
+     "y": 140,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "SELECT.rp-pick"
+    },
+    "clear": {
+     "x": 1309,
+     "y": 170,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "BUTTON"
+    },
+    "active": "SELECT.rp-pick"
+   },
+   "onStrip": {
+    "cleared": false,
+    "leftOpacity": "1",
+    "leftPE": "auto",
+    "left": {
+     "x": 0,
+     "y": 44,
+     "right": 248,
+     "bottom": 860
+    },
+    "panel": {
+     "x": 1090,
+     "y": 88,
+     "right": 1390,
+     "bottom": 451
+    },
+    "panelShown": true,
+    "panelOpacity": "1",
+    "gapPanelToColumn": 842,
+    "overlapColumn": false,
+    "overlapHud": false,
+    "overlapBand": false,
+    "hud": {
+     "x": 262,
+     "y": 114,
+     "right": 467,
+     "bottom": 132
+    },
+    "band": {
+     "x": 332,
+     "y": 52,
+     "right": 1068,
+     "bottom": 108
+    },
+    "centre": {
+     "x": 1240,
+     "y": 269,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "DIV.rp-nudge"
+    },
+    "pick": {
+     "x": 1240,
+     "y": 140,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "SELECT.rp-pick"
+    },
+    "clear": {
+     "x": 1309,
+     "y": 170,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "BUTTON"
+    },
+    "active": "BODY."
+   }
+  },
+  {
+   "look": "skyline-night",
+   "size": "1400x860",
+   "shown": {
+    "cleared": false,
+    "leftOpacity": "1",
+    "leftPE": "auto",
+    "left": {
+     "x": 0,
+     "y": 44,
+     "right": 248,
+     "bottom": 860
+    },
+    "panel": {
+     "x": 1090,
+     "y": 88,
+     "right": 1390,
+     "bottom": 451
+    },
+    "panelShown": true,
+    "panelOpacity": "1",
+    "gapPanelToColumn": 842,
+    "overlapColumn": false,
+    "overlapHud": false,
+    "overlapBand": false,
+    "hud": {
+     "x": 262,
+     "y": 114,
+     "right": 467,
+     "bottom": 132
+    },
+    "band": {
+     "x": 332,
+     "y": 52,
+     "right": 1068,
+     "bottom": 108
+    },
+    "centre": {
+     "x": 1240,
+     "y": 269,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "DIV.rp-nudge"
+    },
+    "pick": {
+     "x": 1240,
+     "y": 140,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "SELECT.rp-pick"
+    },
+    "clear": {
+     "x": 1309,
+     "y": 170,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "BUTTON"
+    },
+    "active": "BODY."
+   },
+   "clearedState": {
+    "cleared": true,
+    "leftOpacity": "0",
+    "leftPE": "none",
+    "left": {
+     "x": 0,
+     "y": 44,
+     "right": 248,
+     "bottom": 860
+    },
+    "panel": {
+     "x": 1090,
+     "y": 88,
+     "right": 1390,
+     "bottom": 451
+    },
+    "panelShown": true,
+    "panelOpacity": "1",
+    "gapPanelToColumn": 842,
+    "overlapColumn": false,
+    "overlapHud": false,
+    "overlapBand": false,
+    "hud": {
+     "x": 262,
+     "y": 114,
+     "right": 467,
+     "bottom": 132
+    },
+    "band": {
+     "x": 332,
+     "y": 52,
+     "right": 1068,
+     "bottom": 108
+    },
+    "centre": {
+     "x": 1240,
+     "y": 269,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "DIV.rp-nudge"
+    },
+    "pick": {
+     "x": 1240,
+     "y": 140,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "SELECT.rp-pick"
+    },
+    "clear": {
+     "x": 1309,
+     "y": 170,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "BUTTON"
+    },
+    "active": "BODY."
+   },
+   "pointerOnPanel": {
+    "cleared": true,
+    "leftOpacity": "0",
+    "leftPE": "none",
+    "left": {
+     "x": 0,
+     "y": 44,
+     "right": 248,
+     "bottom": 860
+    },
+    "panel": {
+     "x": 1090,
+     "y": 88,
+     "right": 1390,
+     "bottom": 451
+    },
+    "panelShown": true,
+    "panelOpacity": "1",
+    "gapPanelToColumn": 842,
+    "overlapColumn": false,
+    "overlapHud": false,
+    "overlapBand": false,
+    "hud": {
+     "x": 262,
+     "y": 114,
+     "right": 467,
+     "bottom": 132
+    },
+    "band": {
+     "x": 332,
+     "y": 52,
+     "right": 1068,
+     "bottom": 108
+    },
+    "centre": {
+     "x": 1240,
+     "y": 269,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "DIV.rp-nudge"
+    },
+    "pick": {
+     "x": 1240,
+     "y": 140,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "SELECT.rp-pick"
+    },
+    "clear": {
+     "x": 1309,
+     "y": 170,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "BUTTON"
+    },
+    "active": "BODY."
+   },
+   "focusInPanel": {
+    "cleared": true,
+    "leftOpacity": "0",
+    "leftPE": "none",
+    "left": {
+     "x": 0,
+     "y": 44,
+     "right": 248,
+     "bottom": 860
+    },
+    "panel": {
+     "x": 1090,
+     "y": 88,
+     "right": 1390,
+     "bottom": 451
+    },
+    "panelShown": true,
+    "panelOpacity": "1",
+    "gapPanelToColumn": 842,
+    "overlapColumn": false,
+    "overlapHud": false,
+    "overlapBand": false,
+    "hud": {
+     "x": 262,
+     "y": 114,
+     "right": 467,
+     "bottom": 132
+    },
+    "band": {
+     "x": 332,
+     "y": 52,
+     "right": 1068,
+     "bottom": 108
+    },
+    "centre": {
+     "x": 1240,
+     "y": 269,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "DIV.rp-nudge"
+    },
+    "pick": {
+     "x": 1240,
+     "y": 140,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "SELECT.rp-pick"
+    },
+    "clear": {
+     "x": 1309,
+     "y": 170,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "BUTTON"
+    },
+    "active": "SELECT.rp-pick"
+   },
+   "onStrip": {
+    "cleared": false,
+    "leftOpacity": "1",
+    "leftPE": "auto",
+    "left": {
+     "x": 0,
+     "y": 44,
+     "right": 248,
+     "bottom": 860
+    },
+    "panel": {
+     "x": 1090,
+     "y": 88,
+     "right": 1390,
+     "bottom": 451
+    },
+    "panelShown": true,
+    "panelOpacity": "1",
+    "gapPanelToColumn": 842,
+    "overlapColumn": false,
+    "overlapHud": false,
+    "overlapBand": false,
+    "hud": {
+     "x": 262,
+     "y": 114,
+     "right": 467,
+     "bottom": 132
+    },
+    "band": {
+     "x": 332,
+     "y": 52,
+     "right": 1068,
+     "bottom": 108
+    },
+    "centre": {
+     "x": 1240,
+     "y": 269,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "DIV.rp-nudge"
+    },
+    "pick": {
+     "x": 1240,
+     "y": 140,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "SELECT.rp-pick"
+    },
+    "clear": {
+     "x": 1309,
+     "y": 170,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "BUTTON"
+    },
+    "active": "BODY."
+   }
+  },
+  {
+   "look": "sigil",
+   "size": "900x600",
+   "shown": {
+    "cleared": false,
+    "leftOpacity": "1",
+    "leftPE": "auto",
+    "left": {
+     "x": 0,
+     "y": 44,
+     "right": 248,
+     "bottom": 600
+    },
+    "panel": {
+     "x": 590,
+     "y": 88,
+     "right": 890,
+     "bottom": 451
+    },
+    "panelShown": true,
+    "panelOpacity": "1",
+    "gapPanelToColumn": 342,
+    "overlapColumn": false,
+    "overlapHud": false,
+    "overlapBand": true,
+    "hud": {
+     "x": 262,
+     "y": 144,
+     "right": 467,
+     "bottom": 162
+    },
+    "band": {
+     "x": 167,
+     "y": 52,
+     "right": 733,
+     "bottom": 138
+    },
+    "centre": {
+     "x": 740,
+     "y": 269,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "DIV.rp-nudge"
+    },
+    "pick": {
+     "x": 740,
+     "y": 140,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "SELECT.rp-pick"
+    },
+    "clear": {
+     "x": 809,
+     "y": 170,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "BUTTON"
+    },
+    "active": "BODY."
+   },
+   "clearedState": {
+    "cleared": true,
+    "leftOpacity": "0",
+    "leftPE": "none",
+    "left": {
+     "x": 0,
+     "y": 44,
+     "right": 248,
+     "bottom": 600
+    },
+    "panel": {
+     "x": 590,
+     "y": 88,
+     "right": 890,
+     "bottom": 451
+    },
+    "panelShown": true,
+    "panelOpacity": "1",
+    "gapPanelToColumn": 342,
+    "overlapColumn": false,
+    "overlapHud": false,
+    "overlapBand": true,
+    "hud": {
+     "x": 262,
+     "y": 144,
+     "right": 467,
+     "bottom": 162
+    },
+    "band": {
+     "x": 167,
+     "y": 52,
+     "right": 733,
+     "bottom": 138
+    },
+    "centre": {
+     "x": 740,
+     "y": 269,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "DIV.rp-nudge"
+    },
+    "pick": {
+     "x": 740,
+     "y": 140,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "SELECT.rp-pick"
+    },
+    "clear": {
+     "x": 809,
+     "y": 170,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "BUTTON"
+    },
+    "active": "BODY."
+   },
+   "pointerOnPanel": {
+    "cleared": true,
+    "leftOpacity": "0",
+    "leftPE": "none",
+    "left": {
+     "x": 0,
+     "y": 44,
+     "right": 248,
+     "bottom": 600
+    },
+    "panel": {
+     "x": 590,
+     "y": 88,
+     "right": 890,
+     "bottom": 451
+    },
+    "panelShown": true,
+    "panelOpacity": "1",
+    "gapPanelToColumn": 342,
+    "overlapColumn": false,
+    "overlapHud": false,
+    "overlapBand": true,
+    "hud": {
+     "x": 262,
+     "y": 144,
+     "right": 467,
+     "bottom": 162
+    },
+    "band": {
+     "x": 167,
+     "y": 52,
+     "right": 733,
+     "bottom": 138
+    },
+    "centre": {
+     "x": 740,
+     "y": 269,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "DIV.rp-nudge"
+    },
+    "pick": {
+     "x": 740,
+     "y": 140,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "SELECT.rp-pick"
+    },
+    "clear": {
+     "x": 809,
+     "y": 170,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "BUTTON"
+    },
+    "active": "BODY."
+   },
+   "focusInPanel": {
+    "cleared": true,
+    "leftOpacity": "0",
+    "leftPE": "none",
+    "left": {
+     "x": 0,
+     "y": 44,
+     "right": 248,
+     "bottom": 600
+    },
+    "panel": {
+     "x": 590,
+     "y": 88,
+     "right": 890,
+     "bottom": 451
+    },
+    "panelShown": true,
+    "panelOpacity": "1",
+    "gapPanelToColumn": 342,
+    "overlapColumn": false,
+    "overlapHud": false,
+    "overlapBand": true,
+    "hud": {
+     "x": 262,
+     "y": 144,
+     "right": 467,
+     "bottom": 162
+    },
+    "band": {
+     "x": 167,
+     "y": 52,
+     "right": 733,
+     "bottom": 138
+    },
+    "centre": {
+     "x": 740,
+     "y": 269,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "DIV.rp-nudge"
+    },
+    "pick": {
+     "x": 740,
+     "y": 140,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "SELECT.rp-pick"
+    },
+    "clear": {
+     "x": 809,
+     "y": 170,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "BUTTON"
+    },
+    "active": "SELECT.rp-pick"
+   },
+   "onStrip": {
+    "cleared": false,
+    "leftOpacity": "1",
+    "leftPE": "auto",
+    "left": {
+     "x": 0,
+     "y": 44,
+     "right": 248,
+     "bottom": 600
+    },
+    "panel": {
+     "x": 590,
+     "y": 88,
+     "right": 890,
+     "bottom": 451
+    },
+    "panelShown": true,
+    "panelOpacity": "1",
+    "gapPanelToColumn": 342,
+    "overlapColumn": false,
+    "overlapHud": false,
+    "overlapBand": true,
+    "hud": {
+     "x": 262,
+     "y": 144,
+     "right": 467,
+     "bottom": 162
+    },
+    "band": {
+     "x": 167,
+     "y": 52,
+     "right": 733,
+     "bottom": 138
+    },
+    "centre": {
+     "x": 740,
+     "y": 269,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "DIV.rp-nudge"
+    },
+    "pick": {
+     "x": 740,
+     "y": 140,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "SELECT.rp-pick"
+    },
+    "clear": {
+     "x": 809,
+     "y": 170,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "BUTTON"
+    },
+    "active": "BODY."
+   }
+  },
+  {
+   "look": "aqua",
+   "size": "900x600",
+   "shown": {
+    "cleared": false,
+    "leftOpacity": "1",
+    "leftPE": "auto",
+    "left": {
+     "x": 0,
+     "y": 44,
+     "right": 248,
+     "bottom": 600
+    },
+    "panel": {
+     "x": 590,
+     "y": 88,
+     "right": 890,
+     "bottom": 451
+    },
+    "panelShown": true,
+    "panelOpacity": "1",
+    "gapPanelToColumn": 342,
+    "overlapColumn": false,
+    "overlapHud": false,
+    "overlapBand": true,
+    "hud": {
+     "x": 262,
+     "y": 144,
+     "right": 467,
+     "bottom": 162
+    },
+    "band": {
+     "x": 167,
+     "y": 52,
+     "right": 733,
+     "bottom": 138
+    },
+    "centre": {
+     "x": 740,
+     "y": 269,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "DIV.rp-nudge"
+    },
+    "pick": {
+     "x": 740,
+     "y": 140,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "SELECT.rp-pick"
+    },
+    "clear": {
+     "x": 809,
+     "y": 170,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "BUTTON"
+    },
+    "active": "BODY."
+   },
+   "clearedState": {
+    "cleared": true,
+    "leftOpacity": "0",
+    "leftPE": "none",
+    "left": {
+     "x": 0,
+     "y": 44,
+     "right": 248,
+     "bottom": 600
+    },
+    "panel": {
+     "x": 590,
+     "y": 88,
+     "right": 890,
+     "bottom": 451
+    },
+    "panelShown": true,
+    "panelOpacity": "1",
+    "gapPanelToColumn": 342,
+    "overlapColumn": false,
+    "overlapHud": false,
+    "overlapBand": true,
+    "hud": {
+     "x": 262,
+     "y": 144,
+     "right": 467,
+     "bottom": 162
+    },
+    "band": {
+     "x": 167,
+     "y": 52,
+     "right": 733,
+     "bottom": 138
+    },
+    "centre": {
+     "x": 740,
+     "y": 269,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "DIV.rp-nudge"
+    },
+    "pick": {
+     "x": 740,
+     "y": 140,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "SELECT.rp-pick"
+    },
+    "clear": {
+     "x": 809,
+     "y": 170,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "BUTTON"
+    },
+    "active": "BODY."
+   },
+   "pointerOnPanel": {
+    "cleared": true,
+    "leftOpacity": "0",
+    "leftPE": "none",
+    "left": {
+     "x": 0,
+     "y": 44,
+     "right": 248,
+     "bottom": 600
+    },
+    "panel": {
+     "x": 590,
+     "y": 88,
+     "right": 890,
+     "bottom": 451
+    },
+    "panelShown": true,
+    "panelOpacity": "1",
+    "gapPanelToColumn": 342,
+    "overlapColumn": false,
+    "overlapHud": false,
+    "overlapBand": true,
+    "hud": {
+     "x": 262,
+     "y": 144,
+     "right": 467,
+     "bottom": 162
+    },
+    "band": {
+     "x": 167,
+     "y": 52,
+     "right": 733,
+     "bottom": 138
+    },
+    "centre": {
+     "x": 740,
+     "y": 269,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "DIV.rp-nudge"
+    },
+    "pick": {
+     "x": 740,
+     "y": 140,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "SELECT.rp-pick"
+    },
+    "clear": {
+     "x": 809,
+     "y": 170,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "BUTTON"
+    },
+    "active": "BODY."
+   },
+   "focusInPanel": {
+    "cleared": true,
+    "leftOpacity": "0",
+    "leftPE": "none",
+    "left": {
+     "x": 0,
+     "y": 44,
+     "right": 248,
+     "bottom": 600
+    },
+    "panel": {
+     "x": 590,
+     "y": 88,
+     "right": 890,
+     "bottom": 451
+    },
+    "panelShown": true,
+    "panelOpacity": "1",
+    "gapPanelToColumn": 342,
+    "overlapColumn": false,
+    "overlapHud": false,
+    "overlapBand": true,
+    "hud": {
+     "x": 262,
+     "y": 144,
+     "right": 467,
+     "bottom": 162
+    },
+    "band": {
+     "x": 167,
+     "y": 52,
+     "right": 733,
+     "bottom": 138
+    },
+    "centre": {
+     "x": 740,
+     "y": 269,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "DIV.rp-nudge"
+    },
+    "pick": {
+     "x": 740,
+     "y": 140,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "SELECT.rp-pick"
+    },
+    "clear": {
+     "x": 809,
+     "y": 170,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "BUTTON"
+    },
+    "active": "SELECT.rp-pick"
+   },
+   "onStrip": {
+    "cleared": false,
+    "leftOpacity": "1",
+    "leftPE": "auto",
+    "left": {
+     "x": 0,
+     "y": 44,
+     "right": 248,
+     "bottom": 600
+    },
+    "panel": {
+     "x": 590,
+     "y": 88,
+     "right": 890,
+     "bottom": 451
+    },
+    "panelShown": true,
+    "panelOpacity": "1",
+    "gapPanelToColumn": 342,
+    "overlapColumn": false,
+    "overlapHud": false,
+    "overlapBand": true,
+    "hud": {
+     "x": 262,
+     "y": 144,
+     "right": 467,
+     "bottom": 162
+    },
+    "band": {
+     "x": 167,
+     "y": 52,
+     "right": 733,
+     "bottom": 138
+    },
+    "centre": {
+     "x": 740,
+     "y": 269,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "DIV.rp-nudge"
+    },
+    "pick": {
+     "x": 740,
+     "y": 140,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "SELECT.rp-pick"
+    },
+    "clear": {
+     "x": 809,
+     "y": 170,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "BUTTON"
+    },
+    "active": "BODY."
+   }
+  },
+  {
+   "look": "aurora",
+   "size": "900x600",
+   "shown": {
+    "cleared": false,
+    "leftOpacity": "1",
+    "leftPE": "auto",
+    "left": {
+     "x": 0,
+     "y": 44,
+     "right": 248,
+     "bottom": 600
+    },
+    "panel": {
+     "x": 590,
+     "y": 88,
+     "right": 890,
+     "bottom": 451
+    },
+    "panelShown": true,
+    "panelOpacity": "1",
+    "gapPanelToColumn": 342,
+    "overlapColumn": false,
+    "overlapHud": false,
+    "overlapBand": true,
+    "hud": {
+     "x": 262,
+     "y": 144,
+     "right": 467,
+     "bottom": 162
+    },
+    "band": {
+     "x": 167,
+     "y": 52,
+     "right": 733,
+     "bottom": 138
+    },
+    "centre": {
+     "x": 740,
+     "y": 269,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "DIV.rp-nudge"
+    },
+    "pick": {
+     "x": 740,
+     "y": 140,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "SELECT.rp-pick"
+    },
+    "clear": {
+     "x": 809,
+     "y": 170,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "BUTTON"
+    },
+    "active": "BODY."
+   },
+   "clearedState": {
+    "cleared": true,
+    "leftOpacity": "0",
+    "leftPE": "none",
+    "left": {
+     "x": 0,
+     "y": 44,
+     "right": 248,
+     "bottom": 600
+    },
+    "panel": {
+     "x": 590,
+     "y": 88,
+     "right": 890,
+     "bottom": 451
+    },
+    "panelShown": true,
+    "panelOpacity": "1",
+    "gapPanelToColumn": 342,
+    "overlapColumn": false,
+    "overlapHud": false,
+    "overlapBand": true,
+    "hud": {
+     "x": 262,
+     "y": 144,
+     "right": 467,
+     "bottom": 162
+    },
+    "band": {
+     "x": 167,
+     "y": 52,
+     "right": 733,
+     "bottom": 138
+    },
+    "centre": {
+     "x": 740,
+     "y": 269,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "DIV.rp-nudge"
+    },
+    "pick": {
+     "x": 740,
+     "y": 140,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "SELECT.rp-pick"
+    },
+    "clear": {
+     "x": 809,
+     "y": 170,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "BUTTON"
+    },
+    "active": "BODY."
+   },
+   "pointerOnPanel": {
+    "cleared": true,
+    "leftOpacity": "0",
+    "leftPE": "none",
+    "left": {
+     "x": 0,
+     "y": 44,
+     "right": 248,
+     "bottom": 600
+    },
+    "panel": {
+     "x": 590,
+     "y": 88,
+     "right": 890,
+     "bottom": 451
+    },
+    "panelShown": true,
+    "panelOpacity": "1",
+    "gapPanelToColumn": 342,
+    "overlapColumn": false,
+    "overlapHud": false,
+    "overlapBand": true,
+    "hud": {
+     "x": 262,
+     "y": 144,
+     "right": 467,
+     "bottom": 162
+    },
+    "band": {
+     "x": 167,
+     "y": 52,
+     "right": 733,
+     "bottom": 138
+    },
+    "centre": {
+     "x": 740,
+     "y": 269,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "DIV.rp-nudge"
+    },
+    "pick": {
+     "x": 740,
+     "y": 140,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "SELECT.rp-pick"
+    },
+    "clear": {
+     "x": 809,
+     "y": 170,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "BUTTON"
+    },
+    "active": "BODY."
+   },
+   "focusInPanel": {
+    "cleared": true,
+    "leftOpacity": "0",
+    "leftPE": "none",
+    "left": {
+     "x": 0,
+     "y": 44,
+     "right": 248,
+     "bottom": 600
+    },
+    "panel": {
+     "x": 590,
+     "y": 88,
+     "right": 890,
+     "bottom": 451
+    },
+    "panelShown": true,
+    "panelOpacity": "1",
+    "gapPanelToColumn": 342,
+    "overlapColumn": false,
+    "overlapHud": false,
+    "overlapBand": true,
+    "hud": {
+     "x": 262,
+     "y": 144,
+     "right": 467,
+     "bottom": 162
+    },
+    "band": {
+     "x": 167,
+     "y": 52,
+     "right": 733,
+     "bottom": 138
+    },
+    "centre": {
+     "x": 740,
+     "y": 269,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "DIV.rp-nudge"
+    },
+    "pick": {
+     "x": 740,
+     "y": 140,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "SELECT.rp-pick"
+    },
+    "clear": {
+     "x": 809,
+     "y": 170,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "BUTTON"
+    },
+    "active": "SELECT.rp-pick"
+   },
+   "onStrip": {
+    "cleared": false,
+    "leftOpacity": "1",
+    "leftPE": "auto",
+    "left": {
+     "x": 0,
+     "y": 44,
+     "right": 248,
+     "bottom": 600
+    },
+    "panel": {
+     "x": 590,
+     "y": 88,
+     "right": 890,
+     "bottom": 451
+    },
+    "panelShown": true,
+    "panelOpacity": "1",
+    "gapPanelToColumn": 342,
+    "overlapColumn": false,
+    "overlapHud": false,
+    "overlapBand": true,
+    "hud": {
+     "x": 262,
+     "y": 144,
+     "right": 467,
+     "bottom": 162
+    },
+    "band": {
+     "x": 167,
+     "y": 52,
+     "right": 733,
+     "bottom": 138
+    },
+    "centre": {
+     "x": 740,
+     "y": 269,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "DIV.rp-nudge"
+    },
+    "pick": {
+     "x": 740,
+     "y": 140,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "SELECT.rp-pick"
+    },
+    "clear": {
+     "x": 809,
+     "y": 170,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "BUTTON"
+    },
+    "active": "BODY."
+   }
+  },
+  {
+   "look": "glass",
+   "size": "900x600",
+   "shown": {
+    "cleared": false,
+    "leftOpacity": "1",
+    "leftPE": "auto",
+    "left": {
+     "x": 0,
+     "y": 44,
+     "right": 248,
+     "bottom": 600
+    },
+    "panel": {
+     "x": 590,
+     "y": 88,
+     "right": 890,
+     "bottom": 451
+    },
+    "panelShown": true,
+    "panelOpacity": "1",
+    "gapPanelToColumn": 342,
+    "overlapColumn": false,
+    "overlapHud": false,
+    "overlapBand": true,
+    "hud": {
+     "x": 262,
+     "y": 144,
+     "right": 467,
+     "bottom": 162
+    },
+    "band": {
+     "x": 167,
+     "y": 52,
+     "right": 733,
+     "bottom": 138
+    },
+    "centre": {
+     "x": 740,
+     "y": 269,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "DIV.rp-nudge"
+    },
+    "pick": {
+     "x": 740,
+     "y": 140,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "SELECT.rp-pick"
+    },
+    "clear": {
+     "x": 809,
+     "y": 170,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "BUTTON"
+    },
+    "active": "BODY."
+   },
+   "clearedState": {
+    "cleared": true,
+    "leftOpacity": "0",
+    "leftPE": "none",
+    "left": {
+     "x": 0,
+     "y": 44,
+     "right": 248,
+     "bottom": 600
+    },
+    "panel": {
+     "x": 590,
+     "y": 88,
+     "right": 890,
+     "bottom": 451
+    },
+    "panelShown": true,
+    "panelOpacity": "1",
+    "gapPanelToColumn": 342,
+    "overlapColumn": false,
+    "overlapHud": false,
+    "overlapBand": true,
+    "hud": {
+     "x": 262,
+     "y": 144,
+     "right": 467,
+     "bottom": 162
+    },
+    "band": {
+     "x": 167,
+     "y": 52,
+     "right": 733,
+     "bottom": 138
+    },
+    "centre": {
+     "x": 740,
+     "y": 269,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "DIV.rp-nudge"
+    },
+    "pick": {
+     "x": 740,
+     "y": 140,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "SELECT.rp-pick"
+    },
+    "clear": {
+     "x": 809,
+     "y": 170,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "BUTTON"
+    },
+    "active": "BODY."
+   },
+   "pointerOnPanel": {
+    "cleared": true,
+    "leftOpacity": "0",
+    "leftPE": "none",
+    "left": {
+     "x": 0,
+     "y": 44,
+     "right": 248,
+     "bottom": 600
+    },
+    "panel": {
+     "x": 590,
+     "y": 88,
+     "right": 890,
+     "bottom": 451
+    },
+    "panelShown": true,
+    "panelOpacity": "1",
+    "gapPanelToColumn": 342,
+    "overlapColumn": false,
+    "overlapHud": false,
+    "overlapBand": true,
+    "hud": {
+     "x": 262,
+     "y": 144,
+     "right": 467,
+     "bottom": 162
+    },
+    "band": {
+     "x": 167,
+     "y": 52,
+     "right": 733,
+     "bottom": 138
+    },
+    "centre": {
+     "x": 740,
+     "y": 269,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "DIV.rp-nudge"
+    },
+    "pick": {
+     "x": 740,
+     "y": 140,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "SELECT.rp-pick"
+    },
+    "clear": {
+     "x": 809,
+     "y": 170,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "BUTTON"
+    },
+    "active": "BODY."
+   },
+   "focusInPanel": {
+    "cleared": true,
+    "leftOpacity": "0",
+    "leftPE": "none",
+    "left": {
+     "x": 0,
+     "y": 44,
+     "right": 248,
+     "bottom": 600
+    },
+    "panel": {
+     "x": 590,
+     "y": 88,
+     "right": 890,
+     "bottom": 451
+    },
+    "panelShown": true,
+    "panelOpacity": "1",
+    "gapPanelToColumn": 342,
+    "overlapColumn": false,
+    "overlapHud": false,
+    "overlapBand": true,
+    "hud": {
+     "x": 262,
+     "y": 144,
+     "right": 467,
+     "bottom": 162
+    },
+    "band": {
+     "x": 167,
+     "y": 52,
+     "right": 733,
+     "bottom": 138
+    },
+    "centre": {
+     "x": 740,
+     "y": 269,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "DIV.rp-nudge"
+    },
+    "pick": {
+     "x": 740,
+     "y": 140,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "SELECT.rp-pick"
+    },
+    "clear": {
+     "x": 809,
+     "y": 170,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "BUTTON"
+    },
+    "active": "SELECT.rp-pick"
+   },
+   "onStrip": {
+    "cleared": false,
+    "leftOpacity": "1",
+    "leftPE": "auto",
+    "left": {
+     "x": 0,
+     "y": 44,
+     "right": 248,
+     "bottom": 600
+    },
+    "panel": {
+     "x": 590,
+     "y": 88,
+     "right": 890,
+     "bottom": 451
+    },
+    "panelShown": true,
+    "panelOpacity": "1",
+    "gapPanelToColumn": 342,
+    "overlapColumn": false,
+    "overlapHud": false,
+    "overlapBand": true,
+    "hud": {
+     "x": 262,
+     "y": 144,
+     "right": 467,
+     "bottom": 162
+    },
+    "band": {
+     "x": 167,
+     "y": 52,
+     "right": 733,
+     "bottom": 138
+    },
+    "centre": {
+     "x": 740,
+     "y": 269,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "DIV.rp-nudge"
+    },
+    "pick": {
+     "x": 740,
+     "y": 140,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "SELECT.rp-pick"
+    },
+    "clear": {
+     "x": 809,
+     "y": 170,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "BUTTON"
+    },
+    "active": "BODY."
+   }
+  },
+  {
+   "look": "skyline",
+   "size": "900x600",
+   "shown": {
+    "cleared": false,
+    "leftOpacity": "1",
+    "leftPE": "auto",
+    "left": {
+     "x": 0,
+     "y": 44,
+     "right": 248,
+     "bottom": 600
+    },
+    "panel": {
+     "x": 590,
+     "y": 88,
+     "right": 890,
+     "bottom": 451
+    },
+    "panelShown": true,
+    "panelOpacity": "1",
+    "gapPanelToColumn": 342,
+    "overlapColumn": false,
+    "overlapHud": false,
+    "overlapBand": true,
+    "hud": {
+     "x": 262,
+     "y": 144,
+     "right": 467,
+     "bottom": 162
+    },
+    "band": {
+     "x": 167,
+     "y": 52,
+     "right": 733,
+     "bottom": 138
+    },
+    "centre": {
+     "x": 740,
+     "y": 269,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "DIV.rp-nudge"
+    },
+    "pick": {
+     "x": 740,
+     "y": 140,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "SELECT.rp-pick"
+    },
+    "clear": {
+     "x": 809,
+     "y": 170,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "BUTTON"
+    },
+    "active": "BODY."
+   },
+   "clearedState": {
+    "cleared": true,
+    "leftOpacity": "0",
+    "leftPE": "none",
+    "left": {
+     "x": 0,
+     "y": 44,
+     "right": 248,
+     "bottom": 600
+    },
+    "panel": {
+     "x": 590,
+     "y": 88,
+     "right": 890,
+     "bottom": 451
+    },
+    "panelShown": true,
+    "panelOpacity": "1",
+    "gapPanelToColumn": 342,
+    "overlapColumn": false,
+    "overlapHud": false,
+    "overlapBand": true,
+    "hud": {
+     "x": 262,
+     "y": 144,
+     "right": 467,
+     "bottom": 162
+    },
+    "band": {
+     "x": 167,
+     "y": 52,
+     "right": 733,
+     "bottom": 138
+    },
+    "centre": {
+     "x": 740,
+     "y": 269,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "DIV.rp-nudge"
+    },
+    "pick": {
+     "x": 740,
+     "y": 140,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "SELECT.rp-pick"
+    },
+    "clear": {
+     "x": 809,
+     "y": 170,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "BUTTON"
+    },
+    "active": "BODY."
+   },
+   "pointerOnPanel": {
+    "cleared": true,
+    "leftOpacity": "0",
+    "leftPE": "none",
+    "left": {
+     "x": 0,
+     "y": 44,
+     "right": 248,
+     "bottom": 600
+    },
+    "panel": {
+     "x": 590,
+     "y": 88,
+     "right": 890,
+     "bottom": 451
+    },
+    "panelShown": true,
+    "panelOpacity": "1",
+    "gapPanelToColumn": 342,
+    "overlapColumn": false,
+    "overlapHud": false,
+    "overlapBand": true,
+    "hud": {
+     "x": 262,
+     "y": 144,
+     "right": 467,
+     "bottom": 162
+    },
+    "band": {
+     "x": 167,
+     "y": 52,
+     "right": 733,
+     "bottom": 138
+    },
+    "centre": {
+     "x": 740,
+     "y": 269,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "DIV.rp-nudge"
+    },
+    "pick": {
+     "x": 740,
+     "y": 140,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "SELECT.rp-pick"
+    },
+    "clear": {
+     "x": 809,
+     "y": 170,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "BUTTON"
+    },
+    "active": "BODY."
+   },
+   "focusInPanel": {
+    "cleared": true,
+    "leftOpacity": "0",
+    "leftPE": "none",
+    "left": {
+     "x": 0,
+     "y": 44,
+     "right": 248,
+     "bottom": 600
+    },
+    "panel": {
+     "x": 590,
+     "y": 88,
+     "right": 890,
+     "bottom": 451
+    },
+    "panelShown": true,
+    "panelOpacity": "1",
+    "gapPanelToColumn": 342,
+    "overlapColumn": false,
+    "overlapHud": false,
+    "overlapBand": true,
+    "hud": {
+     "x": 262,
+     "y": 144,
+     "right": 467,
+     "bottom": 162
+    },
+    "band": {
+     "x": 167,
+     "y": 52,
+     "right": 733,
+     "bottom": 138
+    },
+    "centre": {
+     "x": 740,
+     "y": 269,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "DIV.rp-nudge"
+    },
+    "pick": {
+     "x": 740,
+     "y": 140,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "SELECT.rp-pick"
+    },
+    "clear": {
+     "x": 809,
+     "y": 170,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "BUTTON"
+    },
+    "active": "SELECT.rp-pick"
+   },
+   "onStrip": {
+    "cleared": false,
+    "leftOpacity": "1",
+    "leftPE": "auto",
+    "left": {
+     "x": 0,
+     "y": 44,
+     "right": 248,
+     "bottom": 600
+    },
+    "panel": {
+     "x": 590,
+     "y": 88,
+     "right": 890,
+     "bottom": 451
+    },
+    "panelShown": true,
+    "panelOpacity": "1",
+    "gapPanelToColumn": 342,
+    "overlapColumn": false,
+    "overlapHud": false,
+    "overlapBand": true,
+    "hud": {
+     "x": 262,
+     "y": 144,
+     "right": 467,
+     "bottom": 162
+    },
+    "band": {
+     "x": 167,
+     "y": 52,
+     "right": 733,
+     "bottom": 138
+    },
+    "centre": {
+     "x": 740,
+     "y": 269,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "DIV.rp-nudge"
+    },
+    "pick": {
+     "x": 740,
+     "y": 140,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "SELECT.rp-pick"
+    },
+    "clear": {
+     "x": 809,
+     "y": 170,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "BUTTON"
+    },
+    "active": "BODY."
+   }
+  },
+  {
+   "look": "skyline-night",
+   "size": "900x600",
+   "shown": {
+    "cleared": false,
+    "leftOpacity": "1",
+    "leftPE": "auto",
+    "left": {
+     "x": 0,
+     "y": 44,
+     "right": 248,
+     "bottom": 600
+    },
+    "panel": {
+     "x": 590,
+     "y": 88,
+     "right": 890,
+     "bottom": 451
+    },
+    "panelShown": true,
+    "panelOpacity": "1",
+    "gapPanelToColumn": 342,
+    "overlapColumn": false,
+    "overlapHud": false,
+    "overlapBand": true,
+    "hud": {
+     "x": 262,
+     "y": 144,
+     "right": 467,
+     "bottom": 162
+    },
+    "band": {
+     "x": 167,
+     "y": 52,
+     "right": 733,
+     "bottom": 138
+    },
+    "centre": {
+     "x": 740,
+     "y": 269,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "DIV.rp-nudge"
+    },
+    "pick": {
+     "x": 740,
+     "y": 140,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "SELECT.rp-pick"
+    },
+    "clear": {
+     "x": 809,
+     "y": 170,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "BUTTON"
+    },
+    "active": "BODY."
+   },
+   "clearedState": {
+    "cleared": true,
+    "leftOpacity": "0",
+    "leftPE": "none",
+    "left": {
+     "x": 0,
+     "y": 44,
+     "right": 248,
+     "bottom": 600
+    },
+    "panel": {
+     "x": 590,
+     "y": 88,
+     "right": 890,
+     "bottom": 451
+    },
+    "panelShown": true,
+    "panelOpacity": "1",
+    "gapPanelToColumn": 342,
+    "overlapColumn": false,
+    "overlapHud": false,
+    "overlapBand": true,
+    "hud": {
+     "x": 262,
+     "y": 144,
+     "right": 467,
+     "bottom": 162
+    },
+    "band": {
+     "x": 167,
+     "y": 52,
+     "right": 733,
+     "bottom": 138
+    },
+    "centre": {
+     "x": 740,
+     "y": 269,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "DIV.rp-nudge"
+    },
+    "pick": {
+     "x": 740,
+     "y": 140,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "SELECT.rp-pick"
+    },
+    "clear": {
+     "x": 809,
+     "y": 170,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "BUTTON"
+    },
+    "active": "BODY."
+   },
+   "pointerOnPanel": {
+    "cleared": true,
+    "leftOpacity": "0",
+    "leftPE": "none",
+    "left": {
+     "x": 0,
+     "y": 44,
+     "right": 248,
+     "bottom": 600
+    },
+    "panel": {
+     "x": 590,
+     "y": 88,
+     "right": 890,
+     "bottom": 451
+    },
+    "panelShown": true,
+    "panelOpacity": "1",
+    "gapPanelToColumn": 342,
+    "overlapColumn": false,
+    "overlapHud": false,
+    "overlapBand": true,
+    "hud": {
+     "x": 262,
+     "y": 144,
+     "right": 467,
+     "bottom": 162
+    },
+    "band": {
+     "x": 167,
+     "y": 52,
+     "right": 733,
+     "bottom": 138
+    },
+    "centre": {
+     "x": 740,
+     "y": 269,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "DIV.rp-nudge"
+    },
+    "pick": {
+     "x": 740,
+     "y": 140,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "SELECT.rp-pick"
+    },
+    "clear": {
+     "x": 809,
+     "y": 170,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "BUTTON"
+    },
+    "active": "BODY."
+   },
+   "focusInPanel": {
+    "cleared": true,
+    "leftOpacity": "0",
+    "leftPE": "none",
+    "left": {
+     "x": 0,
+     "y": 44,
+     "right": 248,
+     "bottom": 600
+    },
+    "panel": {
+     "x": 590,
+     "y": 88,
+     "right": 890,
+     "bottom": 451
+    },
+    "panelShown": true,
+    "panelOpacity": "1",
+    "gapPanelToColumn": 342,
+    "overlapColumn": false,
+    "overlapHud": false,
+    "overlapBand": true,
+    "hud": {
+     "x": 262,
+     "y": 144,
+     "right": 467,
+     "bottom": 162
+    },
+    "band": {
+     "x": 167,
+     "y": 52,
+     "right": 733,
+     "bottom": 138
+    },
+    "centre": {
+     "x": 740,
+     "y": 269,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "DIV.rp-nudge"
+    },
+    "pick": {
+     "x": 740,
+     "y": 140,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "SELECT.rp-pick"
+    },
+    "clear": {
+     "x": 809,
+     "y": 170,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "BUTTON"
+    },
+    "active": "SELECT.rp-pick"
+   },
+   "onStrip": {
+    "cleared": false,
+    "leftOpacity": "1",
+    "leftPE": "auto",
+    "left": {
+     "x": 0,
+     "y": 44,
+     "right": 248,
+     "bottom": 600
+    },
+    "panel": {
+     "x": 590,
+     "y": 88,
+     "right": 890,
+     "bottom": 451
+    },
+    "panelShown": true,
+    "panelOpacity": "1",
+    "gapPanelToColumn": 342,
+    "overlapColumn": false,
+    "overlapHud": false,
+    "overlapBand": true,
+    "hud": {
+     "x": 262,
+     "y": 144,
+     "right": 467,
+     "bottom": 162
+    },
+    "band": {
+     "x": 167,
+     "y": 52,
+     "right": 733,
+     "bottom": 138
+    },
+    "centre": {
+     "x": 740,
+     "y": 269,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "DIV.rp-nudge"
+    },
+    "pick": {
+     "x": 740,
+     "y": 140,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "SELECT.rp-pick"
+    },
+    "clear": {
+     "x": 809,
+     "y": 170,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "BUTTON"
+    },
+    "active": "BODY."
+   }
+  }
+ ],
+ "pageErrors": []
+}

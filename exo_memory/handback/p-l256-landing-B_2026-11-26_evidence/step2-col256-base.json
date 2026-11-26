@@ -1,0 +1,583 @@
+{
+ "results": [
+  {
+   "look": "sigil",
+   "size": "1400x860",
+   "shown": {
+    "cleared": false,
+    "leftOpacity": "1",
+    "leftPE": "auto",
+    "left": {
+     "x": 12,
+     "y": 56,
+     "right": 260,
+     "bottom": 730
+    },
+    "panel": {
+     "x": 1090,
+     "y": 88,
+     "right": 1390,
+     "bottom": 451
+    },
+    "panelShown": true,
+    "panelOpacity": "1",
+    "gapPanelToColumn": 830,
+    "overlapColumn": false,
+    "overlapHud": false,
+    "overlapBand": false,
+    "hud": {
+     "x": 274,
+     "y": 114,
+     "right": 479,
+     "bottom": 132
+    },
+    "band": {
+     "x": 332,
+     "y": 52,
+     "right": 1068,
+     "bottom": 108
+    },
+    "centre": {
+     "x": 1240,
+     "y": 269,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "DIV.rp-nudge"
+    },
+    "pick": {
+     "x": 1240,
+     "y": 140,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "SELECT.rp-pick"
+    },
+    "clear": {
+     "x": 1309,
+     "y": 170,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "BUTTON"
+    },
+    "active": "BODY."
+   },
+   "clearedState": {
+    "cleared": false,
+    "leftOpacity": "1",
+    "leftPE": "auto",
+    "left": {
+     "x": 12,
+     "y": 56,
+     "right": 260,
+     "bottom": 730
+    },
+    "panel": {
+     "x": 1090,
+     "y": 88,
+     "right": 1390,
+     "bottom": 451
+    },
+    "panelShown": true,
+    "panelOpacity": "1",
+    "gapPanelToColumn": 830,
+    "overlapColumn": false,
+    "overlapHud": false,
+    "overlapBand": false,
+    "hud": {
+     "x": 274,
+     "y": 114,
+     "right": 479,
+     "bottom": 132
+    },
+    "band": {
+     "x": 332,
+     "y": 52,
+     "right": 1068,
+     "bottom": 108
+    },
+    "centre": {
+     "x": 1240,
+     "y": 269,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "DIV.rp-nudge"
+    },
+    "pick": {
+     "x": 1240,
+     "y": 140,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "SELECT.rp-pick"
+    },
+    "clear": {
+     "x": 1309,
+     "y": 170,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "BUTTON"
+    },
+    "active": "BODY."
+   },
+   "pointerOnPanel": {
+    "cleared": false,
+    "leftOpacity": "1",
+    "leftPE": "auto",
+    "left": {
+     "x": 12,
+     "y": 56,
+     "right": 260,
+     "bottom": 730
+    },
+    "panel": {
+     "x": 1090,
+     "y": 88,
+     "right": 1390,
+     "bottom": 451
+    },
+    "panelShown": true,
+    "panelOpacity": "1",
+    "gapPanelToColumn": 830,
+    "overlapColumn": false,
+    "overlapHud": false,
+    "overlapBand": false,
+    "hud": {
+     "x": 274,
+     "y": 114,
+     "right": 479,
+     "bottom": 132
+    },
+    "band": {
+     "x": 332,
+     "y": 52,
+     "right": 1068,
+     "bottom": 108
+    },
+    "centre": {
+     "x": 1240,
+     "y": 269,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "DIV.rp-nudge"
+    },
+    "pick": {
+     "x": 1240,
+     "y": 140,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "SELECT.rp-pick"
+    },
+    "clear": {
+     "x": 1309,
+     "y": 170,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "BUTTON"
+    },
+    "active": "BODY."
+   },
+   "focusInPanel": {
+    "cleared": false,
+    "leftOpacity": "1",
+    "leftPE": "auto",
+    "left": {
+     "x": 12,
+     "y": 56,
+     "right": 260,
+     "bottom": 730
+    },
+    "panel": {
+     "x": 1090,
+     "y": 88,
+     "right": 1390,
+     "bottom": 451
+    },
+    "panelShown": true,
+    "panelOpacity": "1",
+    "gapPanelToColumn": 830,
+    "overlapColumn": false,
+    "overlapHud": false,
+    "overlapBand": false,
+    "hud": {
+     "x": 274,
+     "y": 114,
+     "right": 479,
+     "bottom": 132
+    },
+    "band": {
+     "x": 332,
+     "y": 52,
+     "right": 1068,
+     "bottom": 108
+    },
+    "centre": {
+     "x": 1240,
+     "y": 269,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "DIV.rp-nudge"
+    },
+    "pick": {
+     "x": 1240,
+     "y": 140,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "SELECT.rp-pick"
+    },
+    "clear": {
+     "x": 1309,
+     "y": 170,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "BUTTON"
+    },
+    "active": "SELECT.rp-pick"
+   },
+   "onStrip": {
+    "cleared": false,
+    "leftOpacity": "1",
+    "leftPE": "auto",
+    "left": {
+     "x": 12,
+     "y": 56,
+     "right": 260,
+     "bottom": 730
+    },
+    "panel": {
+     "x": 1090,
+     "y": 88,
+     "right": 1390,
+     "bottom": 451
+    },
+    "panelShown": true,
+    "panelOpacity": "1",
+    "gapPanelToColumn": 830,
+    "overlapColumn": false,
+    "overlapHud": false,
+    "overlapBand": false,
+    "hud": {
+     "x": 274,
+     "y": 114,
+     "right": 479,
+     "bottom": 132
+    },
+    "band": {
+     "x": 332,
+     "y": 52,
+     "right": 1068,
+     "bottom": 108
+    },
+    "centre": {
+     "x": 1240,
+     "y": 269,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "DIV.rp-nudge"
+    },
+    "pick": {
+     "x": 1240,
+     "y": 140,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "SELECT.rp-pick"
+    },
+    "clear": {
+     "x": 1309,
+     "y": 170,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "BUTTON"
+    },
+    "active": "BODY."
+   }
+  },
+  {
+   "look": "sigil",
+   "size": "900x600",
+   "shown": {
+    "cleared": false,
+    "leftOpacity": "1",
+    "leftPE": "auto",
+    "left": {
+     "x": 12,
+     "y": 56,
+     "right": 260,
+     "bottom": 588
+    },
+    "panel": {
+     "x": 590,
+     "y": 88,
+     "right": 890,
+     "bottom": 451
+    },
+    "panelShown": true,
+    "panelOpacity": "1",
+    "gapPanelToColumn": 330,
+    "overlapColumn": false,
+    "overlapHud": false,
+    "overlapBand": true,
+    "hud": {
+     "x": 274,
+     "y": 144,
+     "right": 479,
+     "bottom": 162
+    },
+    "band": {
+     "x": 167,
+     "y": 52,
+     "right": 733,
+     "bottom": 138
+    },
+    "centre": {
+     "x": 740,
+     "y": 269,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "DIV.rp-nudge"
+    },
+    "pick": {
+     "x": 740,
+     "y": 140,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "SELECT.rp-pick"
+    },
+    "clear": {
+     "x": 809,
+     "y": 170,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "BUTTON"
+    },
+    "active": "BODY."
+   },
+   "clearedState": {
+    "cleared": false,
+    "leftOpacity": "1",
+    "leftPE": "auto",
+    "left": {
+     "x": 12,
+     "y": 56,
+     "right": 260,
+     "bottom": 588
+    },
+    "panel": {
+     "x": 590,
+     "y": 88,
+     "right": 890,
+     "bottom": 451
+    },
+    "panelShown": true,
+    "panelOpacity": "1",
+    "gapPanelToColumn": 330,
+    "overlapColumn": false,
+    "overlapHud": false,
+    "overlapBand": true,
+    "hud": {
+     "x": 274,
+     "y": 144,
+     "right": 479,
+     "bottom": 162
+    },
+    "band": {
+     "x": 167,
+     "y": 52,
+     "right": 733,
+     "bottom": 138
+    },
+    "centre": {
+     "x": 740,
+     "y": 269,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "DIV.rp-nudge"
+    },
+    "pick": {
+     "x": 740,
+     "y": 140,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "SELECT.rp-pick"
+    },
+    "clear": {
+     "x": 809,
+     "y": 170,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "BUTTON"
+    },
+    "active": "BODY."
+   },
+   "pointerOnPanel": {
+    "cleared": false,
+    "leftOpacity": "1",
+    "leftPE": "auto",
+    "left": {
+     "x": 12,
+     "y": 56,
+     "right": 260,
+     "bottom": 588
+    },
+    "panel": {
+     "x": 590,
+     "y": 88,
+     "right": 890,
+     "bottom": 451
+    },
+    "panelShown": true,
+    "panelOpacity": "1",
+    "gapPanelToColumn": 330,
+    "overlapColumn": false,
+    "overlapHud": false,
+    "overlapBand": true,
+    "hud": {
+     "x": 274,
+     "y": 144,
+     "right": 479,
+     "bottom": 162
+    },
+    "band": {
+     "x": 167,
+     "y": 52,
+     "right": 733,
+     "bottom": 138
+    },
+    "centre": {
+     "x": 740,
+     "y": 269,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "DIV.rp-nudge"
+    },
+    "pick": {
+     "x": 740,
+     "y": 140,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "SELECT.rp-pick"
+    },
+    "clear": {
+     "x": 809,
+     "y": 170,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "BUTTON"
+    },
+    "active": "BODY."
+   },
+   "focusInPanel": {
+    "cleared": false,
+    "leftOpacity": "1",
+    "leftPE": "auto",
+    "left": {
+     "x": 12,
+     "y": 56,
+     "right": 260,
+     "bottom": 588
+    },
+    "panel": {
+     "x": 590,
+     "y": 88,
+     "right": 890,
+     "bottom": 451
+    },
+    "panelShown": true,
+    "panelOpacity": "1",
+    "gapPanelToColumn": 330,
+    "overlapColumn": false,
+    "overlapHud": false,
+    "overlapBand": true,
+    "hud": {
+     "x": 274,
+     "y": 144,
+     "right": 479,
+     "bottom": 162
+    },
+    "band": {
+     "x": 167,
+     "y": 52,
+     "right": 733,
+     "bottom": 138
+    },
+    "centre": {
+     "x": 740,
+     "y": 269,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "DIV.rp-nudge"
+    },
+    "pick": {
+     "x": 740,
+     "y": 140,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "SELECT.rp-pick"
+    },
+    "clear": {
+     "x": 809,
+     "y": 170,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "BUTTON"
+    },
+    "active": "SELECT.rp-pick"
+   },
+   "onStrip": {
+    "cleared": false,
+    "leftOpacity": "1",
+    "leftPE": "auto",
+    "left": {
+     "x": 12,
+     "y": 56,
+     "right": 260,
+     "bottom": 588
+    },
+    "panel": {
+     "x": 590,
+     "y": 88,
+     "right": 890,
+     "bottom": 451
+    },
+    "panelShown": true,
+    "panelOpacity": "1",
+    "gapPanelToColumn": 330,
+    "overlapColumn": false,
+    "overlapHud": false,
+    "overlapBand": true,
+    "hud": {
+     "x": 274,
+     "y": 144,
+     "right": 479,
+     "bottom": 162
+    },
+    "band": {
+     "x": 167,
+     "y": 52,
+     "right": 733,
+     "bottom": 138
+    },
+    "centre": {
+     "x": 740,
+     "y": 269,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "DIV.rp-nudge"
+    },
+    "pick": {
+     "x": 740,
+     "y": 140,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "SELECT.rp-pick"
+    },
+    "clear": {
+     "x": 809,
+     "y": 170,
+     "inPanel": true,
+     "inLeft": false,
+     "hit": "BUTTON"
+    },
+    "active": "BODY."
+   }
+  }
+ ],
+ "pageErrors": []
+}

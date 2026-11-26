@@ -1,0 +1,19 @@
+[32m✔ row 1: in every look the column is flush: x 0, from the header's bottom to the window's bottom, corners 0 [90m(16184.5583ms)[39m[39m
+[32m✔ row 2: the view tag keeps its 14 px from the column, the values band and the camera bar are clear of it, and the tag never sits on the bar [90m(6364.7675ms)[39m[39m
+[32m✔ row 3: in every look the pointer off the column clears it after the delay (opacity 0, --left-cleared); the return strip brings it back; a fast cross never clears it [90m(28353.3351ms)[39m[39m
+[32m✔ row 4: cleared, a click over the old column outside the strip reaches the preview's canvas and presses nothing in the column; the strip is 5 px in, not 30 [90m(3955.6086ms)[39m[39m
+[32m✔ row 5: a press as the column comes back presses nothing; after its fade the same click on Extend lays a piece [90m(5258.7678ms)[39m[39m
+[32m✔ row 6: a field being edited, and a press that began in the column, keep it shown with the pointer off it [90m(6346.2964ms)[39m[39m
+[32m✔ row 7: a saved piece's ghost with its Place piece row up keeps the column shown with the pointer off it; Cancel piece lets it clear [90m(4715.9262ms)[39m[39m
+[32m✔ row 8: Tab from the header into the cleared column brings it back, focused where Tab landed [90m(4693.6584ms)[39m[39m
+[32m✔ row 9: prefers-reduced-motion has no fade, only the switch; without it the fade is 0.2 s [90m(2701.907ms)[39m[39m
+[32m✔ row 10: a fresh page keeps the column shown until the pointer has been on it: moving about the preview alone never clears it [90m(4228.8176ms)[39m[39m
+[32m✔ row 11: while the guide points into the column it stays shown with the pointer off it; closing the guide lets it clear [90m(3680.0423ms)[39m[39m
+[34mℹ tests 11[39m
+[34mℹ suites 0[39m
+[34mℹ pass 11[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 87121.0206[39m
