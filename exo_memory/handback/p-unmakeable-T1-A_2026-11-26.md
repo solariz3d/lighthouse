@@ -337,3 +337,36 @@ They live in `G:/consonance-scratch/a-t1-scratch/`.
 
 Ran headless at BelowNormal. Neither his app nor the game was launched, and the heavy-run lock was not taken: no suite
 was run, only the scratch scripts.
+
+## Correction, 20:04Z (the same day; the rows above are kept as written)
+
+Found while running the floors plan's M-B0: the noise check above is wrong in two ways.
+
+1. **Seven sections** have heading jitter over the 2° bar, not two. They are 2128-2332, 4579-4851, 7394-7442,
+   7514-7558, 7614-7634, 7634-7658 and 8774-8794.
+2. **The registered rule was not applied to the verdicts**, not even on the two named. The rule is that exit heading is
+   unusable on such a section. Against the line "Neither section's verdict rests on exit heading": 2128-2332's step-20 form
+   fails on exit heading alone.
+
+Applied now:
+
+- **2128-2332 is made**, by steering: solved-rate pieces every 20 m, 11 pieces, every other bar inside.
+- **4579-4851 is made**, by steering: every 12 m, 24 pieces.
+  - Its 15.8° exit is the reference's own last-station estimate. The built heading is within 3.3° and the line within
+    1.3 m up to 4831 m.
+  - Its peak roll on that form is 1.44 against 1.91 °/m, inside the bar. The "0.69-1.16" above left this form out.
+- The other five stay not made, on other bars.
+
+**The counts become 75 / 96 sections, 8,254 m / 9,162 m.** By hand: 39 sections, 1,995 m. Only by steering: 36
+sections, 6,259 m. Not made: 21 sections, 908 m.
+
+**Withdrawn:**
+
+- the hairpin's "inferred: the bank cannot change fast enough", with its BANK_FIT_FLOOR_M candidate;
+- 2128-2332 as a near-miss;
+- class 2's "One-piece corners on the 20 m sections hit TURN_TOO_SHORT" (and the same on 3819-3891).
+
+The final results carry one readable TURN_TOO_SHORT, on an extra-turn-row form on 3819-3891. Three more refusals are
+truncated before their code. A banked corner under 21 m is laid at ceb21f5.
+
+Details and checks: `exo_memory/loop/plan_t180_floors_and_wrap_2026-11-26.md`, "Results".

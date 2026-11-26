@@ -245,3 +245,145 @@ This plan failed if:
 
 - M-A0 or M-B0 shows a limit this plan did not name as the blocker of the switchback or the hairpin; or
 - a floor is shortened without its guard rows (G1-G5) staying green.
+
+## Results: M-A0 and M-B0 (run 2026-11-26 20:00-20:04Z, chair D677)
+
+Run in scratch copies of ceb21f5 under `G:/consonance-scratch/`, made by `git archive` outside every repo:
+
+| copy | change |
+|---|---|
+| `m-base` | none |
+| `m-cornerfloor` | in `turnby.js` `extendCorner`, a corner of 40 m or less with no knotM gets three knot spans |
+| `m-adaptoff` | `adapter.js` bankPlan skips its re-rounding; the carry through joints is kept |
+| `m-fitoff` | `BANK_FIT_FLOOR_M = 0` |
+
+The scripts are local (`ma0.js`, `knotchk.js`, `knotchk2.js`, `t1.js`, and `cmp.js` with `DUMPH`). No branch was
+touched, no red row was written, and (b) was not touched.
+
+### M-A0: the falsifier fired. The 21 m corner floor is not what blocks the switchback.
+
+The zone was laid as one corner per bend at the bend's own length, cut two ways: at the hand-back's sections, and at the
+reference's own turn-rate inflections. Each cut was scored with the junction rows both in and out of position and pitch
+(amendment 5).
+
+    checked: T180=…/m-base and …/m-cornerfloor, CUT=sections|inflect, JALL=0|1 node ma0.js
+
+| cut | pieces | position p95 | exit | pitch p95 | bank p95 |
+|---|---|---|---|---|---|
+| sections | 8 (22.9-69.9 m) | 19.4-20.6 m | 2.6° | 24-26° | 30.2° |
+| inflections | 8 (23.1-65.6 m) | 13.8-17.3 m | 3.2° | 20-22° | 32.0° |
+
+- **Both copies gave identical results**, to the 0.1, on all four runs.
+- **Why the copies match:** the floor never applies there. Every bend is at least 22.9 m long, and the floor is narrower
+  than the plan assumed.
+
+      checked: knotchk2.js
+
+  - At ceb21f5, a corner under 21 m IS laid whenever it carries a bank change, because the bank's ramp inserts its own
+    knots. Laid: 58.7° in 20 m at bank −30; 70° in 16 m; 45° in 12 m.
+  - TURN_TOO_SHORT fires only on a corner in which nothing else changes.
+  - In the switchback the bank changes in every bend.
+- **The registered falsifier fired:** "if that copy does not bring position p95 under 3 m and the exit under 2°, the
+  corner floor is not what blocks the switchback". The unwelcome outcome, as written in advance: **the floor was never the
+  blocker.**
+- **The floor stays.** Its real reach is a corner under 21 m that changes nothing else.
+- **What does miss.** `inferred:` from the size of the misses, each bend's bank and pitch go one way to the exit value,
+  while the reference reverses its bank (about ±37°) and humps (±15°) inside each bend. That shape needs marks inside a
+  short piece.
+- **The one form that tried marks inside a bend** (the bank's peak as a mid mark, the climb split at the middle; hand-back
+  §2) was refused CLIMB_TOO_SHORT: an extra climb row needs 21.0 m. That is the extra-corner floor, a sibling of this one.
+  It is the next thing to measure, not to move. Per this plan's own falsifier ("M-A0 … shows a limit this plan did not
+  name"), **this plan failed on the switchback.**
+- **Where TURN_TOO_SHORT appears in the [T1] results at all.**
+
+      checked: node -e over the four result files, refusals matching TURN_TOO|CLIMB_TOO
+
+  - Readable: one form, `oneRows {n:4}` on 3819-3891 (18 m parts, an extra turn row).
+  - Three more refusals were truncated at 400 characters before their code (`oneRows {n:4}` on 2552-2640, 3891-3967 and
+    7442-7514). They may be the same.
+
+### M-B0: the falsifier fired. Neither the adapter's 3 g bar nor the 26 m fit floor changes the hairpin, and the hairpin is made.
+
+The hairpin (4579-4851) was laid by five rate forms in each copy.
+
+    checked: T180=…/m-base|m-adaptoff|m-fitoff node t1.js 4579 4851 ratePieces <form>
+
+| form | m-base: peak roll, exit | m-adaptoff | m-fitoff |
+|---|---|---|---|
+| step 12 | 1.44 vs 1.91 °/m, 15.8° | 1.44, 15.8° | 1.44, 15.8° |
+| step 10 | 1.16, 19.2° | 1.13, 19.2° | 1.16, 19.2° |
+| step 20, marks 10 | 0.77, 27.6° | 0.70, 27.6° | 0.77, 27.6° |
+| step 30, marks 10 | 1.11, 22.4° | 1.11, 22.4° | 1.11, 22.4° |
+| step 15, flow | 0.84, 20.1° | 0.87, 20.1° | 0.84, 20.1° |
+
+**Neither limit moves anything that matters.** The adapter-off copy changes peak roll by at most 0.07 °/m. The fit-off
+copy changes nothing. The registered falsifier, "if neither (2) nor (3) brings the built peak roll within 30% of 1.91 °/m,
+neither limit is the blocker", fired: neither brings the roll closer than the base already does.
+
+The base's step-12 form is already inside the roll bar: 1.44 against 1.91 is 0.47 off, and the bar is 0.57. The hand-back
+listed this section's roll as 0.69-1.16. It did not carry the step-12 form's figure, which is a further error in it.
+
+**The plan's fall-back cause, "the cause is in the rate-piece route", is also wrong.**
+
+    checked: DUMPH=1 … node t1.js 4579 4851 ratePieces '{"step":12}'
+
+- **The built road tracks the reference the whole way.** Heading is within 0.1-3.3° and position within 1.3 m at every
+  station to 4831 m.
+- **The 15.8° is the last station alone.** Position blips to 3.3 and 4.5 m at the two stations before it.
+- **The cause is the reference's own end estimate.** Its section-own heading moves 14.4° in its last 4 m, while its
+  centred heading moves 3.3° per station there.
+- **The jitter file agrees.** It gives this section a heading jitter of 2.07°, over the 2° bar. **By the rule registered
+  before any measuring** ("if the noise is over a bar, that bar is reported as unusable rather than quietly widened"),
+  exit heading is unusable here.
+- **On every other bar, the step-12 form passes.**
+
+      checked: node -e over results.local.json, the tries whose only failure is exit heading
+
+  4579-4851 is MADE, by steering: solved-rate pieces every 12 m, 24 pieces.
+
+**So the bank fit floor stays and the 3 g bar stays.** [T1] gives no case against either, and no question about the bar
+goes to him.
+
+### The correction this forces on the [T1] hand-back (my error)
+
+The hand-back's noise check named two sections with heading jitter over the bar: 2128-2332 and 8774-8794. There are
+**seven**.
+
+    checked: node -e over jitter.local.json, headJ > 2
+
+- 2128-2332 (2.04°)
+- 4579-4851 (2.07°)
+- 7394-7442 (3.42°)
+- 7514-7558 (2.97°)
+- 7614-7634 (7.23°)
+- 7634-7658 (2.47°)
+- 8774-8794 (2.9°)
+
+Even on the two the hand-back did name, its verdict was not computed without the exit bar. It said "neither section's
+verdict rests on exit heading", but 2128-2332's step-20 form fails on exit heading alone (8.8°). Applying the rule to all
+seven:
+
+- **2128-2332 is made**, by steering: solved-rate pieces every 20 m, 11 pieces.
+- **4579-4851 is made**, as above.
+- The other five stay not made, on other bars.
+
+**[T1] now stands at 75 / 96 sections, 8,254 m / 9,162 m:**
+
+| | sections | length |
+|---|---|---|
+| made by hand | 39 | 1,995 m (unchanged) |
+| made only by steering | 36 | 6,259 m |
+| not made | 21 | 908 m |
+
+`inferred:` the hand-back's checked figures plus 204 m and 272 m; this is arithmetic, `final.js` was not re-run.
+
+**The catalogue's classes change:**
+
+- The near-miss class loses its two largest sections: 6 sections, 252 m.
+- "The bank cannot change fast enough" is withdrawn.
+- These stand:
+  - the class past one roll (228 m)
+  - the switchback (288 m)
+  - the jogs (140 m)
+
+The same correction is appended to the hand-back.
