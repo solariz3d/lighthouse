@@ -1,0 +1,45 @@
+V3g: mode=road kind=road picked="reference track 1\u0000" drawn=yes (1257 m line) error=null
+V3h: mode=line kind=line picked="reference track 2\u0000" drawn=yes (942 m line) error=null
+V3h2: mode=road kind=road picked="reference track 1\u0000" drawn=yes (1257 m line) error=null
+V3i in Line: mode=line kind=null picked="reference track 7\u0000" drawn=no error=null
+V3i option in Line: {"text":"reference track 7 (no AI line)","value":"reference track 7\u0000","disabled":true}; readout "reference track 7: it has no AI line, so Line has nothing to draw. Road draws it, placed by the start its kn5 names."; line reads asked 0
+V3i back in Road: mode=road kind=road picked="reference track 7\u0000" drawn=yes (road by start) error=null
+V3i option back in Road: {"text":"reference track 7 (no AI line: placed by its start)","value":"reference track 7\u0000","disabled":false}
+V3j shown in Road: mode=road kind=road picked="reference track 7\u0000" drawn=yes (road by start) error=null
+V3j in Line: mode=line kind=null picked="reference track 7\u0000" drawn=no error=null
+V3j back in Road: mode=road kind=road picked="reference track 7\u0000" drawn=yes (road by start) error=null
+V3j: line reads asked 0; Line readout "reference track 7: it has no AI line, so Line has nothing to draw. Road draws it, placed by the start its kn5 names."
+V1n: mode=road kind=road picked="reference track 7\u0000" drawn=yes (road by start) error=null
+[32m✔ V3g: three acts in a row, every read held: pick A (Line), change to Road, pick B: B is drawn, as Road [90m(22.869ms)[39m[39m
+[32m✔ V3h: pick A (Line, held), change to Road, change back to Line: A is drawn, as Line [90m(4.8669ms)[39m[39m
+[32m✔ V3h2: A shown as Road; pick B (its road held); Line; back to Road: B is drawn, as Road [90m(6.1738ms)[39m[39m
+[32m✔ V3i: Road; a layout with no AI line picked, its road still reading; changed to Line: what is drawn and said; then back to Road [90m(1.6502ms)[39m[39m
+[32m✔ V3j: a layout with no AI line SHOWN as Road; changed to Line, then back to Road [90m(1.7755ms)[39m[39m
+[31m✖ V1n (replaces V1): a layout with no AI line: in Line listed greyed "(no AI line)"; in Road listed "(no AI line: placed by its start)", drawn by its start on his start, no line read [90m(46.6428ms)[39m[39m
+[34mℹ tests 6[39m
+[34mℹ suites 0[39m
+[34mℹ pass 5[39m
+[34mℹ fail 1[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 303.1895[39m
+
+[31m✖ failing tests:[39m
+
+test at ..\lighthouse\exo_memory\handback\p-l250-read-E_2026-11-26_evidence\reread\e_vary2.test.js:94:1
+[31m✖ V1n (replaces V1): a layout with no AI line: in Line listed greyed "(no AI line)"; in Road listed "(no AI line: placed by its start)", drawn by its start on his start, no line read [90m(46.6428ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /placed by its kn5's start \(AC_START_0\): it has no AI line/. Input:
+  
+  "600 triangles of road from its kn5, placed by its kn5's start (its first grid slot): it has no AI line · read 0 ms, built 0 ms"
+  
+      at TestContext.<anonymous> (C:\Consonance\lighthouse\exo_memory\handback\p-l250-read-E_2026-11-26_evidence\reread\e_vary2.test.js:107:10)
+  [90m    at async Test.run (node:internal/test_runner/test:1332:7)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)[39m {
+    generatedMessage: [33mtrue[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [32m"600 triangles of road from its kn5, placed by its kn5's start (its first grid slot): it has no AI line · read 0 ms, built 0 ms"[39m,
+    expected: [31m/placed by its kn5's start \(AC_START_0\): it has no AI line/[39m,
+    operator: [32m'match'[39m,
+    diff: [32m'simple'[39m
+  }

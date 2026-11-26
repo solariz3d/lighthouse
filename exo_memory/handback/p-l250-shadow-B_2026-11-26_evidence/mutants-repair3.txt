@@ -1,0 +1,20 @@
+caught      Line asks for a line it does not have (no guard)
+caught      the pick is not kept in Line
+caught      what was shown stays drawn in Line
+SURVIVED    the road still reading stays "reading" in Line
+caught      a change to Road does not re-read the kept pick
+caught      the select does not name the kept pick
+caught      the state names no pick while it is kept
+caught      Line says nothing of the kept pick
+caught      Clear keeps the kept pick
+caught      another pick keeps the kept one
+caught      Road with a line is not set down (the one-line undo)
+caught      a start with no line is not set down
+caught      no road under it: height 0, not its own
+caught      groundUnder reaches 2 m above (as at b26db76)
+caught      groundUnder takes any surface, a deck too
+caught      groundUnder takes the lowest road
+caught      the readout says AC_START_0 again
+caught      an absent start ends as a damaged read
+caught      every refusal loses its ending
+18 of 19 caught; restored byte for byte: true

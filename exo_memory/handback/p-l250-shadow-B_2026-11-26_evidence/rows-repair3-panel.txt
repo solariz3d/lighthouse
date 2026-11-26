@@ -1,0 +1,35 @@
+[32m✔ P1: every installed layout is listed; one with no AI line says so and cannot be picked [90m(5.3269ms)[39m[39m
+[32m✔ P2: pick draws it on his start; Show off hides it and keeps the pick and the nudge; Show on draws it again; Clear drops both [90m(57.8292ms)[39m[39m
+[32m✔ P3: a line that does not read is refused in words, the one shown before is taken down, and its entry is marked [90m(4.3196ms)[39m[39m
+[32m✔ P4: a layout carrying another layout's line is said so, and so is a line far off its stated length; a line of its own says nothing [90m(2.7865ms)[39m[39m
+[32m✔ P5: a later pick wins over an earlier one still being read [90m(1.7568ms)[39m[39m
+[32m✔ RD1: Road draws the kn5's road placed by the layout's AI line: Line and Road lie on each other across under one nudge; Road is set down on its road, flush with his [90m(23.4964ms)[39m[39m
+[32m✔ RD2: a road that does not read is refused in words and the one shown before is taken down; the same layout's Line still draws [90m(9.7233ms)[39m[39m
+[32m✔ RD3: a layout with no AI line is drawn as Road, placed by the start its kn5 names; with no start it is refused in words; in Line it stays greyed [90m(18.8032ms)[39m[39m
+[32m✔ P6 (E's V3e): Road shows one layout; he picks another, its road still reading, and changes to Line: his newest pick is drawn, as Line [90m(4.6295ms)[39m[39m
+[32m✔ P7 (E's V3f): nothing shown, Road; a road still reading when he changes to Line: it is drawn in the mode the panel names [90m(2.2129ms)[39m[39m
+[32m✔ P8: a pick that ended, cleared while it read or refused, is not drawn by a later mode change [90m(2.4963ms)[39m[39m
+[32m✔ P9 (E's V3i): Road; a layout with no AI line picked, its road still reading; changed to Line: nothing is asked, Line says it has nothing to draw, and back in Road his pick is drawn [90m(0.764ms)[39m[39m
+[32m✔ P10 (E's V3j): a layout with no AI line SHOWN as Road; changed to Line, then back to Road: drawn again, with its nudge [90m(0.8815ms)[39m[39m
+[32m✔ P11: a layout with no AI line kept in Line is let go by Clear, and by another pick: the change back to Road draws nothing, or the other [90m(2.1603ms)[39m[39m
+[32m✔ RD4 (E's V1n, which replaces E's V1): a layout with no AI line: greyed in Line; in Road listed "(no AI line: placed by its start)", drawn by its start on his start, its road the only read [90m(14.9382ms)[39m[39m
+[32m✔ N1: a nudge value that is not a number, typed or given, keeps the nudge it had (the box shows it again), and nothing moves [90m(14.507ms)[39m[39m
+[32m✔ L1: the panel's look is one class on the page's own pane tokens, with nothing inline, so a look can style it [90m(0.6731ms)[39m[39m
+[32m✔ R1 (line): the document: nothing of the reference enters it, and the shell is not told of any of it [90m(35.1331ms)[39m[39m
+[32m✔ R1 (road): the document: nothing of the reference enters it, and the shell is not told of any of it [90m(33.3902ms)[39m[39m
+[32m✔ R2 (line): a save: the track file and its undo file are byte for byte the same with a reference shown [90m(22.9968ms)[39m[39m
+[32m✔ R2 (road): a save: the track file and its undo file are byte for byte the same with a reference shown [90m(22.8928ms)[39m[39m
+[32m✔ R3 (line): an undo step: the reference is none; Ctrl+Z undoes his last edit, and the reference stays shown through it [90m(29.9003ms)[39m[39m
+[32m✔ R3 (road): an undo step: the reference is none; Ctrl+Z undoes his last edit, and the reference stays shown through it [90m(28.0663ms)[39m[39m
+[32m✔ R4 (line): an export: every file is byte for byte the same with a reference shown [90m(3516.8505ms)[39m[39m
+[32m✔ R4 (road): an export: every file is byte for byte the same with a reference shown [90m(3257.4655ms)[39m[39m
+[32m✔ D1: the reference goes down before his road and writes no depth, so his road is drawn over it wherever they overlap [90m(2.0371ms)[39m[39m
+[32m✔ D2: the shadow's colour is the skin's --reference token, REFERENCE.colour when it sets none [90m(1.6439ms)[39m[39m
+[34mℹ tests 27[39m
+[34mℹ suites 0[39m
+[34mℹ pass 27[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 7334.3929[39m

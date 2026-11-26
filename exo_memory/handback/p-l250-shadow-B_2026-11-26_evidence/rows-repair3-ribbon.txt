@@ -1,0 +1,28 @@
+[32m✔ a line with a grid is refused by readAiLine and read by readAiShape [90m(6.0298ms)[39m[39m
+[32m✔ a known circle gives its length and its width [90m(3.4402ms)[39m[39m
+[32m✔ sideLeft goes to the left of the way the line runs, sideRight to the right [90m(4.1118ms)[39m[39m
+[32m✔ with no stored normal the camber leans the road: a + camber rises to the right [90m(3.2675ms)[39m[39m
+[32m✔ a stored normal leans the road even with no camber [90m(2.9095ms)[39m[39m
+[32m✔ with no normal and no camber the road is flat [90m(2.66ms)[39m[39m
+[32m✔ an open line is not closed, and its length has no closing span [90m(0.9208ms)[39m[39m
+[32m✔ a long line is split into batches whose indices fit Uint16, covering every span once [90m(5.7082ms)[39m[39m
+[32m✔ placed, the reference starts at the anchor, faces its way, and keeps its scale [90m(1.8814ms)[39m[39m
+[32m✔ a nudge moves and turns it, and never scales it [90m(1.3322ms)[39m[39m
+[32m✔ refuses what it cannot read, by name [90m(0.5267ms)[39m[39m
+[32m✔ L250: the two kinds of line that do not read on L are refused in words, never drawn in part [90m(0.4582ms)[39m[39m
+[32m✔ L250: an open line draws open: no span and no edge joins its last point to its first; a lap whose ends are 2 spacings apart is closed [90m(2.9282ms)[39m[39m
+[32m✔ L250: sameLine tells the same line, the same points with other widths, and another line apart [90m(2.1003ms)[39m[39m
+[32m✔ L250: a layout's stated length is read in metres, and a line more than 5 % off it is said so [90m(10.2313ms)[39m[39m
+[32m✔ L250: a road from the kn5 reads back exactly, its normals face up, and its triangles are counted [90m(1.9649ms)[39m[39m
+[32m✔ L250: road bytes that do not read whole are refused by name, in words, and never drawn in part [90m(1.1873ms)[39m[39m
+[32m✔ L250 repair: a road with no AI line is placed by the start its kn5 names, set down on the road under it; a start that is not one is refused [90m(4.9045ms)[39m[39m
+[32m✔ L250: the road is placed by its layout's AI line: the same way and the same place across, set down on its road under the line's first point, so Line and Road lie on each other across under one nudge [90m(1.6069ms)[39m[39m
+[32m✔ L250 second repair: groundUnder takes the highest road AT OR BELOW the start: a deck overhead, however near, is never the ground (pane E's bridge_check) [90m(0.2557ms)[39m[39m
+[34mℹ tests 20[39m
+[34mℹ suites 0[39m
+[34mℹ pass 20[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 134.1444[39m

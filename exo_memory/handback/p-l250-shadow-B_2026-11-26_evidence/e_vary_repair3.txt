@@ -1,0 +1,54 @@
+V3a: mode=road kind=road picked="reference track 2\u0000" drawn=yes (942 m line) error=null readout="400 triangles of road from its kn5, placed by its 942 m AI line · read 0 ms, built 0 ms"
+V3b: mode=road kind=road picked="reference track 2\u0000" drawn=yes (942 m line) error=null readout="400 triangles of road from its kn5, placed by its 942 m AI line · read 0 ms, built 0 ms"
+V3c: mode=road kind=road picked="reference track 1\u0000two" drawn=yes (1257 m line) error=null readout="600 triangles of road from its kn5, placed by its 1,257 m AI line · read 0 ms, built 0 ms"
+V3d: mode=line kind=null picked=null drawn=no error=null readout="7 of 8 layouts have an AI line to show."
+V4 {"dx":100000}: reply=ok start=1.000e+5,0.000,0.000 model-as-f32 finite=true panel.error=null
+V4 {"dx":10000000}: reply=ok start=1.000e+7,0.000,0.000 model-as-f32 finite=true panel.error=null
+V4 {"dz":-1000000000}: reply=ok start=0.000,0.000,-1.000e+9 model-as-f32 finite=true panel.error=null
+V4 {"yawDeg":1000000000000}: reply=ok start=0.000,0.000,0.000 model-as-f32 finite=true panel.error=null
+V4 {"dx":3.5e+38}: reply=ok start=3.500e+38,0.000,0.000 model-as-f32 finite=false panel.error=null
+V4 {"dx":1e+39}: reply=ok start=1.000e+39,0.000,0.000 model-as-f32 finite=false panel.error=null
+V4 {dx: Infinity}: reply={"lengthM":942.4605676894042,"width":{"median":10,"min":10,"max":10},"closed":true,"points":300,"nudge":{"dx":1e+39,"dz":0,"dy":0,"yawDeg":0},"start":[1e+39,0,0],"forward":[0,0,1],"anchor":{"pos":[0,0,0],"T":[0,0,1]}} drawn start=1.000e+39,0.000,0.000 panel.nudge.dx=1e+39 panel.error=null readout="942 m along its line · 10 m wide (10 to 10) · read 0 ms, built 0 ms"
+V4 then pick track 1: picked="reference track 1\u0000" drawn lengthM=1257 (track 1 is 1257, track 2 is 942) error=null readout="1,257 m along its line · 10 m wide (10 to 10) · read 0 ms, built 0 ms"
+V1 option in Road: {"text":"reference track 5 (no AI line: placed by its start)","value":"reference track 5\u0000","disabled":false}; readout "8 of 8 layouts to show as road (1 with no AI line, placed by the start its kn5 names)."
+V1 pick() of it: mode=road kind=null picked=null drawn=no error="reference track 5: Not drawn: no kn5 in that folder. What does not read whole is never drawn in part." readout="reference track 5: Not drawn: no kn5 in that folder. What does not read whole is never drawn in part."
+V5 line: autosaves 1 (0 after the reference), same autosave=true, same share doc=true, mentions reference=false
+V5 road: autosaves 1 (0 after the reference), same autosave=true, same share doc=true, mentions reference=false
+V3e: mode=line kind=line picked="reference track 1\u0000" drawn=yes (1257 m line) error=null readout="1,257 m along its line · 10 m wide (10 to 10) · read 0 ms, built 0 ms"
+V3f: mode=line kind=line picked="reference track 2\u0000" drawn=yes (942 m line) error=null readout="942 m along its line · 10 m wide (10 to 10) · read 0 ms, built 0 ms"
+[32m✔ V3a (Road): a later pick wins over an earlier one whose ROAD read is still out [90m(21.6846ms)[39m[39m
+[32m✔ V3b: nothing shown; a pick still reading, then the mode changed to Road: what is drawn is in the mode the panel names [90m(3.2526ms)[39m[39m
+[32m✔ V3c: A shown; B picked and still reading; the mode changed to Road: B is drawn as Road (his last pick and his last mode) [90m(5.5094ms)[39m[39m
+[32m✔ V3d: a pick still reading, then Clear: nothing is drawn when it lands [90m(1.1429ms)[39m[39m
+[32m✔ V4: the nudge at large values: what the preview draws and what the panel says [90m(53.3193ms)[39m[39m
+[31m✖ V1: a layout with no AI line, in Road mode and through pick(): listed greyed, refused in words [90m(4.9904ms)[39m[39m
+[32m✔ V5: the autosave and the share code are the same with a reference shown, Line and Road [90m(84.0741ms)[39m[39m
+[32m✔ V3e: A shown as Road; B picked, its road still reading; the mode changed to Line: B is drawn (his last pick), as Line [90m(4.7518ms)[39m[39m
+[32m✔ V3f: nothing shown, Road; B picked, its road still reading; the mode changed to Line: what is drawn is in the mode the panel names [90m(2.9242ms)[39m[39m
+[34mℹ tests 9[39m
+[34mℹ suites 0[39m
+[34mℹ pass 8[39m
+[34mℹ fail 1[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 388.3219[39m
+
+[31m✖ failing tests:[39m
+
+test at ..\lighthouse\exo_memory\handback\p-l250-read-E_2026-11-26_evidence\e_vary.test.js:113:1
+[31m✖ V1: a layout with no AI line, in Road mode and through pick(): listed greyed, refused in words [90m(4.9904ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(o.disabled)
+  
+      at TestContext.<anonymous> (C:\Consonance\lighthouse\exo_memory\handback\p-l250-read-E_2026-11-26_evidence\e_vary.test.js:121:62)
+  [90m    at async Test.run (node:internal/test_runner/test:1332:7)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)[39m {
+    generatedMessage: [33mtrue[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
