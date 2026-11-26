@@ -3288,3 +3288,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 
 ## 2026-11-26 05:5x local (L) · L250 read NOT CLEAN: the shadow panel's setMode re-picks the layout last SHOWN, not the one still reading, so a mode change during a Road read drops his newest pick or draws it in the mode he left (V3e, V3f; a 6-line scratch fix greens all six race rows); the merged tree builds (24/0/3), 61 of 61 layouts read; O's "digits, then starts with a key" rule has 0 nest conflicts and 0 letter-continued names on L, and four nearby rules each lose road on L; the dark Skyline panel is a look defect (inline colours), the stacked START/PIT labels predate L250 → `exo_memory/handback/p-l250-read-E_2026-11-26.md`
 - **Carry:** when a panel has two controls that both start a read, vary the second control during the first read, not only a second pick.
+
+## 2026-11-26 05:5x local (L) · L253 row 7 green: the saved piece's Place / Cancel row (L238) was built above Extend, so it became the panel's first actions row; it now sits under Extend, Straight, Undo, Redo, so a ghost going up no longer moves Extend (base: 202 px with a ghost; now 88 with or without), and row 7b proves it in six looks at 1400 x 860 → `exo_memory/handback/p-l253-row7-E_2026-11-26.md`
+- Builder l253-row7 906db1a on 40e931e (not pushed); texture-page 14/14, piece-ghost 19/19; nothing from #left needed.
+- **Carry:** when a red row says "reachable", measure where the button is before fixing; here it was reachable all along, and what was wrong was the order and the jump.

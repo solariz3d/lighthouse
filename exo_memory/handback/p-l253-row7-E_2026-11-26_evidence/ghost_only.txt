@@ -1,0 +1,27 @@
+✔ P1: Save as piece beside a recipe sidecar: the piece file is byte for byte what the core writes, and the sidecar holds the numbers (55.1195ms)
+✔ P1b: a storage with no recipe commands saves the same piece file and says it saved (56.1811ms)
+✔ P2: a run laid by two Extends, and a piece changed after it was laid, keep no recipe (34.5434ms)
+✔ P3: Rename carries the recipe, Delete takes it with the piece (22.3666ms)
+✔ P4: a click shows the piece as a ghost with its numbers and lays nothing (26.9908ms)
+✔ P5: Place lays it as one undo step, the same document Add at head makes, and the ghost is gone (35.9159ms)
+✔ P6: a piece saved before this build (no sidecar) shows its shape read off, fills no numbers, and Place is its own bytes (55.843ms)
+✔ P7: a sidecar that belongs to another piece file is not used (26.1081ms)
+✔ P8: mirrored: the ghost is the mirror image, no numbers (they are the unmirrored ones), and Place equals Add mirrored (37.4229ms)
+✔ P9: Drop clears the ghost; any change of the document clears it (19.1491ms)
+✔ P10: a refusal shows no ghost, says why, and changes nothing (4.8923ms)
+✔ P11: the piece reader (piece.js, unchanged) still opens a piece file saved with a sidecar (10.463ms)
+✔ Q1: a click shows the ghost, fills the boxes with the numbers that made the piece, and offers Place; nothing is laid (50.3614ms)
+✔ Q2: Place lays the piece the ghost showed, as one undo step (54.0955ms)
+✔ Q3: tweak one box: the ghost becomes the panel own piece from the boxes, and Place lays what that ghost shows (30.943ms)
+✔ Q4: Esc drops the ghost and the boxes stay as they are (16.7358ms)
+✔ R1: Rename rewrites the recipe for the renamed text: a click on the new name still shows the numbers (15.4541ms)
+✔ R2: a case-only Rename on a case-blind store keeps the recipe, rewritten, and the click still shows the numbers (15.1459ms)
+✔ R3: Rename does not carry a recipe that was not the piece's own (15.5002ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 19
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 724.7003

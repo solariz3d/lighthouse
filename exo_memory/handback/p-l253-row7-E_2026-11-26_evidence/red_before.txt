@@ -1,0 +1,64 @@
+✖ row 7 (D417): the first actions row is Extend, Straight, Undo, Redo, and Extend sits above "Extend at the head", in every look (2593.2932ms)
+✖ row 7b (L253): with a saved piece's ghost up, the first actions row is still Extend, Straight, Undo, Redo, and Extend, Place piece and Cancel piece are reachable without scrolling at 1400 x 860, in every look (3273.9982ms)
+ℹ sigil: Extend 202-228, Place piece 166-192, Cancel piece 166-192 (panel bottom 848)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6324.9695
+
+✖ failing tests:
+
+test at app\test\texture-page.test.js:254:1
+✖ row 7 (D417): the first actions row is Extend, Straight, Undo, Redo, and Extend sits above "Extend at the head", in every look (2593.2932ms)
+  AssertionError [ERR_ASSERTION]: sigil: the first actions row
+  + actual - expected
+  
+    [
+  +   'Place piece',
+  +   'Cancel piece'
+  -   'Extend',
+  -   'Straight',
+  -   'Undo',
+  -   'Redo'
+    ]
+  
+      at TestContext.<anonymous> (C:\Consonance\t180-wt-e-l253\app\test\texture-page.test.js:258:12)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [ 'Place piece', 'Cancel piece' ],
+    expected: [ 'Extend', 'Straight', 'Undo', 'Redo' ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at app\test\texture-page.test.js:273:1
+✖ row 7b (L253): with a saved piece's ghost up, the first actions row is still Extend, Straight, Undo, Redo, and Extend, Place piece and Cancel piece are reachable without scrolling at 1400 x 860, in every look (3273.9982ms)
+  AssertionError [ERR_ASSERTION]: sigil, a ghost up: the first actions row
+  + actual - expected
+  
+    [
+  +   'Place piece',
+  +   'Cancel piece'
+  -   'Extend',
+  -   'Straight',
+  -   'Undo',
+  -   'Redo'
+    ]
+  
+      at TestContext.<anonymous> (C:\Consonance\t180-wt-e-l253\app\test\texture-page.test.js:292:14)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [ 'Place piece', 'Cancel piece' ],
+    expected: [ 'Extend', 'Straight', 'Undo', 'Redo' ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+exit 1
