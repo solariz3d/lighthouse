@@ -1,0 +1,476 @@
+[
+ {
+  "look": "sigil",
+  "themeOn": "sigil",
+  "tree": "C:\\Consonance\\t180-wt-c-l251",
+  "focus": 305,
+  "wheel": 0,
+  "at1": 40,
+  "handlesSeen": 16,
+  "dotColours": {
+   "#c58cff": 2,
+   "#6b95ff": 5
+  },
+  "dotsAt": [
+   [
+    658,
+    219,
+    "#c58cff"
+   ],
+   [
+    422,
+    104,
+    "#c58cff"
+   ],
+   [
+    626,
+    296,
+    "#6b95ff"
+   ],
+   [
+    632,
+    138,
+    "#6b95ff"
+   ],
+   [
+    430,
+    99,
+    "#6b95ff"
+   ],
+   [
+    183,
+    46,
+    "#6b95ff"
+   ],
+   [
+    253,
+    17,
+    "#6b95ff"
+   ]
+  ],
+  "bankColour": "#6b95ff",
+  "bankDots": 1,
+  "hover": {
+   "x": 626.3329910152983,
+   "y": 296.07714832340434
+  },
+  "clip": {
+   "x": 296,
+   "y": 66,
+   "width": 660,
+   "height": 300
+  },
+  "window": {
+   "layer": "later changes",
+   "words": "Bank · passes -20.00° at 40.00 m\ndrag to move it",
+   "box": [
+    611,
+    248,
+    190,
+    42
+   ],
+   "backdropFilter": "blur(10px)",
+   "radius": "1px",
+   "background": "rgba(11, 13, 17, 0.92)",
+   "under": "CANVAS"
+  },
+  "windowNodes": 1,
+  "title": "zz-headless-test",
+  "pageErrors": []
+ },
+ {
+  "look": "aqua",
+  "themeOn": "aqua",
+  "tree": "C:\\Consonance\\t180-wt-c-l251",
+  "focus": 305,
+  "wheel": 0,
+  "at1": 40,
+  "handlesSeen": 16,
+  "dotColours": {
+   "#ff7ad9": 2,
+   "#4fa8ff": 5
+  },
+  "dotsAt": [
+   [
+    658,
+    219,
+    "#ff7ad9"
+   ],
+   [
+    422,
+    104,
+    "#ff7ad9"
+   ],
+   [
+    626,
+    296,
+    "#4fa8ff"
+   ],
+   [
+    632,
+    138,
+    "#4fa8ff"
+   ],
+   [
+    430,
+    99,
+    "#4fa8ff"
+   ],
+   [
+    183,
+    46,
+    "#4fa8ff"
+   ],
+   [
+    253,
+    17,
+    "#4fa8ff"
+   ]
+  ],
+  "bankColour": "#4fa8ff",
+  "bankDots": 1,
+  "hover": {
+   "x": 626.3329910152983,
+   "y": 296.07714832340434
+  },
+  "clip": {
+   "x": 296,
+   "y": 66,
+   "width": 660,
+   "height": 300
+  },
+  "window": {
+   "layer": "later changes",
+   "words": "Bank · passes -20.00° at 40.00 m\ndrag to move it",
+   "box": [
+    611,
+    248,
+    191,
+    42
+   ],
+   "backdropFilter": "blur(14px) saturate(1.7)",
+   "radius": "2px",
+   "background": "rgba(3, 56, 70, 0.9)",
+   "under": "CANVAS"
+  },
+  "windowNodes": 1,
+  "title": "zz-headless-test",
+  "pageErrors": []
+ },
+ {
+  "look": "skyline",
+  "themeOn": "skyline",
+  "tree": "C:\\Consonance\\t180-wt-c-l251",
+  "focus": 305,
+  "wheel": 0,
+  "at1": 40,
+  "handlesSeen": 16,
+  "dotColours": {
+   "#8a2be2": 2,
+   "#0a4fff": 5
+  },
+  "dotsAt": [
+   [
+    658,
+    219,
+    "#8a2be2"
+   ],
+   [
+    422,
+    104,
+    "#8a2be2"
+   ],
+   [
+    626,
+    296,
+    "#0a4fff"
+   ],
+   [
+    632,
+    138,
+    "#0a4fff"
+   ],
+   [
+    430,
+    99,
+    "#0a4fff"
+   ],
+   [
+    183,
+    46,
+    "#0a4fff"
+   ],
+   [
+    253,
+    17,
+    "#0a4fff"
+   ]
+  ],
+  "bankColour": "#0a4fff",
+  "bankDots": 1,
+  "hover": {
+   "x": 626.3329910152983,
+   "y": 296.07714832340434
+  },
+  "clip": {
+   "x": 296,
+   "y": 66,
+   "width": 660,
+   "height": 300
+  },
+  "window": {
+   "layer": "later changes",
+   "words": "Bank · passes -20.00° at 40.00 m\ndrag to move it",
+   "box": [
+    611,
+    248,
+    191,
+    42
+   ],
+   "backdropFilter": "blur(18px) saturate(1.3)",
+   "radius": "2px",
+   "background": "rgba(255, 255, 255, 0.92)",
+   "under": "CANVAS"
+  },
+  "windowNodes": 1,
+  "title": "zz-headless-test",
+  "pageErrors": []
+ },
+ {
+  "look": "skyline-night",
+  "themeOn": "skyline-night",
+  "tree": "C:\\Consonance\\t180-wt-c-l251",
+  "focus": 305,
+  "wheel": 0,
+  "at1": 40,
+  "handlesSeen": 16,
+  "dotColours": {
+   "#d77bff": 2,
+   "#4f9dff": 5
+  },
+  "dotsAt": [
+   [
+    658,
+    219,
+    "#d77bff"
+   ],
+   [
+    422,
+    104,
+    "#d77bff"
+   ],
+   [
+    626,
+    296,
+    "#4f9dff"
+   ],
+   [
+    632,
+    138,
+    "#4f9dff"
+   ],
+   [
+    430,
+    99,
+    "#4f9dff"
+   ],
+   [
+    183,
+    46,
+    "#4f9dff"
+   ],
+   [
+    253,
+    17,
+    "#4f9dff"
+   ]
+  ],
+  "bankColour": "#4f9dff",
+  "bankDots": 1,
+  "hover": {
+   "x": 626.3329910152983,
+   "y": 296.07714832340434
+  },
+  "clip": {
+   "x": 296,
+   "y": 66,
+   "width": 660,
+   "height": 300
+  },
+  "window": {
+   "layer": "later changes",
+   "words": "Bank · passes -20.00° at 40.00 m\ndrag to move it",
+   "box": [
+    611,
+    248,
+    191,
+    42
+   ],
+   "backdropFilter": "blur(18px) saturate(1.2)",
+   "radius": "2px",
+   "background": "rgba(14, 30, 62, 0.88)",
+   "under": "CANVAS"
+  },
+  "windowNodes": 1,
+  "title": "zz-headless-test",
+  "pageErrors": []
+ },
+ {
+  "look": "glass",
+  "themeOn": "glass",
+  "tree": "C:\\Consonance\\t180-wt-c-l251",
+  "focus": 305,
+  "wheel": 0,
+  "at1": 40,
+  "handlesSeen": 16,
+  "dotColours": {
+   "#c77dff": 2,
+   "#5fa8ff": 5
+  },
+  "dotsAt": [
+   [
+    658,
+    219,
+    "#c77dff"
+   ],
+   [
+    422,
+    104,
+    "#c77dff"
+   ],
+   [
+    626,
+    296,
+    "#5fa8ff"
+   ],
+   [
+    632,
+    138,
+    "#5fa8ff"
+   ],
+   [
+    430,
+    99,
+    "#5fa8ff"
+   ],
+   [
+    183,
+    46,
+    "#5fa8ff"
+   ],
+   [
+    253,
+    17,
+    "#5fa8ff"
+   ]
+  ],
+  "bankColour": "#5fa8ff",
+  "bankDots": 1,
+  "hover": {
+   "x": 626.3329910152983,
+   "y": 296.07714832340434
+  },
+  "clip": {
+   "x": 296,
+   "y": 66,
+   "width": 660,
+   "height": 300
+  },
+  "window": {
+   "layer": "later changes",
+   "words": "Bank · passes -20.00° at 40.00 m\ndrag to move it",
+   "box": [
+    611,
+    248,
+    191,
+    42
+   ],
+   "backdropFilter": "blur(18px) saturate(1.6) brightness(1.08)",
+   "radius": "0px",
+   "background": "rgba(10, 28, 44, 0.8)",
+   "under": "CANVAS"
+  },
+  "windowNodes": 1,
+  "title": "zz-headless-test",
+  "pageErrors": []
+ },
+ {
+  "look": "aurora",
+  "themeOn": "aurora",
+  "tree": "C:\\Consonance\\t180-wt-c-l251",
+  "focus": 305,
+  "wheel": 0,
+  "at1": 40,
+  "handlesSeen": 16,
+  "dotColours": {
+   "#ff6ec7": 2,
+   "#5ab4ff": 5
+  },
+  "dotsAt": [
+   [
+    658,
+    219,
+    "#ff6ec7"
+   ],
+   [
+    422,
+    104,
+    "#ff6ec7"
+   ],
+   [
+    626,
+    296,
+    "#5ab4ff"
+   ],
+   [
+    632,
+    138,
+    "#5ab4ff"
+   ],
+   [
+    430,
+    99,
+    "#5ab4ff"
+   ],
+   [
+    183,
+    46,
+    "#5ab4ff"
+   ],
+   [
+    253,
+    17,
+    "#5ab4ff"
+   ]
+  ],
+  "bankColour": "#5ab4ff",
+  "bankDots": 1,
+  "hover": {
+   "x": 626.3329910152983,
+   "y": 296.07714832340434
+  },
+  "clip": {
+   "x": 296,
+   "y": 66,
+   "width": 660,
+   "height": 300
+  },
+  "window": {
+   "layer": "later changes",
+   "words": "Bank · passes -20.00° at 40.00 m\ndrag to move it",
+   "box": [
+    611,
+    248,
+    190,
+    42
+   ],
+   "backdropFilter": "blur(16px) saturate(1.4)",
+   "radius": "1.5px",
+   "background": "rgba(8, 10, 30, 0.86)",
+   "under": "CANVAS"
+  },
+  "windowNodes": 1,
+  "title": "zz-headless-test",
+  "pageErrors": []
+ }
+]

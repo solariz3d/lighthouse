@@ -1,0 +1,9 @@
+l251 frames: look aqua, 2 rounds ABBA, 6 s a case, base C:\Consonance\t180-wt-c-l251-base, tip C:\Consonance\t180-wt-c-l251
+{"round":1,"tree":"base","kind":"canvas","windows":8,"shown":0,"blur":null,"frames":5902,"meanMs":1.017,"p50":0.6,"p95":3.9,"p99":5.5,"over16":0,"camEye":[-45,7,983],"errors":[]}
+{"round":1,"tree":"base","kind":"none","windows":0,"shown":0,"blur":null,"frames":11668,"meanMs":0.514,"p50":0.5,"p95":0.8,"p99":1.2,"over16":0,"camEye":[-44,7,983],"errors":[]}
+{"round":1,"tree":"tip","kind":"elements","windows":8,"shown":8,"blur":"blur(14px) saturate(1.7)","frames":6886,"meanMs":0.871,"p50":0.8,"p95":1.4,"p99":1.8,"over16":0,"camEye":[-44,7,983],"errors":[]}
+{"round":1,"tree":"tip","kind":"none","windows":0,"shown":0,"blur":null,"frames":13213,"meanMs":0.454,"p50":0.4,"p95":0.8,"p99":1.1,"over16":0,"camEye":[-45,7,983],"errors":[]}
+{"round":2,"tree":"tip","kind":"elements","windows":8,"shown":8,"blur":"blur(14px) saturate(1.7)","frames":7166,"meanMs":0.837,"p50":0.8,"p95":1.4,"p99":1.8,"over16":0,"camEye":[-45,7,983],"errors":[]}
+{"round":2,"tree":"tip","kind":"none","windows":0,"shown":0,"blur":null,"frames":14607,"meanMs":0.411,"p50":0.4,"p95":0.8,"p99":1.1,"over16":0,"camEye":[-45,7,983],"errors":[]}
+{"round":2,"tree":"base","kind":"canvas","windows":8,"shown":0,"blur":null,"frames":7161,"meanMs":0.838,"p50":0.5,"p95":3.2,"p99":4.6,"over16":0.01,"camEye":[-45,7,983],"errors":[]}
+{"round":2,"tree":"base","kind":"none","windows":0,"shown":0,"blur":null,"frames":14282,"meanMs":0.42,"p50":0.4,"p95":0.8,"p99":1.1,"over16":0,"camEye":[-45,7,983],"errors":[]}

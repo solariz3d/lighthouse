@@ -1,0 +1,378 @@
+[32m✔ C1: the extra bank's tick is labelled with where it starts, where it ends and how long it rolls: "Extra bank · 500.00 m → end · rolls over 500.00 m · drag to start earlier or later" [90m(86.1378ms)[39m[39m
+[32m✔ C2: the label follows the from: slid by its handle to 420 m, and dragged by its tick to 640.5 m [90m(40.7839ms)[39m[39m
+[32m✔ C3: the stretch the tick tints runs from its from to the piece's end (the next change's mark when there is one), and follows the from [90m(52.9799ms)[39m[39m
+[32m✔ C4: the stretch on the ghost: its first station is the tick's, its last the stretch's end, the road's full width across [90m(0.9517ms)[39m[39m
+[32m✔ C5: turn and climb share the path: their ticks read "Extra turn · … · turns over …" and "Extra climb · … · climbs over …" [90m(18.8736ms)[39m[39m
+[32m✔ C6: the extra handle's hover names its sideways drag and where it starts now, and follows the from; a field's own handle has no such line [90m(0.1793ms)[39m[39m
+[32m✔ C7: the handles tell which handle is hovered or dragged (active), so the panel can light its tick [90m(1.9887ms)[39m[39m
+[32m✔ C8: in the panel, the extra bank's tick is lit while its handle is hovered or dragged, and only then [90m(24.8685ms)[39m[39m
+[31m✖ R1: dragging the tick itself, the label's number and the stretch's start follow the drag before release [90m(2.8833ms)[39m[39m
+[31m✖ R2a: a label whose place falls on a handle's screen box is nudged off it [90m(0.7427ms)[39m[39m
+[31m✖ R2b: a label is kept below the HUD's bottom edge [90m(0.5626ms)[39m[39m
+[32m✔ R2c: the panel hands the marks' layer each handle's screen box (and its tip) to keep a label off [90m(19.2482ms)[39m[39m
+[32m✔ D1: at rest, no label box and no label text, and one dot per mark, on the mark [90m(0.5328ms)[39m[39m
+[31m✖ D2: the pointer over one dot shows that mark's label (and no dot for it); off it, the label goes [90m(1.1642ms)[39m[39m
+[31m✖ D3: a lit mark (its extra handle hovered or dragged) shows its label and no dot [90m(0.6117ms)[39m[39m
+[31m✖ D4: a mark just added shows its label for about 2 s, then is a dot; marks there at the first draw do not [90m(0.7909ms)[39m[39m
+[31m✖ D5: the dot is grabbed as the tick was: a press on it and a drag move the mark [90m(0.7309ms)[39m[39m
+[32m✔ D6 (pane C's V4, L241 read): the ghost goes for a draw and comes back with the same marks: nothing was added, so no label shows [90m(0.2903ms)[39m[39m
+[31m✖ E1 (L251): a shown label is a window element over the stage, after the marks' canvas (so over it), taking no pointer events: its words are the label's two lines, its box the one placed, and no word is written on the canvas [90m(0.4385ms)[39m[39m
+[31m✖ E2 (L251): a 60-step drag of the tick makes and removes no element: the one window is moved and its words follow, and the count of window nodes is the same at every step [90m(0.4618ms)[39m[39m
+handles: the cursor could not be put back at the handle: denied
+handles: the cursor could not be put back at the handle: denied
+handles: the cursor could not be put back during the drag: denied
+handles: the cursor could not be put back during the drag: denied
+handles: the cursor could not be put back during the drag: denied
+handles: the cursor could not be put back at the handle: denied
+handles: the cursor could not be put back during the drag: denied
+handles: the cursor could not be put back during the drag: denied
+handles: the cursor could not be put back during the drag: denied
+[32m✔ row 1: every kind is placed where it was marked, and every kind with a side is on BOTH sides, mirrored about the centreline [90m(1.3988ms)[39m[39m
+[32m✔ row 1b: the road's width at the handle sets how far out an edge handle sits, and an unknown or absent kind places nothing [90m(0.2027ms)[39m[39m
+[32m✔ row 2: a positive drag runs outward (width, cup), left on both sides (turn), up on the left edge and down on the right (bank), forward (length: its front end is pulled on), up (climb) [90m(0.1858ms)[39m[39m
+[32m✔ row 3: the two mirrored handles change the SAME value: the same outward motion from either side gives the same field value [90m(0.3388ms)[39m[39m
+[32m✔ row 4: a value from a drag in PIXELS: the rates per pixel (today's speeds at the default camera; length five times), the clamps, the rounding, Shift (one step a pixel: D330) and Ctrl (snap) [90m(0.4887ms)[39m[39m
+[32m✔ row 5: the screen: where a handle is, one metre along its axis in px, behind the camera, an axis seen end-on [90m(0.1725ms)[39m[39m
+[32m✔ row 6: the hit test takes the nearest handle inside the radius, none outside, and skips a handle behind the camera [90m(0.1444ms)[39m[39m
+[32m✔ row 7: the overlay: a press ON a handle opens the drag and nothing else sees it; a press elsewhere is left alone; one apply a frame; the release applies the last position and ends [90m(2.0173ms)[39m[39m
+[32m✔ row 7b: no model, no pose or a refused press: no handles are drawn and a press is not taken; a right-button press is never a handle [90m(0.2104ms)[39m[39m
+[32m✔ row 8: the speed is per PIXEL: 20 px of drag changes a field by the same amount zoomed in and zoomed out [90m(1.1089ms)[39m[39m
+[32m✔ row 9 (D335, amended): no detents in a drag: it moves from the first pixel and goes through 0 without a hold; Ctrl snaps [90m(1.8481ms)[39m[39m
+[32m✔ row 10: the value is rounded to the step with Shift too: a precise drag lands on the hundredth, never on a fraction of one [90m(0.2187ms)[39m[39m
+[32m✔ row 11: a double-click on a handle resets it: 0 for bank, turn, climb; the value before the last drag for length, width, cup; and it is the handle's, not the camera's [90m(0.4223ms)[39m[39m
+[31m✖ row 12: the label shows the exact value the drag sets, and what a double-click would set [90m(1.6033ms)[39m[39m
+[31m✖ row 12b: while a drag is held at an edge, the label's second line is the host's reason; with none, the value alone [90m(0.6457ms)[39m[39m
+[32m✔ row 13: no pointer lock (D270): a grab never asks for one and registers no lock listener, so Chromium has no notice to show; the pointer is captured, the cursor is hidden for the drag and the value follows the pointer past the stage at the same pixel speed [90m(0.6357ms)[39m[39m
+[32m✔ row 13b: the cursor goes back at the handle through the native window when there is one; with none (a browser, a test host) or a refusal the release still ends cleanly [90m(0.8105ms)[39m[39m
+[32m✔ row 13c: Esc ends the drag where it is, as a release does, and gives the cursor back; Esc with no drag, or another key, does nothing; unmount takes the key listener off [90m(0.2969ms)[39m[39m
+[32m✔ row 11b: the double-click is two presses within 400 ms on one handle that changed nothing (no dblclick need come); a drag between them, or a pause, is not one [90m(0.341ms)[39m[39m
+[32m✔ row 14: the landing's kinds (D258): four free marks at the landing, each out along its own arrow, the arrows ARE the take-off's heading frame; their speeds, holds, snaps, resets and labels [90m(0.6148ms)[39m[39m
+[32m✔ the turn handle is not clamped: a long drag goes past 90°/100 m either way [90m(0.0884ms)[39m[39m
+[32m✔ the turn handle: a drag to the right is a right turn and to the left a left turn, whichever way the left of the road lies on screen [90m(0.7943ms)[39m[39m
+[32m✔ leaving a hold walks on a pixel at a time: no jump off the hold, for every kind [90m(0.8112ms)[39m[39m
+[32m✔ a long drag never runs out of screen: the hidden cursor is put back at the grab and the travel adds up [90m(3.9111ms)[39m[39m
+[32m✔ a drag with no native window (a browser) behaves as before: the cursor is never moved, the value follows the pointer [90m(0.1981ms)[39m[39m
+[32m✔ if the window refuses to move the cursor, the drag gives the travel back and follows the pointer as before (nothing counted twice) [90m(1.141ms)[39m[39m
+[32m✔ D330 precise: the gesture is one constant, and with it one pixel of drag is exactly one step (0.01) for every handle kind, both ways, none skipped, no hold [90m(2.0875ms)[39m[39m
+[32m✔ D330 precise through the overlay: a Shift drag of n px along the handle changes turn, width, length and bank by exactly n x 0.01 [90m(0.9004ms)[39m[39m
+[32m✔ D330 wheel: one notch over a handle is exactly one step (0.01) on every handle kind, up adds and down subtracts; over nothing the camera has it; at a clamp it stays [90m(0.9363ms)[39m[39m
+[32m✔ D330 arrows: while a handle is held each arrow press is exactly one step on top of the drag; with nothing held they do nothing and are not taken [90m(0.2782ms)[39m[39m
+[32m✔ a long drag: with the cursor put back promptly and the next event at the grab, the travel adds up (the control the two below depart from) [90m(3.9517ms)[39m[39m
+[32m✔ a long drag whose warp is applied LATE (a busy window thread: the events before it arrive after WARP_WAIT_MS) keeps its travel and keeps warping [90m(4.0607ms)[39m[39m
+[32m✔ a long drag with a FAST hand (the first event after a warp is already 4 px from the grab) does not stall: the return is seen, not waited for [90m(4.7075ms)[39m[39m
+[32m✔ a warp the OS lost is asked for again after WARP_WAIT_MS, and the travel adds up [90m(3.6725ms)[39m[39m
+[32m✔ a window that refuses to move the cursor is tried WARP_MISSES times, never forever, and the travel is counted once [90m(2.3451ms)[39m[39m
+[32m✔ row 17 (D335): the gain: the kind's step over perPx at or below the slow speed, exactly 1 at or above the fast one, eased and never falling between [90m(1.1458ms)[39m[39m
+[32m✔ row 17b (D335): a SLOW drag of n pixels is n x 0.01 for every kind, whatever its own perPx, with no key [90m(1.8032ms)[39m[39m
+[32m✔ row 17c (D335): a FLICK covers the old range in the old distance: 100 px in a few events is the kind's own perPx a pixel [90m(0.3361ms)[39m[39m
+[32m✔ row 17d (D335): the rate eases with the hand: a medium drag is between the slow and the flick, and a faster hand never covers less [90m(3.4972ms)[39m[39m
+[32m✔ row 17e (D335): Shift is always 0.01 a pixel, however fast the hand [90m(1.0432ms)[39m[39m
+[32m✔ row 17f (D335): a bank drag of 400 px at the flick rate lands on 180.00 exactly [90m(0.2786ms)[39m[39m
+[32m✔ row 17g (D335): the speed is the hand's over a short window, so one quick event inside a slow scrub does not jump the rate [90m(0.3825ms)[39m[39m
+[32m✔ row 18 (D519): one row a zone: the hover glyph's kind and its mark at the hit's u (a pair, cup or width, at its own place) [90m(0.3551ms)[39m[39m
+[32m✔ row 18b (D519): the dots stand at the thinned stations, one in each row (three, or five on a cup piece), on the road's own surface [90m(0.6074ms)[39m[39m
+[32m✔ row 18c (D519): a press within 12 px of a dot is left to the zone grab (no handle takes it) and dotAt names the dot; farther, none [90m(0.4598ms)[39m[39m
+[31m✖ W1: each look's window takes that look's own font and corner radius (read from its tokens, shown) [90m(3.9172ms)[39m[39m
+[31m✖ W2: a page with no window tokens shows today's box: square, the veil (solid, since it sets no blur: L251), a 1.5 px edge in the mark's colour, bold 12px system-ui, the words at +6 px [90m(0.1951ms)[39m[39m
+[32m✔ W3: a look that sets no mark colours draws today's; a --mark-<field> token is what the field, its extra handles and its corner kind draw [90m(0.6167ms)[39m[39m
+[32m✔ W4: on every look, bank and turn are told apart (their colours at least 60 apart in RGB), and each window's words read on its fill (contrast 4.5:1 or better) [90m(10.7651ms)[39m[39m
+[32m✔ W5: every look sets its own colour for each field, no two fields within 60 of each other (W4's unit), and each 60 or more off that look's road edges, grid, fog and sky [90m(20.3843ms)[39m[39m
+[32m✔ W6: a field's hue, wherever it comes from (Build, the landing, the Sculpt brush and Smooth's channel, the dots' rows), draws as the look's colour for that field; a hue with no field, and every hue on a page with no tokens, as it is [90m(2.6404ms)[39m[39m
+[32m✔ W7: each look's window corner is the chrome scale's r1 (2 px) times that look's radius factor, written as a plain number [90m(9.701ms)[39m[39m
+[31m✖ W8: each look's window blurs what is behind it with that look's own panel blur (its #left's backdrop-filter, word for word); under prefers-reduced-transparency the fill is solid and nothing is blurred [90m(4.0286ms)[39m[39m
+[31m✖ W9: a window already shown takes a new look at once, without another draw: the skin changed (the tokens refreshed), or the person asked for less transparency [90m(2.2898ms)[39m[39m
+[34mℹ tests 74[39m
+[34mℹ suites 0[39m
+[34mℹ pass 59[39m
+[34mℹ fail 15[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 423.3625[39m
+
+[31m✖ failing tests:[39m
+
+test at app\test\core-mark-labels.test.js:198:1
+[31m✖ R1: dragging the tick itself, the label's number and the stretch's start follow the drag before release [90m(2.8833ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: hovered, drawn at 380 first
+      at TestContext.<anonymous> [90m(C:\Consonance\t180-wt-c-l251-base\[39mapp\test\core-mark-labels.test.js:204:10[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:227:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1325:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:911:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1465:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1390:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [32m''[39m,
+    expected: [31m/^Extra bank · 380\.00 m/[39m,
+    operator: [32m'match'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at app\test\core-mark-labels.test.js:214:1
+[31m✖ R2a: a label whose place falls on a handle's screen box is nudged off it [90m(0.7427ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: the label is drawn
+      at TestContext.<anonymous> [90m(C:\Consonance\t180-wt-c-l251-base\[39mapp\test\core-mark-labels.test.js:216:10[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:227:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1325:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:911:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1465:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1390:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [1mnull[22m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at app\test\core-mark-labels.test.js:224:1
+[31m✖ R2b: a label is kept below the HUD's bottom edge [90m(0.5626ms)[39m[39m
+  TypeError: Cannot read properties of null (reading 'y')
+      at TestContext.<anonymous> [90m(C:\Consonance\t180-wt-c-l251-base\[39mapp\test\core-mark-labels.test.js:226:29[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:227:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1325:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:911:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1465:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1390:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)[39m
+
+test at app\test\core-mark-labels.test.js:255:1
+[31m✖ D2: the pointer over one dot shows that mark's label (and no dot for it); off it, the label goes [90m(1.1642ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: only the hovered mark is labelled
+  [32m+ actual[39m [31m- expected[39m
+  
+  [32m+[39m []
+  [31m-[39m [
+  [31m-[39m   'Extra bank 2 '
+  [31m-[39m ]
+  
+      at TestContext.<anonymous> [90m(C:\Consonance\t180-wt-c-l251-base\[39mapp\test\core-mark-labels.test.js:258:10[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:227:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1325:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:911:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1465:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1390:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [],
+    expected: [ [32m'Extra bank 2 '[39m ],
+    operator: [32m'deepStrictEqual'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at app\test\core-mark-labels.test.js:264:1
+[31m✖ D3: a lit mark (its extra handle hovered or dragged) shows its label and no dot [90m(0.6117ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /^Extra bank · 380\.00 m/. Input:
+  
+  ''
+  
+      at TestContext.<anonymous> [90m(C:\Consonance\t180-wt-c-l251-base\[39mapp\test\core-mark-labels.test.js:265:47[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:227:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1325:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:911:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1465:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1390:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)[39m {
+    generatedMessage: [33mtrue[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [32m''[39m,
+    expected: [31m/^Extra bank · 380\.00 m/[39m,
+    operator: [32m'match'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at app\test\core-mark-labels.test.js:267:1
+[31m✖ D4: a mark just added shows its label for about 2 s, then is a dot; marks there at the first draw do not [90m(0.7909ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: the added one is labelled
+  [32m+ actual[39m [31m- expected[39m
+  
+  [32m+[39m []
+  [31m-[39m [
+  [31m-[39m   'Extra bank 2 '
+  [31m-[39m ]
+  
+      at TestContext.<anonymous> [90m(C:\Consonance\t180-wt-c-l251-base\[39mapp\test\core-mark-labels.test.js:273:12[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:227:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1325:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:911:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1465:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1390:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [],
+    expected: [ [32m'Extra bank 2 '[39m ],
+    operator: [32m'deepStrictEqual'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at app\test\core-mark-labels.test.js:279:1
+[31m✖ D5: the dot is grabbed as the tick was: a press on it and a drag move the mark [90m(0.7309ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: mid-drag, labelled
+      at TestContext.<anonymous> [90m(C:\Consonance\t180-wt-c-l251-base\[39mapp\test\core-mark-labels.test.js:282:43[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:227:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1325:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:911:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1465:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1390:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [32m''[39m,
+    expected: [31m/^Extra bank · 520\.00 m/[39m,
+    operator: [32m'match'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at app\test\core-mark-labels.test.js:299:1
+[31m✖ E1 (L251): a shown label is a window element over the stage, after the marks' canvas (so over it), taking no pointer events: its words are the label's two lines, its box the one placed, and no word is written on the canvas [90m(0.4385ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: one window shown
+  
+  0 !== 1
+  
+      at TestContext.<anonymous> [90m(C:\Consonance\t180-wt-c-l251-base\[39mapp\test\core-mark-labels.test.js:301:10[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:227:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1325:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:911:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1465:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1390:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33m0[39m,
+    expected: [33m1[39m,
+    operator: [32m'strictEqual'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at app\test\core-mark-labels.test.js:311:1
+[31m✖ E2 (L251): a 60-step drag of the tick makes and removes no element: the one window is moved and its words follow, and the count of window nodes is the same at every step [90m(0.4618ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: hovered: one window shown
+  
+  0 !== 1
+  
+      at TestContext.<anonymous> [90m(C:\Consonance\t180-wt-c-l251-base\[39mapp\test\core-mark-labels.test.js:315:10[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:227:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1325:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:911:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1465:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1390:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33m0[39m,
+    expected: [33m1[39m,
+    operator: [32m'strictEqual'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at app\test\handles.test.js:246:1
+[31m✖ row 12: the label shows the exact value the drag sets, and what a double-click would set [90m(1.6033ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: hovering: the value it has and what a double-click sets
+  [32m+ actual[39m [31m- expected[39m
+  
+  [32m+[39m []
+  [31m-[39m [
+  [31m-[39m   'turn 2.00°/100 m · double-click: 0'
+  [31m-[39m ]
+  
+      at TestContext.<anonymous> [90m(C:\Consonance\t180-wt-c-l251-base\[39mapp\test\handles.test.js:249:79[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:227:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1325:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:911:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1465:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1390:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [],
+    expected: [ [32m'turn 2.00°/100 m · double-click: 0'[39m ],
+    operator: [32m'deepStrictEqual'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at app\test\handles.test.js:255:1
+[31m✖ row 12b: while a drag is held at an edge, the label's second line is the host's reason; with none, the value alone [90m(0.6457ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: dragging and held: the value, then why
+  [32m+ actual[39m [31m- expected[39m
+  
+  [32m+[39m []
+  [31m-[39m [
+  [31m-[39m   'turn -0.74°/100 m',
+  [31m-[39m   'held at 52.67°: 90° needs 244.0 m from its mark, it has 150.0 m (shorter, it rolls faster than it can be ridden smoothly)'
+  [31m-[39m ]
+  
+      at TestContext.<anonymous> [90m(C:\Consonance\t180-wt-c-l251-base\[39mapp\test\handles.test.js:260:10[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:227:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1325:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:911:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1465:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1390:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [],
+    expected: [ [32m'turn -0.74°/100 m'[39m, [32m'held at 52.67°: 90° needs 244.0 m from its mark, it has 150.0 m (shorter, it rolls faster than it can be ridden smoothly)'[39m ],
+    operator: [32m'deepStrictEqual'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at app\test\markwindow.test.js:42:1
+[31m✖ W1: each look's window takes that look's own font and corner radius (read from its tokens, shown) [90m(3.9172ms)[39m[39m
+  TypeError: MW.layer is not a function
+      at shownWindow [90m(C:\Consonance\t180-wt-c-l251-base\[39mapp\test\markwindow.test.js:34:16[90m)[39m
+      at TestContext.<anonymous> [90m(C:\Consonance\t180-wt-c-l251-base\[39mapp\test\markwindow.test.js:45:54[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:227:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1325:25)[39m
+  [90m    at Test.start (node:internal/test_runner/test:1191:17)[39m
+  [90m    at startSubtestAfterBootstrap (node:internal/test_runner/harness:385:17)[39m
+
+test at app\test\markwindow.test.js:56:1
+[31m✖ W2: a page with no window tokens shows today's box: square, the veil (solid, since it sets no blur: L251), a 1.5 px edge in the mark's colour, bold 12px system-ui, the words at +6 px [90m(0.1951ms)[39m[39m
+  TypeError: MW.layer is not a function
+      at shownWindow [90m(C:\Consonance\t180-wt-c-l251-base\[39mapp\test\markwindow.test.js:34:16[90m)[39m
+      at TestContext.<anonymous> [90m(C:\Consonance\t180-wt-c-l251-base\[39mapp\test\markwindow.test.js:57:61[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:227:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1325:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:911:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1465:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1390:12)[39m
+  [90m    at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3)[39m
+
+test at app\test\markwindow.test.js:155:1
+[31m✖ W8: each look's window blurs what is behind it with that look's own panel blur (its #left's backdrop-filter, word for word); under prefers-reduced-transparency the fill is solid and nothing is blurred [90m(4.0286ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: sigil: --mark-win-blur is its panel's blur
+  [32m+ actual[39m [31m- expected[39m
+  
+  [32m+[39m undefined
+  [31m- [39m'blur(10px)'
+  
+      at TestContext.<anonymous> [90m(C:\Consonance\t180-wt-c-l251-base\[39mapp\test\markwindow.test.js:159:12[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:227:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1325:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:911:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1465:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1390:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [90mundefined[39m,
+    expected: [32m'blur(10px)'[39m,
+    operator: [32m'strictEqual'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at app\test\markwindow.test.js:171:1
+[31m✖ W9: a window already shown takes a new look at once, without another draw: the skin changed (the tokens refreshed), or the person asked for less transparency [90m(2.2898ms)[39m[39m
+  TypeError: MW.layer is not a function
+      at TestContext.<anonymous> [90m(C:\Consonance\t180-wt-c-l251-base\[39mapp\test\markwindow.test.js:174:16[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:227:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1325:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:911:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1465:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1390:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)[39m

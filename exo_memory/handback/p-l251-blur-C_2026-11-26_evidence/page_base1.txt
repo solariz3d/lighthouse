@@ -1,0 +1,67 @@
+[31m✖ row 1: in every look the shown window blurs what is behind it with the look's own blur, is cornered at --mark-win-radius, lets the blur through its fill and takes no pointer event; under prefers-reduced-transparency its fill is solid and nothing is blurred [90m(3151.9189ms)[39m[39m
+[31m✖ row 2: a press at a shown window's centre reaches what is under it, and a camera drag begun there turns the camera [90m(2757.1548ms)[39m[39m
+[31m✖ row 3: a 60-step drag of the length handle, its readout's words changing: no window element is made or removed, and their count is the same at every step [90m(2749.3598ms)[39m[39m
+[34mℹ tests 3[39m
+[34mℹ suites 0[39m
+[34mℹ pass 0[39m
+[34mℹ fail 3[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 9126.1399[39m
+
+[31m✖ failing tests:[39m
+
+test at app\test\markwindow-page.test.js:75:1
+[31m✖ row 1: in every look the shown window blurs what is behind it with the look's own blur, is cornered at --mark-win-radius, lets the blur through its fill and takes no pointer event; under prefers-reduced-transparency its fill is solid and nothing is blurred [90m(3151.9189ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: sigil: hovering the length handle shows one window, its readout ([])
+  
+  0 !== 1
+  
+      at hovered [90m(C:\Consonance\t180-wt-c-l251-base\[39mapp\test\markwindow-page.test.js:70:35[90m)[39m
+      at async TestContext.<anonymous> [90m(C:\Consonance\t180-wt-c-l251-base\[39mapp\test\markwindow-page.test.js:78:19[90m)[39m
+  [90m    at async Test.run (node:internal/test_runner/test:1332:7)[39m
+  [90m    at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33m0[39m,
+    expected: [33m1[39m,
+    operator: [32m'strictEqual'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at app\test\markwindow-page.test.js:94:1
+[31m✖ row 2: a press at a shown window's centre reaches what is under it, and a camera drag begun there turns the camera [90m(2757.1548ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: aqua: hovering the length handle shows one window, its readout ([])
+  
+  0 !== 1
+  
+      at hovered [90m(C:\Consonance\t180-wt-c-l251-base\[39mapp\test\markwindow-page.test.js:70:35[90m)[39m
+      at async TestContext.<anonymous> [90m(C:\Consonance\t180-wt-c-l251-base\[39mapp\test\markwindow-page.test.js:95:17[90m)[39m
+  [90m    at async Test.run (node:internal/test_runner/test:1332:7)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33m0[39m,
+    expected: [33m1[39m,
+    operator: [32m'strictEqual'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at app\test\markwindow-page.test.js:112:1
+[31m✖ row 3: a 60-step drag of the length handle, its readout's words changing: no window element is made or removed, and their count is the same at every step [90m(2749.3598ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: aurora: hovering the length handle shows one window, its readout ([])
+  
+  0 !== 1
+  
+      at hovered [90m(C:\Consonance\t180-wt-c-l251-base\[39mapp\test\markwindow-page.test.js:70:35[90m)[39m
+      at async TestContext.<anonymous> [90m(C:\Consonance\t180-wt-c-l251-base\[39mapp\test\markwindow-page.test.js:113:17[90m)[39m
+  [90m    at async Test.run (node:internal/test_runner/test:1332:7)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33m0[39m,
+    expected: [33m1[39m,
+    operator: [32m'strictEqual'[39m,
+    diff: [32m'simple'[39m
+  }

@@ -2033,3 +2033,7 @@ Claim (could be wrong): his 08:19 crash was Export to Assetto Corsa: `v8-oom-sta
 ## 2026-11-26 — L249: aqua and aurora at builder l249-c 7ab2adf set only their factor (1, 0.75) and steps 4 and 10, with 0 coloured glows (21 at c9fe4f1); merged with A 3475c98 and E 6f64171 they compute the spec's corners (aqua 4/8/0/999/12, aurora 3/6/0/3/9) and every contrast row is green in them; row 13's focus ring is red in all six looks (A's), and row 14's one reading under 4.5 is skyline-night's panel button at 4.48 (E's)
 - Evidence: `exo_memory/handback/p-l249-chrome-C_2026-11-26_evidence/chrome_rules_c9fe4f1.txt`, `chrome_rules_7ab2adf.txt`, `theme_markwindow_merge3.txt` (21/21), `texture_page_merge3.txt`, `probe_merge3.txt`.
 - Hand-back: `exo_memory/handback/p-l249-chrome-C_2026-11-26.md`
+
+## 2026-11-26 — L251: at builder 6a3ea79 the label windows are elements over the view (markwindow.js layer, one reused node a box, no pointer events), each look blurring by its own #left blur (SIGIL blur(10px) at index.html:268, against the packet's "SIGIL has no panel blur"); eight of them cost no more a frame than 40e931e's canvas windows (p95 1.4 vs 3.2-3.9 ms), but behind 80-92% fills the blur takes only 0.5-3.8% of the detail in the window
+- Evidence: `exo_memory/handback/p-l251-blur-C_2026-11-26_evidence/page_branch1.txt` (3/3; 0/3 at base in `page_base1.txt`), `units_at_base.txt` (15 red), `touched_run1.txt` (372/372), `frames_aqua.txt`, `window_detail.txt`.
+- Hand-back: `exo_memory/handback/p-l251-blur-C_2026-11-26.md`

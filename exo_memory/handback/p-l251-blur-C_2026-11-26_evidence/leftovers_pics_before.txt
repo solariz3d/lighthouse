@@ -1,0 +1,2 @@
+tab proxies          UNCALIBRATED (read 0, and the control made none (0 → 0 → 0))
+orphan browsers      0 headless roots whose parent is gone

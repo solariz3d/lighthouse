@@ -1,0 +1,12 @@
+aqua           detail in the window: 40e931e 22.21, branch 21.90 (-1.4%)
+aurora         detail in the window: 40e931e 25.14, branch 24.79 (-1.4%)
+glass          detail in the window: 40e931e 24.01, branch 23.11 (-3.8%)
+sigil          detail in the window: 40e931e 24.94, branch 24.62 (-1.3%)
+skyline        detail in the window: 40e931e 23.79, branch 23.68 (-0.5%)
+skyline-night  detail in the window: 40e931e 22.74, branch 22.24 (-2.2%)
+aqua           the road alone there (rest.png, branch): 3.91
+aurora         the road alone there (rest.png, branch): 3.96
+glass          the road alone there (rest.png, branch): 3.84
+sigil          the road alone there (rest.png, branch): 3.54
+skyline        the road alone there (rest.png, branch): 4.81
+skyline-night  the road alone there (rest.png, branch): 4.25
