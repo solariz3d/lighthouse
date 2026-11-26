@@ -17,8 +17,10 @@ ruling of 20:06:12Z on drag-frame (ledger D677). Tier: PROVE IT. It continues `p
 - **Installed on D:**
   - installed exe sha256 `3d6b3faafb7e921033057058289bf1e39a0208c67591d82f1cea33558bde0dbd` (the built exe plus the installer's 3-byte stamp; the stamped compare is equal);
   - the old exe was `ecdd721b26e57da7fab19f0bca7fa7a23bc1af380d162394b33d1c2263b2fa5e` (the cfa7ad9 build). It is backed up and byte-checked (§4).
-- **Pictures for his eye: 12 PNGs, uncommitted,** in `G:\consonance-scratch\p-gate\eye-1126\` (§3).
-- **Not done:** no push of landing-1126, no merge to the builder's main, no release. Nothing was launched.
+- **Pictures for his eye: 12 PNGs, uncommitted,** in `G:\consonance-scratch\p-gate\eye-1126\` (§3). **Superseded:** the set to show is `eye-1126b\`. Two §3
+  claims were wrong, and §6 corrects them.
+- **Not done:** no push of landing-1126, no merge to the builder's main, no release. Nothing was launched. **Later:** landing-1126 was pushed at 62f5b95 on the
+  chair's 22:19Z order (§6).
 
 ## 1. The amendment, by name, and why it is a changed rule and not a weakened test
 
@@ -78,6 +80,10 @@ ruling of 20:06:12Z on drag-frame (ledger D677). Tier: PROVE IT. It continues `p
 
 ## 3. The pictures for his eye (uncommitted)
 
+> **CORRECTED in §6 (the librarian's check, 22:19Z).** Two claims in this section did not hold for the set it points to: the "cleared" column (row 2) and
+> "the guide dismissed". The set is re-taken in `G:\consonance-scratch\p-gate\eye-1126b\`. The text below is kept as written, so the correction can be read
+> against it.
+
 `G:\consonance-scratch\p-gate\eye-1126\`, from S/eye.js on the worktree at 62f5b95: headless Chrome, title `zz-headless-test`, 1500×900. The page is served with a
 stand-in for the app's reference commands: a made-up 1,257 m ring named "reference track 1". No file from AC or from any other author was read.
 - TabProxyWindow: 0 before and 0 after, on both runs.
@@ -130,6 +136,51 @@ Then check its sha256 is `ecdd721b…2fa5e`. Either backup will do; they are byt
 
   The two timing reds of the ceb21f5 run passed alone (`p-d677-landing-1126-P` §1).
 
+## 6. After the librarian's check: the push, the clearing check, the re-take (the chair's order of 22:19:56Z)
+
+**The push of landing-1126 (item 1).**
+- checked: `git fetch` → origin/landing-1126 was ceb21f5, an ancestor of 62f5b95, so the push is a fast-forward.
+- It carries four commits: 136e309, 475bd57, 1dfca3d and 62f5b95.
+- checked: their messages and added lines → 0 account paths.
+- `git push origin p-landing-1126:landing-1126` → `ceb21f5..62f5b95  p-landing-1126 -> landing-1126`.
+- The push gate (the credential scan, a hook on the push) wrote `"decision":"allow"` at 22:28:30Z in its ledger.
+- checked: `git ls-remote origin refs/heads/landing-1126` → 62f5b95290035eecec400a069504bea7863baa97.
+- Still no merge to main, and no release.
+
+**§3 corrected, by name.**
+- **What §3 claimed:** for row `2_column_cleared`, "the left column cleared (pointer away; opacity 0, `cleared: true`)". It also said the first-run guide was
+  dismissed, with the log showing `guideLeft: false`, and it named the half-hidden "Rea…" card as "not identified".
+- **What the log showed:** `eye-1126\eye_log.json` → `column.cleared: { opacity: "1", cleared: false }` in **both** looks. `skyline_2_column_cleared.png` shows the
+  column fully drawn.
+  - The "opacity 0, cleared true" I quoted came from the **first** run's output, and the second run overwrote it. I read the second run's log for `guideLeft` and
+    the label radius only, so I never re-read its column state. That is the error.
+- **And the guide was not dismissed.** My eye.js change clicked "Skip", which only steps the guide forward ("Sculpt the road, 2 of 6" → "Read the colours, 4 of
+  6"). `guideLeft: false` only meant that no Skip button was left. The "Rea…" card was that guide, half behind the reference panel. The librarian identified it,
+  not me.
+  - The script's other dismissal, `localStorage t180.guide.done`, does nothing on this tip: the guide keeps its state under `t180b.onboarding`
+    (`app/onboarding/firstrun.js:16`).
+- **Why the column stayed shown:** the open guide held it. leftcolumn-page.test.js row 11: "while the guide points into the column it stays shown with the
+  pointer off it; closing the guide lets it clear".
+
+**Does the clearing work on 62f5b95? Yes.**
+- checked: `node --test app/test/leftcolumn-page.test.js` at 62f5b95, BelowNormal (S/leftcolumn-62f5b95.tap) → **tests 11, pass 11, fail 0**, exit 0.
+- Its row 3: "in every look the pointer off the column clears it after the delay (opacity 0, --left-cleared) …". Row 11 is also `ok`.
+- TabProxyWindow 0 before and after.
+- So there is no defect in what is installed, and no first ring was owed.
+
+**The re-take** (`G:\consonance-scratch\p-gate\eye-1126b\`, the same 12 shots, Glass and Skyline, 62f5b95).
+- The guide is closed by its ✕ inside `#guide`, as leftcolumn-page.test.js `load()` does.
+- The cleared shot no longer waits a fixed 1.4 s. It polls until the column's opacity is 0 (up to 6 s), then waits 600 ms more, past the fade, then shoots.
+- checked: `eye-1126b\eye_log.json`, both looks:
+  - `column.cleared: { opacity: "0", cleared: true, msToClear: 620, after: { opacity: "0", cleared: true } }`;
+  - `guide.outlinedInColumn: false`;
+  - `pageErrors: []`.
+- checked by eye: `glass_2_column_cleared.png` and `skyline_2_column_cleared.png` show no column. The top right holds only the collapsed "Show the guide" button.
+  `glass_3_reference_road_panel.png` has nothing behind the reference panel.
+  - That button is why the log's `guide.guideShown` reads `true`: `#guide` is the collapsed button now, not the guide.
+- TabProxyWindow 0 before and after.
+- **The old set in `eye-1126\` is kept as the evidence for this correction. Show him `eye-1126b\`.**
+
 BASE: the builder checkout (Downloads\t180-fresh) ceb21f5
-SOURCES: S/dragframe-1dfca3d.tap; S/dragframe-run.txt; git merge / diff-tree --cc / diff --stat in t180-wt-p-1126; git show --stat 1dfca3d; S/build-run.log; S/build.log; src-tauri/dist vs HEAD hashes; heavy-run.js --status; tasklist; G:\consonance-scratch\p-gate\eye-1126\{eye-out.txt, eye_log.json, tabproxy-before.txt, tabproxy-after.txt, *.png}; sha256sum and cmp of the installed exe and its backup; install-local.ps1 output
-NEXT: librarian shows him the pictures and says when landing-1126 (62f5b95) is to be pushed; I go on now to the two room laps (shelf-recursion maxBuffer, the CH-4 freeze) and then the lighthouse landing.
+SOURCES: S/leftcolumn-62f5b95.tap; G:nsonance-scratchp-gateeye-1126b{eye_log.json, eye-out.txt, tabproxy-before.txt, tabproxy-after.txt, *_2_column_cleared.png, glass_3_reference_road_panel.png}; git fetch / push / ls-remote landing-1126; push-gate.jsonl last row; app/onboarding/firstrun.js:16; S/dragframe-1dfca3d.tap; S/dragframe-run.txt; git merge / diff-tree --cc / diff --stat in t180-wt-p-1126; git show --stat 1dfca3d; S/build-run.log; S/build.log; src-tauri/dist vs HEAD hashes; heavy-run.js --status; tasklist; G:\consonance-scratch\p-gate\eye-1126\{eye-out.txt, eye_log.json, tabproxy-before.txt, tabproxy-after.txt, *.png}; sha256sum and cmp of the installed exe and its backup; install-local.ps1 output
+NEXT: librarian shows him the re-taken pictures in eye-1126b when it has read §6; landing-1126 is pushed at 62f5b95 and waits there; P goes on with the lighthouse landing (its suite restarts now).
