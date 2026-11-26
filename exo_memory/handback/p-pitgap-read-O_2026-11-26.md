@@ -66,8 +66,8 @@ What this shows:
 - **Below ~0.012 m there is no threshold.** On the straight, 0.002 and 0.008 are clean while 0.005 and 0.01 are red. A's
   table shows the same disorder (cup 10 turning: 0 clean, 0.005 red).
 - **A's points reproduce exactly.** 332 / 55 / 3 at 0 / 0.005 / 0.01 on the flat straight.
-- **So 0.1 m is a margin, and a sound one.** It is 10× the largest red gap A and I measured (0.01 m, on 12 roads between
-  us), and every gap the panel now accepts exported wherever I looked.
+- **So 0.1 m is a margin, and a sound one.** It is 10× the largest red gap A and I measured (0.01 m, on A's 8 roads
+  and my 4, A's flat straight among both), and every gap the panel now accepts exported wherever I looked.
 - **Not measured by me:** the "2–9 cm" the road mesh's edge sits from the formula's edge, which A takes from the
   `src/export/pitlane.js` infill header.
 
