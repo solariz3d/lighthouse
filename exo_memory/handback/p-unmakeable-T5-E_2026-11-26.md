@@ -109,6 +109,37 @@ anywhere, so this is by construction: it only says the pose was in range (pitch 
 - checked (`t5_table.cjs` over `t5_lay.json`): road sections made **10 of 35**; road length made **1,239 of 4,057 m**; jumps **2 of 2**.
 - inferred: against the stated 10.3 km lap, **about 1.2 km is shown made, 4.1 km measured, and about 6 km unread.**
 
+## 4b. By hand or steered (the chair's addendum, 19:33:25Z, from [T3]'s 42 of 115)
+
+**No route here steers.** Each of the 13 forms lays its pieces once, in one pass (`t5_lay.cjs` `layRoute`); nothing is measured against the read, undone
+and re-laid. So every made section was made by hand in the chair's sense, and none only by steering. This is read off the frozen v8 route log
+(`t5_lay.json`, every form's pieces and verdict) by `t5_byhand.cjs`; nothing was re-run.
+
+| section m | simplest route that made it | pieces | metres a piece | forms that made it (pieces) | STEERED |
+|---|---|---|---|---|---|
+| 294-479 | corner: pieces every ~5 m | 25 | 8 | 3 of 13: corner: pieces every ~5 m (25); rate: pieces every ~5 m (25); corner: pieces every ~5 m, bank at start (25) | no |
+| 479-682 | corner: pieces every ~5 m | 26 | 9 | 2 of 13: corner: pieces every ~5 m (26); corner: pieces every ~5 m, bank at start (26) | no |
+| 1740-1805 | corner: pieces every ~5 m | 10 | 9 | 2 of 13: corner: pieces every ~5 m (10); corner: pieces every ~5 m, bank at start (10) | no |
+| 2318-2447 | corner: pieces every ~5 m | 18 | 8 | 2 of 13: corner: pieces every ~5 m (18); corner: pieces every ~5 m, bank at start (18) | no |
+| 3239-3343 | corner: pieces every ~5 m | 15 | 8 | 3 of 13: corner: pieces every ~5 m (15); rate: pieces every ~5 m (15); corner: pieces every ~5 m, bank at start (15) | no |
+| 3405-3472 | corner: pieces every ~10 m | 7 | 12 | 5 of 13: corner: pieces every ~10 m (7); corner: pieces every ~5 m (11); rate: pieces every ~5 m (11); corner: pieces every ~5 m, bank at start (11); corner: pieces every ~10 m, bank at start (7) | no |
+| 3472-3607 | rate: pieces every ~10 m | 13 | 12 | 1 of 13: rate: pieces every ~10 m (13) | no |
+| 3750-3974 | corner: pieces every ~10 m | 19 | 13 | 5 of 13: corner: pieces every ~10 m (19); corner: pieces every ~5 m (28); rate: pieces every ~5 m (28); corner: pieces every ~5 m, bank at start (28); corner: pieces every ~10 m, bank at start (19) | no |
+| 3974-4019 | pieces every ~40 m | 2 | 33 | 10 of 13: pieces every ~40 m (2); pieces every ~20 m (3); rate: pieces every ~20 m (3); rate: pieces every ~10 m (5); corner: pieces every ~10 m (5); corner: pieces every ~5 m (7); rate: pieces every ~5 m (7); corner: pieces every ~5 m, bank at start (7); corner: pieces every ~10 m, bank at start (5); pieces every ~40 m, flowing bank marks every ~10 m (2) | no |
+| 4019-4101 | corner: pieces every ~5 m | 12 | 9 | 2 of 13: corner: pieces every ~5 m (12); corner: pieces every ~5 m, bank at start (12) | no |
+
+- checked (`node t5_byhand.cjs ./t5_lay.json`): **made by hand: 10 sections, 1,239 m. Made only by steering: 0.** Jumps by hand: 2 of 2. Each is one
+  take-off piece, Jump with the landing typed in its boxes, and a landing piece; nothing re-laid.
+- **The simplest route** is the made form with the fewest pieces, ties to the earlier in the list. **Pieces** are counted as laid, including the 10 m
+  lead-in and run-out. **Metres a piece** is (section + 20 m) / pieces.
+- **"~5 m" pieces come out at 8-9 m.** A cut can only fall on a read station, and the stations are spaced 4.09 m (median); checked, `t5_profile.json`.
+- **Only one section (3974-4019, 2 pieces) was made by anything as coarse as ~20-40 m pieces.** 7 of 10 need 10-26 pieces at 8-9 m. Before he can
+  type them, he needs the read's numbers at every cut: turn, climb, bank and width, all taken from the read at those stations. So "by hand" here means
+  typed and not steered, not laid by eye.
+- **One setup is not the panel's.** The first piece of each laid run arrives at the read's turn rate, climb rate, bank and width (`opts.first` set by the
+  harness, `t5_lay.cjs` layRoute). On an empty track the panel would send the typed targets there. inferred: this has little weight, because the
+  comparison starts after a 10 m lead-in, and on a track built continuously the road arrives at those rates from the piece before. It is not tested.
+
 ## 5. The classes not made, in plain words
 
 1. **A one-sided width step.** The road widens by 3 to 3.5 m on one side within about 5 m, so its centre steps sideways. The builder's width is one
