@@ -34,3 +34,8 @@ Other authors' track names stay out of this public repo (the rule of `briefs/t18
 - 03:3x (L): L243 first look done (`handback/p-l243-reference-overlay-B_2026-11-26.md`), pictures sent. Open with him: AI-line ribbon vs the kn5 road (about one more lap).
 - 04:49 (L): to ribbon now or the full road, "Yes finish the rest." Both go: L250,
   `loop/packet_t180_shadow_tracks_BO_2026-11-26.md` (B the ribbon and panel, O the kn5 reader in Rust).
+- 05:2x (L): L250 built. B: `handback/p-l250-shadow-B_2026-11-26.md`, builder `l250-shadow-tracks` 59a54e3 (ribbon 18/18,
+  panel 17/17, mutants 23/23; read-only proved for the doc, a save, an undo step and an export, in both modes). O:
+  `handback/p-l250-kn5-O_2026-11-26.md`, the kn5 road reader (61 of 61 installed layouts read; its mesh rule replaced
+  the first look's, which dropped road on 30 of 61). Eight pictures sent to him (`t180-wt-l243\out\l250-pictures`).
+  Not run: the whole suite, a cargo build of the merged tree, the real app's IPC. E reads next.
