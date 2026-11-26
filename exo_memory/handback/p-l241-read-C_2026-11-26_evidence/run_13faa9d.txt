@@ -1,0 +1,22 @@
+﻿V6 labels while a handle drag crosses mark 2: ["Extra bank 2 @700.00"]
+V8 labels after leaving from the dot: ["Extra bank @400.00"]
+P c-l241-fix overhead handle=false presses=325 hash=6a65041c4067eec8 | overhead handle=true presses=252 hash=fd439a1bf6c3dfa7 | build handle=false presses=322 hash=717e82b7ab614d51 | build handle=true presses=260 hash=0b06e8d488d0480f
+[32m✔ V1: climb, width and cup marks rest as one dot each with no label, and a hover shows the hovered one only [90m(5.1904ms)[39m[39m
+[32m✔ V2: a mark added in the MIDDLE of a field (the later one shifts index) flashes the new one, not the shifted one [90m(1.0529ms)[39m[39m
+[32m✔ V3: two marks added at once in one field flash none (by design); one added in each of two fields flashes both [90m(1.148ms)[39m[39m
+[32m✔ V4: the ghost goes and comes back with the same marks: nothing was added, so no label shows [90m(0.2096ms)[39m[39m
+[32m✔ V5: a press that the handles take (yields) starts no mark drag, and the hover a moment before does not either [90m(0.3035ms)[39m[39m
+[32m✔ V6 (a record): while a field handle is dragged (the press yielded), the pointer crossing a dot lights that mark [90m(1.3121ms)[39m[39m
+[32m✔ V7: a touch press on a dot and a drag: labelled while dragged, and after the lift the mark rests as a dot again [90m(0.5048ms)[39m[39m
+[32m✔ V8 (a record): the pointer leaves the stage from on top of a dot (no event after it): is the mark still shown? [90m(1.0576ms)[39m[39m
+[32m✔ V9: the Build camera: each dot sits on its mark's stroke and a press on it starts that mark's drag [90m(0.3469ms)[39m[39m
+[32m✔ V10: fifty marks added one at a time, 3 s apart: the flash list holds only the live flash, not every flash ever made [90m(13.7113ms)[39m[39m
+[32m✔ P (a record on both trees): the press map [90m(10742.0646ms)[39m[39m
+[34mℹ tests 11[39m
+[34mℹ suites 0[39m
+[34mℹ pass 11[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 10871.4647[39m

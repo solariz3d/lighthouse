@@ -154,6 +154,23 @@ test('V9: the Build camera: each dot sits on its mark\'s stroke and a press on i
   A.L.unmount();
 });
 
+// V10 (L241 re-run, the librarian's catch at 36d2d31): the flash list is pruned of spent flashes. The list is private to mount(), so its length is read where the
+// layer reads it: shownNow's `flashes.some(...)`, which runs for every resting mark on every draw. A spy on Array.prototype.some notes the length of any array whose
+// items are flash records ({ field, from, until }); it is put back in `finally`. Fifty marks are added to one field one at a time, each FLASH_MS + 1 s after the last.
+test('V10: fifty marks added one at a time, 3 s apart: the flash list holds only the live flash, not every flash ever made', { skip: !DOTS }, () => {
+  const realNow = Date.now, realSome = Array.prototype.some; let t = 1e12, seen = 0;
+  Date.now = () => t;
+  Array.prototype.some = function (...a) { if (this.length && this[0] && typeof this[0] === 'object' && 'until' in this[0] && 'field' in this[0]) seen = Math.max(seen, this.length); return realSome.apply(this, a); };
+  try {
+    const marksOf = (n) => Array.from({ length: n }, (_, i) => mk('bank', i, 10 + 15 * i, i + 1 < n ? 10 + 15 * (i + 1) : 1000));
+    const A = layer({ marks: marksOf(1) });
+    for (let n = 2; n <= 51; n++) { t += 3000; A.S.marks = marksOf(n); A.L.drawNow(); }
+    t += 3000; A.L.drawNow();   // a last draw with every flash spent
+    A.L.unmount();
+    assert.ok(seen <= 1, `the flash list reached ${seen} records over 50 adds 3 s apart (each spent 1 s before the next); a pruned list holds at most 1`);
+  } finally { Date.now = realNow; Array.prototype.some = realSome; }
+});
+
 // item 2 of the order, on BOTH trees: which presses start which mark's drag, over a grid around the marks, with and without a handle's reach over one of them
 test('P (a record on both trees): the press map', () => {
   const out = [];

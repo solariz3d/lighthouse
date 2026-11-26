@@ -1,0 +1,82 @@
+﻿[32m✔ L140 X1: each field with a value gets ONE extra handle, its own handle's kind in look and colour, labelled "extra …"; none without a value, none for the edges [90m(149.5916ms)[39m[39m
+[32m✔ L140 X2: the faint offer rings are gone: the marks' layer draws no offer; the extra handles are in the handles' own model [90m(19.574ms)[39m[39m
+[32m✔ L140 X3: dragged toward level, an extra handle LANDS on level within SNAP_PX (his 4.58°, about 10 px short); further away it stays; Shift and Ctrl keep their own rules [90m(0.3599ms)[39m[39m
+[32m✔ L140 X4: an extra handle: a press and release sends nothing; a drag ACROSS sends amounts; a drag ALONG the road slides where its change starts, in metres [90m(4.4949ms)[39m[39m
+[32m✔ L140 X5: in the panel, dragging an unused extra handle makes EXACTLY one change at its place with the amount reached; the document is untouched; one Ctrl+Z removes it [90m(36.9437ms)[39m[39m
+[32m✔ L140 X6: sliding an extra handle moves where its change starts: a used one's mark (kept as its share), an unused one's place, and its amount then lands there [90m(42.5839ms)[39m[39m
+[32m✔ L140 X7: the panel's rows read "extra bank °" (and "extra bank 2 °"), in the field rows' own style, each with its from and a remove [90m(33.608ms)[39m[39m
+[32m✔ L140 X8: his TEST BANKING bank, by the extra handle: 80° then dragged toward level and let go 10 px short ends at 0, laid by the core [90m(61.8373ms)[39m[39m
+[32m✔ W1: his S: with an extra turn at 500 m, the extra bank's handle stands at 380 m (500 − 0.12 × 1,000), and its change starts there [90m(31.9569ms)[39m[39m
+[32m✔ W2: no extra turn: the extra bank stands at 500 m as before (his good piece: corner −90, bank 50, extra bank to 0) [90m(19.2356ms)[39m[39m
+[32m✔ W3: a mark he slid wins over the lead: the unused extra bank slid to 450 m stays at 450 m with an extra turn on the piece [90m(27.5319ms)[39m[39m
+[32m✔ W4: the clamp: on a short piece whose first bank is laid early, the lead never puts the extra bank before the first ramp's end [90m(10.0728ms)[39m[39m
+[32m✔ W5: a typed extra bank row with no from, with an extra turn: extendOptions lays it 0.12 of the piece before the extra turn's mark (380 m), not at 85% [90m(0.2741ms)[39m[39m
+[32m✔ W6: the clamp's low end is the change floor, never the piece's start: an extra turn slid to 100 m (the lead would be −20 m) puts the extra bank at the floor, and Extend lays it [90m(50.273ms)[39m[39m
+[32m✔ W7: a typed extra bank row with no from, behind an extra turn at 100 m: extendOptions lays it at the floor, not at 0 or before [90m(0.2873ms)[39m[39m
+[32m✔ F1 (bank-then-turn): the extra bank lands at the lead, 380 m (the extra turn's 500 − 0.12 × 1,000), and its handle stands there [90m(28.8805ms)[39m[39m
+[32m✔ F2 (bank-then-turn): an extra bank slid to 450 m before it was made stays at 450 m [90m(23.4287ms)[39m[39m
+[32m✔ F3 (bank-then-turn): an extra bank whose from was typed (600 m) stays at 600 m [90m(28.1215ms)[39m[39m
+[32m✔ F1 (turn-then-bank): the extra bank lands at the lead, 380 m (the extra turn's 500 − 0.12 × 1,000), and its handle stands there [90m(23.5649ms)[39m[39m
+[32m✔ F2 (turn-then-bank): an extra bank slid to 450 m before it was made stays at 450 m [90m(21.2533ms)[39m[39m
+[32m✔ F3 (turn-then-bank): an extra bank whose from was typed (600 m) stays at 600 m [90m(28.941ms)[39m[39m
+[32m✔ F4: an extra bank made before the extra turn and left at its default goes back to 500 m when the extra turn is removed [90m(24.05ms)[39m[39m
+[32m✔ F5: a default extra bank's mark dragged along the road (to 700 m) is his: adding the extra turn after it does not move it [90m(27.4337ms)[39m[39m
+[32m✔ his extra turn 1: on his 125 m −90° piece the extra turn's handle drags to −45° and to +45° from 62.5 m, and the core lays both [90m(15.8845ms)[39m[39m
+[32m✔ his extra turn 2: an extra handle held at the edge of what fits says so, why, and the length it needs; back inside, it says nothing [90m(87.2461ms)[39m[39m
+[32m✔ his extra turn 3: a ghost refusal is taken away by the next ghost that is built: the length field emptied, then 125 typed [90m(13.2943ms)[39m[39m
+[32m✔ his extra bank 1: on his piece the extra bank's first move goes where it is dragged (to −20°, not to the edge at −5.49), and on to −45° and −90°, each laid [90m(28.2245ms)[39m[39m
+[32m✔ C1: the extra bank's tick is labelled with where it starts, where it ends and how long it rolls: "Extra bank · 500.00 m → end · rolls over 500.00 m · drag to start earlier or later" [90m(99.1694ms)[39m[39m
+[32m✔ C2: the label follows the from: slid by its handle to 420 m, and dragged by its tick to 640.5 m [90m(52.5006ms)[39m[39m
+[32m✔ C3: the stretch the tick tints runs from its from to the piece's end (the next change's mark when there is one), and follows the from [90m(58.1158ms)[39m[39m
+[32m✔ C4: the stretch on the ghost: its first station is the tick's, its last the stretch's end, the road's full width across [90m(1.286ms)[39m[39m
+[32m✔ C5: turn and climb share the path: their ticks read "Extra turn · … · turns over …" and "Extra climb · … · climbs over …" [90m(28.3944ms)[39m[39m
+[32m✔ C6: the extra handle's hover names its sideways drag and where it starts now, and follows the from; a field's own handle has no such line [90m(0.3279ms)[39m[39m
+[32m✔ C7: the handles tell which handle is hovered or dragged (active), so the panel can light its tick [90m(2.7017ms)[39m[39m
+[32m✔ C8: in the panel, the extra bank's tick is lit while its handle is hovered or dragged, and only then [90m(28.0466ms)[39m[39m
+[32m✔ R1: dragging the tick itself, the label's number and the stretch's start follow the drag before release [90m(4.599ms)[39m[39m
+[32m✔ R2a: a label whose place falls on a handle's screen box is nudged off it [90m(1.8206ms)[39m[39m
+[32m✔ R2b: a label is kept below the HUD's bottom edge [90m(1.4353ms)[39m[39m
+[32m✔ R2c: the panel hands the marks' layer each handle's screen box (and its tip) to keep a label off [90m(24.9119ms)[39m[39m
+[32m✔ D1: at rest, no label box and no label text, and one dot per mark, on the mark [90m(0.5667ms)[39m[39m
+[32m✔ D2: the pointer over one dot shows that mark's label (and no dot for it); off it, the label goes [90m(0.8412ms)[39m[39m
+[32m✔ D3: a lit mark (its extra handle hovered or dragged) shows its label and no dot [90m(0.4889ms)[39m[39m
+[32m✔ D4: a mark just added shows its label for about 2 s, then is a dot; marks there at the first draw do not [90m(0.5762ms)[39m[39m
+[32m✔ D5: the dot is grabbed as the tick was: a press on it and a drag move the mark [90m(0.4548ms)[39m[39m
+[32m✔ D6 (pane C's V4, L241 read): the ghost goes for a draw and comes back with the same marks: nothing was added, so no label shows [90m(0.3678ms)[39m[39m
+[32m✔ L135 C1: the bank's changes sit right after the bank row; a change is a row in the bank row's style (AMENDED L139: a list, not two fixed fields) [90m(41.2974ms)[39m[39m
+[32m✔ L135 C2: the bank's change rows are off until the bank field has a target, on while it has one, off again when it is put back (AMENDED L139: rows of a list) [90m(8.4763ms)[39m[39m
+[32m✔ L135 C3: a change with no from is laid at 85% of the length and follows it until a value is typed; cleared, it follows again (AMENDED L139: a core without secondMinM) [90m(67.5277ms)[39m[39m
+[32m✔ L135 C4: the Extend options carry the bank's change only with a bank target AND a then; the core call is made with it (AMENDED L139: changes.phi, a list) [90m(52.0043ms)[39m[39m
+[32m✔ L135 C5: Undo gives back the bank's change as it was for the undone piece (and whether from was typed); a new document clears it (AMENDED L139: a list) [90m(143.6877ms)[39m[39m
+[32m✔ L135 C6: extendOptions is pure: no change without a bank; from left blank is 85% of the length (no secondMinM); values are sent as typed (AMENDED L139: changes) [90m(0.2825ms)[39m[39m
+[32m✔ L135 C7: the panel says where the bank's mark stands: from, and the road's half width there; nothing without a change (AMENDED L139: marksAt) [90m(25.2154ms)[39m[39m
+[32m✔ L135 C8: tickAt: the ghost's station s0 + from, from -half to +half across; null for a jump's ghost, no ghost, or a from off the piece [90m(0.4929ms)[39m[39m
+[32m✔ L135 C9: the bank's mark is drawn into the view in css px; behind the camera it is not drawn (AMENDED L139: markStroke for tickLine) [90m(0.6301ms)[39m[39m
+[32m✔ L135 C10: the layer draws the marks from the preview's own answers (ghost, view) and the panel's; nothing without them (AMENDED L139: marks, not one tick) [90m(1.3572ms)[39m[39m
+[32m✔ L135 C11: with B's core, his case is built: 750 m, bank 30 then 0 from the panel's default, the piece holds about 30° at from and ends level; 637.5 is refused by name [90m(36.6469ms)[39m[39m
+[32m✔ L135 C12: with B's core, a from past the piece is the core's refusal by name, shown in the panel; Extend adds nothing [90m(6.8436ms)[39m[39m
+[32m✔ L135 C13: on a 300 m piece, 30° then 0, the default from is clamped to 300 less the core's own minimum; 1 cm past it is refused, naming it; typed, it stays [90m(31.5909ms)[39m[39m
+[32m✔ L139 S1: every field (turn, climb, bank, width, cup, left and right edge) has its list of changes right after its row; each change is a numbered then/from row with a remove [90m(49.6869ms)[39m[39m
+[32m✔ L139 S2: a field's rows are off, and not sent, while it has no target; on again with one [90m(9.1365ms)[39m[39m
+[32m✔ L139 S3: a dragged change keeps its share of the piece (lengthen: the marks spread apart); a typed from stays metres; a cleared one is laid by the rule [90m(80.243ms)[39m[39m
+[32m✔ L139 S4: the options carry each field's list in the core's units; as corners, his snake (+60 −60 +60) is turnDeg plus changes.turnDeg [90m(380.5165ms)[39m[39m
+[32m✔ L139 S5: every minimum is the core's secondMinM, asked per segment with its two targets (no number copied); none exported → 85%; never before an early first ramp ends [90m(0.4295ms)[39m[39m
+[32m✔ L139 S6: Undo gives back every field's list (count, values, shares, typed froms); a new document clears them all [90m(142.8593ms)[39m[39m
+[32m✔ L139 S7: one mark per change, in its field's handle colour (handles.js) and place across the road [90m(46.5389ms)[39m[39m
+[32m✔ L139 S8: a mark is short strokes across the road at its field's place: bank on both edges, climb at the centre, cup at ±0.3, turn outside and width inside the edge [90m(0.6925ms)[39m[39m
+[32m✔ L139 S9: a mark is dragged along the piece: the press on it is taken from the handles beneath, each move gives that change the nearest station, the release ends it [90m(1.7934ms)[39m[39m
+[32m✔ L139 S10: in the panel a mark drag sets that change's from (as its share) and nothing else; one Ctrl+Z (the undo guard) puts it back [90m(70.9645ms)[39m[39m
+[32m✔ L139 O1: a field's offer shows exactly when its free stretch reaches its change's own minimum, where the user drew it within that room; again after each change; never without a target; one per field [90m(14.091ms)[39m[39m
+[32m✔ L139 O2: shortening hides the offer at the same length lengthening showed it, with no lingering step [90m(7.6215ms)[39m[39m
+[32m✔ L139 O3: dragging an offer makes exactly one change, from the offer's place, its then where the drag reached; a press with no movement makes none; one Ctrl+Z removes it; the document is untouched [90m(30.3298ms)[39m[39m
+[32m✔ L139 O4: on the real core, a bank offer dragged at the place it appears is laid (form (ii): its own default drag is not refused for room) [90m(18.0998ms)[39m[39m
+[32m✔ L139 O5: on the real core, his snake through the panel (corner +60, then −60, then +60 over 900 m, untyped marks) is one piece ending +60° from where it began, and straight [90m(73.2957ms)[39m[39m
+[32m✔ L139 K1: his picture's −90° corner with a second corner change (+90°), its mark left to the panel, is laid by the real core on a 500 m piece, not refused [90m(15.9525ms)[39m[39m
+[34mℹ tests 74[39m
+[34mℹ suites 0[39m
+[34mℹ pass 74[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 1149.034[39m

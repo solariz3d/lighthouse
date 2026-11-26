@@ -1,0 +1,27 @@
+﻿[31m✖ V10: fifty marks added one at a time, 3 s apart: the flash list holds only the live flash, not every flash ever made [90m(20.0865ms)[39m[39m
+[34mℹ tests 1[39m
+[34mℹ suites 0[39m
+[34mℹ pass 0[39m
+[34mℹ fail 1[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 90.4444[39m
+
+[31m✖ failing tests:[39m
+
+test at c-l241-read.test.js:160:1
+[31m✖ V10: fifty marks added one at a time, 3 s apart: the flash list holds only the live flash, not every flash ever made [90m(20.0865ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: the flash list reached 50 records over 50 adds 3 s apart (each spent 1 s before the next); a pruned list holds at most 1
+      at TestContext.<anonymous> [90m(C:\Consonance\lighthouse\exo_memory\handback\p-l241-read-C_2026-11-26_evidence\[39mc-l241-read.test.js:170:12[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:227:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1325:25)[39m
+  [90m    at Test.start (node:internal/test_runner/test:1191:17)[39m
+  [90m    at startSubtestAfterBootstrap (node:internal/test_runner/harness:385:17)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
