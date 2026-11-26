@@ -1,0 +1,10 @@
+test run_preset_tests::a_committee_pane_the_table_never_named_gets_turbo_by_its_role ... FAILED
+test run_preset_tests::turbo_gives_each_seat_its_model_and_effort ... ok
+test run_preset_tests::normal_gives_back_todays_argv ... ok
+test run_preset_tests::the_spawn_takes_the_launch_once ... ok
+test run_preset_tests::an_unknown_value_runs_as_normal_and_is_refused ... ok
+thread 'run_preset_tests::a_committee_pane_the_table_never_named_gets_turbo_by_its_role' (9364) panicked at src\main.rs:6007:13:
+  left: ["--model", "opus"]
+ right: ["--model", "opus", "--effort", "xhigh"]
+test result: FAILED. 4 passed; 1 failed; 0 ignored; 0 measured; 1355 filtered out; finished in 0.01s
+error: test failed, to rerun pass `--bin consonance`
