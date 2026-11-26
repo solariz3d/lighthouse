@@ -1,0 +1,26 @@
+V3g: mode=road kind=road picked="reference track 1\u0000" drawn=yes (1257 m line) error=null
+V3h: mode=line kind=line picked="reference track 2\u0000" drawn=yes (942 m line) error=null
+V3h2: mode=road kind=road picked="reference track 1\u0000" drawn=yes (1257 m line) error=null
+V3i in Line: mode=line kind=null picked=null drawn=no error="reference track 7: it has no AI line, so Line has nothing to draw. Road draws it, placed by the start its kn5 names."
+V3i option in Line: {"text":"reference track 7 (no AI line)","value":"reference track 7\u0000","disabled":true}; readout "reference track 7: it has no AI line, so Line has nothing to draw. Road draws it, placed by the start its kn5 names."; line reads asked 0
+V3i back in Road: mode=road kind=road picked="reference track 7\u0000" drawn=yes (road by start) error=null
+V3i option back in Road: {"text":"reference track 7 (no AI line: placed by its start)","value":"reference track 7\u0000","disabled":false}
+V3j shown in Road: mode=road kind=road picked="reference track 7\u0000" drawn=yes (road by start) error=null
+V3j in Line: mode=line kind=null picked=null drawn=no error="reference track 7: it has no AI line, so Line has nothing to draw. Road draws it, placed by the start its kn5 names."
+V3j back in Road: mode=road kind=road picked="reference track 7\u0000" drawn=yes (road by start) error=null
+V3j: line reads asked 0; Line readout "reference track 7: it has no AI line, so Line has nothing to draw. Road draws it, placed by the start its kn5 names."
+V1n: mode=road kind=road picked="reference track 7\u0000" drawn=yes (road by start) error=null
+✔ V3g: three acts in a row, every read held: pick A (Line), change to Road, pick B: B is drawn, as Road (21.3903ms)
+✔ V3h: pick A (Line, held), change to Road, change back to Line: A is drawn, as Line (6.167ms)
+✔ V3h2: A shown as Road; pick B (its road held); Line; back to Road: B is drawn, as Road (4.7471ms)
+✔ V3i: Road; a layout with no AI line picked, its road still reading; changed to Line: what is drawn and said; then back to Road (1.7434ms)
+✔ V3j: a layout with no AI line SHOWN as Road; changed to Line, then back to Road (1.2519ms)
+✔ V1n (replaces V1): a layout with no AI line: in Line listed greyed "(no AI line)"; in Road listed "(no AI line: placed by its start)", drawn by its start on his start, no line read (47.9424ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 284.8913

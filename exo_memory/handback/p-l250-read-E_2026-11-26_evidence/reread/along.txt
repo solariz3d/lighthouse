@@ -1,0 +1,15 @@
+layout 1: ahead 40 m, behind 40 m, left 33.6 m, right 11.6 m; T.y -0.000
+layout 2: ahead 40 m, behind 40 m, left 32.8 m, right 12.4 m; T.y -0.000
+layout 3: ahead 40 m, behind 40 m, left 18.1 m, right 7.9 m; T.y -0.000
+layout 4: ahead 40 m, behind 40 m, left 19.6 m, right 11.1 m; T.y -0.000
+layout 6: ahead 40 m, behind 40 m, left 19.4 m, right 8.1 m; T.y -0.000
+layout 7: ahead 40 m, behind 40 m, left 19.4 m, right 8.1 m; T.y -0.000
+layout 48: ahead 40 m, behind 40 m, left 11.5 m, right 4.9 m; T.y -0.000
+layout 51: ahead 40 m, behind 40 m, left 13.2 m, right 13.2 m; T.y -0.000
+layout 53: ahead 40 m, behind 40 m, left 40 m, right 31.8 m; T.y -0.000
+layout 54: ahead 40 m, behind 40 m, left 17.1 m, right 11.6 m; T.y -0.000
+layout 55: ahead 40 m, behind 40 m, left 23.3 m, right 12.9 m; T.y -0.000
+layout 57: ahead 40 m, behind 40 m, left 39.9 m, right 10.5 m; T.y 0.000
+layout 58: ahead 40 m, behind 40 m, left 19 m, right 13 m; T.y 0.000
+layout 59: ahead 40 m, behind 40 m, left 14.8 m, right 40 m; T.y -0.000
+layout 60: ahead 40 m, behind 40 m, left 14.8 m, right 40 m; T.y -0.000

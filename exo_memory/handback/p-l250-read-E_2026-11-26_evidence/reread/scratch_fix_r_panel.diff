@@ -1,0 +1,45 @@
+diff --git a/app/reference/panel.js b/app/reference/panel.js
+index 322b3a3..693a415 100644
+--- a/app/reference/panel.js
++++ b/app/reference/panel.js
+@@ -85,7 +85,7 @@ function createReferencePanel({ doc, root, call, clock = () => (doc.defaultView
+ 
+   // reading: the layout his newest pick is still reading (null once it lands, is refused or is cleared). A mode change re-reads THAT one, so a pick
+   // made while another was out is never dropped, nor drawn in the mode he left (pane E's V3e and V3f)
+-  let layouts = null, ref = null, nudge = { ...ZERO }, shownKey = null, timing = null, error = null, notes = [], shown = true, seq = 0, mode = 'line', reading = null;
++  let layouts = null, ref = null, nudge = { ...ZERO }, shownKey = null, timing = null, error = null, notes = [], shown = true, seq = 0, mode = 'line', reading = null, held = null;
+   // refusals are kept per mode (a road that does not read leaves its line drawable); a line that does not read is refused in both, since the line places the road
+   const refused = new Map(), borrowed = new Set();   // `${mode}\0${key}` -> the words it was refused with; keys of layouts found carrying another layout's line
+   const keyOf = (l) => `${l.track}\u0000${l.layout}`, rk = (k, m = mode) => `${m}\u0000${k}`;
+@@ -145,7 +145,7 @@ function createReferencePanel({ doc, root, call, clock = () => (doc.defaultView
+     relabel(); say(); return layouts;
+   }
+   async function clear() {
+-    seq++; reading = null;   // a pick still reading is dropped when it lands
++    seq++; reading = null; held = null;   // a pick still reading is dropped when it lands
+     ref = null; shownKey = null; timing = null; error = null; notes = []; nudge = { ...ZERO };
+     for (const [k] of NUDGES) inputs[k].value = '0';
+     pickEl.value = ''; await send(); say(); return null;
+@@ -154,7 +154,7 @@ function createReferencePanel({ doc, root, call, clock = () => (doc.defaultView
+     if (track === null || track === undefined) return clear();
+     const my = ++seq, m = mode, l = (layouts || []).find((x) => x.track === track && x.layout === (layout || '')) || { track, layout: layout || '', hasAi: true, uiLength: null };
+     const key = keyOf(l), args = { track, layout: l.layout };
+-    error = null; notes = []; reading = l;
++    error = null; notes = []; reading = l; held = null;
+     // (repair) a layout with no AI line, in Road: no line is read; its road is placed by the start its kn5 names (road.js roadReference)
+     const byStart = m === 'road' && !l.hasAi;
+     let shape, line = null, next, t0, t1, t2, lineOk = false;
+@@ -187,7 +187,12 @@ function createReferencePanel({ doc, root, call, clock = () => (doc.defaultView
+   async function setMode(m) {
+     if (!MODES.some(([v]) => v === m)) throw new Error(`reference panel: the mode is line or road, got ${JSON.stringify(m)}`);
+     mode = m; modeEl.value = m;
+-    const l = reading || (shownKey && layouts && layouts.find((x) => keyOf(x) === shownKey));
++    const l = reading || (shownKey && layouts && layouts.find((x) => keyOf(x) === shownKey)) || held;
++    if (l && m === 'line' && l.hasAi === false) {   // E SCRATCH: Line has nothing to draw for it; held, so Road draws it again
++      seq++; reading = null; held = l; ref = null; shownKey = null; timing = null; notes = [];
++      error = `${nameOf(l)}: it has no AI line, so Line has nothing to draw. Road draws it, placed by the start its kn5 names.`;
++      relabel(); await send(); say(); return null;
++    }
+     if (l) return pick(l.track, l.layout);
+     relabel(); say(); return null;
+   }

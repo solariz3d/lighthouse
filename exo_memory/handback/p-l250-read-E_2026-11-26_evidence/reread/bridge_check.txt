@@ -1,0 +1,6 @@
+start 1.554 m above its road, a road deck 5 m above that road: groundUnder takes 0
+start 3.562 m above its road, a road deck 5 m above that road: groundUnder takes 5  <- the deck
+start 3.562 m above its road, a road deck 5.5 m above that road: groundUnder takes 5.5  <- the deck
+start 3.562 m above its road, a road deck 6 m above that road: groundUnder takes 0
+start 1.112 m above its road, a road deck 3 m above that road: groundUnder takes 3  <- the deck
+start 2 m above its road, a road deck 4.5 m above that road: groundUnder takes 0

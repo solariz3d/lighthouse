@@ -1,0 +1,101 @@
+{
+ "picks": [
+  {
+   "alias": "N3",
+   "msUntilShown": 378,
+   "mode": "road",
+   "kind": "road",
+   "picked": "reference N3\u0000",
+   "triangles": 3200034,
+   "error": null,
+   "readout": "3,200,034 triangles of road from its kn5, placed by its kn5's start (AC_START_0): it has no AI line · read 131 ms, built 175 ms",
+   "timing": {
+    "readMs": 131.20000004768372,
+    "buildMs": 175.20000004768372
+   },
+   "longTasksMs": [
+    177,
+    68
+   ],
+   "frames": {
+    "n": 477,
+    "median": 4.2,
+    "p95": 4.3
+   }
+  },
+  {
+   "alias": "N53",
+   "msUntilShown": 66,
+   "mode": "road",
+   "kind": "road",
+   "picked": "reference N53\u0000",
+   "triangles": 827912,
+   "error": null,
+   "readout": "827,912 triangles of road from its kn5, placed by its kn5's start (AC_START_0): it has no AI line · read 26 ms, built 33 ms",
+   "timing": {
+    "readMs": 26.299999952316284,
+    "buildMs": 33.200000047683716
+   },
+   "longTasksMs": [],
+   "frames": {
+    "n": 479,
+    "median": 4.2,
+    "p95": 4.3
+   }
+  }
+ ],
+ "modeSwitch": {
+  "inLine": {
+   "mode": "line",
+   "kind": null,
+   "picked": null,
+   "triangles": null,
+   "error": "reference N53: Not drawn: no AI line there (The system cannot find the path specified. (os error 3)). What does not read whole is never drawn in part.",
+   "readout": "reference N53: Not drawn: no AI line there (The system cannot find the path specified. (os error 3)). What does not read whole is never drawn in part.",
+   "timing": null
+  },
+  "backInRoad": {
+   "mode": "road",
+   "kind": null,
+   "picked": null,
+   "triangles": null,
+   "error": "reference N53: Not drawn: no AI line there (The system cannot find the path specified. (os error 3)). What does not read whole is never drawn in part.",
+   "readout": "reference N53: Not drawn: no AI line there (The system cannot find the path specified. (os error 3)). What does not read whole is never drawn in part.",
+   "timing": null
+  },
+  "nativeCallsDuring": [
+   "read_reference_line"
+  ]
+ },
+ "errors": [],
+ "optionsLine": [
+  {
+   "text": "None",
+   "disabled": false
+  },
+  {
+   "text": "reference N3 (no AI line)",
+   "disabled": true
+  },
+  {
+   "text": "reference N53 (no AI line)",
+   "disabled": true
+  }
+ ],
+ "optionsRoad": [
+  {
+   "text": "None",
+   "disabled": false
+  },
+  {
+   "text": "reference N3 (no AI line: placed by its start)",
+   "disabled": false
+  },
+  {
+   "text": "reference N53 (no AI line: placed by its start)",
+   "disabled": false
+  }
+ ],
+ "idleReadoutRoad": "2 of 2 layouts to show as road (2 with no AI line, placed by the start its kn5 names).",
+ "title": "zz-headless-test"
+}

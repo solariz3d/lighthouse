@@ -1,0 +1,56 @@
+V3g: mode=road kind=road picked="reference track 1\u0000" drawn=yes (1257 m line) error=null
+V3h: mode=line kind=line picked="reference track 2\u0000" drawn=yes (942 m line) error=null
+V3h2: mode=road kind=road picked="reference track 1\u0000" drawn=yes (1257 m line) error=null
+V3i in Line: mode=line kind=null picked=null drawn=no error="reference track 7: Not drawn: no AI line there. What does not read whole is never drawn in part."
+V3i option in Line: {"text":"reference track 7 (no AI line)","value":"reference track 7\u0000","disabled":true}; readout "reference track 7: Not drawn: no AI line there. What does not read whole is never drawn in part."; line reads asked 1
+V3i back in Road: mode=road kind=null picked=null drawn=no error="reference track 7: Not drawn: no AI line there. What does not read whole is never drawn in part."
+V3i option back in Road: {"text":"reference track 7 (no AI line: placed by its start)","value":"reference track 7\u0000","disabled":false}
+V3j shown in Road: mode=road kind=road picked="reference track 7\u0000" drawn=yes (road by start) error=null
+V3j in Line: mode=line kind=null picked=null drawn=no error="reference track 7: Not drawn: no AI line there. What does not read whole is never drawn in part."
+V3j back in Road: mode=road kind=null picked=null drawn=no error="reference track 7: Not drawn: no AI line there. What does not read whole is never drawn in part."
+V3j: line reads asked 1; Line readout "reference track 7: Not drawn: no AI line there. What does not read whole is never drawn in part."
+V1n: mode=road kind=road picked="reference track 7\u0000" drawn=yes (road by start) error=null
+✔ V3g: three acts in a row, every read held: pick A (Line), change to Road, pick B: B is drawn, as Road (20.5962ms)
+✔ V3h: pick A (Line, held), change to Road, change back to Line: A is drawn, as Line (3.8102ms)
+✔ V3h2: A shown as Road; pick B (its road held); Line; back to Road: B is drawn, as Road (4.9836ms)
+✖ V3i: Road; a layout with no AI line picked, its road still reading; changed to Line: what is drawn and said; then back to Road (1.9884ms)
+✖ V3j: a layout with no AI line SHOWN as Road; changed to Line, then back to Road (1.0426ms)
+✔ V1n (replaces V1): a layout with no AI line: in Line listed greyed "(no AI line)"; in Road listed "(no AI line: placed by its start)", drawn by its start on his start, no line read (42.9738ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 4
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 241.0559
+
+✖ failing tests:
+
+test at ..\..\Users\zackn\AppData\Local\Temp\claude\8e9709f509cfea85\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\l250r\e_vary2.test.js:61:1
+✖ V3i: Road; a layout with no AI line picked, its road still reading; changed to Line: what is drawn and said; then back to Road (1.9884ms)
+  AssertionError [ERR_ASSERTION]: in Line, a layout with no AI line is not called damaged
+      at TestContext.<anonymous> (C:\Users\zackn\AppData\Local\Temp\claude\8e9709f509cfea85\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\l250r\e_vary2.test.js:76:10)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'reference track 7: Not drawn: no AI line there. What does not read whole is never drawn in part.',
+    expected: /never drawn in part/,
+    operator: 'doesNotMatch',
+    diff: 'simple'
+  }
+
+test at ..\..\Users\zackn\AppData\Local\Temp\claude\8e9709f509cfea85\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\l250r\e_vary2.test.js:79:1
+✖ V3j: a layout with no AI line SHOWN as Road; changed to Line, then back to Road (1.0426ms)
+  AssertionError [ERR_ASSERTION]: in Line, a layout with no AI line is not called damaged
+      at TestContext.<anonymous> (C:\Users\zackn\AppData\Local\Temp\claude\8e9709f509cfea85\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\l250r\e_vary2.test.js:88:10)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'reference track 7: Not drawn: no AI line there. What does not read whole is never drawn in part.',
+    expected: /never drawn in part/,
+    operator: 'doesNotMatch',
+    diff: 'simple'
+  }

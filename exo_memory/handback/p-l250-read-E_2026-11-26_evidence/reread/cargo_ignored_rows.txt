@@ -1,0 +1,144 @@
+   Compiling t180-track-builder v0.4.40 (C:\Consonance\t180-wt-e-l250r\src-tauri)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.37s
+     Running unittests src\lib.rs (C:\build\e-l250r-target\debug\deps\t180_track_builder_lib-3e01addbbd0561a9.exe)
+
+running 3 tests
+test kn5road::tests::e_scratch_start_patches ... E patch layout 1: ai=0 start=AC_START_0 patch 1164 triangles of 881368
+E patch layout 2: ai=0 start=AC_START_0 patch 1512 triangles of 513178
+E patch layout 3: ai=0 start=AC_START_0 patch 26218 triangles of 3200034
+E patch layout 4: ai=0 start=AC_START_0 patch 2462 triangles of 657868
+E patch layout 5: ai=1 start=AC_START_0 patch 2736 triangles of 36951
+E patch layout 6: ai=0 start=AC_START_0 patch 2006 triangles of 210298
+E patch layout 7: ai=0 start=AC_START_0 patch 2006 triangles of 59416
+E patch layout 8: ai=1 start=AC_START_0 patch 16475 triangles of 497132
+E patch layout 9: ai=1 start=AC_START_0 patch 14765 triangles of 335202
+E patch layout 10: ai=1 start=AC_START_0 patch 14761 triangles of 332678
+E patch layout 11: ai=1 start=AC_START_0 patch 1050 triangles of 392936
+E patch layout 12: ai=1 start=AC_START_0 patch 1486 triangles of 392936
+E patch layout 13: ai=1 start=AC_START_0 patch 1058 triangles of 392936
+E patch layout 14: ai=1 start=AC_START_0 patch 7030 triangles of 219529
+E patch layout 15: ai=1 start=AC_START_0 patch 7092 triangles of 219529
+E patch layout 16: ai=1 start=AC_START_0 patch 1404 triangles of 52224
+E patch layout 17: ai=1 start=AC_START_0 patch 1404 triangles of 52224
+E patch layout 18: ai=1 start=AC_START_0 patch 1404 triangles of 52224
+E patch layout 19: ai=1 start=AC_START_0 patch 1404 triangles of 52224
+E patch layout 20: ai=1 start=AC_START_0 patch 1404 triangles of 52224
+E patch layout 21: ai=1 start=AC_START_0 patch 24125 triangles of 462524
+E patch layout 22: ai=1 start=AC_START_0 patch 24067 triangles of 462524
+E patch layout 23: ai=1 start=AC_START_0 patch 24072 triangles of 462524
+E patch layout 24: ai=1 start=AC_START_0 patch 24125 triangles of 462524
+E patch layout 25: ai=1 start=AC_START_0 patch 16639 triangles of 353671
+E patch layout 26: ai=1 start=AC_START_0 patch 9747 triangles of 335400
+E patch layout 27: ai=1 start=AC_START_0 patch 9733 triangles of 217652
+E patch layout 28: ai=1 start=AC_START_0 patch 9786 triangles of 217652
+E patch layout 29: ai=1 start=AC_START_0 patch 10761 triangles of 1227197
+E patch layout 30: ai=1 start=AC_START_0 patch 10783 triangles of 1227102
+E patch layout 31: ai=1 start=AC_START_0 patch 7420 triangles of 765977
+E patch layout 32: ai=1 start=none patch 4010 triangles of 780529
+E patch layout 33: ai=1 start=AC_START_0 patch 8207 triangles of 460967
+E patch layout 34: ai=1 start=AC_START_0 patch 8182 triangles of 461304
+E patch layout 35: ai=1 start=AC_START_0 patch 8116 triangles of 460967
+E patch layout 36: ai=1 start=AC_START_0 patch 8172 triangles of 461304
+E patch layout 37: ai=1 start=AC_START_0 patch 10110 triangles of 412723
+E patch layout 38: ai=1 start=AC_START_0 patch 10101 triangles of 412723
+E patch layout 39: ai=1 start=AC_START_0 patch 4791 triangles of 602412
+E patch layout 40: ai=1 start=AC_START_0 patch 4754 triangles of 609837
+E patch layout 41: ai=1 start=AC_START_0 patch 7549 triangles of 602265
+E patch layout 42: ai=1 start=AC_START_0 patch 6780 triangles of 367901
+E patch layout 43: ai=1 start=AC_START_0 patch 1690 triangles of 152928
+E patch layout 44: ai=1 start=AC_START_0 patch 1678 triangles of 152928
+E patch layout 45: ai=1 start=AC_START_0 patch 1680 triangles of 152928
+E patch layout 46: ai=1 start=AC_START_0 patch 5611 triangles of 125773
+E patch layout 47: ai=1 start=AC_START_0 patch 17453 triangles of 357588
+E patch layout 48: ai=0 start=AC_START_0 patch 6773 triangles of 472992
+E patch layout 49: ai=1 start=AC_START_0 patch 9315 triangles of 428872
+E patch layout 50: ai=1 start=AC_START_0 patch 4445 triangles of 457216
+E patch layout 51: ai=0 start=AC_START_0 patch 4374 triangles of 926104
+E patch layout 52: ai=1 start=AC_START_0 patch 2996 triangles of 285596
+E patch layout 53: ai=0 start=AC_START_0 patch 2154 triangles of 827912
+E patch layout 54: ai=0 start=AC_START_0 patch 4498 triangles of 1166100
+E patch layout 55: ai=0 start=AC_START_0 patch 6348 triangles of 159744
+E patch layout 56: ai=1 start=AC_START_0 patch 21247 triangles of 569436
+E patch layout 57: ai=0 start=AC_START_0 patch 5417 triangles of 1034264
+E patch layout 58: ai=0 start=AC_START_0 patch 2460 triangles of 176820
+E patch layout 59: ai=0 start=AC_START_0 patch 7997 triangles of 764414
+E patch layout 60: ai=0 start=AC_START_0 patch 7997 triangles of 809325
+E patch layout 61: ai=1 start=AC_START_0 patch 2295 triangles of 1330225
+ok
+test kn5road::tests::every_installed_layout_reads_or_says_why ... layout 1: 2 files (0 missing), 76 meshes, 881368 triangles, 15 batches, 14985404 bytes, 240 ms, surfaces from layout, NO AI line, start from AC_START_0
+layout 2: 2 files (0 missing), 48 meshes, 513178 triangles, 9 batches, 8851544 bytes, 134 ms, surfaces from layout, NO AI line, start from AC_START_0
+layout 3: 1 files (0 missing), 97 meshes, 3200034 triangles, 74 batches, 60276032 bytes, 958 ms, surfaces from track, NO AI line, start from AC_START_0
+layout 4: 1 files (0 missing), 76 meshes, 657868 triangles, 17 batches, 14409684 bytes, 221 ms, surfaces from track, NO AI line, start from AC_START_0
+layout 5: 1 files (2 missing), 17 meshes, 36951 triangles, 1 batches, 628812 bytes, 14 ms, surfaces from track, with an AI line, start from AC_START_0
+layout 6: 3 files (0 missing), 19 meshes, 210298 triangles, 3 batches, 3168152 bytes, 57 ms, surfaces from layout, NO AI line, start from AC_START_0
+layout 7: 2 files (0 missing), 7 meshes, 59416 triangles, 1 batches, 895412 bytes, 21 ms, surfaces from layout, NO AI line, start from AC_START_0
+layout 8: 4 files (0 missing), 206 meshes, 497132 triangles, 6 batches, 7081520 bytes, 122 ms, surfaces from track, with an AI line, start from AC_START_0
+layout 9: 11 files (0 missing), 241 meshes, 335202 triangles, 3 batches, 4340332 bytes, 89 ms, surfaces from layout, with an AI line, start from AC_START_0
+layout 10: 11 files (0 missing), 238 meshes, 332678 triangles, 3 batches, 4306312 bytes, 101 ms, surfaces from layout, with an AI line, start from AC_START_0
+layout 11: 7 files (0 missing), 343 meshes, 392936 triangles, 4 batches, 5314068 bytes, 104 ms, surfaces from layout, with an AI line, start from AC_START_0
+layout 12: 7 files (0 missing), 343 meshes, 392936 triangles, 4 batches, 5314068 bytes, 103 ms, surfaces from layout, with an AI line, start from AC_START_0
+layout 13: 7 files (0 missing), 343 meshes, 392936 triangles, 4 batches, 5314068 bytes, 118 ms, surfaces from layout, with an AI line, start from AC_START_0
+layout 14: 7 files (0 missing), 76 meshes, 219529 triangles, 3 batches, 2923904 bytes, 68 ms, surfaces from layout, with an AI line, start from AC_START_0
+layout 15: 7 files (0 missing), 76 meshes, 219529 triangles, 3 batches, 2923904 bytes, 68 ms, surfaces from layout, with an AI line, start from AC_START_0
+layout 16: 3 files (0 missing), 26 meshes, 52224 triangles, 1 batches, 784984 bytes, 18 ms, surfaces from layout, with an AI line, start from AC_START_0
+layout 17: 3 files (0 missing), 26 meshes, 52224 triangles, 1 batches, 784984 bytes, 17 ms, surfaces from layout, with an AI line, start from AC_START_0
+layout 18: 3 files (0 missing), 26 meshes, 52224 triangles, 1 batches, 784984 bytes, 17 ms, surfaces from layout, with an AI line, start from AC_START_0
+layout 19: 3 files (0 missing), 26 meshes, 52224 triangles, 1 batches, 784984 bytes, 20 ms, surfaces from layout, with an AI line, start from AC_START_0
+layout 20: 3 files (0 missing), 26 meshes, 52224 triangles, 1 batches, 784984 bytes, 17 ms, surfaces from layout, with an AI line, start from AC_START_0
+layout 21: 10 files (0 missing), 149 meshes, 462524 triangles, 8 batches, 8695032 bytes, 170 ms, surfaces from layout, with an AI line, start from AC_START_0
+layout 22: 10 files (0 missing), 149 meshes, 462524 triangles, 8 batches, 8695032 bytes, 163 ms, surfaces from layout, with an AI line, start from AC_START_0
+layout 23: 10 files (0 missing), 149 meshes, 462524 triangles, 8 batches, 8695032 bytes, 165 ms, surfaces from layout, with an AI line, start from AC_START_0
+layout 24: 9 files (0 missing), 149 meshes, 462524 triangles, 8 batches, 8695032 bytes, 153 ms, surfaces from layout, with an AI line, start from AC_START_0
+layout 25: 10 files (0 missing), 209 meshes, 353671 triangles, 17 batches, 14686956 bytes, 193 ms, surfaces from track, with an AI line, start from AC_START_0
+layout 26: 8 files (0 missing), 81 meshes, 335400 triangles, 16 batches, 12308168 bytes, 189 ms, surfaces from layout, with an AI line, start from AC_START_0
+layout 27: 7 files (0 missing), 58 meshes, 217652 triangles, 12 batches, 8741588 bytes, 122 ms, surfaces from layout, with an AI line, start from AC_START_0
+layout 28: 8 files (0 missing), 58 meshes, 217652 triangles, 12 batches, 8741588 bytes, 115 ms, surfaces from layout, with an AI line, start from AC_START_0
+layout 29: 19 files (0 missing), 1237 meshes, 1227197 triangles, 29 batches, 28659272 bytes, 433 ms, surfaces from layout, with an AI line, start from AC_START_0
+layout 30: 19 files (0 missing), 1236 meshes, 1227102 triangles, 29 batches, 28657444 bytes, 457 ms, surfaces from layout, with an AI line, start from AC_START_0
+layout 31: 14 files (0 missing), 953 meshes, 765977 triangles, 7 batches, 10033068 bytes, 196 ms, surfaces from layout, with an AI line, start from AC_START_0
+layout 32: 12 files (0 missing), 954 meshes, 780529 triangles, 8 batches, 10456824 bytes, 210 ms, surfaces from layout, with an AI line, start from no start
+layout 33: 8 files (0 missing), 279 meshes, 460967 triangles, 22 batches, 18621908 bytes, 236 ms, surfaces from layout, with an AI line, start from AC_START_0
+layout 34: 8 files (0 missing), 282 meshes, 461304 triangles, 22 batches, 18627124 bytes, 263 ms, surfaces from layout, with an AI line, start from AC_START_0
+layout 35: 8 files (0 missing), 279 meshes, 460967 triangles, 22 batches, 18621908 bytes, 264 ms, surfaces from layout, with an AI line, start from AC_START_0
+layout 36: 8 files (0 missing), 282 meshes, 461304 triangles, 22 batches, 18627124 bytes, 257 ms, surfaces from layout, with an AI line, start from AC_START_0
+layout 37: 10 files (0 missing), 262 meshes, 412723 triangles, 20 batches, 16759252 bytes, 247 ms, surfaces from layout, with an AI line, start from AC_START_0
+layout 38: 10 files (0 missing), 262 meshes, 412723 triangles, 20 batches, 16759252 bytes, 241 ms, surfaces from layout, with an AI line, start from AC_START_0
+layout 39: 10 files (0 missing), 274 meshes, 602412 triangles, 8 batches, 9471756 bytes, 179 ms, surfaces from layout, with an AI line, start from AC_START_0
+layout 40: 9 files (0 missing), 278 meshes, 609837 triangles, 8 batches, 9672920 bytes, 169 ms, surfaces from layout, with an AI line, start from AC_START_0
+layout 41: 8 files (0 missing), 269 meshes, 602265 triangles, 8 batches, 9469432 bytes, 163 ms, surfaces from layout, with an AI line, start from AC_START_0
+layout 42: 6 files (0 missing), 142 meshes, 367901 triangles, 18 batches, 15401760 bytes, 193 ms, surfaces from track, with an AI line, start from AC_START_0
+layout 43: 4 files (0 missing), 207 meshes, 152928 triangles, 2 batches, 2250648 bytes, 48 ms, surfaces from layout, with an AI line, start from AC_START_0
+layout 44: 4 files (0 missing), 207 meshes, 152928 triangles, 2 batches, 2250648 bytes, 49 ms, surfaces from layout, with an AI line, start from AC_START_0
+layout 45: 4 files (0 missing), 207 meshes, 152928 triangles, 2 batches, 2250648 bytes, 65 ms, surfaces from layout, with an AI line, start from AC_START_0
+layout 46: 4 files (0 missing), 75 meshes, 125773 triangles, 5 batches, 3861376 bytes, 75 ms, surfaces from track, with an AI line, start from AC_START_0
+layout 47: 2 files (0 missing), 163 meshes, 357588 triangles, 4 batches, 4956572 bytes, 94 ms, surfaces from track, with an AI line, start from AC_START_0
+layout 48: 4 files (0 missing), 70 meshes, 472992 triangles, 13 batches, 9929904 bytes, 150 ms, surfaces from track, NO AI line, start from AC_START_0
+layout 49: 7 files (0 missing), 194 meshes, 428872 triangles, 4 batches, 5591360 bytes, 113 ms, surfaces from track, with an AI line, start from AC_START_0
+layout 50: 4 files (0 missing), 304 meshes, 457216 triangles, 5 batches, 6480924 bytes, 121 ms, surfaces from track, with an AI line, start from AC_START_0
+layout 51: 1 files (0 missing), 85 meshes, 926104 triangles, 31 batches, 27783592 bytes, 378 ms, surfaces from track, NO AI line, start from AC_START_0
+layout 52: 1 files (0 missing), 13 meshes, 285596 triangles, 13 batches, 8568280 bytes, 120 ms, surfaces from track, with an AI line, start from AC_START_0
+layout 53: 3 files (0 missing), 123 meshes, 827912 triangles, 9 batches, 10957656 bytes, 205 ms, surfaces from track, NO AI line, start from AC_START_0
+layout 54: 3 files (0 missing), 17 meshes, 1166100 triangles, 14 batches, 16268488 bytes, 310 ms, surfaces from track, NO AI line, start from AC_START_0
+layout 55: 1 files (0 missing), 2 meshes, 159744 triangles, 2 batches, 2083132 bytes, 35 ms, surfaces from track, NO AI line, start from AC_START_0
+layout 56: 6 files (2 missing), 297 meshes, 569436 triangles, 27 batches, 22238848 bytes, 311 ms, surfaces from track, with an AI line, start from AC_START_0
+layout 57: 1 files (0 missing), 72 meshes, 1034264 triangles, 18 batches, 19088400 bytes, 301 ms, surfaces from track, NO AI line, start from AC_START_0
+layout 58: 1 files (0 missing), 18 meshes, 176820 triangles, 4 batches, 3319588 bytes, 59 ms, surfaces from track, NO AI line, start from AC_START_0
+layout 59: 5 files (0 missing), 72 meshes, 764414 triangles, 23 batches, 17855620 bytes, 266 ms, surfaces from layout, NO AI line, start from AC_START_0
+layout 60: 4 files (0 missing), 78 meshes, 809325 triangles, 23 batches, 18363516 bytes, 276 ms, surfaces from layout, NO AI line, start from AC_START_0
+layout 61: 1 files (0 missing), 152 meshes, 1330225 triangles, 13 batches, 17397636 bytes, 291 ms, surfaces from track, with an AI line, start from AC_START_0
+61 of 61 layouts read. The most: 3200034 triangles, 60276032 bytes, 958 ms. Peak: working set 135.7 MB, private 130.9 MB
+15 layouts: NO AI line, start from AC_START_0
+45 layouts: with an AI line, start from AC_START_0
+1 layouts: with an AI line, start from no start
+ok
+test kn5road::tests::the_three_references_read_as_tools_kn5_cjs_reads_them ... reference track 1: rust {"files":4,"hash":1254934386,"meshes":207,"missing":0,"triangles":152928,"vertices":111060}, 256 AC_ dummies, start Ok(Start { pos: [280.1997375488281, 191.80087280273438, 208.50523376464844], t: [-0.9999999999999989, -4.371138828673788e-8, 1.1924880638503042e-8], from: "AC_START_0" })
+reference track 1: tools/kn5.cjs {"files":4,"hash":1254934386,"meshes":207,"missing":0,"runRuleTriangles":152397,"start":{"T":["-0.9999999999999989","-4.371138828673788e-8","1.1924880638503042e-8"],"from":"AC_START_0","pos":["280.1997375488281","191.80087280273438","208.50523376464844"]},"startsWithTriangles":152928,"triangles":152928,"vertices":111060}, 256 AC_ dummies
+reference track 2: rust {"files":8,"hash":91663141,"meshes":58,"missing":0,"triangles":217652,"vertices":619601}, 72 AC_ dummies, start Ok(Start { pos: [-178.02435302734375, -6.795493125915527, 105.06468963623047], t: [0.11010776422236283, 0.0058292574048377675, -0.9939025606245617], from: "AC_START_0" })
+reference track 2: tools/kn5.cjs {"files":8,"hash":91663141,"meshes":58,"missing":0,"runRuleTriangles":216365,"start":{"T":["0.11010776422236283","0.0058292574048377675","-0.9939025606245617"],"from":"AC_START_0","pos":["-178.02435302734375","-6.795493125915527","105.06468963623047"]},"startsWithTriangles":217652,"triangles":217652,"vertices":619601}, 72 AC_ dummies
+reference track 3: rust {"files":8,"hash":391508649,"meshes":81,"missing":0,"triangles":335400,"vertices":857939}, 72 AC_ dummies, start Ok(Start { pos: [-178.02435302734375, -6.795493125915527, 105.06468963623047], t: [0.11010776422236283, 0.0058292574048377675, -0.9939025606245617], from: "AC_START_0" })
+reference track 3: tools/kn5.cjs {"files":8,"hash":391508649,"meshes":81,"missing":0,"runRuleTriangles":334113,"start":{"T":["0.11010776422236283","0.0058292574048377675","-0.9939025606245617"],"from":"AC_START_0","pos":["-178.02435302734375","-6.795493125915527","105.06468963623047"]},"startsWithTriangles":335400,"triangles":335400,"vertices":857939}, 72 AC_ dummies
+ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 87 filtered out; finished in 31.53s
+
+exit 0
