@@ -98,3 +98,4 @@
   **Open with him:** it comes back only at a 24 px strip on the left edge of the window, not when the pointer is anywhere over
   where it sat. That came from the packet written by the librarian ("a narrow strip"), and departs from his "comes back when
   you put your mouse over it". P reads next.
+- 06:28 (L), his words: "artifact looks good". It arrived while the left-column page was being published, so which page he meant is not certain (the refactor page BG2GrkaJoj6dMaNWAmfRun or the left-column page AwA81VtL7dUbWbhs26trCU). Read as: the look is approved; the return strip stays as built unless he says otherwise. He was told this reading.
