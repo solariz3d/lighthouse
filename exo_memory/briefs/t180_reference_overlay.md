@@ -39,3 +39,11 @@ Other authors' track names stay out of this public repo (the rule of `briefs/t18
   `handback/p-l250-kn5-O_2026-11-26.md`, the kn5 road reader (61 of 61 installed layouts read; its mesh rule replaced
   the first look's, which dropped road on 30 of 61). Eight pictures sent to him (`t180-wt-l243\out\l250-pictures`).
   Not run: the whole suite, a cargo build of the merged tree, the real app's IPC. E reads next.
+- 05:4x (L): E's read of L250 is **NOT CLEAN** (`handback/p-l250-read-E_2026-11-26.md`). One behaviour defect: a Line/Road
+  switch while a pick is still reading drops his newest pick or draws it in the mode he left (`app/reference/panel.js:152-158`,
+  rows V3e and V3f; reachable during a Road read of 0.1 to 1 s). One look defect: the panel is a dark slab in Skyline
+  (inline colours at `panel.js:37`). Holds: read-only through a real save, the merged tree builds (24 cargo rows), 61 of
+  61 layouts read, O's mesh rule on L. A gap E measured: 15 of 61 layouts have no AI line and cannot be shown in either
+  mode, the largest one included. Not L250's: the START / grid / PIT labels stack in the overhead with no reference at
+  all (`app/core/spawnslayer.js`), now on the backlog. Repair round sent: B the race and the panel's class, O the start
+  from the kn5 for layouts with no AI line.
