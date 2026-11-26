@@ -1,0 +1,30 @@
+✔ row 1: the bar reads File, Edit, Build, Track, Pieces, View, Settings, then Export to Assetto Corsa; the ⋯ menu is gone and every control keeps its id (2256.7093ms)
+✔ row 2: one menu open at a time; Esc, a press outside it and a command each close it (2296.9894ms)
+✔ row 3: the moved controls work from their new place (2682.6182ms)
+✔ row 4: a choice in Settings and a tick in View survive a reload, saved as t180.settings.<key> (3369.3191ms)
+✔ row 5: with localStorage refused, the page starts, the menus open, and a setting holds for the session (1563.6004ms)
+✔ row 6: Reset the guide forgets that the guide was finished (1906.2651ms)
+✔ row 7: Build and Track open and say something, never an error (1714.3208ms)
+✔ row 8: the bar fits at 1400 px: the seven menus and Export to Assetto Corsa each on one line and inside the window, the status and install note giving way (1660.2346ms)
+✔ row 9: Settings ▸ Wall raycasting and the checker's CSP box follow each other both ways, and the choice survives a reload (3157.2029ms)
+✔ row 10: with the Track part, the road surface has one controller, alive before the Track menu is opened (1707.9633ms)
+✔ row 11: Build ▸ Sculpt mode shows the Sculpt strip under the bar, keeps it there across an edit, and hides it again (2915.4142ms)
+✔ row 12: with the Track part, a menu panel gives its controls back when the menu closes (2114.5344ms)
+✔ row 13: a part that fails to load says why in its menu, and the other menus still work (1915.6259ms)
+✔ row 14: File holds Export layouts…, its modules load on the page, and off the app it says it needs the native side instead of doing nothing (1699.5749ms)
+✔ row 15: Settings ▸ Sound: the volume slider shows 45 on a fresh start, and a saved volume shows as saved (2764.7891ms)
+✔ row 16 (D394): Settings ▸ Theme: a fixed theme sets the look at once and fetches its own melody's two files; it survives a reload as that look and melody; SIGIL plays its own, Obsidian (D402) (3747.5259ms)
+✔ row 17 (D396): the bar fits at 900, 1100, 1280 and 1400 px and on both sides of each fold: no overflow, the window buttons wholly inside the window, a grab strip of at least 24 px, every menu and Export on one line left of them; at 125% scaling too, where a window can be a fraction of a pixel wide (29502.9163ms)
+✔ row 18 (D401, AMENDED): Settings ▸ Theme offers Random, not Music, after the named looks; a fresh start is Sigil; with Random saved, choosing it picks another look at once and that look's melody follows; a saved music loads as Random (5189.0083ms)
+✔ row 18b (D401, B's D408 probe): the same with Math.random pinned, so both branches run every time: at 0.1 the start look is the pick (its files already in), at 0.5 it is not (10295.3153ms)
+✔ row 19 (D401, A's read §8, AMENDED): Random saved and ticked: one click on Random picks another look and its melody, and so does the next (3982.4204ms)
+✔ row 19b (D401, AMENDED): on a fresh install, Sigil; the first click on Random picks once, not twice: with Math.random at 0.4, Sigil becomes Glass, then Aurora (1810.9575ms)
+✔ row 20: File ▸ Open… is a list the page draws: no select in any menu, its rows are the saved tracks, a click opens one, Esc closes it (4632.4348ms)
+ℹ tests 22
+ℹ suites 0
+ℹ pass 22
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 93517.9588

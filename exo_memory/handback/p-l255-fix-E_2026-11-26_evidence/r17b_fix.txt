@@ -1,0 +1,10 @@
+✔ row 17b (L255): File with a 61-character saved name (64 stored, the native limit) in its Open… list, unfolded, lies wholly inside the window at every 10 px from 900 to 1400, in every look (64199.7424ms)
+ℹ File with the long name open, left..right: sigil at 1000 258..635; sigil at 1400 584..961; aqua at 1000 258..635; aqua at 1400 584..961; skyline at 1000 258..635; skyline at 1400 584..961; glass at 1000 258..635; glass at 1400 584..961; aurora at 1000 258..635; aurora at 1400 584..961; skyline-night at 1000 258..635; skyline-night at 1400 584..961
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 64785.3886

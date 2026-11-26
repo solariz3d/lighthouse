@@ -3301,3 +3301,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 - **Carry:** when a fix places a box by a measured width, try the widest content the data allows (here the native name rule) before calling the width safe.
 
 ## 2026-11-26 13:0x local (D) · D677 HELD for his restart: the File/Edit fix (L255 item 4) was started and stopped unrun, committed WIP on builder branch l255-menus-rightwards-e 5549bb0 (local, not pushed; worktree C:\Consonance\t180-wt-e-rightwards); [T5] of packet_t180_unmakeable_shapes_2026-11-26.md is queued and not started; I resume the fix (rows 17/17b red then green, menubar-page row 17, push, ring), then [T5], after the restart
+
+## 2026-11-26 13:2x local (D) · L255 item 4 fixed: File and Edit open rightwards at every width; row 17b (File with a 61-character saved name, Open… unfolded, 900-1400 every 10 px, six looks) red at ceb21f5 in 72 cases (worst -72 px at 1000) and green on t180 l255-menus-rightwards-e 136e309 (pushed); texture-page 19/0, menubar-page 22/0 → `exo_memory/handback/p-l255-fix-E_2026-11-26.md`
+- The hold for his restart (line above) was void; resumed.
+- **Carry:** a row that looks up a name in a list must look for the name as the list shows it, not as it is stored.

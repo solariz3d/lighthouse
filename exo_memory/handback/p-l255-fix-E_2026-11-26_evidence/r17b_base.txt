@@ -1,0 +1,141 @@
+✖ row 17b (L255): File with a 61-character saved name (64 stored, the native limit) in its Open… list, unfolded, lies wholly inside the window at every 10 px from 900 to 1400, in every look (64283.1282ms)
+ℹ File with the long name open, left..right: sigil at 1000 -72..305; sigil at 1400 260..637; aqua at 1000 -72..305; aqua at 1400 260..637; skyline at 1000 -72..305; skyline at 1400 260..637; glass at 1000 -72..305; glass at 1400 260..637; aurora at 1000 -72..305; aurora at 1400 260..637; skyline-night at 1000 -72..305; skyline-night at 1400 260..637
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 64865.3038
+
+✖ failing tests:
+
+test at app\test\texture-page.test.js:589:1
+✖ row 17b (L255): File with a 61-character saved name (64 stored, the native limit) in its Open… list, unfolded, lies wholly inside the window at every 10 px from 900 to 1400, in every look (64283.1282ms)
+  AssertionError [ERR_ASSERTION]: File, with a long saved name, past an edge of the window
+  + actual - expected
+  
+  + [
+  +   'sigil at 1000: File -72..305 in a 1000 px window',
+  +   'sigil at 1010: File -62..315 in a 1010 px window',
+  +   'sigil at 1020: File -52..325 in a 1020 px window',
+  +   'sigil at 1030: File -42..335 in a 1030 px window',
+  +   'sigil at 1040: File -32..345 in a 1040 px window',
+  +   'sigil at 1050: File -22..355 in a 1050 px window',
+  +   'sigil at 1060: File -12..365 in a 1060 px window',
+  +   'sigil at 1070: File -2..375 in a 1070 px window',
+  +   'sigil at 1100: File -40..337 in a 1100 px window',
+  +   'sigil at 1110: File -30..347 in a 1110 px window',
+  +   'sigil at 1120: File -20..357 in a 1120 px window',
+  +   'sigil at 1130: File -10..367 in a 1130 px window',
+  +   'aqua at 1000: File -72..305 in a 1000 px window',
+  +   'aqua at 1010: File -62..315 in a 1010 px window',
+  +   'aqua at 1020: File -52..325 in a 1020 px window',
+  +   'aqua at 1030: File -42..335 in a 1030 px window',
+  +   'aqua at 1040: File -32..345 in a 1040 px window',
+  +   'aqua at 1050: File -22..355 in a 1050 px window',
+  +   'aqua at 1060: File -12..365 in a 1060 px window',
+  +   'aqua at 1070: File -2..375 in a 1070 px window',
+  +   'aqua at 1100: File -40..337 in a 1100 px window',
+  +   'aqua at 1110: File -30..347 in a 1110 px window',
+  +   'aqua at 1120: File -20..357 in a 1120 px window',
+  +   'aqua at 1130: File -10..367 in a 1130 px window',
+  +   'skyline at 1000: File -72..305 in a 1000 px window',
+  +   'skyline at 1010: File -62..315 in a 1010 px window',
+  +   'skyline at 1020: File -52..325 in a 1020 px window',
+  +   'skyline at 1030: File -42..335 in a 1030 px window',
+  +   'skyline at 1040: File -32..345 in a 1040 px window',
+  +   'skyline at 1050: File -22..355 in a 1050 px window',
+  +   'skyline at 1060: File -12..365 in a 1060 px window',
+  +   'skyline at 1070: File -2..375 in a 1070 px window',
+  +   'skyline at 1100: File -40..337 in a 1100 px window',
+  +   'skyline at 1110: File -30..347 in a 1110 px window',
+  +   'skyline at 1120: File -20..357 in a 1120 px window',
+  +   'skyline at 1130: File -10..367 in a 1130 px window',
+  +   'glass at 1000: File -72..305 in a 1000 px window',
+  +   'glass at 1010: File -62..315 in a 1010 px window',
+  +   'glass at 1020: File -52..325 in a 1020 px window',
+  +   'glass at 1030: File -42..335 in a 1030 px window',
+  +   'glass at 1040: File -32..345 in a 1040 px window',
+  +   'glass at 1050: File -22..355 in a 1050 px window',
+  +   'glass at 1060: File -12..365 in a 1060 px window',
+  +   'glass at 1070: File -2..375 in a 1070 px window',
+  +   'glass at 1100: File -40..337 in a 1100 px window',
+  +   'glass at 1110: File -30..347 in a 1110 px window',
+  +   'glass at 1120: File -20..357 in a 1120 px window',
+  +   'glass at 1130: File -10..367 in a 1130 px window',
+  +   'aurora at 1000: File -72..305 in a 1000 px window',
+  +   'aurora at 1010: File -62..315 in a 1010 px window',
+  +   'aurora at 1020: File -52..325 in a 1020 px window',
+  +   'aurora at 1030: File -42..335 in a 1030 px window',
+  +   'aurora at 1040: File -32..345 in a 1040 px window',
+  +   'aurora at 1050: File -22..355 in a 1050 px window',
+  +   'aurora at 1060: File -12..365 in a 1060 px window',
+  +   'aurora at 1070: File -2..375 in a 1070 px window',
+  +   'aurora at 1100: File -40..337 in a 1100 px window',
+  +   'aurora at 1110: File -30..347 in a 1110 px window',
+  +   'aurora at 1120: File -20..357 in a 1120 px window',
+  +   'aurora at 1130: File -10..367 in a 1130 px window',
+  +   'skyline-night at 1000: File -72..305 in a 1000 px window',
+  +   'skyline-night at 1010: File -62..315 in a 1010 px window',
+  +   'skyline-night at 1020: File -52..325 in a 1020 px window',
+  +   'skyline-night at 1030: File -42..335 in a 1030 px window',
+  +   'skyline-night at 1040: File -32..345 in a 1040 px window',
+  +   'skyline-night at 1050: File -22..355 in a 1050 px window',
+  +   'skyline-night at 1060: File -12..365 in a 1060 px window',
+  +   'skyline-night at 1070: File -2..375 in a 1070 px window',
+  +   'skyline-night at 1100: File -40..337 in a 1100 px window',
+  +   'skyline-night at 1110: File -30..347 in a 1110 px window',
+  +   'skyline-night at 1120: File -20..357 in a 1120 px window',
+  +   'skyline-night at 1130: File -10..367 in a 1130 px window'
+  + ]
+  - []
+  
+      at TestContext.<anonymous> (C:\Consonance\t180-wt-e-rightwards-base\app\test\texture-page.test.js:620:10)
+      at async Test.run (node:internal/test_runner/test:1125:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [
+      'sigil at 1000: File -72..305 in a 1000 px window',         'sigil at 1010: File -62..315 in a 1010 px window',
+      'sigil at 1020: File -52..325 in a 1020 px window',         'sigil at 1030: File -42..335 in a 1030 px window',
+      'sigil at 1040: File -32..345 in a 1040 px window',         'sigil at 1050: File -22..355 in a 1050 px window',
+      'sigil at 1060: File -12..365 in a 1060 px window',         'sigil at 1070: File -2..375 in a 1070 px window',
+      'sigil at 1100: File -40..337 in a 1100 px window',         'sigil at 1110: File -30..347 in a 1110 px window',
+      'sigil at 1120: File -20..357 in a 1120 px window',         'sigil at 1130: File -10..367 in a 1130 px window',
+      'aqua at 1000: File -72..305 in a 1000 px window',          'aqua at 1010: File -62..315 in a 1010 px window',
+      'aqua at 1020: File -52..325 in a 1020 px window',          'aqua at 1030: File -42..335 in a 1030 px window',
+      'aqua at 1040: File -32..345 in a 1040 px window',          'aqua at 1050: File -22..355 in a 1050 px window',
+      'aqua at 1060: File -12..365 in a 1060 px window',          'aqua at 1070: File -2..375 in a 1070 px window',
+      'aqua at 1100: File -40..337 in a 1100 px window',          'aqua at 1110: File -30..347 in a 1110 px window',
+      'aqua at 1120: File -20..357 in a 1120 px window',          'aqua at 1130: File -10..367 in a 1130 px window',
+      'skyline at 1000: File -72..305 in a 1000 px window',       'skyline at 1010: File -62..315 in a 1010 px window',
+      'skyline at 1020: File -52..325 in a 1020 px window',       'skyline at 1030: File -42..335 in a 1030 px window',
+      'skyline at 1040: File -32..345 in a 1040 px window',       'skyline at 1050: File -22..355 in a 1050 px window',
+      'skyline at 1060: File -12..365 in a 1060 px window',       'skyline at 1070: File -2..375 in a 1070 px window',
+      'skyline at 1100: File -40..337 in a 1100 px window',       'skyline at 1110: File -30..347 in a 1110 px window',
+      'skyline at 1120: File -20..357 in a 1120 px window',       'skyline at 1130: File -10..367 in a 1130 px window',
+      'glass at 1000: File -72..305 in a 1000 px window',         'glass at 1010: File -62..315 in a 1010 px window',
+      'glass at 1020: File -52..325 in a 1020 px window',         'glass at 1030: File -42..335 in a 1030 px window',
+      'glass at 1040: File -32..345 in a 1040 px window',         'glass at 1050: File -22..355 in a 1050 px window',
+      'glass at 1060: File -12..365 in a 1060 px window',         'glass at 1070: File -2..375 in a 1070 px window',
+      'glass at 1100: File -40..337 in a 1100 px window',         'glass at 1110: File -30..347 in a 1110 px window',
+      'glass at 1120: File -20..357 in a 1120 px window',         'glass at 1130: File -10..367 in a 1130 px window',
+      'aurora at 1000: File -72..305 in a 1000 px window',        'aurora at 1010: File -62..315 in a 1010 px window',
+      'aurora at 1020: File -52..325 in a 1020 px window',        'aurora at 1030: File -42..335 in a 1030 px window',
+      'aurora at 1040: File -32..345 in a 1040 px window',        'aurora at 1050: File -22..355 in a 1050 px window',
+      'aurora at 1060: File -12..365 in a 1060 px window',        'aurora at 1070: File -2..375 in a 1070 px window',
+      'aurora at 1100: File -40..337 in a 1100 px window',        'aurora at 1110: File -30..347 in a 1110 px window',
+      'aurora at 1120: File -20..357 in a 1120 px window',        'aurora at 1130: File -10..367 in a 1130 px window',
+      'skyline-night at 1000: File -72..305 in a 1000 px window', 'skyline-night at 1010: File -62..315 in a 1010 px window',
+      'skyline-night at 1020: File -52..325 in a 1020 px window', 'skyline-night at 1030: File -42..335 in a 1030 px window',
+      'skyline-night at 1040: File -32..345 in a 1040 px window', 'skyline-night at 1050: File -22..355 in a 1050 px window',
+      'skyline-night at 1060: File -12..365 in a 1060 px window', 'skyline-night at 1070: File -2..375 in a 1070 px window',
+      'skyline-night at 1100: File -40..337 in a 1100 px window', 'skyline-night at 1110: File -30..347 in a 1110 px window',
+      'skyline-night at 1120: File -20..357 in a 1120 px window', 'skyline-night at 1130: File -10..367 in a 1130 px window'
+    ],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
