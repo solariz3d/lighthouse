@@ -57,3 +57,6 @@
   :57 names glass and aurora themselves as top-tier tells), `research/ui_unslop_guide_2026-10-27.md`, and C's audit of
   our screens `handback/p-d546-slop-audit-C_2026-10-29.md`. They say what slop IS. A positive design doc or repo
   to learn FROM is not on disk. That is L246.
+- 02:37 (L): "if we find good research. We defintelly need to do a whole UI refactor, but keep all the plumbing."
+  So L246's findings feed a UI refactor: the look and layout change, while behaviour, data, the core, export and the
+  native side stay as they are. The refactor is planned only after the research lands and he has read it.

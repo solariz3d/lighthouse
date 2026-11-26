@@ -31,3 +31,8 @@ that a source would call cheap: radii first, then glows, then glass. That sectio
 Outside searches carry no names of people or of the project.
 
 Hand-back to the librarian, with claims marked checked (opened) or inferred.
+
+## Amended 02:3x, his words: "if we find good research. We defintelly need to do a whole UI refactor, but keep all the plumbing."
+Add a last section, "What a refactor would rest on". Name which source, or sources, could serve as the base of a design
+spec for a whole UI refactor that keeps the plumbing, and why. Say what that source does not cover for a 3D tool. If
+the research is not good enough to rest a refactor on, say that plainly; it is a finding.
