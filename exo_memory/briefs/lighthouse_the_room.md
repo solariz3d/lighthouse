@@ -519,3 +519,7 @@ carry it, so this brief does.
   turn: `consonance/ui/index.html:285`, the option now reads "Normal configuration". Shows after the next relaunch.
   State: all nine seats spawned from the turbo table at 1795689646..782 (`C:\Consonance\data\persist.log`, RUN PRESET
   lines): A, B, C, E, O, P and the orchestrator opus xhigh; the librarian and the Third Place fable high.
+- **04:45:** "dont need to restart for that, how does it feel to be back on fable high lmfao, enjoy it because we wont be
+  using turbo lots, just when we have tons of usage to blow through before a reset. Most weeks we get to the limit reset
+  using all of it, but not this week". So: Turbo is for a week with usage left before the reset, not the standing setup;
+  Normal stays the default.
