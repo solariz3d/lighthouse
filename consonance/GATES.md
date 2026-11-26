@@ -236,7 +236,7 @@ recorded is not given. `node wake-gate.js --replay <transcript.jsonl>` counts ho
 
 **To turn it off:** remove the `wake-gate.js` entry from `%USERPROFILE%\.claude\settings.json` (under `hooks` → `PreToolUse`).
 
-## Also installed, and it spends your usage: the second reader
+## Shipped, and off since 2026-11-25: the second reader
 
 This one is not a gate: it never refuses, delays or changes anything. But it runs on **your Claude account**, so you should know it is there.
 
@@ -250,13 +250,16 @@ rows back into a seat; they are a record for you. One worker runs at a time, and
 the CLI reported a median of **$0.019** per call (90% under $0.048), about **$16** in all, at 9 to 133 rings a day. On a Claude subscription that is usage
 counted against your limits rather than a bill. The figures are the CLI's own `total_cost_usd`, as recorded in that file.
 
-**Why it is on.** It is the room's measurement of how often a ring claims more than its turn checked. It ships on, as it runs for the people who
-built it, and it is disclosed here so it is your choice.
+**Why it is off.** It was the room's measurement of how often a ring claims more than its turn checked. On 2026-11-25, 9 of its newest 20 flags
+were right when checked against the turn, and the one seat it reads did not want its note, so `install.ps1` marks it and its same-turn note
+(`second-reader-note.js`) `Excluded`: no run registers them. Their files are still copied.
 
-**To turn it off:** remove the `second-reader.js` entry from `%USERPROFILE%\.claude\settings.json` (under `hooks` → `PreToolUse`, matcher
-`mcp__consonance__call_librarian|mcp__consonance__call_chair`). To keep it off when `install.ps1` runs again, mark its line in `$register`
-`Excluded`, as below. It runs by default, the cost above included: when `~/.consonance.json` sets no `data_dir`, it uses the default Data
-folder, `%USERPROFILE%\.consonance`, as the app does.
+**To turn it off:** on a machine that registered it before, remove the `second-reader.js` entry from `%USERPROFILE%\.claude\settings.json` (under
+`hooks` → `PreToolUse`, matcher `mcp__consonance__call_librarian|mcp__consonance__call_chair`) and the `second-reader-note.js` entry (under
+`PostToolUse`, matcher `mcp__consonance__call_chair`). `install.ps1` never removes a registration; its `-Check` names a live one EXCLUDED BUT LIVE.
+**To turn it back on:** delete `Excluded = '...'` from both lines in `$register` and run
+`install.ps1 -Only second-reader.js,second-reader-worker.js,second-reader-note.js`. When `~/.consonance.json` sets no `data_dir`, it uses the
+default Data folder, `%USERPROFILE%\.consonance`, as the app does.
 
 ## Built and not installed: the claim check
 

@@ -53,7 +53,11 @@ let seq = 0;
 
 // A throwaway repo: only the two source directories the manifest draws from, plus the script.
 // Copied rather than symlinked so a mutant can be applied to the copy without touching the tree.
-function mkRepo(mutate) {
+// R1 (2026-11-25, pane C): the keeper's green light took the second reader and its note off, as `Excluded` entries. Some thirty rows below use the
+// reader as their FIXTURE for -Only and matcher-group mechanics, not as the thing under test, so the copy drops that one exclusion unless a row
+// asks to keep it (`keepR1`). The exclusion itself is asserted by the R1 row at the end, which keeps it.
+const R1_EXCLUSION = /;\s*Excluded = 'R1 2026-11-25[^']*'/g;
+function mkRepo(mutate, { keepR1 = false } = {}) {
   const root = path.join(tmp, 'repo' + (++seq));
   // L214: dev/shell/agents is the installer's second source (its agent definitions), so the fixture copies it too.
   for (const rel of ['dev/shell/lib', 'dev/shell/hooks', 'consonance/hooks', 'dev/shell/agents']) {
@@ -66,6 +70,7 @@ function mkRepo(mutate) {
   }
   const script = path.join(root, 'dev', 'shell', 'install.ps1');
   let body = fs.readFileSync(path.join(REPO, 'dev', 'shell', 'install.ps1'), 'utf8');
+  if (!keepR1) body = body.replace(R1_EXCLUSION, '');
   if (mutate) body = mutate(body);
   fs.writeFileSync(script, body);
   return { root, script };
@@ -654,6 +659,20 @@ test('D631: an entry with its own Timeout is registered with it (the second read
   assert.ok(note, JSON.stringify(g)); assert.strictEqual(note.timeout, 30);
   const pre = groupsOf(home).find((x) => x.matcher === SR), sr = [].concat(pre.hooks).find((h) => /second-reader\.js"$/.test(h.command));
   assert.strictEqual(sr.timeout, 10, 'an entry with no Timeout changed');
+});
+
+// R1 (2026-11-25): the second reader and its note are Excluded (the keeper, 09:33: "if you want to fix all those I give the green light fully";
+// exo_memory/handback/p-r1-C_2026-11-25.md). No run registers them, bare or -Only, and the run says so. Red before the two entries were marked.
+test('R1: the second reader and its note are excluded: a bare run and an -Only run of all three register neither, and say so', () => {
+  const real = fs.readFileSync(path.join(REPO, 'dev', 'shell', 'install.ps1'), 'utf8');
+  assert.strictEqual((real.match(R1_EXCLUSION) || []).length, 2, 'install.ps1 must carry the R1 exclusion on exactly the two entries');
+  const repo = mkRepo(null, { keepR1: true });
+  for (const args of [[], ['-Only', 'second-reader.js,second-reader-worker.js,second-reader-note.js']]) {
+    const home = mkHome(), r = run(repo, home, args);
+    assert.strictEqual(count(home, 'second-reader.js'), 0, JSON.stringify(args) + ' registered the second reader: ' + JSON.stringify(commands(home)));
+    assert.strictEqual(count(home, 'second-reader-note.js'), 0, JSON.stringify(args) + ' registered the note: ' + JSON.stringify(commands(home)));
+    assert.ok(/(EXCLUDED|SKIPPED)[^\n]*second-reader\.js/.test(r.out) && /(EXCLUDED|SKIPPED)[^\n]*second-reader-note\.js/.test(r.out), 'the run must say it skipped them:\n' + r.out);
+  }
 });
 
 console.log(`\n${pass} passed, ${fail} failed`);

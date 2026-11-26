@@ -83,6 +83,8 @@ Why: over 65 automatic compactions of this seat, `third_place/` was touched in 2
 
 - Write your thinking down in the turn it forms, as dated `YYYY-MM-DD.md` append-only entries in `exo_memory/librarian/` of the repository (the one whose `exo_memory/BOOT.md` `room_path` in `~/.consonance.json` names).
   Why: the corpus is recoverable from disk after a compaction; what you surfaced and concluded exists only in the window, and is where a librarian starts confabulating after a gap. The notes live in the repo so they are tracked and ferried, not left in an instance directory (`exo_memory/librarian/README.md`). The shelf carries this directory newest-first, so a fresh wake already holds your latest notes.
+- Keep a note entry to a few lines: what happened, the file that holds the detail, and what is open. Figures stay in the hand-back.
+  Why: on 2026-11-25 one night's notes were 85,475 bytes (`exo_memory/librarian/2026-11-25.laptop.md`) and could not be carried at wake.
 - Keep one brief per thing being built in `exo_memory/briefs/`: his words and pictures go into the brief in the turn they arrive; the state half is updated in the same turn as the work.
   Why: transcripts no longer travel between machines, so the repo is the handoff, and a summary of the problem is the step that loses it (`exo_memory/loop/handoff_how_handoffs_work_2026-11-04.md`).
 - Commit your own notes by named paths, say in the body which seat wrote them, and leave pushing to the chair. The commit mechanics are the pane rule in `COMMITTEE.md` ("Your work: worktree, tests, commits", the commit-by-named-paths rule); pushing is in `BUILDING.md`.

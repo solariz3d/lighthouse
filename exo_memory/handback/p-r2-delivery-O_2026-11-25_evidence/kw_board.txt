@@ -1,0 +1,23 @@
+held 2026-11-14: 1
+held 2026-11-15: 4
+held 2026-11-16: 7
+held 2026-11-23: 3
+held 2026-11-24: 5
+hour 2026-11-16: 8
+kw_all 2026-11-14: 26
+kw_all 2026-11-15: 91
+kw_all 2026-11-16: 165
+kw_all 2026-11-23: 20
+kw_all 2026-11-24: 71
+tp_ping 2026-11-14: 10
+tp_ping 2026-11-16: 22
+visit_refused 2026-11-15: 7
+visit_refused 2026-11-16: 13
+visit_refused 2026-11-24: 1
+LAST:
+  kw_all 2026-11-24T23:31:55.540Z keep-warm -> fbf98f8e (committee) · 51 min since its last request started · context 141527 tokens
+  tp_ping 2026-11-16T17:56:40.085Z keep-warm -> the Third Place (its idle time and size stay off the shared board)
+  held 2026-11-24T21:58:38.324Z keep-warm visit <- 0c0c0c0b: held for the Third Place's visit hour (286 characters, no words)
+  visit_refused 2026-11-24T17:11:51.384Z keep-warm visit REFUSED — from 0c0c0c0a (over 400 characters); its words are not kept
+  hour 2026-11-16T11:40:15.952Z keep-warm visit hour -> the Third Place answered 1 of 1 visits (no words)
+ROWS FROM A third_place ROLE/PANE: {}

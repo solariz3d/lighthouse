@@ -1,0 +1,9 @@
+MUTANT empty is a submit again, seen or not: CAUGHT — test result: FAILED. 19 passed; 3 failed; 0 ignored; 0 measured; 1333 filtered out; finished in 0.02s
+  red: the_decision_table, r2_an_empty_box_where_our_text_was_never_seen_is_never_reported_submitted, r2_whatever_the_tui_speed_the_report_says_submitted_exactly_when_the_ring_left_the_line
+MUTANT no wait for the paste to be drawn: CAUGHT — test result: FAILED. 21 passed; 1 failed; 0 ignored; 0 measured; 1333 filtered out; finished in 0.02s
+  red: r2_a_tui_drawing_within_the_wait_gets_the_ring_submitted
+MUTANT an Enter on the last reading again: CAUGHT — test result: FAILED. 21 passed; 1 failed; 0 ignored; 0 measured; 1333 filtered out; finished in 0.02s
+  red: r2_whatever_the_tui_speed_the_report_says_submitted_exactly_when_the_ring_left_the_line
+source restored: [33mtrue[39m
+(node:13904) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)

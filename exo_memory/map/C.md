@@ -2001,3 +2001,7 @@ Claim (could be wrong): his 08:19 crash was Export to Assetto Corsa: `v8-oom-sta
 ## 2026-11-25 — L238 re-run: at builder cfa7ad91 the rename carries a recipe only when it was the old file's own, so C6, C1 and C2 are all green with my other six rows (9/9) and the touched tests 74/74; CLEAN
 - Evidence: `exo_memory/handback/p-l238-rerun-C_2026-11-25_evidence/run_cfa7ad91.txt`, `touched_tests_cfa7ad91.txt`.
 - Hand-back: `exo_memory/handback/p-l238-rerun-C_2026-11-25.md`
+
+## 2026-11-25 — R1: 9 of the second reader's newest 20 flags on the librarian were right (11 cite a file the turn read whole or its own write), so it and its note are Excluded in install.ps1 and removed from D's settings.json (backup .bak-r1-C-2026-11-25); the librarian brief gains the few-lines note bullet
+- Evidence: `exo_memory/handback/p-r1-C_2026-11-25_evidence/last20.txt`, `ledger_figures.txt`, `red_install_only.txt`, `check_D_excerpt.txt`.
+- Hand-back: `exo_memory/handback/p-r1-C_2026-11-25.md`
