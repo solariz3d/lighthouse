@@ -84,3 +84,9 @@
 - Read as: the left column flush to the window's edge; and it fades out (see-through) when the pointer leaves it and
   returns when the pointer is over it, since his purpose is more room for the preview. He wrote "opaque"; he has been
   told the reading. L254: `loop/packet_t180_left_column_A_2026-11-26.md` (A builds, C reads).
+- 06:1x (L): the read of L249 by pane P is **CLEAN** (`handback/p-l249-read-P_2026-11-26.md`): 33 of 34 rows (the red is row 7,
+  since fixed on `l253-row7`); the amended focus row fails on 3 of 3 planted pages; a look switched live equals a fresh
+  load, 0 of 9 differ. Left for a small lap (L255, pane O): Export has no hover in aurora and the two Skylines; the menu
+  titles in SIGIL have none; the File menu runs 55 px off the left edge at 900 px wide; a clicked field wears its border and
+  the ring together. The blur on label windows is dispatched (L251, pane C). P reads L254, L251 and L255.
+  Open with him: L249 carries the per-theme handle colours of L244, and the record has no word from him on those pictures.
