@@ -540,3 +540,10 @@ carry it, so this brief does.
   `handback/p-consumer-coldread3-LIB_2026-10-09.md` (a dead hook at `dev/shell/hooks/precompact.js:39`, a hard-coded
   path at `dev/dream/dream_cycle.ps1:52`). The risk named: deliberate limits (the intake cap, who may ring whom) read as
   defects by a reviewer without the purpose.
+- **05:02:** "but thats what I mean, how could it understand what the code itself is saying if it cannot understand the
+  objectives on a macro scale". His catch on the librarian's 05:01 line ("it can check that the code does what the code
+  says it means"): that only holds where the rule is written out in a comment or a test. Where the rule is itself only
+  meaningful given what the room is for (what counts as mid-thread, what the shell must carry), a purpose-blind reader
+  checks the function against its own rule and cannot see the rule missing the point. The librarian's changed lean: both
+  free runs go to the track builder, whose purpose an outsider can read off the code; the room's code is read by a seat
+  that holds the room.
