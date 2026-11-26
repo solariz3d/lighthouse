@@ -280,6 +280,11 @@
         <label><input type="checkbox" id="usbmode" style="width:auto;" /> Move seats between computers with a USB drive</label>
         <span class="settingsnote">Off unless you turn it on. When on, closing Consonance saves your seats to a USB drive and the next launch picks them up from it, so you can carry them to another computer. A drive counts when it holds a <code>consonance-transfer</code> folder (with its <code>MANIFEST.json</code>) at its top level or one folder down; Consonance only looks as it starts and as it closes. Takes effect at the next launch.</span>
       </div>
+      <div class="field">
+        <label>Run preset — how the seats run</label>
+        <select id="runpreset" style="width:auto;"><option value="normal">Normal: every seat as it is set up now</option><option value="turbo">Turbo: every builder pane and the orchestrator on Opus at xhigh effort; the librarian and the Third Place on Fable at high</option></select>
+        <span class="settingsnote">Takes effect at the next relaunch: a seat that is already running keeps the model and effort it started with. Saving backs up <code>.consonance.json</code> first, beside it.</span>
+      </div>
       <div class="row">
         <button id="savesettings" class="btn accent">Save settings</button>
         <span class="settingsnote">Blank = built-in default. Applies to new spawns immediately; restart for full effect.</span>
