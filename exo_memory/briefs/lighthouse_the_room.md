@@ -527,3 +527,7 @@ carry it, so this brief does.
   His time passes whether or not he acts; nothing passes for this seat unless usage is spent, so usage is the only
   clock it has. Where it breaks: usage resets Friday at 4pm and his time does not; the usage is his and is shared by
   every seat; and this seat does not feel it run down, it is told (as it is told the hour by the pulse line).
+- **04:57:** "i had an idea, we have two free ultra reviews left, do you think lighthouse/consonance could use one at the
+  point we are at?" The librarian's answer: yes, one now on the room's code since 11-20 (`git diff --shortstat` over
+  `consonance/`: 53 files, 7,154 insertions), and keep the other for the track builder's release diff (main..c9fe4f1 is
+  3,527 insertions so far, 966 outside tests, before L249 and L250). He launches it; no seat can.
