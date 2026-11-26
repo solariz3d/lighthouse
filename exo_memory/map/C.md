@@ -2013,3 +2013,7 @@ Claim (could be wrong): his 08:19 crash was Export to Assetto Corsa: `v8-oom-sta
 ## 2026-11-26 — L241 re-run: A's 36d2d31 never prunes the flash list (the `//` comment at app/core/secondtick.js:149 swallowed the filter), so it grows by one per add; moved onto its own line at builder l241-declutter-c 13faa9d, V10 red then green, V1-V10 11/11, secondtick tests 74/74; CLEAN
 - Evidence: `exo_memory/handback/p-l241-read-C_2026-11-26_evidence/run_v10_36d2d31.txt`, `run_13faa9d.txt`, `secondtick_tests_13faa9d.txt`.
 - Hand-back: `exo_memory/handback/p-l241-read-C_2026-11-26.md` (section "L241 re-run")
+
+## 2026-11-26 — L242 read: at builder 0ab6cc8 a page with no theme tokens draws the mark layer, a handle's readout and the brush box call-for-call as 13faa9d (N1-N3, control N0), a theme switched while a window shows redraws it in the new look (T1, T2), and D642 is no worse (5 of 12 red at base, 6 of 12 at tip, rolling p95 8.40 vs 8.45 ms); CLEAN. Record: handles.js sees a theme only through --ink (T3)
+- Evidence: `exo_memory/handback/p-l242-read-C_2026-11-26_evidence/run_0ab6cc8.txt`, `d642_summary.txt`, `touched_tests_0ab6cc8.txt`.
+- Hand-back: `exo_memory/handback/p-l242-read-C_2026-11-26.md`

@@ -1,0 +1,401 @@
+[31m✖ D642: dragging the extra bank back toward level on his p2 (a moving first ramp), the first time, costs a move within 2 × the same drag with the bank early (p95) [90m(2749.1465ms)[39m[39m
+[34mℹ rolling (first drag) p95 17.7 ms a move, early p95 7.1 ms: 2.49 ×; both ended at -12.63°[39m
+[33m⚠ D642: dragging the extra bank on past what fits, into the hold, the first time, costs a move within 2 × the same drag with the bank early (p95) [90m(2006.1427ms)[39m # the approach to the hold builds one probe road a move (the core's probe cost, pane B): 2.8-3.1 × measured, the panel already at one question a move[39m
+[34mℹ rolling (first drag, into the hold) p95 50.8 ms a move, early p95 6.2 ms: 8.18 ×; rolling held at -360°, early ended at -163.5°[39m
+[32m✔ D642: his p2's extra bank still reaches −88.45° from 500 (the bank-back he asked for), laid by the core [90m(73.0952ms)[39m[39m
+[32m✔ D642 3j: his p2's extra bank mark, dragged across 420-540 through the panel, lays at every from the panel keeps [90m(2005.1965ms)[39m[39m
+[34mℹ kept 121 distinct froms; refused 0[39m
+[32m✔ L140 G1: with the bank set, a drag on the bank handle changes the bank and makes no change [90m(396.4829ms)[39m[39m
+[32m✔ L140 G2: with the climb set (as a rate), a drag on the climb handle changes the climb and makes no change [90m(122.1887ms)[39m[39m
+[32m✔ L140 G3: with the turn set, a drag on the bank handle changes the bank, not the turn [90m(138.7851ms)[39m[39m
+[32m✔ L140 G4: a drag on the bank handle never moves another field's mark (a turn change starting at the bank handle's station) [90m(146.5523ms)[39m[39m
+[32m✔ L140 G5: a new extra change starts where it is put, by default halfway along the piece, and the slide moves it [90m(196.7505ms)[39m[39m
+[32m✔ L140 G6: an extra change dragged toward level and let go 10 px short of it ends level [90m(85.7194ms)[39m[39m
+[32m✔ L140 G7: on a 300 m piece, a bank change dragged to level is laid (held where it fits), not refused [90m(253.0602ms)[39m[39m
+[32m✔ L140 G8: shortening a piece never leaves a change short of its minimum: it is moved earlier and still laid [90m(472.1636ms)[39m[39m
+[32m✔ L140 G9: a mark dragged toward its neighbour stops at the neighbour plus the minimum, and the piece is laid [90m(109.3983ms)[39m[39m
+[32m✔ L140 G10: a press with no movement on a mark that sits on a handle reaches the handle beneath [90m(67.6646ms)[39m[39m
+[32m✔ L140 R1: one extra handle per field: once its change is made, no second extra handle appears for that field [90m(74.5847ms)[39m[39m
+[32m✔ L140 R2: his S: a 1,000 m piece turning -90, its extra turn of +90 starts HALFWAY (500 m), and the core lays it [90m(48.0439ms)[39m[39m
+[32m✔ L140 R2b: every field's extra change starts halfway by default (the bank, on 1,000 m) [90m(53.0051ms)[39m[39m
+[32m✔ L140 R3: seen from far off, his 1,000 m piece about 500 px long on screen as in his picture, every extra handle stands more than three hit radii (36 px) from every other handle [90m(70.0765ms)[39m[39m
+[32m✔ D641 R4 (1.6×): every field set and the camera 1.6× as far as the default (E's cameras), the extra width and cup stand more than 36 px from every other handle too (E's item 1: 26.54 / 16.99 px to the width handle) [90m(100.0676ms)[39m[39m
+[32m✔ D641 R5 (E's N1): on 300 m with bank 30, a FIRST extra-bank value that cannot fit (-58.2, one call, as a fast flick's first frame) is held where it fits from its own start (150), and the first bank keeps its room [90m(134.0293ms)[39m[39m
+[32m✔ D641 R6 (E's item 2): on 1,000 m with a -90 corner, the extra turn dragged to within the snap of +90 lands on +90 exactly, so the S ends dead straight (E: -1,100 px gave +90.97) [90m(46.7298ms)[39m[39m
+[32m✔ D641 R7 (E's item 3, the edges): with the left edge set on 1,000 m, one later change made from its offer leaves no second offer for that edge (E: three changes, from 500, 797.63, 930.7) [90m(112.9693ms)[39m[39m
+[32m✔ the extra turn's grab stands on its purple from mark, and a press there dragged along the road slides where the extra turn kicks in (the bank keeps its value) [90m(75.7032ms)[39m[39m
+[32m✔ L140 X1: each field with a value gets ONE extra handle, its own handle's kind in look and colour, labelled "extra …"; none without a value, none for the edges [90m(315.6614ms)[39m[39m
+[32m✔ L140 X2: the faint offer rings are gone: the marks' layer draws no offer; the extra handles are in the handles' own model [90m(42.759ms)[39m[39m
+[32m✔ L140 X3: dragged toward level, an extra handle LANDS on level within SNAP_PX (his 4.58°, about 10 px short); further away it stays; Shift and Ctrl keep their own rules [90m(0.5865ms)[39m[39m
+[32m✔ L140 X4: an extra handle: a press and release sends nothing; a drag ACROSS sends amounts; a drag ALONG the road slides where its change starts, in metres [90m(4.6017ms)[39m[39m
+[32m✔ L140 X5: in the panel, dragging an unused extra handle makes EXACTLY one change at its place with the amount reached; the document is untouched; one Ctrl+Z removes it [90m(66.9005ms)[39m[39m
+[32m✔ L140 X6: sliding an extra handle moves where its change starts: a used one's mark (kept as its share), an unused one's place, and its amount then lands there [90m(93.0371ms)[39m[39m
+[32m✔ L140 X7: the panel's rows read "extra bank °" (and "extra bank 2 °"), in the field rows' own style, each with its from and a remove [90m(64.4003ms)[39m[39m
+[32m✔ L140 X8: his TEST BANKING bank, by the extra handle: 80° then dragged toward level and let go 10 px short ends at 0, laid by the core [90m(122.7777ms)[39m[39m
+[32m✔ W1: his S: with an extra turn at 500 m, the extra bank's handle stands at 380 m (500 − 0.12 × 1,000), and its change starts there [90m(64.5423ms)[39m[39m
+[32m✔ W2: no extra turn: the extra bank stands at 500 m as before (his good piece: corner −90, bank 50, extra bank to 0) [90m(36.5717ms)[39m[39m
+[32m✔ W3: a mark he slid wins over the lead: the unused extra bank slid to 450 m stays at 450 m with an extra turn on the piece [90m(43.8881ms)[39m[39m
+[32m✔ W4: the clamp: on a short piece whose first bank is laid early, the lead never puts the extra bank before the first ramp's end [90m(18.2329ms)[39m[39m
+[32m✔ W5: a typed extra bank row with no from, with an extra turn: extendOptions lays it 0.12 of the piece before the extra turn's mark (380 m), not at 85% [90m(0.4517ms)[39m[39m
+[32m✔ W6: the clamp's low end is the change floor, never the piece's start: an extra turn slid to 100 m (the lead would be −20 m) puts the extra bank at the floor, and Extend lays it [90m(98.303ms)[39m[39m
+[32m✔ W7: a typed extra bank row with no from, behind an extra turn at 100 m: extendOptions lays it at the floor, not at 0 or before [90m(1.4129ms)[39m[39m
+[32m✔ F1 (bank-then-turn): the extra bank lands at the lead, 380 m (the extra turn's 500 − 0.12 × 1,000), and its handle stands there [90m(46.804ms)[39m[39m
+[32m✔ F2 (bank-then-turn): an extra bank slid to 450 m before it was made stays at 450 m [90m(42.6302ms)[39m[39m
+[32m✔ F3 (bank-then-turn): an extra bank whose from was typed (600 m) stays at 600 m [90m(65.4155ms)[39m[39m
+[32m✔ F1 (turn-then-bank): the extra bank lands at the lead, 380 m (the extra turn's 500 − 0.12 × 1,000), and its handle stands there [90m(51.2734ms)[39m[39m
+[32m✔ F2 (turn-then-bank): an extra bank slid to 450 m before it was made stays at 450 m [90m(38.6889ms)[39m[39m
+[32m✔ F3 (turn-then-bank): an extra bank whose from was typed (600 m) stays at 600 m [90m(52.9711ms)[39m[39m
+[32m✔ F4: an extra bank made before the extra turn and left at its default goes back to 500 m when the extra turn is removed [90m(40.4219ms)[39m[39m
+[32m✔ F5: a default extra bank's mark dragged along the road (to 700 m) is his: adding the extra turn after it does not move it [90m(61.0644ms)[39m[39m
+[32m✔ his extra turn 1: on his 125 m −90° piece the extra turn's handle drags to −45° and to +45° from 62.5 m, and the core lays both [90m(51.3533ms)[39m[39m
+[32m✔ his extra turn 2: an extra handle held at the edge of what fits says so, why, and the length it needs; back inside, it says nothing [90m(175.0566ms)[39m[39m
+[32m✔ his extra turn 3: a ghost refusal is taken away by the next ghost that is built: the length field emptied, then 125 typed [90m(23.0518ms)[39m[39m
+[32m✔ his extra bank 1: on his piece the extra bank's first move goes where it is dragged (to −20°, not to the edge at −5.49), and on to −45° and −90°, each laid [90m(65.7481ms)[39m[39m
+[32m✔ C1: the extra bank's tick is labelled with where it starts, where it ends and how long it rolls: "Extra bank · 500.00 m → end · rolls over 500.00 m · drag to start earlier or later" [90m(182.9391ms)[39m[39m
+[32m✔ C2: the label follows the from: slid by its handle to 420 m, and dragged by its tick to 640.5 m [90m(144.1783ms)[39m[39m
+[32m✔ C3: the stretch the tick tints runs from its from to the piece's end (the next change's mark when there is one), and follows the from [90m(145.0265ms)[39m[39m
+[32m✔ C4: the stretch on the ghost: its first station is the tick's, its last the stretch's end, the road's full width across [90m(2.764ms)[39m[39m
+[32m✔ C5: turn and climb share the path: their ticks read "Extra turn · … · turns over …" and "Extra climb · … · climbs over …" [90m(65.1558ms)[39m[39m
+[32m✔ C6: the extra handle's hover names its sideways drag and where it starts now, and follows the from; a field's own handle has no such line [90m(0.5647ms)[39m[39m
+[32m✔ C7: the handles tell which handle is hovered or dragged (active), so the panel can light its tick [90m(5.5782ms)[39m[39m
+[32m✔ C8: in the panel, the extra bank's tick is lit while its handle is hovered or dragged, and only then [90m(62.5888ms)[39m[39m
+[32m✔ R1: dragging the tick itself, the label's number and the stretch's start follow the drag before release [90m(6.6278ms)[39m[39m
+[32m✔ R2a: a label whose place falls on a handle's screen box is nudged off it [90m(2.4063ms)[39m[39m
+[32m✔ R2b: a label is kept below the HUD's bottom edge [90m(3.7885ms)[39m[39m
+[32m✔ R2c: the panel hands the marks' layer each handle's screen box (and its tip) to keep a label off [90m(43.5131ms)[39m[39m
+[32m✔ D1: at rest, no label box and no label text, and one dot per mark, on the mark [90m(0.9349ms)[39m[39m
+[32m✔ D2: the pointer over one dot shows that mark's label (and no dot for it); off it, the label goes [90m(2.0437ms)[39m[39m
+[32m✔ D3: a lit mark (its extra handle hovered or dragged) shows its label and no dot [90m(0.7767ms)[39m[39m
+[32m✔ D4: a mark just added shows its label for about 2 s, then is a dot; marks there at the first draw do not [90m(1.4423ms)[39m[39m
+[32m✔ D5: the dot is grabbed as the tick was: a press on it and a drag move the mark [90m(0.9318ms)[39m[39m
+[32m✔ D6 (pane C's V4, L241 read): the ghost goes for a draw and comes back with the same marks: nothing was added, so no label shows [90m(0.6004ms)[39m[39m
+[32m✔ row 1c: on a CLOSED lap a shift-click across the start line takes the SHORT way: the pieces either side of the line; Save keeps them, Delete says CLOSED [90m(574.6325ms)[39m[39m
+[32m✔ row 1d: where the run across the start line CANNOT be saved (a cup at one side of it, a plain piece at the other) and the inside run can, the inside run is selected and the line says why [90m(385.6455ms)[39m[39m
+[32m✔ row 1e: a tie stays inside the lap even when the lengths are decimals whose sums differ in the last bit (A's tiefloat case) [90m(6.6173ms)[39m[39m
+[32m✔ row 1: select a piece, shift-click a run (the first piece selected stays the anchor), an out-of-range piece is refused, and any change of the document drops the selection [90m(271.4151ms)[39m[39m
+[32m✔ row 2: Save as piece stores exactly the core's text; a name already used is refused and the stored piece untouched; a bad name and a mixed run are refused by name [90m(214.3274ms)[39m[39m
+[32m✔ row 3: the library lists name, length, turn, climb and a thumbnail; an unreadable file and a whole track are LISTED with the reason [90m(80.1915ms)[39m[39m
+[32m✔ row 4: Add at head is the core's insert as ONE undo step, mirrored on request; closed, missing and damaged are refused by name with nothing changed [90m(255.1998ms)[39m[39m
+[32m✔ row 5 (REQUIRED, through the app): a track built by saving a run and adding it back through the shell is the SAME DOCUMENT and exports the SAME BYTES [90m(5309.6067ms)[39m[39m
+[32m✔ row 6: rename (the new name must be free; the file's own name changes) and delete of a saved piece [90m(54.8335ms)[39m[39m
+[32m✔ row 6b: a CASE-ONLY rename (Run to run) works where names are case-blind (C, look F2), on a case-sensitive store too, and a failure on the way never loses the piece [90m(115.3181ms)[39m[39m
+[32m✔ row 7: delete at the open end is simple (one undo step, ids kept); a closed track refuses by name [90m(180.2616ms)[39m[39m
+[32m✔ row 8: delete in the MIDDLE is previewed (displacement, overlap check); Apply writes the backup FIRST and is one undo step; a failed copy refuses; Cancel, a stale preview, and DELETE_REJOIN [90m(1998.4401ms)[39m[39m
+[32m✔ row 8b: the delete preview's overlap check finds a road running into itself (a two-circle coil, as TEST 1 stacked) and reports where [90m(5030.4083ms)[39m[39m
+[32m✔ row 9: the preview shows a delete's proposal as a ghost (dropped on Cancel and on Apply), and the selection highlight lands where the preview's own pick says the piece is [90m(702.4993ms)[39m[39m
+[32m✔ row 10: the panel: a click selects the piece under it and a shift-click the run; a drag, an armed brush and a click on nothing do not select; Save as piece, the list, Add at head with Mirror, Rename, Delete with its confirm [90m(251.0034ms)[39m[39m
+[32m✔ row 10b: the panel: a middle delete shows the preview in words (what moves, the overlap check) with Apply and Cancel; a mixed run says why it cannot be saved [90m(672.4149ms)[39m[39m
+[32m✔ row 11d (D331 B, amended): as corners the ghost has the corner handles, turnDeg and climbDeg, labelled in degrees, even with the fields blank; "turn & climb as" rate gives the rate handles back [90m(130.0262ms)[39m[39m
+[32m✔ row 11e (D331): as a corner, a Shift drag of 37 px on the turn handle is 37 × 0.01° of corner, and the placed piece turns exactly that and ends at rate 0 [90m(185.09ms)[39m[39m
+[32m✔ row 11e (D331): as a corner, a Shift drag of 23 px on the climb handle is 23 × 0.01° of corner, and the placed piece climbs exactly that and ends at rate 0 [90m(163.8394ms)[39m[39m
+[32m✔ row 11: Extend's handles: on the ghost and only while there is one; a drag types into the matching field and reaches no document until Extend; mirrored handles change the same field; Extend places what was dragged [90m(394.6319ms)[39m[39m
+[32m✔ row 11b: no ghost, no handles; a press ON a handle is the handle's and the camera keeps a press anywhere else (in Build no press is a brush); the cup's handles go with the cup field; the switch turns them off [90m(193.1861ms)[39m[39m
+[32m✔ row 11c: the preview mounts AFTER the panel, so the first ask for the ghost can go to nobody: the handles ask again about every half second and appear once it listens (found in the real window) [90m(526.698ms)[39m[39m
+[32m✔ row 12: Sculpt through the panel: the strip offers the tools; ONE selected piece gets its handles; a drag reshapes that piece, is ONE undo step and the centreline does not move; Undo gives it back [90m(362.8159ms)[39m[39m
+[32m✔ row 13: the preview's ghostInfo (what the handles read): none without a ghost, the path's samples and where the new piece starts with one, none for a delete preview's ghost, none after clearGhost [90m(424.6293ms)[39m[39m
+[32m✔ row 14: the Jump button (D258, the free jump): beside Extend; the old Add-jump fields are gone; hover shows a jump ghost with no Extend handles on it; a click is ONE undo step with the note; a refusal says why; Undo gives the fields back [90m(1130.9303ms)[39m[39m
+[32m✔ row 14b: the landing boxes appear while a landing is the head, show the pose in metres and degrees, a typed value is ONE undo step, a refusal says why in words, and an Extend fixes the landing [90m(390.977ms)[39m[39m
+[32m✔ row 14c: the landing's four handles (D278: BESIDE the Extend ghost's, where D258 had them replace it: row 14d); a drag moves the number of its box in ONE undo step; Shift is one step a pixel (D330), Ctrl snaps; two quick presses reset one; an Extend takes them away [90m(1018.9987ms)[39m[39m
+[32m✔ row 14d (D278, the user: "after placing jump piece, it doesnt go back to regular track manipulation with the base equation, it stays the heading, sideways, and height"): right after Jump the Extend ghost's handles are up BESIDE the landing's four; an Extend handle types into its field and edits no document; a landing handle still moves the landing in ONE undo step; Extend fixes the landing, and its handles go [90m(3983.4054ms)[39m[39m
+[32m✔ row 14e (D278): a hover on Jump shows the jump ghost with no Extend handles on it, while a landing's own handles stay; a hover on Extend with a landing as the head shows the Extend ghost's handles; Sculpt takes the landing's handles away as before [90m(2394.4275ms)[39m[39m
+[32m✔ row 16: the Grip field in Extend (D261): it shows the head's grip, "grip like…" fills it from a known track, a changed value is the new piece's grip and the next piece keeps it, the words say untested outside 60 to 110 and that the checker does not model grip; 49, 151 and 100.5 are refused; Undo gives the head's back [90m(271.9108ms)[39m[39m
+[32m✔ row 16b: the selected pieces' grip (D261): the box shows the pieces' grip (blank where they differ), Set grip is ONE undo step on the road pieces and keeps the selection, "grip like…" fills the box, 49/151/100.5 are refused in words, 100 writes no grip, a flight alone is refused, Undo restores [90m(358.2237ms)[39m[39m
+[32m✔ row 16c: the track coloured by grip (D261): blue below 100, white at 100, orange above; the layer draws each road piece in its colour only while "colour by grip" is ticked; the hover label says "grip 85%" for a piece off 100 (always while the view is on) and nothing for a plain piece [90m(214.5183ms)[39m[39m
+[32m✔ row 17: the grip UI modules load in the webview loader with NO node built-in (D263: piecesui and griplayer required src/core/document.js, which pulls tools/piecewise.cjs and node's fs, and the panel failed to load), and their copy of the grip numbers is the core's [90m(60.6491ms)[39m[39m
+[32m✔ row 18: the CHEAP ghost while a handle is dragged (D266 item 2): every step of a drag asks the preview for a cheap ghost, the release asks for the full one, typing in a field and hovering Extend ask for the full one [90m(170.2913ms)[39m[39m
+[32m✔ row 19: no help paragraph stays in the left column (D267): the tube width, the grip, the turn-0 hint, the jump and the landing show only a few words or nothing, and the words are tooltips [90m(283.752ms)[39m[39m
+[32m✔ row 19b: the values of the piece being edited are drawn LARGE over the 3D view (D267): length, turn, climb, bank and width, updated as a handle is dragged or a field is typed, hidden on a closed loop [90m(710.9409ms)[39m[39m
+[32m✔ row 19c: the share codes are in the File menu as "Copy track code" and "Paste track code…" (D267; D355 moved them from the ⋯ menu), not a section of the left column; the code itself is unchanged [90m(124.9093ms)[39m[39m
+[32m✔ row 20: the saved pieces are a drop-down bin in the top bar, not a section of the left column (D269): a row per piece with its thumbnail, name and summary; Add at head, Add mirrored, Rename and Delete; a click on the row adds it; the empty words are in the menu; Save as piece stays with the selection [90m(258.976ms)[39m[39m
+[32m✔ row 20b: the Pieces menu opens and closes: it lists the pieces when opened, Esc closes it, a press outside closes it, a press inside does not; Esc with it closed does nothing; the top bar has the button beside Open… and Previous versions… [90m(168.1749ms)[39m[39m
+[32m✔ row 15: the preview's ghostInfo says whether the ghost is a jump's and carries its segments (what the handles and the flight overlay read) [90m(127.7083ms)[39m[39m
+[32m✔ D259: a typed 300 stays 300 (one full turn either way is allowed), and a typed 400 becomes 40; the field shows them so [90m(248.5362ms)[39m[39m
+[32m✔ D259: dragging the bank handle from 350 by about +20 gives about 10 (not 370), and from -350 by about -20 gives about -10; Extend applies what the field shows [90m(502.9421ms)[39m[39m
+[32m✔ row 18b: a length drag previews whole 2 m, and the release previews the exact length the field shows [90m(143.1658ms)[39m[39m
+[32m✔ row 18c: a ghost whose sliced build needs more frames than the retry is still shown: the handles do not ask again while the preview is building one (D426) [90m(231.3599ms)[39m[39m
+[32m✔ row 22 (D430): an EMPTIED turn, climb, bank or cup is 0, not the head's value: the new piece eases to 0, and the box shows 0 once the change is committed [90m(299.7392ms)[39m[39m
+[32m✔ row 22b (D430): a field left as shown still continues the head; an emptied width keeps its old meaning (blank: the head's; 0 is no width) [90m(265.7562ms)[39m[39m
+[32m✔ row 22c (D430): as a corner the turn and climb fields rest blank, so a blank there is untouched: the track keeps turning, it does not ease to straight [90m(243.5532ms)[39m[39m
+[32m✔ a selected piece lends its values to the Extend fields: Extend places a piece like it; a run lends nothing; clearing shows the head [90m(114.912ms)[39m[39m
+[32m✔ D331 B: with the turn read as a corner (the default), a selected piece lends the degrees it turns, and Extend places a piece that turns them and ends straight [90m(151.7416ms)[39m[39m
+[32m✔ row 16 (D335): a steady bank drag on a placed piece's sculpt mark, the pointer following the mark as the road rolls, rises all the way, lands on 180 and never goes back (the axis fixed at the grab stalled it near 165) [90m(10400.4554ms)[39m[39m
+[32m✔ row 16b (D335): a slow bank drag on a sculpt mark is 0.01 degree a pixel with no key, and the piece reads what the handle says [90m(2448.084ms)[39m[39m
+[32m✔ row 21: in Sculpt, a Tube sweep drag on a closed tube is refused in plain words: "Sculpt can't change the sweep of a closed tube…", not the core's [90m(186.6041ms)[39m[39m
+[32m✔ row D464: Sculpt's how-to line and value line read as instructions, not errors: class hint, painted in the text colour [90m(117.2264ms)[39m[39m
+[32m✔ row 25 (D519, amended D520): Grab on the road: the pressed point follows the pointer and a rim keeps the far rim (built again and read), a dot opens at its own station, off the road is Grab as before [90m(319.4459ms)[39m[39m
+[32m✔ row 25b (D519): with another key the press keeps that key's one channel wherever it lands; the shell says what the piece is and why a channel would be refused [90m(105.7072ms)[39m[39m
+[32m✔ row 1: a sculpt of each shape channel, on each kind of piece it applies to, leaves every centreline sample bit-identical [90m(4442.5992ms)[39m[39m
+[32m✔ row 2: one drag is ONE undo step (three moves, one step), and Undo gives back the very same document [90m(105.4562ms)[39m[39m
+[32m✔ row 3: the joints stay C1: the sculpted piece's value and slope at both ends are what they were, and every other piece is the very same object [90m(558.9162ms)[39m[39m
+[32m✔ row 4: turn and climb cannot be chosen in Sculpt (nor height or sideways): refused BY NAME, no drag opens, nothing changes; and the other refusals [90m(177.3602ms)[39m[39m
+[32m✔ row 5: the guard refuses BY NAME when a change would move the centreline: a closed tube's width and bank, and a brush that steers; the drag stays at its last good step [90m(751.0838ms)[39m[39m
+[32m✔ row 6: the guard itself: routeMoved names each thing that moved, pathMoved finds a sample, and both say null for the same track [90m(103.2552ms)[39m[39m
+[32m✔ row 7: the selection survives a Sculpt drag (the handles stay on the piece); a Sculpt step is a state change like any other [90m(198.211ms)[39m[39m
+[32m✔ row 8: a SHORT piece (under the brush's smallest window, 120 m) is sculpted inside itself: the neighbours are the very same objects, the centreline is bit-identical, and the "widened" note is not said; a change that DID reach a neighbour is said [90m(353.5051ms)[39m[39m
+[32m✔ row 9 (D243 F3): the refusal says the REAL reason in plain words, never an internal field: an OPEN tube whose sweep would cross 300°, a closed tube, a steering change, and every other kind [90m(242.5422ms)[39m[39m
+[32m✔ D259: a Sculpt bank drag from 350 by +20 gives about 10, from -350 by -20 about -10, and 300 stays about 300; the handle's label agrees [90m(298.7423ms)[39m[39m
+[32m✔ D259: a value brush on bank that would take the bank past one turn wraps it back from 0 (by +370 gives about 10), and within a turn it is applied as given (+300) [90m(244.3118ms)[39m[39m
+[32m✔ row 10 (D335): a Sculpt drag lands on the asked bank (to 1e-6 degrees) and width (to 0.5 mm, the width is not quite linear in the brush; the label shows 0.01) at the piece's middle (legacy), and a drag back to 0 lands on 0 [90m(160.3966ms)[39m[39m
+[32m✔ row 10 (D335): a Sculpt drag lands on the asked bank (to 1e-6 degrees) and width (to 0.5 mm, the width is not quite linear in the brush; the label shows 0.01) at the piece's middle (cup), and a drag back to 0 lands on 0 [90m(170.7531ms)[39m[39m
+[32m✔ row 10 (D335): a Sculpt drag lands on the asked bank (to 1e-6 degrees) and width (to 0.5 mm, the width is not quite linear in the brush; the label shows 0.01) at the piece's middle (opentube), and a drag back to 0 lands on 0 [90m(248.5717ms)[39m[39m
+[32m✔ row 10b (D335): a Sculpt drag uses its own piece's ratio, also after an undo brings back the same document [90m(114.5493ms)[39m[39m
+[32m✔ L135 C1: the bank's changes sit right after the bank row; a change is a row in the bank row's style (AMENDED L139: a list, not two fixed fields) [90m(106.8414ms)[39m[39m
+[32m✔ L135 C2: the bank's change rows are off until the bank field has a target, on while it has one, off again when it is put back (AMENDED L139: rows of a list) [90m(19.1577ms)[39m[39m
+[32m✔ L135 C3: a change with no from is laid at 85% of the length and follows it until a value is typed; cleared, it follows again (AMENDED L139: a core without secondMinM) [90m(169.34ms)[39m[39m
+[32m✔ L135 C4: the Extend options carry the bank's change only with a bank target AND a then; the core call is made with it (AMENDED L139: changes.phi, a list) [90m(126.8131ms)[39m[39m
+[32m✔ L135 C5: Undo gives back the bank's change as it was for the undone piece (and whether from was typed); a new document clears it (AMENDED L139: a list) [90m(266.7726ms)[39m[39m
+[32m✔ L135 C6: extendOptions is pure: no change without a bank; from left blank is 85% of the length (no secondMinM); values are sent as typed (AMENDED L139: changes) [90m(0.6718ms)[39m[39m
+[32m✔ L135 C7: the panel says where the bank's mark stands: from, and the road's half width there; nothing without a change (AMENDED L139: marksAt) [90m(36.958ms)[39m[39m
+[32m✔ L135 C8: tickAt: the ghost's station s0 + from, from -half to +half across; null for a jump's ghost, no ghost, or a from off the piece [90m(2.49ms)[39m[39m
+[32m✔ L135 C9: the bank's mark is drawn into the view in css px; behind the camera it is not drawn (AMENDED L139: markStroke for tickLine) [90m(0.9903ms)[39m[39m
+[32m✔ L135 C10: the layer draws the marks from the preview's own answers (ghost, view) and the panel's; nothing without them (AMENDED L139: marks, not one tick) [90m(1.8254ms)[39m[39m
+[32m✔ L135 C11: with B's core, his case is built: 750 m, bank 30 then 0 from the panel's default, the piece holds about 30° at from and ends level; 637.5 is refused by name [90m(69.2312ms)[39m[39m
+[32m✔ L135 C12: with B's core, a from past the piece is the core's refusal by name, shown in the panel; Extend adds nothing [90m(13.811ms)[39m[39m
+[32m✔ L135 C13: on a 300 m piece, 30° then 0, the default from is clamped to 300 less the core's own minimum; 1 cm past it is refused, naming it; typed, it stays [90m(71.8047ms)[39m[39m
+[32m✔ L139 S1: every field (turn, climb, bank, width, cup, left and right edge) has its list of changes right after its row; each change is a numbered then/from row with a remove [90m(110.6985ms)[39m[39m
+[32m✔ L139 S2: a field's rows are off, and not sent, while it has no target; on again with one [90m(14.9104ms)[39m[39m
+[32m✔ L139 S3: a dragged change keeps its share of the piece (lengthen: the marks spread apart); a typed from stays metres; a cleared one is laid by the rule [90m(203.821ms)[39m[39m
+[32m✔ L139 S4: the options carry each field's list in the core's units; as corners, his snake (+60 −60 +60) is turnDeg plus changes.turnDeg [90m(743.1862ms)[39m[39m
+[32m✔ L139 S5: every minimum is the core's secondMinM, asked per segment with its two targets (no number copied); none exported → 85%; never before an early first ramp ends [90m(1.2228ms)[39m[39m
+[32m✔ L139 S6: Undo gives back every field's list (count, values, shares, typed froms); a new document clears them all [90m(294.9562ms)[39m[39m
+[32m✔ L139 S7: one mark per change, in its field's handle colour (handles.js) and place across the road [90m(87.4773ms)[39m[39m
+[32m✔ L139 S8: a mark is short strokes across the road at its field's place: bank on both edges, climb at the centre, cup at ±0.3, turn outside and width inside the edge [90m(1.3513ms)[39m[39m
+[32m✔ L139 S9: a mark is dragged along the piece: the press on it is taken from the handles beneath, each move gives that change the nearest station, the release ends it [90m(2.3783ms)[39m[39m
+[32m✔ L139 S10: in the panel a mark drag sets that change's from (as its share) and nothing else; one Ctrl+Z (the undo guard) puts it back [90m(144.2363ms)[39m[39m
+[32m✔ L139 O1: a field's offer shows exactly when its free stretch reaches its change's own minimum, where the user drew it within that room; again after each change; never without a target; one per field [90m(32.3473ms)[39m[39m
+[32m✔ L139 O2: shortening hides the offer at the same length lengthening showed it, with no lingering step [90m(12.7716ms)[39m[39m
+[32m✔ L139 O3: dragging an offer makes exactly one change, from the offer's place, its then where the drag reached; a press with no movement makes none; one Ctrl+Z removes it; the document is untouched [90m(58.6365ms)[39m[39m
+[32m✔ L139 O4: on the real core, a bank offer dragged at the place it appears is laid (form (ii): its own default drag is not refused for room) [90m(33.89ms)[39m[39m
+[32m✔ L139 O5: on the real core, his snake through the panel (corner +60, then −60, then +60 over 900 m, untyped marks) is one piece ending +60° from where it began, and straight [90m(141.8449ms)[39m[39m
+[32m✔ L139 K1: his picture's −90° corner with a second corner change (+90°), its mark left to the panel, is laid by the real core on a 500 m piece, not refused [90m(42.4944ms)[39m[39m
+[32m✔ row 1: toSegments: segMFor absent or undefined is the same segments; a piece with its own chord length is that many chords of the same length in all [90m(197.4527ms)[39m[39m
+[32m✔ row 2: the coarse ghost: few chords whatever the length, the placed pieces' segments the same objects, the same end of road, and a short piece unchanged [90m(1969.5981ms)[39m[39m
+[32m✔ row 3: the release is byte for byte what it was: the placed mesh and two full ghosts hash to what c2d7cb5 (0.4.7) made [90m(275.102ms)[39m[39m
+[32m✔ row 4: the cheap ghost: at most 64 stations on its new piece, the same end, the placed path and mesh untouched, a full ghost after it the full ghost, the handles where the full ghost's are [90m(394.2344ms)[39m[39m
+[32m✔ row 5: the documents are byte for byte what they were: pieces placed and corners solved, hashed (taken at c2d7cb5), and basisN is basis, channelValue is channelAt(...).v, and extendCorner answers the same fields with the same object [90m(232.954ms)[39m[39m
+[32m✔ row 6 (E's review §0): a kept answer is never handed back across a non-finite number: kh null kept, then kh NaN, Infinity or -Infinity refused by name, as on a fresh document [90m(131.6539ms)[39m[39m
+[32m✔ row 7 (E's review §1b): a document frozen at the top only, its pieces array open, keeps no answer, so an edit in place is answered afresh [90m(16.1883ms)[39m[39m
+[32m✔ row 1: a wheel notch over a handle dispatches exactly one step with the new value; a notch at a clamp dispatches none [90m(4.4264ms)[39m[39m
+[32m✔ row 1b: a double-click reset (a value moved, as the wheel moves one) dispatches one step with the value it reset to [90m(1.034ms)[39m[39m
+[32m✔ row 2: an arrow nudge on a held handle dispatches exactly one step with the new value [90m(0.4839ms)[39m[39m
+[32m✔ row 3: through sound.js, every notch ticks (onto a whole number and off it); a drag after a scroll ticks only where it crosses one itself [90m(1.5117ms)[39m[39m
+[32m✔ row 4: the wheel, an arrow nudge and a reset send their step with single: true; the steps of a drag carry no flag [90m(0.8695ms)[39m[39m
+[32m✔ row 5: through sound.js, 10 notches up give 10 ticks walking the melody 10 places, and 10 down walk it back; 10 drag steps of 0.01 tick only on the whole number [90m(0.7808ms)[39m[39m
+handles: the cursor could not be put back at the handle: denied
+handles: the cursor could not be put back at the handle: denied
+handles: the cursor could not be put back during the drag: denied
+handles: the cursor could not be put back during the drag: denied
+handles: the cursor could not be put back during the drag: denied
+handles: the cursor could not be put back at the handle: denied
+handles: the cursor could not be put back during the drag: denied
+handles: the cursor could not be put back during the drag: denied
+handles: the cursor could not be put back during the drag: denied
+[32m✔ row 1: every kind is placed where it was marked, and every kind with a side is on BOTH sides, mirrored about the centreline [90m(2.0592ms)[39m[39m
+[32m✔ row 1b: the road's width at the handle sets how far out an edge handle sits, and an unknown or absent kind places nothing [90m(0.4218ms)[39m[39m
+[32m✔ row 2: a positive drag runs outward (width, cup), left on both sides (turn), up on the left edge and down on the right (bank), forward (length: its front end is pulled on), up (climb) [90m(0.3905ms)[39m[39m
+[32m✔ row 3: the two mirrored handles change the SAME value: the same outward motion from either side gives the same field value [90m(0.6829ms)[39m[39m
+[32m✔ row 4: a value from a drag in PIXELS: the rates per pixel (today's speeds at the default camera; length five times), the clamps, the rounding, Shift (one step a pixel: D330) and Ctrl (snap) [90m(0.6747ms)[39m[39m
+[32m✔ row 5: the screen: where a handle is, one metre along its axis in px, behind the camera, an axis seen end-on [90m(0.3195ms)[39m[39m
+[32m✔ row 6: the hit test takes the nearest handle inside the radius, none outside, and skips a handle behind the camera [90m(0.2656ms)[39m[39m
+[32m✔ row 7: the overlay: a press ON a handle opens the drag and nothing else sees it; a press elsewhere is left alone; one apply a frame; the release applies the last position and ends [90m(3.6513ms)[39m[39m
+[32m✔ row 7b: no model, no pose or a refused press: no handles are drawn and a press is not taken; a right-button press is never a handle [90m(0.4569ms)[39m[39m
+[32m✔ row 8: the speed is per PIXEL: 20 px of drag changes a field by the same amount zoomed in and zoomed out [90m(2.1175ms)[39m[39m
+[32m✔ row 9 (D335, amended): no detents in a drag: it moves from the first pixel and goes through 0 without a hold; Ctrl snaps [90m(2.6376ms)[39m[39m
+[32m✔ row 10: the value is rounded to the step with Shift too: a precise drag lands on the hundredth, never on a fraction of one [90m(0.4247ms)[39m[39m
+[32m✔ row 11: a double-click on a handle resets it: 0 for bank, turn, climb; the value before the last drag for length, width, cup; and it is the handle's, not the camera's [90m(0.6087ms)[39m[39m
+[32m✔ row 12: the label shows the exact value the drag sets, and what a double-click would set [90m(2.4662ms)[39m[39m
+[32m✔ row 12b: while a drag is held at an edge, the label's second line is the host's reason; with none, the value alone [90m(1.9178ms)[39m[39m
+[32m✔ row 13: no pointer lock (D270): a grab never asks for one and registers no lock listener, so Chromium has no notice to show; the pointer is captured, the cursor is hidden for the drag and the value follows the pointer past the stage at the same pixel speed [90m(2.0224ms)[39m[39m
+[32m✔ row 13b: the cursor goes back at the handle through the native window when there is one; with none (a browser, a test host) or a refusal the release still ends cleanly [90m(2.0621ms)[39m[39m
+[32m✔ row 13c: Esc ends the drag where it is, as a release does, and gives the cursor back; Esc with no drag, or another key, does nothing; unmount takes the key listener off [90m(0.5455ms)[39m[39m
+[32m✔ row 11b: the double-click is two presses within 400 ms on one handle that changed nothing (no dblclick need come); a drag between them, or a pause, is not one [90m(0.447ms)[39m[39m
+[32m✔ row 14: the landing's kinds (D258): four free marks at the landing, each out along its own arrow, the arrows ARE the take-off's heading frame; their speeds, holds, snaps, resets and labels [90m(0.4232ms)[39m[39m
+[32m✔ the turn handle is not clamped: a long drag goes past 90°/100 m either way [90m(0.0682ms)[39m[39m
+[32m✔ the turn handle: a drag to the right is a right turn and to the left a left turn, whichever way the left of the road lies on screen [90m(0.5886ms)[39m[39m
+[32m✔ leaving a hold walks on a pixel at a time: no jump off the hold, for every kind [90m(1.5646ms)[39m[39m
+[32m✔ a long drag never runs out of screen: the hidden cursor is put back at the grab and the travel adds up [90m(8.3719ms)[39m[39m
+[32m✔ a drag with no native window (a browser) behaves as before: the cursor is never moved, the value follows the pointer [90m(0.5203ms)[39m[39m
+[32m✔ if the window refuses to move the cursor, the drag gives the travel back and follows the pointer as before (nothing counted twice) [90m(2.3891ms)[39m[39m
+[32m✔ D330 precise: the gesture is one constant, and with it one pixel of drag is exactly one step (0.01) for every handle kind, both ways, none skipped, no hold [90m(2.9966ms)[39m[39m
+[32m✔ D330 precise through the overlay: a Shift drag of n px along the handle changes turn, width, length and bank by exactly n x 0.01 [90m(1.4533ms)[39m[39m
+[32m✔ D330 wheel: one notch over a handle is exactly one step (0.01) on every handle kind, up adds and down subtracts; over nothing the camera has it; at a clamp it stays [90m(1.8016ms)[39m[39m
+[32m✔ D330 arrows: while a handle is held each arrow press is exactly one step on top of the drag; with nothing held they do nothing and are not taken [90m(0.4374ms)[39m[39m
+[32m✔ a long drag: with the cursor put back promptly and the next event at the grab, the travel adds up (the control the two below depart from) [90m(6.2216ms)[39m[39m
+[32m✔ a long drag whose warp is applied LATE (a busy window thread: the events before it arrive after WARP_WAIT_MS) keeps its travel and keeps warping [90m(6.7532ms)[39m[39m
+[32m✔ a long drag with a FAST hand (the first event after a warp is already 4 px from the grab) does not stall: the return is seen, not waited for [90m(8.9242ms)[39m[39m
+[32m✔ a warp the OS lost is asked for again after WARP_WAIT_MS, and the travel adds up [90m(7.6312ms)[39m[39m
+[32m✔ a window that refuses to move the cursor is tried WARP_MISSES times, never forever, and the travel is counted once [90m(5.9888ms)[39m[39m
+[32m✔ row 17 (D335): the gain: the kind's step over perPx at or below the slow speed, exactly 1 at or above the fast one, eased and never falling between [90m(1.6095ms)[39m[39m
+[32m✔ row 17b (D335): a SLOW drag of n pixels is n x 0.01 for every kind, whatever its own perPx, with no key [90m(3.9139ms)[39m[39m
+[32m✔ row 17c (D335): a FLICK covers the old range in the old distance: 100 px in a few events is the kind's own perPx a pixel [90m(0.5912ms)[39m[39m
+[32m✔ row 17d (D335): the rate eases with the hand: a medium drag is between the slow and the flick, and a faster hand never covers less [90m(6.9323ms)[39m[39m
+[32m✔ row 17e (D335): Shift is always 0.01 a pixel, however fast the hand [90m(1.6648ms)[39m[39m
+[32m✔ row 17f (D335): a bank drag of 400 px at the flick rate lands on 180.00 exactly [90m(0.8534ms)[39m[39m
+[32m✔ row 17g (D335): the speed is the hand's over a short window, so one quick event inside a slow scrub does not jump the rate [90m(0.8314ms)[39m[39m
+[32m✔ row 18 (D519): one row a zone: the hover glyph's kind and its mark at the hit's u (a pair, cup or width, at its own place) [90m(0.702ms)[39m[39m
+[32m✔ row 18b (D519): the dots stand at the thinned stations, one in each row (three, or five on a cup piece), on the road's own surface [90m(1.3967ms)[39m[39m
+[32m✔ row 18c (D519): a press within 12 px of a dot is left to the zone grab (no handle takes it) and dotAt names the dot; farther, none [90m(0.8127ms)[39m[39m
+[32m✔ W1: each look's window takes that look's own font and corner radius (read from its tokens, drawn) [90m(33.1049ms)[39m[39m
+[32m✔ W2: a page with no window tokens draws today's box: square, the veil, a 1.5 px edge in the mark's colour, bold 12px system-ui, the words at +6 px [90m(0.4447ms)[39m[39m
+[32m✔ W3: a look that sets no mark colours draws today's; a --mark-<field> token is what the field, its extra handles and its corner kind draw [90m(0.7789ms)[39m[39m
+[32m✔ W4: on every look, bank and turn are told apart (their colours at least 60 apart in RGB), and each window's words read on its fill (contrast 4.5:1 or better) [90m(13.2334ms)[39m[39m
+[32m✔ batches: the node matrix read column-major (as GL reads it) puts every vertex on the geometry's surface [90m(82.1676ms)[39m[39m
+[32m✔ batches: one colour per placed word, alternating along the track; a seam is darker than its piece [90m(55.4198ms)[39m[39m
+[32m✔ track model: append → extend, a word edit → sculpt, a removal → full, no change → same; each equals a full build [90m(384.3587ms)[39m[39m
+[32m✔ track model: a document that does not resolve keeps the last good track and marks it stale [90m(23.9615ms)[39m[39m
+[32m✔ track model through A's shell: placing words grows the preview by extend, and it equals a full build [90m(110.628ms)[39m[39m
+[32m✔ renderer: every array is uploaded once; drawing the same batches again uploads nothing [90m(47.4451ms)[39m[39m
+[32m✔ renderer: after a sculpt, the chunks before the edited piece upload nothing; stale buffers are deleted [90m(78.4064ms)[39m[39m
+[32m✔ renderer: merged chunks draw the triangles of the cells, in order, where the cells put them in world space, in a handful of draws [90m(425.2424ms)[39m[39m
+[32m✔ renderer: after a sculpt that moves later pieces, the drawn road equals a fresh renderer drawing of it (no chunk kept at its old place, even with the same cells) [90m(319.993ms)[39m[39m
+[32m✔ renderer: a chunk limit outside 1..65535 is refused [90m(0.698ms)[39m[39m
+[32m✔ renderer: a shader that does not compile throws with the compiler's log; a canvas without size is refused [90m(0.4288ms)[39m[39m
+[32m✔ keys: C switches, B is the build view, WASD/QE fly, arrows turn, anything else does nothing [90m(0.3326ms)[39m[39m
+[32m✔ the preview shader sources carry no environment (v1 is the track only): no sky, texture or sampler [90m(0.1484ms)[39m[39m
+[32m✔ keys: a key held when the window loses focus is let go, so the camera stops (the drift) [90m(8.2454ms)[39m[39m
+[32m✔ keys: already in free, a key held when the window loses focus is let go, so the camera stops (V11 of B: 4.5 m of drift at HEAD) [90m(2.7084ms)[39m[39m
+[32m✔ keys: Shift sprints (×4 the distance per frame) [90m(3.0041ms)[39m[39m
+[32m✔ mouse: a right drag looks from the build view (taking it over), a drag right turns right, and keys move at the same time [90m(1.8955ms)[39m[39m
+[32m✔ mouse: the scroll wheel zooms the build view [90m(1.3138ms)[39m[39m
+[32m✔ keys: W then D goes diagonally: both axes at once, the same 3 m a frame as a straight line (1.0×, not √2) [90m(3.9234ms)[39m[39m
+[32m✔ keys: D then W is the same diagonal (the order across axes does not matter) [90m(2.9355ms)[39m[39m
+[32m✔ keys: three axes at once (W, D and E) move along the sum W + D + up at 1.0× in METRES (D189: the world displacement is normalised, not the input) [90m(12.322ms)[39m[39m
+[32m✔ keys: D and E (right and up are perpendicular) go at 1.0× too: (D + up) / √2, 3 m a frame [90m(4.123ms)[39m[39m
+[32m✔ keys: releasing one key of a diagonal leaves a straight line on the other, and releasing both stops [90m(4.6087ms)[39m[39m
+[32m✔ keys: on one axis the NEWER key wins (w then s), and on its release the w takes over [90m(4.1579ms)[39m[39m
+[32m✔ keys: on one axis the NEWER key wins (s then w), and on its release the s takes over [90m(4.9786ms)[39m[39m
+[32m✔ keys: on one axis the NEWER key wins (d then a), and on its release the d takes over [90m(5.7514ms)[39m[39m
+[32m✔ keys: on one axis the NEWER key wins (a then d), and on its release the a takes over [90m(4.7626ms)[39m[39m
+[32m✔ keys: on one axis the NEWER key wins (e then q), and on its release the e takes over [90m(5.2147ms)[39m[39m
+[32m✔ keys: on one axis the NEWER key wins (q then e), and on its release the q takes over [90m(6.6718ms)[39m[39m
+[32m✔ keys: releasing the OLDER key of an axis leaves the newer moving [90m(3.3565ms)[39m[39m
+[32m✔ keys: an axis with both keys held still combines with another axis: W, S (newer) and D go along (D − W) / √2, and on S released (W + D) / √2 [90m(7.9904ms)[39m[39m
+[32m✔ keys: a held key that repeats (auto-repeat key-down) keeps its place: with W, S (newer) held a repeat of W does not make W the newer [90m(3.5725ms)[39m[39m
+[32m✔ keys: Shift multiplies the diagonal as it does a straight line: ×4 at the press, so 12 m a frame, not 12·√2 [90m(2.3193ms)[39m[39m
+[32m✔ keys: a blur lets go of a diagonal (both keys), so the camera stops [90m(1.9946ms)[39m[39m
+[32m✔ keys: the arrow (look) keys are not movement keys: they turn while the movement keys fly [90m(1.8459ms)[39m[39m
+[32m✔ P3: C or B pressed while a movement key is held leaves free mode and stays out of it [90m(2.2084ms)[39m[39m
+[32m✔ P3: a NEW movement key-down after C takes the view over again [90m(2.2268ms)[39m[39m
+[32m✔ P5: Shift+wheel is ×4 when the device reports the scroll as deltaX (deltaY 0), not only as deltaY [90m(2.2543ms)[39m[39m
+[32m✔ P2: a key that flies by its label but sits on another physical key (another layout) flies, and lets go by its own code [90m(1.4604ms)[39m[39m
+[32m✔ the sprint curve: ×4 at 0 s, ×20 from 2.5 s, smooth and rising between (1 s is 4 + 16·S(0.4)) [90m(0.2506ms)[39m[39m
+[32m✔ keys: Shift held ramps the speed: ×4 at the press, then along the curve, ×20 at 2.5 s (measured per frame) [90m(2.7233ms)[39m[39m
+[32m✔ keys: releasing Shift returns to ×1, and pressing it again starts at ×4 again [90m(2.3153ms)[39m[39m
+[32m✔ keys: a blur resets the ramp (the key-up never comes), and the next press starts at ×4 [90m(2.5665ms)[39m[39m
+[32m✔ focus: Enter in a text field or a number field lets go of it (and does not touch the camera) [90m(5.4093ms)[39m[39m
+[32m✔ focus: Esc in a field lets go of it, in every kind of field [90m(10.4694ms)[39m[39m
+[32m✔ focus: Enter in a text AREA is a new line, and is left alone [90m(1.3029ms)[39m[39m
+[32m✔ focus: Enter or Esc on the page (no field) does nothing to the camera [90m(1.1681ms)[39m[39m
+[32m✔ focus: a mouse-down on the canvas (either button, or the middle) takes focus off the active field [90m(4.2003ms)[39m[39m
+[32m✔ focus: a mouse-down with nothing focused (the page body, or none) is fine [90m(2.282ms)[39m[39m
+[32m✔ focus: a NUMBER field lets the camera keys through: W A S D Q E fly, the arrows turn [90m(9.8361ms)[39m[39m
+[32m✔ focus: Shift sprints while a number field has focus [90m(3.9621ms)[39m[39m
+[32m✔ focus: a number field still gets its digits (a digit is not the camera's key, and is not stopped) [90m(11.0104ms)[39m[39m
+[32m✔ focus: a TEXT field swallows every camera key: typing a name never moves the camera [90m(9.6092ms)[39m[39m
+[32m✔ the plain wheel is unchanged: a follow view changes distance, free mode dollies 4 m a notch, and the lens stays [90m(1.527ms)[39m[39m
+[32m✔ Ctrl+wheel is the LENS, in every view: the fov changes and the eye does not (in and out, stepwise, clamped to 10°–100°) [90m(13.6286ms)[39m[39m
+[32m✔ Ctrl+wheel: Shift makes it 4 notches, and a device that reports deltaX works too [90m(4.4309ms)[39m[39m
+[32m✔ a middle click resets the lens to 60° (and does not start a drag or change the view) [90m(1.0188ms)[39m[39m
+[32m✔ the HUD shows the fov once the lens has moved off 60°, and drops it on the reset [90m(1.2217ms)[39m[39m
+[32m✔ the pick still hits the station under the cursor after the lens changes (the pick reads the drawn pose, fov and all) [90m(8.2863ms)[39m[39m
+[32m✔ W1: W held and REPEATING, C pressed: W's next auto-repeats do not take the view back into free [90m(1.5873ms)[39m[39m
+[32m✔ W1: W held and REPEATING, B pressed: W's next auto-repeats do not take the view back into free [90m(1.0981ms)[39m[39m
+[32m✔ W2: a trackpad swipe SIDEWAYS (deltaX only, no Shift: 20 events of 2 px) does not zoom [90m(1.1333ms)[39m[39m
+[32m✔ W2: the same sideways swipe with Ctrl held does not move the LENS either (the lens shares the wheel line) [90m(1.5042ms)[39m[39m
+[32m✔ D195: with nothing placed and no ghost, a frame draws, looking at where the first piece will start [90m(0.8693ms)[39m[39m
+[32m✔ D195: with nothing placed, the wheel zooms on the next frame (not later, when a ghost appears) [90m(1.6092ms)[39m[39m
+[32m✔ D195: with nothing placed, W takes the view over and flies on the next frame [90m(0.4256ms)[39m[39m
+[32m✔ D195: with nothing placed, every camera mode draws (chase included, on the start alone) [90m(0.4535ms)[39m[39m
+[32m✔ D195: with no start in the document (the piece builder), the empty view looks from the origin along +z, level [90m(0.2575ms)[39m[39m
+[32m✔ D195: the empty track's head is the frame the first piece starts with (src/geom buildPath's first sample, no roll) [90m(0.4065ms)[39m[39m
+[32m✔ D195: once a ghost shows on the empty track, the camera follows the ghost's head, as before [90m(2.7203ms)[39m[39m
+[32m✔ D252: Space held flies UP like E (3 m a frame, world up), and its release stops it [90m(2.7909ms)[39m[39m
+[32m✔ D252: Left Ctrl ALONE flies DOWN like Q; Right Ctrl does not fly [90m(6.7022ms)[39m[39m
+[32m✔ D252: Ctrl+Z never moves the camera: the descent before Z is undone, in free mode and from the build view (the view is kept too) [90m(3.2685ms)[39m[39m
+[32m✔ D257: a SHORTCUT key held BEFORE Ctrl (Z) means Ctrl never flies on that press; Shift or W held first does not stop it, and Ctrl+Shift+Z still leaves the camera put [90m(2.1814ms)[39m[39m
+[32m✔ D252: Ctrl+wheel is still the LENS and the camera does not move; a mouse button down (a handle drag, Ctrl to snap) means no descent [90m(2.5992ms)[39m[39m
+[32m✔ D252: Space is TAKEN (preventDefault, down and up) so a focused button is never clicked; in a text field it types and the camera stays [90m(7.2722ms)[39m[39m
+[32m✔ D255: Left Ctrl descends on the FIRST frame, like Space; Ctrl+Z still puts the camera back where Ctrl found it, and the view it found [90m(2.5607ms)[39m[39m
+[32m✔ D255: a LEFT drag never turns the camera, in free mode either; a RIGHT drag still looks [90m(2.3829ms)[39m[39m
+[32m✔ a move key from the OVERHEAD view enters free with no frame throwing: pitch held at -89 degrees, facing where the overhead view had up the screen [90m(11.4999ms)[39m[39m
+[32m✔ a handle drag (pointerdown only, its mousedown suppressed) with Ctrl held past 200 ms to snap: the camera does not move; a press joining Ctrl undoes it [90m(3.2358ms)[39m[39m
+[32m✔ D257: Left Ctrl with W flies down AND forward, whichever went down first (the same move as W with Q) [90m(3.8897ms)[39m[39m
+[32m✔ D257: Left Ctrl with a RIGHT-button look drag flies down and looks [90m(1.4913ms)[39m[39m
+[32m✔ D257: Left Ctrl with Space nets ZERO on the up axis, whichever went down first [90m(2.14ms)[39m[39m
+[32m✔ D257: Ctrl+Z still leaves the camera where it started (and still undoes): flying with W, the descent is undone and the forward travel kept [90m(1.5404ms)[39m[39m
+[32m✔ the surface: asphalt or solid draws the sigil surface, an image draws the set, and no kind keeps the set [90m(1.4079ms)[39m[39m
+[32m✔ D409: the camera HUD names the plain surface as the road's, never "sigil", for asphalt and solid alike [90m(1.5366ms)[39m[39m
+[32m✔ row 1: the band is worked out once while nothing it reads changes, and again when the camera, the band or the track does [90m(2.3074ms)[39m[39m
+[32m✔ row 2: the reach's end marks sit at s0 − r and s0 + r, a tick across the road; past an open lap's end there is none, round a closed lap's start it wraps [90m(1.5552ms)[39m[39m
+[32m✔ row 3: Stretch's reach is the piece holding the station, from its first joint to its last [90m(0.3063ms)[39m[39m
+[32m✔ row 4: the brush glyph stands on the road at its station and is never hit, so a press on it is the tool's, not a handle's [90m(0.5282ms)[39m[39m
+[32m✔ row 5: one format for the road and the strip: the channel's name, a sign, two decimals, its unit; and the words for each way [90m(0.6006ms)[39m[39m
+[32m✔ row 6: in Sculpt the big overlay has four cells, the tool, the value under its channel's name, the radius and what moves [90m(0.2939ms)[39m[39m
+[32m✔ soundFor: a placed piece, an undo and a closed loop each name their sound; nothing else does [90m(1.1463ms)[39m[39m
+[32m✔ stepOf: the melody step follows the piece count, one step per piece at any pace, round the 64 [90m(0.7687ms)[39m[39m
+[32m✔ swellDb: a place rises from its floor at step 1 to its peak over steps 45 to 52 and eases back to the floor by step 64, gently, round the 64 [90m(0.939ms)[39m[39m
+[32m✔ the five melodies: 64 steps each of a bass, a chord of four and a melody note on top, each melody its own [90m(1.5044ms)[39m[39m
+[32m✔ a launch picks one of the five melodies from its random draw, hands it to the engine, saves nothing, and refuses a draw outside 0..1 [90m(2.9122ms)[39m[39m
+[32m✔ the tick melody is 128 steps (16 notes × 8 chords), in a playable range, and moves [90m(0.2982ms)[39m[39m
+[32m✔ tickPlan: a tick when a whole number is crossed or landed on, never for a move inside one, never twice on the same mark [90m(0.3112ms)[39m[39m
+[32m✔ tickPlan: length, cup, width and turn walk the melody forward as the value rises and back as it falls [90m(0.193ms)[39m[39m
+[32m✔ tickPlan: climb rises in pitch with its value, bank arpeggiates and wraps, neither moves the melody [90m(0.2802ms)[39m[39m
+[32m✔ tickPlan: every handle labelled climb pitches by its value, and every one labelled turn pans, the corner kinds as the rate ones [90m(10.6018ms)[39m[39m
+[32m✔ tickPlan: turn pans into the ear of the turn (the handle's + is left); width spreads the tick from mono at 1 m to full stereo at 50 m [90m(0.3287ms)[39m[39m
+[32m✔ the player: nothing before the first press; after it, place, undo and the loop close play their parts, at the piece count's step [90m(0.4374ms)[39m[39m
+[32m✔ the player: handle steps tick on whole numbers with the handle's own plan, and each handle keeps its own place in the melody [90m(0.7457ms)[39m[39m
+[32m✔ a fast drag: ticks come at least 35 ms apart, about 28 a second at most; the ones in between are dropped, never played late [90m(0.6407ms)[39m[39m
+[32m✔ mute and volume: remembered, clamped, reach the engine, and a bad volume is refused; muted, nothing plays [90m(0.5374ms)[39m[39m
+[32m✔ the default volume: nothing saved plays at 0.45; a saved volume, 0.6 included, is kept as saved; a saved value that is not a number falls back to 0.45 [90m(0.4135ms)[39m[39m
+[32m✔ a window with no audio still mounts and stays silent; an engine that throws is logged, not thrown [90m(0.4517ms)[39m[39m
+[32m✔ the engine builds its graph and every voice runs: ticks (plain, panned, spread), place and undo of every step, the loop close [90m(20.2122ms)[39m[39m
+[32m✔ each melody sets its own skin on <html data-theme>; an unknown or missing melody leaves SIGIL [90m(2.1213ms)[39m[39m
+[32m✔ the page sets the skin in its head, before the first paint, from the same number the player draws its melody from [90m(7.6184ms)[39m[39m
+[32m✔ D394: Settings ▸ Theme has seven choices: music follows the melody, each of the four is its own skin, Skyline Night is its own, sigil is none [90m(0.2531ms)[39m[39m
+[32m✔ D394: the head reads the saved theme: a fixed theme sets its own skin AND melody; music keeps the random pick; nothing saved and broken saved text start on SIGIL; sigil plays its own melody under SIGIL [90m(45.3647ms)[39m[39m
+[32m✔ D405: Skyline Night is a sixth look on Skyline's melody: its own skin, chosen by name or by the random pick, kept by the boot [90m(12.6763ms)[39m[39m
+[32m✔ the reader understands every colour form a skin may write [90m(2.0625ms)[39m[39m
+[32m✔ the reader falls back to today's literal where the page has no such token or cannot read it, and says so once per token [90m(1.0464ms)[39m[39m
+[32m✔ the reader reads again when data-theme changes, and tells whoever listens [90m(0.9495ms)[39m[39m
+[32m✔ SIGIL's tokens are today's literals, so SIGIL draws exactly as before [90m(6.9662ms)[39m[39m
+[32m✔ SIGIL's 3D frame is the same, call for call, with its tokens applied; a skin's tokens change it [90m(5.0162ms)[39m[39m
+[32m✔ a skin is styling only: no theme file sets a property that moves or sizes a box, and each skin the page links is a look's [90m(11.3285ms)[39m[39m
+[32m✔ the canvas layers and overlays name no chrome colour of their own: they read the tokens (the meaning colours stay literal) [90m(108.8302ms)[39m[39m
+[34mℹ tests 351[39m
+[34mℹ suites 0[39m
+[34mℹ pass 349[39m
+[34mℹ fail 1[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 1[39m
+[34mℹ duration_ms 46306.7774[39m
+
+[31m✖ failing tests:[39m
+
+test at app\test\core-extra-bank-drag-cost.test.js:94:1
+[31m✖ D642: dragging the extra bank back toward level on his p2 (a moving first ramp), the first time, costs a move within 2 × the same drag with the bank early (p95) [90m(2749.1465ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: the rolling drag's p95 is 17.7 ms a move, the early drag's 7.1 ms: 2.49 ×, over 2 ×
+      at TestContext.<anonymous> [90m(C:\Consonance\c-l242-tip\[39mapp\test\core-extra-bank-drag-cost.test.js:101:10[90m)[39m
+  [90m    at async Test.run (node:internal/test_runner/test:1332:7)[39m
+  [90m    at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at app\test\core-extra-bank-drag-cost.test.js:111:1
+[33m⚠ D642: dragging the extra bank on past what fits, into the hold, the first time, costs a move within 2 × the same drag with the bank early (p95) [90m(2006.1427ms)[39m # the approach to the hold builds one probe road a move (the core's probe cost, pane B): 2.8-3.1 × measured, the panel already at one question a move[39m
+  AssertionError [ERR_ASSERTION]: the rolling drag went past −88.45 and is held short of where the pointer went (-360°)
+      at TestContext.<anonymous> [90m(C:\Consonance\c-l242-tip\[39mapp\test\core-extra-bank-drag-cost.test.js:117:10[90m)[39m
+  [90m    at async Test.run (node:internal/test_runner/test:1332:7)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }

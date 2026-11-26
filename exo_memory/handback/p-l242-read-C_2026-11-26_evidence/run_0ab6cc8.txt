@@ -1,0 +1,30 @@
+N1: 1560 calls compared, 4 words
+N2: 197 + 197 calls compared; readout words: ["bank 0.00° · double-click: 0"]
+T1 sigil: 600 12px Bahnschrift, "DIN Alternate", "Segoe UI", system-ui, sans-serif r2 text #eef1f6 | aqua: 600 12px "Segoe UI Variable Text", "Segoe UI", system-ui, sans-serif r10 text #f2fdff | skyline: 600 12px "Segoe UI Variable Text", "Segoe UI", system-ui, sans-serif r12 text #0b2747 | sigil: 600 12px Bahnschrift, "DIN Alternate", "Segoe UI", system-ui, sans-serif r2 text #eef1f6
+T2 sigil: 600 12px Bahnschrift, "DIN Alternate", "Segoe UI", system-ui, sans-serif r2 | aqua: 600 12px "Segoe UI Variable Text", "Segoe UI", system-ui, sans-serif r10 | glass: 600 12px "Segoe UI Variable Text", "Segoe UI", system-ui, sans-serif r0 | skyline-night: 600 12px "Segoe UI Variable Text", "Segoe UI", system-ui, sans-serif r11
+T3 --ink per look: {"sigil":"#0b0d11","aqua":"#011d26","glass":"#04101a","aurora":"#070920","skyline":"#0b2747","skyline-night":"#06122a"}; distinct 6 of 6
+T3 a look differing only in its window tokens: NOT redrawn (the old look stays until the hover or the model moves)
+E1 900x600: box 218.5,4.0,551.0,42.0 r 12, 2 lines
+E1 420x600: the box [4,4,551,42] runs off the stage, as the base's does (a label wider than the stage; placeLabel's, not L242's)
+E1 420x600: box 4.0,4.0,551.0,42.0 r 12, 2 lines
+E1 300x260: the box [4,4,551,42] runs off the stage, as the base's does (a label wider than the stage; placeLabel's, not L242's)
+E1 300x260: box 4.0,4.0,551.0,42.0 r 12, 2 lines
+L1 sigil 1+1=2: drawn | aqua 1.5+1=2.5: drawn | glass 1+1=2: drawn | aurora 1.25+1=2.25: drawn | skyline 1.5+1=2.5: drawn | skyline-night 1.5+1=2.5: drawn
+N3: words [["bank more ↑ / ↓ bank less"],["width 31.00 m"],["lift ↑ / ↓ sink · Alt ↔","Alt: sideways"]]
+[32m✔ N1: no tokens: the mark layer draws the same calls with the same effective state at 13faa9d and 0ab6cc8 (every field at rest, a hovered label, a lit two-line label, an edge mark) [90m(12.4845ms)[39m[39m
+[32m✔ N2: no tokens: a handle's readout (hovered bank, then hovered width) draws the same calls with the same effective state at 13faa9d and 0ab6cc8 [90m(4.2848ms)[39m[39m
+[32m✔ T1: a mark's label shown (hovered) while the theme goes SIGIL -> Aqua -> Skyline -> SIGIL: each next draw wears the new look, nothing of the old [90m(14.2957ms)[39m[39m
+[32m✔ T2: a handle's readout shown (hovered) while the theme changes: the next frame redraws it in the new look (handles.js draws only when its frame key changes) [90m(9.9919ms)[39m[39m
+[32m✔ T3 (a record): the frame key sees a theme change only through --ink; two looks with one --ink would leave a shown readout in the old look until something else changes [90m(10.6908ms)[39m[39m
+[32m✔ E1: Skyline (radius 12): a long two-line label on a mark near the right and top edges stays on the stage, its words are measured in the font they are drawn in, and the corner leaves the words inside [90m(7.3051ms)[39m[39m
+[32m✔ L1: a lit mark's window edge is the look's edge + 1 on every look (A: 2.5 lit with no tokens) [90m(29.1529ms)[39m[39m
+[32m✔ N0 (control for N1 and N2): the comparator sees a difference when there is one: SIGIL's tokens on the tip against the base's no-token box [90m(5.2538ms)[39m[39m
+[32m✔ N3 (A's list: the brush box, Sculpt, not pictured): no tokens: the brush glyph and its box draw the same at 13faa9d and 0ab6cc8 (hover words, then a drag's value, for two brush kinds) [90m(1.7746ms)[39m[39m
+[34mℹ tests 9[39m
+[34mℹ suites 0[39m
+[34mℹ pass 9[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 179.3148[39m

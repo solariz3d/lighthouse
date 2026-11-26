@@ -1,0 +1,3 @@
+# node d642_summary.js d642_abba_12.txt
+base: red 5 of 12; median ratio 1.930; median rolling p95 8.40 ms; median early p95 4.25 ms; max ratio 2.58
+tip: red 6 of 12; median ratio 1.985; median rolling p95 8.45 ms; median early p95 4.20 ms; max ratio 2.2

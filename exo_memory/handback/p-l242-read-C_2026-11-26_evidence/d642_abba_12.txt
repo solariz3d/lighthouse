@@ -1,0 +1,25 @@
+round 1 base FAIL exit=1 4497ms rolling (first drag) p95 8.7 ms a move, early p95 4.2 ms: 2.10 ×; both ended at -12.63°[39m
+round 1 tip FAIL exit=1 4306ms rolling (first drag) p95 8.9 ms a move, early p95 4.0 ms: 2.20 ×; both ended at -12.63°[39m
+round 2 tip PASS exit=0 4347ms rolling (first drag) p95 9.1 ms a move, early p95 4.6 ms: 1.97 ×; both ended at -12.63°[39m
+round 2 base FAIL exit=1 4386ms rolling (first drag) p95 8.5 ms a move, early p95 4.2 ms: 2.04 ×; both ended at -12.63°[39m
+round 3 base PASS exit=0 4268ms rolling (first drag) p95 8.1 ms a move, early p95 4.8 ms: 1.69 ×; both ended at -12.63°[39m
+round 3 tip PASS exit=0 4205ms rolling (first drag) p95 7.7 ms a move, early p95 4.5 ms: 1.74 ×; both ended at -12.63°[39m
+round 4 tip PASS exit=0 4360ms rolling (first drag) p95 8.2 ms a move, early p95 4.3 ms: 1.92 ×; both ended at -12.63°[39m
+round 4 base PASS exit=0 4267ms rolling (first drag) p95 8.8 ms a move, early p95 4.5 ms: 1.93 ×; both ended at -12.63°[39m
+round 5 base PASS exit=0 4706ms rolling (first drag) p95 8.1 ms a move, early p95 4.2 ms: 1.93 ×; both ended at -12.63°[39m
+round 5 tip FAIL exit=1 4404ms rolling (first drag) p95 8.7 ms a move, early p95 3.9 ms: 2.20 ×; both ended at -12.63°[39m
+round 6 tip FAIL exit=1 4459ms rolling (first drag) p95 8.7 ms a move, early p95 4.3 ms: 2.02 ×; both ended at -12.63°[39m
+round 6 base PASS exit=0 4328ms rolling (first drag) p95 8.3 ms a move, early p95 4.6 ms: 1.80 ×; both ended at -12.63°[39m
+round 7 base FAIL exit=1 4418ms rolling (first drag) p95 8.8 ms a move, early p95 4.3 ms: 2.06 ×; both ended at -12.63°[39m
+round 7 tip FAIL exit=1 4360ms rolling (first drag) p95 8.9 ms a move, early p95 4.5 ms: 2.00 ×; both ended at -12.63°[39m
+round 8 tip PASS exit=0 4305ms rolling (first drag) p95 7.8 ms a move, early p95 4.1 ms: 1.89 ×; both ended at -12.63°[39m
+round 8 base FAIL exit=1 4387ms rolling (first drag) p95 10.6 ms a move, early p95 4.1 ms: 2.58 ×; both ended at -12.63°[39m
+round 9 base PASS exit=0 4380ms rolling (first drag) p95 7.8 ms a move, early p95 4.6 ms: 1.70 ×; both ended at -12.63°[39m
+round 9 tip FAIL exit=1 4393ms rolling (first drag) p95 8.5 ms a move, early p95 4.2 ms: 2.03 ×; both ended at -12.63°[39m
+round 10 tip PASS exit=0 4392ms rolling (first drag) p95 8.1 ms a move, early p95 4.2 ms: 1.92 ×; both ended at -12.63°[39m
+round 10 base PASS exit=0 4489ms rolling (first drag) p95 7.7 ms a move, early p95 4.8 ms: 1.59 ×; both ended at -12.63°[39m
+round 11 base FAIL exit=1 4340ms rolling (first drag) p95 8.6 ms a move, early p95 4.2 ms: 2.03 ×; both ended at -12.63°[39m
+round 11 tip FAIL exit=1 4294ms rolling (first drag) p95 8.4 ms a move, early p95 4.0 ms: 2.10 ×; both ended at -12.63°[39m
+round 12 tip PASS exit=0 4364ms rolling (first drag) p95 8.0 ms a move, early p95 4.2 ms: 1.90 ×; both ended at -12.63°[39m
+round 12 base PASS exit=0 4467ms rolling (first drag) p95 7.6 ms a move, early p95 4.2 ms: 1.81 ×; both ended at -12.63°[39m
+TALLY base 5 red of 12; tip 6 red of 12
