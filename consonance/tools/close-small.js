@@ -51,7 +51,15 @@ function lastRequest(jsonl) {
   if (last < 0) return null;
   const r = reqId(rows[last]);
   const u = (rows[last].message && rows[last].message.usage) || {};
-  const context = ['input_tokens', 'cache_read_input_tokens', 'cache_creation_input_tokens'].reduce((n, k) => n + (Number(u[k]) || 0), 0);
+  let context = ['input_tokens', 'cache_read_input_tokens', 'cache_creation_input_tokens'].reduce((n, k) => n + (Number(u[k]) || 0), 0);
+  // A compaction recorded AFTER the last call (his catch, 2026-11-26: seats just cut were listed again). The seat has made no call
+  // since, so the usage above is the size from before the cut; the boundary's own postTokens is what the cut left. A boundary with
+  // no size reads as unknown (null), never as the old size. main.rs last_request does not do this yet.
+  for (let i = rows.length - 1; i > last; i--) {
+    if (rows[i].type !== 'system' || rows[i].subtype !== 'compact_boundary') continue;
+    context = Number((rows[i].compactMetadata || {}).postTokens) || 0;
+    break;
+  }
   for (let i = last - 1; i >= 0; i--) {
     if (reqId(rows[i]) === r) continue;
     const t = Date.parse(rows[i].timestamp);

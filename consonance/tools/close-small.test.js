@@ -69,6 +69,37 @@ test("a subagent's own requests (sidechain) are not the seat's last call", () =>
   ].join('\n');
   assert.deepStrictEqual(C.lastRequest(jsonl), { startedMs: Date.parse('2026-11-21T06:00:00.000Z'), context: 500001 });
 });
+// His catch, 2026-11-26 07:42 (L): "compacted the warm seats, but now it says they still need to be compacted". A seat cut by
+// /compact has made no call since, so its last reply still carries the size from before the cut; the transcript's own
+// compact_boundary after that reply holds the size the cut left (the chair's on L: reply 406,849, then postTokens 17,380).
+const boundary = (ts, meta) => row({ type: 'system', subtype: 'compact_boundary', timestamp: ts, compactMetadata: meta });
+test('a compaction recorded after the last call gives the context it left, so a seat just cut is not listed again', () => {
+  const jsonl = [
+    row({ type: 'user', timestamp: '2026-11-26T13:39:00.000Z' }),
+    req('r1', '2026-11-26T13:39:52.000Z', { input_tokens: 5, cache_read_input_tokens: 406844 }),
+    boundary('2026-11-26T13:41:16.000Z', { trigger: 'manual', preTokens: 407027, postTokens: 17380 }),
+    row({ type: 'user', isCompactSummary: true, timestamp: '2026-11-26T13:41:15.000Z' }),
+  ].join('\n');
+  const last = C.lastRequest(jsonl);
+  assert.deepStrictEqual(last, { startedMs: Date.parse('2026-11-26T13:39:00.000Z'), context: 17380 });
+  assert.strictEqual(C.decide({ name: 'main', transcript: 'x.jsonl', last }, { nowMs: Date.parse('2026-11-26T13:43:00.000Z') }).action, 'skip');
+});
+test('a compaction BEFORE the last call changes nothing: the call after it carries the real size', () => {
+  const jsonl = [
+    boundary('2026-11-26T13:00:00.000Z', { trigger: 'manual', preTokens: 407027, postTokens: 17380 }),
+    row({ type: 'user', timestamp: '2026-11-26T13:10:00.000Z' }),
+    req('r1', '2026-11-26T13:10:09.000Z', { input_tokens: 5, cache_read_input_tokens: 350000 }),
+  ].join('\n');
+  assert.strictEqual(C.lastRequest(jsonl).context, 350005);
+});
+test('a compaction after the last call that records no size reads as unknown, never as the size from before it', () => {
+  const jsonl = [
+    row({ type: 'user', timestamp: '2026-11-26T13:39:00.000Z' }),
+    req('r1', '2026-11-26T13:39:52.000Z', { input_tokens: 5, cache_read_input_tokens: 406844 }),
+    boundary('2026-11-26T13:41:16.000Z', { trigger: 'manual' }),
+  ].join('\n');
+  assert.strictEqual(C.lastRequest(jsonl).context, null);
+});
 test('a torn last line (a transcript being written) is skipped, never a crash', () => {
   const jsonl = [row({ type: 'user', timestamp: '2026-11-21T06:00:00.000Z' }),
     req('r1', '2026-11-21T06:00:05.000Z', { input_tokens: 7 }), '{"type":"assist'].join('\n');
