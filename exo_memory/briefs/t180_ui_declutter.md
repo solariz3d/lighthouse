@@ -91,3 +91,10 @@
   the ring together. The blur on label windows is dispatched (L251, pane C). P reads L254, L251 and L255.
   Open with him: L249 carries the per-theme handle colours of L244, and the record has no word from him on those pictures.
 - 06:13 (L), his words, on whether to keep the per-theme handle colours: "what do u think". The librarian answered keep them: the white length mark of today sits 40 RGB from the white road edges in SIGIL (`handback/p-l244-theme-colours-A_2026-11-26.md`, `palette_check.txt`), the W5 row holds every mark 60 or more off the road edges, grid, fog and sky in six looks, and P read c9fe4f1 clean. Each kind keeps its hue family across looks. Not yet his decision.
+- 06:3x (L): the left column is built: builder `l254-left-column` 2d7ab5f on 40e931e (local), `handback/p-l254-left-column-A_2026-11-26.md`
+  (the ledger calls this lap L251). Flush: its box is 0, 44, 248, 860 where it was 12, 56, 260, 644.5; it now runs to the
+  window bottom. Clears 0.4 s after the pointer leaves, fades 0.2 s. New page rows 11 of 11 (8 of 9 red at the base); mutants
+  14 of 15 caught, the 15th equivalent. Page for him: https://claude.ai/artifact/AwA81VtL7dUbWbhs26trCU (15 pictures; the librarian opened two).
+  **Open with him:** it comes back only at a 24 px strip on the left edge of the window, not when the pointer is anywhere over
+  where it sat. That came from the packet written by the librarian ("a narrow strip"), and departs from his "comes back when
+  you put your mouse over it". P reads next.
