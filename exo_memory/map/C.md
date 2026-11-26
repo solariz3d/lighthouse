@@ -2050,3 +2050,7 @@ Claim (could be wrong): his 08:19 crash was Export to Assetto Corsa: `v8-oom-sta
 ## 2026-11-26 — reader-downray read: E's dab271b re-reads a station under a cupped road right when the road is level (4 of 4 widths), but on banked road its fixed ray window (tools/piecewise.cjs:123, 8 m up, 3 m down) caps the band near 11/sin(bank) m and moves the centre 2.1-3.4 m uphill; the landing guard fires on 5 of 38 local reads, all real; NOT CLEAN
 - Evidence: `exo_memory/handback/p-reader-downray-read-C_2026-11-26_evidence/synth.js`, `synth_tip.txt`, `synth_base.txt`, `mutants.txt` (applied 6 / caught 4 / NOT APPLIED 0), `window_cap.txt`.
 - Hand-back: `exo_memory/handback/p-reader-downray-read-C_2026-11-26.md`
+
+## 2026-11-26 — reader-downray re-read: E's a8e54b7 makes the down-ray band follow banked road (the height window now moves with the band), so 48 of my 60 synthetic cases pass and the misses are the named limits (overhang past vertical, the 58° `above` reach); the 4 new rows go red at dab271b on width and M5's equivalent is caught by the new edge row; CLEAN, one comment nit ("within its gap" should be "at least its gap", my own first-read wording)
+- Evidence: `exo_memory/handback/p-reader-downray-read-C_2026-11-26_evidence/reread/tests_new_rows_at_dab271b.txt`, `mutants2.txt` (applied 8 / caught 7 / NOT APPLIED 0), `synth_all_tip.txt`.
+- Hand-back: `exo_memory/handback/p-reader-downray-read-C_2026-11-26.md` (section "Re-read")

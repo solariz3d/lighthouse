@@ -100,3 +100,73 @@ A cupped road (floor + 4 m sides rising to 30° or 50°), widths 12, 27, 38 and 
 ## Map line
 
 `exo_memory/map/C.md`, 2026-11-26, reader-downray read.
+
+---
+
+# Re-read: E's repair, `reader-downray-e` dab271b..a8e54b7 (pane C, 2026-11-26)
+
+Packet: the chair's D677 RE-READ of 21:51:00Z. Tier CHECK IT, no edits. Only the change since dab271b: one commit, `a8e54b7`, 3 files
+(`tools/piecewise.cjs` +14/−5, `test/piecewise.test.js` +29, `CHANGELOG.md` +3; `git diff --stat dab271b a8e54b7`), read in my worktree
+`G:\consonance-scratch\t180-downray-c`, now detached at a8e54b7 and clean. I did my own pass first, then read E's account
+(`exo_memory/handback/p-reader-downray-repair-E_2026-11-26.md`, at 19476fbb); it agrees with every number below. Evidence: `evidence/reread/`.
+
+## Verdict: CLEAN, with one wording nit in a comment (mine, carried over)
+
+The finding of my first read is fixed. The rays' height window now moves with the band (`layers(u, ref)`, the window centred on the band's
+last point), and the step across halves down to du/64 at steep sides and edges. Every banked case from my first read passes except the ones
+past vertical, which the code and the CHANGELOG now name as a limit.
+
+## 1. My cases A as rows, red first
+
+- checked: E's four new banked rows (`test/piecewise.test.js:174-186` at a8e54b7; the edge row at :187) are 20°/27 m and 20°/49 m with 50° sides, 40°/38 m with
+  50° sides, and 52°/49 m with 30° sides. Against dab271b's `piecewise.cjs` (swapped in, restored by `git checkout`) all 4 fail, **on width**:
+  13.40, 16.64, 26.19 and 31.93 m, the four numbers in my first read's table (`reread/tests_new_rows_at_dab271b.txt`). At a8e54b7 the file is
+  **20 of 20** (`reread/tests_at_tip.txt`).
+- Each row asserts what the reader returns: every station re-read, width within 0.5 m of W, centre within 0.3 m of the top's centre.
+- The 52° row uses 30° sides, not 50°. That is right: at 52° with 50° sides the upper side turns past vertical (102°), which rays from
+  above cannot see (below).
+
+## 2. The row that kills M5
+
+- checked, eight one-line mutants (`reread/mutants2.sh` → `reread/mutants2.txt`): **applied 8 / caught 7 / NOT APPLIED 0.**
+  - My first read's M5 line was rewritten, so I applied its equivalent on the new line: `if (!next || next.d > stepMax) { h /= 2; continue; }`
+    → `if (!next) { h /= 2; continue; }` (M5b). **Caught**, by the new row "the band stops at its edge where the next layer is a step of more
+    than 1 m": a lower road 2.5 m down beside the edge, which the band would otherwise walk onto.
+  - Two mutants that undo the repair, both caught: M7, the window fixed at the station again (3 banked rows), and M8, no step refinement
+    (3 banked rows).
+  - M1-M4 caught as before. **M6 still survives** (the band always taken over the walk), minor as in the first read.
+
+## 3. The comment at the guard
+
+- checked: `tools/piecewise.cjs:164-166` (at a8e54b7) says drivenM (20 m) must stay under the reader's shortest jump, that the reader looks for
+  landings from 25 m out only, and "Raise one only with the other." It anchors on the code text (`for (let dist = 25; …`), not a line
+  number. That is what the chair asked for.
+- **Nit, and it is my wording:** the comment says "a landing is always within its gap of the take-off station". It is the other way round.
+  The reader's search (skill `scripts/read_track.cjs:160-162`) steps `dist` along the heading from 25 m and adds a sideways offset up to 16 m
+  and a drop down to 100 m, so a landing lies **at least** its gap from the take-off, never within it. The conclusion stands: a 20 m radius
+  can never reach the take-off itself, and a radius at or past 25 m would end every straight, level jump of 25 m. E took the phrase from my
+  first read (§3B, "the landing is always within the gap's length of the take-off station itself"), which was exact only for my
+  straight-on synthetic case. A one-word fix ("within" → "at least") for whoever lands it; it changes no behaviour.
+
+## 4. My own probes again
+
+- checked, `reread/synth_all_tip.txt` (my `synth.js`, made to print every case): **A: 48 of 60 cases pass** (30 at dab271b, 20 at ceb21f5).
+  - Every banked case at 20° and 40°, and at 52° with 30° sides, at widths 12, 27, 38 and 49 m: width 0.01-0.06 m short, centre 0.05-0.17 m
+    off (bars 0.5 and 0.3 m).
+  - 4 misses, at 52° with 50° sides (the overhang): 10.94 of 12, 25.94 of 27, 36.94 of 38, 47.95 of 49. Checked by arithmetic: the upper side's
+    slope is 52° + 12.5°/m along its 4 m arc, so it passes vertical 3.04 m along and 0.96 m of it cannot be seen from above. The rest of the
+    1.05-1.06 m shortfall is the edge loss the passing cases show. Centre 0.72 m off (0.32 m at 49 m). inferred: the uphill side's lost
+    arc moves the centre, but half the shortfall is 0.53 m, so 0.72 m is not fully explained. Named in the CHANGELOG and the comment as a limit.
+    At dab271b the same cases read 13.40 m.
+  - 8 misses at 58°, unchanged from base and from my first read (the `above` = 2.5 m limit, `piecewise.cjs:127` then, now the `here()` line).
+  - A2 (a second road level with the cup's rim): 26.99 of 27, not taken.
+- B, the guard, unchanged: its code did not change (only the comment). B1 (12 m jump) and B2 (new deck 12 m over driven road) still fire;
+  both stay latent with today's reader, as in the first read. B1b and B3 kept, as wanted.
+
+## Corrections (mine)
+
+- **My first read cited the reader's landing search as `scripts/read_track.cjs:157`.** No copy on this machine has it there (checked:
+  `grep -n "for (let dist = 25;"` over every `read_track.cjs` under the user folder and G:, 90 copies: 153, 159 or 160, none 157).
+  The skill's copy has it at :160. E caught it first and inferred I had read another machine's copy; it was simply a wrong number. The
+  code text is the anchor.
+- The "within its gap" wording in §3 above is my first read's, now carried into a comment.
