@@ -2041,3 +2041,7 @@ Claim (could be wrong): his 08:19 crash was Export to Assetto Corsa: `v8-oom-sta
 ## 2026-11-26 — [T2] research lap, HELD at section 17 of 61 for his restart (D677): the builder's core laid every [T2] section tried so far within the registered tolerances once the rates were solved (sections 1, 2, 4 made, 59 just outside on width and direction); resume by re-running pass 2 from the local notes, then the table and hand-back
 - Evidence (local, uncommitted, holds track data): `G:\consonance-scratch\c-t2\RESUME.md`, `TOLERANCES.md` (registered 18:56:26Z before any measure), `pass2.txt`.
 - Hand-back: `exo_memory/handback/p-unmakeable-T2-C_2026-11-26.md` (not yet written)
+
+## 2026-11-26 — [T2] unmakeable: every one of the 61 sections is made by hand-typed corners when laid alone (36,088 m; the simplest route 50 m to 5 m, 4,420 pieces; none needed solved rates or steering), and chained by hand at 5 m, 5 of 7 stretches are made; but the whole lap cannot be laid as one document, because the read's own banked passes over itself sit closer than the builder's 3.1 m clearance (refused at section 20 by 4 routes), and 16 sections have an off-centre floor no panel field sends
+- Evidence (local, uncommitted, holds track data): `G:\consonance-scratch\c-t2\table_pass7.md`, `chaintable.md`, `chain_lap10_hand_apron0.txt`, `passread.js`, `TOLERANCES.md` (6 dated amendments).
+- Hand-back: `exo_memory/handback/p-unmakeable-T2-C_2026-11-26.md`
