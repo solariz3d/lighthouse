@@ -36,3 +36,4 @@
 - The themes' own panels have blur (`backdrop-filter`), and skyline has a `--glow`. The handle colours are fixed hex
   values in `handles.js:49-58` (width #ff5a5a, bank #4d86ff, cup #3ddc6e, turn #b968ff), the same in every theme.
 - 01:0x: packet `loop/packet_t180_themed_marks_A_2026-11-26.md` (L242), to go after C's read of L241.
+- 01:2x (L): L242 pictures sent (`handback/p-l242-themed-marks-A_2026-11-26_evidence/pics/`). Open with him: per-theme mark colours, and whether glass needs real blur (that would mean HTML windows).
