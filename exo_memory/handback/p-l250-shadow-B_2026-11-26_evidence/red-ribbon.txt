@@ -1,0 +1,19 @@
+ℹ fail 3
+ℹ pass 12
+ℹ tests 15
+✔ L250: an open line draws open: no span and no edge joins its last point to its first; a lap whose ends are 2 spacings apart is closed (3.1251ms)
+✔ a known circle gives its length and its width (5.0491ms)
+✔ a line with a grid is refused by readAiLine and read by readAiShape (7.3115ms)
+✔ a long line is split into batches whose indices fit Uint16, covering every span once (4.638ms)
+✔ a nudge moves and turns it, and never scales it (2.0262ms)
+✔ a stored normal leans the road even with no camber (2.944ms)
+✔ an open line is not closed, and its length has no closing span (2.0139ms)
+✔ placed, the reference starts at the anchor, faces its way, and keeps its scale (1.9745ms)
+✔ refuses what it cannot read, by name (0.4469ms)
+✔ sideLeft goes to the left of the way the line runs, sideRight to the right (3.6884ms)
+✔ with no normal and no camber the road is flat (2.1084ms)
+✔ with no stored normal the camber leans the road: a + camber rises to the right (3.8056ms)
+✖ L250: a layout's stated length is read in metres, and a line more than 5 % off it is said so (0.1291ms)
+✖ L250: sameLine tells the same line, the same points with other widths, and another line apart (1.0876ms)
+✖ L250: the two kinds of line that do not read on L are refused in words, never drawn in part (0.328ms)
+✖ failing tests:

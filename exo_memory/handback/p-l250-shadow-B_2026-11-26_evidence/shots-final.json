@@ -1,0 +1,161 @@
+{
+ "placed": true,
+ "gpu": {
+  "canvases": 8,
+  "found": true,
+  "webgl2": true,
+  "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5070 Ti Laptop GPU (0x00002F58) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+ },
+ "results": [
+  {
+   "skin": "sigil",
+   "mode": "line",
+   "pickMs": 8.7,
+   "state": {
+    "open": true,
+    "layouts": 2,
+    "mode": "line",
+    "picked": "reference track 1\u0000",
+    "kind": "line",
+    "triangles": null,
+    "shown": true,
+    "showOn": true,
+    "nudge": {
+     "dx": 0,
+     "dz": 0,
+     "dy": 0,
+     "yawDeg": 0
+    },
+    "timing": {
+     "readMs": 7.800000071525574,
+     "buildMs": 0
+    },
+    "error": null,
+    "notes": [],
+    "refused": 0,
+    "readout": "1,720 m along its line · 12.1 m wide (10 to 14.5) · read 8 ms, built 0 ms"
+   },
+   "frameMsShown": {
+    "median": 0.1,
+    "p90": 0.2
+   },
+   "frameMsHidden": {
+    "median": 0,
+    "p90": 0.2
+   }
+  },
+  {
+   "skin": "sigil",
+   "mode": "road",
+   "pickMs": 32.5,
+   "state": {
+    "open": true,
+    "layouts": 2,
+    "mode": "road",
+    "picked": "reference track 1\u0000",
+    "kind": "road",
+    "triangles": 152928,
+    "shown": true,
+    "showOn": true,
+    "nudge": {
+     "dx": 0,
+     "dz": 0,
+     "dy": 0,
+     "yawDeg": 0
+    },
+    "timing": {
+     "readMs": 17.899999976158142,
+     "buildMs": 14.100000023841858
+    },
+    "error": null,
+    "notes": [],
+    "refused": 0,
+    "readout": "152,928 triangles of road from its kn5, placed by its 1,720 m AI line · read 18 ms, built 14 ms"
+   },
+   "frameMsShown": {
+    "median": 0.1,
+    "p90": 0.2
+   },
+   "frameMsHidden": {
+    "median": 0.1,
+    "p90": 0.2
+   }
+  },
+  {
+   "skin": "skyline",
+   "mode": "line",
+   "pickMs": 5.7,
+   "state": {
+    "open": true,
+    "layouts": 2,
+    "mode": "line",
+    "picked": "reference track 1\u0000",
+    "kind": "line",
+    "triangles": null,
+    "shown": true,
+    "showOn": true,
+    "nudge": {
+     "dx": 0,
+     "dz": 0,
+     "dy": 0,
+     "yawDeg": 0
+    },
+    "timing": {
+     "readMs": 5.299999952316284,
+     "buildMs": 0
+    },
+    "error": null,
+    "notes": [],
+    "refused": 0,
+    "readout": "1,720 m along its line · 12.1 m wide (10 to 14.5) · read 5 ms, built 0 ms"
+   },
+   "frameMsShown": {
+    "median": 0.1,
+    "p90": 0.2
+   },
+   "frameMsHidden": {
+    "median": 0.1,
+    "p90": 0.2
+   }
+  },
+  {
+   "skin": "skyline",
+   "mode": "road",
+   "pickMs": 22,
+   "state": {
+    "open": true,
+    "layouts": 2,
+    "mode": "road",
+    "picked": "reference track 1\u0000",
+    "kind": "road",
+    "triangles": 152928,
+    "shown": true,
+    "showOn": true,
+    "nudge": {
+     "dx": 0,
+     "dz": 0,
+     "dy": 0,
+     "yawDeg": 0
+    },
+    "timing": {
+     "readMs": 14.900000095367432,
+     "buildMs": 6.699999928474426
+    },
+    "error": null,
+    "notes": [],
+    "refused": 0,
+    "readout": "152,928 triangles of road from its kn5, placed by its 1,720 m AI line · read 15 ms, built 7 ms"
+   },
+   "frameMsShown": {
+    "median": 0.1,
+    "p90": 0.2
+   },
+   "frameMsHidden": {
+    "median": 0,
+    "p90": 0.1
+   }
+  }
+ ],
+ "afterClear": null,
+ "pageErrors": []
+}

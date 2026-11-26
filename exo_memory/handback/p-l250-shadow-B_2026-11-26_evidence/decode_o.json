@@ -1,0 +1,74 @@
+{
+ "reference track 1.road": {
+  "bytes": 2250484,
+  "batches": 2,
+  "triangles": 152928,
+  "vertices": 111060,
+  "headerTriangles": 152928,
+  "headerFiles": 4,
+  "headerMissing": 0,
+  "headerMeshes": 207,
+  "validKeys": 6,
+  "surfaces": "layout",
+  "decodeMs": 20.6,
+  "corners": {
+   "corners": 458784,
+   "sum": [
+    -54502720.3,
+    85839888.6,
+    45440255.5
+   ]
+  }
+ },
+ "reference track 2.road": {
+  "bytes": 8741424,
+  "batches": 12,
+  "triangles": 217652,
+  "vertices": 619601,
+  "headerTriangles": 217652,
+  "headerFiles": 8,
+  "headerMissing": 0,
+  "headerMeshes": 58,
+  "validKeys": 7,
+  "surfaces": "layout",
+  "decodeMs": 28.9
+ },
+ "reference track 3.road": {
+  "bytes": 12308004,
+  "batches": 16,
+  "triangles": 335400,
+  "vertices": 857939,
+  "headerTriangles": 335400,
+  "headerFiles": 8,
+  "headerMissing": 0,
+  "headerMeshes": 81,
+  "validKeys": 7,
+  "surfaces": "layout",
+  "decodeMs": 35.5
+ },
+ "the largest layout.road": {
+  "bytes": 60275872,
+  "batches": 74,
+  "triangles": 3200034,
+  "vertices": 3422911,
+  "headerTriangles": 3200034,
+  "headerFiles": 1,
+  "headerMissing": 0,
+  "headerMeshes": 97,
+  "validKeys": 3,
+  "surfaces": "track",
+  "decodeMs": 178.7
+ },
+ "B node-built reference track 1": {
+  "triangles": 152928,
+  "vertices": 111060,
+  "corners": {
+   "corners": 458784,
+   "sum": [
+    -54502720.3,
+    85839888.6,
+    45440255.5
+   ]
+  }
+ }
+}

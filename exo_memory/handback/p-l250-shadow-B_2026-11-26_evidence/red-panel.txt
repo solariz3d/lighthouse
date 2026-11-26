@@ -1,0 +1,15 @@
+ℹ fail 10
+ℹ pass 1
+ℹ tests 11
+✔ P1: every installed layout is listed; one with no AI line says so and cannot be picked (4.6706ms)
+✖ D1: the reference goes down before his road and writes no depth, so his road is drawn over it wherever they overlap (2.2884ms)
+✖ D2: the shadow's colour is the skin's --reference token, REFERENCE.colour when it sets none (0.4119ms)
+✖ P2: pick draws it on his start; Show off hides it and keeps the pick and the nudge; Show on draws it again; Clear drops both (61.293ms)
+✖ P3: a line that does not read is refused in words, the one shown before is taken down, and its entry is marked (3.0384ms)
+✖ P4: a layout carrying another layout's line is said so, and so is a line far off its stated length; a line of its own says nothing (1.6728ms)
+✖ P5: a later pick wins over an earlier one still being read (3.4864ms)
+✖ R1: the document: nothing of the reference enters it, and the shell is not told of any of it (50.2517ms)
+✖ R2: a save: the track file and its undo file are byte for byte the same with a reference shown (40.3276ms)
+✖ R3: an undo step: the reference is none; Ctrl+Z undoes his last edit, and the reference stays shown through it (25.676ms)
+✖ R4: an export: every file is byte for byte the same with a reference shown (2023.0436ms)
+✖ failing tests:

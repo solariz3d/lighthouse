@@ -1,0 +1,24 @@
+a refused line leaves the last one drawn: caught
+a refused entry is not marked: caught
+Show off still draws: caught
+Clear keeps the nudge: caught
+a stale pick is not dropped: caught
+a borrowed line is not marked in the list: caught
+the ui length is not read: caught
+a road refusal refuses the line too: caught
+Road mode draws the line: caught
+sameLine ignores the widths: caught
+sameLine ignores the points: caught
+a line 50 % off is the first said: caught
+a bare number is always metres: caught
+the code shown, not its words: caught
+a road's normals keep the kn5's winding: caught
+bytes after the last batch allowed: caught
+an index past its vertices allowed: caught
+the header's triangles not checked: caught
+the magic not checked: caught
+the road placed by its own origin: caught
+the reference after his road: caught
+the reference writes depth: caught
+the token is not read: caught
+23 of 23 caught; restored byte for byte

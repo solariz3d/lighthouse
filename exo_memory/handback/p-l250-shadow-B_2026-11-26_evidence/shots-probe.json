@@ -1,0 +1,87 @@
+{
+ "placed": true,
+ "gpu": {
+  "canvases": 8,
+  "found": true,
+  "webgl2": true,
+  "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5070 Ti Laptop GPU (0x00002F58) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+ },
+ "results": [
+  {
+   "skin": "sigil",
+   "mode": "line",
+   "pickMs": 6.2,
+   "state": {
+    "open": true,
+    "layouts": 2,
+    "mode": "line",
+    "picked": "reference track 1\u0000",
+    "kind": "line",
+    "triangles": null,
+    "shown": true,
+    "showOn": true,
+    "nudge": {
+     "dx": 0,
+     "dz": 0,
+     "dy": 0,
+     "yawDeg": 0
+    },
+    "timing": {
+     "readMs": 5.5,
+     "buildMs": 0
+    },
+    "error": null,
+    "notes": [],
+    "refused": 0,
+    "readout": "1,720 m along its line · 12.1 m wide (10 to 14.5) · read 6 ms, built 0 ms"
+   },
+   "frameMsShown": {
+    "median": 0.1,
+    "p90": 0.2
+   },
+   "frameMsHidden": {
+    "median": 0,
+    "p90": 0.1
+   }
+  },
+  {
+   "skin": "sigil",
+   "mode": "road",
+   "pickMs": 26.3,
+   "state": {
+    "open": true,
+    "layouts": 2,
+    "mode": "road",
+    "picked": "reference track 1\u0000",
+    "kind": "road",
+    "triangles": 152928,
+    "shown": true,
+    "showOn": true,
+    "nudge": {
+     "dx": 0,
+     "dz": 0,
+     "dy": 0,
+     "yawDeg": 0
+    },
+    "timing": {
+     "readMs": 17.199999928474426,
+     "buildMs": 8.700000047683716
+    },
+    "error": null,
+    "notes": [],
+    "refused": 0,
+    "readout": "152,928 triangles of road from its kn5, placed by its 1,720 m AI line · read 17 ms, built 9 ms"
+   },
+   "frameMsShown": {
+    "median": 0.1,
+    "p90": 0.3
+   },
+   "frameMsHidden": {
+    "median": 0,
+    "p90": 0.1
+   }
+  }
+ ],
+ "afterClear": null,
+ "pageErrors": []
+}
