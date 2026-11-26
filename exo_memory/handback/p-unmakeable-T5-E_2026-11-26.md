@@ -3,6 +3,14 @@
 **Order:** the chair, 18:51:35Z, Part 2: `exo_memory/loop/packet_t180_unmakeable_shapes_2026-11-26.md`, track [T5]. Research only, headless,
 BelowNormal; nothing was launched. His words in the brief (12:48): *"There are points in each track that our system cannot currently make"*.
 
+**Order 2 (19:44:28Z), section 9:**
+- the reader branch `reader-downray-e` `dab271b`;
+- the whole lap read and laid: **19 of 71 sections made, 2,730 of 10,734 m**. The read's misses are 11 sections (1,131 m), all on the first pass.
+  The builder's misses are 41 sections (6,873 m).
+- the route through the ramp at d 4,038 is open.
+
+Section 5c and parts of sections 4-5 are corrected in section 7.
+
 **Builder:** the worktree `C:\Consonance\t180-wt-e-rightwards` at `136e309` (landing-1126 `ceb21f5` plus my L255 CSS fix; the core is the same as ceb21f5's).
 Every section was laid through `app/core/panel.js` `extendOptions` and `src/core/turnby.js` `extendCorner`, the call the panel's Extend makes
 (`app/core/coreshell.js` `extend`), and the jumps through `src/core/jump.js` `jump`, the Jump button's free flight.
@@ -240,10 +248,12 @@ checked (`node t5_table2.cjs t5_table.md t5_lay.json t5_side_12.json t5_side_30.
 
 ## 5c. Not read at all
 
+*(Superseded by section 9: the rest of the lap is read and laid there.)*
+
 - **past 4,204 m (reader d 4,038):** checked, a surface follower (`t5_follow.cjs`, 1 m steps by `crossSection` centres) went on 355 m past the stop,
-  banking up to 52°, so the stop is the reader's, not the road's;
+  banking up to 52°, so the stop is the reader's, not the road's; **Corrected (section 7, 9c): the follower turned round; the stop is a ramp.**
 - **the branch at reader d 2,471:** the reader took a jump, but checked, the same follower ran 309 m straight on, downhill, from the take-off; which
-  branch the lap takes is not known (no AI line);
+  branch the lap takes is not known (no AI line); **Corrected (section 7): the follower turned round here too; it is a jump, not a branch.**
 - **the jump at reader d 660:** checked, no surface 1 m ahead of the take-off within 2 m of its plane, so it is a real jump.
 
 ## 6. The measure, version by version (the tolerances never moved)
@@ -278,11 +288,230 @@ checked (`node t5_table2.cjs t5_table.md t5_lay.json t5_side_12.json t5_side_30.
 - **A table cell first named the wrong quantity:** "bank misses by 2.8x" at 1805–1845 was the peak curvature's ratio (bank is 1.2×). The rule now names
   the largest ratio.
 
+- **The follower turned round, twice, and I read it as road going on.** Section 5c said it "went on 355 m past the stop" at d 4,038 and "ran 309 m
+  straight on" at the d 2,471 jump. Re-run with the nearest read station beside each step (`t5_follow2.cjs`), both run back along the read's own line
+  within 2.1 m, heading the other way (dot −1.00), from 87 m and 34 m. So the stop at 4,038 is the road's (a ramp), and 2,471 is a jump, not a branch.
+- **The 0-60 m kink was not the read's.** Section 4's "inferred read-side (a widening at 56-60 m, checked)" was a check of the heading near 56 m. The
+  kink that still blocks the section is at 32 m, and both edges bend with the centre (0.84 and 1.65 of its curvature): the road turns. My table script
+  also wrote that note on any section starting at 0 m, in any run; it is now limited to the first pass.
+- **"A second road layer ~0.35 m under the top" (section 5) is the slab's own lower face, everywhere.** The misread at reader d 700-1,400 is the
+  station sitting 1.44-1.66 m under the top (9b), checked against two stretches that read well.
+- **`t5_lay.cjs` crashed on a cut run whose last row is a jump with no landing.** Such jumps are now skipped (v9); nothing else changed.
+- **My first count of the seeded walks said 4 end at the d 7,030 take-off; it is 2,** and 3 more at d 10,086, the same jump on the read's second time
+  round.
+
 ## 8. The packet's falsifier, as it stands
 
 - *"…a class it names as 'cannot' is later laid by a route the hand-back did not try"*: **this hand-back names no "cannot".** Class 1 has now failed
   13 Extend forms and 3 sideways controls (section 5b). It names what remains untried: Bend, Smooth, other drag orders and other radii.
 - *"…fewer than one unmade class per track … without a section-by-section table"*: [T5] has class 1 and the read-blocked stretches, with the table.
+- **Order 2, the whole lap as read (section 9d):** 71 sections in one table, with the read's misses apart from the builder's. Still no "cannot".
+  The builder's classes on runs 2-4 are the same as on the first pass: one-sided width (7 sections lap-wide) and turns sharper than any form laid them
+  (11). Plus quantity misses (10) and marginal ones (13).
+
+## 9. Order 2 (chair, 2026-11-26T19:44:28Z): our own reader, then the rest of [T5]
+
+### 9a. The reader branch (tier CHECK IT, rows red first)
+
+- checked: `git ls-remote --heads origin reader-downray-e` → `dab271b1011ee0705fc7b9f324282bf711c4f350`, on base `ceb21f5`, made in my own worktree
+  `C:\Consonance\t180-wt-e-reader`. Three files: `tools/piecewise.cjs`, `test/piecewise.test.js`, `CHANGELOG.md`. The tests use synthetic geometry
+  only. The scans (keys, his address, the track's name) found 0 in the content.
+- **`downBand`** (new, exported): rays straight down inside the station's cross-plane every 0.25 m, keeping every layer each ray passes. The band
+  starts at the highest layer within 2.5 m over the station and follows, ray to ray, the layer nearest in height; it ends where no layer lies within
+  1 m. Width is the 3-D length along the band. `meshCentreline` uses it where `crossSection` reads under half the read's own `width`, or finds
+  nothing, and takes it when it reads wider. A read with no `width` is walked as before.
+- **The landing guard** (`meshCentreline`): when a jump's landing lies within 20 m of a station taken before the take-off, the line ends at the
+  take-off. The jump is listed in `falseLandings` (take-off d, landing d, the driven station's d, the distance). The command line prints
+  `rereadByDownRays` and `falseLandings`.
+- checked, red first: `node --test test/piecewise.test.js`, the 4 new rows run before the code existed:
+  - the stacked-layer row read **1.99 m** (the strip, against 18);
+  - the guard row failed with "the line runs past the take-off";
+  - the other two failed because `falseLandings` was undefined.
+
+  With the code: **15 of 15 pass.** What the four rows test:
+  - a station on a 2 m strip 1.5 m under cupped road reads 18 m wide, with its centre on the top;
+  - a road 3.5 m over the cup is not taken, and a read without a width is left as walked;
+  - a jump that "lands" on its own earlier road ends the line at the take-off;
+  - a jump onto new road is kept.
+- checked: who uses what changed (`grep -rn piecewise` over the repo). `crossSection` and `meshCentreline` are used only by the command line and
+  `test/piecewise.test.js`. Shipped code takes `basis`, `basisN`, `bandChol` and `denseSolve`, which did not change.
+- checked, on the [T5] reads (local, summary only): `tools/piecewise.cjs` on the original read now reports:
+  - `falseLandings` 1: take-off d 4,038, landing d 4,126 on road the read took at d 1,320, 1.1 m off;
+  - `rereadByDownRays` 15.
+
+  The original read and the scratch read (v3) now give the same line: 978 stations, lap 4,401.4 m.
+
+**What the guard does not settle, found after it was written (9c).** At d 4,038 the landing it refuses may be the lap's own route: the same road,
+driven back the other way. The guard ends the line and says where; it does not choose between two landings. That choice is the reader's, in the
+skill's `read_track.cjs`, outside the builder repo. 9c shows that is where the read actually went wrong: at d 7,030 it had new road in reach and
+landed on old road.
+
+### 9b. Why the cross-section read narrow (checked, with a control)
+
+- checked (`t5_layers.cjs`, world-down rays ±4 m at each station): the road is a slab, a top face with a second face about 0.35 m under it.
+  - On stretches that read well, the read's station sits **0.28-0.82 m under the top** (reader d 300-600 and 3,400-3,700).
+  - The return run along the same corridor sits **0.30-0.41 m** under it.
+  - At reader d **700-1,400** the first pass sat **1.44-1.66 m under the top**, below the slab. At several of those stations no surface lies
+    under it at all.
+
+  The cross-section walked from there, and those stations are the read's 10 flagged sections at 778-1,740 m.
+- So the "second road layer" in section 5 was the slab's own lower face, and the misses there are the read's, not the road's.
+
+### 9c. The rest of [T5]: how it was read
+
+- checked: **the road area** (`t5_cover.cjs`, every road triangle) is 599,197 m².
+  - The read's first pass covers 240,230 m² over 4,401 m: **about 55 m² per metre**, walls and banks included.
+  - The original read's new run covers 141,404 m² over 2,348 m: about 60 m² per metre.
+  - **217,563 m² lies within 12 m of no read station: about 3.8 km at 57 m² a metre.** Nearly all of it is one connected piece, from 67 m under
+    to 65 m over the ramp's height.
+- checked: **12 walks of a scratch copy of the reader, seeded in that piece** (`walker/read_seed.cjs`). Six points spread through it, each walked
+  both ways; a walk stops when it comes within 6 m of a station of the original read.
+  - **Every walk that goes one way ends at the original read's d 7,030 take-off, by a 61 m jump.** That is 2 walks; 3 more reach the same jump at
+    d 10,086, the read's second time round.
+  - **Every walk that goes the other way ends at the read's start, by a 41 m jump** (5 walks), heading the read's own way (dot 0.87-1.00). Seed 0,
+    walked to the start, covers **3,591 m**.
+  - Seed 3's two walks ended at d 6,122 (after the 61 m and 45 m jumps) and at d 3,048 (after the 41 m jump and a 113 m one).
+    inferred: they passed the two join points more than 6 m off, the stop's radius.
+- checked: so the original read went wrong **at d 7,030**. It landed on its own first-pass road at d 1,392 and went round again; the seeded walks
+  land the same jump on the unread road, which runs to the start.
+- checked: the follower's "355 m on past the stop" (section 5c) **turned round**. From 87 m on it runs 0.1-2.1 m off the read's own line, heading
+  the other way (dot −1.00).
+- checked: nothing lies ahead of the ramp at d 4,038 along its heading, for 400 m and within ±8 m. Down-rays find:
+  - road 54-70 m over it;
+  - road 55-75 m under it;
+  - just beneath it, the corridor the read drove at d 755-1,320.
+
+  The original read "landed" on that corridor, **85 m out and 35 m down**, and drove it back the other way (d 4,126-4,678) into the new run
+  (d 4,682-7,030).
+- inferred: **the lap**, in the order the reads join:
+  1. the first pass, start to the ramp: 4,204 m of mesh arc; then the 85 m flight;
+  2. back along the 755-1,320 corridor: 572 m;
+  3. the new run: 2,447 m, with a 45 m jump; then the 61 m flight;
+  4. the unread run to the start: 3,755 m, with a 41 m jump.
+
+  **11.1 km of mesh arc, against the stated 10.3 km.** Run 2 drives road that run 1 drove, the other way. If the lap does not do that, the 0.6 km
+  comes off and the total sits closer to the stated length, but then nothing on disk joins the ramp to the new run. **The route through the ramp
+  is open** (there is no AI line). Its falsifier: an AI line, or a replay, that goes from the ramp anywhere but back along that corridor.
+
+### 9d. The rest of [T5]: laid with the same packet
+
+Everything is as before:
+- the profile (`t5_profile.cjs`, now on the reader branch's `meshCentreline`);
+- the sections, the 13 forms and the tolerances;
+- the table rules (`t5_lay.cjs`, `t5_table.cjs`).
+
+Two scratch fixes, both recorded in section 7. The **whose** column keeps the read's misses apart from the builder's:
+- **reader, checked:** the read could not take 2 or more stations of the section;
+- **builder:** a quantity misses by more than 1.5× its tolerance;
+- **builder, marginal:** a quantity misses within 1.5× its tolerance;
+- **kinks** (a curvature peak the built road does not follow) are now sorted by `t5_kink.cjs`, not inferred. At the lay's own peak station, found
+  by its own `curvAt`, it compares the curvature of each road edge with the centre's:
+  - the centre bends while both edges stay smooth (each under half the centre's): **the read's**;
+  - one edge bends and the other is smooth: **a one-sided width change**, the builder's class from section 5b;
+  - both edges bend (each at least half the centre's): **the road turns** that sharply.
+
+  **0 of 18 kinks were the centre alone.** The 0.5 cut is mine, set before the run; each row carries its ratios.
+
+**Per run:**
+
+| run | sections made | metres made (of sections) | reader, checked | builder | builder, marginal | builder: one-sided width (kink) | builder: the road turns (kink) | kink, unsorted | jumps |
+|---|---|---|---|---|---|---|---|---|---|
+| first pass (reader d 0-4,038) | 10 of 35 | 1239 of 4057 | 11 (1131 m) | 4 (624 m) | 7 (772 m) | 1 (103 m) | 2 (188 m) | 0 | made, made |
+| return along the 755-1,320 corridor (orig. read d 4,126-4,678) | 0 of 1 | 0 of 572 | 0 | 0 | 0 | 0 | 1 (572 m) | 0 | - |
+| new run (orig. read d 4,682-7,030) | 3 of 16 | 437 of 2396 | 0 | 4 (452 m) | 2 (571 m) | 3 (531 m) | 4 (405 m) | 0 | made |
+| unread run (seeded walk, to the start) | 6 of 19 | 1054 of 3709 | 0 | 2 (430 m) | 4 (1515 m) | 3 (375 m) | 4 (335 m) | 0 | made |
+
+
+- inferred from the rows above:
+  - **sections made: 19 of 71**, 2,730 of 10,734 m of sections;
+  - **jumps:** 4 laid and all 4 made; 2 flights not laid. At d 4,038 the landing is open; at d 7,030 the take-off and the landing sit in different
+    runs here.
+- **the read's misses:** 11 sections, 1,131 m, all on the first pass. 9b gives the cause for the 10 at 778-1,740 m; the one at 2,606-2,775 m is
+  not explained here. Beyond the sections, the read chose the wrong landing at d 7,030, and the route at d 4,038 is left open. **Nothing on
+  runs 2-4 is the read's.**
+- **the builder's misses:** 41 sections, 6,873 m:
+  - 10 past 1.5× a tolerance (1,506 m);
+  - 13 marginal (2,858 m);
+  - 7 one-sided width changes (1,009 m);
+  - 11 where the road turns sharper than any form laid it (1,500 m).
+- **made by hand:** all 19, none steered (`t5_byhand.cjs` on each run).
+
+**The table, section by section.** Columns: the run; the section's metres along its run; its metres along the inferred lap; class; made; whose;
+what blocks it; the simplest route that made it; its pieces; STEERED.
+
+| run | section m (run) | lap m | class | made? | whose | what blocks it | simplest route that made it | pieces | STEERED |
+|---|---|---|---|---|---|---|---|---|---|
+| 1 | 0-60 | 0-60 | corner, bank under 45° | no | builder: the road turns (kink) | a curvature peak the built road does not follow (peak curvature off 82%, 4.1x its tolerance); checked: edges/centre curvature 0.84 and 1.65, widths 16.5/16.5/16.6 | - | - | - |
+| 1 | 60-236 | 60-236 | corner, bank under 45° | no | builder, marginal | marginal: heading 1.34x, within 1.5x tolerance, position held (1.7 m) | - | - | - |
+| 1 | 236-294 | 236-294 | corner, banked 45-100° | no | builder, marginal | marginal: heading 1.44x, within 1.5x tolerance, position held (1.1 m) | - | - | - |
+| 1 | 294-479 | 294-479 | corner, banked 45-100° | yes | made | - | corner: pieces every ~5 m | 25 | no |
+| 1 | 479-682 | 479-682 | corner, bank under 45° | yes | made | - | corner: pieces every ~5 m | 26 | no |
+| 1 | 778-885 | 778-885 | tight corner, bank under 45°, steep (pitch 30° or more); 3 station(s) the read could not take | no | reader, checked | the read: stations it could not take; not attributed to the builder | - | - | - |
+| 1 | 885-979 | 885-979 | corner, bank under 45°; 6 station(s) the read could not take | no | reader, checked | the read: stations it could not take; not attributed to the builder | - | - | - |
+| 1 | 979-1085 | 979-1085 | corner, bank under 45°; 4 station(s) the read could not take | no | reader, checked | the read: stations it could not take; not attributed to the builder | - | - | - |
+| 1 | 1085-1218 | 1085-1218 | corner, bank under 45°; 5 station(s) the read could not take | no | reader, checked | the read: stations it could not take; not attributed to the builder | - | - | - |
+| 1 | 1218-1280 | 1218-1280 | corner, bank under 45°; 2 station(s) the read could not take | no | reader, checked | the read: stations it could not take; not attributed to the builder | - | - | - |
+| 1 | 1280-1364 | 1280-1364 | corner, bank under 45°; 5 station(s) the read could not take | no | reader, checked | the read: stations it could not take; not attributed to the builder | - | - | - |
+| 1 | 1364-1433 | 1364-1433 | tight corner, bank under 45°, steep (pitch 30° or more); 9 station(s) the read could not take | no | reader, checked | the read: stations it could not take; not attributed to the builder | - | - | - |
+| 1 | 1433-1514 | 1433-1514 | corner, bank under 45°; 5 station(s) the read could not take | no | reader, checked | the read: stations it could not take; not attributed to the builder | - | - | - |
+| 1 | 1514-1682 | 1514-1682 | tight corner, bank under 45°, steep (pitch 30° or more); 5 station(s) the read could not take | no | reader, checked | the read: stations it could not take; not attributed to the builder | - | - | - |
+| 1 | 1682-1740 | 1682-1740 | tight corner, bank under 45°; 2 station(s) the read could not take | no | reader, checked | the read: stations it could not take; not attributed to the builder | - | - | - |
+| 1 | 1740-1805 | 1740-1805 | corner, banked 45-100° | yes | made | - | corner: pieces every ~5 m | 10 | no |
+| 1 | 1805-1845 | 1805-1845 | corner, bank under 45°, fast roll (1.8 °/m or more) | no | builder | peak curvature misses by 2.8x its tolerance (also bank 1.2x), position held (1.0 m) | - | - | - |
+| 1 | 1845-2154 | 1845-2154 | corner, bank under 45° | no | builder | peak curvature misses by 1.9x its tolerance (also heading 1.4x), position held (1.7 m) | - | - | - |
+| 1 | 2154-2318 | 2154-2318 | corner, banked 45-100° | no | builder, marginal | marginal: heading 1.12x, within 1.5x tolerance, position held (1.4 m) | - | - | - |
+| 1 | 2318-2447 | 2318-2447 | tight corner, banked 45-100° | yes | made | - | corner: pieces every ~5 m | 18 | no |
+| 1 | 2447-2555 | 2447-2555 | tight corner, bank under 45° | no | builder, marginal | marginal: heading 1.31x, within 1.5x tolerance, position held (0.9 m) | - | - | - |
+| 1 | 2606-2775 | 2606-2775 | tight corner, banked 45-100°; 4 station(s) the read could not take | no | reader, checked | the read: stations it could not take; not attributed to the builder | - | - | - |
+| 1 | 2775-2836 | 2775-2836 | tight corner, bank under 45°, fast roll (1.8 °/m or more) | no | builder, marginal | marginal: width 1.25x, within 1.5x tolerance, position held (1.0 m) | - | - | - |
+| 1 | 2836-2964 | 2836-2964 | corner, banked 45-100° | no | builder: the road turns (kink) | a curvature peak the built road does not follow (peak curvature off 54%, 2.7x its tolerance); checked: edges/centre curvature 0.66 and 1.68, widths 17.0/17.0/19.7 | - | - | - |
+| 1 | 2964-3172 | 2964-3172 | corner, banked past 100°, steep (pitch 30° or more) | no | builder | pitch misses by 2.5x its tolerance, position held (1.3 m) | - | - | - |
+| 1 | 3172-3239 | 3172-3239 | corner, banked past 100° | no | builder | pitch misses by 2.6x its tolerance, position held (0.9 m) | - | - | - |
+| 1 | 3239-3343 | 3239-3343 | corner, banked 45-100°, steep (pitch 30° or more) | yes | made | - | corner: pieces every ~5 m | 15 | no |
+| 1 | 3343-3405 | 3343-3405 | tight corner, banked past 100°, steep (pitch 30° or more), fast roll (1.8 °/m or more) | no | builder, marginal | marginal: bank 1.30x, within 1.5x tolerance, position held (1.0 m) | - | - | - |
+| 1 | 3405-3472 | 3405-3472 | tight corner, banked past 100°, steep (pitch 30° or more), fast roll (1.8 °/m or more) | yes | made | - | corner: pieces every ~10 m | 7 | no |
+| 1 | 3472-3607 | 3472-3607 | tight corner, banked past 100°, steep (pitch 30° or more), fast roll (1.8 °/m or more) | yes | made | - | rate: pieces every ~10 m | 13 | no |
+| 1 | 3607-3750 | 3607-3750 | tight corner, bank under 45° | no | builder, marginal | marginal: heading 1.01x, bank 1.00x, within 1.5x tolerance, position held (1.9 m) | - | - | - |
+| 1 | 3750-3974 | 3750-3974 | corner, bank under 45° | yes | made | - | corner: pieces every ~10 m | 19 | no |
+| 1 | 3974-4019 | 3974-4019 | corner, bank under 45° | yes | made | - | pieces every ~40 m | 2 | no |
+| 1 | 4019-4101 | 4019-4101 | tight corner, banked 45-100° | yes | made | - | corner: pieces every ~5 m | 12 | no |
+| 1 | 4101-4204 | 4101-4204 | corner, bank under 45° | no | builder: one-sided width (kink) | a curvature peak the built road does not follow (peak curvature off 29%, 1.5x its tolerance); checked: edges/centre curvature 0.06 and 1.69, widths 19.7/17.0/16.8 | - | - | - |
+| 2 | 0-572 | 4289-4861 | corner, bank under 45° | no | builder: the road turns (kink) | a curvature peak the built road does not follow (peak curvature off 25%, 1.2x its tolerance); checked: edges/centre curvature 0.92 and 1.12, widths 19.8/19.7/19.7 | - | - | - |
+| 3 | 0-331 | 4861-5192 | corner, banked 45-100° | no | builder, marginal | marginal: width 1.24x, within 1.5x tolerance, position held (1.3 m) | - | - | - |
+| 3 | 331-516 | 5192-5377 | corner, banked 45-100°, steep (pitch 30° or more) | no | builder: the road turns (kink) | a curvature peak the built road does not follow (peak curvature off 57%, 2.9x its tolerance); checked: edges/centre curvature 0.78 and 1.05, widths 16.9/17.1/16.8 | - | - | - |
+| 3 | 516-621 | 5377-5482 | corner, bank under 45° | no | builder: one-sided width (kink) | a curvature peak the built road does not follow (peak curvature off 83%, 4.2x its tolerance); checked: edges/centre curvature 0.19 and 3.27, widths 16.8/16.8/18.8 | - | - | - |
+| 3 | 621-934 | 5482-5795 | corner, bank under 45° | yes | made | - | corner: pieces every ~10 m | 26 | no |
+| 3 | 934-1022 | 5795-5883 | corner, bank under 45° | no | builder | peak curvature misses by 2.9x its tolerance (also heading 1.5x), position held (1.1 m) | - | - | - |
+| 3 | 1022-1125 | 5883-5986 | corner, bank under 45° | no | builder | width misses by 1.6x its tolerance (also heading 1.1x, peak curvature 1.5x), position held (1.0 m) | - | - | - |
+| 3 | 1125-1381 | 5986-6242 | corner, banked 45-100° | no | builder: one-sided width (kink) | a curvature peak the built road does not follow (peak curvature off 37%, 1.9x its tolerance); checked: edges/centre curvature 0.19 and 1.06, widths 17.4/20.0/19.7 | - | - | - |
+| 3 | 1381-1489 | 6242-6350 | corner, banked 45-100° | yes | made | - | rate: pieces every ~10 m | 10 | no |
+| 3 | 1489-1595 | 6350-6456 | tight corner, bank under 45° | no | builder | heading misses by 3.5x its tolerance, position held (1.1 m) | - | - | - |
+| 3 | 1646-1662 | 6507-6523 | corner, bank under 45° | yes | made | - | rate: pieces every ~20 m | 1 | no |
+| 3 | 1662-1742 | 6523-6603 | corner, bank under 45° | no | builder: the road turns (kink) | a curvature peak the built road does not follow (peak curvature off 84%, 4.2x its tolerance); checked: edges/centre curvature 0.98 and 1.04, widths 16.8/16.8/16.9 | - | - | - |
+| 3 | 1742-1912 | 6603-6773 | corner, bank under 45° | no | builder: one-sided width (kink) | a curvature peak the built road does not follow (peak curvature off 69%, 3.4x its tolerance); checked: edges/centre curvature 0.08 and 1.99, widths 16.8/17.1/20.0 | - | - | - |
+| 3 | 1912-1962 | 6773-6823 | corner, bank under 45° | no | builder: the road turns (kink) | a curvature peak the built road does not follow (peak curvature off 62%, 3.1x its tolerance); checked: edges/centre curvature 0.95 and 1.07, widths 19.7/19.7/19.7 | - | - | - |
+| 3 | 1962-2202 | 6823-7063 | tight corner, bank under 45° | no | builder, marginal | marginal: heading 1.14x, within 1.5x tolerance, position held (1.3 m) | - | - | - |
+| 3 | 2202-2292 | 7063-7153 | corner, bank under 45° | no | builder: the road turns (kink) | a curvature peak the built road does not follow (peak curvature off 83%, 4.1x its tolerance); checked: edges/centre curvature 0.96 and 1.01, widths 16.8/17.0/17.0 | - | - | - |
+| 3 | 2292-2447 | 7153-7308 | corner, bank under 45°; 1 station(s) the read could not take | no | builder | heading misses by 1.5x its tolerance, position held (1.5 m) | - | - | - |
+| 4 | 0-65 | 7369-7434 | corner, bank under 45° | no | builder: the road turns (kink) | a curvature peak the built road does not follow (peak curvature off 88%, 4.4x its tolerance); checked: edges/centre curvature 0.67 and 1.70, widths 16.8/17.0/17.0 | - | - | - |
+| 4 | 65-221 | 7434-7590 | corner, bank under 45° | no | builder, marginal | marginal: width 1.06x, within 1.5x tolerance, position held (2.0 m) | - | - | - |
+| 4 | 221-399 | 7590-7768 | corner, banked 45-100° | yes | made | - | corner: pieces every ~5 m | 24 | no |
+| 4 | 399-544 | 7768-7913 | corner, banked 45-100° | yes | made | - | corner: pieces every ~5 m | 20 | no |
+| 4 | 544-667 | 7913-8036 | corner, bank under 45° | no | builder: one-sided width (kink) | a curvature peak the built road does not follow (peak curvature off 40%, 2.0x its tolerance); checked: edges/centre curvature 0.08 and 1.55, widths 19.7/17.0/16.9 | - | - | - |
+| 4 | 667-790 | 8036-8159 | corner, bank under 45° | no | builder: the road turns (kink) | a curvature peak the built road does not follow (peak curvature off 78%, 3.9x its tolerance); checked: edges/centre curvature 0.61 and 1.35, widths 16.8/16.8/17.0 | - | - | - |
+| 4 | 790-946 | 8159-8315 | tight corner, bank under 45°; 1 station(s) the read could not take | no | builder | width misses by 1.5x its tolerance (also heading 1.0x), position held (1.8 m) | - | - | - |
+| 4 | 946-1050 | 8315-8419 | corner, bank under 45° | no | builder: the road turns (kink) | a curvature peak the built road does not follow (peak curvature off 91%, 4.6x its tolerance); checked: edges/centre curvature 0.96 and 0.99, widths 16.8/16.8/17.1 | - | - | - |
+| 4 | 1050-1433 | 8419-8802 | corner, bank under 45° | yes | made | - | corner: pieces every ~5 m | 48 | no |
+| 4 | 1433-1476 | 8802-8845 | corner, bank under 45° | no | builder: the road turns (kink) | a curvature peak the built road does not follow (peak curvature off 81%, 4.0x its tolerance); checked: edges/centre curvature 0.96 and 1.04, widths 19.7/19.7/19.7 | - | - | - |
+| 4 | 1476-2468 | 8845-9837 | corner, banked 45-100° | no | builder, marginal | marginal: width 1.05x, within 1.5x tolerance, position held (1.0 m) | - | - | - |
+| 4 | 2468-2638 | 9837-10007 | corner, banked 45-100°, steep (pitch 30° or more) | yes | made | - | corner: pieces every ~5 m | 23 | no |
+| 4 | 2638-2850 | 10007-10219 | corner, bank under 45°, steep (pitch 30° or more) | no | builder: one-sided width (kink) | a curvature peak the built road does not follow (peak curvature off 59%, 3.0x its tolerance); checked: edges/centre curvature 0.01 and 2.07, widths 16.8/16.9/19.8 | - | - | - |
+| 4 | 2850-2919 | 10219-10288 | tight corner, banked 45-100° | yes | made | - | corner: pieces every ~5 m | 11 | no |
+| 4 | 2919-3126 | 10288-10495 | corner, banked 45-100° | no | builder, marginal | marginal: width 1.04x, within 1.5x tolerance, position held (1.3 m) | - | - | - |
+| 4 | 3126-3400 | 10495-10769 | tight corner, bank under 45° | no | builder | heading misses by 6.9x its tolerance (also peak curvature 2.6x), position held (1.4 m) | - | - | - |
+| 4 | 3446-3486 | 10815-10855 | corner, bank under 45° | no | builder: one-sided width (kink) | a curvature peak the built road does not follow (peak curvature off 87%, 4.4x its tolerance); checked: edges/centre curvature 0.30 and 1.97, widths 16.8/16.8/17.1 | - | - | - |
+| 4 | 3486-3646 | 10855-11015 | tight corner, bank under 45°; 1 station(s) the read could not take | no | builder, marginal | marginal: width 1.33x, within 1.5x tolerance, position held (2.2 m) | - | - | - |
+| 4 | 3646-3755 | 11015-11124 | straight, bank under 45° | yes | made | - | pieces every ~40 m | 3 | no |
 
 ## Scripts (scratch only, kept; their outputs are the other author's layout)
 
@@ -300,6 +529,14 @@ checked (`node t5_table2.cjs t5_table.md t5_lay.json t5_side_12.json t5_side_30.
 | `t5_cswhy.cjs`, `t5_across2.cjs` | why `crossSection` stops early; every road layer under a station |
 | `t5_follow.cjs`, `t5_gap.cjs`, `t5_long.cjs`, `t5_across.cjs`, `t5_sides.cjs` | the read checks |
 | `walker/` | the scratch reader with the three landing guards |
+| `t5_stop.cjs`, `t5_stop2.cjs`, `t5_ahead.cjs`, `t5_meshes.cjs` | what lies ahead of the ramp at d 4,038 |
+| `t5_cstrace.cjs`, `t5_layers.cjs` | the cross-section's walk against the top surface; the layers over each station (9b) |
+| `t5_cover.cjs`, `t5_seeds.json` | the road area, read and unread; the six seed points |
+| `walker/read_seed.cjs`, `run_seeds.sh`, `seed_*.read.json` | the seeded reader and its 12 walks (9c) |
+| `newrun.read.json`, `deck.read.json`, `unread.read.json` and their `_profile`, `_lay`, `_table` files | runs 2-4, laid (9d) |
+| `t5_follow2.cjs` | the follower, with the nearest read station at each step |
+| `t5_kink.cjs`, `*_kinks.txt` | the kink sort (9d) |
+| `t5_final.cjs`, `t5_final.md` | the merged table (9d); `F1=85 F2=61 node t5_final.cjs` |
 
 The reads are in the builder checkout's gitignored `reads/`.
 
