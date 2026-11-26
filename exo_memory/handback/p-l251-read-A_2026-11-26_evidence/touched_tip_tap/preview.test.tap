@@ -1,0 +1,526 @@
+TAP version 13
+# Subtest: batches: the node matrix read column-major (as GL reads it) puts every vertex on the geometry's surface
+ok 1 - batches: the node matrix read column-major (as GL reads it) puts every vertex on the geometry's surface
+  ---
+  duration_ms: 47.8792
+  type: 'test'
+  ...
+# Subtest: batches: one colour per placed word, alternating along the track; a seam is darker than its piece
+ok 2 - batches: one colour per placed word, alternating along the track; a seam is darker than its piece
+  ---
+  duration_ms: 26.3178
+  type: 'test'
+  ...
+# Subtest: track model: append → extend, a word edit → sculpt, a removal → full, no change → same; each equals a full build
+ok 3 - track model: append → extend, a word edit → sculpt, a removal → full, no change → same; each equals a full build
+  ---
+  duration_ms: 136.3333
+  type: 'test'
+  ...
+# Subtest: track model: a document that does not resolve keeps the last good track and marks it stale
+ok 4 - track model: a document that does not resolve keeps the last good track and marks it stale
+  ---
+  duration_ms: 11.3598
+  type: 'test'
+  ...
+# Subtest: track model through A's shell: placing words grows the preview by extend, and it equals a full build
+ok 5 - track model through A's shell: placing words grows the preview by extend, and it equals a full build
+  ---
+  duration_ms: 31.6446
+  type: 'test'
+  ...
+# Subtest: renderer: every array is uploaded once; drawing the same batches again uploads nothing
+ok 6 - renderer: every array is uploaded once; drawing the same batches again uploads nothing
+  ---
+  duration_ms: 26.2213
+  type: 'test'
+  ...
+# Subtest: renderer: after a sculpt, the chunks before the edited piece upload nothing; stale buffers are deleted
+ok 7 - renderer: after a sculpt, the chunks before the edited piece upload nothing; stale buffers are deleted
+  ---
+  duration_ms: 39.9992
+  type: 'test'
+  ...
+# Subtest: renderer: merged chunks draw the triangles of the cells, in order, where the cells put them in world space, in a handful of draws
+ok 8 - renderer: merged chunks draw the triangles of the cells, in order, where the cells put them in world space, in a handful of draws
+  ---
+  duration_ms: 189.3076
+  type: 'test'
+  ...
+# Subtest: renderer: after a sculpt that moves later pieces, the drawn road equals a fresh renderer drawing of it (no chunk kept at its old place, even with the same cells)
+ok 9 - renderer: after a sculpt that moves later pieces, the drawn road equals a fresh renderer drawing of it (no chunk kept at its old place, even with the same cells)
+  ---
+  duration_ms: 126.9396
+  type: 'test'
+  ...
+# Subtest: renderer: a chunk limit outside 1..65535 is refused
+ok 10 - renderer: a chunk limit outside 1..65535 is refused
+  ---
+  duration_ms: 0.4027
+  type: 'test'
+  ...
+# Subtest: renderer: a shader that does not compile throws with the compiler's log; a canvas without size is refused
+ok 11 - renderer: a shader that does not compile throws with the compiler's log; a canvas without size is refused
+  ---
+  duration_ms: 0.2626
+  type: 'test'
+  ...
+# Subtest: keys: C switches, B is the build view, WASD/QE fly, arrows turn, anything else does nothing
+ok 12 - keys: C switches, B is the build view, WASD/QE fly, arrows turn, anything else does nothing
+  ---
+  duration_ms: 0.252
+  type: 'test'
+  ...
+# Subtest: the preview shader sources carry no environment (v1 is the track only): no sky, texture or sampler
+ok 13 - the preview shader sources carry no environment (v1 is the track only): no sky, texture or sampler
+  ---
+  duration_ms: 0.1092
+  type: 'test'
+  ...
+# Subtest: keys: a key held when the window loses focus is let go, so the camera stops (the drift)
+ok 14 - keys: a key held when the window loses focus is let go, so the camera stops (the drift)
+  ---
+  duration_ms: 6.447
+  type: 'test'
+  ...
+# Subtest: keys: already in free, a key held when the window loses focus is let go, so the camera stops (V11 of B: 4.5 m of drift at HEAD)
+ok 15 - keys: already in free, a key held when the window loses focus is let go, so the camera stops (V11 of B: 4.5 m of drift at HEAD)
+  ---
+  duration_ms: 2.084
+  type: 'test'
+  ...
+# Subtest: keys: Shift sprints (×4 the distance per frame)
+ok 16 - keys: Shift sprints (×4 the distance per frame)
+  ---
+  duration_ms: 2.1757
+  type: 'test'
+  ...
+# Subtest: mouse: a right drag looks from the build view (taking it over), a drag right turns right, and keys move at the same time
+ok 17 - mouse: a right drag looks from the build view (taking it over), a drag right turns right, and keys move at the same time
+  ---
+  duration_ms: 1.2211
+  type: 'test'
+  ...
+# Subtest: mouse: the scroll wheel zooms the build view
+ok 18 - mouse: the scroll wheel zooms the build view
+  ---
+  duration_ms: 3.8777
+  type: 'test'
+  ...
+# Subtest: keys: W then D goes diagonally: both axes at once, the same 3 m a frame as a straight line (1.0×, not √2)
+ok 19 - keys: W then D goes diagonally: both axes at once, the same 3 m a frame as a straight line (1.0×, not √2)
+  ---
+  duration_ms: 2.6048
+  type: 'test'
+  ...
+# Subtest: keys: D then W is the same diagonal (the order across axes does not matter)
+ok 20 - keys: D then W is the same diagonal (the order across axes does not matter)
+  ---
+  duration_ms: 1.4426
+  type: 'test'
+  ...
+# Subtest: keys: three axes at once (W, D and E) move along the sum W + D + up at 1.0× in METRES (D189: the world displacement is normalised, not the input)
+ok 21 - keys: three axes at once (W, D and E) move along the sum W + D + up at 1.0× in METRES (D189: the world displacement is normalised, not the input)
+  ---
+  duration_ms: 2.7501
+  type: 'test'
+  ...
+# Subtest: keys: D and E (right and up are perpendicular) go at 1.0× too: (D + up) / √2, 3 m a frame
+ok 22 - keys: D and E (right and up are perpendicular) go at 1.0× too: (D + up) / √2, 3 m a frame
+  ---
+  duration_ms: 2.1581
+  type: 'test'
+  ...
+# Subtest: keys: releasing one key of a diagonal leaves a straight line on the other, and releasing both stops
+ok 23 - keys: releasing one key of a diagonal leaves a straight line on the other, and releasing both stops
+  ---
+  duration_ms: 2.1141
+  type: 'test'
+  ...
+# Subtest: keys: on one axis the NEWER key wins (w then s), and on its release the w takes over
+ok 24 - keys: on one axis the NEWER key wins (w then s), and on its release the w takes over
+  ---
+  duration_ms: 2.0786
+  type: 'test'
+  ...
+# Subtest: keys: on one axis the NEWER key wins (s then w), and on its release the s takes over
+ok 25 - keys: on one axis the NEWER key wins (s then w), and on its release the s takes over
+  ---
+  duration_ms: 1.8413
+  type: 'test'
+  ...
+# Subtest: keys: on one axis the NEWER key wins (d then a), and on its release the d takes over
+ok 26 - keys: on one axis the NEWER key wins (d then a), and on its release the d takes over
+  ---
+  duration_ms: 1.9272
+  type: 'test'
+  ...
+# Subtest: keys: on one axis the NEWER key wins (a then d), and on its release the a takes over
+ok 27 - keys: on one axis the NEWER key wins (a then d), and on its release the a takes over
+  ---
+  duration_ms: 2.1023
+  type: 'test'
+  ...
+# Subtest: keys: on one axis the NEWER key wins (e then q), and on its release the e takes over
+ok 28 - keys: on one axis the NEWER key wins (e then q), and on its release the e takes over
+  ---
+  duration_ms: 1.7556
+  type: 'test'
+  ...
+# Subtest: keys: on one axis the NEWER key wins (q then e), and on its release the q takes over
+ok 29 - keys: on one axis the NEWER key wins (q then e), and on its release the q takes over
+  ---
+  duration_ms: 2.0944
+  type: 'test'
+  ...
+# Subtest: keys: releasing the OLDER key of an axis leaves the newer moving
+ok 30 - keys: releasing the OLDER key of an axis leaves the newer moving
+  ---
+  duration_ms: 1.2724
+  type: 'test'
+  ...
+# Subtest: keys: an axis with both keys held still combines with another axis: W, S (newer) and D go along (D − W) / √2, and on S released (W + D) / √2
+ok 31 - keys: an axis with both keys held still combines with another axis: W, S (newer) and D go along (D − W) / √2, and on S released (W + D) / √2
+  ---
+  duration_ms: 1.8981
+  type: 'test'
+  ...
+# Subtest: keys: a held key that repeats (auto-repeat key-down) keeps its place: with W, S (newer) held a repeat of W does not make W the newer
+ok 32 - keys: a held key that repeats (auto-repeat key-down) keeps its place: with W, S (newer) held a repeat of W does not make W the newer
+  ---
+  duration_ms: 1.2026
+  type: 'test'
+  ...
+# Subtest: keys: Shift multiplies the diagonal as it does a straight line: ×4 at the press, so 12 m a frame, not 12·√2
+ok 33 - keys: Shift multiplies the diagonal as it does a straight line: ×4 at the press, so 12 m a frame, not 12·√2
+  ---
+  duration_ms: 0.7279
+  type: 'test'
+  ...
+# Subtest: keys: a blur lets go of a diagonal (both keys), so the camera stops
+ok 34 - keys: a blur lets go of a diagonal (both keys), so the camera stops
+  ---
+  duration_ms: 0.6927
+  type: 'test'
+  ...
+# Subtest: keys: the arrow (look) keys are not movement keys: they turn while the movement keys fly
+ok 35 - keys: the arrow (look) keys are not movement keys: they turn while the movement keys fly
+  ---
+  duration_ms: 0.9263
+  type: 'test'
+  ...
+# Subtest: P3: C or B pressed while a movement key is held leaves free mode and stays out of it
+ok 36 - P3: C or B pressed while a movement key is held leaves free mode and stays out of it
+  ---
+  duration_ms: 1.6068
+  type: 'test'
+  ...
+# Subtest: P3: a NEW movement key-down after C takes the view over again
+ok 37 - P3: a NEW movement key-down after C takes the view over again
+  ---
+  duration_ms: 0.7749
+  type: 'test'
+  ...
+# Subtest: P5: Shift+wheel is ×4 when the device reports the scroll as deltaX (deltaY 0), not only as deltaY
+ok 38 - P5: Shift+wheel is ×4 when the device reports the scroll as deltaX (deltaY 0), not only as deltaY
+  ---
+  duration_ms: 5.1852
+  type: 'test'
+  ...
+# Subtest: P2: a key that flies by its label but sits on another physical key (another layout) flies, and lets go by its own code
+ok 39 - P2: a key that flies by its label but sits on another physical key (another layout) flies, and lets go by its own code
+  ---
+  duration_ms: 0.8144
+  type: 'test'
+  ...
+# Subtest: the sprint curve: ×4 at 0 s, ×20 from 2.5 s, smooth and rising between (1 s is 4 + 16·S(0.4))
+ok 40 - the sprint curve: ×4 at 0 s, ×20 from 2.5 s, smooth and rising between (1 s is 4 + 16·S(0.4))
+  ---
+  duration_ms: 0.2152
+  type: 'test'
+  ...
+# Subtest: keys: Shift held ramps the speed: ×4 at the press, then along the curve, ×20 at 2.5 s (measured per frame)
+ok 41 - keys: Shift held ramps the speed: ×4 at the press, then along the curve, ×20 at 2.5 s (measured per frame)
+  ---
+  duration_ms: 1.4802
+  type: 'test'
+  ...
+# Subtest: keys: releasing Shift returns to ×1, and pressing it again starts at ×4 again
+ok 42 - keys: releasing Shift returns to ×1, and pressing it again starts at ×4 again
+  ---
+  duration_ms: 1.3564
+  type: 'test'
+  ...
+# Subtest: keys: a blur resets the ramp (the key-up never comes), and the next press starts at ×4
+ok 43 - keys: a blur resets the ramp (the key-up never comes), and the next press starts at ×4
+  ---
+  duration_ms: 1.6875
+  type: 'test'
+  ...
+# Subtest: focus: Enter in a text field or a number field lets go of it (and does not touch the camera)
+ok 44 - focus: Enter in a text field or a number field lets go of it (and does not touch the camera)
+  ---
+  duration_ms: 9.2865
+  type: 'test'
+  ...
+# Subtest: focus: Esc in a field lets go of it, in every kind of field
+ok 45 - focus: Esc in a field lets go of it, in every kind of field
+  ---
+  duration_ms: 2.9671
+  type: 'test'
+  ...
+# Subtest: focus: Enter in a text AREA is a new line, and is left alone
+ok 46 - focus: Enter in a text AREA is a new line, and is left alone
+  ---
+  duration_ms: 0.7051
+  type: 'test'
+  ...
+# Subtest: focus: Enter or Esc on the page (no field) does nothing to the camera
+ok 47 - focus: Enter or Esc on the page (no field) does nothing to the camera
+  ---
+  duration_ms: 0.6303
+  type: 'test'
+  ...
+# Subtest: focus: a mouse-down on the canvas (either button, or the middle) takes focus off the active field
+ok 48 - focus: a mouse-down on the canvas (either button, or the middle) takes focus off the active field
+  ---
+  duration_ms: 1.8429
+  type: 'test'
+  ...
+# Subtest: focus: a mouse-down with nothing focused (the page body, or none) is fine
+ok 49 - focus: a mouse-down with nothing focused (the page body, or none) is fine
+  ---
+  duration_ms: 2.3489
+  type: 'test'
+  ...
+# Subtest: focus: a NUMBER field lets the camera keys through: W A S D Q E fly, the arrows turn
+ok 50 - focus: a NUMBER field lets the camera keys through: W A S D Q E fly, the arrows turn
+  ---
+  duration_ms: 7.1391
+  type: 'test'
+  ...
+# Subtest: focus: Shift sprints while a number field has focus
+ok 51 - focus: Shift sprints while a number field has focus
+  ---
+  duration_ms: 1.5849
+  type: 'test'
+  ...
+# Subtest: focus: a number field still gets its digits (a digit is not the camera's key, and is not stopped)
+ok 52 - focus: a number field still gets its digits (a digit is not the camera's key, and is not stopped)
+  ---
+  duration_ms: 0.7199
+  type: 'test'
+  ...
+# Subtest: focus: a TEXT field swallows every camera key: typing a name never moves the camera
+ok 53 - focus: a TEXT field swallows every camera key: typing a name never moves the camera
+  ---
+  duration_ms: 3.5901
+  type: 'test'
+  ...
+# Subtest: the plain wheel is unchanged: a follow view changes distance, free mode dollies 4 m a notch, and the lens stays
+ok 54 - the plain wheel is unchanged: a follow view changes distance, free mode dollies 4 m a notch, and the lens stays
+  ---
+  duration_ms: 0.6188
+  type: 'test'
+  ...
+# Subtest: Ctrl+wheel is the LENS, in every view: the fov changes and the eye does not (in and out, stepwise, clamped to 10°–100°)
+ok 55 - Ctrl+wheel is the LENS, in every view: the fov changes and the eye does not (in and out, stepwise, clamped to 10°–100°)
+  ---
+  duration_ms: 3.6992
+  type: 'test'
+  ...
+# Subtest: Ctrl+wheel: Shift makes it 4 notches, and a device that reports deltaX works too
+ok 56 - Ctrl+wheel: Shift makes it 4 notches, and a device that reports deltaX works too
+  ---
+  duration_ms: 1.6306
+  type: 'test'
+  ...
+# Subtest: a middle click resets the lens to 60° (and does not start a drag or change the view)
+ok 57 - a middle click resets the lens to 60° (and does not start a drag or change the view)
+  ---
+  duration_ms: 0.5932
+  type: 'test'
+  ...
+# Subtest: the HUD shows the fov once the lens has moved off 60°, and drops it on the reset
+ok 58 - the HUD shows the fov once the lens has moved off 60°, and drops it on the reset
+  ---
+  duration_ms: 0.5702
+  type: 'test'
+  ...
+# Subtest: the pick still hits the station under the cursor after the lens changes (the pick reads the drawn pose, fov and all)
+ok 59 - the pick still hits the station under the cursor after the lens changes (the pick reads the drawn pose, fov and all)
+  ---
+  duration_ms: 3.5727
+  type: 'test'
+  ...
+# Subtest: W1: W held and REPEATING, C pressed: W's next auto-repeats do not take the view back into free
+ok 60 - W1: W held and REPEATING, C pressed: W's next auto-repeats do not take the view back into free
+  ---
+  duration_ms: 0.7532
+  type: 'test'
+  ...
+# Subtest: W1: W held and REPEATING, B pressed: W's next auto-repeats do not take the view back into free
+ok 61 - W1: W held and REPEATING, B pressed: W's next auto-repeats do not take the view back into free
+  ---
+  duration_ms: 0.5531
+  type: 'test'
+  ...
+# Subtest: W2: a trackpad swipe SIDEWAYS (deltaX only, no Shift: 20 events of 2 px) does not zoom
+ok 62 - W2: a trackpad swipe SIDEWAYS (deltaX only, no Shift: 20 events of 2 px) does not zoom
+  ---
+  duration_ms: 4.2555
+  type: 'test'
+  ...
+# Subtest: W2: the same sideways swipe with Ctrl held does not move the LENS either (the lens shares the wheel line)
+ok 63 - W2: the same sideways swipe with Ctrl held does not move the LENS either (the lens shares the wheel line)
+  ---
+  duration_ms: 1.3341
+  type: 'test'
+  ...
+# Subtest: D195: with nothing placed and no ghost, a frame draws, looking at where the first piece will start
+ok 64 - D195: with nothing placed and no ghost, a frame draws, looking at where the first piece will start
+  ---
+  duration_ms: 0.6317
+  type: 'test'
+  ...
+# Subtest: D195: with nothing placed, the wheel zooms on the next frame (not later, when a ghost appears)
+ok 65 - D195: with nothing placed, the wheel zooms on the next frame (not later, when a ghost appears)
+  ---
+  duration_ms: 0.5893
+  type: 'test'
+  ...
+# Subtest: D195: with nothing placed, W takes the view over and flies on the next frame
+ok 66 - D195: with nothing placed, W takes the view over and flies on the next frame
+  ---
+  duration_ms: 0.2667
+  type: 'test'
+  ...
+# Subtest: D195: with nothing placed, every camera mode draws (chase included, on the start alone)
+ok 67 - D195: with nothing placed, every camera mode draws (chase included, on the start alone)
+  ---
+  duration_ms: 0.4385
+  type: 'test'
+  ...
+# Subtest: D195: with no start in the document (the piece builder), the empty view looks from the origin along +z, level
+ok 68 - D195: with no start in the document (the piece builder), the empty view looks from the origin along +z, level
+  ---
+  duration_ms: 0.2283
+  type: 'test'
+  ...
+# Subtest: D195: the empty track's head is the frame the first piece starts with (src/geom buildPath's first sample, no roll)
+ok 69 - D195: the empty track's head is the frame the first piece starts with (src/geom buildPath's first sample, no roll)
+  ---
+  duration_ms: 0.2463
+  type: 'test'
+  ...
+# Subtest: D195: once a ghost shows on the empty track, the camera follows the ghost's head, as before
+ok 70 - D195: once a ghost shows on the empty track, the camera follows the ghost's head, as before
+  ---
+  duration_ms: 2.1648
+  type: 'test'
+  ...
+# Subtest: D252: Space held flies UP like E (3 m a frame, world up), and its release stops it
+ok 71 - D252: Space held flies UP like E (3 m a frame, world up), and its release stops it
+  ---
+  duration_ms: 1.7441
+  type: 'test'
+  ...
+# Subtest: D252: Left Ctrl ALONE flies DOWN like Q; Right Ctrl does not fly
+ok 72 - D252: Left Ctrl ALONE flies DOWN like Q; Right Ctrl does not fly
+  ---
+  duration_ms: 2.6557
+  type: 'test'
+  ...
+# Subtest: D252: Ctrl+Z never moves the camera: the descent before Z is undone, in free mode and from the build view (the view is kept too)
+ok 73 - D252: Ctrl+Z never moves the camera: the descent before Z is undone, in free mode and from the build view (the view is kept too)
+  ---
+  duration_ms: 1.1154
+  type: 'test'
+  ...
+# Subtest: D257: a SHORTCUT key held BEFORE Ctrl (Z) means Ctrl never flies on that press; Shift or W held first does not stop it, and Ctrl+Shift+Z still leaves the camera put
+ok 74 - D257: a SHORTCUT key held BEFORE Ctrl (Z) means Ctrl never flies on that press; Shift or W held first does not stop it, and Ctrl+Shift+Z still leaves the camera put
+  ---
+  duration_ms: 1.0472
+  type: 'test'
+  ...
+# Subtest: D252: Ctrl+wheel is still the LENS and the camera does not move; a mouse button down (a handle drag, Ctrl to snap) means no descent
+ok 75 - D252: Ctrl+wheel is still the LENS and the camera does not move; a mouse button down (a handle drag, Ctrl to snap) means no descent
+  ---
+  duration_ms: 1.2689
+  type: 'test'
+  ...
+# Subtest: D252: Space is TAKEN (preventDefault, down and up) so a focused button is never clicked; in a text field it types and the camera stays
+ok 76 - D252: Space is TAKEN (preventDefault, down and up) so a focused button is never clicked; in a text field it types and the camera stays
+  ---
+  duration_ms: 1.0102
+  type: 'test'
+  ...
+# Subtest: D255: Left Ctrl descends on the FIRST frame, like Space; Ctrl+Z still puts the camera back where Ctrl found it, and the view it found
+ok 77 - D255: Left Ctrl descends on the FIRST frame, like Space; Ctrl+Z still puts the camera back where Ctrl found it, and the view it found
+  ---
+  duration_ms: 1.0003
+  type: 'test'
+  ...
+# Subtest: D255: a LEFT drag never turns the camera, in free mode either; a RIGHT drag still looks
+ok 78 - D255: a LEFT drag never turns the camera, in free mode either; a RIGHT drag still looks
+  ---
+  duration_ms: 0.982
+  type: 'test'
+  ...
+# Subtest: a move key from the OVERHEAD view enters free with no frame throwing: pitch held at -89 degrees, facing where the overhead view had up the screen
+ok 79 - a move key from the OVERHEAD view enters free with no frame throwing: pitch held at -89 degrees, facing where the overhead view had up the screen
+  ---
+  duration_ms: 4.7713
+  type: 'test'
+  ...
+# Subtest: a handle drag (pointerdown only, its mousedown suppressed) with Ctrl held past 200 ms to snap: the camera does not move; a press joining Ctrl undoes it
+ok 80 - a handle drag (pointerdown only, its mousedown suppressed) with Ctrl held past 200 ms to snap: the camera does not move; a press joining Ctrl undoes it
+  ---
+  duration_ms: 1.3385
+  type: 'test'
+  ...
+# Subtest: D257: Left Ctrl with W flies down AND forward, whichever went down first (the same move as W with Q)
+ok 81 - D257: Left Ctrl with W flies down AND forward, whichever went down first (the same move as W with Q)
+  ---
+  duration_ms: 1.5548
+  type: 'test'
+  ...
+# Subtest: D257: Left Ctrl with a RIGHT-button look drag flies down and looks
+ok 82 - D257: Left Ctrl with a RIGHT-button look drag flies down and looks
+  ---
+  duration_ms: 0.651
+  type: 'test'
+  ...
+# Subtest: D257: Left Ctrl with Space nets ZERO on the up axis, whichever went down first
+ok 83 - D257: Left Ctrl with Space nets ZERO on the up axis, whichever went down first
+  ---
+  duration_ms: 1.0934
+  type: 'test'
+  ...
+# Subtest: D257: Ctrl+Z still leaves the camera where it started (and still undoes): flying with W, the descent is undone and the forward travel kept
+ok 84 - D257: Ctrl+Z still leaves the camera where it started (and still undoes): flying with W, the descent is undone and the forward travel kept
+  ---
+  duration_ms: 0.8199
+  type: 'test'
+  ...
+# Subtest: the surface: asphalt or solid draws the sigil surface, an image draws the set, and no kind keeps the set
+ok 85 - the surface: asphalt or solid draws the sigil surface, an image draws the set, and no kind keeps the set
+  ---
+  duration_ms: 0.7643
+  type: 'test'
+  ...
+# Subtest: D409: the camera HUD names the plain surface as the road's, never "sigil", for asphalt and solid alike
+ok 86 - D409: the camera HUD names the plain surface as the road's, never "sigil", for asphalt and solid alike
+  ---
+  duration_ms: 0.7231
+  type: 'test'
+  ...
+1..86
+# tests 86
+# suites 0
+# pass 86
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 945.1725

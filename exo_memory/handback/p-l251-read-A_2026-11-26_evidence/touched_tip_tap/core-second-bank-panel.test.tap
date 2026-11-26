@@ -1,0 +1,88 @@
+TAP version 13
+# Subtest: L135 C1: the bank's changes sit right after the bank row; a change is a row in the bank row's style (AMENDED L139: a list, not two fixed fields)
+ok 1 - L135 C1: the bank's changes sit right after the bank row; a change is a row in the bank row's style (AMENDED L139: a list, not two fixed fields)
+  ---
+  duration_ms: 48.9061
+  type: 'test'
+  ...
+# Subtest: L135 C2: the bank's change rows are off until the bank field has a target, on while it has one, off again when it is put back (AMENDED L139: rows of a list)
+ok 2 - L135 C2: the bank's change rows are off until the bank field has a target, on while it has one, off again when it is put back (AMENDED L139: rows of a list)
+  ---
+  duration_ms: 6.9691
+  type: 'test'
+  ...
+# Subtest: L135 C3: a change with no from is laid at 85% of the length and follows it until a value is typed; cleared, it follows again (AMENDED L139: a core without secondMinM)
+ok 3 - L135 C3: a change with no from is laid at 85% of the length and follows it until a value is typed; cleared, it follows again (AMENDED L139: a core without secondMinM)
+  ---
+  duration_ms: 57.7904
+  type: 'test'
+  ...
+# Subtest: L135 C4: the Extend options carry the bank's change only with a bank target AND a then; the core call is made with it (AMENDED L139: changes.phi, a list)
+ok 4 - L135 C4: the Extend options carry the bank's change only with a bank target AND a then; the core call is made with it (AMENDED L139: changes.phi, a list)
+  ---
+  duration_ms: 50.8845
+  type: 'test'
+  ...
+# Subtest: L135 C5: Undo gives back the bank's change as it was for the undone piece (and whether from was typed); a new document clears it (AMENDED L139: a list)
+ok 5 - L135 C5: Undo gives back the bank's change as it was for the undone piece (and whether from was typed); a new document clears it (AMENDED L139: a list)
+  ---
+  duration_ms: 134.5835
+  type: 'test'
+  ...
+# Subtest: L135 C6: extendOptions is pure: no change without a bank; from left blank is 85% of the length (no secondMinM); values are sent as typed (AMENDED L139: changes)
+ok 6 - L135 C6: extendOptions is pure: no change without a bank; from left blank is 85% of the length (no secondMinM); values are sent as typed (AMENDED L139: changes)
+  ---
+  duration_ms: 0.5637
+  type: 'test'
+  ...
+# Subtest: L135 C7: the panel says where the bank's mark stands: from, and the road's half width there; nothing without a change (AMENDED L139: marksAt)
+ok 7 - L135 C7: the panel says where the bank's mark stands: from, and the road's half width there; nothing without a change (AMENDED L139: marksAt)
+  ---
+  duration_ms: 26.5231
+  type: 'test'
+  ...
+# Subtest: L135 C8: tickAt: the ghost's station s0 + from, from -half to +half across; null for a jump's ghost, no ghost, or a from off the piece
+ok 8 - L135 C8: tickAt: the ghost's station s0 + from, from -half to +half across; null for a jump's ghost, no ghost, or a from off the piece
+  ---
+  duration_ms: 0.797
+  type: 'test'
+  ...
+# Subtest: L135 C9: the bank's mark is drawn into the view in css px; behind the camera it is not drawn (AMENDED L139: markStroke for tickLine)
+ok 9 - L135 C9: the bank's mark is drawn into the view in css px; behind the camera it is not drawn (AMENDED L139: markStroke for tickLine)
+  ---
+  duration_ms: 0.6978
+  type: 'test'
+  ...
+# Subtest: L135 C10: the layer draws the marks from the preview's own answers (ghost, view) and the panel's; nothing without them (AMENDED L139: marks, not one tick)
+ok 10 - L135 C10: the layer draws the marks from the preview's own answers (ghost, view) and the panel's; nothing without them (AMENDED L139: marks, not one tick)
+  ---
+  duration_ms: 1.4369
+  type: 'test'
+  ...
+# Subtest: L135 C11: with B's core, his case is built: 750 m, bank 30 then 0 from the panel's default, the piece holds about 30° at from and ends level; 637.5 is refused by name
+ok 11 - L135 C11: with B's core, his case is built: 750 m, bank 30 then 0 from the panel's default, the piece holds about 30° at from and ends level; 637.5 is refused by name
+  ---
+  duration_ms: 38.9003
+  type: 'test'
+  ...
+# Subtest: L135 C12: with B's core, a from past the piece is the core's refusal by name, shown in the panel; Extend adds nothing
+ok 12 - L135 C12: with B's core, a from past the piece is the core's refusal by name, shown in the panel; Extend adds nothing
+  ---
+  duration_ms: 8.3166
+  type: 'test'
+  ...
+# Subtest: L135 C13: on a 300 m piece, 30° then 0, the default from is clamped to 300 less the core's own minimum; 1 cm past it is refused, naming it; typed, it stays
+ok 13 - L135 C13: on a 300 m piece, 30° then 0, the default from is clamped to 300 less the core's own minimum; 1 cm past it is refused, naming it; typed, it stays
+  ---
+  duration_ms: 30.7854
+  type: 'test'
+  ...
+1..13
+# tests 13
+# suites 0
+# pass 13
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 588.9612

@@ -1,0 +1,1 @@
+{"file":"app/test/core-extra-bank-drag-cost.test.js","exit":0,"tests":4,"pass":3,"fail":0,"skipped":0,"todo":1,"s":5,"failed":["D642: dragging the extra bank on past what fits, into the hold, the first time, costs a move within 2 × the same drag with the bank early (p"]}

@@ -1,0 +1,208 @@
+MODE pointer {"look":"aqua","dots":7,"markWindowBefore":[{"x":502,"y":247,"w":308,"h":42,"words":"Extra turn · 80.00 m → 200.00 m · turns over 120.00 m"},{"x":502,"y":247,"w":308,"h":42,"words":"Extra turn · 80.00 m → 200.00 m · turns over 120.00 m"}],"markWindowAtRelease":["Extra turn · 179.00 m → 200.00 m · turns over 21.00 m","Extra turn · 179.00 m → 200.00 m · turns over 21.00 m"],"markStepsOverAWindow":2,"markPath":{"from":[581,398],"to":[656,268]},"afterMark":{"fields":"?=300 | ?=-1 | extra turn=92 | extra turn from=179 | extra turn 2=-91 | extra turn 2 from=200 | ?= | ?=-20 | bank at=80 | extra bank=-27 | extra bank from=145 | extra bank 2=0 | extra bank 2 from=200 | extra bank 3=25 | extra bank 3 from=255 | extra bank 4=26 | extra bank 4 from=300 | ?=15.5 | ?=33 | grip=100 | ?=0 | ?=0 | ?=0.64 | ?=0 | landing forward= | landing left= | landing up= | landing heading= | landing pitch= | landing bank= | selection grip= | piece name= | ?=90 | ?=90 | ?=22 | ?=4","band":"length 300.00 m turn +0.04° climb 0.00° bank +26.00° width 33.00 m NEXT turn+0.04° climb0° bank+26.00° cup15.5 edge0 edge start0.64 tube0 corner+0.04° · ends straight climb cornernone bank to gravity0.00° → +26.00°","dots":"650,300 589,346 640,329 658,293 446,266 467,266"},"readoutBefore":[],"handleStepsOverAWindow":20,"readoutWordsSeen":40,"handlePath":{"from":[508,330],"through":[573,307]},"afterHandle":{"fields":"?=301.34 | ?=-1 | extra turn=92 | extra turn from=179 | extra turn 2=-91 | extra turn 2 from=200 | ?= | ?=-20 | bank at=80 | extra bank=-27 | extra bank from=145 | extra bank 2=0 | extra bank 2 from=200 | extra bank 3=25 | extra bank 3 from=255 | extra bank 4=26 | extra bank 4 from=300 | ?=15.5 | ?=33 | grip=100 | ?=0 | ?=0 | ?=0.64 | ?=0 | landing forward= | landing left= | landing up= | landing heading= | landing pitch= | landing bank= | selection grip= | piece name= | ?=90 | ?=90 | ?=22 | ?=4","band":"length 301.34 m turn +0.03° climb 0.00° bank +26.00° width 33.00 m NEXT turn+0.03° climb0° bank+26.00° cup15.5 edge0 edge start0.64 tube0 corner+0.03° · ends straight climb cornernone bank to gravity0.00° → +26.00°","dots":"636,309 654,301 589,346 640,329 660,293 448,266 465,266"},"pageErrors":[]}
+MODE zorder {"look":"sigil","tree":"base (canvas)","containers":[],"values band / later changes":"under","values band / drag handles":"WINDOW ON TOP","view tag / later changes":"WINDOW ON TOP","view tag / drag handles":"WINDOW ON TOP","#left / later changes":"under","#left / drag handles":"under","camera bar / later changes":"under","camera bar / drag handles":"under","Show the guide / later changes":"under","Show the guide / drag handles":"WINDOW ON TOP","File menu / later changes":"under","File menu / drag handles":"under","dialog / later changes":"under","dialog / drag handles":"under","guide card / later changes":"under","guide card / drag handles":"WINDOW ON TOP","pageErrors":[]}
+MODE zorder {"look":"glass","tree":"base (canvas)","containers":[],"values band / later changes":"under","values band / drag handles":"WINDOW ON TOP","view tag / later changes":"WINDOW ON TOP","view tag / drag handles":"WINDOW ON TOP","#left / later changes":"under","#left / drag handles":"under","camera bar / later changes":"under","camera bar / drag handles":"under","Show the guide / later changes":"under","Show the guide / drag handles":"WINDOW ON TOP","File menu / later changes":"under","File menu / drag handles":"under","dialog / later changes":"under","dialog / drag handles":"under","guide card / later changes":"under","guide card / drag handles":"WINDOW ON TOP","pageErrors":[]}
+MODE zorder {"look":"aqua","tree":"base (canvas)","containers":[],"values band / later changes":"under","values band / drag handles":"WINDOW ON TOP","view tag / later changes":"WINDOW ON TOP","view tag / drag handles":"WINDOW ON TOP","#left / later changes":"under","#left / drag handles":"under","camera bar / later changes":"under","camera bar / drag handles":"under","Show the guide / later changes":"under","Show the guide / drag handles":"WINDOW ON TOP","File menu / later changes":"under","File menu / drag handles":"under","dialog / later changes":"under","dialog / drag handles":"under","guide card / later changes":"under","guide card / drag handles":"WINDOW ON TOP","pageErrors":[]}
+MODE zorder {"look":"aurora","tree":"base (canvas)","containers":[],"values band / later changes":"under","values band / drag handles":"WINDOW ON TOP","view tag / later changes":"WINDOW ON TOP","view tag / drag handles":"WINDOW ON TOP","#left / later changes":"under","#left / drag handles":"under","camera bar / later changes":"under","camera bar / drag handles":"under","Show the guide / later changes":"under","Show the guide / drag handles":"WINDOW ON TOP","File menu / later changes":"under","File menu / drag handles":"under","dialog / later changes":"under","dialog / drag handles":"under","guide card / later changes":"under","guide card / drag handles":"WINDOW ON TOP","pageErrors":[]}
+MODE zorder {"look":"skyline","tree":"base (canvas)","containers":[],"values band / later changes":"under","values band / drag handles":"WINDOW ON TOP","view tag / later changes":"WINDOW ON TOP","view tag / drag handles":"WINDOW ON TOP","#left / later changes":"under","#left / drag handles":"under","camera bar / later changes":"under","camera bar / drag handles":"under","Show the guide / later changes":"under","Show the guide / drag handles":"WINDOW ON TOP","File menu / later changes":"under","File menu / drag handles":"under","dialog / later changes":"under","dialog / drag handles":"under","guide card / later changes":"under","guide card / drag handles":"WINDOW ON TOP","pageErrors":[]}
+MODE zorder {"look":"skyline-night","tree":"base (canvas)","containers":[],"values band / later changes":"under","values band / drag handles":"WINDOW ON TOP","view tag / later changes":"WINDOW ON TOP","view tag / drag handles":"WINDOW ON TOP","#left / later changes":"under","#left / drag handles":"under","camera bar / later changes":"under","camera bar / drag handles":"under","Show the guide / later changes":"under","Show the guide / drag handles":"WINDOW ON TOP","File menu / later changes":"under","File menu / drag handles":"under","dialog / later changes":"under","dialog / drag handles":"under","guide card / later changes":"under","guide card / drag handles":"WINDOW ON TOP","pageErrors":[]}
+{
+ "tree": "C:\\Consonance\\t180-wt-l251-base",
+ "modes": [
+  "pointer",
+  "zorder"
+ ],
+ "chrome": "Chrome/158.0.8127.37",
+ "pointer": {
+  "look": "aqua",
+  "dots": 7,
+  "markWindowBefore": [
+   {
+    "x": 502,
+    "y": 247,
+    "w": 308,
+    "h": 42,
+    "words": "Extra turn · 80.00 m → 200.00 m · turns over 120.00 m"
+   },
+   {
+    "x": 502,
+    "y": 247,
+    "w": 308,
+    "h": 42,
+    "words": "Extra turn · 80.00 m → 200.00 m · turns over 120.00 m"
+   }
+  ],
+  "markWindowAtRelease": [
+   "Extra turn · 179.00 m → 200.00 m · turns over 21.00 m",
+   "Extra turn · 179.00 m → 200.00 m · turns over 21.00 m"
+  ],
+  "markStepsOverAWindow": 2,
+  "markPath": {
+   "from": [
+    581,
+    398
+   ],
+   "to": [
+    656,
+    268
+   ]
+  },
+  "afterMark": {
+   "fields": "?=300 | ?=-1 | extra turn=92 | extra turn from=179 | extra turn 2=-91 | extra turn 2 from=200 | ?= | ?=-20 | bank at=80 | extra bank=-27 | extra bank from=145 | extra bank 2=0 | extra bank 2 from=200 | extra bank 3=25 | extra bank 3 from=255 | extra bank 4=26 | extra bank 4 from=300 | ?=15.5 | ?=33 | grip=100 | ?=0 | ?=0 | ?=0.64 | ?=0 | landing forward= | landing left= | landing up= | landing heading= | landing pitch= | landing bank= | selection grip= | piece name= | ?=90 | ?=90 | ?=22 | ?=4",
+   "band": "length 300.00 m turn +0.04° climb 0.00° bank +26.00° width 33.00 m NEXT turn+0.04° climb0° bank+26.00° cup15.5 edge0 edge start0.64 tube0 corner+0.04° · ends straight climb cornernone bank to gravity0.00° → +26.00°",
+   "dots": "650,300 589,346 640,329 658,293 446,266 467,266"
+  },
+  "readoutBefore": [],
+  "handleStepsOverAWindow": 20,
+  "readoutWordsSeen": 40,
+  "handlePath": {
+   "from": [
+    508,
+    330
+   ],
+   "through": [
+    573,
+    307
+   ]
+  },
+  "afterHandle": {
+   "fields": "?=301.34 | ?=-1 | extra turn=92 | extra turn from=179 | extra turn 2=-91 | extra turn 2 from=200 | ?= | ?=-20 | bank at=80 | extra bank=-27 | extra bank from=145 | extra bank 2=0 | extra bank 2 from=200 | extra bank 3=25 | extra bank 3 from=255 | extra bank 4=26 | extra bank 4 from=300 | ?=15.5 | ?=33 | grip=100 | ?=0 | ?=0 | ?=0.64 | ?=0 | landing forward= | landing left= | landing up= | landing heading= | landing pitch= | landing bank= | selection grip= | piece name= | ?=90 | ?=90 | ?=22 | ?=4",
+   "band": "length 301.34 m turn +0.03° climb 0.00° bank +26.00° width 33.00 m NEXT turn+0.03° climb0° bank+26.00° cup15.5 edge0 edge start0.64 tube0 corner+0.03° · ends straight climb cornernone bank to gravity0.00° → +26.00°",
+   "dots": "636,309 654,301 589,346 640,329 660,293 448,266 465,266"
+  },
+  "pageErrors": []
+ },
+ "zorder": {
+  "sigil": {
+   "look": "sigil",
+   "tree": "base (canvas)",
+   "containers": [],
+   "values band / later changes": "under",
+   "values band / drag handles": "WINDOW ON TOP",
+   "view tag / later changes": "WINDOW ON TOP",
+   "view tag / drag handles": "WINDOW ON TOP",
+   "#left / later changes": "under",
+   "#left / drag handles": "under",
+   "camera bar / later changes": "under",
+   "camera bar / drag handles": "under",
+   "Show the guide / later changes": "under",
+   "Show the guide / drag handles": "WINDOW ON TOP",
+   "File menu / later changes": "under",
+   "File menu / drag handles": "under",
+   "dialog / later changes": "under",
+   "dialog / drag handles": "under",
+   "guide card / later changes": "under",
+   "guide card / drag handles": "WINDOW ON TOP",
+   "pageErrors": []
+  },
+  "glass": {
+   "look": "glass",
+   "tree": "base (canvas)",
+   "containers": [],
+   "values band / later changes": "under",
+   "values band / drag handles": "WINDOW ON TOP",
+   "view tag / later changes": "WINDOW ON TOP",
+   "view tag / drag handles": "WINDOW ON TOP",
+   "#left / later changes": "under",
+   "#left / drag handles": "under",
+   "camera bar / later changes": "under",
+   "camera bar / drag handles": "under",
+   "Show the guide / later changes": "under",
+   "Show the guide / drag handles": "WINDOW ON TOP",
+   "File menu / later changes": "under",
+   "File menu / drag handles": "under",
+   "dialog / later changes": "under",
+   "dialog / drag handles": "under",
+   "guide card / later changes": "under",
+   "guide card / drag handles": "WINDOW ON TOP",
+   "pageErrors": []
+  },
+  "aqua": {
+   "look": "aqua",
+   "tree": "base (canvas)",
+   "containers": [],
+   "values band / later changes": "under",
+   "values band / drag handles": "WINDOW ON TOP",
+   "view tag / later changes": "WINDOW ON TOP",
+   "view tag / drag handles": "WINDOW ON TOP",
+   "#left / later changes": "under",
+   "#left / drag handles": "under",
+   "camera bar / later changes": "under",
+   "camera bar / drag handles": "under",
+   "Show the guide / later changes": "under",
+   "Show the guide / drag handles": "WINDOW ON TOP",
+   "File menu / later changes": "under",
+   "File menu / drag handles": "under",
+   "dialog / later changes": "under",
+   "dialog / drag handles": "under",
+   "guide card / later changes": "under",
+   "guide card / drag handles": "WINDOW ON TOP",
+   "pageErrors": []
+  },
+  "aurora": {
+   "look": "aurora",
+   "tree": "base (canvas)",
+   "containers": [],
+   "values band / later changes": "under",
+   "values band / drag handles": "WINDOW ON TOP",
+   "view tag / later changes": "WINDOW ON TOP",
+   "view tag / drag handles": "WINDOW ON TOP",
+   "#left / later changes": "under",
+   "#left / drag handles": "under",
+   "camera bar / later changes": "under",
+   "camera bar / drag handles": "under",
+   "Show the guide / later changes": "under",
+   "Show the guide / drag handles": "WINDOW ON TOP",
+   "File menu / later changes": "under",
+   "File menu / drag handles": "under",
+   "dialog / later changes": "under",
+   "dialog / drag handles": "under",
+   "guide card / later changes": "under",
+   "guide card / drag handles": "WINDOW ON TOP",
+   "pageErrors": []
+  },
+  "skyline": {
+   "look": "skyline",
+   "tree": "base (canvas)",
+   "containers": [],
+   "values band / later changes": "under",
+   "values band / drag handles": "WINDOW ON TOP",
+   "view tag / later changes": "WINDOW ON TOP",
+   "view tag / drag handles": "WINDOW ON TOP",
+   "#left / later changes": "under",
+   "#left / drag handles": "under",
+   "camera bar / later changes": "under",
+   "camera bar / drag handles": "under",
+   "Show the guide / later changes": "under",
+   "Show the guide / drag handles": "WINDOW ON TOP",
+   "File menu / later changes": "under",
+   "File menu / drag handles": "under",
+   "dialog / later changes": "under",
+   "dialog / drag handles": "under",
+   "guide card / later changes": "under",
+   "guide card / drag handles": "WINDOW ON TOP",
+   "pageErrors": []
+  },
+  "skyline-night": {
+   "look": "skyline-night",
+   "tree": "base (canvas)",
+   "containers": [],
+   "values band / later changes": "under",
+   "values band / drag handles": "WINDOW ON TOP",
+   "view tag / later changes": "WINDOW ON TOP",
+   "view tag / drag handles": "WINDOW ON TOP",
+   "#left / later changes": "under",
+   "#left / drag handles": "under",
+   "camera bar / later changes": "under",
+   "camera bar / drag handles": "under",
+   "Show the guide / later changes": "under",
+   "Show the guide / drag handles": "WINDOW ON TOP",
+   "File menu / later changes": "under",
+   "File menu / drag handles": "under",
+   "dialog / later changes": "under",
+   "dialog / drag handles": "under",
+   "guide card / later changes": "under",
+   "guide card / drag handles": "WINDOW ON TOP",
+   "pageErrors": []
+  }
+ }
+}

@@ -1,0 +1,27 @@
+t180: waiting for a headless browser slot (4 of 4 held: pid 15988 since 2026-11-26T13:10:27.810Z; pid 34084 since 2026-11-26T13:05:20.125Z; pid 25708 since 2026-11-26T13:10:27.824Z; pid 19264 since 2026-11-26T13:10:39.554Z) since 30 s
+MODE sculpt {"sculpt":true,"at":[234,309],"brushHandles":[],"shown":[],"nodesBefore":0,"nodesDuring":[0],"mutations":{"added":0,"removed":0},"pageErrors":[]}
+{
+ "tree": "C:\\Consonance\\t180-wt-l251-read",
+ "modes": [
+  "sculpt"
+ ],
+ "chrome": "Chrome/158.0.8127.37",
+ "sculpt": {
+  "sculpt": true,
+  "at": [
+   234,
+   309
+  ],
+  "brushHandles": [],
+  "shown": [],
+  "nodesBefore": 0,
+  "nodesDuring": [
+   0
+  ],
+  "mutations": {
+   "added": 0,
+   "removed": 0
+  },
+  "pageErrors": []
+ }
+}

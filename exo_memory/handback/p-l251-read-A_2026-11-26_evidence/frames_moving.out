@@ -1,0 +1,9 @@
+l251 frames: look aqua, 2 rounds ABBA, 6 s a case, base C:\Consonance\t180-wt-l251-base, tip C:\Consonance\t180-wt-l251-read
+{"round":1,"tree":"base","kind":"canvas","windows":8,"shown":0,"blur":null,"frames":5283,"meanMs":1.136,"p50":0.7,"p95":3.8,"p99":5.5,"over16":0.04,"camEye0":[0,7,983],"camEye":[-44,7,983],"errors":[]}
+{"round":1,"tree":"base","kind":"none","windows":0,"shown":0,"blur":null,"frames":12598,"meanMs":0.476,"p50":0.4,"p95":0.8,"p99":1.3,"over16":0,"camEye0":[0,7,983],"camEye":[-44,7,983],"errors":[]}
+{"round":1,"tree":"tip","kind":"elements","windows":8,"shown":8,"blur":"blur(14px) saturate(1.7)","frames":6968,"meanMs":0.861,"p50":0.8,"p95":1.4,"p99":2.3,"over16":0,"camEye0":[0,7,983],"camEye":[-44,7,983],"errors":[]}
+{"round":1,"tree":"tip","kind":"none","windows":0,"shown":0,"blur":null,"frames":14084,"meanMs":0.426,"p50":0.4,"p95":0.7,"p99":1.1,"over16":0,"camEye0":[0,7,983],"camEye":[-45,7,983],"errors":[]}
+{"round":2,"tree":"tip","kind":"elements","windows":8,"shown":8,"blur":"blur(14px) saturate(1.7)","frames":6950,"meanMs":0.863,"p50":0.8,"p95":1.3,"p99":2.2,"over16":0,"camEye0":[0,7,983],"camEye":[-44,7,983],"errors":[]}
+{"round":2,"tree":"tip","kind":"none","windows":0,"shown":0,"blur":null,"frames":14021,"meanMs":0.428,"p50":0.4,"p95":0.7,"p99":1.1,"over16":0,"camEye0":[0,7,983],"camEye":[-44,7,983],"errors":[]}
+{"round":2,"tree":"base","kind":"canvas","windows":8,"shown":0,"blur":null,"frames":5899,"meanMs":1.017,"p50":0.6,"p95":3.4,"p99":4.7,"over16":0,"camEye0":[0,7,983],"camEye":[-44,7,983],"errors":[]}
+{"round":2,"tree":"base","kind":"none","windows":0,"shown":0,"blur":null,"frames":13700,"meanMs":0.438,"p50":0.4,"p95":0.7,"p99":1.2,"over16":0,"camEye0":[0,7,983],"camEye":[-44,7,983],"errors":[]}

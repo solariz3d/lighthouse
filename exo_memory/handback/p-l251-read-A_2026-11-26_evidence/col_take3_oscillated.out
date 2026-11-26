@@ -1,0 +1,4 @@
+heavy-run: waiting on 6fe15f0a pid 21156 (A L251 read: touched tests at 6a3ea79, since 2026-11-26T12:44:44.484Z) and 6e6e002c pid 24812 (P l254 read: select holds + mutants, release-frame row 4 opacity trace, since 2026-11-26T12:52:46.203Z) — all 2 slots are held
+heavy-run: waiting on 6fe15f0a pid 21156 (A L251 read: touched tests at 6a3ea79, since 2026-11-26T12:44:44.484Z) and 6e6e002c pid 24812 (P l254 read: select holds + mutants, release-frame row 4 opacity trace, since 2026-11-26T12:52:46.203Z) — all 2 slots are held
+{"look":"aqua","column":{"cleared":true,"opacity":"0"},"nudges":"dadadadadadadadadadadadadadada","handles":10,"handlesUnderColumn":[],"pageErrors":[]}
+{"look":"sigil","column":{"cleared":true,"opacity":"0"},"nudges":"dadadadadadadadadadadadadadada","handles":10,"handlesUnderColumn":[],"pageErrors":[]}

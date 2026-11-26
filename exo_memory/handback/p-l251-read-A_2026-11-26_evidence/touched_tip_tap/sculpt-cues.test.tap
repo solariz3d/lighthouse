@@ -1,0 +1,46 @@
+TAP version 13
+# Subtest: row 1: the band is worked out once while nothing it reads changes, and again when the camera, the band or the track does
+ok 1 - row 1: the band is worked out once while nothing it reads changes, and again when the camera, the band or the track does
+  ---
+  duration_ms: 1.5515
+  type: 'test'
+  ...
+# Subtest: row 2: the reach's end marks sit at s0 − r and s0 + r, a tick across the road; past an open lap's end there is none, round a closed lap's start it wraps
+ok 2 - row 2: the reach's end marks sit at s0 − r and s0 + r, a tick across the road; past an open lap's end there is none, round a closed lap's start it wraps
+  ---
+  duration_ms: 1.4917
+  type: 'test'
+  ...
+# Subtest: row 3: Stretch's reach is the piece holding the station, from its first joint to its last
+ok 3 - row 3: Stretch's reach is the piece holding the station, from its first joint to its last
+  ---
+  duration_ms: 0.2845
+  type: 'test'
+  ...
+# Subtest: row 4: the brush glyph stands on the road at its station and is never hit, so a press on it is the tool's, not a handle's
+ok 4 - row 4: the brush glyph stands on the road at its station and is never hit, so a press on it is the tool's, not a handle's
+  ---
+  duration_ms: 0.3864
+  type: 'test'
+  ...
+# Subtest: row 5: one format for the road and the strip: the channel's name, a sign, two decimals, its unit; and the words for each way
+ok 5 - row 5: one format for the road and the strip: the channel's name, a sign, two decimals, its unit; and the words for each way
+  ---
+  duration_ms: 0.5075
+  type: 'test'
+  ...
+# Subtest: row 6: in Sculpt the big overlay has four cells, the tool, the value under its channel's name, the radius and what moves
+ok 6 - row 6: in Sculpt the big overlay has four cells, the tool, the value under its channel's name, the radius and what moves
+  ---
+  duration_ms: 0.3704
+  type: 'test'
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 89.1265

@@ -1,0 +1,25 @@
+MODE sculpt {"sculpt":true,"at":[700,492],"shown":[],"nodesBefore":0,"nodesDuring":[0],"mutations":{"added":0,"removed":0},"pageErrors":[]}
+{
+ "tree": "C:\\Consonance\\t180-wt-l251-read",
+ "modes": [
+  "sculpt"
+ ],
+ "chrome": "Chrome/158.0.8127.37",
+ "sculpt": {
+  "sculpt": true,
+  "at": [
+   700,
+   492
+  ],
+  "shown": [],
+  "nodesBefore": 0,
+  "nodesDuring": [
+   0
+  ],
+  "mutations": {
+   "added": 0,
+   "removed": 0
+  },
+  "pageErrors": []
+ }
+}

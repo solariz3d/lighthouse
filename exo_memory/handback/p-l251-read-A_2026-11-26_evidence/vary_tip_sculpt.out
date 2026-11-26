@@ -1,0 +1,36 @@
+MODE sculpt {"sculpt":true,"at":[300,575],"scanned":339,"brushHandles":["brush-twist"],"shown":[{"layer":"drag handles","words":"this side follows the pointer · the far edge stays\nthe road ","bf":"blur(14px) saturate(1.7)","pe":"none"}],"nodesBefore":1,"nodesDuring":[1],"mutations":{"added":0,"removed":0},"pageErrors":[]}
+{
+ "tree": "C:\\Consonance\\t180-wt-l251-read",
+ "modes": [
+  "sculpt"
+ ],
+ "chrome": "Chrome/158.0.8127.37",
+ "sculpt": {
+  "sculpt": true,
+  "at": [
+   300,
+   575
+  ],
+  "scanned": 339,
+  "brushHandles": [
+   "brush-twist"
+  ],
+  "shown": [
+   {
+    "layer": "drag handles",
+    "words": "this side follows the pointer · the far edge stays\nthe road ",
+    "bf": "blur(14px) saturate(1.7)",
+    "pe": "none"
+   }
+  ],
+  "nodesBefore": 1,
+  "nodesDuring": [
+   1
+  ],
+  "mutations": {
+   "added": 0,
+   "removed": 0
+  },
+  "pageErrors": []
+ }
+}

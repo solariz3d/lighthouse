@@ -1,0 +1,245 @@
+[
+ {
+  "look": "aqua",
+  "handle": [
+   750,
+   367
+  ],
+  "atHover": {
+   "column": {
+    "cleared": false,
+    "opacity": "1"
+   },
+   "windows": [
+    {
+     "layer": "drag handles",
+     "tag": "9omvyl",
+     "words": "length 100.00 m",
+     "box": [
+      764,
+      333,
+      100,
+      22
+     ]
+    }
+   ]
+  },
+  "afterClear": {
+   "column": {
+    "cleared": true,
+    "opacity": "0"
+   },
+   "windows": [
+    {
+     "layer": "drag handles",
+     "tag": "9omvyl",
+     "words": "length 100.00 m",
+     "box": [
+      764,
+      333,
+      100,
+      22
+     ]
+    }
+   ],
+   "mutations": {
+    "added": 0,
+    "removed": 0
+   }
+  },
+  "sameWindowAcrossClear": true,
+  "containers": [
+   "drag handles z6"
+  ],
+  "paintCleared": {
+   "later changes": "no container",
+   "drag handles": "WINDOW SHOWS"
+  },
+  "columnBack": {
+   "column": {
+    "cleared": false,
+    "opacity": "1"
+   },
+   "windows": [
+    {
+     "layer": "drag handles",
+     "tag": "9omvyl",
+     "words": "length 100.00 m",
+     "box": [
+      764,
+      333,
+      100,
+      22
+     ]
+    }
+   ]
+  },
+  "paintShown": {
+   "later changes": "no container",
+   "drag handles": "covered 2,43,54"
+  },
+  "pageErrors": []
+ },
+ {
+  "look": "sigil",
+  "handle": [
+   750,
+   367
+  ],
+  "atHover": {
+   "column": {
+    "cleared": false,
+    "opacity": "1"
+   },
+   "windows": [
+    {
+     "layer": "drag handles",
+     "tag": "nhuq0e",
+     "words": "length 100.00 m",
+     "box": [
+      764,
+      333,
+      96,
+      22
+     ]
+    }
+   ]
+  },
+  "afterClear": {
+   "column": {
+    "cleared": true,
+    "opacity": "0"
+   },
+   "windows": [
+    {
+     "layer": "drag handles",
+     "tag": "nhuq0e",
+     "words": "length 100.00 m",
+     "box": [
+      764,
+      333,
+      96,
+      22
+     ]
+    }
+   ],
+   "mutations": {
+    "added": 0,
+    "removed": 0
+   }
+  },
+  "sameWindowAcrossClear": true,
+  "containers": [
+   "drag handles z6"
+  ],
+  "paintCleared": {
+   "later changes": "no container",
+   "drag handles": "WINDOW SHOWS"
+  },
+  "columnBack": {
+   "column": {
+    "cleared": false,
+    "opacity": "1"
+   },
+   "windows": [
+    {
+     "layer": "drag handles",
+     "tag": "nhuq0e",
+     "words": "length 100.00 m",
+     "box": [
+      764,
+      333,
+      96,
+      22
+     ]
+    }
+   ]
+  },
+  "paintShown": {
+   "later changes": "no container",
+   "drag handles": "covered 61,22,60"
+  },
+  "pageErrors": []
+ },
+ {
+  "look": "glass",
+  "handle": [
+   750,
+   367
+  ],
+  "atHover": {
+   "column": {
+    "cleared": false,
+    "opacity": "1"
+   },
+   "windows": [
+    {
+     "layer": "drag handles",
+     "tag": "0qotqa",
+     "words": "length 100.00 m",
+     "box": [
+      764,
+      333,
+      100,
+      22
+     ]
+    }
+   ]
+  },
+  "afterClear": {
+   "column": {
+    "cleared": true,
+    "opacity": "0"
+   },
+   "windows": [
+    {
+     "layer": "drag handles",
+     "tag": "0qotqa",
+     "words": "length 100.00 m",
+     "box": [
+      764,
+      333,
+      100,
+      22
+     ]
+    }
+   ],
+   "mutations": {
+    "added": 0,
+    "removed": 0
+   }
+  },
+  "sameWindowAcrossClear": true,
+  "containers": [
+   "drag handles z6"
+  ],
+  "paintCleared": {
+   "later changes": "no container",
+   "drag handles": "WINDOW SHOWS"
+  },
+  "columnBack": {
+   "column": {
+    "cleared": false,
+    "opacity": "1"
+   },
+   "windows": [
+    {
+     "layer": "drag handles",
+     "tag": "0qotqa",
+     "words": "length 100.00 m",
+     "box": [
+      764,
+      333,
+      100,
+      22
+     ]
+    }
+   ]
+  },
+  "paintShown": {
+   "later changes": "no container",
+   "drag handles": "covered 11,25,43"
+  },
+  "pageErrors": []
+ }
+]
