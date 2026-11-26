@@ -70,3 +70,9 @@
 - State: L249 (`loop/packet_t180_chrome_refactor_ACE_2026-11-26.md`) is the refactor: corners, pills, glows, shadows and
   focus only; backdrops, colours, fonts and layout stay. L250 (`loop/packet_t180_shadow_tracks_BO_2026-11-26.md`) is the
   shadow tracks. The blur is L251, queued behind L249 because both touch how a label window is drawn.
+- 05:3x (L): L249 built and merged: builder `l249-chrome-refactor` 40e931e (pushed), `handback/p-l249-chrome-A_2026-11-26.md`
+  (with C's and E's). theme + markwindow 21/21; texture-page 12/13, the red is row 7 (known, L253). The before/after
+  page from the real branch is published for him: https://claude.ai/artifact/BG2GrkaJoj6dMaNWAmfRun (36 pictures; the
+  librarian opened two first). Open with him, from A's "Said plainly": the left column is not flush to the window, it
+  sits 12 px in (`index.html` `#left { margin: 12px 0 12px 12px }`), so it is a floating panel with square corners;
+  flush, or floating with the 12 px corner, is his call. P reads next.
