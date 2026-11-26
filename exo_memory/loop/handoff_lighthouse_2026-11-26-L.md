@@ -18,6 +18,23 @@ for track builder and lighthouse".
   and is live only after a rebuild; L's running exe was built before it.
 - Panes O and P are on the committee on L (his 02:56 and 02:57 words).
 
+## After the handoff was first pushed: the Compact warm seats list (07:42 to 07:50)
+
+- His catch at 07:42: "found a bug, so compacted the warm seats, but now it says they still need to be compacted or some
+  shit". All four cuts had landed (`C:\Consonance\data\close-small.jsonl`); the list was wrong.
+- Cause: `consonance/tools/close-small.js` `lastRequest` read a seat's size from its last reply. A seat just cut has made
+  no call since, so its size from before the cut was listed again.
+- Fix, room commit **d8c98105**, by the librarian seat: a `compact_boundary` recorded after the last call gives its
+  `postTokens`. `close-small.test.js` 16 of 16 (three new rows, two red first). The app runs the tool from the repo, so
+  it is live without a rebuild; D gets it with a pull.
+- **Owed to D** (pane A's `handback/p-l257-push-A_2026-11-26.md`): the full js-suite and TAP were not run on
+  ab3ed333..d8c98105; only the tool's own test file was.
+- **Open:** `main.rs` `last_request` (:14693) still reads a seat's size the old way. What uses it was not traced. A
+  pane's job, and it needs a rebuild.
+- His second catch, 07:46: "but M is working, why tell me to close when you started something". The librarian had rung
+  the chair for a push and said "good to close" in the same reply. For this seat: no "good to close" while a ring of its
+  own is unanswered.
+
 ## The landing suite's reds, as read on 95e772a9 (A's `scratchpad/l247land/run.log`; figures in the hand-back)
 
 - `intake_light_tests::light_the_librarian_worst_case_intake_is_under_145_000` (main.rs:10882): 147,663 B. The
