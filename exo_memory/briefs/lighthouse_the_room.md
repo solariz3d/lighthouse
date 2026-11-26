@@ -499,3 +499,11 @@ carry it, so this brief does.
   (`spawn_sibling`, main.rs:4077). It is born kept, as a committee pane, and takes the next letter never used.
   `letters.json` on L uses A to N, so the next two are O and P, the same letters as D's. `seat_models` O and P were set
   to opus at 03:0x (backup `~/.consonance.json.bak-20261126-before-OP`).
+- 03:00 (L): "so just a reminder, all builder panes are opus 5.5 on xhigh, i changed my mind about the orch being fable,
+  would be too expensive, so orch opus 5.5 xhigh, then lib and third place are fable high". So the turbo table is:
+  committee panes opus xhigh; main opus xhigh; librarian fable high; third_place fable high.
+- Found 03:0x (checked, `C:\Consonance\data\persist.log`): he made O and P at 1795683544/549. Neither has a
+  `SEAT MODEL` line. `spawn_sibling` spawns the pane BEFORE it assigns the letter (main.rs:4080 spawn, :4093
+  pane_letter), so the by-letter `seat_models` lookup finds nothing, and the pane starts with no `--model` and takes
+  `~/.claude/settings.json` `"model": "fable"` (inferred: no reply of theirs has been read yet). They will come up on opus
+  at the next relaunch, when the letter exists. The fix, assigning the letter before the spawn, goes into L247.
