@@ -531,3 +531,12 @@ carry it, so this brief does.
   point we are at?" The librarian's answer: yes, one now on the room's code since 11-20 (`git diff --shortstat` over
   `consonance/`: 53 files, 7,154 insertions), and keep the other for the track builder's release diff (main..c9fe4f1 is
   3,527 insertions so far, 966 outside tests, before L249 and L250). He launches it; no seat can.
+- **05:01:** "but also, our objective for what consonance is, is sort of abstract in a way, the "solutions" we look for
+  consonance may not be understood by such a system, sure does the code work and run, better efficiency per chunk of
+  lines etc, but would it understand what consonance is trying to do and become beyond just a normal chat
+  wrapper/orchestrator?" The librarian's answer: no, and it does not have to for what it checks. It can check that the
+  code does what the code says it means (a seat is not cut mid-lap, a spawn gets the model its table names); it cannot
+  judge whether that is the right thing to build. Prior art for a purpose-blind reader still finding real faults:
+  `handback/p-consumer-coldread3-LIB_2026-10-09.md` (a dead hook at `dev/shell/hooks/precompact.js:39`, a hard-coded
+  path at `dev/dream/dream_cycle.ps1:52`). The risk named: deliberate limits (the intake cap, who may ring whom) read as
+  defects by a reviewer without the purpose.
