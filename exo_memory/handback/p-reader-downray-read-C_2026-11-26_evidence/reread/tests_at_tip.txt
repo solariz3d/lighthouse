@@ -1,0 +1,28 @@
+✔ the cubic basis: a partition of unity, and its first and second derivatives agree with finite differences (0.8994ms)
+✔ a G2 joint holds: value, slope and curvature agree at the joint to 1e-8, even over data with a kink there (1.7421ms)
+✔ closure: a self-closing piece ends where it began, to G2, with its data never forced to meet (0.5316ms)
+✔ a flat 20 m strip reads 20 m wide, its centre on the midline (4.4291ms)
+✔ a half-pipe reads its width ALONG the surface (32 m), and its centre sits on the floor, not in the air between the rims (8.7133ms)
+✔ a road 5 m above is not captured: the walk stays on the surface it started on (trap b) (3.0431ms)
+✔ a closed ring road: one self-closing piece, rebuilt within 5 m and 5° everywhere, and it closes (84.6934ms)
+✔ a ring road with a 40 m gap: split at the jump, rebuilt within tolerance, and the flight checked (66.6745ms)
+✔ a row with no value moves nothing: the fit with null rows added equals the fit without them (0.3137ms)
+✔ the banded Cholesky solves a symmetric banded system exactly as a dense solve does (0.3124ms)
+✔ the rotation-minimising frame (double reflection) on a planar circle keeps its up vector the plane's normal (0.1665ms)
+✔ a station on a narrow layer under cupped road is re-read by down-rays: the full width, the centre on the top surface (46.2229ms)
+✔ the re-read does not take a road 5 m above, and leaves a read with no width of its own as the cross-section found it (99.5541ms)
+✔ banked 20°, 27 m wide, sides rising to 50°: the re-read band follows the surface past a fixed height window, the full width, the centre on the top's centre (62.9696ms)
+✔ banked 20°, 49 m wide, sides rising to 50°: the re-read band follows the surface past a fixed height window, the full width, the centre on the top's centre (104.6096ms)
+✔ banked 40°, 38 m wide, sides rising to 50°: the re-read band follows the surface past a fixed height window, the full width, the centre on the top's centre (76.2269ms)
+✔ banked 52°, 49 m wide, sides rising to 30°: the re-read band follows the surface past a fixed height window, the full width, the centre on the top's centre (90.2489ms)
+✔ the band stops at its edge where the next layer is a step of more than 1 m (a lower road beside it), and does not walk onto it (47.0445ms)
+✔ a jump whose landing lies on road the read already took ends the line at the take-off, and says where it landed (15.1111ms)
+✔ a jump that lands on new road is kept as it was (69.7317ms)
+ℹ tests 20
+ℹ suites 0
+ℹ pass 20
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 849.7662

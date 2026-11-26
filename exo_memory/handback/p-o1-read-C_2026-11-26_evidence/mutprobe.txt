@@ -1,0 +1,15 @@
+N1-window-starts-at-the-mark: cases differing 0 of 245
+N2-window-ends-at-the-piece-end: cases differing 0 of 245
+N3-no-step-back-by-the-metre: cases differing 31 of 245
+   e.g. tip {"first":-80,"changes":[[100,-100],[200,-90]],"laid":false,"needM":121} 
+   mutant {"set":"A","lead":0,"first":-80,"L":300,"changes":[[100,-100],[200,-90]],"laid":false,"err":"BAD_SECOND","needM":123,"msg":"BAD_SECOND: the turn (kh) change 1 (its second turn), from -0.0139626 to -0.0174533, needs at least 123.0 m before change 2's mark (the built road rounds a shorter one back ove
+N4-turn-and-climb-share-a-memo: cases differing 0 of 245
+N5-probe-base-not-keyed-by-field: cases differing 0 of 245
+N6-no-ceiling-short-circuit: cases differing 0 of 245
+N7-search-cap-without-the-floor: cases differing 0 of 245
+N8-search-steps-up-by-50: cases differing 32 of 245
+   e.g. tip {"first":-80,"changes":[[100,-100],[200,-90]],"laid":false,"needM":121} 
+   mutant {"set":"A","lead":0,"first":-80,"L":300,"changes":[[100,-100],[200,-90]],"laid":false,"err":"BAD_SECOND","needM":140,"msg":"BAD_SECOND: the turn (kh) change 1 (its second turn), from -0.0139626 to -0.0174533, needs at least 140.0 m before change 2's mark (the built road rounds a shorter one back ove
+N9-probe-bar-1.3: cases differing 7 of 245
+   e.g. tip {"first":-80,"changes":[[120,-100],[230,-90]],"laid":false,"needM":121} 
+   mutant {"set":"A","lead":0,"first":-80,"L":300,"changes":[[120,-100],[230,-90]],"laid":true,"peak":1.253,"sha":"b616a767ccc79daf"}

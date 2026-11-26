@@ -1,0 +1,72 @@
+✖ O1 R1a: a turn change −80 → −60 °/100m over 103 m on a 300 m piece whose first ramp (0 → −80) runs under it is laid (the capped ceiling asked 205.9 m), reaching −60 with its built turn changing under the bar (× 1.05) (3.0097ms)
+✖ O1 R1a climb: a climb change −30 → −20 °/100m over 80 m on a 300 m piece whose first ramp (0 → −30) runs under it is laid (the capped ceiling asked 102.9 m), reaching −20 with its built climb changing under the bar (× 1.05) (0.5459ms)
+✖ O1 R1b: a turn change −80 → −75 over 13 m on that moving ramp is still refused, naming a shortest under the capped 51.5 m and never under its own 25.7 m; laid there, its built turn changes under the bar (× 1.05) (0.9353ms)
+✔ O1 R1b sharp ramp: where the first ramp itself changes the turn faster than the bar near the mark (0 → −80 over 120 m), a span between the change's own shortest and the ceiling is refused, naming the ceiling (0.5995ms)
+✔ O1 R1c: with no first ramp under the change, the refusals and the laid documents are today's, byte for byte (turn and climb) (5.3827ms)
+✔ O1 R1e: a change at or past the closed-form ceiling over a moving first ramp lays today's document, byte for byte (turn and climb) (2.6988ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 3
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 80.8947
+
+✖ failing tests:
+
+test at test\core_turn_share_built.test.js:34:1
+✖ O1 R1a: a turn change −80 → −60 °/100m over 103 m on a 300 m piece whose first ramp (0 → −80) runs under it is laid (the capped ceiling asked 205.9 m), reaching −60 with its built turn changing under the bar (× 1.05) (3.0097ms)
+  Error [CoreError]: BAD_SECOND: the turn (kh) change 1 (its second turn), from -0.0139626 to -0.010472, needs at least 205.9 m before the piece's end (the built road rounds a shorter one back over the hold): from at most 94.1, got 197
+      at G:\consonance-scratch\t180-o1-c\src\core\extend.js:628:41
+      at Array.forEach (<anonymous>)
+      at changeLists (G:\consonance-scratch\t180-o1-c\src\core\extend.js:601:25)
+      at extend (G:\consonance-scratch\t180-o1-c\src\core\extend.js:1015:57)
+      at lay (G:\consonance-scratch\t180-o1-c\test\core_turn_share_built.test.js:21:10)
+      at TestContext.<anonymous> (G:\consonance-scratch\t180-o1-c\test\core_turn_share_built.test.js:35:13)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.start (node:internal/test_runner/test:1015:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:358:17) {
+    code: 'BAD_SECOND',
+    channel: 'kh',
+    change: 0,
+    needM: 205.87761380667803
+  }
+
+test at test\core_turn_share_built.test.js:41:1
+✖ O1 R1a climb: a climb change −30 → −20 °/100m over 80 m on a 300 m piece whose first ramp (0 → −30) runs under it is laid (the capped ceiling asked 102.9 m), reaching −20 with its built climb changing under the bar (× 1.05) (0.5459ms)
+  Error [CoreError]: BAD_SECOND: the climb (kv) change 1 (its second climb), from -0.00523599 to -0.00349066, needs at least 102.9 m before the piece's end (the built road rounds a shorter one back over the hold): from at most 197.1, got 220
+      at G:\consonance-scratch\t180-o1-c\src\core\extend.js:628:41
+      at Array.forEach (<anonymous>)
+      at changeLists (G:\consonance-scratch\t180-o1-c\src\core\extend.js:601:25)
+      at extend (G:\consonance-scratch\t180-o1-c\src\core\extend.js:1015:57)
+      at lay (G:\consonance-scratch\t180-o1-c\test\core_turn_share_built.test.js:21:10)
+      at TestContext.<anonymous> (G:\consonance-scratch\t180-o1-c\test\core_turn_share_built.test.js:42:13)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+      at Test.postRun (node:internal/test_runner/test:1247:19) {
+    code: 'BAD_SECOND',
+    channel: 'kv',
+    change: 0,
+    needM: 102.93880690333901
+  }
+
+test at test\core_turn_share_built.test.js:48:1
+✖ O1 R1b: a turn change −80 → −75 over 13 m on that moving ramp is still refused, naming a shortest under the capped 51.5 m and never under its own 25.7 m; laid there, its built turn changes under the bar (× 1.05) (0.9353ms)
+  AssertionError [ERR_ASSERTION]: it names the built road's shortest, not the capped ceiling: 51.46940345166938
+      at TestContext.<anonymous> (G:\consonance-scratch\t180-o1-c\test\core_turn_share_built.test.js:52:10)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+      at Test.postRun (node:internal/test_runner/test:1247:19)
+      at Test.run (node:internal/test_runner/test:1175:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:787:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

@@ -1,0 +1,31 @@
+A. station on a 2 m strip under a cupped, banked road: read width W; want width within 0.5 m of W, centre within 0.3 m of the top centre
+  W 12 bank 0 cup 50 strip 1.5 m down: reread 22/22 width 11.99-11.99 centre off 0.05 m ok
+  W 12 bank 0 cup 30 strip 1.5 m down: reread 22/22 width 11.99-11.99 centre off 0.05 m ok
+  W 12 bank 0 cup 50 strip 0.8 m down: reread 0/22 width 11.98-11.98 centre off 0.00 m ok
+  W 12 bank 52 cup 50 strip 1.5 m down: reread 22/22 width 10.94-10.94 centre off 0.72 m MISS
+  W 12 bank 58 cup 50 strip 1.5 m down: reread 0/22 width 1.99-1.99 centre off 1.50 m MISS
+  W 12 bank 58 cup 30 strip 1.5 m down: reread 0/22 width 1.99-1.99 centre off 1.50 m MISS
+  W 27 bank 0 cup 50 strip 1.5 m down: reread 22/22 width 26.99-26.99 centre off 0.05 m ok
+  W 27 bank 0 cup 30 strip 1.5 m down: reread 22/22 width 26.99-26.99 centre off 0.05 m ok
+  W 27 bank 0 cup 50 strip 0.8 m down: reread 0/22 width 26.98-26.98 centre off 0.00 m ok
+  W 27 bank 52 cup 50 strip 1.5 m down: reread 22/22 width 25.94-25.94 centre off 0.72 m MISS
+  W 27 bank 58 cup 50 strip 1.5 m down: reread 0/22 width 1.99-1.99 centre off 1.50 m MISS
+  W 27 bank 58 cup 30 strip 1.5 m down: reread 0/22 width 1.99-1.99 centre off 1.50 m MISS
+  W 38 bank 0 cup 50 strip 1.5 m down: reread 22/22 width 37.99-37.99 centre off 0.05 m ok
+  W 38 bank 0 cup 30 strip 1.5 m down: reread 22/22 width 37.99-37.99 centre off 0.05 m ok
+  W 38 bank 0 cup 50 strip 0.8 m down: reread 0/22 width 37.98-37.98 centre off 0.00 m ok
+  W 38 bank 52 cup 50 strip 1.5 m down: reread 22/22 width 36.94-36.94 centre off 0.72 m MISS
+  W 38 bank 58 cup 50 strip 1.5 m down: reread 0/22 width 1.99-1.99 centre off 1.50 m MISS
+  W 38 bank 58 cup 30 strip 1.5 m down: reread 0/22 width 1.99-1.99 centre off 1.50 m MISS
+  W 49 bank 0 cup 50 strip 1.5 m down: reread 22/22 width 48.99-48.99 centre off 0.05 m ok
+  W 49 bank 0 cup 30 strip 1.5 m down: reread 22/22 width 48.99-48.99 centre off 0.05 m ok
+  W 49 bank 0 cup 50 strip 0.8 m down: reread 0/22 width 48.98-48.98 centre off 0.00 m ok
+  W 49 bank 52 cup 50 strip 1.5 m down: reread 22/22 width 47.95-47.95 centre off 0.32 m MISS
+  W 49 bank 58 cup 50 strip 1.5 m down: reread 0/22 width 1.99-1.99 centre off 1.50 m MISS
+  W 49 bank 58 cup 30 strip 1.5 m down: reread 0/22 width 1.99-1.99 centre off 1.50 m MISS
+  A: 48 of 60 cases ok
+A2. a second road level with the cup's left rim (2.4 m up), from its edge outward 20 m: width 26.99-26.99 (want 27) reread 22
+B. a 12 m jump straight on, onto new road: falseLandings [{"d":100,"landingD":112,"onD":100,"distM":12}], last station d 100, NOT as wanted (want 0)
+B. a 25 m jump straight on, onto new road: falseLandings [], last station d 213, as wanted (want 0)
+B. a jump landing on a NEW deck 12 m over road driven earlier: falseLandings [{"d":144,"landingD":178,"onD":28,"distM":12.2}], last station d 140, NOT as wanted (want 0)
+B. a landing on a separate road beside the driven one, 32 m apart: falseLandings [], last station d 440, as wanted (want 0)

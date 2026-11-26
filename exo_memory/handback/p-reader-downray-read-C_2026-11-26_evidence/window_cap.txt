@@ -1,0 +1,4 @@
+bank 20: cap 32.2 m (uphill 18.7, downhill 13.4)
+bank 40: cap 17.1 m (uphill 9.4, downhill 7.7)
+bank 52: cap 14.0 m (uphill 7.1, downhill 6.9)
+above (2.5 m straight up) passed when 1.5/cos(b) > 2.5: b > 53.1 deg

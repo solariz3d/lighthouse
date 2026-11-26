@@ -2037,3 +2037,24 @@ Claim (could be wrong): his 08:19 crash was Export to Assetto Corsa: `v8-oom-sta
 ## 2026-11-26 — L251: at builder 6a3ea79 the label windows are elements over the view (markwindow.js layer, one reused node a box, no pointer events), each look blurring by its own #left blur (SIGIL blur(10px) at index.html:268, against the packet's "SIGIL has no panel blur"); eight of them cost no more a frame than 40e931e's canvas windows (p95 1.4 vs 3.2-3.9 ms), but behind 80-92% fills the blur takes only 0.5-3.8% of the detail in the window
 - Evidence: `exo_memory/handback/p-l251-blur-C_2026-11-26_evidence/page_branch1.txt` (3/3; 0/3 at base in `page_base1.txt`), `units_at_base.txt` (15 red), `touched_run1.txt` (372/372), `frames_aqua.txt`, `window_detail.txt`.
 - Hand-back: `exo_memory/handback/p-l251-blur-C_2026-11-26.md`
+
+## 2026-11-26 — [T2] research lap, HELD at section 17 of 61 for his restart (D677): the builder's core laid every [T2] section tried so far within the registered tolerances once the rates were solved (sections 1, 2, 4 made, 59 just outside on width and direction); resume by re-running pass 2 from the local notes, then the table and hand-back
+- Evidence (local, uncommitted, holds track data): `G:\consonance-scratch\c-t2\RESUME.md`, `TOLERANCES.md` (registered 18:56:26Z before any measure), `pass2.txt`.
+- Hand-back: `exo_memory/handback/p-unmakeable-T2-C_2026-11-26.md` (not yet written)
+
+## 2026-11-26 — [T2] unmakeable: every one of the 61 sections is made by hand-typed corners when laid alone (36,088 m; the simplest route 50 m to 5 m, 4,420 pieces; none needed solved rates or steering), and chained by hand at 5 m, 5 of 7 stretches are made; but the whole lap cannot be laid as one document, because the read's own banked passes over itself sit closer than the builder's 3.1 m clearance (refused at section 20 by 4 routes), and 16 sections have an off-centre floor no panel field sends
+- Evidence (local, uncommitted, holds track data): `G:\consonance-scratch\c-t2\table_pass7.md`, `chaintable.md`, `chain_lap10_hand_apron0.txt`, `passread.js`, `TOLERANCES.md` (6 dated amendments).
+- Hand-back: `exo_memory/handback/p-unmakeable-T2-C_2026-11-26.md`
+
+
+## 2026-11-26 — reader-downray read: E's dab271b re-reads a station under a cupped road right when the road is level (4 of 4 widths), but on banked road its fixed ray window (tools/piecewise.cjs:123, 8 m up, 3 m down) caps the band near 11/sin(bank) m and moves the centre 2.1-3.4 m uphill; the landing guard fires on 5 of 38 local reads, all real; NOT CLEAN
+- Evidence: `exo_memory/handback/p-reader-downray-read-C_2026-11-26_evidence/synth.js`, `synth_tip.txt`, `synth_base.txt`, `mutants.txt` (applied 6 / caught 4 / NOT APPLIED 0), `window_cap.txt`.
+- Hand-back: `exo_memory/handback/p-reader-downray-read-C_2026-11-26.md`
+
+## 2026-11-26 — reader-downray re-read: E's a8e54b7 makes the down-ray band follow banked road (the height window now moves with the band), so 48 of my 60 synthetic cases pass and the misses are the named limits (overhang past vertical, the 58° `above` reach); the 4 new rows go red at dab271b on width and M5's equivalent is caught by the new edge row; CLEAN, one comment nit ("within its gap" should be "at least its gap", my own first-read wording)
+- Evidence: `exo_memory/handback/p-reader-downray-read-C_2026-11-26_evidence/reread/tests_new_rows_at_dab271b.txt`, `mutants2.txt` (applied 8 / caught 7 / NOT APPLIED 0), `synth_all_tip.txt`.
+- Hand-back: `exo_memory/handback/p-reader-downray-read-C_2026-11-26.md` (section "Re-read")
+
+## 2026-11-26 — O1 read: E's bfa6732 probes a turn or climb change as if it ended where the first ramp ends (extend.js routePeak :505-519, asked with the span to the next mark at :619), so a change in the ramp's own direction followed by another change is laid over the bar on the built road, 35 of 67 newly laid cases, worst 1.287 (turn and climb alike), all refused at ceb21f5; the probe's bar (1.3 survives) and the named shortest are unpinned; R1c bytes and the 7 failures hold; NOT CLEAN
+- Evidence: `exo_memory/handback/p-o1-read-C_2026-11-26_evidence/sweep_tip.jsonl`, `sweep_base.jsonl`, `holds.js`, `kv.js`, `mutants3.txt` (applied 9 / caught 0 / NOT APPLIED 0), `mutprobe.txt`, `r1d_cap_restored.txt`.
+- Hand-back: `exo_memory/handback/p-o1-read-C_2026-11-26.md`
