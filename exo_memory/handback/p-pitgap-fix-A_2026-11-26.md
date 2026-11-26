@@ -67,6 +67,11 @@ counted by the export's own `laneForExport` with its self-check on.
 **The floor: `PIT_GAP_MIN_M = 0.1` m** (`src/doc/pitlane.js`). It is above every red value measured (0.01) and above the
 2-9 cm mesh offset.
 
+> **Corrected 2026-11-26, repair round (pane O's read, `p-pitgap-read-O_2026-11-26.md` §2):** 0.1 m is a **margin, not the
+> least gap that exports.** O measured every gap from 0.012 m up exporting, on every road measured. Below that there is no
+> threshold: 0.002 and 0.008 pass where 0.005 and 0.01 fail. My heading "the smallest exportable value, measured" overstated
+> what the table shows. It shows red at 0.01 m and under, and clean from 0.02 m where I looked.
+
 `inferred:` 0.1 m clears every road measured here, not every road there could be. The rows pin the flat control, and the
 table above is the evidence for the others.
 
@@ -81,6 +86,10 @@ table above is the evidence for the others.
 **What it does not cover:**
 - A stored file with a gap under 0.1 m still exports red, as before. Its next panel edit to the lane is refused until
   the gap is raised.
+  > **Corrected 2026-11-26, repair round (O's read §1, §2):** both halves were wrong.
+  > - Such a file exports as before, red only at the gaps that were red: 0.01 m and under, measured. From 0.012 m it exports.
+  > - Refusing every later edit was the bug O found: the panel sends the whole stored lane on every edit. The repair
+  >   (`p-pitgap-repair-A_2026-11-26.md`) refuses only a gap that changes to under 0.1 m.
 - `D.setPitLane` called directly (scripts, the core API) is not refused.
 - Of his 27 saved tracks, 9 have a pit lane, and all 9 have a gap of 12 m. None is affected.
 
