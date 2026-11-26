@@ -1,0 +1,21 @@
+ℹ tests 3697
+ℹ pass 3669
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 23
+ℹ todo 3
+ℹ duration_ms 1161579.384
+fast-exit 1
+✖ failing tests:
+test at app\test\aclook.test.js:219:1
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+test at app\test\core-extra-bank-drag-cost.test.js:94:1
+✖ D642: dragging the extra bank back toward level on his p2 (a moving first ramp), the first time, costs a move within 2 × the same drag with the bank early (p95) (1992.1178ms)
+  AssertionError [ERR_ASSERTION]: the rolling drag's p95 is 13.3 ms a move, the early drag's 5.6 ms: 2.38 ×, over 2 ×
+test at app\test\core-extra-bank-drag-cost.test.js:111:1
+  AssertionError [ERR_ASSERTION]: the rolling drag went past −88.45 and is held short of where the pointer went (-360°)
+test at app\test\texture-page.test.js:252:1
+✖ row 7 (D417): the first actions row is Extend, Straight, Undo, Redo, and Extend sits above "Extend at the head", in every look (2676.097ms)
+  AssertionError [ERR_ASSERTION]: sigil: the first actions row
+test at test\core_bank_flow.test.js:197:1
+  AssertionError [ERR_ASSERTION]: run-in 3.819° at 360; ease-out 9.583° at 673

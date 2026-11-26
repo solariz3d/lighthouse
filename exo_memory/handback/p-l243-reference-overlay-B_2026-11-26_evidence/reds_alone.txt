@@ -1,0 +1,8 @@
+red-l243-aclook.txt: ℹ pass 32 ℹ fail 0 
+red-l243-core-extra-bank-drag-cost.txt: ℹ pass 3 ℹ fail 0 
+red-l243-core_bank_flow.txt: ℹ pass 17 ℹ fail 0 
+red-l243-texture-page.txt: ℹ pass 10 ℹ fail 1 
+red-piece-aclook.txt: ℹ pass 32 ℹ fail 0 
+red-piece-core-extra-bank-drag-cost.txt: ℹ pass 2 ℹ fail 1 
+red-piece-core_bank_flow.txt: ℹ pass 17 ℹ fail 0 
+red-piece-texture-page.txt: ℹ pass 10 ℹ fail 1 

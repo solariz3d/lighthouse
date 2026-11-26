@@ -1,0 +1,11 @@
+sideLeft to the right: caught
+no closing span: caught
+camber sign: caught
+yaw sign: caught
+no anchor translation: caught
+always closed: caught
+a batch drops its last span: caught
+trailing bytes allowed: caught
+grid refused: caught
+stored normal ignored: caught
+10 of 10 caught; restored byte for byte

@@ -1,0 +1,107 @@
+{
+ "reference track 1": {
+  "kn5Files": 4,
+  "readMs": 337.3809,
+  "parsed": 4,
+  "refused": [],
+  "meshes": 1317,
+  "roadMeshes": 204,
+  "roadTris": 130081,
+  "keys": {
+   "ROAD": 143,
+   "GRASS": 19,
+   "SAND": 17,
+   "KERB": 18,
+   "CURB": 16,
+   "CONCRETE": 26,
+   "CARPET": 1,
+   "PITS": 3,
+   "WALL": 67,
+   "GRS": 4,
+   "OUT": 2
+  },
+  "mode": "the main road key only",
+  "validKeys": {
+   "ROAD": 130081,
+   "KERB": 4121,
+   "CURB": 15008,
+   "CONCRETE": 3166,
+   "CARPET": 21
+  },
+  "mainKey": "ROAD",
+  "surfacesIni": true,
+  "samples": 44,
+  "offRoad": 0,
+  "kn5WidthMed": 12.25,
+  "aiWidthMed": 12.132451057434082,
+  "ratioMed": 1.004765956959826,
+  "within5pct": 24,
+  "mbRead": 449.5
+ },
+ "reference track 2": {
+  "kn5Files": 8,
+  "readMs": 404.3389000000001,
+  "parsed": 8,
+  "refused": [],
+  "meshes": 940,
+  "roadMeshes": 56,
+  "roadTris": 214393,
+  "keys": {
+   "WALL": 94,
+   "GRASS": 21,
+   "KERB": 4,
+   "PIT": 2,
+   "OUT": 1,
+   "SAND": 1,
+   "TARMHIST": 52
+  },
+  "mode": "the main road key only",
+  "validKeys": {
+   "KERB": 1972,
+   "TARMHIST": 214393
+  },
+  "mainKey": "TARMHIST",
+  "surfacesIni": true,
+  "samples": 150,
+  "offRoad": 0,
+  "kn5WidthMed": 9.25,
+  "aiWidthMed": 9.590857982635498,
+  "ratioMed": 1.0252543631054105,
+  "within5pct": 123,
+  "mbRead": 529.2
+ },
+ "reference track 3": {
+  "kn5Files": 8,
+  "readMs": 488.12539999999996,
+  "parsed": 8,
+  "refused": [],
+  "meshes": 1113,
+  "roadMeshes": 79,
+  "roadTris": 214393,
+  "keys": {
+   "WALL": 123,
+   "GRASS": 35,
+   "KERB": 5,
+   "PIT": 2,
+   "OUT": 1,
+   "SAND": 1,
+   "TARMHIST": 52,
+   "ROAD": 22
+  },
+  "mode": "the main road key only",
+  "validKeys": {
+   "KERB": 2680,
+   "TARMHIST": 214393,
+   "ROAD": 117040
+  },
+  "mainKey": "TARMHIST",
+  "surfacesIni": true,
+  "samples": 173,
+  "offRoad": 87,
+  "kn5WidthMed": 9.5,
+  "aiWidthMed": 9.610257863998413,
+  "ratioMed": 1.0208622244901435,
+  "within5pct": 122,
+  "mbRead": 634.2
+ }
+}

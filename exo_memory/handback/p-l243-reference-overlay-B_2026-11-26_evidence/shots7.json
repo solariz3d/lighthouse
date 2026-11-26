@@ -1,0 +1,219 @@
+{
+ "placed": true,
+ "trackInfo": {
+  "lengthM": 500,
+  "samples": 251,
+  "start": [
+   0,
+   0,
+   0
+  ],
+  "closed": false
+ },
+ "results": [
+  {
+   "alias": "reference track 1",
+   "kind": "tight",
+   "readMsNode": 0.5152,
+   "wallMs": 17656,
+   "nudge": null,
+   "info": {
+    "lengthM": 1719.9504588856262,
+    "width": {
+     "median": 12.099873065948486,
+     "min": 10.002362728118896,
+     "max": 14.522552967071533
+    },
+    "closed": true,
+    "points": 1092,
+    "nudge": {
+     "dx": 0,
+     "dz": 0,
+     "dy": 0,
+     "yawDeg": 0
+    },
+    "start": [
+     0,
+     0,
+     0
+    ],
+    "forward": [
+     1.5699247457590104e-16,
+     -0.0055351697916953555,
+     0.99998468083035
+    ],
+    "anchor": {
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "T": [
+      0,
+      0,
+      1
+     ]
+    }
+   },
+   "state": {
+    "open": true,
+    "layouts": 4,
+    "shown": "reference track 1\u0000",
+    "nudge": {
+     "dx": 0,
+     "dz": 0,
+     "dy": 0,
+     "yawDeg": 0
+    },
+    "timing": {
+     "readMs": 1.399999976158142,
+     "buildMs": 4
+    },
+    "error": null,
+    "readout": "1,720 m along its line · 12.1 m wide (10 to 14.5) · read 1 ms, built 4 ms"
+   },
+   "frameMs": 2.799999952316284
+  },
+  {
+   "alias": "reference track 2",
+   "kind": "fast",
+   "readMsNode": 0.6836,
+   "wallMs": 22830,
+   "nudge": null,
+   "info": {
+    "lengthM": 5755.166689962854,
+    "width": {
+     "median": 9.59086537361145,
+     "min": 8.240211963653564,
+     "max": 18.675803184509277
+    },
+    "closed": true,
+    "points": 3728,
+    "nudge": {
+     "dx": 0,
+     "dz": 0,
+     "dy": 0,
+     "yawDeg": 0
+    },
+    "start": [
+     0,
+     0,
+     0
+    ],
+    "forward": [
+     9.71445146547012e-17,
+     0.0051920441836148645,
+     0.9999865212477593
+    ],
+    "anchor": {
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "T": [
+      0,
+      0,
+      1
+     ]
+    }
+   },
+   "state": {
+    "open": true,
+    "layouts": 4,
+    "shown": "reference track 2\u0000",
+    "nudge": {
+     "dx": 0,
+     "dz": 0,
+     "dy": 0,
+     "yawDeg": 0
+    },
+    "timing": {
+     "readMs": 2,
+     "buildMs": 7.299999952316284
+    },
+    "error": null,
+    "readout": "5,755 m along its line · 9.6 m wide (8.2 to 18.7) · read 2 ms, built 7 ms"
+   },
+   "frameMs": 2.6999999284744263
+  },
+  {
+   "alias": "reference track 3",
+   "kind": "banked",
+   "readMsNode": 0.8863,
+   "wallMs": 21939,
+   "nudge": {
+    "dx": -984,
+    "dz": -91,
+    "dy": 7,
+    "yawDeg": -133.5,
+    "atPoint": 5577,
+    "camberDeg": 30.9,
+    "after": {
+     "dx": -984,
+     "dz": -91,
+     "dy": 7,
+     "yawDeg": -133.5
+    }
+   },
+   "info": {
+    "lengthM": 10013.760443123132,
+    "width": {
+     "median": 10.655721664428711,
+     "min": 7.802821636199951,
+     "max": 13.806678295135498
+    },
+    "closed": true,
+    "points": 6478,
+    "nudge": {
+     "dx": 0,
+     "dz": 0,
+     "dy": 0,
+     "yawDeg": 0
+    },
+    "start": [
+     0,
+     0,
+     0
+    ],
+    "forward": [
+     6.938893903907228e-17,
+     0.005457560956339108,
+     0.9999851074033091
+    ],
+    "anchor": {
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "T": [
+      0,
+      0,
+      1
+     ]
+    }
+   },
+   "state": {
+    "open": true,
+    "layouts": 4,
+    "shown": "reference track 3\u0000",
+    "nudge": {
+     "dx": 0,
+     "dz": 0,
+     "dy": 0,
+     "yawDeg": 0
+    },
+    "timing": {
+     "readMs": 2.600000023841858,
+     "buildMs": 16.600000023841858
+    },
+    "error": null,
+    "readout": "10,014 m along its line · 10.7 m wide (7.8 to 13.8) · read 3 ms, built 17 ms"
+   },
+   "frameMs": 2.600000023841858
+  }
+ ],
+ "afterNone": null,
+ "pageErrors": []
+}

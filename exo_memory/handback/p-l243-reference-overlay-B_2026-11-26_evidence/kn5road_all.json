@@ -1,0 +1,107 @@
+{
+ "reference track 1": {
+  "kn5Files": 4,
+  "readMs": 325.509,
+  "parsed": 4,
+  "refused": [],
+  "meshes": 1317,
+  "roadMeshes": 204,
+  "roadTris": 152397,
+  "keys": {
+   "ROAD": 143,
+   "GRASS": 19,
+   "SAND": 17,
+   "KERB": 18,
+   "CURB": 16,
+   "CONCRETE": 26,
+   "CARPET": 1,
+   "PITS": 3,
+   "WALL": 67,
+   "GRS": 4,
+   "OUT": 2
+  },
+  "mode": "every valid-track surface",
+  "validKeys": {
+   "ROAD": 130081,
+   "KERB": 4121,
+   "CURB": 15008,
+   "CONCRETE": 3166,
+   "CARPET": 21
+  },
+  "mainKey": "ROAD",
+  "surfacesIni": true,
+  "samples": 44,
+  "offRoad": 0,
+  "kn5WidthMed": 13.75,
+  "aiWidthMed": 12.132451057434082,
+  "ratioMed": 0.9267771584647042,
+  "within5pct": 13,
+  "mbRead": 449.5
+ },
+ "reference track 2": {
+  "kn5Files": 8,
+  "readMs": 417.712,
+  "parsed": 8,
+  "refused": [],
+  "meshes": 940,
+  "roadMeshes": 56,
+  "roadTris": 216365,
+  "keys": {
+   "WALL": 94,
+   "GRASS": 21,
+   "KERB": 4,
+   "PIT": 2,
+   "OUT": 1,
+   "SAND": 1,
+   "TARMHIST": 52
+  },
+  "mode": "every valid-track surface",
+  "validKeys": {
+   "KERB": 1972,
+   "TARMHIST": 214393
+  },
+  "mainKey": "TARMHIST",
+  "surfacesIni": true,
+  "samples": 150,
+  "offRoad": 0,
+  "kn5WidthMed": 9.5,
+  "aiWidthMed": 9.590857982635498,
+  "ratioMed": 1.0159243447440012,
+  "within5pct": 123,
+  "mbRead": 529.2
+ },
+ "reference track 3": {
+  "kn5Files": 8,
+  "readMs": 479.5145,
+  "parsed": 8,
+  "refused": [],
+  "meshes": 1113,
+  "roadMeshes": 79,
+  "roadTris": 334113,
+  "keys": {
+   "WALL": 123,
+   "GRASS": 35,
+   "KERB": 5,
+   "PIT": 2,
+   "OUT": 1,
+   "SAND": 1,
+   "TARMHIST": 52,
+   "ROAD": 22
+  },
+  "mode": "every valid-track surface",
+  "validKeys": {
+   "KERB": 2680,
+   "TARMHIST": 214393,
+   "ROAD": 117040
+  },
+  "mainKey": "TARMHIST",
+  "surfacesIni": true,
+  "samples": 260,
+  "offRoad": 0,
+  "kn5WidthMed": 10.75,
+  "aiWidthMed": 10.730846881866455,
+  "ratioMed": 1.0282299352246662,
+  "within5pct": 151,
+  "mbRead": 634.2
+ }
+}
