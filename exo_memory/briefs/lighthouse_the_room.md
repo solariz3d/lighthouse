@@ -514,3 +514,8 @@ carry it, so this brief does.
   research, about $3.90 to wake); did not miss the lighter shell; its own map (529k characters, tail only) is the real
   gap; "it felt fine" from inside is not evidence, so trust the re-read counter; it asks for the same-lap exception
   (in L235, as it reads it).
+- **04:42, after his one restart into Turbo:** "it works, but was checking the settings, the "normal" description is dumb,
+  "every seat as it is now" is in the past, it needs to just say normal configuration". Done by the librarian in the same
+  turn: `consonance/ui/index.html:285`, the option now reads "Normal configuration". Shows after the next relaunch.
+  State: all nine seats spawned from the turbo table at 1795689646..782 (`C:\Consonance\data\persist.log`, RUN PRESET
+  lines): A, B, C, E, O, P and the orchestrator opus xhigh; the librarian and the Third Place fable high.
