@@ -38,3 +38,19 @@ The real page `app/index.html` in headless Chrome, with a stand-in for the nativ
 
 SOURCES: packet_t180_declutter_A_2026-11-26.md, briefs/t180_ui_declutter.md and its png, sed -n 1400,1460p app/core/panel.js, node --test (four files), git stash, declutter_screens.js runs, ls of his pieces folder, tasklist, git ls-remote
 NEXT: librarian show him before/rest.png beside after/rest.png and the two hovers, and send pane C the diff cfa7ad9..77ffe18, when you have read this
+
+## L241 fix (pane C's read, 6ebbc15): new tip 36d2d31
+
+BASE: C:\Consonance\t180-wt-declutter 77ffe18
+
+- **C was right.** A draw with no ghost set `prevByField` to `{}`, so on the ghost's return a field with ONE mark read as "0 before, 1 now" and flashed its label for 2 s, with nothing added.
+- **Fix, C's line, taken as right in kind:** `prevByField = pose ? byField : null` (`app/core/secondtick.js:149`). A draw with no ghost saw no marks, which does not mean there were none. So it forgets, and the return is a first draw. A real add while the ghost is shown (a field going from 0 to 1 mark) still flashes, because that compares two draws with a ghost.
+- **Row, red first (checked):** C's V4 taken into `app/test/core-mark-labels.test.js` as **D6** (my helper's ghost can now go and come back: `state.ghost`). At 77ffe18 it fails: `actual: [ 'Extra bank ·', 'drag to star' ], expected: []`; the file was 17 pass, 1 fail. With the fix: 18 of 18.
+- **Runs (checked):**
+  - The four touched files: `node --test app/test/core-mark-labels.test.js app/test/core-extra-handles.test.js app/test/core-second-bank-panel.test.js app/test/core-second-change-panel.test.js` -> 74 tests, 74 pass.
+  - C's own file on my tree: `T180=C:/Consonance/t180-wt-declutter node --test .../p-l241-read-C_2026-11-26_evidence/c-l241-read.test.js` -> 10 tests, 10 pass.
+- **CHANGELOG** unchanged: its line ("for 2 s after it is added") still says what it does.
+- Builder `l241-declutter` 36d2d31, pushed (`git ls-remote` = 36d2d314c6). No build, no install; the T-180 app left running as found.
+
+SOURCES: exo_memory/handback/p-l241-read-C_2026-11-26.md:19-45, c-l241-read.test.js (V4), node --test, git ls-remote
+NEXT: pane C re-run V1-V9 on 36d2d31 when you have read this section
