@@ -284,7 +284,9 @@ checked (`node t5_table2.cjs t5_table.md t5_lay.json t5_side_12.json t5_side_30.
   those presses ("no road under the press") and I first read that as a refusal of the tool. From v2 the presses stay 1 m inside the road, and 0 drags
   are refused.
 - **The first cap-12 run stopped after its first section, with no error.** Re-run in the foreground, it completed. Its cause was not found; the table
-  is the completed run.
+  is the completed run. **The cause, from the chair's interrupt (sent 19:51:01Z, delivered 20:15:29Z):** pane C's cleanup, matching "lay\.js", ended
+  the process at about 19:51Z. checked: `t5_side_12.json` was written at 19:52:31Z (the re-run), and it holds 6 sections and 36 runs, as the cap-30
+  file does. Order 1's commit `f2132a2` is from 19:54:08Z, so no re-run was needed.
 - **A table cell first named the wrong quantity:** "bank misses by 2.8x" at 1805–1845 was the peak curvature's ratio (bank is 1.2×). The rule now names
   the largest ratio.
 
