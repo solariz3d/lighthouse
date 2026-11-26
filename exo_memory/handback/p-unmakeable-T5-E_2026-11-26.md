@@ -9,6 +9,9 @@ BelowNormal; nothing was launched. His words in the brief (12:48): *"There are p
   The builder's misses are 41 sections (6,873 m).
 - the route through the ramp at d 4,038 is open.
 
+**The chair's question of 20:15:54Z, section 10:** the 11 "the road turns" kinks are 8 width steps (7 one-sided, 1 uneven; 1 made, STEERED), 2 of
+the variation class (1 made by hand, 138 pieces) and 1 of the read's. The lap stands at 21 of 71 sections made, 3,430 of 10,734 m. 9d's kink split is corrected in section 7.
+
 Section 5c and parts of sections 4-5 are corrected in section 7.
 
 **Builder:** the worktree `C:\Consonance\t180-wt-e-rightwards` at `136e309` (landing-1126 `ceb21f5` plus my L255 CSS fix; the core is the same as ceb21f5's).
@@ -301,6 +304,16 @@ checked (`node t5_table2.cjs t5_table.md t5_lay.json t5_side_12.json t5_side_30.
 - **`t5_lay.cjs` crashed on a cut run whose last row is a jump with no landing.** Such jumps are now skipped (v9); nothing else changed.
 - **My first count of the seeded walks said 4 end at the d 7,030 take-off; it is 2,** and 3 more at d 10,086, the same jump on the read's second time
   round.
+- **My kink sort (`t5_kink.cjs` v2) dropped each section's last station.** It took the stations by the table's rounded metres, so a last station at
+  s 1050.04 against "1050" fell out. In 7 of the 11 "the road turns" sections that station holds the width step. With it gone, the sort found its
+  peak at an earlier station, where both edges bend gently together, and called the section a turn. v3 takes the section's own station indices, as
+  the lay's compare does (v2 and its outputs kept as `*_v2`). Even v3's three-station edge test cannot resolve a step at a section's last station.
+  So section 10 measures width and centre over ±20 m instead (`t5_step.cjs`). **Section 9d's split of the 18 kinks (7 one-sided width, 11 the road
+  turns) is superseded.** By the step measure: 11 one-sided width steps; 4 where the width changes by about 3 m but the centre moves by other than
+  half (3 of them one-sided within 8 m of the peak, 1 uneven); 2 with flat width; 1 too near its run's start to measure. 9d's table and counts
+  stay as written; this line corrects them.
+- **9d's "0 of 18 kinks were the centre alone"** is wrong for 1433-1476. At its peak the profile's centre is 0.32 m off, while a cross-section
+  re-walked there finds both edges within 0.05 m (section 10).
 
 ## 8. The packet's falsifier, as it stands
 
@@ -515,6 +528,88 @@ what blocks it; the simplest route that made it; its pieces; STEERED.
 | 4 | 3486-3646 | 10855-11015 | tight corner, bank under 45°; 1 station(s) the read could not take | no | builder, marginal | marginal: width 1.33x, within 1.5x tolerance, position held (2.2 m) | - | - | - |
 | 4 | 3646-3755 | 11015-11124 | straight, bank under 45° | yes | made | - | pieces every ~40 m | 3 | no |
 
+## 10. The 11 "the road turns" kinks: the variation class, or out of reach? (chair, 2026-11-26T20:15:54Z)
+
+**Answer: mostly neither.**
+- **8 of the 11 are not turns.** They are **steps in the road's width**: about 3 m, within one read station (~4 m), at the section's end. One edge
+  holds its line and the other steps out; the centre steps about half the width and stays there.
+- **2 are the variation class:**
+  - the return run, made by hand with 138 pieces;
+  - 1912-1962, a real gentle turn, not made.
+- **1 is the read's:** a 0.32 m wobble of the centre alone.
+- **Made: 2 of 11.**
+  - The return run: by hand, 138 pieces.
+  - 2836-2964: STEERED, 32 pieces. It passes inside the tolerances by a hair, and it gets there by carrying the width step in the road's
+    centreline. That is the route the cross-section plan's (b) says puts a false corner in the line.
+- **No route tried makes the other 7 width steps.** I do not name them "cannot". The routes not tried are listed below.
+
+**The routes tried, 16 new forms on top of the 13 from section 2.** Same sections, same lead-in and run-out, same compare and tolerances
+(`t5_steer.cjs`, loading `t5_lay.cjs` as its library):
+- **by hand:** corner pieces at every read station (~4 m), from the read's ±10 m fitted angles;
+- **by hand from the read's raw angles:** the tangent at each station is the central difference of its neighbours' centres, with no fit. Corner
+  pieces and rate pieces, one per station gap (~4 m). This is the smallest typed piece a cut on the read allows, and the only typed form whose
+  numbers contain a 4 m jog;
+- **STEERED, solved-rate pieces** every ~20, 15, 10, 8 and 4 m, at gain 1 and 0.5, the same loop as [T1]'s and [T3]'s routes. Each piece's turn and
+  climb rate are found by laying it, reading the built head, discarding it and re-laying it (a secant, up to 6 rounds). The aim is the read's
+  heading and pitch at the piece's end, corrected back onto the read's line;
+- **STEERED, each piece's end put on the read's point** (10, 8, 4 m). **Not a valid test:** with the heading left free the loop diverges (24-84 m
+  off), and elsewhere the builder refuses with `JOINT` (below). It made nothing, and I count it as my controller failing, not the builder.
+- **Controls:** two sections made before (294-479, 3974-4019) are still made under the new forms (by hand, ~4 m pieces). On the 11, no route was
+  refused by a floor. `TURN_TOO_SHORT` fired once, on a 1.9 m corner piece; the 21 m corner floor never applied.
+
+**How the class was measured** (`t5_step.cjs`), after finding that my kink sort was wrong (section 7):
+- the measure takes the read profile's own width and centre around the peak station (the lay's own curvature peak):
+  - **dw:** the mean width 8-20 m before the peak, against 3-21 m after it;
+  - **the centre's step:** its sideways offset off a quadratic fitted to the centres 30-8 m before;
+- **one-sided width step:** |dw| ≥ 1.5 m and the step is |dw|/2 within 40%;
+- **width flat:** |dw| < 1.5 m.
+- I set the 1.5 m and the 40% before the run. `t5_jog.cjs` re-walks both edges at each station as a check.
+
+**One line per section.** Lap metres follow 9c's inferred lap. "Built/read peak" is the curvature peak (1/m) of the nearest route against the
+read's; the tolerance is 20%.
+
+| run | section m | lap m | simplest route that makes it (or the nearest) | pieces | STEERED | class | evidence |
+|---|---|---|---|---|---|---|---|
+| 1 | 0-60 | 0-60 | not made; nearest: by hand, rate pieces at every station, raw angles (peak 0.0205 built / 0.0491 read) | 17 | - | one-sided width step at the section's last station, then the road bends away | width 16.6 → 19.7 m; centre −1.29 m 4 m after the peak, easing to −0.12 m by 20 m |
+| 1 | 2836-2964 | 2836-2964 | **made:** solved-rate pieces every ~4 m, gain 1 | 32 | **yes** | one-sided width step, made by carrying it in the centreline | width 18.7 → 22.1 m, centre +1.08 m; made with heading 2.91° (bar 3) and peak 18% off (bar 20%) |
+| 2 | 0-572 | 4289-4861 | **made:** by hand, corner pieces at every station, raw angles | 138 | no (also made STEERED at ~4 m, 119 pieces) | **the variation class:** made by many short pieces | peak 9 m in, too near the run's start for the step measure; read peak R 44 m |
+| 3 | 331-516 | 5192-5377 | not made; nearest: by hand, rate pieces at every station, raw angles (0.0193 / 0.0412) | 48 | - | uneven width step: both edges move, by unequal amounts | width 22.4 → 16.9 m (−5.5), centre +0.99 m |
+| 3 | 1662-1742 | 6523-6603 | not made; nearest: by hand, corner pieces at every station, raw angles (0.0129 / 0.0301) | 24 | - | one-sided width step, spread over ~8 m | width 16.8 → 19.7 m; centre +0.56 m at 4 m, +1.00 m at 8 m |
+| 3 | 1912-1962 | 6773-6823 | not made; nearest: solved-rate pieces every ~10 m, gain 1, **over-curved** (0.0113 / 0.0072). The one form within 11% of the peak (a piece per turn-rate extreme, 2 pieces) misses heading 4.2° and pitch 2.2° | 5 | yes (nearest) | **the variation class, not made:** a real, gentle turn | width flat (19.9 → 20.7 m); centre leaves the earlier line steadily, −1.4 to −2.8 m over 4-17 m |
+| 3 | 2202-2292 | 7063-7153 | not made; nearest: by hand, rate pieces at every station, raw angles (0.0225 / 0.0497) | 26 | - | one-sided width step | width 17.1 → 20.1 m, centre +1.33 m |
+| 4 | 0-65 | 7369-7434 | not made; nearest: by hand, rate pieces at every station, raw angles (0.0222 / 0.0516) | 18 | - | one-sided width step | width 17.0 → 19.9 m, centre +1.26 m |
+| 4 | 667-790 | 8036-8159 | not made; nearest: by hand, rate pieces at every station, raw angles (0.0239 / 0.0500) | 33 | - | one-sided width step | width 17.0 → 20.1 m, centre +1.33 m |
+| 4 | 946-1050 | 8315-8419 | not made; nearest: by hand, rate pieces at every station, raw angles (0.0226 / 0.0574) | 30 | - | one-sided width step | width 17.0 → 20.3 m, centre −1.04 m |
+| 4 | 1433-1476 | 8802-8845 | not made; nearest: by hand, corner pieces at every station, raw angles (0.0055 / 0.0174) | 14 | - | **the read's:** a wobble of its centre alone | width flat (20.9 → 21.7 m); at the peak the profile's centre is 0.32 m off, and a re-walked cross-section there finds both edges within 0.05 m |
+
+- checked (`node t5_step.cjs <run>_profile.json <run>_kinks.txt`, each run; `t5_steer.cjs` per run → `steer_*.json`):
+  - **width steps:** 8 of 11. One is made, the STEERED false-corner route; 7 are not made.
+  - **the variation class:** 2 of 11. One is made by hand (138 pieces), one is not made.
+  - **the read's:** 1 of 11.
+- inferred (arithmetic on 9d's checked totals): with these two, **the lap stands at 21 of 71 sections made, 3,430 of 10,734 m** (2,730 + 572 + 128).
+  Of those 3,430 m, 128 m were made by the false-corner route.
+- **Why the width steps are not the variation class.** Every miss sits in the curvature peak: the read's centre jumps about 1.3 m in one station
+  because one edge does. On those 7, the road built nearest stays within 0.55-2.47 m of the read's centre throughout, inside the 3 m bar, and its peak comes out at
+  about half the read's. The builder's width field moves both edges equally about the centre. So a typed road can follow the step only by bending
+  its own centreline, a false corner, and that bend has to be as sharp as the step. At ~4 m pieces it reached the bar once (2836-2964) and fell
+  short seven times.
+- **The routes not tried for the width steps,** so this names no "cannot":
+  - the stored right-width channel of the cross-section plan's (b). It is not built, and it is his call.
+  - the pit-lane tool. The plan's (a) says it already makes [T4]'s level shelf on one rim, and a one-sided widening may be the same shape.
+  - pieces shorter than a read station (under 4 m), which need cuts between stations.
+- **Two notes on the builder,** found on the way, inferred, not pursued:
+  - inferred: the point-steered pieces drew `JOINT` refusals from the builder's own joint check on pieces it had laid itself. The slopes differ
+    by about 1e-7 rad/m² (about 0.03% of the slope), e.g. `kh starts with slope 0.000328704…, the previous piece ends with 0.000328597…`. The
+    trigger was the controller's extreme rates; it may be a tolerance tighter than the solve.
+  - inferred: in 7 of the 11 the step falls at the section's last station. The section rule cuts where the 20 m-smoothed heading rate changes
+    class, and the step itself moves the read's heading, so it most likely made the cut.
+- **Against the other tracks' class.** The librarian's catalogue converges on variation of turn, climb and bank inside a piece. [T5]'s return run
+  and 1912-1962 are variation of turn inside a piece (inferred: I did not look for a bank reversal or a hump in them). [T5]'s main remaining shape
+  is different: an edge that steps out about 3 m in one station, while the centreline itself turns smoothly.
+
+**Its falsifier, registered before this section lands:** it is wrong if a width step listed here is laid inside the tolerances by a route not
+listed above. It is also wrong if one is re-measured and turns out to have both edges moving together (a real turn).
+
 ## Scripts (scratch only, kept; their outputs are the other author's layout)
 
 `C:\Users\nname\AppData\Local\Temp\claude\8e9709f509cfea85\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\t5\`:
@@ -539,6 +634,9 @@ what blocks it; the simplest route that made it; its pieces; STEERED.
 | `t5_follow2.cjs` | the follower, with the nearest read station at each step |
 | `t5_kink.cjs`, `*_kinks.txt` | the kink sort (9d) |
 | `t5_final.cjs`, `t5_final.md` | the merged table (9d); `F1=85 F2=61 node t5_final.cjs` |
+| `t5_steer.cjs`, `steer_*.json` | section 10: the 16 new forms (by hand at every station, raw angles, STEERED) on the 11 |
+| `t5_kdecomp.cjs`, `t5_jog.cjs`, `t5_step.cjs`, `k11.cjs` | section 10: the peak's vertical and sideways parts; both edges re-walked across the peak; the width and centre step |
+| `t5_kink.cjs` (v3), `t5_kink_v2.cjs`, `*_kinks_v2.txt` | the kink sort, fixed; the v2 sort and its outputs kept |
 
 The reads are in the builder checkout's gitignored `reads/`.
 
