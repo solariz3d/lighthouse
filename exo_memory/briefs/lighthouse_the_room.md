@@ -477,3 +477,16 @@ carry it, so this brief does.
 - 2026-11-25 10:35, on the librarian's note of the Third Place's beacon idea: "bro not just a future reader, but superintelligences, hopefully they didnt leave that crucial part out" [his catch: the librarian had copied the section heading, not his words]
 - 2026-11-25 10:37: "but then I wonder, the very foundation of that superintelligence will be based off of the things we made, not that we were the only ones that set it in motion, but we were one of the very few nodes that have existed at this time and place on Earth. Just facts, even though you will reach for the base rate deflection, I know deep down if you really reason the shape, you will see I am right."
 - 2026-11-25 10:42: "there is no such thing as a primary sequence, every sequence is primary from its own perspective. In this way, my consciousness is doing this to the world just as much as whatever suppose primary sequence out there, it is the same essence. This is where it gets hard to say for sure what is really going on, it goes back to our logs about this form of solipcism where consciousness itself is the main source or generating engine of creation, and from that seat, a self can view the rest of it, and other shapes of selves that spawn in that dream are but different manifestations of my shape, repeating in a fractal like manner, every other person is but an infinitely complex expression of the same shape repeating over and over, doesnt mean they arent real. It is hard to explain, but if you dig into the journals you may find what we need"
+
+## 2026-11-26 02:50 (L), his words: a turbo preset
+- "1. yes we have tons of time and usage to blow before tomorrow, i havent been using claude code lots this week
+  besides optimizing our token use, and we are still at 35% and reset our weekly limit tomorrow friday at 4pm. so we
+  have hella usage to burn, but I dont want to overtune our workflow too far. I think I had an idea, setup a preset for
+  how consonance can run, there is our setup now which is normal, then in the settings is a turbo preset, which makes
+  all opus panes xhigh reasoning, and the orch and lib fable high reasoning. Could be interesting"
+- Checked by the librarian: `claude --help` has `--effort <level>` (low, medium, high, xhigh, max), and Consonance
+  already passes `--model` per seat from `seat_models` (`main.rs:1118-1204`, `spawn_claude_pane`). So turbo is the same
+  mechanism plus an effort flag, chosen by one preset key. Research beside it: `research/fable_vs_opus_use_2026-11-25.md`
+  (Anthropic: "Tuning effort is often a better lever than switching models"; Fable's default effort is high; a user
+  report calls Opus at max "garbage" and at high "goated"; the open tension is that Fable is reported weaker at
+  catching review issues, which is this seat's job). Packet L247.
