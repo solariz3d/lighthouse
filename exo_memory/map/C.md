@@ -2005,3 +2005,7 @@ Claim (could be wrong): his 08:19 crash was Export to Assetto Corsa: `v8-oom-sta
 ## 2026-11-25 — R1: 9 of the second reader's newest 20 flags on the librarian were right (11 cite a file the turn read whole or its own write), so it and its note are Excluded in install.ps1 and removed from D's settings.json (backup .bak-r1-C-2026-11-25); the librarian brief gains the few-lines note bullet
 - Evidence: `exo_memory/handback/p-r1-C_2026-11-25_evidence/last20.txt`, `ledger_figures.txt`, `red_install_only.txt`, `check_D_excerpt.txt`.
 - Hand-back: `exo_memory/handback/p-r1-C_2026-11-25.md`
+
+## 2026-11-26 — L241 read: at builder 77ffe18 a mark alone in its field flashes its label for 2 s each time the Extend ghost comes back (app/core/secondtick.js:149, the flash memory reset by a ghost-less draw), though nothing was added; the press map is identical to cfa7ad9 and the rest is clean; NOT CLEAN
+- Evidence: `exo_memory/handback/p-l241-read-C_2026-11-26_evidence/run_77ffe18.txt` (V4 red), `run_cfa7ad9.txt`, `fix_tried_prevByField.txt`, `secondtick_tests_77ffe18.txt`.
+- Hand-back: `exo_memory/handback/p-l241-read-C_2026-11-26.md`

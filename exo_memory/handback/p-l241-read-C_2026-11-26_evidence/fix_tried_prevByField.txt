@@ -1,0 +1,33 @@
+diff --git a/app/core/secondtick.js b/app/core/secondtick.js
+index d9d733d..a045e35 100644
+--- a/app/core/secondtick.js
++++ b/app/core/secondtick.js
+@@ -146,7 +146,7 @@ function mount(stage, win, itemsNow, hooks = {}) {
+       const was = prevByField[f] || [], now = byField[f];
+       if (now.length === was.length + 1) { const fresh = now.filter((x) => !was.some((y) => Math.abs(x - y) < 1e-6)); if (fresh.length === 1) flashes.push({ field: f, from: fresh[0], until: nowMs + FLASH_MS }); }
+     }
+-    prevByField = byField; flashes = flashes.filter((x) => x.until > nowMs);
++    prevByField = pose ? byField : null; flashes = flashes.filter((x) => x.until > nowMs);
+     drawnOffers = pose ? (items.offers || []).map((of) => { const d = markStroke(ghost, { ...of, nudgePx: of.nudgePx, sides: [of.sides[0]] }, pose, W, H); return d ? { ...d, item: of, at: { x: (d.strokes[0].a.x + d.strokes[0].b.x) / 2, y: (d.strokes[0].a.y + d.strokes[0].b.y) / 2 } } : null; }).filter(Boolean) : [];
+     const ctx = canvas.getContext ? canvas.getContext('2d') : null;
+     if (ctx) {
+[32m✔ V1: climb, width and cup marks rest as one dot each with no label, and a hover shows the hovered one only [90m(5.8445ms)[39m[39m
+[32m✔ V2: a mark added in the MIDDLE of a field (the later one shifts index) flashes the new one, not the shifted one [90m(0.5601ms)[39m[39m
+[32m✔ V3: two marks added at once in one field flash none (by design); one added in each of two fields flashes both [90m(1.0665ms)[39m[39m
+[32m✔ V4: the ghost goes and comes back with the same marks: nothing was added, so no label shows [90m(0.4851ms)[39m[39m
+[32m✔ V5: a press that the handles take (yields) starts no mark drag, and the hover a moment before does not either [90m(0.3011ms)[39m[39m
+[32m✔ V6 (a record): while a field handle is dragged (the press yielded), the pointer crossing a dot lights that mark [90m(1.1835ms)[39m[39m
+[32m✔ V7: a touch press on a dot and a drag: labelled while dragged, and after the lift the mark rests as a dot again [90m(0.5779ms)[39m[39m
+[32m✔ V8 (a record): the pointer leaves the stage from on top of a dot (no event after it): is the mark still shown? [90m(1.0909ms)[39m[39m
+[32m✔ V9: the Build camera: each dot sits on its mark's stroke and a press on it starts that mark's drag [90m(0.3875ms)[39m[39m
+[34mℹ tests 9[39m
+[34mℹ suites 0[39m
+[34mℹ pass 9[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 89.8564[39m
+[34mℹ tests 17[39m
+[34mℹ pass 17[39m
+[34mℹ fail 0[39m

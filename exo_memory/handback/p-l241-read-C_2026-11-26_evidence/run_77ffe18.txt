@@ -1,0 +1,48 @@
+V6 labels while a handle drag crosses mark 2: ["Extra bank 2 @700.00"]
+V8 labels after leaving from the dot: ["Extra bank @400.00"]
+P t180-wt-declutter overhead handle=false presses=325 hash=6a65041c4067eec8 | overhead handle=true presses=252 hash=fd439a1bf6c3dfa7 | build handle=false presses=322 hash=717e82b7ab614d51 | build handle=true presses=260 hash=0b06e8d488d0480f
+[32m✔ V1: climb, width and cup marks rest as one dot each with no label, and a hover shows the hovered one only [90m(6.1148ms)[39m[39m
+[32m✔ V2: a mark added in the MIDDLE of a field (the later one shifts index) flashes the new one, not the shifted one [90m(0.5806ms)[39m[39m
+[32m✔ V3: two marks added at once in one field flash none (by design); one added in each of two fields flashes both [90m(1.6901ms)[39m[39m
+[31m✖ V4: the ghost goes and comes back with the same marks: nothing was added, so no label shows [90m(1.4629ms)[39m[39m
+[32m✔ V5: a press that the handles take (yields) starts no mark drag, and the hover a moment before does not either [90m(0.2313ms)[39m[39m
+[32m✔ V6 (a record): while a field handle is dragged (the press yielded), the pointer crossing a dot lights that mark [90m(0.5702ms)[39m[39m
+[32m✔ V7: a touch press on a dot and a drag: labelled while dragged, and after the lift the mark rests as a dot again [90m(1.0756ms)[39m[39m
+[32m✔ V8 (a record): the pointer leaves the stage from on top of a dot (no event after it): is the mark still shown? [90m(0.515ms)[39m[39m
+[32m✔ V9: the Build camera: each dot sits on its mark's stroke and a press on it starts that mark's drag [90m(0.3258ms)[39m[39m
+[32m✔ P (a record on both trees): the press map [90m(13422.5355ms)[39m[39m
+[34mℹ tests 10[39m
+[34mℹ suites 0[39m
+[34mℹ pass 9[39m
+[34mℹ fail 1[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 13528.2034[39m
+
+[31m✖ failing tests:[39m
+
+test at c-l241-read.test.js:105:1
+[31m✖ V4: the ghost goes and comes back with the same marks: nothing was added, so no label shows [90m(1.4629ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: the ghost came back with the same three marks; none was added
+  [32m+ actual[39m [31m- expected[39m
+  
+  [32m+[39m [
+  [32m+[39m   'Extra bank @400.00'
+  [32m+[39m ]
+  [31m-[39m []
+  
+      at TestContext.<anonymous> [90m(C:\Consonance\lighthouse\exo_memory\handback\p-l241-read-C_2026-11-26_evidence\[39mc-l241-read.test.js:109:10[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:227:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1325:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:911:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1465:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1390:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [ [32m'Extra bank @400.00'[39m ],
+    expected: [],
+    operator: [32m'deepStrictEqual'[39m,
+    diff: [32m'simple'[39m
+  }

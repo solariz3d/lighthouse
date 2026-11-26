@@ -1,0 +1,19 @@
+P c-l241-base overhead handle=false presses=325 hash=6a65041c4067eec8 | overhead handle=true presses=252 hash=fd439a1bf6c3dfa7 | build handle=false presses=322 hash=717e82b7ab614d51 | build handle=true presses=260 hash=0b06e8d488d0480f
+[90m﹣ V1: climb, width and cup marks rest as one dot each with no label, and a hover shows the hovered one only [90m(0.4525ms)[39m # SKIP[39m
+[90m﹣ V2: a mark added in the MIDDLE of a field (the later one shifts index) flashes the new one, not the shifted one [90m(0.0728ms)[39m # SKIP[39m
+[90m﹣ V3: two marks added at once in one field flash none (by design); one added in each of two fields flashes both [90m(0.0384ms)[39m # SKIP[39m
+[90m﹣ V4: the ghost goes and comes back with the same marks: nothing was added, so no label shows [90m(0.0352ms)[39m # SKIP[39m
+[32m✔ V5: a press that the handles take (yields) starts no mark drag, and the hover a moment before does not either [90m(3.2608ms)[39m[39m
+[90m﹣ V6 (a record): while a field handle is dragged (the press yielded), the pointer crossing a dot lights that mark [90m(0.0528ms)[39m # SKIP[39m
+[90m﹣ V7: a touch press on a dot and a drag: labelled while dragged, and after the lift the mark rests as a dot again [90m(0.041ms)[39m # SKIP[39m
+[90m﹣ V8 (a record): the pointer leaves the stage from on top of a dot (no event after it): is the mark still shown? [90m(0.0356ms)[39m # SKIP[39m
+[90m﹣ V9: the Build camera: each dot sits on its mark's stroke and a press on it starts that mark's drag [90m(0.0547ms)[39m # SKIP[39m
+[32m✔ P (a record on both trees): the press map [90m(61011.6808ms)[39m[39m
+[34mℹ tests 10[39m
+[34mℹ suites 0[39m
+[34mℹ pass 2[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 8[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 61126.9765[39m
