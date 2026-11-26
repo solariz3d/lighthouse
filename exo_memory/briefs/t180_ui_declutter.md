@@ -44,3 +44,4 @@
   system, just renders the total shape of the track to see within the preview"
 - So: install L241+L242 (0ab6cc8) on L (L244a, pane A, once the builder is closed); a blur mock artifact (L245, pane C);
   per-theme handle colours (L244, pane A, after the install).
+- 02:3x (L): blur mock https://claude.ai/artifact/85aiPQ31PPitFfHU1Sducb (L245). Panels are 80-95% opaque, so the blur shows only as a soft smear; a thinner fill would show more road.
