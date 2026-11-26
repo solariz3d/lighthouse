@@ -2037,3 +2037,7 @@ Claim (could be wrong): his 08:19 crash was Export to Assetto Corsa: `v8-oom-sta
 ## 2026-11-26 — L251: at builder 6a3ea79 the label windows are elements over the view (markwindow.js layer, one reused node a box, no pointer events), each look blurring by its own #left blur (SIGIL blur(10px) at index.html:268, against the packet's "SIGIL has no panel blur"); eight of them cost no more a frame than 40e931e's canvas windows (p95 1.4 vs 3.2-3.9 ms), but behind 80-92% fills the blur takes only 0.5-3.8% of the detail in the window
 - Evidence: `exo_memory/handback/p-l251-blur-C_2026-11-26_evidence/page_branch1.txt` (3/3; 0/3 at base in `page_base1.txt`), `units_at_base.txt` (15 red), `touched_run1.txt` (372/372), `frames_aqua.txt`, `window_detail.txt`.
 - Hand-back: `exo_memory/handback/p-l251-blur-C_2026-11-26.md`
+
+## 2026-11-26 — [T2] research lap, HELD at section 17 of 61 for his restart (D677): the builder's core laid every [T2] section tried so far within the registered tolerances once the rates were solved (sections 1, 2, 4 made, 59 just outside on width and direction); resume by re-running pass 2 from the local notes, then the table and hand-back
+- Evidence (local, uncommitted, holds track data): `G:\consonance-scratch\c-t2\RESUME.md`, `TOLERANCES.md` (registered 18:56:26Z before any measure), `pass2.txt`.
+- Hand-back: `exo_memory/handback/p-unmakeable-T2-C_2026-11-26.md` (not yet written)
