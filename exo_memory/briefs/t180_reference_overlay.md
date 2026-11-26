@@ -47,3 +47,10 @@ Other authors' track names stay out of this public repo (the rule of `briefs/t18
   mode, the largest one included. Not L250's: the START / grid / PIT labels stack in the overhead with no reference at
   all (`app/core/spawnslayer.js`), now on the backlog. Repair round sent: B the race and the panel's class, O the start
   from the kn5 for layouts with no AI line.
+- 06:0x (L): the repair is in: builder `l250-shadow-tracks` b26db76 (local), `handback/p-l250-shadow-B_2026-11-26.md`
+  "Repair", with O's adf307c merged. The mode-switch race is fixed (rows P6 and P7 red first; E's own file 9 of 9 after
+  the fix). The panel takes the page's tokens (white in Skyline; the librarian opened `look_skyline.png`). All 15 layouts
+  with no AI line can now be shown as Road, placed by the kn5's start and set down on the road under it. Rows: ribbon 19
+  of 19, panel 23 of 23. Not run: cargo on the merged tree by B, the real app's IPC, a picture of a Road placed by its
+  start. Open, B's finding: with an AI line, Road sits 0.28 to 0.40 m below his road at the start (the AI line rides that
+  far above its own road). E re-reads the repair next.
