@@ -1,0 +1,13 @@
+caught: cac348e's rule: a bare starts-with, no end after the key (23 passed, 1 failed: a_longer_name_is_not_taken_for_a_shorter_key)
+caught: the letter-run key rule (pane B L243) (21 passed, 3 failed: a_mesh_is_track_when_its_name_after_the_digits_starts_with_a_valid_key, only_the_valid_track_meshes_are_read_and_the_rest_skipped, a_layout_reads_every_kn5_its_own_models_ini_names_with_its_own_surfaces)
+caught: a digit after the key not taken as an end (22 passed, 2 failed: a_longer_name_is_not_taken_for_a_shorter_key, a_mesh_is_track_when_its_name_after_the_digits_starts_with_a_valid_key)
+caught: the start dummy's forward reversed (23 passed, 1 failed: the_start_is_the_ac_start_0_dummy_in_world_space_and_reaches_the_page)
+caught: the time line facing R - L (along the gate) instead of across it (23 passed, 1 failed: with_no_start_dummy_the_start_is_the_time_lines_middle_facing_across_it)
+caught: the time line facing down the other way (23 passed, 1 failed: with_no_start_dummy_the_start_is_the_time_lines_middle_facing_across_it)
+caught: the time line's middle taken at L (23 passed, 1 failed: with_no_start_dummy_the_start_is_the_time_lines_middle_facing_across_it)
+caught: the time line before the start dummy (23 passed, 1 failed: the_start_is_the_ac_start_0_dummy_in_world_space_and_reaches_the_page)
+caught: a placed model's dummy used for the start (23 passed, 1 failed: a_start_in_a_model_the_ini_places_elsewhere_is_not_used)
+caught: an AC_ dummy kept by the parent matrix, not its own (22 passed, 2 failed: the_start_is_the_ac_start_0_dummy_in_world_space_and_reaches_the_page, with_no_start_dummy_the_start_is_the_time_lines_middle_facing_across_it)
+caught: the header without the start (23 passed, 1 failed: the_start_is_the_ac_start_0_dummy_in_world_space_and_reaches_the_page)
+caught: the header without the reason (23 passed, 1 failed: with_neither_the_start_is_missing_and_the_header_says_so)
+applied 12 / caught 12 / NOT APPLIED 0 / did not compile 0; restored byte for byte: true
