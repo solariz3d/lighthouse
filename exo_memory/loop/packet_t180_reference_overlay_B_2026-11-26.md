@@ -35,3 +35,15 @@ pictures.
 ## Hand-back
 
 File in `exo_memory/handback/`, rung to the librarian, with claims marked checked or inferred and who acts next.
+
+## Amended 02:2x, at his word (02:23): "it can be accessed through the other saved tracks that already exist in the
+## assetto track folder, it doesnt create it through our system, just renders the total shape of the track"
+
+- **The picker** lists the tracks, and each track's layouts, in the AC install's `content/tracks` (the install the
+  exporter already finds). The user picks one, and its shape renders in the preview. Nothing is written to the track
+  folder or to the doc.
+- **"The total shape"**: draw the AI line's ribbon first (step 1, cheap and sure). Then report whether the road mesh
+  from the track's `.kn5` (its surfaces named as road) can be drawn instead, as the whole road with pit lane and run-off.
+  That means checking what the builder's kn5 code (`src/export/*`) can already read. Give a cost for each, and a
+  picture of the kn5 road if it reads.
+- A track with no `ai/fast_lane.ai` is listed with that said, never hidden.

@@ -25,3 +25,9 @@ Other authors' track names stay out of this public repo (the rule of `briefs/t18
 
 - 01:0x: packet `loop/packet_t180_reference_overlay_B_2026-11-26.md` (L243), a first look with pictures. It queues
   behind L241/L242 unless he wants it run alongside them.
+
+## His words, 02:23 (L)
+- "Yes, and it can be accessed through the other saved tracks that already exist in the assetto track folder, it
+  doesnt create it through our system, just renders the total shape of the track to see within the preview"
+- L243 was sent to pane B at 02:2x with this added: the reference is picked from the installed tracks (and their
+  layouts) in AC's tracks folder. It is read-only, and nothing of it enters the doc.

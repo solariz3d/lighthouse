@@ -37,3 +37,10 @@
   values in `handles.js:49-58` (width #ff5a5a, bank #4d86ff, cup #3ddc6e, turn #b968ff), the same in every theme.
 - 01:0x: packet `loop/packet_t180_themed_marks_A_2026-11-26.md` (L242), to go after C's read of L241.
 - 01:2x (L): L242 pictures sent (`handback/p-l242-themed-marks-A_2026-11-26_evidence/pics/`). Open with him: per-theme mark colours, and whether glass needs real blur (that would mean HTML windows).
+
+## His words, 02:23 (L), answering the four
+- "1. yes. 2. hmmm, lets see the blur in an artifact. 3. yes handle colors per theme. 4. Yes, and it can be accessed
+  through the other saved tracks that already exist in the assetto track folder, it doesnt create it through our
+  system, just renders the total shape of the track to see within the preview"
+- So: install L241+L242 (0ab6cc8) on L (L244a, pane A, once the builder is closed); a blur mock artifact (L245, pane C);
+  per-theme handle colours (L244, pane A, after the install).
