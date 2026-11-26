@@ -54,3 +54,11 @@ Other authors' track names stay out of this public repo (the rule of `briefs/t18
   of 19, panel 23 of 23. Not run: cargo on the merged tree by B, the real app's IPC, a picture of a Road placed by its
   start. Open, B's finding: with an AI line, Road sits 0.28 to 0.40 m below his road at the start (the AI line rides that
   far above its own road). E re-reads the repair next.
+- 06:2x (L): the re-read by E of the repair is **NOT CLEAN** on one new defect (`handback/p-l250-read-E_2026-11-26.md`, "Re-read"):
+  a layout with no AI line shown as Road, then the mode set to Line, shows a refusal and drops his pick; back in Road nothing is
+  drawn (rows V3i and V3j, `reread/e_vary2.test.js`). Everything the repair fixed holds when varied: the race by five paths,
+  cargo on the merged tree 28 rows, 61 of 61 layouts, the 15 start-placed layouts each 0.000 m off his start height and facing
+  along their road. The largest layout (3,200,034 triangles) shows in 378 ms through the real panel. The librarian opened
+  `reread/overhead_N53.png`: the reference lies under his road in Road mode. Measured: with an AI line, Road sits 0.28 to 0.57 m
+  below his road at the start; with none it is flush. Second repair sent to B: the Road-to-Line defect, Road set down on the
+  ground in both cases (the librarian changed its earlier lean on the weighing by E), a tighter reach for the ground under a start.
