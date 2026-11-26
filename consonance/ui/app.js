@@ -34,6 +34,7 @@ async function load() {
   if ($('#ambientlon')) $('#ambientlon').value = state.ambient_lon || '';
   if ($('#ambienttz')) $('#ambienttz').value = state.ambient_tz || '';
   if ($('#usbmode')) $('#usbmode').checked = state.usb_mode === true;   // D273: the USB mode, OFF unless the config says true
+  if ($('#runpreset')) $('#runpreset').value = state.run_preset || 'normal';   // L247: the run preset, Normal when the key is missing or empty
   // fresh machine (no saved config) → land on Settings so directories are the first thing chosen
   try {
     if (!(await invoke('config_exists'))) {
@@ -54,6 +55,7 @@ async function persist() {
   if ($('#ambientlat')) state.ambient_lat = $('#ambientlat').value.trim();
   if ($('#ambientlon')) state.ambient_lon = $('#ambientlon').value.trim();
   if ($('#ambienttz')) state.ambient_tz = $('#ambienttz').value.trim();
+  if ($('#runpreset') && $('#runpreset').value) state.run_preset = $('#runpreset').value;   // L247: a value the select cannot show (a hand-written one) is kept as written
   if ($('#usbmode')) state.usb_mode = !!$('#usbmode').checked;   // D273: persisted with the rest; a save never drops it (Config carries the field)
   await invoke('save_config', { cfg: state });
 }

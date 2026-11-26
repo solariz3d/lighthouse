@@ -70,6 +70,11 @@ struct Config {
     // (start_exit_waiter), no stick at close (leave_run, so no Leave screen), and stick_state says it is off.
     #[serde(default)]
     usb_mode: bool,
+    // L247, THE RUN PRESET (his words, 2026-11-26 02:50: "there is our setup now which is normal, then in the settings is a turbo preset"):
+    // "normal" (or missing, or "") is today's spawn; "turbo" is TURBO_SEATS. Kept as written: a value the tab does not know is saved back
+    // unchanged, and refused at each spawn (seat_launch), never guessed at.
+    #[serde(default)]
+    run_preset: String,
 }
 
 fn home() -> String {
@@ -140,6 +145,7 @@ fn parse_config(s: &str) -> (Config, Vec<String>) {
         ambient_label: stringish(&v, "ambient_label"),
         ambient_tz: stringish(&v, "ambient_tz"),
         usb_mode: matches!(v.get("usb_mode"), Some(serde_json::Value::Bool(true))),
+        run_preset: stringish(&v, "run_preset"),
     };
     (cfg, bad)
 }
@@ -184,7 +190,7 @@ const USB_OFF_WHY: &str = "the USB mode is off (Settings: \"Move seats between c
 /// base, flags, instances, dream_model, dream_times, machine_tag, state_dir), and the save used to write the whole struct, so every Settings save
 /// silently dropped them; a USB stranger would lose machine_tag the same way. These are the keys the tab owns (exactly Config's fields; a row
 /// holds the two lists equal), and a save changes these and nothing else.
-const SETTINGS_KEYS: &[&str] = &["room_path", "instances_dir", "data_dir", "ambient_lat", "ambient_lon", "ambient_label", "ambient_tz", "usb_mode"];
+const SETTINGS_KEYS: &[&str] = &["room_path", "instances_dir", "data_dir", "ambient_lat", "ambient_lon", "ambient_label", "ambient_tz", "usb_mode", "run_preset"];
 
 /// The config file's new text: `existing` (None when there is no file yet) with the Settings tab's keys set from `cfg` and EVERY other key kept,
 /// value for value. A file that exists but is not a JSON object is REFUSED by name, never overwritten: it may hold what someone needs, and a
@@ -198,11 +204,16 @@ fn merged_config_text(existing: Option<&str>, cfg: &Config) -> Result<String, St
             Err(e) => return Err(format!("it is not valid JSON ({e}), so it was NOT overwritten")),
         },
     };
+    let had_preset = obj.contains_key("run_preset");
     let owned = serde_json::to_value(cfg).map_err(|e| format!("the settings could not be written as JSON ({e})"))?;
     for k in SETTINGS_KEYS {
         if let Some(v) = owned.get(*k) {
             obj.insert((*k).to_string(), v.clone());
         }
+    }
+    // L247: an empty preset is "not set" (it runs as normal), so a save of a file that had no run_preset adds none; a fresh file gets every tab key
+    if existing.is_some() && !had_preset && cfg.run_preset.is_empty() {
+        obj.remove("run_preset");
     }
     serde_json::to_string_pretty(&serde_json::Value::Object(obj)).map_err(|e| format!("the merged config could not be written as JSON ({e})"))
 }
@@ -222,7 +233,28 @@ fn save_config_at(path: &Path, cfg: &Config) -> Result<(), String> {
         Err(e) => return Err(refuse_save(path, &format!("it could not be read ({e}), so it was NOT overwritten"))),
     };
     let text = merged_config_text(existing.as_deref(), cfg).map_err(|why| refuse_save(path, &why))?;
+    // L247: a save that changes the file backs it up first (the run preset's packet: "Back up the file first, the way the seat_models edit did")
+    if let Some(old) = existing.as_deref().filter(|old| *old != text) {
+        backup_before_save(path, old).map_err(|why| refuse_save(path, &why))?;
+    }
     fs::write(path, text).map_err(|e| refuse_save(path, &format!("it could not be written ({e})")))
+}
+
+/// L247: the file as it was, beside it, as `<name>.bak-<YYYYMMDD-HHMMSS>-settings` (the shape of the seat_models edit's
+/// `.consonance.json.bak-20261125-before-models`), never over an older backup: a name taken gets -2, -3 and so on. A backup that cannot be
+/// written refuses the save, so no save ever goes ahead without one.
+fn backup_before_save(path: &Path, old: &str) -> Result<PathBuf, String> {
+    let name = path.file_name().map(|n| n.to_string_lossy().into_owned()).unwrap_or_else(|| ".consonance.json".into());
+    let base = format!("{name}.bak-{}-settings", chrono::Local::now().format("%Y%m%d-%H%M%S"));
+    for n in 1..1000 {
+        let p = path.with_file_name(if n == 1 { base.clone() } else { format!("{base}-{n}") });
+        match fs::OpenOptions::new().write(true).create_new(true).open(&p) {
+            Ok(mut f) => return f.write_all(old.as_bytes()).map(|_| p.clone()).map_err(|e| format!("the backup {} could not be written ({e}), so it was NOT overwritten", p.display())),
+            Err(e) if e.kind() == std::io::ErrorKind::AlreadyExists => continue,
+            Err(e) => return Err(format!("the backup {} could not be made ({e}), so it was NOT overwritten", p.display())),
+        }
+    }
+    Err("no free backup name, so it was NOT overwritten".into())
 }
 
 /// A refused save is LOUD: stderr, the log beside the config (a release build has no console), and the message the Settings tab shows.
@@ -1141,24 +1173,127 @@ fn plain_model_name(m: &str) -> bool {
     !m.is_empty() && m.len() <= 64 && !m.starts_with('-') && m.chars().all(|c| c.is_ascii_alphanumeric() || "-._[]".contains(c))
 }
 
-/// The model for this seat from the config's text, or None (today's behaviour). Pure: a refusal is logged by `seat_model`.
+/// The model for this seat from the config's text, or None (today's behaviour). Pure: a refusal is logged by `seat_launch` (L247; it was `seat_model`).
 fn seat_model_from(raw: &str, pane_id: &str, letter: Option<&str>) -> Option<String> {
     seat_model_named(raw, pane_id, letter).filter(|m| plain_model_name(m))
 }
 
-fn seat_model(pane_id: &str) -> Option<String> {
-    let raw = fs::read_to_string(config_path()).ok()?;
-    if !raw.contains("seat_models") {
-        return None;   // shipped empty: the letter registry is not even read
+// ── L247, pane A, 2026-11-26: THE RUN PRESET ────────────────────────────────────────────────────────────────────────────
+// His words (2026-11-26 02:50, exo_memory/briefs/lighthouse_the_room.md): "setup a preset for how consonance can run, there is our
+// setup now which is normal, then in the settings is a turbo preset, which makes all opus panes xhigh reasoning, and the orch and lib
+// fable high reasoning". And: "I dont want to overtune our workflow too far" — so ONE key and ONE table, nothing per seat to tune.
+//
+// The key: "run_preset" in ~/.consonance.json, a Settings-tab key (SETTINGS_KEYS). Missing, empty or "normal": today's spawn exactly
+// (seat_models as written, no --effort). "turbo": a seat TURBO_SEATS names takes the table's model and effort; a seat it does not name
+// runs as normal. Any other value is REFUSED in plog and the seat runs as normal: never a guess at what was meant. Read at every spawn
+// and resume, so a change reaches a seat when it next starts, never a running one.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+enum RunPreset {
+    Normal,
+    Turbo,
+}
+
+/// THE TURBO TABLE, the one place the preset's seats are named: (role, model, effort). BY ROLE, NEVER BY LETTER (the chair, 2026-11-26 08:58Z:
+/// he adds panes, O and P on L, and letters are assigned at spawn): "main", "librarian" and "third_place" are the fixed seats, known by their
+/// session ids; "builder" is every committee pane, a managed seat in a `sibling-` folder (is_managed_cwd && is_builder_dir_name, the rule the
+/// builder's no-prompt and floor settings use). A model of None keeps the seat's own seat_models entry (the Third Place: fable on his machines).
+const TURBO_SEATS: &[(&str, Option<&str>, &str)] = &[
+    ("main", Some("opus"), "xhigh"),   // his words, 2026-11-26 03:00: Fable for the orchestrator was too expensive
+    ("librarian", Some("fable"), "high"),
+    ("third_place", None, "high"),
+    ("builder", Some("opus"), "xhigh"),
+];
+
+/// The preset the config's text names. Ok(Normal) for no file, text that is not JSON (get_state complains about that), no key, "" or
+/// "normal"; Ok(Turbo) for "turbo"; Err(what is written there, as JSON) for anything else, which the caller refuses.
+fn run_preset_from(raw: Option<&str>) -> Result<RunPreset, String> {
+    let Some(raw) = raw else { return Ok(RunPreset::Normal) };
+    let Ok(v) = serde_json::from_str::<serde_json::Value>(raw.trim_start_matches('\u{feff}')) else { return Ok(RunPreset::Normal) };
+    match v.get("run_preset") {
+        None => Ok(RunPreset::Normal),
+        Some(serde_json::Value::String(s)) if s.is_empty() || s == "normal" => Ok(RunPreset::Normal),
+        Some(serde_json::Value::String(s)) if s == "turbo" => Ok(RunPreset::Turbo),
+        Some(other) => Err(one_line(&other.to_string(), 80)),
     }
-    let letter = read_letters().get(pane_id).cloned();
-    let named = seat_model_named(&raw, pane_id, letter.as_deref())?;
-    if plain_model_name(&named) {
-        Some(named)
-    } else {
-        plog(&format!("SEAT MODEL REFUSED pane={pane_id}: seat_models names {:?}, which is not a plain model name; no --model", one_line(&named, 80)));
-        None
+}
+
+/// The plog line for a refused preset value.
+fn run_preset_refusal(pane_id: &str, value: &str) -> String {
+    format!("RUN PRESET REFUSED pane={pane_id}: run_preset is {value}, which is neither \"normal\" nor \"turbo\"; this seat runs as normal (today's spawn)")
+}
+
+/// What a spawn adds for the model and the effort.
+#[derive(Debug, Clone, PartialEq, Eq)]
+struct SeatLaunch {
+    preset: RunPreset,
+    refused: Option<String>,
+    model: Option<String>,
+    effort: Option<&'static str>,
+    from_table: bool,
+}
+
+/// The seat's launch from the config's text, its session id and its letter. Pure. Normal is seat_model_from exactly, as before L247.
+fn seat_launch_from(raw: Option<&str>, pane_id: &str, letter: Option<&str>, builder: bool) -> SeatLaunch {
+    let (preset, refused) = match run_preset_from(raw) {
+        Ok(p) => (p, None),
+        Err(v) => (RunPreset::Normal, Some(v)),
+    };
+    let own = || raw.and_then(|r| seat_model_from(r, pane_id, letter));
+    if preset == RunPreset::Turbo {
+        let role = match pane_id {
+            MAIN_SID => Some("main"),
+            LIBRARIAN_SID => Some("librarian"),
+            THIRD_PLACE_SID => Some("third_place"),
+            _ if builder => Some("builder"),
+            _ => None,
+        };
+        if let Some(&(_, model, effort)) = role.and_then(|r| TURBO_SEATS.iter().find(|row| row.0 == r)) {
+            return SeatLaunch { preset, refused, model: model.map(str::to_string).or_else(own), effort: Some(effort), from_table: true };
+        }
     }
+    SeatLaunch { preset, refused, model: own(), effort: None, from_table: false }
+}
+
+/// The arguments a launch adds, in the order spawn_claude_pane adds them.
+fn seat_launch_args(l: &SeatLaunch) -> Vec<String> {
+    let mut a = Vec::new();
+    if let Some(m) = &l.model {
+        a.extend(["--model".to_string(), m.clone()]);
+    }
+    if let Some(e) = l.effort {
+        a.extend(["--effort".to_string(), e.to_string()]);
+    }
+    a
+}
+
+/// The launch for this seat, read from the live config, with its plog lines: a refused preset, a refused model name (as seat_model said
+/// before L247), and one RUN PRESET line per spawn naming the model and effort it starts on.
+fn seat_launch(pane_id: &str, builder: bool) -> SeatLaunch {
+    let raw = fs::read_to_string(config_path()).ok();
+    // shipped empty: the letter registry is read only when the config names seat models or a preset
+    let letter = match raw.as_deref() {
+        Some(r) if r.contains("seat_models") || r.contains("run_preset") => read_letters().get(pane_id).cloned(),
+        _ => None,
+    };
+    let l = seat_launch_from(raw.as_deref(), pane_id, letter.as_deref(), builder);
+    if let Some(v) = &l.refused {
+        plog(&run_preset_refusal(pane_id, v));
+    }
+    if l.model.is_none() {
+        if let Some(named) = raw.as_deref().and_then(|r| seat_model_named(r, pane_id, letter.as_deref())) {
+            if !plain_model_name(&named) {
+                plog(&format!("SEAT MODEL REFUSED pane={pane_id}: seat_models names {:?}, which is not a plain model name; no --model", one_line(&named, 80)));
+            }
+        }
+    }
+    plog(&format!(
+        "RUN PRESET pane={pane_id} {}: model {}, effort {}{}",
+        if l.preset == RunPreset::Turbo { "turbo" } else { "normal" },
+        l.model.as_deref().unwrap_or("(claude's own)"),
+        l.effort.unwrap_or("(claude's own)"),
+        if l.from_table { " (the turbo table)" } else { "" }
+    ));
+    l
 }
 
 fn spawn_claude_pane(app: AppHandle, pane_id: String, cwd: String, resume: bool, skip_perms: bool) -> Result<PtySession, String> {
@@ -1199,9 +1334,15 @@ fn spawn_claude_pane(app: AppHandle, pane_id: String, cwd: String, resume: bool,
         cmd.args(["--session-id", &pane_id]); // names the transcript for the tap
     }
     // C1 (Lap W): the model named for this seat, on a fresh start and on a resume alike. None is today's behaviour.
-    if let Some(model) = seat_model(&pane_id) {
+    // L247: and, under the turbo preset, the model and effort its table names (seat_launch; normal is exactly the line above's rule).
+    let launch = seat_launch(&pane_id, is_managed_cwd(&cwd) && is_builder_dir_name(&cwd));
+    if let Some(model) = launch.model.clone() {
         cmd.args(["--model", &model]);
-        plog(&format!("SEAT MODEL pane={pane_id} --model {model} (seat_models in {})", config_path().display()));
+        let from = if launch.from_table { "the turbo table".to_string() } else { format!("seat_models in {}", config_path().display()) };
+        plog(&format!("SEAT MODEL pane={pane_id} --model {model} ({from})"));
+    }
+    if let Some(effort) = launch.effort {
+        cmd.args(["--effort", effort]);
     }
     // panes the chair drives/oversees skip the permission prompts (the chair is the gate).
     // autonomous bodies do NOT get this — their prompts are the only thing keeping a body's
@@ -4077,6 +4218,11 @@ fn prepare_sibling_dir() -> Result<String, String> {
 fn spawn_sibling(app: AppHandle, panes: State<Panes>, cost: State<Cost>, board: State<Board>, roles: State<PaneRoles>) -> Result<SiblingInfo, String> {
     let cwd = prepare_sibling_dir()?;
     let pane_id = Uuid::new_v4().to_string();
+    // claim the letter at birth, not at first render: it is the pane's identity on every
+    // surface (pulls, dyad inputs, the digest), so it must exist before anything can ask.
+    // L247 (the chair, 09:00Z): and BEFORE the first spawn, which reads it for the seat's model and the run preset's role.
+    // O and P were born on L with no SEAT MODEL line, because the letter came 13 lines after the spawn.
+    let letter = pane_letter(&pane_id);
     let session = spawn_claude_pane(app.clone(), pane_id.clone(), cwd.clone(), false, true)?;
     start_tailer(app, pane_id.clone(), cwd.clone(), cost.0.clone(), board.0.clone());
     insert_pane(&panes, pane_id.clone(), session);
@@ -4088,9 +4234,6 @@ fn spawn_sibling(app: AppHandle, panes: State<Panes>, cost: State<Cost>, board: 
     kept.retain(|k| k.pane != pane_id);
     kept.push(KeptPane { pane: pane_id.clone(), cwd: cwd.clone(), label: "✦ brief".into() });
     write_kept(&kept);
-    // claim the letter at birth, not at first render: it is the pane's identity on every
-    // surface (pulls, dyad inputs, the digest), so it must exist before anything can ask.
-    let letter = pane_letter(&pane_id);
     plog(&format!("born-kept sibling pane={pane_id} letter={letter} cwd={cwd}"));
     Ok(SiblingInfo { pane: pane_id, cwd, role: "committee".to_string() })
 }
@@ -4114,6 +4257,7 @@ fn prepare_fresh_dir() -> Result<String, String> {
 fn spawn_fresh(app: AppHandle, panes: State<Panes>, cost: State<Cost>, board: State<Board>, roles: State<PaneRoles>) -> Result<SiblingInfo, String> {
     let cwd = prepare_fresh_dir()?;
     let pane_id = Uuid::new_v4().to_string();
+    let letter = pane_letter(&pane_id);   // L247: before the first spawn, which reads it for the seat's model (spawn_sibling says why)
     // skip_perms=false: a legit fresh spawn asks permission like anyone's claude. The chair
     // answers its prompts in the pane — same hands that click approve everywhere else.
     let session = spawn_claude_pane(app.clone(), pane_id.clone(), cwd.clone(), false, false)?;
@@ -4126,7 +4270,6 @@ fn spawn_fresh(app: AppHandle, panes: State<Panes>, cost: State<Cost>, board: St
     kept.retain(|k| k.pane != pane_id);
     kept.push(KeptPane { pane: pane_id.clone(), cwd: cwd.clone(), label: "○ fresh".into() });
     write_kept(&kept);
-    let letter = pane_letter(&pane_id);
     plog(&format!("born-kept fresh pane={pane_id} letter={letter} cwd={cwd}"));
     Ok(SiblingInfo { pane: pane_id, cwd, role: "committee".to_string() })
 }
@@ -4230,6 +4373,7 @@ fn new_room(app: AppHandle, panes: State<Panes>, cost: State<Cost>, board: State
     let cwd = prepare_room_dir(name)?;
     set_workspace_trust(&cwd);
     let pane_id = Uuid::new_v4().to_string();
+    let letter = pane_letter(&pane_id);   // L247: before the first spawn, which reads it for the seat's model (spawn_sibling says why)
     // skip_perms = FALSE, always: the room's safety design IS the scoped permissions —
     // the AI writes pending/ and journal/ and nothing else; canon is unreachable
     // except through the person's seal. Never bypass here.
@@ -4241,7 +4385,6 @@ fn new_room(app: AppHandle, panes: State<Panes>, cost: State<Cost>, board: State
     kept.retain(|k| k.pane != pane_id);
     kept.push(KeptPane { pane: pane_id.clone(), cwd: cwd.clone(), label: "⌂ room".into() });
     write_kept(&kept);
-    let letter = pane_letter(&pane_id);
     plog(&format!("room opened pane={pane_id} letter={letter} cwd={cwd}"));
     // a room is a person's — role stays human so no injection path can ever reach it
     Ok(SiblingInfo { pane: pane_id, cwd, role: "human".to_string() })
@@ -5792,6 +5935,142 @@ mod fresh_permission_tests {
             "the allowlist must be an ELSE branch of the elevation check; if both can apply, a \
              fresh pane could be elevated and the allowlist would read as a limit while being none"
         );
+    }
+}
+
+// L247 (his words, 2026-11-26 02:50: "there is our setup now which is normal, then in the settings is a turbo preset"): the run preset's rows.
+// Pure on the config's text; the wiring into spawn_claude_pane is pinned by source shape, as the seat model's is.
+#[cfg(test)]
+mod run_preset_tests {
+    use super::*;
+
+    /// Today's (pre-L247) model arguments for a seat: seat_models, nothing else.
+    fn todays_args(raw: Option<&str>, pane_id: &str, letter: Option<&str>) -> Vec<String> {
+        raw.and_then(|r| seat_model_from(r, pane_id, letter)).map(|m| vec!["--model".to_string(), m]).unwrap_or_default()
+    }
+    const SEATS: [(&str, Option<&str>); 8] =
+        [(MAIN_SID, None), (LIBRARIAN_SID, Some("M")), (THIRD_PLACE_SID, None), ("pane-a", Some("A")), ("pane-b", Some("B")), ("pane-c", Some("C")), ("pane-d", Some("D")), ("pane-e", Some("E"))];
+
+    /// Row 1: normal gives back today's argv exactly: a missing key, "", "normal", and every config shape seat_models' own rows use.
+    #[test]
+    fn normal_gives_back_todays_argv() {
+        let models = r#""seat_models":{"main":"opus","librarian":"fable","third_place":"fable","B":"sonnet","pane-c":"haiku","E":"opus --bad"}"#;
+        let mut configs: Vec<Option<String>> = vec![None, Some(String::new()), Some("{ not json".into()), Some("{}".into()), Some(format!("{{{models}}}"))];
+        for p in [r#""run_preset":"normal""#, r#""run_preset":"""#] {
+            configs.push(Some(format!("{{{p}}}")));
+            configs.push(Some(format!("{{{p},{models}}}")));
+            configs.push(Some(format!("\u{feff}{{{models},{p}}}")));
+        }
+        for raw in &configs {
+            for (id, letter) in SEATS {
+                let l = seat_launch_from(raw.as_deref(), id, letter, id.starts_with("pane-"));
+                assert_eq!(l.preset, RunPreset::Normal, "{raw:?}");
+                assert_eq!(l.refused, None, "{raw:?} is not a refusal");
+                assert_eq!(l.effort, None, "{raw:?} {id}: normal adds no --effort");
+                assert_eq!(seat_launch_args(&l), todays_args(raw.as_deref(), id, letter), "{raw:?} {id}: not today's argv");
+            }
+        }
+    }
+
+    /// Row 2: turbo gives each seat the table's model and effort; the Third Place keeps its seat_models entry; a seat the table does not name runs as normal.
+    #[test]
+    fn turbo_gives_each_seat_its_model_and_effort() {
+        let raw = r#"{"run_preset":"turbo","seat_models":{"main":"opus","third_place":"fable","A":"sonnet","D":"haiku"}}"#;
+        let args = |id: &str, letter: Option<&str>| seat_launch_args(&seat_launch_from(Some(raw), id, letter, id.starts_with("pane-")));
+        let v = |a: &[&str]| a.iter().map(|s| s.to_string()).collect::<Vec<_>>();
+        assert_eq!(args(MAIN_SID, None), v(&["--model", "opus", "--effort", "xhigh"]), "the orchestrator: opus at xhigh (his 03:00 words), over its seat_models entry");
+        assert_eq!(args(LIBRARIAN_SID, Some("M")), v(&["--model", "fable", "--effort", "high"]));
+        assert_eq!(args(THIRD_PLACE_SID, None), v(&["--model", "fable", "--effort", "high"]), "the Third Place: its own seat_models model, at high");
+        for (id, l) in [("pane-a", "A"), ("pane-b", "B"), ("pane-c", "C"), ("pane-e", "E")] {
+            assert_eq!(args(id, Some(l)), v(&["--model", "opus", "--effort", "xhigh"]), "pane {l}");
+        }
+        assert_eq!(seat_launch_args(&seat_launch_from(Some(raw), "fresh-d", Some("D"), false)), v(&["--model", "haiku"]), "a seat with no turbo role (not a builder): today's (its seat_models, no effort)");
+        assert_eq!(args("fresh", None), Vec::<String>::new(), "a seat with no name at all: today's");
+        let bare = r#"{"run_preset":"turbo"}"#;
+        assert_eq!(seat_launch_args(&seat_launch_from(Some(bare), THIRD_PLACE_SID, None, false)), v(&["--effort", "high"]), "no seat_models entry: no --model, the effort still");
+        assert!(seat_launch_from(Some(raw), "pane-a", Some("A"), true).from_table);
+        assert_eq!(TURBO_SEATS.iter().filter(|r| r.0.len() == 1).count(), 0, "no letter in the table (the chair, 08:58Z: by role)");
+        // the table is the one place, and every effort in it is one claude takes
+        for (seat, model, effort) in TURBO_SEATS {
+            assert!(["low", "medium", "high", "xhigh", "max"].contains(effort), "{seat}: {effort}");
+            assert!(model.map_or(true, plain_model_name), "{seat}: {model:?}");
+        }
+    }
+
+    /// Row 2b (the chair, 08:58Z: "the turbo table goes by role, not by letter"): a committee pane the table names nowhere (O, P, any later
+    /// letter) is a builder by its role and gets opus at xhigh under turbo; under normal it gets exactly today's argv. A seat that is not a builder
+    /// (a fresh pane, a room) is not, whatever its letter.
+    #[test]
+    fn a_committee_pane_the_table_never_named_gets_turbo_by_its_role() {
+        let models = r#""seat_models":{"O":"opus","P":"opus","Q":"sonnet"}"#;
+        let v = |a: &[&str]| a.iter().map(|s| s.to_string()).collect::<Vec<_>>();
+        let turbo = format!(r#"{{"run_preset":"turbo",{models}}}"#);
+        for (id, letter) in [("pane-o", "O"), ("pane-p", "P"), ("pane-q", "Q"), ("pane-z9", "Z9")] {
+            assert_eq!(seat_launch_args(&seat_launch_from(Some(&turbo), id, Some(letter), true)), v(&["--model", "opus", "--effort", "xhigh"]), "builder {letter} under turbo");
+            for normal in [format!("{{{models}}}"), format!(r#"{{"run_preset":"normal",{models}}}"#)] {
+                assert_eq!(seat_launch_args(&seat_launch_from(Some(&normal), id, Some(letter), true)), todays_args(Some(&normal), id, Some(letter)), "builder {letter} under normal");
+            }
+        }
+        assert_eq!(seat_launch_args(&seat_launch_from(Some(&turbo), "fresh-1", Some("Q"), false)), v(&["--model", "sonnet"]), "not a builder: today's, whatever its letter");
+    }
+
+    /// Row 5 (the chair, 09:00Z: O and P were born on L with no SEAT MODEL line): a pane is born with its letter ALREADY claimed, so its very
+    /// first spawn finds its seat_models entry and, under turbo, its role's effort. pane_letter comes before spawn_claude_pane in every birth.
+    #[test]
+    fn a_newborn_pane_has_its_letter_before_its_first_spawn() {
+        let models = r#"{"seat_models":{"O":"opus"}}"#;
+        assert_eq!(seat_launch_args(&seat_launch_from(Some(models), "pane-o", None, true)), Vec::<String>::new(), "control: with no letter yet the seat's model is missed (what O and P got)");
+        assert_eq!(seat_launch_args(&seat_launch_from(Some(models), "pane-o", Some("O"), true)), vec!["--model".to_string(), "opus".to_string()]);
+        let src = fs::read_to_string("src/main.rs").expect("read own source").replace("\r\n", "\n");
+        let body_of = |sig: &str| {
+            let f = src.split(sig).nth(1).unwrap_or_else(|| panic!("{sig} moved"));
+            f.split("\n}\n").next().unwrap_or(f).to_string()
+        };
+        for sig in ["fn spawn_sibling(", "fn spawn_fresh(", "fn new_room("] {
+            let b = body_of(sig);
+            let letter = b.find("let letter = pane_letter(&pane_id);").unwrap_or_else(|| panic!("{sig}: no letter claim"));
+            let spawn = b.find("spawn_claude_pane(").unwrap_or_else(|| panic!("{sig}: no spawn"));
+            assert!(letter < spawn, "{sig}: the letter is claimed after the first spawn, so that spawn reads no letter");
+            assert_eq!(b.matches("pane_letter(").count(), 1, "{sig}: one claim");
+        }
+        // the spawn reads the registry pane_letter writes
+        assert!(body_of("fn seat_launch(pane_id: &str").contains("read_letters().get(pane_id)"));
+        assert!(body_of("fn pane_letter(pane: &str)").contains("fs::write(letters_path(), s)"));
+    }
+
+    /// Row 3: an unknown value runs as normal and is refused, loudly, never guessed at ("Turbo" is not "turbo").
+    #[test]
+    fn an_unknown_value_runs_as_normal_and_is_refused() {
+        for p in [r#""Turbo""#, r#""TURBO""#, r#"" turbo""#, r#""fast""#, "1", "true", "null", r#"{"turbo":true}"#, r#"["turbo"]"#] {
+            let raw = format!(r#"{{"run_preset":{p},"seat_models":{{"A":"sonnet"}}}}"#);
+            for (id, letter) in SEATS {
+                let l = seat_launch_from(Some(&raw), id, letter, id.starts_with("pane-"));
+                assert_eq!(l.preset, RunPreset::Normal, "{p}");
+                assert!(l.refused.is_some(), "{p} was not refused");
+                assert_eq!(seat_launch_args(&l), todays_args(Some(&raw), id, letter), "{p} {id}: not today's argv");
+            }
+            let line = run_preset_refusal("pane-a", &seat_launch_from(Some(&raw), "pane-a", Some("A"), true).refused.unwrap());
+            assert!(line.starts_with("RUN PRESET REFUSED pane=pane-a") && line.contains(&one_line(&serde_json::from_str::<serde_json::Value>(p).unwrap().to_string(), 80)), "{line}");
+        }
+        // and the refusal reaches plog, once per spawn
+        let src = fs::read_to_string("src/main.rs").expect("read own source").replace("\r\n", "\n");
+        let f = src.split("fn seat_launch(pane_id: &str)").nth(1).expect("seat_launch moved");
+        let body = f.split("\n}\n").next().unwrap_or(f);
+        assert!(body.contains("plog(&run_preset_refusal(pane_id, v));"), "the refusal is not logged");
+    }
+
+    /// Row 4 (wiring): spawn_claude_pane takes its model and effort from seat_launch, once each, after the resume / session-id arguments.
+    #[test]
+    fn the_spawn_takes_the_launch_once() {
+        let src = fs::read_to_string("src/main.rs").expect("read own source").replace("\r\n", "\n");
+        let f = src.split("fn spawn_claude_pane(").nth(1).expect("spawn_claude_pane moved");
+        let body = f.split("\n}\n").next().unwrap_or(f);
+        let resume = body.find("cmd.args([\"--resume\", &pane_id]);").expect("the resume argument moved");
+        let launch = body.find("let launch = seat_launch(&pane_id, is_managed_cwd(&cwd) && is_builder_dir_name(&cwd));").expect("spawn does not read seat_launch by the pane's role");
+        let effort = body.find("cmd.args([\"--effort\", effort]);").expect("no --effort call");
+        assert!(resume < launch && launch < effort);
+        assert_eq!(body.matches("\"--effort\"").count(), 1, "one --effort call");
+        assert_eq!(body.matches("seat_launch(").count(), 1, "the config is read once per spawn");
     }
 }
 
@@ -27508,6 +27787,39 @@ mod config_merge_tests {
         let p = tmp("bom", Some(&with_bom));
         save_config_at(&p, &parse_config(LIVE_LIKE).0).unwrap();
         assert_eq!(read_obj(&p)["machine_tag"], "D");
+    }
+
+    /// L247 row: saving the run preset writes that key and keeps every other key, value for value; the file is backed up first, beside it, with
+    /// the old text byte for byte; a save that changes nothing writes no backup; a value the tab does not know is kept as written.
+    #[test]
+    fn saving_the_run_preset_keeps_every_other_key_and_backs_up_first() {
+        let with = LIVE_LIKE.replacen("\"usb_mode\": true", "\"usb_mode\": true,\n  \"seat_models\": {\"third_place\": \"fable\"}", 1);
+        assert!(with.contains("seat_models"), "control: the fixture carries seat_models");
+        let p = tmp("preset", Some(&with));
+        let before = read_obj(&p);
+        let mut cfg = parse_config(&with).0;
+        cfg.run_preset = "turbo".into();
+        save_config_at(&p, &cfg).unwrap();
+        let after = read_obj(&p);
+        assert_eq!(after.get("run_preset"), Some(&serde_json::json!("turbo")), "the preset is written");
+        for (k, v) in &before {
+            assert_eq!(after.get(k), Some(v), "{k} changed");
+        }
+        assert_eq!(after.len(), before.len() + 1, "one key added, none dropped");
+        let dir = p.parent().unwrap().to_path_buf();
+        let baks = || {
+            let mut v: Vec<PathBuf> = fs::read_dir(&dir).unwrap().flatten().map(|e| e.path()).filter(|x| x.file_name().unwrap().to_string_lossy().starts_with(".consonance.json.bak-")).collect();
+            v.sort();
+            v
+        };
+        let b = baks();
+        assert_eq!(b.len(), 1, "one backup, beside the file");
+        assert_eq!(fs::read(&b[0]).unwrap(), with.as_bytes(), "the backup is the file as it was, byte for byte");
+        save_config_at(&p, &parse_config(&fs::read_to_string(&p).unwrap()).0).unwrap();
+        assert_eq!(baks().len(), 1, "a save that changes nothing writes no backup");
+        let odd = tmp("preset-odd", Some(r#"{"run_preset":"warp","machine_tag":"L"}"#));
+        save_config_at(&odd, &parse_config(&fs::read_to_string(&odd).unwrap()).0).unwrap();
+        assert_eq!(read_obj(&odd).get("run_preset"), Some(&serde_json::json!("warp")), "a value the tab does not know is kept as written");
     }
 
     /// Row 6: the keys the tab owns are EXACTLY Config's fields, so a field added later is owned (written) and nothing else is.
