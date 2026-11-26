@@ -45,3 +45,15 @@
 - So: install L241+L242 (0ab6cc8) on L (L244a, pane A, once the builder is closed); a blur mock artifact (L245, pane C);
   per-theme handle colours (L244, pane A, after the install).
 - 02:3x (L): blur mock https://claude.ai/artifact/85aiPQ31PPitFfHU1Sducb (L245). Panels are 80-95% opaque, so the blur shows only as a soft smear; a thinner fill would show more road.
+
+## His words, 02:33 (L), on the blur mock
+- "i like the styling, but not the circuluar design choice for the few that have it, looks so cheap to me. I wonder, we
+  have spent a lot of time trying to make things I like without it looking too much like as well what others would
+  call AI slop design, this feels to me closer to agreeing with those idiots lol. I think we should look up and research
+  a design doc or repo to learn more how to do clean UI design that goes with the aesthetics we want."
+- The rounded ones in the mock are aqua (18 px), aurora and skyline/skyline-night (16 px). L242's canvas windows carry
+  aqua 10, aurora 8 and skyline 12 px.
+- Prior art, surfaced by the librarian: `research/ai_slop_ui_survey_2026-10-29.md` (section 3, "What reads as crafted";
+  :57 names glass and aurora themselves as top-tier tells), `research/ui_unslop_guide_2026-10-27.md`, and C's audit of
+  our screens `handback/p-d546-slop-audit-C_2026-10-29.md`. They say what slop IS. A positive design doc or repo
+  to learn FROM is not on disk. That is L246.
