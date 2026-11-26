@@ -111,3 +111,4 @@
 - Read as: the landing runs to its end (the reads, the merges, the whole suite once, the installer built). Nothing new
   starts; panes C and O stay idle. The install on L is NOT decided for him: it replaces his installed app, so it waits
   for his word. Then the two handoffs: `loop/handoff_t180_2026-11-26-L.md` and `loop/handoff_lighthouse_2026-11-26-L.md`.
+- 07:2x (L): the read of the blur by A is **CLEAN** (`handback/p-l251-read-A_2026-11-26.md`): the two pointer cases C had inferred hold on both trees (a mark dragged under its own window; a handle dragged through its readout, 301.34 m on both); with the camera moving, eight blurred windows cost about 0.43 ms a frame over none, less than the canvas windows; no window paints over an open menu or a dialog. The read of the row 7 fix by P is CLEAN too (`handback/p-l253-read-P_2026-11-26.md`). Backlog, older than tonight: the handle readout draws over the guide card; row 7b runs only at 1400 x 860.
