@@ -1,0 +1,26 @@
+✔ W1: each look's window takes that look's own font and corner radius (read from its tokens, drawn) (15.4582ms)
+✔ W2: a page with no window tokens draws today's box: square, the veil, a 1.5 px edge in the mark's colour, bold 12px system-ui, the words at +6 px (0.1775ms)
+✔ W3: a look that sets no mark colours draws today's; a --mark-<field> token is what the field, its extra handles and its corner kind draw (0.2847ms)
+✔ W4: on every look, bank and turn are told apart (their colours at least 60 apart in RGB), and each window's words read on its fill (contrast 4.5:1 or better) (6.5184ms)
+✔ W5: every look sets its own colour for each field, no two fields within 60 of each other (W4's unit), and each 60 or more off that look's road edges, grid, fog and sky (13.3228ms)
+✔ W6: a field's hue, wherever it comes from (Build, the landing, the Sculpt brush and Smooth's channel, the dots' rows), draws as the look's colour for that field; a hue with no field, and every hue on a page with no tokens, as it is (2.2612ms)
+✔ each melody sets its own skin on <html data-theme>; an unknown or missing melody leaves SIGIL (0.8983ms)
+✔ the page sets the skin in its head, before the first paint, from the same number the player draws its melody from (2.8976ms)
+✔ D394: Settings ▸ Theme has seven choices: music follows the melody, each of the four is its own skin, Skyline Night is its own, sigil is none (0.1515ms)
+✔ D394: the head reads the saved theme: a fixed theme sets its own skin AND melody; music keeps the random pick; nothing saved and broken saved text start on SIGIL; sigil plays its own melody under SIGIL (18.9418ms)
+✔ D405: Skyline Night is a sixth look on Skyline's melody: its own skin, chosen by name or by the random pick, kept by the boot (4.3308ms)
+✔ the reader understands every colour form a skin may write (0.8599ms)
+✔ the reader falls back to today's literal where the page has no such token or cannot read it, and says so once per token (0.3849ms)
+✔ the reader reads again when data-theme changes, and tells whoever listens (0.2976ms)
+✔ SIGIL's tokens are today's literals, so SIGIL draws exactly as before (1.3091ms)
+✔ SIGIL's 3D frame is the same, call for call, with its tokens applied; a skin's tokens change it (1.6385ms)
+✔ a skin is styling only: no theme file sets a property that moves or sizes a box, and each skin the page links is a look's (3.3086ms)
+✔ the canvas layers and overlays name no chrome colour of their own: they read the tokens (the meaning colours stay literal) (11.2305ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 18
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 129.6561

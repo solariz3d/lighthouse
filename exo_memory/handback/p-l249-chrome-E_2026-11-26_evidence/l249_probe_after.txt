@@ -1,0 +1,27 @@
+AFTER (this worktree) skyline: --radius-factor = 1
+  ok  a panel button (r2): 4px
+  ok  a menu title (r2): 4px
+  ok  a menu (r3): 8px
+  OFF a row in a menu (r3 - 8, concentric): NO ELEMENT  (the scale says 0px; .more-menu .menu-row)
+  ok  a button in a menu (r3 - 8, concentric): 0px
+  ok  a field (r1): 2px
+  ok  the left column (square, docked): 0px
+  ok  the camera dock (r2): 4px
+  ok  the camera hint (r1): 2px
+  OFF the HUD strip (r2): 6px  (the scale says 4px; .preview-hud)
+  ok  the guide card (r3): 8px
+  ok  Export (the one capsule): 999px
+AFTER (this worktree) skyline-night: --radius-factor = 1
+  ok  a panel button (r2): 4px
+  ok  a menu title (r2): 4px
+  ok  a menu (r3): 8px
+  OFF a row in a menu (r3 - 8, concentric): NO ELEMENT  (the scale says 0px; .more-menu .menu-row)
+  ok  a button in a menu (r3 - 8, concentric): 0px
+  ok  a field (r1): 2px
+  ok  the left column (square, docked): 0px
+  ok  the camera dock (r2): 4px
+  ok  the camera hint (r1): 2px
+  OFF the HUD strip (r2): 6px  (the scale says 4px; .preview-hud)
+  ok  the guide card (r3): 8px
+  ok  Export (the one capsule): 999px
+4 off the scale
