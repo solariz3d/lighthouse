@@ -125,3 +125,22 @@ degrees into the new 360 you know? 5. Not sure, what is smoothness limit?"
 - 2026-11-27 05:44 (L), to "the smaller, slower cars are not in the public repository yet": "yes bc the update itsnt out yet"
 - 2026-11-27 05:45 (L): "we will refactor the builder when the update goes live, i wager we wont have to change much"
 - 2026-11-27 06:01 (L): "do what you think is best" (his answer to the Even plan’s calls; also read by the librarian as covering its lean on the width hold’s ripple, and told to him so)
+
+## His answers on D, 2026-11-27 10:26 (verbatim), to four questions from the librarian
+
+The questions: 1. install the laptop's test build (c522ea6) here; 2. install torch and ffmpeg here for the Third Place's film;
+3. when drivers say the Type A clips, is the body seen under the road, or does the car physically glitch; 4. after a brush,
+should bank, cup, the edges and the right width also hold, as the width now does.
+
+"1. yes. 2. yes. 3. it doesnt matter if he body cosmetically clips under the track, we have seen mach 6 body clipping underneath
+the track but it doesnt do shit, but it has to be some reason why. I am sure we have a type A replay with telemetry here to
+see, we didnt on the laptop. 4. Im not sure"
+
+- 1: install `landing-1127-l263` c522ea6 on D, the current exe backed up first.
+- 2: torch and ffmpeg on D (the film's source is `third_place/in_concert_2026-11-27/`).
+- 3: the drawn body under the road is not the question (the Mach 6's body does it and nothing happens). The question is why
+  the Type A physically clips worse. **Checked on D at 10:3x:** 98 replays in his replay folder parse, and none holds a Type A
+  or a Fumee in any car slot (81 Mach 6, 4 GRX, 2 Talon, 2 Krysha, 2 Demo, 1 each Gigerbon, Gladiator, Augury, Hangul, Mach 6
+  Active, and 2 road cars); 3 more replays in blackbox samples and Downloads are Mach 6 or unnamed. So there is no Type A
+  telemetry on D yet.
+- 4: not decided. Only the width holds after a brush.
