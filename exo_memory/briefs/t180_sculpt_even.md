@@ -33,3 +33,10 @@
 - Why a grab dips the road: it scales the section about the far rim, so on a cupped road the centre drops (0.2403 m on his example); cup 0 gives 0.
 - The plan's section 8, eleven calls, put to him with the librarian's leans. No build until his word.
 - 2026-11-27 06:01 (L), to the eleven calls with the librarian’s lean on each: "do what you think is best"
+
+## State, 2026-11-27 07:17 (L): the banked direction failed; nothing built
+
+- `handback/p-l267-sculpt-even-build-A_2026-11-27.md`, "Stage 1, measured (13:16Z)" (628f736f): the librarian’s direction for a banked turn (even = the smooth ease between the run’s two end values) fired its registered falsifier. It flattens the designed roll-in (bank 17.4425 degrees off the design). Holding the centre’s height draws new reds on a banked road. Keeping the bank as found keeps the grabs’ 5.0 degrees.
+- On a flat road the tool’s rows all pass, as before.
+- Stage 2 (the build) not started. A second probe is written: `loop/packet_t180_sculpt_even_banked_probe2_2026-11-27.md`. Its ring is held while the width-hold builder works.
+- Found by the planner: the plan’s banked test road banked the turn away from its centre (4 reds of its own); banked into the turn it has none.
