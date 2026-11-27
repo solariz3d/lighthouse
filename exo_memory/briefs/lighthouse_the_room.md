@@ -570,3 +570,6 @@ carry it, so this brief does.
 - 2026-11-27 06:21 (L): "what do you think>?"
 - 2026-11-27 06:23 (L): "go" (the second Fable run, after pane B’s timings)
 - 2026-11-27 07:19 (L): "try to stop new work in motion, when all is done, push the relevant handoffs so we can pick up on desktop, then after, give me a solid run down of tonights work and where its headed"
+
+- 2026-11-27 15:01 (D), to the librarian: "having my 8 hour sleep compaction lol, keep going". Read as: he sleeps about
+  eight hours; the room goes on with what is already his line of work. Not a word to compact any seat.
