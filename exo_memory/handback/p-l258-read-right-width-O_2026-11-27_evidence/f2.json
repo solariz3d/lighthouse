@@ -1,0 +1,148 @@
+{
+ "M": [
+  {
+   "case": "split head, width 19.1346, right +3.5: width left as shown, right width m typed as the width is shown",
+   "headW": 19.1346,
+   "widthFieldShows": "19.13",
+   "rightFieldShowed": "22.63",
+   "message": null,
+   "lastSplit": true,
+   "lastEndWd": 0,
+   "schema": "t180b.core/7",
+   "nextSplit": false,
+   "rightFieldNow": "19.13",
+   "widthFieldNow": "19.13"
+  },
+  {
+   "case": "split head, width 19.1 brushed +1.37 at the head: width left as shown, right width m typed as the width is shown",
+   "headW": 20.463,
+   "widthFieldShows": "20.46",
+   "rightFieldShowed": "23.96",
+   "message": null,
+   "lastSplit": true,
+   "lastEndWd": 0,
+   "schema": "t180b.core/7",
+   "nextSplit": false,
+   "rightFieldNow": "20.28",
+   "widthFieldNow": "20.28"
+  },
+  {
+   "case": "unsplit head, width 19.1346: width left as shown, right width m typed as the width is shown",
+   "headW": 19.1346,
+   "widthFieldShows": "19.13",
+   "rightFieldShowed": "19.13",
+   "message": null,
+   "lastSplit": false,
+   "lastEndWd": 0,
+   "schema": "t180b.core/4",
+   "nextSplit": false,
+   "rightFieldNow": "19.13",
+   "widthFieldNow": "19.13"
+  },
+  {
+   "case": "split head 19.1346: the width field typed as shown (\"19.13\") and right width m typed as shown",
+   "lastEndWd": 0,
+   "lastEndW": 19.1346,
+   "note": "the width field typed equal to what it shows counts as left as shown (asTyped)"
+  },
+  {
+   "case": "split head 19.1346: the width typed as a NEW number (19.2) and right width m typed 19.13",
+   "lastEndWd": -0.07,
+   "lastEndW": 19.2
+  },
+  {
+   "case": "brushed split head: SPLIT_HEAD, then its advice typed into the mounted panel, then the piece added",
+   "firstRefused": "SPLIT_HEAD: the road's right side has its own width at the head (right width 23.96 m, width 20.46 m), which a saved piece cannot carry on yet; Extend with right width m set to the width (20.46), then add the piece",
+   "laidAfterAdvice": 1,
+   "advice": "20.46",
+   "afterMessage": "added the piece \"plain\" at the head: 1 piece (Ctrl+Z takes it back)",
+   "before": 3
+  }
+ ],
+ "R": [
+  {
+   "case": "width 19.1346, right width typed 19.1316",
+   "sent": -0.003,
+   "wanted": -0.003,
+   "endWd": -0.003,
+   "rightSide": 19.1316,
+   "split": true
+  },
+  {
+   "case": "width 19.1346, right width typed 19.133",
+   "sent": -0.0016,
+   "wanted": -0.0016,
+   "endWd": -0.0016,
+   "rightSide": 19.133,
+   "split": true
+  },
+  {
+   "case": "width 19.1346, right width typed 19.1376",
+   "sent": 0.003,
+   "wanted": 0.003,
+   "endWd": 0.003,
+   "rightSide": 19.1376,
+   "split": true
+  },
+  {
+   "case": "width 19.1346, right width typed 19.13",
+   "sent": 0,
+   "wanted": -0.0046,
+   "endWd": 0,
+   "rightSide": 19.1346,
+   "split": true
+  },
+  {
+   "case": "width 19.1, right width typed 19.097",
+   "sent": -0.003,
+   "wanted": -0.003,
+   "endWd": -0.003,
+   "rightSide": 19.097,
+   "split": true
+  },
+  {
+   "case": "width 19.1, right width typed 19.103",
+   "sent": 0.003,
+   "wanted": 0.003,
+   "endWd": 0.003,
+   "rightSide": 19.103,
+   "split": true
+  },
+  {
+   "case": "width 19.1, right width typed 19.1",
+   "sent": 0,
+   "wanted": 0,
+   "endWd": 0,
+   "rightSide": 19.1,
+   "split": true
+  }
+ ],
+ "C": [
+  {
+   "case": "width 19.1: a 3.5 m step, then \"set the right width back to the width\" (Extend, right width as shown)",
+   "schemaBefore": "t180b.core/7",
+   "schemaAfterSettingBack": "t180b.core/7",
+   "piecesThatWriteWd": [
+    2,
+    3,
+    4
+   ],
+   "pieceThatSetItBackWritesWd": true,
+   "nextPieceSplit": false,
+   "schemaWithTheStepTakenOff": "t180b.core/4"
+  },
+  {
+   "case": "width 19.1346: a 3.5 m step, then \"set the right width back to the width\" (Extend, right width as shown)",
+   "schemaBefore": "t180b.core/7",
+   "schemaAfterSettingBack": "t180b.core/7",
+   "piecesThatWriteWd": [
+    2,
+    3,
+    4
+   ],
+   "pieceThatSetItBackWritesWd": true,
+   "nextPieceSplit": false,
+   "schemaWithTheStepTakenOff": "t180b.core/4"
+  }
+ ]
+}

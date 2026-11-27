@@ -230,3 +230,85 @@ NEXT: librarian takes CLEAN to the chair, with F1 named for B or the landing (th
 **Evidence added to `p-l258-read-right-width-O_2026-11-27_evidence/`:** `o_f1.js` → `f1.json`, `f1_wayout.txt` (the `node -e` that made it is in the section above), `heavy_run_status_f1.txt`.
 
 NEXT: librarian takes NOT CLEAN to the chair with F2 for B (a right width typed as the width is shown goes back to the width, with a row on a non-round width), when it has read this section.
+
+## Delta read, 2026-11-27 10:1xZ: B's F2, 8b7cafc..de6c069 — NOT CLEAN on the CHANGELOG's way back only; the code is clean
+
+**Order:** the chair's of 10:01:27Z.
+- **Base:** builder `d677-right-width-b` **de6c069**, one commit on 8b7cafc; local only. Read in my own detached worktree `C:\Consonance\t180-wt-o-l258g`, removed at hand-back.
+- **The objects:** B's section "F2: a right width typed as the width is shown is back to the width" (`handback/p-l258-right-width-B_2026-11-27.md:247`, room d717cf54), read whole, against my F2 above.
+- **The diff** (checked: `git diff 8b7cafc de6c069`): 6 files, +82/−6.
+  - `panel.js`: `backToWidth`. With no width target, a right width typed `=== near2(ref)` is sent as wd 0, for the first target and for each change at its mark (`wdAt`).
+  - `piece.js`: SPLIT_HEAD's numbers through `shown2`, the panel's own arithmetic.
+  - Three panel rows, mutants, and the CHANGELOG, MAP and README lines.
+
+**Verdict: NOT CLEAN, on one sentence, the CHANGELOG's way back** (F3 below). It does not hold as written, at any width. The rule B built holds everywhere I varied it.
+
+### The rule: holds (checked: `o_f2.js` → `f2.json`, the panel MOUNTED with B's own fake DOM, typed as he types)
+
+**Typed in the mounted panel:**
+
+| head | typed | result |
+|---|---|---|
+| split, width 19.1346 (shows 19.13; right shows 22.63) | right width m "19.13", width left as shown | ends at **wd 0**; the next piece is one width; both fields then show 19.13 |
+| split, 19.1 brushed +1.37 at the head (width 20.463, shows 20.46) | right width m "20.46" | ends at **wd 0**; the next piece is one width |
+| unsplit, 19.1346 | right width m "19.13" | not split; the file stays **core/4** |
+| split, 19.1346 | the width field typed as it shows ("19.13") and right width "19.13" | wd 0; the width kept at 19.1346 (a field typed equal to what it shows counts as left as shown, `asTyped`) |
+| split, 19.1346 | the width typed as a new number (19.2) and right width 19.13 | wd −0.07, as typed (the difference of the two typed numbers) |
+| brushed split head | SPLIT_HEAD's advice, "(20.46)", typed into the mounted panel | the piece is **laid** ("added the piece "plain" at the head") |
+
+**The other ways a right width is set** (checked in code at de6c069):
+- **Every Extend button reads the same options,** `opts()` → `extendOptions`: Extend, the ghost (`panel.js:660`), Turn by (`:737`), Turn to grid (`:753`), Sharp (`:761`) and Jump (`:1137`). So the rule covers all of them.
+- **Every write into a change row goes through `show()`, two decimals:** a handle drag (`:1545-1552`), an offer (`:1622-1623`), a row made where its handle stood (`:1533`), and Undo's put-back of the recorded values (`:595`). So a dragged or restored right width lands on the same two-decimal grid the rule compares against.
+- **The width brush and Sculpt do not touch `wd`** (D's named edge, and my earlier vary: `wdUnchanged`). So they cannot leave a few-mm right width.
+- **A pasted value** is read as typed (`num` → `Number`). A comma is NaN and refused by Extend as a non-finite target. inferred from the code; not pasted.
+
+**A right width he really wants a few mm off** (through `extendOptions`): it holds to the millimetre.
+
+| width | typed | sent | the road's right side |
+|---|---|---|---|
+| 19.1346 | 19.1316 | −0.003 | 19.1316 |
+| 19.1346 | 19.133 | −0.0016 | 19.133 |
+| 19.1346 | 19.1376 | +0.003 | 19.1376 |
+| 19.1 | 19.097 | −0.003 | 19.097 |
+| 19.1 | 19.103 | +0.003 | 19.103 |
+
+- **The one value lost is B's stated trade-off:** a right width exactly equal to the width *as shown*, when the true width differs (19.13 on 19.1346, 4.6 mm narrower). It is sent as 0.
+- It is reachable by typing the width field too.
+- inferred: rare and recoverable, and the right call against making every right width within 5 mm unlayable from every caller.
+
+**B's rows:** `node --test test/core_right_width.test.js app/test/core-right-width-panel.test.js` on de6c069, at BelowNormal → **29 of 29** (`rows_f2.txt`). B's touched set (144) and harness (35 / 35) were not re-run; they stand as B's.
+
+### F3: the CHANGELOG's way back does not hold as written (checked)
+
+**The sentence**, unchanged since e4e7ecc: *"An older builder refuses a core/7 file by name rather than open it wrong; to go back, set the right width back to the width (the piece then writes no `wd`, and the file is core/4, /5 or /6 again)."*
+
+**On a road that has a step** (`o_f2.js`, case C), at width 19.1 and at 19.1346 alike: a 3.5 m step, then an Extend with the right width set back to the width as shown (B's rule applied).
+- **The file stays core/7.**
+- **The pieces that write `wd` are the step, the hold, and the piece that sets it back.** That last piece ramps 3.5 → 0, so it writes `wd` too.
+- Only the piece after it is one width.
+- **What brings core/4 back:** the stepped pieces taken off (Undo or Delete).
+- **The panel has no way to change a placed piece's right width.** Selecting a piece only lends its values to the fields for the next Extend (`panel.js:1335-1345`).
+
+**B's third row,** *"the CHANGELOG's way back holds on such a width"*, builds its head with `{ split: false }`: a road that never had a right width. It proves that typing the width as shown on such a road keeps its schema, which is F2's fix. It does not prove the way back, because there is nothing to go back from.
+
+**What would close it** (inferred, a words change):
+- *"to go back, Undo or delete every piece whose right side has its own width; setting the right width back to the width ends the step, and the pieces after it write no `wd`, but the file stays core/7 while the stepped pieces are in it"*;
+- the row renamed to what it holds;
+- optionally, a row on a stepped road that asserts core/7 after setting it back, and core/4 after the Undo.
+
+**Why it is NOT CLEAN and not a nit:** it is the rollback note of a stored-format change. Someone who follows it expecting an older builder to open the file again gets "a newer file needs a newer builder".
+
+### Correction, mine, to my last section
+
+- **I wrote** that the CHANGELOG's way back *"fails the same way for such a width … Every piece after it stays split, and the file stays core/7"*, as if the few millimetres were the cause of core/7.
+- **They are not.** The file stays core/7 at any width, two-decimal widths included, because the stepped pieces keep `wd` (case C above, at 19.1). The millimetres only kept the pieces *after* it split. B's fix cures that part.
+
+### The machine
+
+- My worktree removed. No process of mine running.
+- His saves not opened. Synthetic roads only; no names.
+- One probe and two row files, at BelowNormal, after `heavy-run.js --status`; no slot.
+
+**Evidence added:** `o_f2.js` → `f2.json`, `rows_f2.txt`, `heavy_run_status_f2.txt`.
+
+NEXT: librarian takes NOT CLEAN (F3, the CHANGELOG's way back and B's third row's name) to the chair for B, when it has read this section; the code of F2 is clean.
