@@ -1,0 +1,5 @@
+t180-o1-eee: refused there 356; refused at the tip and NOT there: 0; refused there and laid at the tip: 256; refused at both with the same reason: 88
+span hole at the tip: kh -80 250 [-90,-100,-110] marks 16.06/93.56/197.06 | at eee621f: BAD_SECOND: the turn (kh) change 1 (its second turn), from -0.0139626  marks 95.5/147/198.5
+span hole at the tip: kh 80 250 [90,100,110] marks 16.06/93.56/197.06 | at eee621f: BAD_SECOND: the turn (kh) change 1 (its second turn), from 0.0139626 t marks 95.5/147/198.5
+span hole at the tip: kv -80 250 [-90,-100,-110] marks 16.06/93.56/197.06 | at eee621f: BAD_SECOND: the climb (kv) change 1 (its second climb), from -0.013962 marks 95.5/147/198.5
+span hole at the tip: kv 80 250 [90,100,110] marks 16.06/93.56/197.06 | at eee621f: BAD_SECOND: the climb (kv) change 1 (its second climb), from 0.0139626 marks 95.5/147/198.5

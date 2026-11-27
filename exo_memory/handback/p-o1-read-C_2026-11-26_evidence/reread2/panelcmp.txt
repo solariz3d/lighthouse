@@ -1,0 +1,45 @@
+{
+ "turn": {
+  "n": 72,
+  "tipLaid": 72,
+  "eeeLaid": 31,
+  "baseLaid": 27,
+  "laidBaseNotTip": [],
+  "laidEeeNotTip": [],
+  "sameMarksAsEee": 31
+ },
+ "climb": {
+  "n": 72,
+  "tipLaid": 72,
+  "eeeLaid": 31,
+  "baseLaid": 27,
+  "laidBaseNotTip": [],
+  "laidEeeNotTip": [],
+  "sameMarksAsEee": 31
+ },
+ "bank": {
+  "n": 24,
+  "tipLaid": 14,
+  "eeeLaid": 14,
+  "baseLaid": 14,
+  "laidBaseNotTip": [],
+  "laidEeeNotTip": [],
+  "sameMarksAsEee": 21
+ }
+}
+slow 191 ms (eee 4.4 ) turn|-80|300|-100,-90| laid
+slow 179.4 ms (eee 4 ) climb|-80|300|-100,-90| laid
+slow 29.4 ms (eee 0.5 ) turn|-60|300|-80,-70| laid
+slow 27.3 ms (eee 0.4 ) climb|-60|300|-80,-70| laid
+slow 17.2 ms (eee 21.5 ) bank|30|300|45,40| laid
+slow 16.7 ms (eee 14.5 ) bank|-20|300|-30,-10| laid
+bank not laid at tip: bank|30|300|45,40|240 tip [90.5,240] | eee placed-then-refused [90.5,240] | base placed-then-refused [90.5,240]
+bank not laid at tip: bank|30|300|20,40|240 tip [18.22,240] | eee placed-then-refused [18.22,240] | base placed-then-refused [18.22,240]
+bank not laid at tip: bank|30|300|40,50,40| tip [0,99.7,199.4] | eee invalid-marks [0,99.7,199.4] | base invalid-marks [0,99.7,199.4]
+bank not laid at tip: bank|30|300|40,50,40|240 tip [0,99.7,240] | eee invalid-marks [0,99.7,240] | base invalid-marks [0,99.7,240]
+bank not laid at tip: bank|30|500|20,40|400 tip [243.4,400] | eee placed-then-refused [243.4,400] | base placed-then-refused [243.4,400]
+bank not laid at tip: bank|30|500|40,50,40|400 tip [184.9,284.6,400] | eee placed-then-refused [184.9,284.6,400] | base placed-then-refused [184.9,284.6,400]
+bank not laid at tip: bank|-20|300|-5,-10|240 tip [77.5,240] | eee placed-then-refused [77.5,240] | base placed-then-refused [77.5,240]
+bank not laid at tip: bank|-20|300|-10,0,-10| tip [0,125.7,251.4] | eee invalid-marks [0,125.7,251.4] | base invalid-marks [0,125.7,251.4]
+bank not laid at tip: bank|-20|300|-10,0,-10|240 tip [0,125.7,240] | eee invalid-marks [0,125.7,240] | base invalid-marks [0,125.7,240]
+bank not laid at tip: bank|-20|500|-30,-10|400 tip [257.4,400] | eee placed-then-refused [257.4,400] | base placed-then-refused [257.4,400]

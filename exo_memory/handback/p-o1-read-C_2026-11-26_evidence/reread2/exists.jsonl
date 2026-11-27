@@ -1,0 +1,95 @@
+{"ch":"kh","first":-80,"L":200,"ts":[-65,-70],"oracle":[39.7,117],"panel":[79.9,174.2],"panelRes":"laid"}
+{"ch":"kh","first":-80,"L":200,"ts":[-55,-65],"oracle":null,"panel":[0,128.7],"panelRes":"the turn (kh) change 1 (its second turn) starts inside the piece and before the piece's end (200 m): from in (0, 200), g"}
+{"ch":"kh","first":-80,"L":200,"ts":[-50,-40],"oracle":null,"panel":[0,154.5],"panelRes":"the turn (kh) change 1 (its second turn) starts inside the piece and before the piece's end (200 m): from in (0, 200), g"}
+{"ch":"kh","first":-80,"L":200,"ts":[-105,-90],"oracle":null,"panel":[0,200.7],"panelRes":"the turn (kh) change 1 (its second turn) starts inside the piece and before the piece's end (200 m): from in (0, 200), g"}
+{"ch":"kh","first":-80,"L":200,"ts":[-100,-120],"oracle":null,"panel":[0,200],"panelRes":"the turn (kh) change 1 (its second turn) starts inside the piece and before the piece's end (200 m): from in (0, 200), g"}
+{"ch":"kh","first":-80,"L":200,"ts":[-65,-70,-65],"oracle":null,"panel":[45.43,122.73,174.2],"panelRes":"laid"}
+{"ch":"kh","first":-80,"L":200,"ts":[-60,-70,-80],"oracle":null,"panel":[0,120,222.94],"panelRes":"the turn (kh) change 1 (its second turn) starts inside the piece and before the piece's end (200 m): from in (0, 200), g"}
+{"ch":"kh","first":-80,"L":250,"ts":[-65,-70],"oracle":[0.7,78],"panel":[146.9,224.2],"panelRes":"laid"}
+{"ch":"kh","first":-80,"L":250,"ts":[-55,-65],"oracle":[0.3,129],"panel":[69.8,198.5],"panelRes":"laid"}
+{"ch":"kh","first":-80,"L":250,"ts":[-50,-40],"oracle":[0.5,155],"panel":[44,198.5],"panelRes":"laid"}
+{"ch":"kh","first":-80,"L":250,"ts":[-105,-90],"oracle":null,"panel":[0,172.7],"panelRes":"the turn (kh) change 1 (its second turn) starts inside the piece and before the piece's end (250 m): from in (0, 250), g"}
+{"ch":"kh","first":-80,"L":250,"ts":[-100,-120],"oracle":null,"panel":[0,205.88],"panelRes":"the turn (kh) change 1 (its second turn) starts inside the piece and before the piece's end (250 m): from in (0, 250), g"}
+{"ch":"kh","first":-80,"L":250,"ts":[-65,-70,-65],"oracle":[2.7,80,135],"panel":[109.1,186.4,218.2],"panelRes":"laid"}
+{"ch":"kh","first":-80,"L":250,"ts":[-60,-70,-80],"oracle":null,"panel":[0,103,206.5],"panelRes":"the turn (kh) change 1 (its second turn) starts inside the piece and before the piece's end (250 m): from in (0, 250), g"}
+{"ch":"kh","first":-80,"L":300,"ts":[-65,-70],"oracle":[0.7,78],"panel":[196.9,274.2],"panelRes":"laid"}
+{"ch":"kh","first":-80,"L":300,"ts":[-55,-65],"oracle":[0.3,129],"panel":[119.8,248.5],"panelRes":"laid"}
+{"ch":"kh","first":-80,"L":300,"ts":[-50,-40],"oracle":[0.5,155],"panel":[94,248.5],"panelRes":"laid"}
+{"ch":"kh","first":-80,"L":300,"ts":[-105,-90],"oracle":null,"panel":[0,222.7],"panelRes":"the turn (kh) change 1 (its second turn) starts inside the piece and before the piece's end (300 m): from in (0, 300), g"}
+{"ch":"kh","first":-80,"L":300,"ts":[-100,-120],"oracle":[1,124],"panel":[11,176],"panelRes":"laid"}
+{"ch":"kh","first":-80,"L":300,"ts":[-65,-70,-65],"oracle":[2.7,80,125],"panel":[162.1,239.4,265.2],"panelRes":"laid"}
+{"ch":"kh","first":-80,"L":300,"ts":[-60,-70,-80],"oracle":[2,105,210],"panel":[67,170,248.5],"panelRes":"laid"}
+{"ch":"kh","first":-60,"L":200,"ts":[-45,-50],"oracle":[0.7,78],"panel":[96.9,174.2],"panelRes":"laid"}
+{"ch":"kh","first":-60,"L":200,"ts":[-35,-45],"oracle":[0.3,129],"panel":[19.8,148.5],"panelRes":"laid"}
+{"ch":"kh","first":-60,"L":200,"ts":[-30,-20],"oracle":null,"panel":[0,154.5],"panelRes":"the turn (kh) change 1 (its second turn) starts inside the piece and before the piece's end (200 m): from in (0, 200), g"}
+{"ch":"kh","first":-60,"L":200,"ts":[-85,-70],"oracle":null,"panel":[0,200.7],"panelRes":"the turn (kh) change 1 (its second turn) starts inside the piece and before the piece's end (200 m): from in (0, 200), g"}
+{"ch":"kh","first":-60,"L":200,"ts":[-80,-100],"oracle":null,"panel":[0,200],"panelRes":"the turn (kh) change 1 (its second turn) starts inside the piece and before the piece's end (200 m): from in (0, 200), g"}
+{"ch":"kh","first":-60,"L":200,"ts":[-45,-50,-45],"oracle":[2.7,80,135],"panel":[57.1,134.4,172.2],"panelRes":"laid"}
+{"ch":"kh","first":-60,"L":200,"ts":[-40,-50,-60],"oracle":null,"panel":[0,103,191.5],"panelRes":"the turn (kh) change 1 (its second turn) starts inside the piece and before the piece's end (200 m): from in (0, 200), g"}
+{"ch":"kh","first":-60,"L":250,"ts":[-45,-50],"oracle":[0.7,78],"panel":[146.9,224.2],"panelRes":"laid"}
+{"ch":"kh","first":-60,"L":250,"ts":[-35,-45],"oracle":[0.3,129],"panel":[69.8,198.5],"panelRes":"laid"}
+{"ch":"kh","first":-60,"L":250,"ts":[-30,-20],"oracle":[0.5,155],"panel":[44,198.5],"panelRes":"laid"}
+{"ch":"kh","first":-60,"L":250,"ts":[-85,-70],"oracle":null,"panel":[0,172.7],"panelRes":"the turn (kh) change 1 (its second turn) starts inside the piece and before the piece's end (250 m): from in (0, 250), g"}
+{"ch":"kh","first":-60,"L":250,"ts":[-80,-100],"oracle":null,"panel":[0,125],"panelRes":"the turn (kh) change 1 (its second turn) starts inside the piece and before the piece's end (250 m): from in (0, 250), g"}
+{"ch":"kh","first":-60,"L":250,"ts":[-45,-50,-45],"oracle":[7.7,85,130],"panel":[114.1,191.4,217.2],"panelRes":"laid"}
+{"ch":"kh","first":-60,"L":250,"ts":[-40,-50,-60],"oracle":[2,105,190],"panel":[19,122,198.5],"panelRes":"laid"}
+{"ch":"kh","first":-60,"L":300,"ts":[-45,-50],"oracle":[0.7,78],"panel":[196.9,274.2],"panelRes":"laid"}
+{"ch":"kh","first":-60,"L":300,"ts":[-35,-45],"oracle":[0.3,129],"panel":[119.8,248.5],"panelRes":"laid"}
+{"ch":"kh","first":-60,"L":300,"ts":[-30,-20],"oracle":[0.5,155],"panel":[94,248.5],"panelRes":"laid"}
+{"ch":"kh","first":-60,"L":300,"ts":[-85,-70],"oracle":[1.3,130],"panel":[57,222.7],"panelRes":"laid"}
+{"ch":"kh","first":-60,"L":300,"ts":[-80,-100],"oracle":[1,104],"panel":[60,190],"panelRes":"laid"}
+{"ch":"kh","first":-60,"L":300,"ts":[-45,-50,-45],"oracle":[2.7,80,115],"panel":[162.1,239.4,265.2],"panelRes":"laid"}
+{"ch":"kh","first":-60,"L":300,"ts":[-40,-50,-60],"oracle":[2,105,175],"panel":[91,194,248.5],"panelRes":"laid"}
+{"ch":"kh","first":50,"L":200,"ts":[35,40],"oracle":[0.7,78],"panel":[96.9,174.2],"panelRes":"laid"}
+{"ch":"kh","first":50,"L":200,"ts":[25,35],"oracle":[0.3,129],"panel":[19.8,148.5],"panelRes":"laid"}
+{"ch":"kh","first":50,"L":200,"ts":[20,10],"oracle":null,"panel":[0,154.5],"panelRes":"the turn (kh) change 1 (its second turn) starts inside the piece and before the piece's end (200 m): from in (0, 200), g"}
+{"ch":"kh","first":50,"L":200,"ts":[75,60],"oracle":null,"panel":[0,200.7],"panelRes":"the turn (kh) change 1 (its second turn) starts inside the piece and before the piece's end (200 m): from in (0, 200), g"}
+{"ch":"kh","first":50,"L":200,"ts":[70,90],"oracle":null,"panel":[0,180],"panelRes":"the turn (kh) change 1 (its second turn) starts inside the piece and before the piece's end (200 m): from in (0, 200), g"}
+{"ch":"kh","first":50,"L":200,"ts":[35,40,35],"oracle":[2.7,80,125],"panel":[62.1,139.4,172.2],"panelRes":"laid"}
+{"ch":"kh","first":50,"L":200,"ts":[30,40,50],"oracle":null,"panel":[0,103,177.5],"panelRes":"the turn (kh) change 1 (its second turn) starts inside the piece and before the piece's end (200 m): from in (0, 200), g"}
+{"ch":"kh","first":50,"L":250,"ts":[35,40],"oracle":[0.7,78],"panel":[146.9,224.2],"panelRes":"laid"}
+{"ch":"kh","first":50,"L":250,"ts":[25,35],"oracle":[0.3,129],"panel":[69.8,198.5],"panelRes":"laid"}
+{"ch":"kh","first":50,"L":250,"ts":[20,10],"oracle":[0.5,155],"panel":[44,198.5],"panelRes":"laid"}
+{"ch":"kh","first":50,"L":250,"ts":[75,60],"oracle":[1.3,145],"panel":[15,172.7],"panelRes":"laid"}
+{"ch":"kh","first":50,"L":250,"ts":[70,90],"oracle":[1,104],"panel":[19,135],"panelRes":"the turn (kh) change 2 (its third turn), from 0.0122173 to 0.015708, is laid over the bar by 115 m before the piece's en"}
+{"ch":"kh","first":50,"L":250,"ts":[35,40,35],"oracle":[12.7,90,120],"panel":[114.1,191.4,217.2],"panelRes":"laid"}
+{"ch":"kh","first":50,"L":250,"ts":[30,40,50],"oracle":[2,105,175],"panel":[31,134,194.5],"panelRes":"the turn (kh) change 3 (its fourth turn), from 0.00698132 to 0.00872665, is laid over the bar by 55.5 m before the piece"}
+{"ch":"kh","first":50,"L":300,"ts":[35,40],"oracle":[0.7,78],"panel":[196.9,274.2],"panelRes":"laid"}
+{"ch":"kh","first":50,"L":300,"ts":[25,35],"oracle":[0.3,129],"panel":[119.8,248.5],"panelRes":"laid"}
+{"ch":"kh","first":50,"L":300,"ts":[20,10],"oracle":[0.5,155],"panel":[94,248.5],"panelRes":"laid"}
+{"ch":"kh","first":50,"L":300,"ts":[75,60],"oracle":[0.3,129],"panel":[80,221.7],"panelRes":"laid"}
+{"ch":"kh","first":50,"L":300,"ts":[70,90],"oracle":[1,104],"panel":[80,192],"panelRes":"laid"}
+{"ch":"kh","first":50,"L":300,"ts":[35,40,35],"oracle":[2.7,80,110],"panel":[171.1,248.4,274.2],"panelRes":"laid"}
+{"ch":"kh","first":50,"L":300,"ts":[30,40,50],"oracle":[2,105,170],"panel":[91,194,245.5],"panelRes":"laid"}
+{"ch":"kv","first":-80,"L":200,"ts":[-65,-70],"oracle":[39.7,117],"panel":[79.9,174.2],"panelRes":"laid"}
+{"ch":"kv","first":-80,"L":200,"ts":[-55,-65],"oracle":null,"panel":[0,128.7],"panelRes":"the climb (kv) change 1 (its second climb) starts inside the piece and before the piece's end (200 m): from in (0, 200),"}
+{"ch":"kv","first":-80,"L":200,"ts":[-65,-70,-65],"oracle":null,"panel":[45.43,122.73,174.2],"panelRes":"laid"}
+{"ch":"kv","first":-80,"L":250,"ts":[-65,-70],"oracle":[0.7,78],"panel":[146.9,224.2],"panelRes":"laid"}
+{"ch":"kv","first":-80,"L":250,"ts":[-55,-65],"oracle":[0.3,129],"panel":[69.8,198.5],"panelRes":"laid"}
+{"ch":"kv","first":-80,"L":250,"ts":[-65,-70,-65],"oracle":[2.7,80,135],"panel":[109.1,186.4,218.2],"panelRes":"laid"}
+{"ch":"kv","first":-80,"L":300,"ts":[-65,-70],"oracle":[0.7,78],"panel":[196.9,274.2],"panelRes":"laid"}
+{"ch":"kv","first":-80,"L":300,"ts":[-55,-65],"oracle":[0.3,129],"panel":[119.8,248.5],"panelRes":"laid"}
+{"ch":"kv","first":-80,"L":300,"ts":[-65,-70,-65],"oracle":[2.7,80,125],"panel":[162.1,239.4,265.2],"panelRes":"laid"}
+{"ch":"kv","first":-60,"L":200,"ts":[-45,-50],"oracle":[0.7,78],"panel":[96.9,174.2],"panelRes":"laid"}
+{"ch":"kv","first":-60,"L":200,"ts":[-35,-45],"oracle":[0.3,129],"panel":[19.8,148.5],"panelRes":"laid"}
+{"ch":"kv","first":-60,"L":200,"ts":[-45,-50,-45],"oracle":[2.7,80,135],"panel":[57.1,134.4,172.2],"panelRes":"laid"}
+{"ch":"kv","first":-60,"L":250,"ts":[-45,-50],"oracle":[0.7,78],"panel":[146.9,224.2],"panelRes":"laid"}
+{"ch":"kv","first":-60,"L":250,"ts":[-35,-45],"oracle":[0.3,129],"panel":[69.8,198.5],"panelRes":"laid"}
+{"ch":"kv","first":-60,"L":250,"ts":[-45,-50,-45],"oracle":[7.7,85,130],"panel":[114.1,191.4,217.2],"panelRes":"laid"}
+{"ch":"kv","first":-60,"L":300,"ts":[-45,-50],"oracle":[0.7,78],"panel":[196.9,274.2],"panelRes":"laid"}
+{"ch":"kv","first":-60,"L":300,"ts":[-35,-45],"oracle":[0.3,129],"panel":[119.8,248.5],"panelRes":"laid"}
+{"ch":"kv","first":-60,"L":300,"ts":[-45,-50,-45],"oracle":[2.7,80,115],"panel":[162.1,239.4,265.2],"panelRes":"laid"}
+{"ch":"kv","first":50,"L":200,"ts":[35,40],"oracle":[0.7,78],"panel":[96.9,174.2],"panelRes":"laid"}
+{"ch":"kv","first":50,"L":200,"ts":[25,35],"oracle":[0.3,129],"panel":[19.8,148.5],"panelRes":"laid"}
+{"ch":"kv","first":50,"L":200,"ts":[35,40,35],"oracle":[2.7,80,125],"panel":[62.1,139.4,172.2],"panelRes":"laid"}
+{"ch":"kv","first":50,"L":250,"ts":[35,40],"oracle":[0.7,78],"panel":[146.9,224.2],"panelRes":"laid"}
+{"ch":"kv","first":50,"L":250,"ts":[25,35],"oracle":[0.3,129],"panel":[69.8,198.5],"panelRes":"laid"}
+{"ch":"kv","first":50,"L":250,"ts":[35,40,35],"oracle":[12.7,90,120],"panel":[114.1,191.4,217.2],"panelRes":"laid"}
+{"ch":"kv","first":50,"L":300,"ts":[35,40],"oracle":[0.7,78],"panel":[196.9,274.2],"panelRes":"laid"}
+{"ch":"kv","first":50,"L":300,"ts":[25,35],"oracle":[0.3,129],"panel":[119.8,248.5],"panelRes":"laid"}
+{"ch":"kv","first":50,"L":300,"ts":[35,40,35],"oracle":[2.7,80,110],"panel":[171.1,248.4,274.2],"panelRes":"laid"}
+SUMMARY {"n":90,"exists":68,"panelLaid":68,"missed":2,"panelLaidNoOracle":2,"oracleNotConfirmed":0}
+MISSED {"ch":"kh","first":50,"L":250,"ts":[70,90],"oracle":[1,104],"panel":[19,135],"why":"the turn (kh) change 2 (its third turn), from 0.0122173 to 0.015708, is laid over the bar by 115 m before the piece's en"}
+MISSED {"ch":"kh","first":50,"L":250,"ts":[30,40,50],"oracle":[2,105,175],"panel":[31,134,194.5],"why":"the turn (kh) change 3 (its fourth turn), from 0.00698132 to 0.00872665, is laid over the bar by 55.5 m before the piece"}
+PANEL-ONLY {"ch":"kh","first":-80,"L":200,"ts":[-65,-70,-65],"panel":[45.43,122.73,174.2]}
+PANEL-ONLY {"ch":"kv","first":-80,"L":200,"ts":[-65,-70,-65],"panel":[45.43,122.73,174.2]}

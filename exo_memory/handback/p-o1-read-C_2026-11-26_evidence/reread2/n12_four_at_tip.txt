@@ -1,0 +1,4 @@
+kh|-80|-90|-85|80|160 under N12: laid 1.062 | tip: refused 97.5
+kh|-80|-90|-85|100|180 under N12: laid 1.085 | tip: refused 100.5
+kh|-80|-90|-85|120|200 under N12: laid 1.086 | tip: refused 102.9
+kh|-80|-90|-85|140|220 under N12: laid 1.063 | tip: refused 100.5

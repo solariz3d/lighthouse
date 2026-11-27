@@ -1,0 +1,20 @@
+N11-routeMin-memo-forgets-end:
+  kh: of 67 cases bfa6732 newly laid: refused 43, laid within 1.05 24, laid over 1.05 0
+  kv: of 21 cases bfa6732 newly laid: refused 0, laid within 1.05 21, laid over 1.05 0
+  whole sweep at the new tip: 184 cases, laid 93, over 1.05 0; ceb21f5 laid 48
+N12-routePeak-memo-forgets-end:
+  kh: of 67 cases bfa6732 newly laid: refused 37, laid within 1.05 26, laid over 1.05 4, worst 1.086
+  kv: of 21 cases bfa6732 newly laid: refused 0, laid within 1.05 21, laid over 1.05 0
+  whole sweep at the new tip: 184 cases, laid 99, over 1.05 4, worst 1.086; ceb21f5 laid 48
+    over {"ch":"kh","first":-80,"t1":-90,"t2":-85,"f1":80,"f2":160,"laid":1,"p":1.062,"at":121}
+    over {"ch":"kh","first":-80,"t1":-90,"t2":-85,"f1":100,"f2":180,"laid":1,"p":1.085,"at":141}
+    over {"ch":"kh","first":-80,"t1":-90,"t2":-85,"f1":120,"f2":200,"laid":1,"p":1.086,"at":159}
+    over {"ch":"kh","first":-80,"t1":-90,"t2":-85,"f1":140,"f2":220,"laid":1,"p":1.063,"at":179}
+N13-change-runs-on-past-its-end:
+  kh: of 67 cases bfa6732 newly laid: refused 43, laid within 1.05 24, laid over 1.05 0
+  kv: of 21 cases bfa6732 newly laid: refused 0, laid within 1.05 21, laid over 1.05 0
+  whole sweep at the new tip: 184 cases, laid 93, over 1.05 0; ceb21f5 laid 48
+N14-refusal-loop-forgets-end:
+  kh: of 67 cases bfa6732 newly laid: refused 43, laid within 1.05 24, laid over 1.05 0
+  kv: of 21 cases bfa6732 newly laid: refused 0, laid within 1.05 21, laid over 1.05 0
+  whole sweep at the new tip: 184 cases, laid 93, over 1.05 0; ceb21f5 laid 48

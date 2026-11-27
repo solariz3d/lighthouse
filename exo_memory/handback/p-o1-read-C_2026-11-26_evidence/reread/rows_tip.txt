@@ -1,0 +1,18 @@
+✔ O1 R1a: a turn change −80 → −60 °/100m over 103 m on a 300 m piece whose first ramp (0 → −80) runs under it is laid (the capped ceiling asked 205.9 m), reaching −60 with its built turn changing under the bar (× 1.05) (19.4493ms)
+✔ O1 R1a climb: a climb change −30 → −20 °/100m over 80 m on a 300 m piece whose first ramp (0 → −30) runs under it is laid (the capped ceiling asked 102.9 m), reaching −20 with its built climb changing under the bar (× 1.05) (8.5596ms)
+✔ O1 R1b: a turn change −80 → −75 over 13 m on that moving ramp is still refused, naming a shortest under the capped 51.5 m and never under its own 25.7 m; laid there, its built turn changes under the bar (× 1.05) (6.5656ms)
+✔ O1 R1b sharp ramp: where the first ramp itself changes the turn faster than the bar near the mark (0 → −80 over 120 m), a span between the change's own shortest and the ceiling is refused, naming the ceiling (3.0557ms)
+✔ O1 R1c: with no first ramp under the change, the refusals and the laid documents are today's, byte for byte (turn and climb) (2.8317ms)
+✔ O1 R1e: a change at or past the closed-form ceiling over a moving first ramp lays today's document, byte for byte (turn and climb) (0.9683ms)
+✔ O1 F1 kh: a change −80 → −95 from 120 m to the next mark at 200 m (then −90), on a 0 → −80 ramp over 300 m, is refused, and laid at the mark it names its built rate changes under the bar (× 1.05) (14.3841ms)
+✔ O1 F1 kv: a change −80 → −95 from 120 m to the next mark at 200 m (then −90), on a 0 → −80 ramp over 300 m, is refused, and laid at the mark it names its built rate changes under the bar (× 1.05) (13.7676ms)
+✔ O1 F2 kh: the probe's bar and the shortest it names: −80 → −95 ending at the next mark (200 m) on a 0 → −80 ramp needs 148.3 m; laid there it is under the bar, a metre shorter it is refused (22.1002ms)
+✔ O1 F2 kv: the probe's bar and the shortest it names: −80 → −95 ending at the next mark (200 m) on a 0 → −80 ramp needs 148.3 m; laid there it is under the bar, a metre shorter it is refused (17.123ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 174.7418

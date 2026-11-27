@@ -1,0 +1,3 @@
+tip 0eb3448: RESULT held -87.86 laid true
+N15 (panel.js:1439 fit check without end): RESULT held -95 laid false
+N16 (coreshell.js spanHolds without end): RESULT held -95 laid false

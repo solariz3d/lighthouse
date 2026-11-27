@@ -1,0 +1,7 @@
+unmutated:
+✖ D642: dragging the extra bank back toward level on his p2 (a moving first ramp), the first time, costs a m
+N15 applied
+  SURVIVED (same failing names as unmutated)
+N16 applied
+  1d0
+  < ✖ D642: dragging the extra bank back toward level on his p2 (a moving first ramp), the first time, costs a move with
