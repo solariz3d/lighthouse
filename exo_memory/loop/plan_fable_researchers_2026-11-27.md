@@ -191,3 +191,5 @@ R1 to R6 above stay held; R5 (how other editors make things even) is being answe
 **When:** after pane B’s timing session hands back (it holds both run slots and needs a quiet machine; the first study overlapped its first minutes, posted to the board). **Waits on his go, said as a go.**
 
 **His word, 06:23: "go"**, to the librarian’s "say go and I’ll start it once B is done". The second run is ordered. It starts when pane B’s timing session has handed back and the two pane packets have gone to the chair; if usage runs short before the reset, the researchers are cut before the builds (the librarian’s condition, told to him at 06:21).
+
+**Started 06:53** (workflow wf_7dea3e80): THREE builders, not two (the usage is there, and two of three agreeing reads better than two of two), each blind to outcomes and writing into `research/t180_soft_contact_simulation_2026-11-27_evidence/sim{A,B,C}/`; a scorer who reads the record and the bar above; a writer; a checker who re-runs the code. Six agents. Any run over five seconds goes through heavy-run at below-normal priority. Output `research/t180_soft_contact_simulation_2026-11-27.md`.
