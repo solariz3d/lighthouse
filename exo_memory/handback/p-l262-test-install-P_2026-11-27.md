@@ -12,7 +12,7 @@ This file has two halves. §A, the run after go, is directly below. The preparat
 - **INSTALLED at 09:29:39Z, not launched.** The installed exe is now **69462996bfa3602f20e1a358aec017af727adef1da24238bc60d2d1445de2cd7**, 16,089,600 B; the stamped compare against the build (b9eef9b9…) is equal.
 - **Backup:** `.before-l262-f3cd425`, sha256 **2820e5f82160b8d48b3cb0399671f0783ef6bb7563d1e9e4056cda63c7d75576**, the f3cd425 install, made and `cmp`-checked first.
 - I held the install on my own §4 condition from my commit ea32ea59 (09:28:33Z, its commit time: `git log -1 --format=%cI ea32ea59`) to the word at 09:29:21Z, which was INSTALL (§5.6).
-- **The whole suite** is running in the background on 537a0c9. It is reported when it ends.
+- **The whole suite** on 537a0c9 has ended: 5,076 tests, 5,043 pass, **2 fail**. Both are p95 timing rows that also fail at f3cd425 on L under the exclusive hold (B's figures). 0 functional reds (§5.7).
 
 
 ## 0. The answer first (preparation)
@@ -193,9 +193,20 @@ Code files changed (checked: `git diff --name-only f3cd425 <tip>`):
 
   Then check its sha256 is 2820e5f8…7576 (f3cd425). The backup is kept twice; the earlier `.before-l259-0ab6cc8` is untouched.
 
-### 5.7 The whole suite
+### 5.7 The whole suite, once, on 537a0c9 (ended 10:09:34Z)
 
-Once, on 537a0c9: running in the background under heavy-run at BelowNormal (`--test-concurrency=4`, TAP, leftovers.js before and after). It gates a merge to main or a release, not this install. Reported when it ends.
+**Result:** checked (scratch `l262/run/suite.tap`, `l262/suite.log`): **tests 5,076 · pass 5,043 · fail 2** · cancelled 0 · todo 3 · skipped 28, in 2,571 s.
+- How it ran: `node --test --test-concurrency=4 --test-reporter=tap "test/*.test.js" "app/test/*.test.js"`, `npm test`'s command, under heavy-run at BelowNormal from 09:26:43Z.
+- **0 functional reds.** The 2 fails are both p95 timing rows, and the 3 todo rows are the known three.
+- `leftovers.js` before and after: tab proxies UNCALIBRATED (read 0, and the control made none); 0 orphan browsers; 0 strays; worktrees 36 → 35 linked (another seat removed one). The tree was clean after.
+
+**The 2 fails:**
+- `app/test/core-extra-bank-drag-cost.test.js` row 322 (D642, "dragging the extra bank back toward level on his p2 … within 2 ×", p95): "the rolling drag's p95 is 12.6 ms a move, the early drag's 5.2 ms: **2.41 ×, over 2 ×**".
+- `app/test/drag-frame.test.js` row 863 (row 8, "a 1,000 m piece with a left edge typed, stretched on an empty track …", p95 bar 6.9 ms): "aqua … **p95 7.4 / 7.5 ms** (median 2.5 / 2.6), over 6.9 ms".
+- **Why they read as the machine, not the merge** (checked, from B's figures under the exclusive hold, `p-l258-right-width-B_2026-11-27.md` "The timing rows", `timing2-*.txt`): at **f3cd425**, D642 failed 1 run of 2 (2.15×) and drag-frame row 8 failed 1 of 2 (8.6 / 7.8 ms). On B's branch each also failed 1 of 2 (2.06×; 8.3 / 7.5 ms). B's reading, which I share: "these rows are at their bars on L, at base as on the branch".
+- **And my run was loaded.** It used the suite's own concurrency of 4. When it started, A's L261 held the other slot with "core-extra-bank-drag-cost x4 (change, 7b3926e, change, 7b3926e)", the same file as the first red (checked: `suite.log`'s `--status` at 09:26Z).
+- inferred: neither red is caused by this merge. Not re-run alone: a quiet re-run needs the exclusive hold, and B already has the base-against-branch figures from one.
+- **For the landing that goes to main:** these two rows and release-frame row 1 are red at f3cd425 on L under the hold. Expect them there, and read them against f3cd425 under the hold, as B did.
 
 ### 5.8 For him to try, now that it is installed on the laptop (one line each)
 
@@ -216,4 +227,4 @@ Once, on 537a0c9: running in the background under heavy-run at BelowNormal (`--t
 BASE: C:\Consonance\t180-wt-p-l262 f3cd425
 BASE: C:\Consonance\lighthouse 93d4f3a7
 SOURCES: exo_memory/loop/packet_t180_test_install_on_L_2026-11-27.md:50; exo_memory/handback/p-l259-install-P_2026-11-27.md; exo_memory/handback/p-d677-right-width-B_2026-11-27.md:15-47; heavy-run --status ×4; tasklist ×5; scratch l262/pipeline.log, run/pipeline.json, run/tier-plain.tap, run/tier-harness.tap, run/tset-final.json, run/build262.json, build262.log, run/bytes.json, copies.taken, src.sha; git rev-list / log -p / diff-tree --cc for the push scan; git push ×3; git ls-remote origin; push-gate.jsonl last 3 rows; sha256sum of the installed exe; the chair's word of 09:29:21Z (librarian note 93d4f3a7); tasklist and gamesIn before the install; install-local.ps1 output run/install.txt; sha256sum and cmp of the installed exe and both backups; find -newermt on his app-data folders
-NEXT: librarian tells him the test build is on the laptop, with 5.8, when it has read 5.6; P reports the whole suite on 537a0c9 when it ends
+NEXT: librarian reads §5.7 (the whole suite on 537a0c9) when it collates L262; nothing more is owed on L262
