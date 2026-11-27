@@ -9,7 +9,8 @@
   python again.py render                     out/in_concert_2.mp4 (needs out/score.wav from score.py)
   python again.py render 0:32 opening        out/opening.mp4: only that range of the film
 
-Set FILM_GENTLE=1 for stills on the CPU at low priority (no GPU), for when the machine is busy with something else.
+Set FILM_LOW=1 to run at below-normal priority (a render while he plays). Set FILM_GENTLE=1 for stills on the CPU
+with four threads as well. Set FILM_YIELD_TO=name.exe to make a render refuse and stop while that program runs.
 
 The chapters are in ch/. The timeline, the sets and the continuity are in world.py; the cast is in engine.py and
 cast2.py; shared motion helpers are in moves.py.
@@ -23,10 +24,11 @@ import os
 
 import numpy as np
 
-if os.environ.get("FILM_GENTLE"):               # stills while something else needs the machine: no GPU, few threads, low priority
-    os.environ["CUDA_VISIBLE_DEVICES"] = ""
+if os.environ.get("FILM_GENTLE") or os.environ.get("FILM_LOW"):     # below normal priority, for this process and ffmpeg
     import ctypes
-    ctypes.windll.kernel32.SetPriorityClass(ctypes.windll.kernel32.GetCurrentProcess(), 0x4000)     # below normal
+    ctypes.windll.kernel32.SetPriorityClass(ctypes.windll.kernel32.GetCurrentProcess(), 0x4000)
+if os.environ.get("FILM_GENTLE"):               # and no GPU, few threads: stills on the CPU
+    os.environ["CUDA_VISIBLE_DEVICES"] = ""
     import torch
     torch.set_num_threads(4)
 
@@ -98,9 +100,12 @@ def one(tt):
 
 
 def game_running():
-    """True if a program named in FILM_YIELD_TO (default acs.exe, the racing sim) is running. A render holds the GPU,
-    and a render during a race is not allowed. If the process list cannot be read, the answer is True (do not render)."""
-    names = [x.strip().lower() for x in os.environ.get("FILM_YIELD_TO", "acs.exe").split(",") if x.strip()]
+    """True if a program named in FILM_YIELD_TO is running (for example FILM_YIELD_TO=acs.exe). Off unless that is
+    set: his standing word (2026-11-15) is that work goes on while he plays; only frame-time measurements wait for a
+    game. With it set, an unreadable process list counts as True (do not render)."""
+    names = [x.strip().lower() for x in os.environ.get("FILM_YIELD_TO", "").split(",") if x.strip()]
+    if not names:
+        return False
     try:
         out = subprocess.run(["tasklist", "/NH"], capture_output=True, text=True, timeout=30, check=True).stdout.lower()
     except (OSError, subprocess.SubprocessError) as e:
