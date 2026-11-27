@@ -50,3 +50,26 @@ tracks and undo steps the same on c522ea6 and on the merge, from copies; build t
 **Do not install.** The install is his word in the morning, with the pictures in front of him.
 
 NEXT: chair dispatch N1 now and N3 when no run holds a slot; N2 and N4 wait for the librarian's ring; each pane call_librarian with its hand-back
+
+---
+
+## N6, added 18:0x (D): the T-180 research notes of 11-27 would ship in the consumer build (the room's repo; tier PROVE IT, it is what reaches a stranger)
+
+Found by O's suite (`handback/p-d678-heavyrun-stalls-O_2026-11-27.md` section 9) and read by the librarian:
+`node --test consonance/tools/gen-consumer.test.js` → 116 tests, 115 pass, 1 fail, row "D454: the t180 product research
+(exo_memory/research/t180_*) is withheld; the rest of research/ ships" (`gen-consumer.test.js:1986`): "premise: three t180
+research files in dev, 9 !== 3". Six T-180 notes were added on 11-27 (five on L, one on D today) with no row in the
+generator's EXCLUDE list, and the row's premise is a count that stops the real check from running. The rule it guards is the
+librarian's own routing of D454: research for the track builder is a product's, not the room's, and stays out.
+
+- Make the six new notes withheld the way the first three are (`consonance/tools/gen-consumer.js`, `EXCLUDE`, each with its
+  reason), **and their evidence folders** (`research/t180_*_evidence/`): say first whether `collect()` reaches those folders at
+  all today; if it does, they are withheld too, by a row that reads the shipped set for any path under `research/t180_`.
+- The row's premise follows the folder, not a count (every `research/t180_*` found must be excluded and absent from the
+  shipped set; at least three exist), amended by name with the reason. Red first is already on main. The mutants that name
+  `gen-consumer.js`.
+- Say whether a rule ("any research note named t180_ is withheld") would be safer than a list, and what it would break; do not
+  switch to it without saying so in the hand-back.
+- No consumer build is generated or installed here. Push follows the room's rule after the checks.
+
+NEXT: chair dispatch N6 to a free pane now; that pane call_librarian with its hand-back
