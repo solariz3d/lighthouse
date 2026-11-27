@@ -172,3 +172,20 @@ R1 to R6 above stay held; R5 (how other editors make things even) is being answe
 **His word, 05:55:** "what about now?Its like as soon as we have a plan new info pops up lmfa". Read by the librarian as go, and told to him so. Nothing that arrived since the proposal (the Sculpt Even measurement) bears on the vector. One change before the start, for the new-info problem itself: the modeller does NOT see the record's cases (V2); it states the model and its rule from V1, V3, V4 and V5 alone, and a separate scorer then applies the rule to V2's cases. Nine agents: five readers, a modeller, a scorer, a writer, a checker. Started 05:55 as one workflow; output `research/t180_why_a_car_goes_through_a_road_2026-11-27.md`.
 
 **Corrected, 05:58: his 05:55 line was not a go.** His word at 05:58: "lmfao it wasnt lmfao but if it works it works, i was under the impression A pane might have given us new information". The librarian misread a question as an order and started the workflow on it. It stays running by his 05:58 word. Answer to what he asked: pane A's results since the proposal are about the Sculpt Even tool and do not bear on this vector.
+
+## His offer, 06:19, and the librarian’s proposal (06:21): a second run, a model that can be RUN
+
+> "we could do another run of fable researchers again, we have the usage, 9 and a half hours till reset and we still have 24% weekly usage left"
+
+**Why the first model failed, read from its own note:** it was reasoned, not run. It put the whole load on the floor box and used a depth as the point of no return; the record contradicted both (`research/t180_why_a_car_goes_through_a_road_2026-11-27.md`, Answer first 2 to 4). What the record does hold is a separator with no mechanism: the box’s sink rate (`handback/p-d563-wheel-under-O_2026-10-30.md:409-423`).
+
+**The vector proposed:** a tick-by-tick simulation of the soft road contact, written from the open-source collision library’s own code, to see whether "a fast sink breaks, a slow sink holds" comes out of the contact itself, and where the line sits.
+- Two builders, each alone, each from the library’s source and the road block the editor exports (`src/export/trackfiles.js:27-36`): one mass, the floor box, the springs and tyres as given, 333 Hz. Neither is shown any recorded outcome.
+- **Registered before any run, by the librarian:** the simulation counts as reproducing the record only if, with nothing tuned on the cases, on the softer setting (0.0002) a pass sinking at 0.63 m/s or less holds and one at 1.66 m/s or more goes through, AND on the stiffer setting (0.00005) a pass at 65 g holds. If the two builders disagree with each other, neither is believed.
+- If it reproduces: it is then asked what the two untested road settings and the offline-only box extension would do, as predictions for a lap to score.
+- If it does not: that is the finding (the game’s own build of the library differs from the public one where it matters), and the next step is data, not more reasoning.
+- A scorer, a writer, a checker as before. About seven agents.
+
+**Checked by the librarian before proposing:** his game documents are under `OneDriveDocumentsAssetto Corsa`; the replay folder on L holds 10 files, 48 MB, so a wide re-read of replays is not available on this machine (the 30 October passes were read on D). He has no `cfgextensiongeneral.ini` of his own, so the patch’s defaults apply offline: both offline-only protections are on for him offline [inferred from the absence of an override].
+
+**When:** after pane B’s timing session hands back (it holds both run slots and needs a quiet machine; the first study overlapped its first minutes, posted to the board). **Waits on his go, said as a go.**
