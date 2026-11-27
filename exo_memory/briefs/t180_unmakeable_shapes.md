@@ -41,3 +41,17 @@ the week and it expires tomorrow, so maybe we could do turbo mode"
 ## State
 
 - 12:5x: research lap written (`loop/packet_t180_unmakeable_shapes_2026-11-26.md`), rung to the chair.
+
+## His answers to the morning page (2026-11-26 23:00, on D, verbatim)
+
+"1. yes. 2. Yes old tracks stay the same, it allows for new tracks to have the individual sides of width. 3. Well our track has
+the underside thickness and side aprons, so it has to be different in that way than the study tracks, it cant get as close as
+some of them, you know? 4. I guess when it goes all the around, it resets back to 0 but can still start to carry the extra
+degrees into the new 360 you know? 5. Not sure, what is smoothness limit?"
+
+- 1: install landing-1126-batch f3cd425.
+- 2: build the stored right-side width (plan (b)); old tracks unchanged.
+- 3: the overpass gap stays; our road has an underside and aprons, so it cannot pass as close as the study tracks.
+- 4: the shown bank resets past a full turn, but the road keeps rolling into the next turn instead of unwinding (my reading,
+  said back to him).
+- 5: explained to him; no lap yet.
