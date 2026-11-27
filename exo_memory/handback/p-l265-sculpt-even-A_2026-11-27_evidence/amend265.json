@@ -1,0 +1,3030 @@
+{
+ "started": "2026-11-27T11:36:09.626Z",
+ "tree": "C:\\Users\\zackn\\Downloads\\t180-wt-l265c-even",
+ "mechanism": [
+  {
+   "base": "cupped (the default cup)",
+   "cupAtMid": 0,
+   "sectionWidth": 12,
+   "heldRimFromCentre": [
+    5.9418,
+    0.714
+   ],
+   "pulledRimFromCentre": [
+    -5.9418,
+    0.714
+   ],
+   "horizontalSpan": 11.8835,
+   "predicted": {
+    "k": 1.3366,
+    "w": 4.0392,
+    "l": -2,
+    "h": -0.2403
+   },
+   "followSent": {
+    "h": -0.2403,
+    "l": -2,
+    "w": 4.0392,
+    "phi": 0
+   }
+  },
+  {
+   "base": "no cup (cup 0)",
+   "cupAtMid": 0,
+   "sectionWidth": 12,
+   "heldRimFromCentre": [
+    6,
+    0
+   ],
+   "pulledRimFromCentre": [
+    -6,
+    0
+   ],
+   "horizontalSpan": 12,
+   "predicted": {
+    "k": 1.3333,
+    "w": 4,
+    "l": -2,
+    "h": 0
+   },
+   "followSent": {
+    "h": 0,
+    "l": -2,
+    "w": 4,
+    "phi": 0
+   }
+  }
+ ],
+ "rows": [
+  {
+   "name": "start base",
+   "w": {
+    "min": 12,
+    "max": 12,
+    "spread": 0
+   },
+   "l": {
+    "min": 0,
+    "max": 0,
+    "spread": 0
+   },
+   "h": {
+    "min": 0,
+    "max": 0,
+    "spread": 0
+   },
+   "phi": {
+    "min": 0,
+    "max": 0,
+    "spread": 0
+   },
+   "inLat": {
+    "min": 5.9418,
+    "max": 5.9418,
+    "spread": 0
+   },
+   "inZ": {
+    "min": 0.714,
+    "max": 0.714,
+    "spread": 0
+   },
+   "outLat": {
+    "min": -5.9418,
+    "max": -5.9418,
+    "spread": 0
+   },
+   "outZ": {
+    "min": 0.714,
+    "max": 0.714,
+    "spread": 0
+   },
+   "inPlan": {
+    "min": 6,
+    "max": 6,
+    "spread": 0
+   },
+   "outPlan": {
+    "min": -6,
+    "max": -6,
+    "spread": 0
+   },
+   "profile": {
+    "w": [
+     12,
+     12,
+     12,
+     12,
+     12,
+     12,
+     12,
+     12,
+     12,
+     12,
+     12,
+     12,
+     12
+    ],
+    "h": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "check": {
+    "red": 0,
+    "amber": 0,
+    "redOnRun": 0,
+    "redInWindow": 0,
+    "redList": [],
+    "amberList": [],
+    "rawKeys": []
+   }
+  },
+  {
+   "name": "start T1",
+   "w": {
+    "min": 12,
+    "max": 16.0392,
+    "spread": 4.0392
+   },
+   "l": {
+    "min": -2,
+    "max": 0,
+    "spread": 2
+   },
+   "h": {
+    "min": -0.2403,
+    "max": 0,
+    "spread": 0.2403
+   },
+   "phi": {
+    "min": 0,
+    "max": 0,
+    "spread": 0
+   },
+   "inLat": {
+    "min": 5.897,
+    "max": 5.948,
+    "spread": 0.051
+   },
+   "inZ": {
+    "min": 0.714,
+    "max": 0.9126,
+    "spread": 0.1985
+   },
+   "outLat": {
+    "min": -9.9016,
+    "max": -5.9418,
+    "spread": 3.9599
+   },
+   "outZ": {
+    "min": 0.714,
+    "max": 0.9126,
+    "spread": 0.1985
+   },
+   "inPlan": {
+    "min": 6,
+    "max": 6.0196,
+    "spread": 0.0196
+   },
+   "outPlan": {
+    "min": -10.0196,
+    "max": -6,
+    "spread": 4.0196
+   },
+   "profile": {
+    "w": [
+     12,
+     12,
+     12,
+     12,
+     12,
+     12.7773,
+     16.0392,
+     12.7773,
+     12,
+     12,
+     12,
+     12,
+     12
+    ],
+    "h": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     -0.0463,
+     -0.2403,
+     -0.0463,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "check": {
+    "red": 2,
+    "amber": 0,
+    "redOnRun": 2,
+    "redInWindow": 2,
+    "redList": [
+     {
+      "s": 294,
+      "s1": 300,
+      "reason": "leaves-surface"
+     },
+     {
+      "s": 340,
+      "s1": 346,
+      "reason": "leaves-surface"
+     }
+    ],
+    "amberList": [],
+    "rawKeys": [
+     "s0",
+     "s1",
+     "u",
+     "reason",
+     "source",
+     "worst"
+    ]
+   }
+  },
+  {
+   "name": "start T2a",
+   "w": {
+    "min": 12,
+    "max": 16.0392,
+    "spread": 4.0392
+   },
+   "l": {
+    "min": -2,
+    "max": 0,
+    "spread": 2
+   },
+   "h": {
+    "min": -0.2403,
+    "max": 0,
+    "spread": 0.2403
+   },
+   "phi": {
+    "min": 0,
+    "max": 0,
+    "spread": 0
+   },
+   "inLat": {
+    "min": 5.8977,
+    "max": 5.9462,
+    "spread": 0.0484
+   },
+   "inZ": {
+    "min": 0.714,
+    "max": 0.9126,
+    "spread": 0.1985
+   },
+   "outLat": {
+    "min": -9.9016,
+    "max": -5.9418,
+    "spread": 3.9599
+   },
+   "outZ": {
+    "min": 0.714,
+    "max": 0.9126,
+    "spread": 0.1985
+   },
+   "inPlan": {
+    "min": 6,
+    "max": 6.0196,
+    "spread": 0.0196
+   },
+   "outPlan": {
+    "min": -10.0196,
+    "max": -6,
+    "spread": 4.0196
+   },
+   "profile": {
+    "w": [
+     12,
+     15.1497,
+     15.1497,
+     12,
+     15.1497,
+     15.1497,
+     12,
+     15.1497,
+     15.1497,
+     12,
+     15.1497,
+     15.1497,
+     12
+    ],
+    "h": [
+     0,
+     -0.1874,
+     -0.1874,
+     0,
+     -0.1874,
+     -0.1874,
+     0,
+     -0.1874,
+     -0.1874,
+     0,
+     -0.1874,
+     -0.1874,
+     0
+    ]
+   },
+   "check": {
+    "red": 5,
+    "amber": 4,
+    "redOnRun": 5,
+    "redInWindow": 5,
+    "redList": [
+     {
+      "s": 200,
+      "s1": 210,
+      "reason": "leaves-surface"
+     },
+     {
+      "s": 250,
+      "s1": 270,
+      "reason": "leaves-surface"
+     },
+     {
+      "s": 310,
+      "s1": 330,
+      "reason": "leaves-surface"
+     },
+     {
+      "s": 370,
+      "s1": 390,
+      "reason": "leaves-surface"
+     },
+     {
+      "s": 430,
+      "s1": 438,
+      "reason": "leaves-surface"
+     }
+    ],
+    "amberList": [
+     {
+      "s": 222,
+      "s1": 238,
+      "reason": "load-on-the-chassis"
+     },
+     {
+      "s": 282,
+      "s1": 298,
+      "reason": "load-on-the-chassis"
+     },
+     {
+      "s": 342,
+      "s1": 358,
+      "reason": "load-on-the-chassis"
+     },
+     {
+      "s": 402,
+      "s1": 418,
+      "reason": "load-on-the-chassis"
+     }
+    ],
+    "rawKeys": [
+     "s0",
+     "s1",
+     "u",
+     "reason",
+     "source",
+     "worst"
+    ]
+   }
+  },
+  {
+   "name": "start T2b",
+   "w": {
+    "min": 14.06,
+    "max": 16.12,
+    "spread": 2.06
+   },
+   "l": {
+    "min": -2.04,
+    "max": -1.02,
+    "spread": 1.02
+   },
+   "h": {
+    "min": -0.2452,
+    "max": -0.1226,
+    "spread": 0.1226
+   },
+   "phi": {
+    "min": 0,
+    "max": 0,
+    "spread": 0
+   },
+   "inLat": {
+    "min": 5.897,
+    "max": 5.924,
+    "spread": 0.027
+   },
+   "inZ": {
+    "min": 0.8068,
+    "max": 0.915,
+    "spread": 0.1082
+   },
+   "outLat": {
+    "min": -9.9811,
+    "max": -7.964,
+    "spread": 2.017
+   },
+   "outZ": {
+    "min": 0.8068,
+    "max": 0.915,
+    "spread": 0.1082
+   },
+   "inPlan": {
+    "min": 6.01,
+    "max": 6.02,
+    "spread": 0.01
+   },
+   "outPlan": {
+    "min": -10.1,
+    "max": -8.05,
+    "spread": 2.05
+   },
+   "profile": {
+    "w": [
+     14.06,
+     15.8929,
+     15.8929,
+     16.12,
+     15.8929,
+     15.8929,
+     16.12,
+     15.8929,
+     15.8929,
+     16.12,
+     15.8929,
+     15.8929,
+     14.06
+    ],
+    "h": [
+     -0.1226,
+     -0.2317,
+     -0.2317,
+     -0.2452,
+     -0.2317,
+     -0.2317,
+     -0.2452,
+     -0.2317,
+     -0.2317,
+     -0.2452,
+     -0.2317,
+     -0.2317,
+     -0.1226
+    ]
+   },
+   "check": {
+    "red": 2,
+    "amber": 6,
+    "redOnRun": 0,
+    "redInWindow": 2,
+    "redList": [
+     {
+      "s": 192,
+      "s1": 196,
+      "reason": "leaves-surface"
+     },
+     {
+      "s": 444,
+      "s1": 448,
+      "reason": "leaves-surface"
+     }
+    ],
+    "amberList": [
+     {
+      "s": 440,
+      "s1": 440,
+      "reason": "load-above-proven"
+     },
+     {
+      "s": 230,
+      "s1": 230,
+      "reason": "load-on-the-chassis"
+     },
+     {
+      "s": 290,
+      "s1": 290,
+      "reason": "load-on-the-chassis"
+     },
+     {
+      "s": 350,
+      "s1": 350,
+      "reason": "load-on-the-chassis"
+     },
+     {
+      "s": 410,
+      "s1": 410,
+      "reason": "load-on-the-chassis"
+     },
+     {
+      "s": 440,
+      "s1": 440,
+      "reason": "load-on-the-chassis"
+     }
+    ],
+    "rawKeys": [
+     "s0",
+     "s1",
+     "u",
+     "reason",
+     "source",
+     "worst"
+    ]
+   }
+  },
+  {
+   "name": "start bankBase",
+   "w": {
+    "min": 12,
+    "max": 12,
+    "spread": 0
+   },
+   "l": {
+    "min": 0,
+    "max": 0,
+    "spread": 0
+   },
+   "h": {
+    "min": 0,
+    "max": 0,
+    "spread": 0
+   },
+   "phi": {
+    "min": 0,
+    "max": 0.3491,
+    "spread": 0.3491
+   },
+   "inLat": {
+    "min": 5.3392,
+    "max": 5.9418,
+    "spread": 0.6026
+   },
+   "inZ": {
+    "min": 0.714,
+    "max": 2.7032,
+    "spread": 1.9891
+   },
+   "outLat": {
+    "min": -5.9845,
+    "max": -5.8276,
+    "spread": 0.1569
+   },
+   "outZ": {
+    "min": -1.3612,
+    "max": 0.714,
+    "spread": 2.0753
+   },
+   "inPlan": {
+    "min": 6,
+    "max": 6,
+    "spread": 0
+   },
+   "outPlan": {
+    "min": -6,
+    "max": -6,
+    "spread": 0
+   },
+   "profile": {
+    "w": [
+     12,
+     12,
+     12,
+     12,
+     12,
+     12,
+     12,
+     12,
+     12,
+     12,
+     12,
+     12,
+     12
+    ],
+    "h": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "check": {
+    "red": 4,
+    "amber": 0,
+    "redOnRun": 4,
+    "redInWindow": 4,
+    "redList": [
+     {
+      "s": 222,
+      "s1": 252,
+      "reason": "leaves-surface"
+     },
+     {
+      "s": 268,
+      "s1": 312,
+      "reason": "leaves-surface"
+     },
+     {
+      "s": 328,
+      "s1": 372,
+      "reason": "leaves-surface"
+     },
+     {
+      "s": 388,
+      "s1": 432,
+      "reason": "leaves-surface"
+     }
+    ],
+    "amberList": [],
+    "rawKeys": [
+     "s0",
+     "s1",
+     "u",
+     "reason",
+     "source",
+     "worst"
+    ]
+   }
+  },
+  {
+   "name": "start bankT1",
+   "w": {
+    "min": 12,
+    "max": 15.8559,
+    "spread": 3.8559
+   },
+   "l": {
+    "min": -2,
+    "max": 0,
+    "spread": 2
+   },
+   "h": {
+    "min": -0.2403,
+    "max": 0,
+    "spread": 0.2403
+   },
+   "phi": {
+    "min": 0,
+    "max": 0.3491,
+    "spread": 0.3491
+   },
+   "inLat": {
+    "min": 5.2482,
+    "max": 5.9418,
+    "spread": 0.6936
+   },
+   "inZ": {
+    "min": 0.714,
+    "max": 2.8794,
+    "spread": 2.1653
+   },
+   "outLat": {
+    "min": -9.8401,
+    "max": -5.8276,
+    "spread": 4.0124
+   },
+   "outZ": {
+    "min": -1.3612,
+    "max": 0.714,
+    "spread": 2.0753
+   },
+   "inPlan": {
+    "min": 5.928,
+    "max": 6,
+    "spread": 0.0721
+   },
+   "outPlan": {
+    "min": -9.9279,
+    "max": -6,
+    "spread": 3.928
+   },
+   "profile": {
+    "w": [
+     12,
+     12,
+     12,
+     12,
+     12,
+     12.742,
+     15.8559,
+     12.742,
+     12,
+     12,
+     12,
+     12,
+     12
+    ],
+    "h": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     -0.0463,
+     -0.2403,
+     -0.0463,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "check": {
+    "red": 3,
+    "amber": 0,
+    "redOnRun": 3,
+    "redInWindow": 3,
+    "redList": [
+     {
+      "s": 222,
+      "s1": 252,
+      "reason": "leaves-surface"
+     },
+     {
+      "s": 268,
+      "s1": 372,
+      "reason": "leaves-surface"
+     },
+     {
+      "s": 388,
+      "s1": 432,
+      "reason": "leaves-surface"
+     }
+    ],
+    "amberList": [],
+    "rawKeys": [
+     "s0",
+     "s1",
+     "u",
+     "reason",
+     "source",
+     "worst"
+    ]
+   }
+  },
+  {
+   "name": "start bankT2b",
+   "w": {
+    "min": 13.9692,
+    "max": 16.0403,
+    "spread": 2.0711
+   },
+   "l": {
+    "min": -2.04,
+    "max": -1.02,
+    "spread": 1.02
+   },
+   "h": {
+    "min": -0.2452,
+    "max": -0.1226,
+    "spread": 0.1226
+   },
+   "phi": {
+    "min": -0.0055,
+    "max": 0.3052,
+    "spread": 0.3107
+   },
+   "inLat": {
+    "min": 5.2441,
+    "max": 5.9278,
+    "spread": 0.6837
+   },
+   "inZ": {
+    "min": 0.7738,
+    "max": 2.9256,
+    "spread": 2.1518
+   },
+   "outLat": {
+    "min": -9.9252,
+    "max": -7.8774,
+    "spread": 2.0478
+   },
+   "outZ": {
+    "min": -1.3191,
+    "max": 0.9094,
+    "spread": 2.2285
+   },
+   "inPlan": {
+    "min": 5.9279,
+    "max": 6.0186,
+    "spread": 0.0907
+   },
+   "outPlan": {
+    "min": -10.0217,
+    "max": -8.0046,
+    "spread": 2.0171
+   },
+   "profile": {
+    "w": [
+     14.0589,
+     15.8873,
+     15.7573,
+     15.9529,
+     15.7166,
+     15.7314,
+     15.9413,
+     15.7166,
+     15.7314,
+     15.9413,
+     15.7164,
+     15.7211,
+     13.9692
+    ],
+    "h": [
+     -0.1226,
+     -0.2317,
+     -0.2317,
+     -0.2452,
+     -0.2317,
+     -0.2317,
+     -0.2452,
+     -0.2317,
+     -0.2317,
+     -0.2452,
+     -0.2317,
+     -0.2317,
+     -0.1226
+    ]
+   },
+   "check": {
+    "red": 5,
+    "amber": 2,
+    "redOnRun": 4,
+    "redInWindow": 5,
+    "redList": [
+     {
+      "s": 192,
+      "s1": 196,
+      "reason": "leaves-surface"
+     },
+     {
+      "s": 222,
+      "s1": 248,
+      "reason": "leaves-surface"
+     },
+     {
+      "s": 272,
+      "s1": 308,
+      "reason": "leaves-surface"
+     },
+     {
+      "s": 332,
+      "s1": 368,
+      "reason": "leaves-surface"
+     },
+     {
+      "s": 392,
+      "s1": 442,
+      "reason": "leaves-surface"
+     }
+    ],
+    "amberList": [
+     {
+      "s": 446,
+      "s1": 446,
+      "reason": "load-above-proven"
+     },
+     {
+      "s": 444,
+      "s1": 448,
+      "reason": "load-on-the-chassis"
+     }
+    ],
+    "rawKeys": [
+     "s0",
+     "s1",
+     "u",
+     "reason",
+     "source",
+     "worst"
+    ]
+   }
+  },
+  {
+   "name": "E2 base: w to 16, l to -2 (the plan's level)",
+   "w": {
+    "min": 16,
+    "max": 16,
+    "spread": 0
+   },
+   "l": {
+    "min": -2,
+    "max": -2,
+    "spread": 0
+   },
+   "h": {
+    "min": 0,
+    "max": 0,
+    "spread": 0
+   },
+   "phi": {
+    "min": 0,
+    "max": 0,
+    "spread": 0
+   },
+   "inLat": {
+    "min": 5.8825,
+    "max": 5.8825,
+    "spread": 0
+   },
+   "inZ": {
+    "min": 1.1493,
+    "max": 1.1493,
+    "spread": 0
+   },
+   "outLat": {
+    "min": -9.8825,
+    "max": -9.8825,
+    "spread": 0
+   },
+   "outZ": {
+    "min": 1.1493,
+    "max": 1.1493,
+    "spread": 0
+   },
+   "inPlan": {
+    "min": 6,
+    "max": 6,
+    "spread": 0
+   },
+   "outPlan": {
+    "min": -10,
+    "max": -10,
+    "spread": 0
+   },
+   "profile": {
+    "w": [
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16
+    ],
+    "h": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "heldRimMoved": {
+    "lat": 0.0592,
+    "z": 0.4353
+   },
+   "outsideMaxChange": 0,
+   "piecesSameObject": 0,
+   "check": {
+    "red": 0,
+    "amber": 1,
+    "redOnRun": 0,
+    "redInWindow": 0,
+    "redList": [],
+    "amberList": [
+     {
+      "s": 450,
+      "s1": 450,
+      "reason": "load-on-the-chassis"
+     }
+    ],
+    "rawKeys": []
+   }
+  },
+  {
+   "name": "E3 base: w to 16, l and h carried about the held inner rim",
+   "w": {
+    "min": 16,
+    "max": 16,
+    "spread": 0
+   },
+   "l": {
+    "min": -1.9806,
+    "max": -1.9806,
+    "spread": 0
+   },
+   "h": {
+    "min": -0.238,
+    "max": -0.2379,
+    "spread": 0.0001
+   },
+   "phi": {
+    "min": 0,
+    "max": 0,
+    "spread": 0
+   },
+   "inLat": {
+    "min": 5.9019,
+    "max": 5.9019,
+    "spread": 0
+   },
+   "inZ": {
+    "min": 0.9113,
+    "max": 0.9114,
+    "spread": 0.0001
+   },
+   "outLat": {
+    "min": -9.8631,
+    "max": -9.8631,
+    "spread": 0
+   },
+   "outZ": {
+    "min": 0.9113,
+    "max": 0.9114,
+    "spread": 0.0001
+   },
+   "inPlan": {
+    "min": 6.0194,
+    "max": 6.0194,
+    "spread": 0
+   },
+   "outPlan": {
+    "min": -9.9806,
+    "max": -9.9806,
+    "spread": 0
+   },
+   "profile": {
+    "w": [
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16
+    ],
+    "h": [
+     -0.238,
+     -0.238,
+     -0.238,
+     -0.238,
+     -0.238,
+     -0.238,
+     -0.238,
+     -0.238,
+     -0.238,
+     -0.238,
+     -0.238,
+     -0.238,
+     -0.238
+    ]
+   },
+   "heldRimMoved": {
+    "lat": 0.0398,
+    "z": 0.1973
+   },
+   "outsideMaxChange": 0,
+   "piecesSameObject": 0,
+   "check": {
+    "red": 2,
+    "amber": 2,
+    "redOnRun": 0,
+    "redInWindow": 2,
+    "redList": [
+     {
+      "s": 176,
+      "s1": 180,
+      "reason": "leaves-surface"
+     },
+     {
+      "s": 458,
+      "s1": 464,
+      "reason": "leaves-surface"
+     }
+    ],
+    "amberList": [
+     {
+      "s": 190,
+      "s1": 190,
+      "reason": "load-on-the-chassis"
+     },
+     {
+      "s": 448,
+      "s1": 452,
+      "reason": "load-on-the-chassis"
+     }
+    ],
+    "rawKeys": [
+     "s0",
+     "s1",
+     "u",
+     "reason",
+     "source",
+     "worst"
+    ]
+   }
+  },
+  {
+   "name": "E2 T1: w to 16, l to -2 (the plan's level)",
+   "w": {
+    "min": 16,
+    "max": 16,
+    "spread": 0
+   },
+   "l": {
+    "min": -2,
+    "max": -2,
+    "spread": 0
+   },
+   "h": {
+    "min": -0.2403,
+    "max": 0,
+    "spread": 0.2403
+   },
+   "phi": {
+    "min": 0,
+    "max": 0,
+    "spread": 0
+   },
+   "inLat": {
+    "min": 5.8825,
+    "max": 5.8825,
+    "spread": 0
+   },
+   "inZ": {
+    "min": 0.909,
+    "max": 1.1493,
+    "spread": 0.2403
+   },
+   "outLat": {
+    "min": -9.8825,
+    "max": -9.8825,
+    "spread": 0
+   },
+   "outZ": {
+    "min": 0.909,
+    "max": 1.1493,
+    "spread": 0.2403
+   },
+   "inPlan": {
+    "min": 6,
+    "max": 6,
+    "spread": 0
+   },
+   "outPlan": {
+    "min": -10,
+    "max": -10,
+    "spread": 0
+   },
+   "profile": {
+    "w": [
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16
+    ],
+    "h": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     -0.0463,
+     -0.2403,
+     -0.0463,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "heldRimMoved": {
+    "lat": 0.0655,
+    "z": 0.4353
+   },
+   "outsideMaxChange": 0,
+   "piecesSameObject": 0,
+   "check": {
+    "red": 2,
+    "amber": 1,
+    "redOnRun": 2,
+    "redInWindow": 2,
+    "redList": [
+     {
+      "s": 294,
+      "s1": 300,
+      "reason": "leaves-surface"
+     },
+     {
+      "s": 340,
+      "s1": 346,
+      "reason": "leaves-surface"
+     }
+    ],
+    "amberList": [
+     {
+      "s": 450,
+      "s1": 450,
+      "reason": "load-on-the-chassis"
+     }
+    ],
+    "rawKeys": [
+     "s0",
+     "s1",
+     "u",
+     "reason",
+     "source",
+     "worst"
+    ]
+   }
+  },
+  {
+   "name": "E3 T1: w to 16, l and h carried about the held inner rim",
+   "w": {
+    "min": 16,
+    "max": 16,
+    "spread": 0
+   },
+   "l": {
+    "min": -1.9807,
+    "max": -1.9785,
+    "spread": 0.0022
+   },
+   "h": {
+    "min": -0.2485,
+    "max": -0.2375,
+    "spread": 0.011
+   },
+   "phi": {
+    "min": 0,
+    "max": 0,
+    "spread": 0
+   },
+   "inLat": {
+    "min": 5.9018,
+    "max": 5.904,
+    "spread": 0.0022
+   },
+   "inZ": {
+    "min": 0.9009,
+    "max": 0.9118,
+    "spread": 0.011
+   },
+   "outLat": {
+    "min": -9.8632,
+    "max": -9.861,
+    "spread": 0.0022
+   },
+   "outZ": {
+    "min": 0.9009,
+    "max": 0.9118,
+    "spread": 0.011
+   },
+   "inPlan": {
+    "min": 6.0193,
+    "max": 6.0215,
+    "spread": 0.0022
+   },
+   "outPlan": {
+    "min": -9.9807,
+    "max": -9.9785,
+    "spread": 0.0022
+   },
+   "profile": {
+    "w": [
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16
+    ],
+    "h": [
+     -0.238,
+     -0.238,
+     -0.238,
+     -0.238,
+     -0.238,
+     -0.2451,
+     -0.2375,
+     -0.2459,
+     -0.238,
+     -0.238,
+     -0.238,
+     -0.238,
+     -0.238
+    ]
+   },
+   "heldRimMoved": {
+    "lat": 0.0453,
+    "z": 0.1973
+   },
+   "outsideMaxChange": 0,
+   "piecesSameObject": 0,
+   "check": {
+    "red": 2,
+    "amber": 2,
+    "redOnRun": 0,
+    "redInWindow": 2,
+    "redList": [
+     {
+      "s": 176,
+      "s1": 180,
+      "reason": "leaves-surface"
+     },
+     {
+      "s": 458,
+      "s1": 464,
+      "reason": "leaves-surface"
+     }
+    ],
+    "amberList": [
+     {
+      "s": 190,
+      "s1": 190,
+      "reason": "load-on-the-chassis"
+     },
+     {
+      "s": 448,
+      "s1": 452,
+      "reason": "load-on-the-chassis"
+     }
+    ],
+    "rawKeys": [
+     "s0",
+     "s1",
+     "u",
+     "reason",
+     "source",
+     "worst"
+    ]
+   }
+  },
+  {
+   "name": "E2 T2a: w to 16, l to -2 (the plan's level)",
+   "w": {
+    "min": 16,
+    "max": 16,
+    "spread": 0
+   },
+   "l": {
+    "min": -2,
+    "max": -2,
+    "spread": 0
+   },
+   "h": {
+    "min": -0.2403,
+    "max": 0,
+    "spread": 0.2403
+   },
+   "phi": {
+    "min": 0,
+    "max": 0,
+    "spread": 0
+   },
+   "inLat": {
+    "min": 5.8825,
+    "max": 5.8825,
+    "spread": 0
+   },
+   "inZ": {
+    "min": 0.909,
+    "max": 1.1493,
+    "spread": 0.2403
+   },
+   "outLat": {
+    "min": -9.8825,
+    "max": -9.8825,
+    "spread": 0
+   },
+   "outZ": {
+    "min": 0.909,
+    "max": 1.1493,
+    "spread": 0.2403
+   },
+   "inPlan": {
+    "min": 6,
+    "max": 6,
+    "spread": 0
+   },
+   "outPlan": {
+    "min": -10,
+    "max": -10,
+    "spread": 0
+   },
+   "profile": {
+    "w": [
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16
+    ],
+    "h": [
+     0,
+     -0.1874,
+     -0.1874,
+     0,
+     -0.1874,
+     -0.1874,
+     0,
+     -0.1874,
+     -0.1874,
+     0,
+     -0.1874,
+     -0.1874,
+     0
+    ]
+   },
+   "heldRimMoved": {
+    "lat": 0.0637,
+    "z": 0.4353
+   },
+   "outsideMaxChange": 0,
+   "piecesSameObject": 0,
+   "check": {
+    "red": 5,
+    "amber": 0,
+    "redOnRun": 5,
+    "redInWindow": 5,
+    "redList": [
+     {
+      "s": 200,
+      "s1": 210,
+      "reason": "leaves-surface"
+     },
+     {
+      "s": 250,
+      "s1": 270,
+      "reason": "leaves-surface"
+     },
+     {
+      "s": 310,
+      "s1": 330,
+      "reason": "leaves-surface"
+     },
+     {
+      "s": 370,
+      "s1": 390,
+      "reason": "leaves-surface"
+     },
+     {
+      "s": 430,
+      "s1": 438,
+      "reason": "leaves-surface"
+     }
+    ],
+    "amberList": [],
+    "rawKeys": [
+     "s0",
+     "s1",
+     "u",
+     "reason",
+     "source",
+     "worst"
+    ]
+   }
+  },
+  {
+   "name": "E3 T2a: w to 16, l and h carried about the held inner rim",
+   "w": {
+    "min": 16,
+    "max": 16,
+    "spread": 0
+   },
+   "l": {
+    "min": -1.9807,
+    "max": -1.9786,
+    "spread": 0.0022
+   },
+   "h": {
+    "min": -0.249,
+    "max": -0.2374,
+    "spread": 0.0116
+   },
+   "phi": {
+    "min": 0,
+    "max": 0,
+    "spread": 0
+   },
+   "inLat": {
+    "min": 5.9018,
+    "max": 5.904,
+    "spread": 0.0022
+   },
+   "inZ": {
+    "min": 0.9004,
+    "max": 0.9119,
+    "spread": 0.0116
+   },
+   "outLat": {
+    "min": -9.8632,
+    "max": -9.8611,
+    "spread": 0.0022
+   },
+   "outZ": {
+    "min": 0.9004,
+    "max": 0.9119,
+    "spread": 0.0116
+   },
+   "inPlan": {
+    "min": 6.0193,
+    "max": 6.0214,
+    "spread": 0.0022
+   },
+   "outPlan": {
+    "min": -9.9807,
+    "max": -9.9786,
+    "spread": 0.0022
+   },
+   "profile": {
+    "w": [
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16
+    ],
+    "h": [
+     -0.238,
+     -0.2447,
+     -0.2447,
+     -0.238,
+     -0.2447,
+     -0.2447,
+     -0.238,
+     -0.2447,
+     -0.2447,
+     -0.238,
+     -0.2447,
+     -0.2447,
+     -0.238
+    ]
+   },
+   "heldRimMoved": {
+    "lat": 0.0443,
+    "z": 0.1973
+   },
+   "outsideMaxChange": 0,
+   "piecesSameObject": 0,
+   "check": {
+    "red": 2,
+    "amber": 1,
+    "redOnRun": 0,
+    "redInWindow": 2,
+    "redList": [
+     {
+      "s": 166,
+      "s1": 172,
+      "reason": "leaves-surface"
+     },
+     {
+      "s": 466,
+      "s1": 474,
+      "reason": "leaves-surface"
+     }
+    ],
+    "amberList": [
+     {
+      "s": 456,
+      "s1": 460,
+      "reason": "load-on-the-chassis"
+     }
+    ],
+    "rawKeys": [
+     "s0",
+     "s1",
+     "u",
+     "reason",
+     "source",
+     "worst"
+    ]
+   }
+  },
+  {
+   "name": "E2 T2b: w to 16, l to -2 (the plan's level)",
+   "w": {
+    "min": 16,
+    "max": 16,
+    "spread": 0
+   },
+   "l": {
+    "min": -2,
+    "max": -2,
+    "spread": 0
+   },
+   "h": {
+    "min": -0.2452,
+    "max": -0.1226,
+    "spread": 0.1226
+   },
+   "phi": {
+    "min": 0,
+    "max": 0,
+    "spread": 0
+   },
+   "inLat": {
+    "min": 5.8825,
+    "max": 5.8825,
+    "spread": 0
+   },
+   "inZ": {
+    "min": 0.9041,
+    "max": 1.0267,
+    "spread": 0.1226
+   },
+   "outLat": {
+    "min": -9.8825,
+    "max": -9.8825,
+    "spread": 0
+   },
+   "outZ": {
+    "min": 0.9041,
+    "max": 1.0267,
+    "spread": 0.1226
+   },
+   "inPlan": {
+    "min": 6,
+    "max": 6,
+    "spread": 0
+   },
+   "outPlan": {
+    "min": -10,
+    "max": -10,
+    "spread": 0
+   },
+   "profile": {
+    "w": [
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16
+    ],
+    "h": [
+     -0.1226,
+     -0.2317,
+     -0.2317,
+     -0.2452,
+     -0.2317,
+     -0.2317,
+     -0.2452,
+     -0.2317,
+     -0.2317,
+     -0.2452,
+     -0.2317,
+     -0.2317,
+     -0.1226
+    ]
+   },
+   "heldRimMoved": {
+    "lat": 0.0415,
+    "z": 0.2199
+   },
+   "outsideMaxChange": 0,
+   "piecesSameObject": 0,
+   "check": {
+    "red": 2,
+    "amber": 1,
+    "redOnRun": 0,
+    "redInWindow": 2,
+    "redList": [
+     {
+      "s": 192,
+      "s1": 196,
+      "reason": "leaves-surface"
+     },
+     {
+      "s": 444,
+      "s1": 448,
+      "reason": "leaves-surface"
+     }
+    ],
+    "amberList": [
+     {
+      "s": 440,
+      "s1": 440,
+      "reason": "load-on-the-chassis"
+     }
+    ],
+    "rawKeys": [
+     "s0",
+     "s1",
+     "u",
+     "reason",
+     "source",
+     "worst"
+    ]
+   }
+  },
+  {
+   "name": "E3 T2b: w to 16, l and h carried about the held inner rim",
+   "w": {
+    "min": 16,
+    "max": 16,
+    "spread": 0
+   },
+   "l": {
+    "min": -1.9809,
+    "max": -1.9779,
+    "spread": 0.003
+   },
+   "h": {
+    "min": -0.2514,
+    "max": -0.2366,
+    "spread": 0.0148
+   },
+   "phi": {
+    "min": 0,
+    "max": 0,
+    "spread": 0
+   },
+   "inLat": {
+    "min": 5.9016,
+    "max": 5.9046,
+    "spread": 0.003
+   },
+   "inZ": {
+    "min": 0.898,
+    "max": 0.9127,
+    "spread": 0.0148
+   },
+   "outLat": {
+    "min": -9.8634,
+    "max": -9.8605,
+    "spread": 0.003
+   },
+   "outZ": {
+    "min": 0.898,
+    "max": 0.9127,
+    "spread": 0.0148
+   },
+   "inPlan": {
+    "min": 6.0191,
+    "max": 6.0221,
+    "spread": 0.003
+   },
+   "outPlan": {
+    "min": -9.9809,
+    "max": -9.9779,
+    "spread": 0.003
+   },
+   "profile": {
+    "w": [
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16
+    ],
+    "h": [
+     -0.2508,
+     -0.2393,
+     -0.2393,
+     -0.2366,
+     -0.2393,
+     -0.2393,
+     -0.2366,
+     -0.2393,
+     -0.2393,
+     -0.2366,
+     -0.2393,
+     -0.2393,
+     -0.2508
+    ]
+   },
+   "heldRimMoved": {
+    "lat": 0.0196,
+    "z": 0.0917
+   },
+   "outsideMaxChange": 0,
+   "piecesSameObject": 0,
+   "check": {
+    "red": 2,
+    "amber": 1,
+    "redOnRun": 0,
+    "redInWindow": 2,
+    "redList": [
+     {
+      "s": 158,
+      "s1": 160,
+      "reason": "leaves-surface"
+     },
+     {
+      "s": 476,
+      "s1": 482,
+      "reason": "leaves-surface"
+     }
+    ],
+    "amberList": [
+     {
+      "s": 468,
+      "s1": 468,
+      "reason": "load-on-the-chassis"
+     }
+    ],
+    "rawKeys": [
+     "s0",
+     "s1",
+     "u",
+     "reason",
+     "source",
+     "worst"
+    ]
+   }
+  },
+  {
+   "name": "E3 bankBase: w to 16, l and h carried, the bank kept",
+   "w": {
+    "min": 16,
+    "max": 16,
+    "spread": 0
+   },
+   "l": {
+    "min": -1.9806,
+    "max": -1.7796,
+    "spread": 0.201
+   },
+   "h": {
+    "min": -0.9013,
+    "max": -0.238,
+    "spread": 0.6633
+   },
+   "phi": {
+    "min": 0,
+    "max": 0.3491,
+    "spread": 0.3491
+   },
+   "inLat": {
+    "min": 5.2343,
+    "max": 5.9019,
+    "spread": 0.6676
+   },
+   "inZ": {
+    "min": 0.9113,
+    "max": 2.875,
+    "spread": 1.9637
+   },
+   "outLat": {
+    "min": -9.899,
+    "max": -9.5798,
+    "spread": 0.3191
+   },
+   "outZ": {
+    "min": -2.5172,
+    "max": 0.9113,
+    "spread": 3.4286
+   },
+   "inPlan": {
+    "min": 6.0194,
+    "max": 6.2204,
+    "spread": 0.201
+   },
+   "outPlan": {
+    "min": -9.9806,
+    "max": -9.7796,
+    "spread": 0.201
+   },
+   "profile": {
+    "w": [
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16
+    ],
+    "h": [
+     -0.238,
+     -0.394,
+     -0.7556,
+     -0.9011,
+     -0.9011,
+     -0.9011,
+     -0.9011,
+     -0.9011,
+     -0.9011,
+     -0.9011,
+     -0.9011,
+     -0.9011,
+     -0.9011
+    ]
+   },
+   "heldRimMoved": {
+    "lat": 0.1057,
+    "z": 0.1973
+   },
+   "outsideMaxChange": 0,
+   "piecesSameObject": 0,
+   "check": {
+    "red": 6,
+    "amber": 2,
+    "redOnRun": 4,
+    "redInWindow": 6,
+    "redList": [
+     {
+      "s": 176,
+      "s1": 180,
+      "reason": "leaves-surface"
+     },
+     {
+      "s": 210,
+      "s1": 248,
+      "reason": "leaves-surface"
+     },
+     {
+      "s": 268,
+      "s1": 312,
+      "reason": "leaves-surface"
+     },
+     {
+      "s": 328,
+      "s1": 372,
+      "reason": "leaves-surface"
+     },
+     {
+      "s": 388,
+      "s1": 432,
+      "reason": "leaves-surface"
+     },
+     {
+      "s": 458,
+      "s1": 466,
+      "reason": "leaves-surface"
+     }
+    ],
+    "amberList": [
+     {
+      "s": 190,
+      "s1": 190,
+      "reason": "load-on-the-chassis"
+     },
+     {
+      "s": 448,
+      "s1": 452,
+      "reason": "load-on-the-chassis"
+     }
+    ],
+    "rawKeys": [
+     "s0",
+     "s1",
+     "u",
+     "reason",
+     "source",
+     "worst"
+    ]
+   }
+  },
+  {
+   "name": "E4 bankBase: w to 16, the bank to 20 deg, l and h carried",
+   "w": {
+    "min": 16,
+    "max": 16,
+    "spread": 0
+   },
+   "l": {
+    "min": -1.7797,
+    "max": -1.1771,
+    "spread": 0.6027
+   },
+   "h": {
+    "min": -2.8902,
+    "max": -0.9011,
+    "spread": 1.9891
+   },
+   "phi": {
+    "min": 0.3491,
+    "max": 0.3491,
+    "spread": 0
+   },
+   "inLat": {
+    "min": 5.2343,
+    "max": 5.837,
+    "spread": 0.6027
+   },
+   "inZ": {
+    "min": 0.8858,
+    "max": 2.8749,
+    "spread": 1.9891
+   },
+   "outLat": {
+    "min": -9.58,
+    "max": -8.9773,
+    "spread": 0.6027
+   },
+   "outZ": {
+    "min": -4.5062,
+    "max": -2.517,
+    "spread": 1.9891
+   },
+   "inPlan": {
+    "min": 6.2203,
+    "max": 6.8229,
+    "spread": 0.6027
+   },
+   "outPlan": {
+    "min": -9.7797,
+    "max": -9.1771,
+    "spread": 0.6027
+   },
+   "profile": {
+    "w": [
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16
+    ],
+    "h": [
+     -2.8902,
+     -2.2416,
+     -1.5151,
+     -0.9011,
+     -0.9011,
+     -0.9011,
+     -0.9011,
+     -0.9011,
+     -0.9011,
+     -0.9011,
+     -0.9011,
+     -0.9011,
+     -0.9011
+    ]
+   },
+   "heldRimMoved": {
+    "lat": 0.214,
+    "z": 0.4042
+   },
+   "outsideMaxChange": 0,
+   "piecesSameObject": 0,
+   "check": {
+    "red": 8,
+    "amber": 6,
+    "redOnRun": 5,
+    "redInWindow": 8,
+    "redList": [
+     {
+      "s": 162,
+      "s1": 182,
+      "reason": "leaves-surface"
+     },
+     {
+      "s": 210,
+      "s1": 248,
+      "reason": "leaves-surface"
+     },
+     {
+      "s": 252,
+      "s1": 258,
+      "reason": "leaves-surface"
+     },
+     {
+      "s": 268,
+      "s1": 312,
+      "reason": "leaves-surface"
+     },
+     {
+      "s": 328,
+      "s1": 372,
+      "reason": "leaves-surface"
+     },
+     {
+      "s": 388,
+      "s1": 432,
+      "reason": "leaves-surface"
+     },
+     {
+      "s": 442,
+      "s1": 446,
+      "reason": "leaves-surface"
+     },
+     {
+      "s": 458,
+      "s1": 470,
+      "reason": "leaves-surface"
+     }
+    ],
+    "amberList": [
+     {
+      "s": 188,
+      "s1": 192,
+      "reason": "load-above-proven"
+     },
+     {
+      "s": 450,
+      "s1": 450,
+      "reason": "load-above-proven"
+     },
+     {
+      "s": 186,
+      "s1": 186,
+      "reason": "load-on-the-chassis"
+     },
+     {
+      "s": 194,
+      "s1": 194,
+      "reason": "load-on-the-chassis"
+     },
+     {
+      "s": 204,
+      "s1": 206,
+      "reason": "load-on-the-chassis"
+     },
+     {
+      "s": 448,
+      "s1": 452,
+      "reason": "load-on-the-chassis"
+     }
+    ],
+    "rawKeys": [
+     "s0",
+     "s1",
+     "u",
+     "reason",
+     "source",
+     "worst"
+    ]
+   }
+  },
+  {
+   "name": "E3 bankT1: w to 16, l and h carried, the bank kept",
+   "w": {
+    "min": 16,
+    "max": 16,
+    "spread": 0
+   },
+   "l": {
+    "min": -2.0659,
+    "max": -1.7796,
+    "spread": 0.2863
+   },
+   "h": {
+    "min": -0.9013,
+    "max": -0.238,
+    "spread": 0.6633
+   },
+   "phi": {
+    "min": 0,
+    "max": 0.3491,
+    "spread": 0.3491
+   },
+   "inLat": {
+    "min": 5.234,
+    "max": 5.9019,
+    "spread": 0.6679
+   },
+   "inZ": {
+    "min": 0.9113,
+    "max": 2.8818,
+    "spread": 1.9705
+   },
+   "outLat": {
+    "min": -9.9773,
+    "max": -9.5798,
+    "spread": 0.3975
+   },
+   "outZ": {
+    "min": -2.5172,
+    "max": 0.9113,
+    "spread": 3.4286
+   },
+   "inPlan": {
+    "min": 5.9341,
+    "max": 6.2204,
+    "spread": 0.2863
+   },
+   "outPlan": {
+    "min": -10.0659,
+    "max": -9.7796,
+    "spread": 0.2863
+   },
+   "profile": {
+    "w": [
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16
+    ],
+    "h": [
+     -0.238,
+     -0.394,
+     -0.7556,
+     -0.9011,
+     -0.8975,
+     -0.7222,
+     -0.2687,
+     -0.6965,
+     -0.8705,
+     -0.9011,
+     -0.9011,
+     -0.9011,
+     -0.9011
+    ]
+   },
+   "heldRimMoved": {
+    "lat": 0.1058,
+    "z": 0.1973
+   },
+   "outsideMaxChange": 0,
+   "piecesSameObject": 0,
+   "check": {
+    "red": 7,
+    "amber": 2,
+    "redOnRun": 5,
+    "redInWindow": 7,
+    "redList": [
+     {
+      "s": 176,
+      "s1": 180,
+      "reason": "leaves-surface"
+     },
+     {
+      "s": 210,
+      "s1": 248,
+      "reason": "leaves-surface"
+     },
+     {
+      "s": 268,
+      "s1": 294,
+      "reason": "leaves-surface"
+     },
+     {
+      "s": 302,
+      "s1": 338,
+      "reason": "leaves-surface"
+     },
+     {
+      "s": 346,
+      "s1": 370,
+      "reason": "leaves-surface"
+     },
+     {
+      "s": 388,
+      "s1": 432,
+      "reason": "leaves-surface"
+     },
+     {
+      "s": 458,
+      "s1": 466,
+      "reason": "leaves-surface"
+     }
+    ],
+    "amberList": [
+     {
+      "s": 190,
+      "s1": 190,
+      "reason": "load-on-the-chassis"
+     },
+     {
+      "s": 448,
+      "s1": 452,
+      "reason": "load-on-the-chassis"
+     }
+    ],
+    "rawKeys": [
+     "s0",
+     "s1",
+     "u",
+     "reason",
+     "source",
+     "worst"
+    ]
+   }
+  },
+  {
+   "name": "E4 bankT1: w to 16, the bank to 20 deg, l and h carried",
+   "w": {
+    "min": 16,
+    "max": 16,
+    "spread": 0
+   },
+   "l": {
+    "min": -1.8214,
+    "max": -1.1771,
+    "spread": 0.6443
+   },
+   "h": {
+    "min": -2.8902,
+    "max": -0.8119,
+    "spread": 2.0783
+   },
+   "phi": {
+    "min": 0.3491,
+    "max": 0.3491,
+    "spread": 0
+   },
+   "inLat": {
+    "min": 5.1926,
+    "max": 5.837,
+    "spread": 0.6443
+   },
+   "inZ": {
+    "min": 0.8858,
+    "max": 2.9641,
+    "spread": 2.0783
+   },
+   "outLat": {
+    "min": -9.6216,
+    "max": -8.9773,
+    "spread": 0.6443
+   },
+   "outZ": {
+    "min": -4.5062,
+    "max": -2.4279,
+    "spread": 2.0783
+   },
+   "inPlan": {
+    "min": 6.1786,
+    "max": 6.8229,
+    "spread": 0.6443
+   },
+   "outPlan": {
+    "min": -9.8214,
+    "max": -9.1771,
+    "spread": 0.6443
+   },
+   "profile": {
+    "w": [
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16
+    ],
+    "h": [
+     -2.8902,
+     -2.2416,
+     -1.5151,
+     -0.9011,
+     -0.8975,
+     -0.8435,
+     -0.8943,
+     -0.8183,
+     -0.8705,
+     -0.9011,
+     -0.9011,
+     -0.9011,
+     -0.9011
+    ]
+   },
+   "heldRimMoved": {
+    "lat": 0.2767,
+    "z": 0.5239
+   },
+   "outsideMaxChange": 0,
+   "piecesSameObject": 0,
+   "check": {
+    "red": 8,
+    "amber": 6,
+    "redOnRun": 5,
+    "redInWindow": 8,
+    "redList": [
+     {
+      "s": 162,
+      "s1": 182,
+      "reason": "leaves-surface"
+     },
+     {
+      "s": 210,
+      "s1": 248,
+      "reason": "leaves-surface"
+     },
+     {
+      "s": 252,
+      "s1": 258,
+      "reason": "leaves-surface"
+     },
+     {
+      "s": 268,
+      "s1": 310,
+      "reason": "leaves-surface"
+     },
+     {
+      "s": 330,
+      "s1": 372,
+      "reason": "leaves-surface"
+     },
+     {
+      "s": 388,
+      "s1": 432,
+      "reason": "leaves-surface"
+     },
+     {
+      "s": 442,
+      "s1": 446,
+      "reason": "leaves-surface"
+     },
+     {
+      "s": 458,
+      "s1": 470,
+      "reason": "leaves-surface"
+     }
+    ],
+    "amberList": [
+     {
+      "s": 188,
+      "s1": 192,
+      "reason": "load-above-proven"
+     },
+     {
+      "s": 450,
+      "s1": 450,
+      "reason": "load-above-proven"
+     },
+     {
+      "s": 186,
+      "s1": 186,
+      "reason": "load-on-the-chassis"
+     },
+     {
+      "s": 194,
+      "s1": 194,
+      "reason": "load-on-the-chassis"
+     },
+     {
+      "s": 204,
+      "s1": 206,
+      "reason": "load-on-the-chassis"
+     },
+     {
+      "s": 448,
+      "s1": 452,
+      "reason": "load-on-the-chassis"
+     }
+    ],
+    "rawKeys": [
+     "s0",
+     "s1",
+     "u",
+     "reason",
+     "source",
+     "worst"
+    ]
+   }
+  },
+  {
+   "name": "E3 bankT2b: w to 16, l and h carried, the bank kept",
+   "w": {
+    "min": 16,
+    "max": 16,
+    "spread": 0
+   },
+   "l": {
+    "min": -2.0678,
+    "max": -1.9366,
+    "spread": 0.1312
+   },
+   "h": {
+    "min": -0.5515,
+    "max": -0.2373,
+    "spread": 0.3142
+   },
+   "phi": {
+    "min": -0.0055,
+    "max": 0.3052,
+    "spread": 0.3107
+   },
+   "inLat": {
+    "min": 5.2363,
+    "max": 5.9093,
+    "spread": 0.673
+   },
+   "inZ": {
+    "min": 0.8593,
+    "max": 2.9264,
+    "spread": 2.0671
+   },
+   "outLat": {
+    "min": -9.9924,
+    "max": -9.8002,
+    "spread": 0.1922
+   },
+   "outZ": {
+    "min": -1.8239,
+    "max": 0.9461,
+    "spread": 2.77
+   },
+   "inPlan": {
+    "min": 5.9322,
+    "max": 6.0634,
+    "spread": 0.1312
+   },
+   "outPlan": {
+    "min": -10.0678,
+    "max": -9.9366,
+    "spread": 0.1312
+   },
+   "profile": {
+    "w": [
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16
+    ],
+    "h": [
+     -0.2464,
+     -0.2441,
+     -0.2716,
+     -0.2545,
+     -0.2878,
+     -0.2853,
+     -0.2568,
+     -0.2878,
+     -0.2853,
+     -0.2568,
+     -0.2878,
+     -0.287,
+     -0.5515
+    ]
+   },
+   "heldRimMoved": {
+    "lat": 0.0486,
+    "z": 0.0918
+   },
+   "outsideMaxChange": 0,
+   "piecesSameObject": 0,
+   "check": {
+    "red": 6,
+    "amber": 3,
+    "redOnRun": 4,
+    "redInWindow": 6,
+    "redList": [
+     {
+      "s": 158,
+      "s1": 160,
+      "reason": "leaves-surface"
+     },
+     {
+      "s": 226,
+      "s1": 248,
+      "reason": "leaves-surface"
+     },
+     {
+      "s": 272,
+      "s1": 308,
+      "reason": "leaves-surface"
+     },
+     {
+      "s": 332,
+      "s1": 368,
+      "reason": "leaves-surface"
+     },
+     {
+      "s": 392,
+      "s1": 442,
+      "reason": "leaves-surface"
+     },
+     {
+      "s": 476,
+      "s1": 482,
+      "reason": "leaves-surface"
+     }
+    ],
+    "amberList": [
+     {
+      "s": 446,
+      "s1": 446,
+      "reason": "load-above-proven"
+     },
+     {
+      "s": 444,
+      "s1": 444,
+      "reason": "load-on-the-chassis"
+     },
+     {
+      "s": 448,
+      "s1": 448,
+      "reason": "load-on-the-chassis"
+     }
+    ],
+    "rawKeys": [
+     "s0",
+     "s1",
+     "u",
+     "reason",
+     "source",
+     "worst"
+    ]
+   }
+  },
+  {
+   "name": "E4 bankT2b: w to 16, the bank to 20 deg, l and h carried",
+   "w": {
+    "min": 16,
+    "max": 16,
+    "spread": 0
+   },
+   "l": {
+    "min": -1.7815,
+    "max": -1.1227,
+    "spread": 0.6588
+   },
+   "h": {
+    "min": -2.9253,
+    "max": -0.8498,
+    "spread": 2.0755
+   },
+   "phi": {
+    "min": 0.3491,
+    "max": 0.3491,
+    "spread": 0
+   },
+   "inLat": {
+    "min": 5.2325,
+    "max": 5.8913,
+    "spread": 0.6588
+   },
+   "inZ": {
+    "min": 0.8507,
+    "max": 2.9262,
+    "spread": 2.0755
+   },
+   "outLat": {
+    "min": -9.5817,
+    "max": -8.923,
+    "spread": 0.6588
+   },
+   "outZ": {
+    "min": -4.5412,
+    "max": -2.4658,
+    "spread": 2.0755
+   },
+   "inPlan": {
+    "min": 6.2185,
+    "max": 6.8773,
+    "spread": 0.6588
+   },
+   "outPlan": {
+    "min": -9.7815,
+    "max": -9.1227,
+    "spread": 0.6588
+   },
+   "profile": {
+    "w": [
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16
+    ],
+    "h": [
+     -2.9228,
+     -2.1654,
+     -1.5523,
+     -0.8566,
+     -0.8899,
+     -0.8614,
+     -0.8805,
+     -0.8899,
+     -0.8615,
+     -0.8805,
+     -0.8905,
+     -0.8815,
+     -0.8649
+    ]
+   },
+   "heldRimMoved": {
+    "lat": 0.1608,
+    "z": 0.3165
+   },
+   "outsideMaxChange": 0,
+   "piecesSameObject": 0,
+   "check": {
+    "red": 9,
+    "amber": 4,
+    "redOnRun": 6,
+    "redInWindow": 9,
+    "redList": [
+     {
+      "s": 152,
+      "s1": 164,
+      "reason": "leaves-surface"
+     },
+     {
+      "s": 192,
+      "s1": 196,
+      "reason": "leaves-surface"
+     },
+     {
+      "s": 210,
+      "s1": 236,
+      "reason": "leaves-surface"
+     },
+     {
+      "s": 240,
+      "s1": 258,
+      "reason": "leaves-surface"
+     },
+     {
+      "s": 270,
+      "s1": 312,
+      "reason": "leaves-surface"
+     },
+     {
+      "s": 328,
+      "s1": 372,
+      "reason": "leaves-surface"
+     },
+     {
+      "s": 388,
+      "s1": 430,
+      "reason": "leaves-surface"
+     },
+     {
+      "s": 440,
+      "s1": 446,
+      "reason": "leaves-surface"
+     },
+     {
+      "s": 474,
+      "s1": 484,
+      "reason": "leaves-surface"
+     }
+    ],
+    "amberList": [
+     {
+      "s": 170,
+      "s1": 172,
+      "reason": "load-above-proven"
+     },
+     {
+      "s": 168,
+      "s1": 180,
+      "reason": "load-on-the-chassis"
+     },
+     {
+      "s": 204,
+      "s1": 206,
+      "reason": "load-on-the-chassis"
+     },
+     {
+      "s": 464,
+      "s1": 470,
+      "reason": "load-on-the-chassis"
+     }
+    ],
+    "rawKeys": [
+     "s0",
+     "s1",
+     "u",
+     "reason",
+     "source",
+     "worst"
+    ]
+   }
+  }
+ ],
+ "test": [
+  {
+   "name": "flat, from T1",
+   "pass": false,
+   "rows": {
+    "width": true,
+    "outerEdge": true,
+    "heldRim": false,
+    "outside": true,
+    "surface": false,
+    "redsOnRun": true
+   },
+   "numbers": {
+    "w": 0,
+    "outLat": 0.0022,
+    "outPlan": 0.0022,
+    "heldLat": 0.0453,
+    "heldZ": 0.1973,
+    "h": 0.011,
+    "phi": 0,
+    "outside": 0,
+    "redOnRun": 0,
+    "redInWindow": 2,
+    "red": 2
+   }
+  },
+  {
+   "name": "flat, from T2b",
+   "pass": false,
+   "rows": {
+    "width": true,
+    "outerEdge": true,
+    "heldRim": false,
+    "outside": true,
+    "surface": false,
+    "redsOnRun": true
+   },
+   "numbers": {
+    "w": 0,
+    "outLat": 0.003,
+    "outPlan": 0.003,
+    "heldLat": 0.0196,
+    "heldZ": 0.0917,
+    "h": 0.0148,
+    "phi": 0,
+    "outside": 0,
+    "redOnRun": 0,
+    "redInWindow": 2,
+    "red": 2
+   }
+  },
+  {
+   "name": "banked, from T1",
+   "pass": false,
+   "rows": {
+    "width": true,
+    "outerEdge": false,
+    "heldRim": false,
+    "outside": true,
+    "surface": false,
+    "redsOnRun": false
+   },
+   "numbers": {
+    "w": 0,
+    "outLat": 0.6443,
+    "outPlan": 0.6443,
+    "heldLat": 0.2767,
+    "heldZ": 0.5239,
+    "h": 2.0783,
+    "phi": 0,
+    "outside": 0,
+    "redOnRun": 5,
+    "redInWindow": 8,
+    "red": 8
+   }
+  },
+  {
+   "name": "banked, from T2b",
+   "pass": false,
+   "rows": {
+    "width": true,
+    "outerEdge": false,
+    "heldRim": false,
+    "outside": true,
+    "surface": false,
+    "redsOnRun": false
+   },
+   "numbers": {
+    "w": 0,
+    "outLat": 0.6588,
+    "outPlan": 0.6588,
+    "heldLat": 0.1608,
+    "heldZ": 0.3165,
+    "h": 2.0755,
+    "phi": 0,
+    "outside": 0,
+    "redOnRun": 6,
+    "redInWindow": 9,
+    "red": 9
+   }
+  }
+ ],
+ "errors": [],
+ "bankedFollow": {
+  "h": -0.2403,
+  "l": -2,
+  "w": 3.8559,
+  "phi": -0.0872
+ },
+ "bankValue": {
+  "rad": 0.34906585,
+  "deg": 20
+ },
+ "ended": "2026-11-27T11:39:01.040Z"
+}

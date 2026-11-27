@@ -124,3 +124,62 @@ Each picture puts before and after side by side at the page's own pixels: two 90
 
 SOURCES: evidence render265b.json, prediction265b.md, hcheck265b.txt; even265.json (d7342b61); the chair's L265 same-lap order 11:14:05Z
 NEXT: librarian shows him even2_4grabs_far.jpg, saying the 8-grab scallops are not visible at true scale; the chair decides on a third render and on a surface row for the registered test
+
+## The plan amended: the surface, 2026-11-27 11:43Z (the chair's L265 amendment, 11:29:58Z)
+
+**The plan is amended in place.** Every change is marked *[amended 11:43Z]* and replaced text is struck (26 markers). Plan only; nothing built. The probe is `amend265.js`, with every figure in `amend265.json`.
+
+**Why a width grab moves the height. checked** (plan item 1, new part; `zonegrab.js` `follow`; `amend265.json` `mechanism`):
+- **The rule:** a rim press holds the far rim and scales the section about it by k.
+- **On this road the rims stand 0.714 m above the centre** (the cup).
+- **So the centre drops (k − 1) × 0.714 = 0.2403 m.** That is exactly the follow's `h −0.2403`.
+- **The control:** with cup 0 the same grab sends `h 0`.
+- **Found:** the real section does not scale in proportion. Its rims stand 1.149 m up at 16 m, where the rule assumes 0.952. So after a grab both rims sit 0.2 m higher; neither is held in height.
+- **Banked 20°:** the grab also turns the bank −5.0°.
+
+**The level carrying width, the sideways shift and the height (E3), rerun on both starts. checked** (plan item 2 (b′)):
+
+| start | width spread | sideways spread | height spread | reds on the run | reds in the window |
+|---|---|---|---|---|---|
+| T1, before | 4.0392 | 2 | 0.2403 | 2 | 2 |
+| T1, E3 | 0 | 0.0022 | 0.011 | 0 | 2 (176–180, 458–464) |
+| T2b, before | 2.06 | 1.02 | 0.1226 | 0 | 2 (192–196, 444–448) |
+| T2b, E3 | 0 | 0.003 | 0.0148 | 0 | 2 (158–160, 476–482) |
+
+**E3 fails the amended test,** on three counts:
+- the height's spread is over the 0.01 m bar;
+- the held rim moves 0.2 m up: it uses the grab's proportional rule;
+- its 0.24 m height ramp draws 2 reds just outside the run.
+
+**The pick is E5, NOT measured.** It brings the width, the centre's height and the sideways shift to values; the shift is read from the section at the new width (−1.9407 m on his example).
+- inferred: spreads 0, and no ramp reds, from E2's measured rows.
+- **It needs one more probe:** the order allowed one, and it ran E3. The chair's call.
+
+**What "to a value" means for the height** (plan (b′), and call 10): the centre's height h is brought to one value along the run. By default that is the height where the run is untouched; it can also be typed or picked. The rims sit at the section's rise above it. Holding a rim's height instead is his call.
+
+**The registered test** (plan item 6) gains:
+- **row 6, the surface:** the height's spread over the run ≤ 0.01 m;
+- **row 7:** the checker's reds on the run are gone. My addition: no red in the window that the base lacks.
+- **Row 3 is amended:** the held edge is read as the rim the section puts there, held at its place where the run is untouched.
+
+**The banked row. checked, open:**
+- the banked base already draws 4 reds on the run before any grab;
+- neither E3 nor E4 evens it (height spread 0.31 to 2.08 m).
+- The plan says so and does not solve it.
+
+**Corrections, carried into the plan, struck and marked:**
+1. **The 8-grab ripple is 0.28 m, not 0.25 m** (the 10 m profile missed 15.84).
+2. **"The grab overshoots by 1%" is withdrawn.** My probe pulled the rim 4 m horizontally, and the width is measured along the cupped section, which spans 11.88 m sideways at 12 m. checked: `horizontalSpan` 11.8835, k 1.3366.
+3. **The plan's E2 "held the inner edge" by l + w/2.** The rim itself moved 0.059 m inward (5.8825 against 5.9418): the earlier edges were a proxy, flat-section numbers.
+
+The earlier sections of this hand-back keep their wording, as dated traces. Their "0.25 m" and "1%" are corrected here.
+
+**The machine:**
+- **The one probe:** `node consonance/tools/heavy-run.js --status && node consonance/tools/heavy-run.js --run --priority belownormal --cmd "A L265 amendment: …" -- node amend265.js <tree> <out>`, run 11:36:09 to 11:39:01Z, node only, no page.
+  - Both slots were free. No cmd in the chain.
+  - checked at 11:36:13Z: its node child, pid 38184, was at BelowNormal with 4.64 s of CPU.
+- **The worktree** `t180-wt-l265c-even` at c522ea6: checked clean, then removed. E's worktree was not touched.
+- **No pictures.**
+
+SOURCES: exo_memory/loop/plan_t180_sculpt_even_2026-11-27.md (amended 11:43Z); evidence amend265.js, amend265.json; builder c522ea6 app/core/zonegrab.js (follow, frameAt), app/validate-ui/checkjob.js; the chair's L265 amendment 11:29:58Z
+NEXT: chair allows or refuses one more node probe for E5 when it reads the amended plan; if allowed, A measures E5 from T1 and T2b and appends its spreads and reds
