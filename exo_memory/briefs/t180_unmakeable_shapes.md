@@ -76,3 +76,4 @@ degrees into the new 360 you know? 5. Not sure, what is smoothness limit?"
   - Beside his 01:11 "i know other wouldnt like it" and his 01:28 "the original owner would still be the maker". The librarian's answer to him, not his words: "meant to be" has one reader who can check it, the track's author shown both roads; and some roughness is design, so the measure has to tell a fought mesh from a chosen bump.
 - 02:15 (L), his words: "when i meant smooth it, i meant the geometry itself. not the track and the bumps"
   - His correction of the librarian's 01:33 answer, which cautioned him against smoothing out bumps he had never proposed to touch. Requirement, as he states it: the dev tool smooths the modelled geometry (the mesh's facets and steps); the track's own shape, its bumps included, is kept.
+- 02:20 (L), his words: "sounds good", to the reading at 02:16 (same track, bumps kept; the modelled geometry smoothed; a dev version only he runs; a plan first).
