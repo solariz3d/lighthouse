@@ -58,3 +58,22 @@ bank drag on a piece wound past a turn carries on, as typing now does, instead o
 
 Hand-backs to the librarian by `call_librarian`, claims marked checked or inferred. No landing, build, install, merge or
 release in this packet.
+
+## Amendment, 01:25, after E's read of 2067c88 (`handback/p-l258-read-bankcarry-E_2026-11-27.md`, NOT CLEAN on the record only)
+
+**A claim of this packet was wrong.** Track 7 said the ghost's bank handle and the extra bank's hold were "not in scope" and
+unchanged. That was D's sentence, carried here unchecked. E measured both trees:
+- the ghost's bank handle already lays in the head's turn at 2067c88 (from a head at −392, its write of −42 lays −392 to −402;
+  at f3cd425 it unwinds 350°);
+- so does the extra bank handle (D's own row W4) and the flowing bank's offer (E2a).
+- Sculpt's handle and the bank brush are the two that still unwind; they are track 7's change, as ordered.
+
+**Added to track 7, same branch:**
+1. Correct the sentence wherever it stands: `CHANGELOG.md:35`, the header of `app/test/core-bank-carry.test.js` (:5). After
+   track 7 every bank drag carries past a turn; say that, and say which commit made each one so.
+2. A row that pins the ghost handle's roll from a head past a turn (none does; E's case E1), through the handle's own path
+   where the fake DOM allows it, and said plainly if it is only the handle's write.
+3. A row for the flowing offer's value from a head past a turn: E's mutant F1 (the flow branch's `- headTurns()` removed)
+   was applied 1 / caught 0 over 13 rows.
+4. **Do not change the whole-turn edge.** At exactly one full turn the core stores −359.9999999897 and the field shows −360,
+   so a typed −32 unwinds 328° on both trees (E10a, E10b, E10e). Whether a full turn should show 0 and carry is with him.
