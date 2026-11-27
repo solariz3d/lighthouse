@@ -765,3 +765,111 @@ the librarian.
 
 - **Builder:** `d678-even-a` at 437590e, unchanged.
 - **Lighthouse:** this section only.
+
+## 4. The order of 21:34Z (the librarian's 15:4x rulings and the 15:5x rows): registration, before any run
+
+Read whole: the packet's "Amended 15:4x" (`:89`) and "Added 15:5x" (3ba0cead); B's read sections 2.1 to 2.8 (at 788f25a).
+Registered at 21:48Z, before any candidate, row or measure below was run.
+
+**What was in flight, and what became of it.** Item 2 of 14:5x (the sideways least-squares fit) is **STOPPED and REVERTED**,
+not committed. My three queued heavy-run tasks were ended by their own ids before they started (the Even harness
+`btgqr4r6h`, the gate measure `b1efl9nns`, the long-run probe `b10b1yksd`). In the worktree, `src/core/even.js` and
+`test/core_even.test.js` are back to 437590e (`git checkout --`), with item 1's `shiftOf` put back by hand. checked: on B+,
+B+0, B-, Bhold and flat, the level is the same bytes as 437590e's, and `shiftAt` is the same bits at 681 stations each. The
+reverted work is kept as a patch in my scratchpad, not in any repository. The CHANGELOG has lost the fit's clause. H6 and H7
+are no longer live mutants; they are back in the harness header, measured (section 4.4).
+
+### 4.1 Item 2: the kept edge, the candidates on one table
+
+**The candidates.** Each is `src/core/even.js` on the branch with one textual change, loaded in the file's place. The script
+is `p-d678-even-build-A_2026-11-27_evidence/cand678.js`, and its header states each change exactly.
+
+- **A0, the rule as built.** It reads the road from the window's two ends with the rest rule (10 m, 1 mm) and the agree rule
+  (1 cm), and otherwise keeps the edge where it is now. It is the baseline.
+- **A, the rule as built, mended.** Each window end is read at the nearest place outward, within 100 m, where w AND l are at
+  rest (within 1 mm at 10, 20 and 30 m further out). This is aimed at the 10 m test a grab straddles, and at an end that sits
+  on a grab. If both ends are read and agree within 1 cm, the kept edge is laid on that road with its bumps taken out.
+  Otherwise, with no rest within reach (a taper, the track's start, the open end) or with the ends disagreeing (the road's
+  own width changing), the edge is kept where it is now. The middle is as built.
+- **B, no guess about the past.** The kept edge, or the middle, is kept where it IS. Even changes the width, and the other
+  edge moves. The centre's height only rises or falls with its sideways move, in the plane of the road as built. A hill or a
+  swerve he made stays.
+- **C, no guess, smoothed.** The kept edge is laid on the road eased between where it is at the window's two ends: no rest
+  rule and no agree rule. The middle is as built. This is the registered C1b rule of U4, kept as a candidate because B leaves
+  an uneven kept edge uneven.
+
+**The cases.** Each case is run with either edge kept. The hill and the swerve are run with the middle kept.
+
+- **A run from the track's start** (the 15:5x first row): the flat turn's pieces 0..1, untouched, and with a grab at 30.
+- **The flat turn and B-:** T1, T2b, W1, W8.
+- **WC0 to WC4**, as B's `v2width678.js` makes them.
+- **A row of grabs through both ends:** every 30 m over 175..475 (flat), and over 145..505 (flat, B-).
+- **A grab centred at 145**, 5 m before the start end (flat, B-).
+- **To the head:** pieces 4..5 with a grab at 560.
+- **One piece:** piece 2 with a grab at 320.
+- **A width stroke at 470** (flat, B-).
+- **A hill and a swerve at 320**, +2 m, radius 30 (flat, B-).
+
+That makes 30 cases and 224 rows.
+
+**The measures**, all through the fixture functions, every 1 m:
+
+- the width over the run, and the width in the margins against the value (the 15:5x ask: on every row);
+- the kept edge against where it is now (the window) and against the road before any grab (the run);
+- how uneven each edge is left over the run, against the untouched road's;
+- the largest move of either edge;
+- outside the candidate's own window, the joints, and the new reds;
+- K3 on B-.
+
+**Each candidate's failing result, registered before the run:**
+
+- **Every candidate** fails a row on any of these: the run's width spread over 0.01 m; the margins' width off by more than
+  0.01 m; anything outside its own window changed; a joint step; a red in the window the start lacks.
+- **A0** claims "the kept edge is the road's before any grab". It fails a row where the kept edge is more than 0.01 m from
+  the untouched road over the run. Predicted, from B's figures: the start run 9.31 m, the flat row 3.94, B-'s row 3.50, WC3
+  2.92, the flat stroke at 470 0.91, WC1 0.077.
+- **A** claims the road before any grab where it reads one at rest at both ends, and where it is now otherwise. It fails a
+  row where the claim that applies is missed by more than 0.01 m.
+  - **Predicted, and unwelcome for it:** the flat turn's lead tapers from 31 m all the way to 200, so no rest lies within
+    100 m of its window's start, and **on every flat case A gives where it is now, the same as B.** The grabbed edge then
+    keeps its grabs (T1 right, about 4 m from the road before the grab). This is the case U4's rest rule was built for.
+  - On B-, A reads the road past the grabs at 145 and through the row.
+- **B** claims where it is now: the kept edge over the window, and the middle in l and h over the run. It fails a row where
+  that is missed by more than 0.01 m.
+  - **Predicted to fail:** WC1 (0.077) and the margins (0.165), because the sideways move is still set one control point at
+    a time.
+  - **Predicted:** where the kept edge is uneven (T2b, W8 and the rows, with the grabbed edge kept), the other edge takes the
+    same bumps. The ripple is equal on both edges and the width is even. What the tool would tell him there is a sentence I
+    write once the rows are in.
+- **C** claims the kept edge on a line eased between its own ends. It fails a row where, on an untouched road, the kept edge
+  is more than 0.01 m from it over the run. **Predicted to fail** on every flat case and on the start run (the lead's taper
+  at 150: of the order of 1 m at s 200).
+- **Unwelcome outcomes, in the words that would make them true:**
+  - "A, mended, is B on the flat turn: no mend of the reading rescues the case it was built for."
+  - "Both A and B fail the same case" (WC1, the margins).
+  - "No candidate keeps the kept edge within 0.01 m on WC1."
+- **My bias:** I built A0, so my stake is in A0 and A. B is the reader's and the librarian's proposal, and A is mine, written
+  after reading B's failures. I choose no candidate. The table and the pictures go to him.
+
+**The pictures.** The two or three cases where the candidates' kept edges differ most, measured by the largest gap between
+candidates in the kept edge's final place. Before and after, through the page as `render678.js` drives it, with the candidate
+loaded in the page.
+
+### 4.2 Item 4: two measured misses, the rows registered first
+
+- **R1, the margins, nothing grabbed.** On the flat turn and on B-, untouched, Even the run 200..440 to 16 m with either edge
+  kept. Over the margins (180..200 and 440..460), the kept edge must be within 0.01 m of the start, and the width within
+  0.01 m of 16.
+  - Predicted red on the branch: about 0.165 m (B's 0.1648 flat, 0.1673 B-). The width there is unmeasured (B saw 16.11 at
+    460 after a stroke).
+  - The cause to test is B's reading of `even.js:240`: a control point whose support reaches past the window is left as it
+    was, so the long exit piece is only partly held.
+- **R2, the centre near the far window end.** On B- with one grab at 470, one at 485, and two at 175 and 465, Even to 16 m
+  with the left edge kept: K3 must be within 0.01 m over the window.
+  - Predicted red: 0.042 to 0.072 m, at about s 477.
+- **Mend or explain.** A mend makes the rows green with everything else in 4.1's first bullet still holding and the Even
+  harness still catching. If a mend would need Even to change anything outside its window, or would change the window's
+  meaning, I explain the cause with figures instead, and the rows stay out of the suite.
+- **Unwelcome:**
+  - "R1's 0.165 m is the same per-control-point limit as WC1's 0.077, and it cannot be mended inside the window."
+  - "R2 is the height fit's knot spacing in the exit piece, and no fit on those knots meets 0.01 m."
