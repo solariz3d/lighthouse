@@ -117,7 +117,8 @@ All of this section is from search summaries. No repository, licence or release 
 
 ## 8. Measured on L (04:22 to 05:00, at his "well lets use what we cant do ourselves then")
 
-**Installed**, all inside `C:\Consonance\hear` (outside the repo and the app; deleting the folder removes it):
+**Installed**, all inside one folder named `hear`, in the `Consonance` folder at the root of the laptop's system drive
+(outside the repo and the app; deleting the folder removes it):
 a Python 3.12 environment of 3.8 GB with `torch 2.14.1+cu130`, `audio-separator 0.48.0`, `onnxruntime-gpu 1.32.0`,
 librosa, and `audioread`; and 1.07 GB of weights (`vocals_mel_band_roformer.ckpt` 913 MB, `rmvpe.pt` 181 MB).
 
