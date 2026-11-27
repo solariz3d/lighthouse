@@ -1,0 +1,139 @@
+TAP version 13
+1..0
+# Subtest: core_additive.test.js
+ok 1 - core_additive.test.js
+  ---
+  duration_ms: 73.4129
+  type: 'test'
+  ...
+1..0
+# Subtest: core_at_start_f.test.js
+ok 2 - core_at_start_f.test.js
+  ---
+  duration_ms: 111.6816
+  type: 'test'
+  ...
+1..0
+# Subtest: core_bank_ramp.test.js
+ok 3 - core_bank_ramp.test.js
+  ---
+  duration_ms: 125.0357
+  type: 'test'
+  ...
+1..0
+# Subtest: core_bank_swell.test.js
+ok 4 - core_bank_swell.test.js
+  ---
+  duration_ms: 114.2652
+  type: 'test'
+  ...
+1..0
+# Subtest: core_bankswing.test.js
+ok 5 - core_bankswing.test.js
+  ---
+  duration_ms: 80.9167
+  type: 'test'
+  ...
+1..0
+# Subtest: core_changes.test.js
+ok 6 - core_changes.test.js
+  ---
+  duration_ms: 138.7672
+  type: 'test'
+  ...
+1..0
+# Subtest: core_extend_at_start.test.js
+ok 7 - core_extend_at_start.test.js
+  ---
+  duration_ms: 129.8718
+  type: 'test'
+  ...
+# Subtest: row 2: on his piece the extra bank to -20° from 47.5 m is laid, reaches -20° as built, and before the mark the road is his piece's
+ok 8 - row 2: on his piece the extra bank to -20° from 47.5 m is laid, reaches -20° as built, and before the mark the road is his piece's
+  ---
+  duration_ms: 89.31
+  type: 'test'
+  ...
+# Subtest: row 3: on his piece the extra bank to -45° from 47.5 m is laid, reaches -45° as built, and before the mark the road is his piece's
+ok 9 - row 3: on his piece the extra bank to -45° from 47.5 m is laid, reaches -45° as built, and before the mark the road is his piece's
+  ---
+  duration_ms: 27.5552
+  type: 'test'
+  ...
+# Subtest: row 11: what frees his piece, read apart: the road turns there (the same way as his first bank, +20°, is laid too); on a straight piece his −20° turns the bank back, and +20° is refused
+not ok 10 - row 11: what frees his piece, read apart: the road turns there (the same way as his first bank, +20°, is laid too); on a straight piece his −20° turns the bank back, and +20° is refused
+  ---
+  duration_ms: 2.5252
+  type: 'test'
+  location: 'G:\\consonance-scratch\\e-d678\\wt-mut\\test\\core_extra_change.test.js:131:1'
+  failureType: 'testCodeFailure'
+  error: "BAD_SECOND: the bank (phi) change 1 (its second bank), from 0.00226893 to 0.349066, needs more than 77.5 m before the piece's end on this road (the built road rounds a shorter one back over the hold; 140.9 m holds): from at most -15.9, got 47.5"
+  code: 'BAD_SECOND'
+  name: 'CoreError'
+  stack: |-
+    bankAsBuilt (G:\consonance-scratch\e-d678\wt-mut\src\core\extend.js:1218:25)
+    extend (G:\consonance-scratch\e-d678\wt-mut\src\core\extend.js:1180:33)
+    easedPiece (G:\consonance-scratch\e-d678\wt-mut\src\core\turnby.js:67:17)
+    startOf (G:\consonance-scratch\e-d678\wt-mut\src\core\turnby.js:100:13)
+    solve (G:\consonance-scratch\e-d678\wt-mut\src\core\turnby.js:110:62)
+    extendBy (G:\consonance-scratch\e-d678\wt-mut\src\core\turnby.js:149:13)
+    solveList (G:\consonance-scratch\e-d678\wt-mut\src\core\turnby.js:272:29)
+    extendList (G:\consonance-scratch\e-d678\wt-mut\src\core\turnby.js:319:13)
+    cornerOf (G:\consonance-scratch\e-d678\wt-mut\src\core\turnby.js:334:40)
+    Object.extendCorner (G:\consonance-scratch\e-d678\wt-mut\src\core\turnby.js:178:15)
+  ...
+# Subtest: row 2: where the elimination swaps rows (uneven knots), the banded fit still equals the dense fit byte for byte
+ok 11 - row 2: where the elimination swaps rows (uneven knots), the banded fit still equals the dense fit byte for byte
+  ---
+  duration_ms: 387.0757
+  type: 'test'
+  ...
+# 72 of 400 pieces swap rows in the elimination
+# Subtest: row 3: a singular system (a free point whose support falls between two samples) is "the fit as it was", as in the dense fit
+ok 12 - row 3: a singular system (a free point whose support falls between two samples) is "the fit as it was", as in the dense fit
+  ---
+  duration_ms: 1.9789
+  type: 'test'
+  ...
+# Subtest: row 2: a 15° cup brought home to 0 over 40 m is C2 at both ends of the fade
+ok 13 - row 2: a 15° cup brought home to 0 over 40 m is C2 at both ends of the fade
+  ---
+  duration_ms: 6.3924
+  type: 'test'
+  ...
+# Subtest: row 3: a 30° edge brought to 0 over 50 m is C2 at both ends
+ok 14 - row 3: a 30° edge brought to 0 over 50 m is C2 at both ends
+  ---
+  duration_ms: 2.2434
+  type: 'test'
+  ...
+1..0
+# Subtest: core_mirror_refusal.test.js
+ok 11 - core_mirror_refusal.test.js
+  ---
+  duration_ms: 83.8984
+  type: 'test'
+  ...
+1..0
+# Subtest: core_ramp.test.js
+ok 12 - core_ramp.test.js
+  ---
+  duration_ms: 82.7113
+  type: 'test'
+  ...
+1..0
+# Subtest: core_width_at_start_f.test.js
+ok 13 - core_width_at_start_f.test.js
+  ---
+  duration_ms: 112.1864
+  type: 'test'
+  ...
+1..17
+# tests 17
+# suites 0
+# pass 16
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 574.7527

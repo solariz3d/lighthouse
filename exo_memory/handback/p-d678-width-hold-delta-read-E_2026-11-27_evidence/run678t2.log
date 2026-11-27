@@ -1,0 +1,22 @@
+heavy-run: capped to 8 of 16 logical CPUs, spread (affinity 21845); every child inherits it
+## 19:17:53Z P1b ripple268 on the tip
+exit 0
+## 19:17:55Z d678 on the tip
+exit 0
+## 19:20:21Z delta P1 control e112a14 vs c2591bf
+exit 0
+## 19:20:21Z delta c2591bf vs tip
+exit 0
+## 19:20:21Z f4 tip
+exit 0
+## 19:20:38Z f4 control c2591bf
+exit 0
+## 19:20:56Z var tip
+exit 0
+## 19:21:05Z var control c2591bf
+exit 0
+## 19:21:12Z chan678 e112a14 vs tip
+exit 0
+## 19:21:23Z endpos678 e112a14 vs tip
+exit 0
+## 19:21:27Z done

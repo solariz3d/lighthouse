@@ -1,0 +1,21 @@
+== per caller
+extend {"level head, bytes same":1,"held, width columns same":60}
+turnBy 45 {"level head, bytes same":1,"held, width columns same":60}
+turnBy -90 over 200 {"level head, bytes same":1,"held, width columns same":60}
+corner 30 + extra 20 from 50 {"level head, bytes same":1,"held, width columns same":60}
+sharp 90 R22 ramp4 {"refused both, same text":61}
+sharp -60 R40 ramp8 {"level head, bytes same":1,"held, width columns DIFFER":60,"sharp within the bar":60,"maxDswingMm":1.054,"maxRelDswing":0.01387,"lengths":["40.2238 -> 40.3629"],"w2B":[0.0025008,4.707,0.0024848,4.6927],"over1mm":[1.7,1.71]}
+sharp 90 R150 ramp4 {"level head, bytes same":1,"held, width columns DIFFER":60,"sharp within the bar":60,"maxDswingMm":0.121,"maxRelDswing":0.00222,"lengths":["234.2583 -> 234.3479"],"w2B":[0.0022072,4.4353,0.0022057,4.4337],"over1mm":[1.38,1.38]}
+sharp -60 R40 ramp1 {"level head, bytes same":1,"held, width columns same":60}
+jump (take-off) {"level head, bytes same":1,"held, width columns same":60}
+level {"level head, bytes same":1,"held, width columns same":60}
+
+== Finish
+lap level: closed true -> true, plan LSL -> LSL, window [6,7,8] -> [6,7,8], placed same, lengths 942/364/943 -> 942/364/943, first piece's width columns same, bytes same
+lap brush +1.37 end-5 r20: closed true -> true, plan LSL -> LSL, window [6,7,8] -> [6,7,8], placed same, lengths 942/363/942 -> 942/364/943, first piece's width columns same, bytes differ
+lap brush +5 end-30 r40: closed true -> true, plan LSL -> LSL, window [6,7,8] -> [6,7,8], placed same, lengths 942/363/942 -> 942/364/943, first piece's width columns same, bytes differ
+lap grab +2 end-10 r20: closed true -> true, plan LSL -> LSL, window [6,7,8] -> [6,7,8], placed same, lengths 942/363/942 -> 942/364/943, first piece's width columns same, bytes differ
+lap grab +2 end-0 r10: closed true -> true, plan LSL -> LSL, window [6,7,8] -> [6,7,8], placed same, lengths 942/363/942 -> 942/364/943, first piece's width columns same, bytes differ
+lap grab -2 end-2 r5: closed true -> true, plan LSL -> LSL, window [6,7,8] -> [6,7,8], placed same, lengths 942/363/942 -> 942/364/943, first piece's width columns same, bytes differ
+
+== against the bar: 0 fail

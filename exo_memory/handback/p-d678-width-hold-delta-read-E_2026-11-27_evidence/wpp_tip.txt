@@ -1,0 +1,25 @@
+CONTROL one-sided second derivative of 3x^3-2x^2 at 1.5 (exact 23): left 22.9982 right 23.0018
+{"head":"E4 brush +5 end-30 r40","slope":-0.15118,"brushedOwn":{"B":0.012043,"knots1e3":0.012056,"knots1e4":0.012057}}
+{"head":"E4 brush +5 end-30 r40","caller":"extend 100","length":100,"firstKnots":[5,10,15,20,40,60],"B":0.059472,"fine":0.060278,"knots1e3":0.06047,"knots1e4":0.060478,"at":0,"ratioB":4.938,"ratioKnots":5.016}
+{"head":"E4 brush +5 end-30 r40","caller":"extend 30","length":30,"firstKnots":[3.75,7.5,11.25,15],"B":0.078848,"fine":0.080282,"knots1e3":0.080622,"knots1e4":0.080639,"at":0,"ratioB":6.547,"ratioKnots":6.688}
+{"head":"E4 brush +5 end-30 r40","caller":"extend 15","length":15,"firstKnots":[3.75,7.5,11.25],"B":0.078848,"fine":0.080282,"knots1e3":0.080622,"knots1e4":0.080639,"at":0,"ratioB":6.547,"ratioKnots":6.688}
+{"head":"E4 brush +5 end-30 r40","caller":"extend 10","length":10,"firstKnots":[2.5,5,7.5],"B":0.11693,"fine":0.12015,"knots1e3":0.12092,"knots1e4":0.12096,"at":0,"ratioB":9.709,"ratioKnots":10.032}
+{"head":"E4 brush +5 end-30 r40","caller":"sharp -60 R40 ramp8","length":40.3629,"firstKnots":[0.961,1.4415,1.922,2,4,6],"B":0.42481,"fine":0.47304,"knots1e3":0.4845,"knots1e4":0.48504,"at":0,"ratioB":35.274,"ratioKnots":40.229}
+{"head":"E4 brush +5 end-30 r40","caller":"sharp 90 R150 ramp4","length":234.3479,"firstKnots":[0.993,1,1.4895,1.986,2,3],"B":0.40139,"fine":0.44114,"knots1e3":0.45058,"knots1e4":0.45102,"at":0,"ratioB":33.329,"ratioKnots":37.408}
+{"head":"E4 brush +5 end-30 r40","caller":"sharp -60 R40 ramp1","length":42.4492,"firstKnots":[0.7404,0.75,0.9872,1,1.9744,2.9616],"B":0.64797,"fine":0.77861,"knots1e3":0.80964,"knots1e4":0.81111,"at":0,"ratioB":53.803,"ratioKnots":67.274}
+{"head":"E6 grab +2 end-10 r20","slope":-0.19377,"brushedOwn":{"B":0.046219,"knots1e3":0.046357,"knots1e4":0.046361}}
+{"head":"E6 grab +2 end-10 r20","caller":"extend 100","length":100,"firstKnots":[5,10,15,20,40,60],"B":0.076204,"fine":0.077238,"knots1e3":0.077483,"knots1e4":0.077493,"at":0,"ratioB":1.649,"ratioKnots":1.672}
+{"head":"E6 grab +2 end-10 r20","caller":"extend 30","length":30,"firstKnots":[3.75,7.5,11.25,15],"B":0.10104,"fine":0.10288,"knots1e3":0.10332,"knots1e4":0.10334,"at":0,"ratioB":2.186,"ratioKnots":2.229}
+{"head":"E6 grab +2 end-10 r20","caller":"extend 15","length":15,"firstKnots":[3.75,7.5,11.25],"B":0.10104,"fine":0.10288,"knots1e3":0.10332,"knots1e4":0.10334,"at":0,"ratioB":2.186,"ratioKnots":2.229}
+{"head":"E6 grab +2 end-10 r20","caller":"extend 10","length":10,"firstKnots":[2.5,5,7.5],"B":0.14987,"fine":0.15401,"knots1e3":0.15499,"knots1e4":0.15503,"at":0,"ratioB":3.243,"ratioKnots":3.344}
+{"head":"E6 grab +2 end-10 r20","caller":"sharp -60 R40 ramp8","length":40.3629,"firstKnots":[0.961,1.4415,1.922,2,4,6],"B":0.54522,"fine":0.60714,"knots1e3":0.62184,"knots1e4":0.62254,"at":0,"ratioB":11.796,"ratioKnots":13.428}
+{"head":"E6 grab +2 end-10 r20","caller":"sharp 90 R150 ramp4","length":234.3479,"firstKnots":[0.993,1,1.4895,1.986,2,3],"B":0.51435,"fine":0.56524,"knots1e3":0.57732,"knots1e4":0.57789,"at":0,"ratioB":11.129,"ratioKnots":12.465}
+{"head":"E6 grab +2 end-10 r20","caller":"sharp -60 R40 ramp1","length":42.4492,"firstKnots":[0.7404,0.75,0.9872,1,1.9744,2.9616],"B":0.83037,"fine":0.9978,"knots1e3":1.0376,"knots1e4":1.0394,"at":0,"ratioB":17.966,"ratioKnots":22.421}
+{"head":"grab +4 end-3 r5","slope":-1.66857,"brushedOwn":{"B":1.8081,"knots1e3":1.8313,"knots1e4":1.8319}}
+{"head":"grab +4 end-3 r5","caller":"extend 100","length":100,"firstKnots":[5,10,15,20,40,60],"B":0.65629,"fine":0.66519,"knots1e3":0.6673,"knots1e4":0.6674,"at":0,"ratioB":0.363,"ratioKnots":0.364}
+{"head":"grab +4 end-3 r5","caller":"extend 30","length":30,"firstKnots":[3.75,7.5,11.25,15],"B":0.87012,"fine":0.88594,"knots1e3":0.8897,"knots1e4":0.88988,"at":0,"ratioB":0.481,"ratioKnots":0.486}
+{"head":"grab +4 end-3 r5","caller":"extend 15","length":15,"firstKnots":[3.75,7.5,11.25],"B":0.87012,"fine":0.88594,"knots1e3":0.8897,"knots1e4":0.88988,"at":0,"ratioB":0.481,"ratioKnots":0.486}
+{"head":"grab +4 end-3 r5","caller":"extend 10","length":10,"firstKnots":[2.5,5,7.5],"B":1.2904,"fine":1.326,"knots1e3":1.3344,"knots1e4":1.3348,"at":0,"ratioB":0.714,"ratioKnots":0.729}
+{"head":"grab +4 end-3 r5","caller":"sharp -60 R40 ramp8","length":40.3629,"firstKnots":[0.961,1.4415,1.922,2,4,6],"B":4.6927,"fine":5.2256,"knots1e3":5.3522,"knots1e4":5.3582,"at":0,"ratioB":2.595,"ratioKnots":2.925}
+{"head":"grab +4 end-3 r5","caller":"sharp 90 R150 ramp4","length":234.3479,"firstKnots":[0.993,1,1.4895,1.986,2,3],"B":4.4337,"fine":4.8727,"knots1e3":4.9769,"knots1e4":4.9819,"at":0,"ratioB":2.452,"ratioKnots":2.72}
+{"head":"grab +4 end-3 r5","caller":"sharp -60 R40 ramp1","length":42.4492,"firstKnots":[0.7404,0.75,0.9872,1,1.9744,2.9616],"B":7.1537,"fine":8.5961,"knots1e3":8.9386,"knots1e4":8.9549,"at":0,"ratioB":3.956,"ratioKnots":4.888}

@@ -1,0 +1,17 @@
+heavy-run: capped to 8 of 16 logical CPUs, spread (affinity 21845); every child inherits it
+## 19:23:15Z fin678 tip
+exit 0
+## 19:23:44Z fin678 c259
+exit 0
+## 19:24:15Z fin678 e112
+exit 0
+## 19:25:01Z done
+## 19:25:01Z D9 size
+anchor count [33m1[39m
+exit 0
+## 19:25:22Z restored: 0 changed files in wt-mut
+## 19:25:22Z atstart tip
+exit 0
+## 19:25:23Z atstart c2591bf
+exit 0
+## 19:25:24Z done

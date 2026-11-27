@@ -1,0 +1,9 @@
+G:\consonance-scratch\e-d678\wt-before: placed 24bcdf657190c0cd, placed + corners but w eb3501a2c3eec581, head w 25.1049 (0.08390399999999999), corner knots 74/19/109
+G:\consonance-scratch\e-d678\wt-after: placed 24bcdf657190c0cd, placed + corners but w 5e302d1023e4f078, head w 25.1049 (0.08390399999999999), corner knots 77/22/112
+  corner 1 (1500 m): lengths same, channels but w within 455.325 steps of REF (kh at 19.85), end 7.191e-3 m from REF's, width ends 25.1049 (0) against the head's 25.1049
+  corner 2 (400 m): lengths same, channels but w within 32206.617 steps of REF (kh at 19.30), end 1.252e-1 m from REF's, width ends 25.1049 (0) against the head's 25.1049
+  corner 3 (2200 m): lengths same, channels but w within 0.000 steps of REF (phi at 0.35), end 0.000e+0 m from REF's, width ends 25.1049 (0) against the head's 25.1049
+G:\consonance-scratch\e-d678\wt-tip: placed 24bcdf657190c0cd, placed + corners but w 015881f53acdbc5f, head w 25.1049 (0.08390399999999999), corner knots 77/22/112
+  corner 1 (1500 m): lengths same, channels but w within 0.685 steps of REF (phi at 24.90), end 3.054e-6 m from REF's, width ends 25.1049 (0) against the head's 25.1049
+  corner 2 (400 m): lengths same, channels but w within 0.622 steps of REF (kh at 21.35), end 6.338e-6 m from REF's, width ends 25.1049 (0) against the head's 25.1049
+  corner 3 (2200 m): lengths same, channels but w within 0.000 steps of REF (phi at 0.35), end 0.000e+0 m from REF's, width ends 25.1049 (0) against the head's 25.1049

@@ -1,0 +1,61 @@
+== per caller
+extend {"level head, bytes same":1,"held, width columns DIFFER":60}
+turnBy 45 {"level head, bytes same":1,"held, width columns DIFFER":60}
+turnBy -90 over 200 {"level head, bytes same":1,"held, width columns DIFFER":60}
+corner 30 + extra 20 from 50 {"level head, bytes same":1,"held, width columns DIFFER":60}
+sharp 90 R22 ramp4 {"refused both, same text":61}
+sharp -60 R40 ramp8 {"level head, bytes same":1,"held, width columns DIFFER":60,"sharp within the bar":4,"maxDswingMm":296.933,"maxRelDswing":0.5112,"lengths":["40.3629 -> 40.2238"],"w2B":[0.0011275,2.5569,0.0025008,4.707],"over1mm":[14.14,1.7],"SHARP OUTSIDE THE BAR":56}
+sharp 90 R150 ramp4 {"level head, bytes same":1,"held, width columns DIFFER":60,"sharp within the bar":4,"maxDswingMm":485.343,"maxRelDswing":0.60158,"lengths":["234.3479 -> 234.2583"],"w2B":[0.0012275,2.5094,0.0022072,4.4353],"over1mm":[14.54,1.38],"SHARP OUTSIDE THE BAR":56}
+sharp -60 R40 ramp1 {"level head, bytes same":1,"held, width columns DIFFER":60}
+jump (take-off) {"level head, bytes same":1,"held, width columns DIFFER":60}
+level {"level head, bytes same":1,"held, width columns DIFFER":60}
+
+== Finish
+lap level: closed true -> true, plan LSL -> LSL, window [6,7,8] -> [6,7,8], placed same, lengths 942/364/943 -> 942/364/943, first piece's width columns same, bytes same
+lap brush +1.37 end-5 r20: closed true -> true, plan LSL -> LSL, window [6,7,8] -> [6,7,8], placed same, lengths 942/364/943 -> 942/363/942, first piece's width columns DIFFER swing,swingAt,factor,over1mmUntil,over1e9Until,w2B,w2fine, bytes differ
+lap brush +5 end-30 r40: closed true -> true, plan LSL -> LSL, window [6,7,8] -> [6,7,8], placed same, lengths 942/364/943 -> 942/363/942, first piece's width columns DIFFER swing,swingAt,factor,over1mmUntil,over1e9Until,w2B,w2fine, bytes differ
+lap grab +2 end-10 r20: closed true -> true, plan LSL -> LSL, window [6,7,8] -> [6,7,8], placed same, lengths 942/364/943 -> 942/363/942, first piece's width columns DIFFER swing,swingAt,factor,over1mmUntil,over1e9Until,w2B,w2fine, bytes differ
+lap grab +2 end-0 r10: closed true -> true, plan LSL -> LSL, window [6,7,8] -> [6,7,8], placed same, lengths 942/364/943 -> 942/363/942, first piece's width columns DIFFER swing,swingAt,factor,over1mmUntil,over1e9Until,w2B,w2fine, bytes differ
+lap grab -2 end-2 r5: closed true -> true, plan LSL -> LSL, window [6,7,8] -> [6,7,8], placed same, lengths 942/364/943 -> 942/363/942, first piece's width columns DIFFER swing,swingAt,factor,over1mmUntil,over1e9Until,w2B,w2fine, bytes differ
+
+== against the bar: 537 FAIL
+E1 brush +1.37 end-5 r20 | extend: columns differ swing,swingAt,factor,over1mmUntil,over1e9Until,w2B,w2fine (swing -0.0037219 -> -0.0015571)
+E1 brush +1.37 end-5 r20 | turnBy 45: columns differ swing,swingAt,factor,over1mmUntil,over1e9Until,w2B,w2fine (swing -0.0037219 -> -0.0015571)
+E1 brush +1.37 end-5 r20 | turnBy -90 over 200: columns differ swing,swingAt,factor,over1mmUntil,over1e9Until,w2B,w2fine (swing -0.0037219 -> -0.0015571)
+E1 brush +1.37 end-5 r20 | corner 30 + extra 20 from 50: columns differ swing,swingAt,factor,over1mmUntil,over1e9Until,w2B,w2fine (swing -0.0037219 -> -0.0015571)
+E1 brush +1.37 end-5 r20 | sharp -60 R40 ramp1: columns differ swing,swingAt,factor,over1e9Until,w2B,w2fine (swing -0.0002125 -> -0.0000895)
+E1 brush +1.37 end-5 r20 | jump (take-off): columns differ swing,swingAt,factor,over1mmUntil,over1e9Until,w2B,w2fine (swing -0.0037219 -> -0.0015571)
+E1 brush +1.37 end-5 r20 | level: columns differ swing,swingAt,factor,over1mmUntil,over1e9Until,w2B,w2fine (swing -0.0037219 -> -0.0015571)
+E4 brush +5 end-30 r40 | extend: columns differ swing,swingAt,factor,over1mmUntil,over1e9Until,w2B,w2fine (swing -0.5604846 -> -0.2308217)
+E4 brush +5 end-30 r40 | turnBy 45: columns differ swing,swingAt,factor,over1mmUntil,over1e9Until,w2B,w2fine (swing -0.5604846 -> -0.2308217)
+E4 brush +5 end-30 r40 | turnBy -90 over 200: columns differ swing,swingAt,factor,over1mmUntil,over1e9Until,w2B,w2fine (swing -0.5607107 -> -0.2308217)
+E4 brush +5 end-30 r40 | corner 30 + extra 20 from 50: columns differ swing,swingAt,factor,over1mmUntil,over1e9Until,w2B,w2fine (swing -0.5604846 -> -0.2308217)
+E4 brush +5 end-30 r40 | sharp -60 R40 ramp8: dswing 26.894 mm, end {"v":21.6,"m":0}, joint null
+E4 brush +5 end-30 r40 | sharp 90 R150 ramp4: dswing 43.981 mm, end {"v":21.6,"m":0}, joint null
+E4 brush +5 end-30 r40 | sharp -60 R40 ramp1: columns differ swing,swingAt,factor,over1mmUntil,over1e9Until,w2B,w2fine (swing -0.0290428 -> -0.0166841)
+E4 brush +5 end-30 r40 | jump (take-off): columns differ swing,swingAt,factor,over1mmUntil,over1e9Until,w2B,w2fine (swing -0.5604846 -> -0.2308217)
+E4 brush +5 end-30 r40 | level: columns differ swing,swingAt,factor,over1mmUntil,over1e9Until,w2B,w2fine (swing -0.5604846 -> -0.2308217)
+E6 grab +2 end-10 r20 | extend: columns differ swing,swingAt,factor,over1mmUntil,over1e9Until,w2B,w2fine (swing -0.7183546 -> -0.2957632)
+E6 grab +2 end-10 r20 | turnBy 45: columns differ swing,swingAt,factor,over1mmUntil,over1e9Until,w2B,w2fine (swing -0.7183546 -> -0.2957632)
+E6 grab +2 end-10 r20 | turnBy -90 over 200: columns differ swing,swingAt,factor,over1mmUntil,over1e9Until,w2B,w2fine (swing -0.7186515 -> -0.2957632)
+E6 grab +2 end-10 r20 | corner 30 + extra 20 from 50: columns differ swing,swingAt,factor,over1mmUntil,over1e9Until,w2B,w2fine (swing -0.7183546 -> -0.2957632)
+E6 grab +2 end-10 r20 | sharp -60 R40 ramp8: dswing 34.461 mm, end {"v":20.1682,"m":0}, joint null
+E6 grab +2 end-10 r20 | sharp 90 R150 ramp4: dswing 56.382 mm, end {"v":20.1682,"m":0}, joint null
+E6 grab +2 end-10 r20 | sharp -60 R40 ramp1: columns differ swing,swingAt,factor,over1mmUntil,over1e9Until,w2B,w2fine (swing -0.0372042 -> -0.0213807)
+E6 grab +2 end-10 r20 | jump (take-off): columns differ swing,swingAt,factor,over1mmUntil,over1e9Until,w2B,w2fine (swing -0.7183546 -> -0.2957632)
+E6 grab +2 end-10 r20 | level: columns differ swing,swingAt,factor,over1mmUntil,over1e9Until,w2B,w2fine (swing -0.7183546 -> -0.2957632)
+grab +2 end-0 r5 | extend: columns differ swing,swingAt,factor,over1mmUntil,over1e9Until,w2B,w2fine (swing 0.1541481 -> 0.063476)
+grab +2 end-0 r5 | turnBy 45: columns differ swing,swingAt,factor,over1mmUntil,over1e9Until,w2B,w2fine (swing 0.1541481 -> 0.063476)
+grab +2 end-0 r5 | turnBy -90 over 200: columns differ swing,swingAt,factor,over1mmUntil,over1e9Until,w2B,w2fine (swing 0.1542178 -> 0.063476)
+grab +2 end-0 r5 | corner 30 + extra 20 from 50: columns differ swing,swingAt,factor,over1mmUntil,over1e9Until,w2B,w2fine (swing 0.1541481 -> 0.063476)
+grab +2 end-0 r5 | sharp -60 R40 ramp8: dswing 7.355 mm, end {"v":21.1,"m":0}, joint null
+grab +2 end-0 r5 | sharp 90 R150 ramp4: dswing 12.103 mm, end {"v":21.1,"m":0}, joint null
+grab +2 end-0 r5 | sharp -60 R40 ramp1: columns differ swing,swingAt,factor,over1mmUntil,over1e9Until,w2B,w2fine (swing 0.0079985 -> 0.0046071)
+grab +2 end-0 r5 | jump (take-off): columns differ swing,swingAt,factor,over1mmUntil,over1e9Until,w2B,w2fine (swing 0.1541481 -> 0.063476)
+grab +2 end-0 r5 | level: columns differ swing,swingAt,factor,over1mmUntil,over1e9Until,w2B,w2fine (swing 0.1541481 -> 0.063476)
+grab -2 end-0 r5 | extend: columns differ swing,swingAt,factor,over1mmUntil,over1e9Until,w2B,w2fine (swing -0.1541481 -> -0.063476)
+grab -2 end-0 r5 | turnBy 45: columns differ swing,swingAt,factor,over1mmUntil,over1e9Until,w2B,w2fine (swing -0.1541481 -> -0.063476)
+grab -2 end-0 r5 | turnBy -90 over 200: columns differ swing,swingAt,factor,over1mmUntil,over1e9Until,w2B,w2fine (swing -0.1542178 -> -0.063476)
+grab -2 end-0 r5 | corner 30 + extra 20 from 50: columns differ swing,swingAt,factor,over1mmUntil,over1e9Until,w2B,w2fine (swing -0.1541481 -> -0.063476)
+grab -2 end-0 r5 | sharp -60 R40 ramp8: dswing 7.355 mm, end {"v":17.1,"m":0}, joint null
+grab -2 end-0 r5 | sharp 90 R150 ramp4: dswing 12.103 mm, end {"v":17.1,"m":0}, joint null

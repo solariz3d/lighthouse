@@ -1,0 +1,33 @@
+heavy-run: waiting on a2122153 pid 4764 (E D678 Track 2 delta read probes d678 var678 chan678 (not a timing session), since 2026-11-27T19:17:53.348Z) — it holds this tree
+heavy-run: waiting on a2122153 pid 4764 (E D678 Track 2 delta read probes d678 var678 chan678 (not a timing session), since 2026-11-27T19:17:53.348Z) — it holds this tree
+heavy-run: waiting on a2122153 pid 4764 (E D678 Track 2 delta read probes d678 var678 chan678 (not a timing session), since 2026-11-27T19:17:53.348Z) — it holds this tree
+heavy-run: capped to 8 of 16 logical CPUs, spread (affinity 21845); every child inherits it
+## 19:21:28Z EX12 control, unmutated
+# tests 17 # pass 17 # fail 0 # skipped 0 # todo 0 
+## 19:21:29Z EX12 mutant
+anchor count [33m1[39m
+# tests 17 # pass 16 # fail 1 # skipped 0 # todo 0 
+not ok 10 - row 11: what frees his piece, read apart: the road turns there (the same way as his first bank, +20°, is laid too); on a straight piece his −20° turns the bank back, and +20° is refused
+## 19:21:30Z D9 control, unmutated
+# tests 13 # pass 13 # fail 0 # skipped 0 # todo 0 
+## 19:21:31Z D9 mutant
+anchor count [33m1[39m
+# tests 13 # pass 12 # fail 1 # skipped 0 # todo 0 
+not ok 10 - D678: after a width brush, a corner of 30 with an extra 20 from 50, or from 10 (inside the hold), lays the same path as from a level head
+# Subtest: D678: after a width brush, a corner of 30 with an extra 20 from 50, or from 10 (inside the hold), lays the same path as from a level head
+not ok 10 - D678: after a width brush, a corner of 30 with an extra 20 from 50, or from 10 (inside the hold), lays the same path as from a level head
+  error: "the corner list, its extra from 10 m, piece 1: kh is 2.63e-4 from the level head's, over one step"
+## 19:21:33Z drag-ghost on the tip
+# tests 7 # pass 7 # fail 0 # skipped 0 # todo 0 
+## 19:21:34Z dg5e678 e112a14 c2591bf tip
+exit 0
+G:\consonance-scratch\e-d678\wt-before: placed 24bcdf657190c0cd, placed + corners but w eb3501a2c3eec581, head w 25.1049 (0.08390399999999999), corner knots 74/19/109
+G:\consonance-scratch\e-d678\wt-after: placed 24bcdf657190c0cd, placed + corners but w 5e302d1023e4f078, head w 25.1049 (0.08390399999999999), corner knots 77/22/112
+  corner 1 (1500 m): lengths same, channels but w within 455.325 steps of REF (kh at 19.85), end 7.191e-3 m from REF's, width ends 25.1049 (0) against the head's 25.1049
+  corner 2 (400 m): lengths same, channels but w within 32206.617 steps of REF (kh at 19.30), end 1.252e-1 m from REF's, width ends 25.1049 (0) against the head's 25.1049
+  corner 3 (2200 m): lengths same, channels but w within 0.000 steps of REF (phi at 0.35), end 0.000e+0 m from REF's, width ends 25.1049 (0) against the head's 25.1049
+G:\consonance-scratch\e-d678\wt-tip: placed 24bcdf657190c0cd, placed + corners but w 015881f53acdbc5f, head w 25.1049 (0.08390399999999999), corner knots 77/22/112
+  corner 1 (1500 m): lengths same, channels but w within 0.685 steps of REF (phi at 24.90), end 3.054e-6 m from REF's, width ends 25.1049 (0) against the head's 25.1049
+  corner 2 (400 m): lengths same, channels but w within 0.622 steps of REF (kh at 21.35), end 6.338e-6 m from REF's, width ends 25.1049 (0) against the head's 25.1049
+  corner 3 (2200 m): lengths same, channels but w within 0.000 steps of REF (phi at 0.35), end 0.000e+0 m from REF's, width ends 25.1049 (0) against the head's 25.1049
+## 19:21:36Z restored: 0 changed files in wt-mut

@@ -1,0 +1,3460 @@
+{
+ "ref": "G:\\consonance-scratch\\e-d678\\wt-before",
+ "test": "G:\\consonance-scratch\\e-d678\\wt-after",
+ "width": null,
+ "set": "f4",
+ "DEC": {
+  "m": 4,
+  "kh": 9,
+  "kv": 9,
+  "phi": 9,
+  "w": 4,
+  "r": 6,
+  "h": 4,
+  "l": 4,
+  "c": 6,
+  "e": 6,
+  "s": 6,
+  "t": 6,
+  "er": 6,
+  "wd": 4,
+  "rad": 9
+ },
+ "rows": [
+  {
+   "head": "level head",
+   "caller": "extend",
+   "slope": 0,
+   "refused": null,
+   "refRefused": null,
+   "placedSame": true,
+   "vsRef": {
+    "count": [
+     1,
+     1
+    ],
+    "lengths": [
+     "same"
+    ],
+    "worst": 0,
+    "worstAt": null,
+    "perCh": {
+     "kh": 0,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 0
+   },
+   "vsTwin": null,
+   "width": null
+  },
+  {
+   "head": "level head",
+   "caller": "turnBy 45",
+   "slope": 0,
+   "refused": null,
+   "refRefused": null,
+   "placedSame": true,
+   "vsRef": {
+    "count": [
+     1,
+     1
+    ],
+    "lengths": [
+     "same"
+    ],
+    "worst": 0,
+    "worstAt": null,
+    "perCh": {
+     "kh": 0,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 0
+   },
+   "vsTwin": null,
+   "width": null
+  },
+  {
+   "head": "level head",
+   "caller": "turnBy -90 over 200",
+   "slope": 0,
+   "refused": null,
+   "refRefused": null,
+   "placedSame": true,
+   "vsRef": {
+    "count": [
+     1,
+     1
+    ],
+    "lengths": [
+     "same"
+    ],
+    "worst": 0,
+    "worstAt": null,
+    "perCh": {
+     "kh": 0,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 0
+   },
+   "vsTwin": null,
+   "width": null
+  },
+  {
+   "head": "level head",
+   "caller": "corner 30 + extra 20 from 50",
+   "slope": 0,
+   "refused": null,
+   "refRefused": null,
+   "placedSame": true,
+   "vsRef": {
+    "count": [
+     1,
+     1
+    ],
+    "lengths": [
+     "same"
+    ],
+    "worst": 0,
+    "worstAt": null,
+    "perCh": {
+     "kh": 0,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 0
+   },
+   "vsTwin": null,
+   "width": null
+  },
+  {
+   "head": "level head",
+   "caller": "corner 30 + extra 20 from 10",
+   "slope": 0,
+   "refused": null,
+   "refRefused": null,
+   "placedSame": true,
+   "vsRef": {
+    "count": [
+     1,
+     1
+    ],
+    "lengths": [
+     "same"
+    ],
+    "worst": 0,
+    "worstAt": null,
+    "perCh": {
+     "kh": 0,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 0
+   },
+   "vsTwin": null,
+   "width": null
+  },
+  {
+   "head": "level head",
+   "caller": "sharp -60 R40 ramp8",
+   "slope": 0,
+   "refused": null,
+   "refRefused": null,
+   "placedSame": true,
+   "vsRef": {
+    "count": [
+     2,
+     2
+    ],
+    "lengths": [
+     "same",
+     "same"
+    ],
+    "worst": 0,
+    "worstAt": null,
+    "perCh": {
+     "kh": 0,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 0
+   },
+   "vsTwin": null,
+   "width": null
+  },
+  {
+   "head": "level head",
+   "caller": "sharp 90 R150 ramp4",
+   "slope": 0,
+   "refused": null,
+   "refRefused": null,
+   "placedSame": true,
+   "vsRef": {
+    "count": [
+     2,
+     2
+    ],
+    "lengths": [
+     "same",
+     "same"
+    ],
+    "worst": 0,
+    "worstAt": null,
+    "perCh": {
+     "kh": 0,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 0
+   },
+   "vsTwin": null,
+   "width": null
+  },
+  {
+   "head": "level head",
+   "caller": "sharp -60 R40 ramp1",
+   "slope": 0,
+   "refused": null,
+   "refRefused": null,
+   "placedSame": true,
+   "vsRef": {
+    "count": [
+     2,
+     2
+    ],
+    "lengths": [
+     "same",
+     "same"
+    ],
+    "worst": 0,
+    "worstAt": null,
+    "perCh": {
+     "kh": 0,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 0
+   },
+   "vsTwin": null,
+   "width": null
+  },
+  {
+   "head": "level head",
+   "caller": "jump (take-off)",
+   "slope": 0,
+   "refused": null,
+   "refRefused": null,
+   "placedSame": true,
+   "vsRef": {
+    "count": [
+     3,
+     3
+    ],
+    "lengths": [
+     "same",
+     "same",
+     "same"
+    ],
+    "worst": 0,
+    "worstAt": null,
+    "perCh": {
+     "kh": 0,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 0
+   },
+   "vsTwin": null,
+   "width": null
+  },
+  {
+   "head": "level head",
+   "caller": "level",
+   "slope": 0,
+   "refused": null,
+   "refRefused": null,
+   "placedSame": true,
+   "vsRef": {
+    "count": [
+     1,
+     1
+    ],
+    "lengths": [
+     "same"
+    ],
+    "worst": 0,
+    "worstAt": null,
+    "perCh": {
+     "kh": 0,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 0
+   },
+   "vsTwin": null,
+   "width": null
+  },
+  {
+   "head": "E1",
+   "caller": "extend",
+   "slope": -0.0010049999999997895,
+   "refused": null,
+   "refRefused": null,
+   "placedSame": true,
+   "vsRef": {
+    "count": [
+     1,
+     1
+    ],
+    "lengths": [
+     "same"
+    ],
+    "worst": 0.368,
+    "worstAt": "kh, piece 0 at 11.46 m",
+    "perCh": {
+     "kh": 0.368,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 1.499e-7
+   },
+   "vsTwin": {
+    "count": [
+     1,
+     1
+    ],
+    "lengths": [
+     "same"
+    ],
+    "worst": 0.368,
+    "worstAt": "kh, piece 0 at 11.46 m",
+    "perCh": {
+     "kh": 0.368,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 1.499e-7
+   },
+   "width": {
+    "head": {
+     "v": 20.463,
+     "m": -0.0010049999999997895
+    },
+    "slope": -0.0010049999999997895,
+    "joint": null,
+    "endIsHeadLevel": true,
+    "end": {
+     "v": 20.463,
+     "m": 0
+    },
+    "swingMm": -1.557,
+    "swingAt": 3.55,
+    "over1mmUntil": 6.9,
+    "knots": 7,
+    "minKnotGapM": 5
+   }
+  },
+  {
+   "head": "E1",
+   "caller": "turnBy 45",
+   "slope": -0.0010049999999997895,
+   "refused": null,
+   "refRefused": null,
+   "placedSame": true,
+   "vsRef": {
+    "count": [
+     1,
+     1
+    ],
+    "lengths": [
+     "same"
+    ],
+    "worst": 69950.715,
+    "worstAt": "kh, piece 0 at 27.22 m",
+    "perCh": {
+     "kh": 69950.715,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 0.03304
+   },
+   "vsTwin": {
+    "count": [
+     1,
+     1
+    ],
+    "lengths": [
+     "same"
+    ],
+    "worst": 69950.715,
+    "worstAt": "kh, piece 0 at 27.22 m",
+    "perCh": {
+     "kh": 69950.715,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 0.03304
+   },
+   "width": {
+    "head": {
+     "v": 20.463,
+     "m": -0.0010049999999997895
+    },
+    "slope": -0.0010049999999997895,
+    "joint": null,
+    "endIsHeadLevel": true,
+    "end": {
+     "v": 20.463,
+     "m": 0
+    },
+    "swingMm": -1.557,
+    "swingAt": 3.55,
+    "over1mmUntil": 6.9,
+    "knots": 7,
+    "minKnotGapM": 5
+   }
+  },
+  {
+   "head": "E1",
+   "caller": "turnBy -90 over 200",
+   "slope": -0.0010049999999997895,
+   "refused": null,
+   "refRefused": null,
+   "placedSame": true,
+   "vsRef": {
+    "count": [
+     1,
+     1
+    ],
+    "lengths": [
+     "same"
+    ],
+    "worst": 188881.957,
+    "worstAt": "kh, piece 0 at 18.00 m",
+    "perCh": {
+     "kh": 188881.957,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 0.3173
+   },
+   "vsTwin": {
+    "count": [
+     1,
+     1
+    ],
+    "lengths": [
+     "same"
+    ],
+    "worst": 188881.957,
+    "worstAt": "kh, piece 0 at 18.00 m",
+    "perCh": {
+     "kh": 188881.957,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 0.3173
+   },
+   "width": {
+    "head": {
+     "v": 20.463,
+     "m": -0.0010049999999997895
+    },
+    "slope": -0.0010049999999997895,
+    "joint": null,
+    "endIsHeadLevel": true,
+    "end": {
+     "v": 20.463,
+     "m": 0
+    },
+    "swingMm": -1.557,
+    "swingAt": 3.55,
+    "over1mmUntil": 6.9,
+    "knots": 12,
+    "minKnotGapM": 5
+   }
+  },
+  {
+   "head": "E1",
+   "caller": "corner 30 + extra 20 from 50",
+   "slope": -0.0010049999999997895,
+   "refused": null,
+   "refRefused": null,
+   "placedSame": true,
+   "vsRef": {
+    "count": [
+     1,
+     1
+    ],
+    "lengths": [
+     "same"
+    ],
+    "worst": 39547.583,
+    "worstAt": "kh, piece 0 at 27.22 m",
+    "perCh": {
+     "kh": 39547.583,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 0.01878
+   },
+   "vsTwin": {
+    "count": [
+     1,
+     1
+    ],
+    "lengths": [
+     "same"
+    ],
+    "worst": 39547.583,
+    "worstAt": "kh, piece 0 at 27.22 m",
+    "perCh": {
+     "kh": 39547.583,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 0.01878
+   },
+   "width": {
+    "head": {
+     "v": 20.463,
+     "m": -0.0010049999999997895
+    },
+    "slope": -0.0010049999999997895,
+    "joint": null,
+    "endIsHeadLevel": true,
+    "end": {
+     "v": 20.463,
+     "m": 0
+    },
+    "swingMm": -1.557,
+    "swingAt": 3.55,
+    "over1mmUntil": 6.9,
+    "knots": 15,
+    "minKnotGapM": 1.25
+   }
+  },
+  {
+   "head": "E1",
+   "caller": "corner 30 + extra 20 from 10",
+   "slope": -0.0010049999999997895,
+   "refused": null,
+   "refRefused": null,
+   "placedSame": true,
+   "vsRef": {
+    "count": [
+     1,
+     1
+    ],
+    "lengths": [
+     "same"
+    ],
+    "worst": 270473.468,
+    "worstAt": "kh, piece 0 at 19.53 m",
+    "perCh": {
+     "kh": 270473.468,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 0.08591
+   },
+   "vsTwin": {
+    "count": [
+     1,
+     1
+    ],
+    "lengths": [
+     "same"
+    ],
+    "worst": 270473.468,
+    "worstAt": "kh, piece 0 at 19.53 m",
+    "perCh": {
+     "kh": 270473.468,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 0.08591
+   },
+   "width": {
+    "head": {
+     "v": 20.463,
+     "m": -0.0010049999999997895
+    },
+    "slope": -0.0010049999999997895,
+    "joint": null,
+    "endIsHeadLevel": true,
+    "end": {
+     "v": 20.463,
+     "m": 0
+    },
+    "swingMm": -1.557,
+    "swingAt": 3.55,
+    "over1mmUntil": 6.9,
+    "knots": 14,
+    "minKnotGapM": 1.25
+   }
+  },
+  {
+   "head": "E1",
+   "caller": "sharp -60 R40 ramp8",
+   "slope": -0.0010049999999997895,
+   "refused": null,
+   "refRefused": null,
+   "placedSame": true,
+   "vsRef": {
+    "count": [
+     2,
+     2
+    ],
+    "lengths": [
+     "40.2238 vs 40.3629",
+     "same"
+    ],
+    "worst": 1476897.397,
+    "worstAt": "kh, piece 0 at 2.66 m",
+    "perCh": {
+     "kh": 1476897.397,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 0.1391
+   },
+   "vsTwin": {
+    "count": [
+     2,
+     2
+    ],
+    "lengths": [
+     "40.2238 vs 40.3629",
+     "same"
+    ],
+    "worst": 1476897.397,
+    "worstAt": "kh, piece 0 at 2.66 m",
+    "perCh": {
+     "kh": 1476897.397,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 0.1391
+   },
+   "width": {
+    "head": {
+     "v": 20.463,
+     "m": -0.0010049999999997895
+    },
+    "slope": -0.0010049999999997895,
+    "joint": null,
+    "endIsHeadLevel": true,
+    "end": {
+     "v": 20.463,
+     "m": 0
+    },
+    "swingMm": -0.187,
+    "swingAt": 0.45,
+    "over1mmUntil": 0,
+    "knots": 25,
+    "minKnotGapM": 0.0846
+   }
+  },
+  {
+   "head": "E1",
+   "caller": "sharp 90 R150 ramp4",
+   "slope": -0.0010049999999997895,
+   "refused": null,
+   "refRefused": null,
+   "placedSame": true,
+   "vsRef": {
+    "count": [
+     2,
+     2
+    ],
+    "lengths": [
+     "234.2583 vs 234.3479",
+     "same"
+    ],
+    "worst": 405625.126,
+    "worstAt": "kh, piece 0 at 1.71 m",
+    "perCh": {
+     "kh": 405625.126,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 0.08967
+   },
+   "vsTwin": {
+    "count": [
+     2,
+     2
+    ],
+    "lengths": [
+     "234.2583 vs 234.3479",
+     "same"
+    ],
+    "worst": 405625.126,
+    "worstAt": "kh, piece 0 at 1.71 m",
+    "perCh": {
+     "kh": 405625.126,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 0.08967
+   },
+   "width": {
+    "head": {
+     "v": 20.463,
+     "m": -0.0010049999999997895
+    },
+    "slope": -0.0010049999999997895,
+    "joint": null,
+    "endIsHeadLevel": true,
+    "end": {
+     "v": 20.463,
+     "m": 0
+    },
+    "swingMm": -0.196,
+    "swingAt": 0.48,
+    "over1mmUntil": 0,
+    "knots": 122,
+    "minKnotGapM": 0.0074
+   }
+  },
+  {
+   "head": "E1",
+   "caller": "sharp -60 R40 ramp1",
+   "slope": -0.0010049999999997895,
+   "refused": null,
+   "refRefused": null,
+   "placedSame": true,
+   "vsRef": {
+    "count": [
+     2,
+     2
+    ],
+    "lengths": [
+     "same",
+     "same"
+    ],
+    "worst": 3787042.174,
+    "worstAt": "kh, piece 0 at 0.54 m",
+    "perCh": {
+     "kh": 3787042.174,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 0
+   },
+   "vsTwin": {
+    "count": [
+     2,
+     2
+    ],
+    "lengths": [
+     "same",
+     "same"
+    ],
+    "worst": 3787042.174,
+    "worstAt": "kh, piece 0 at 0.54 m",
+    "perCh": {
+     "kh": 3787042.174,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 0
+   },
+   "width": {
+    "head": {
+     "v": 20.463,
+     "m": -0.0010049999999997895
+    },
+    "slope": -0.0010049999999997895,
+    "joint": null,
+    "endIsHeadLevel": true,
+    "end": {
+     "v": 20.463,
+     "m": 0
+    },
+    "swingMm": -0.089,
+    "swingAt": 0.25,
+    "over1mmUntil": 0,
+    "knots": 45,
+    "minKnotGapM": 0.0096
+   }
+  },
+  {
+   "head": "E1",
+   "caller": "jump (take-off)",
+   "slope": -0.0010049999999997895,
+   "refused": null,
+   "refRefused": null,
+   "placedSame": true,
+   "vsRef": {
+    "count": [
+     3,
+     3
+    ],
+    "lengths": [
+     "same",
+     "same",
+     "same"
+    ],
+    "worst": 0.368,
+    "worstAt": "kh, piece 0 at 11.46 m",
+    "perCh": {
+     "kh": 0.368,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 2.696e-7
+   },
+   "vsTwin": {
+    "count": [
+     3,
+     3
+    ],
+    "lengths": [
+     "same",
+     "same",
+     "same"
+    ],
+    "worst": 0.368,
+    "worstAt": "kh, piece 0 at 11.46 m",
+    "perCh": {
+     "kh": 0.368,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 2.696e-7
+   },
+   "width": {
+    "head": {
+     "v": 20.463,
+     "m": -0.0010049999999997895
+    },
+    "slope": -0.0010049999999997895,
+    "joint": null,
+    "endIsHeadLevel": true,
+    "end": {
+     "v": 20.463,
+     "m": 0
+    },
+    "swingMm": -1.557,
+    "swingAt": 3.55,
+    "over1mmUntil": 6.9,
+    "knots": 7,
+    "minKnotGapM": 5
+   }
+  },
+  {
+   "head": "E1",
+   "caller": "level",
+   "slope": -0.0010049999999997895,
+   "refused": null,
+   "refRefused": null,
+   "placedSame": true,
+   "vsRef": {
+    "count": [
+     1,
+     1
+    ],
+    "lengths": [
+     "same"
+    ],
+    "worst": 0.368,
+    "worstAt": "kh, piece 0 at 11.46 m",
+    "perCh": {
+     "kh": 0.368,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 1.499e-7
+   },
+   "vsTwin": {
+    "count": [
+     1,
+     1
+    ],
+    "lengths": [
+     "same"
+    ],
+    "worst": 0.368,
+    "worstAt": "kh, piece 0 at 11.46 m",
+    "perCh": {
+     "kh": 0.368,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 1.499e-7
+   },
+   "width": {
+    "head": {
+     "v": 20.463,
+     "m": -0.0010049999999997895
+    },
+    "slope": -0.0010049999999997895,
+    "joint": null,
+    "endIsHeadLevel": true,
+    "end": {
+     "v": 20.463,
+     "m": 0
+    },
+    "swingMm": -1.557,
+    "swingAt": 3.55,
+    "over1mmUntil": 6.9,
+    "knots": 7,
+    "minKnotGapM": 5
+   }
+  },
+  {
+   "head": "E4",
+   "caller": "extend",
+   "slope": -0.1511849999999999,
+   "refused": null,
+   "refRefused": null,
+   "placedSame": true,
+   "vsRef": {
+    "count": [
+     1,
+     1
+    ],
+    "lengths": [
+     "same"
+    ],
+    "worst": 0.368,
+    "worstAt": "kh, piece 0 at 11.46 m",
+    "perCh": {
+     "kh": 0.368,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 1.499e-7
+   },
+   "vsTwin": {
+    "count": [
+     1,
+     1
+    ],
+    "lengths": [
+     "same"
+    ],
+    "worst": 0.368,
+    "worstAt": "kh, piece 0 at 11.46 m",
+    "perCh": {
+     "kh": 0.368,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 1.499e-7
+   },
+   "width": {
+    "head": {
+     "v": 21.6,
+     "m": -0.1511849999999999
+    },
+    "slope": -0.1511849999999999,
+    "joint": null,
+    "endIsHeadLevel": true,
+    "end": {
+     "v": 21.6,
+     "m": 0
+    },
+    "swingMm": -230.822,
+    "swingAt": 3.55,
+    "over1mmUntil": 13.56,
+    "knots": 7,
+    "minKnotGapM": 5
+   }
+  },
+  {
+   "head": "E4",
+   "caller": "turnBy 45",
+   "slope": -0.1511849999999999,
+   "refused": null,
+   "refRefused": null,
+   "placedSame": true,
+   "vsRef": {
+    "count": [
+     1,
+     1
+    ],
+    "lengths": [
+     "same"
+    ],
+    "worst": 69950.715,
+    "worstAt": "kh, piece 0 at 27.22 m",
+    "perCh": {
+     "kh": 69950.715,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 0.03304
+   },
+   "vsTwin": {
+    "count": [
+     1,
+     1
+    ],
+    "lengths": [
+     "same"
+    ],
+    "worst": 69950.715,
+    "worstAt": "kh, piece 0 at 27.22 m",
+    "perCh": {
+     "kh": 69950.715,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 0.03304
+   },
+   "width": {
+    "head": {
+     "v": 21.6,
+     "m": -0.1511849999999999
+    },
+    "slope": -0.1511849999999999,
+    "joint": null,
+    "endIsHeadLevel": true,
+    "end": {
+     "v": 21.6,
+     "m": 0
+    },
+    "swingMm": -230.822,
+    "swingAt": 3.55,
+    "over1mmUntil": 13.56,
+    "knots": 7,
+    "minKnotGapM": 5
+   }
+  },
+  {
+   "head": "E4",
+   "caller": "turnBy -90 over 200",
+   "slope": -0.1511849999999999,
+   "refused": null,
+   "refRefused": null,
+   "placedSame": true,
+   "vsRef": {
+    "count": [
+     1,
+     1
+    ],
+    "lengths": [
+     "same"
+    ],
+    "worst": 188881.957,
+    "worstAt": "kh, piece 0 at 18.00 m",
+    "perCh": {
+     "kh": 188881.957,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 0.3173
+   },
+   "vsTwin": {
+    "count": [
+     1,
+     1
+    ],
+    "lengths": [
+     "same"
+    ],
+    "worst": 188881.957,
+    "worstAt": "kh, piece 0 at 18.00 m",
+    "perCh": {
+     "kh": 188881.957,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 0.3173
+   },
+   "width": {
+    "head": {
+     "v": 21.6,
+     "m": -0.1511849999999999
+    },
+    "slope": -0.1511849999999999,
+    "joint": null,
+    "endIsHeadLevel": true,
+    "end": {
+     "v": 21.6,
+     "m": 0
+    },
+    "swingMm": -230.822,
+    "swingAt": 3.55,
+    "over1mmUntil": 13.56,
+    "knots": 12,
+    "minKnotGapM": 5
+   }
+  },
+  {
+   "head": "E4",
+   "caller": "corner 30 + extra 20 from 50",
+   "slope": -0.1511849999999999,
+   "refused": null,
+   "refRefused": null,
+   "placedSame": true,
+   "vsRef": {
+    "count": [
+     1,
+     1
+    ],
+    "lengths": [
+     "same"
+    ],
+    "worst": 39547.583,
+    "worstAt": "kh, piece 0 at 27.22 m",
+    "perCh": {
+     "kh": 39547.583,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 0.01878
+   },
+   "vsTwin": {
+    "count": [
+     1,
+     1
+    ],
+    "lengths": [
+     "same"
+    ],
+    "worst": 39547.583,
+    "worstAt": "kh, piece 0 at 27.22 m",
+    "perCh": {
+     "kh": 39547.583,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 0.01878
+   },
+   "width": {
+    "head": {
+     "v": 21.6,
+     "m": -0.1511849999999999
+    },
+    "slope": -0.1511849999999999,
+    "joint": null,
+    "endIsHeadLevel": true,
+    "end": {
+     "v": 21.6,
+     "m": 0
+    },
+    "swingMm": -230.822,
+    "swingAt": 3.55,
+    "over1mmUntil": 13.56,
+    "knots": 15,
+    "minKnotGapM": 1.25
+   }
+  },
+  {
+   "head": "E4",
+   "caller": "corner 30 + extra 20 from 10",
+   "slope": -0.1511849999999999,
+   "refused": null,
+   "refRefused": null,
+   "placedSame": true,
+   "vsRef": {
+    "count": [
+     1,
+     1
+    ],
+    "lengths": [
+     "same"
+    ],
+    "worst": 270473.468,
+    "worstAt": "kh, piece 0 at 19.53 m",
+    "perCh": {
+     "kh": 270473.468,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 0.08591
+   },
+   "vsTwin": {
+    "count": [
+     1,
+     1
+    ],
+    "lengths": [
+     "same"
+    ],
+    "worst": 270473.468,
+    "worstAt": "kh, piece 0 at 19.53 m",
+    "perCh": {
+     "kh": 270473.468,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 0.08591
+   },
+   "width": {
+    "head": {
+     "v": 21.6,
+     "m": -0.1511849999999999
+    },
+    "slope": -0.1511849999999999,
+    "joint": null,
+    "endIsHeadLevel": true,
+    "end": {
+     "v": 21.6,
+     "m": 0
+    },
+    "swingMm": -230.822,
+    "swingAt": 3.55,
+    "over1mmUntil": 13.56,
+    "knots": 14,
+    "minKnotGapM": 1.25
+   }
+  },
+  {
+   "head": "E4",
+   "caller": "sharp -60 R40 ramp8",
+   "slope": -0.1511849999999999,
+   "refused": null,
+   "refRefused": null,
+   "placedSame": true,
+   "vsRef": {
+    "count": [
+     2,
+     2
+    ],
+    "lengths": [
+     "40.2238 vs 40.3629",
+     "same"
+    ],
+    "worst": 1476897.397,
+    "worstAt": "kh, piece 0 at 2.66 m",
+    "perCh": {
+     "kh": 1476897.397,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 0.1391
+   },
+   "vsTwin": {
+    "count": [
+     2,
+     2
+    ],
+    "lengths": [
+     "40.2238 vs 40.3629",
+     "same"
+    ],
+    "worst": 1476897.397,
+    "worstAt": "kh, piece 0 at 2.66 m",
+    "perCh": {
+     "kh": 1476897.397,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 0.1391
+   },
+   "width": {
+    "head": {
+     "v": 21.6,
+     "m": -0.1511849999999999
+    },
+    "slope": -0.1511849999999999,
+    "joint": null,
+    "endIsHeadLevel": true,
+    "end": {
+     "v": 21.6,
+     "m": 0
+    },
+    "swingMm": -28.039,
+    "swingAt": 0.42,
+    "over1mmUntil": 1.45,
+    "knots": 25,
+    "minKnotGapM": 0.0846
+   }
+  },
+  {
+   "head": "E4",
+   "caller": "sharp 90 R150 ramp4",
+   "slope": -0.1511849999999999,
+   "refused": null,
+   "refRefused": null,
+   "placedSame": true,
+   "vsRef": {
+    "count": [
+     2,
+     2
+    ],
+    "lengths": [
+     "234.2583 vs 234.3479",
+     "same"
+    ],
+    "worst": 405625.126,
+    "worstAt": "kh, piece 0 at 1.71 m",
+    "perCh": {
+     "kh": 405625.126,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 0.08967
+   },
+   "vsTwin": {
+    "count": [
+     2,
+     2
+    ],
+    "lengths": [
+     "234.2583 vs 234.3479",
+     "same"
+    ],
+    "worst": 405625.126,
+    "worstAt": "kh, piece 0 at 1.71 m",
+    "perCh": {
+     "kh": 405625.126,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 0.08967
+   },
+   "width": {
+    "head": {
+     "v": 21.6,
+     "m": -0.1511849999999999
+    },
+    "slope": -0.1511849999999999,
+    "joint": null,
+    "endIsHeadLevel": true,
+    "end": {
+     "v": 21.6,
+     "m": 0
+    },
+    "swingMm": -29.859,
+    "swingAt": 0.44,
+    "over1mmUntil": 1.24,
+    "knots": 122,
+    "minKnotGapM": 0.0074
+   }
+  },
+  {
+   "head": "E4",
+   "caller": "sharp -60 R40 ramp1",
+   "slope": -0.1511849999999999,
+   "refused": null,
+   "refRefused": null,
+   "placedSame": true,
+   "vsRef": {
+    "count": [
+     2,
+     2
+    ],
+    "lengths": [
+     "same",
+     "same"
+    ],
+    "worst": 3787042.174,
+    "worstAt": "kh, piece 0 at 0.54 m",
+    "perCh": {
+     "kh": 3787042.174,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 0
+   },
+   "vsTwin": {
+    "count": [
+     2,
+     2
+    ],
+    "lengths": [
+     "same",
+     "same"
+    ],
+    "worst": 3787042.174,
+    "worstAt": "kh, piece 0 at 0.54 m",
+    "perCh": {
+     "kh": 3787042.174,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 0
+   },
+   "width": {
+    "head": {
+     "v": 21.6,
+     "m": -0.1511849999999999
+    },
+    "slope": -0.1511849999999999,
+    "joint": null,
+    "endIsHeadLevel": true,
+    "end": {
+     "v": 21.6,
+     "m": 0
+    },
+    "swingMm": -16.684,
+    "swingAt": 0.25,
+    "over1mmUntil": 0.67,
+    "knots": 45,
+    "minKnotGapM": 0.0096
+   }
+  },
+  {
+   "head": "E4",
+   "caller": "jump (take-off)",
+   "slope": -0.1511849999999999,
+   "refused": null,
+   "refRefused": null,
+   "placedSame": true,
+   "vsRef": {
+    "count": [
+     3,
+     3
+    ],
+    "lengths": [
+     "same",
+     "same",
+     "same"
+    ],
+    "worst": 0.368,
+    "worstAt": "kh, piece 0 at 11.46 m",
+    "perCh": {
+     "kh": 0.368,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 2.696e-7
+   },
+   "vsTwin": {
+    "count": [
+     3,
+     3
+    ],
+    "lengths": [
+     "same",
+     "same",
+     "same"
+    ],
+    "worst": 0.368,
+    "worstAt": "kh, piece 0 at 11.46 m",
+    "perCh": {
+     "kh": 0.368,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 2.696e-7
+   },
+   "width": {
+    "head": {
+     "v": 21.6,
+     "m": -0.1511849999999999
+    },
+    "slope": -0.1511849999999999,
+    "joint": null,
+    "endIsHeadLevel": true,
+    "end": {
+     "v": 21.6,
+     "m": 0
+    },
+    "swingMm": -230.822,
+    "swingAt": 3.55,
+    "over1mmUntil": 13.56,
+    "knots": 7,
+    "minKnotGapM": 5
+   }
+  },
+  {
+   "head": "E4",
+   "caller": "level",
+   "slope": -0.1511849999999999,
+   "refused": null,
+   "refRefused": null,
+   "placedSame": true,
+   "vsRef": {
+    "count": [
+     1,
+     1
+    ],
+    "lengths": [
+     "same"
+    ],
+    "worst": 0.368,
+    "worstAt": "kh, piece 0 at 11.46 m",
+    "perCh": {
+     "kh": 0.368,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 1.499e-7
+   },
+   "vsTwin": {
+    "count": [
+     1,
+     1
+    ],
+    "lengths": [
+     "same"
+    ],
+    "worst": 0.368,
+    "worstAt": "kh, piece 0 at 11.46 m",
+    "perCh": {
+     "kh": 0.368,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 1.499e-7
+   },
+   "width": {
+    "head": {
+     "v": 21.6,
+     "m": -0.1511849999999999
+    },
+    "slope": -0.1511849999999999,
+    "joint": null,
+    "endIsHeadLevel": true,
+    "end": {
+     "v": 21.6,
+     "m": 0
+    },
+    "swingMm": -230.822,
+    "swingAt": 3.55,
+    "over1mmUntil": 13.56,
+    "knots": 7,
+    "minKnotGapM": 5
+   }
+  },
+  {
+   "head": "E6",
+   "caller": "extend",
+   "slope": -0.1937690311548453,
+   "refused": null,
+   "refRefused": null,
+   "placedSame": true,
+   "vsRef": {
+    "count": [
+     1,
+     1
+    ],
+    "lengths": [
+     "same"
+    ],
+    "worst": 0.366,
+    "worstAt": "kh, piece 0 at 8.66 m",
+    "perCh": {
+     "kh": 0.366,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 2.994e-7
+   },
+   "vsTwin": {
+    "count": [
+     1,
+     1
+    ],
+    "lengths": [
+     "same"
+    ],
+    "worst": 0.366,
+    "worstAt": "kh, piece 0 at 8.66 m",
+    "perCh": {
+     "kh": 0.366,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 2.994e-7
+   },
+   "width": {
+    "head": {
+     "v": 20.1682,
+     "m": -0.1937690311548453
+    },
+    "slope": -0.1937690311548453,
+    "joint": null,
+    "endIsHeadLevel": true,
+    "end": {
+     "v": 20.1682,
+     "m": 0
+    },
+    "swingMm": -295.763,
+    "swingAt": 3.55,
+    "over1mmUntil": 13.67,
+    "knots": 7,
+    "minKnotGapM": 5
+   }
+  },
+  {
+   "head": "E6",
+   "caller": "turnBy 45",
+   "slope": -0.1937690311548453,
+   "refused": null,
+   "refRefused": null,
+   "placedSame": true,
+   "vsRef": {
+    "count": [
+     1,
+     1
+    ],
+    "lengths": [
+     "same"
+    ],
+    "worst": 69950.715,
+    "worstAt": "kh, piece 0 at 27.22 m",
+    "perCh": {
+     "kh": 69950.715,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 0.03304
+   },
+   "vsTwin": {
+    "count": [
+     1,
+     1
+    ],
+    "lengths": [
+     "same"
+    ],
+    "worst": 69950.715,
+    "worstAt": "kh, piece 0 at 27.22 m",
+    "perCh": {
+     "kh": 69950.715,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 0.03304
+   },
+   "width": {
+    "head": {
+     "v": 20.1682,
+     "m": -0.1937690311548453
+    },
+    "slope": -0.1937690311548453,
+    "joint": null,
+    "endIsHeadLevel": true,
+    "end": {
+     "v": 20.1682,
+     "m": 0
+    },
+    "swingMm": -295.763,
+    "swingAt": 3.55,
+    "over1mmUntil": 13.67,
+    "knots": 7,
+    "minKnotGapM": 5
+   }
+  },
+  {
+   "head": "E6",
+   "caller": "turnBy -90 over 200",
+   "slope": -0.1937690311548453,
+   "refused": null,
+   "refRefused": null,
+   "placedSame": true,
+   "vsRef": {
+    "count": [
+     1,
+     1
+    ],
+    "lengths": [
+     "same"
+    ],
+    "worst": 188881.957,
+    "worstAt": "kh, piece 0 at 18.00 m",
+    "perCh": {
+     "kh": 188881.957,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 0.3173
+   },
+   "vsTwin": {
+    "count": [
+     1,
+     1
+    ],
+    "lengths": [
+     "same"
+    ],
+    "worst": 188881.957,
+    "worstAt": "kh, piece 0 at 18.00 m",
+    "perCh": {
+     "kh": 188881.957,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 0.3173
+   },
+   "width": {
+    "head": {
+     "v": 20.1682,
+     "m": -0.1937690311548453
+    },
+    "slope": -0.1937690311548453,
+    "joint": null,
+    "endIsHeadLevel": true,
+    "end": {
+     "v": 20.1682,
+     "m": 0
+    },
+    "swingMm": -295.763,
+    "swingAt": 3.55,
+    "over1mmUntil": 13.67,
+    "knots": 12,
+    "minKnotGapM": 5
+   }
+  },
+  {
+   "head": "E6",
+   "caller": "corner 30 + extra 20 from 50",
+   "slope": -0.1937690311548453,
+   "refused": null,
+   "refRefused": null,
+   "placedSame": true,
+   "vsRef": {
+    "count": [
+     1,
+     1
+    ],
+    "lengths": [
+     "same"
+    ],
+    "worst": 39547.583,
+    "worstAt": "kh, piece 0 at 27.22 m",
+    "perCh": {
+     "kh": 39547.583,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 0.01878
+   },
+   "vsTwin": {
+    "count": [
+     1,
+     1
+    ],
+    "lengths": [
+     "same"
+    ],
+    "worst": 39547.583,
+    "worstAt": "kh, piece 0 at 27.22 m",
+    "perCh": {
+     "kh": 39547.583,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 0.01878
+   },
+   "width": {
+    "head": {
+     "v": 20.1682,
+     "m": -0.1937690311548453
+    },
+    "slope": -0.1937690311548453,
+    "joint": null,
+    "endIsHeadLevel": true,
+    "end": {
+     "v": 20.1682,
+     "m": 0
+    },
+    "swingMm": -295.763,
+    "swingAt": 3.55,
+    "over1mmUntil": 13.67,
+    "knots": 15,
+    "minKnotGapM": 1.25
+   }
+  },
+  {
+   "head": "E6",
+   "caller": "corner 30 + extra 20 from 10",
+   "slope": -0.1937690311548453,
+   "refused": null,
+   "refRefused": null,
+   "placedSame": true,
+   "vsRef": {
+    "count": [
+     1,
+     1
+    ],
+    "lengths": [
+     "same"
+    ],
+    "worst": 270473.468,
+    "worstAt": "kh, piece 0 at 19.53 m",
+    "perCh": {
+     "kh": 270473.468,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 0.08591
+   },
+   "vsTwin": {
+    "count": [
+     1,
+     1
+    ],
+    "lengths": [
+     "same"
+    ],
+    "worst": 270473.468,
+    "worstAt": "kh, piece 0 at 19.53 m",
+    "perCh": {
+     "kh": 270473.468,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 0.08591
+   },
+   "width": {
+    "head": {
+     "v": 20.1682,
+     "m": -0.1937690311548453
+    },
+    "slope": -0.1937690311548453,
+    "joint": null,
+    "endIsHeadLevel": true,
+    "end": {
+     "v": 20.1682,
+     "m": 0
+    },
+    "swingMm": -295.763,
+    "swingAt": 3.55,
+    "over1mmUntil": 13.67,
+    "knots": 14,
+    "minKnotGapM": 1.25
+   }
+  },
+  {
+   "head": "E6",
+   "caller": "sharp -60 R40 ramp8",
+   "slope": -0.1937690311548453,
+   "refused": null,
+   "refRefused": null,
+   "placedSame": true,
+   "vsRef": {
+    "count": [
+     2,
+     2
+    ],
+    "lengths": [
+     "40.2238 vs 40.3629",
+     "same"
+    ],
+    "worst": 1476897.397,
+    "worstAt": "kh, piece 0 at 2.66 m",
+    "perCh": {
+     "kh": 1476897.397,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 0.1391
+   },
+   "vsTwin": {
+    "count": [
+     2,
+     2
+    ],
+    "lengths": [
+     "40.2238 vs 40.3629",
+     "same"
+    ],
+    "worst": 1476897.397,
+    "worstAt": "kh, piece 0 at 2.66 m",
+    "perCh": {
+     "kh": 1476897.397,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 0.1391
+   },
+   "width": {
+    "head": {
+     "v": 20.1682,
+     "m": -0.1937690311548453
+    },
+    "slope": -0.1937690311548453,
+    "joint": null,
+    "endIsHeadLevel": true,
+    "end": {
+     "v": 20.1682,
+     "m": 0
+    },
+    "swingMm": -35.959,
+    "swingAt": 0.42,
+    "over1mmUntil": 1.49,
+    "knots": 25,
+    "minKnotGapM": 0.0846
+   }
+  },
+  {
+   "head": "E6",
+   "caller": "sharp 90 R150 ramp4",
+   "slope": -0.1937690311548453,
+   "refused": null,
+   "refRefused": null,
+   "placedSame": true,
+   "vsRef": {
+    "count": [
+     2,
+     2
+    ],
+    "lengths": [
+     "234.2583 vs 234.3479",
+     "same"
+    ],
+    "worst": 405625.126,
+    "worstAt": "kh, piece 0 at 1.71 m",
+    "perCh": {
+     "kh": 405625.126,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 0.08967
+   },
+   "vsTwin": {
+    "count": [
+     2,
+     2
+    ],
+    "lengths": [
+     "234.2583 vs 234.3479",
+     "same"
+    ],
+    "worst": 405625.126,
+    "worstAt": "kh, piece 0 at 1.71 m",
+    "perCh": {
+     "kh": 405625.126,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 0.08967
+   },
+   "width": {
+    "head": {
+     "v": 20.1682,
+     "m": -0.1937690311548453
+    },
+    "slope": -0.1937690311548453,
+    "joint": null,
+    "endIsHeadLevel": true,
+    "end": {
+     "v": 20.1682,
+     "m": 0
+    },
+    "swingMm": -38.262,
+    "swingAt": 0.44,
+    "over1mmUntil": 1.26,
+    "knots": 122,
+    "minKnotGapM": 0.0074
+   }
+  },
+  {
+   "head": "E6",
+   "caller": "sharp -60 R40 ramp1",
+   "slope": -0.1937690311548453,
+   "refused": null,
+   "refRefused": null,
+   "placedSame": true,
+   "vsRef": {
+    "count": [
+     2,
+     2
+    ],
+    "lengths": [
+     "same",
+     "same"
+    ],
+    "worst": 3787042.174,
+    "worstAt": "kh, piece 0 at 0.54 m",
+    "perCh": {
+     "kh": 3787042.174,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 0
+   },
+   "vsTwin": {
+    "count": [
+     2,
+     2
+    ],
+    "lengths": [
+     "same",
+     "same"
+    ],
+    "worst": 3787042.174,
+    "worstAt": "kh, piece 0 at 0.54 m",
+    "perCh": {
+     "kh": 3787042.174,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 0
+   },
+   "width": {
+    "head": {
+     "v": 20.1682,
+     "m": -0.1937690311548453
+    },
+    "slope": -0.1937690311548453,
+    "joint": null,
+    "endIsHeadLevel": true,
+    "end": {
+     "v": 20.1682,
+     "m": 0
+    },
+    "swingMm": -21.381,
+    "swingAt": 0.25,
+    "over1mmUntil": 0.68,
+    "knots": 45,
+    "minKnotGapM": 0.0096
+   }
+  },
+  {
+   "head": "E6",
+   "caller": "jump (take-off)",
+   "slope": -0.1937690311548453,
+   "refused": null,
+   "refRefused": null,
+   "placedSame": true,
+   "vsRef": {
+    "count": [
+     3,
+     3
+    ],
+    "lengths": [
+     "same",
+     "same",
+     "same"
+    ],
+    "worst": 0.366,
+    "worstAt": "kh, piece 0 at 8.66 m",
+    "perCh": {
+     "kh": 0.366,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 6.786e-7
+   },
+   "vsTwin": {
+    "count": [
+     3,
+     3
+    ],
+    "lengths": [
+     "same",
+     "same",
+     "same"
+    ],
+    "worst": 0.366,
+    "worstAt": "kh, piece 0 at 8.66 m",
+    "perCh": {
+     "kh": 0.366,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 6.786e-7
+   },
+   "width": {
+    "head": {
+     "v": 20.1682,
+     "m": -0.1937690311548453
+    },
+    "slope": -0.1937690311548453,
+    "joint": null,
+    "endIsHeadLevel": true,
+    "end": {
+     "v": 20.1682,
+     "m": 0
+    },
+    "swingMm": -295.763,
+    "swingAt": 3.55,
+    "over1mmUntil": 13.67,
+    "knots": 7,
+    "minKnotGapM": 5
+   }
+  },
+  {
+   "head": "E6",
+   "caller": "level",
+   "slope": -0.1937690311548453,
+   "refused": null,
+   "refRefused": null,
+   "placedSame": true,
+   "vsRef": {
+    "count": [
+     1,
+     1
+    ],
+    "lengths": [
+     "same"
+    ],
+    "worst": 0.366,
+    "worstAt": "kh, piece 0 at 8.66 m",
+    "perCh": {
+     "kh": 0.366,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 2.994e-7
+   },
+   "vsTwin": {
+    "count": [
+     1,
+     1
+    ],
+    "lengths": [
+     "same"
+    ],
+    "worst": 0.366,
+    "worstAt": "kh, piece 0 at 8.66 m",
+    "perCh": {
+     "kh": 0.366,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 2.994e-7
+   },
+   "width": {
+    "head": {
+     "v": 20.1682,
+     "m": -0.1937690311548453
+    },
+    "slope": -0.1937690311548453,
+    "joint": null,
+    "endIsHeadLevel": true,
+    "end": {
+     "v": 20.1682,
+     "m": 0
+    },
+    "swingMm": -295.763,
+    "swingAt": 3.55,
+    "over1mmUntil": 13.67,
+    "knots": 7,
+    "minKnotGapM": 5
+   }
+  },
+  {
+   "head": "grab +4 end-3 r5",
+   "caller": "extend",
+   "slope": -1.6685666286674343,
+   "refused": null,
+   "refRefused": null,
+   "placedSame": true,
+   "vsRef": {
+    "count": [
+     1,
+     1
+    ],
+    "lengths": [
+     "same"
+    ],
+    "worst": 0,
+    "worstAt": "s, piece 0 at 0.56 m",
+    "perCh": {
+     "kh": 0,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 0
+   },
+   "vsTwin": {
+    "count": [
+     1,
+     1
+    ],
+    "lengths": [
+     "same"
+    ],
+    "worst": 0,
+    "worstAt": "s, piece 0 at 0.56 m",
+    "perCh": {
+     "kh": 0,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 0
+   },
+   "width": {
+    "head": {
+     "v": 20.5469,
+     "m": -1.6685666286674343
+    },
+    "slope": -1.6685666286674343,
+    "joint": null,
+    "endIsHeadLevel": true,
+    "end": {
+     "v": 20.5469,
+     "m": 0
+    },
+    "swingMm": -2547.191,
+    "swingAt": 3.55,
+    "over1mmUntil": 14.35,
+    "knots": 7,
+    "minKnotGapM": 5
+   }
+  },
+  {
+   "head": "grab +4 end-3 r5",
+   "caller": "turnBy 45",
+   "slope": -1.6685666286674343,
+   "refused": null,
+   "refRefused": null,
+   "placedSame": true,
+   "vsRef": {
+    "count": [
+     1,
+     1
+    ],
+    "lengths": [
+     "same"
+    ],
+    "worst": 69950.193,
+    "worstAt": "kh, piece 0 at 27.22 m",
+    "perCh": {
+     "kh": 69950.193,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 0.03304
+   },
+   "vsTwin": {
+    "count": [
+     1,
+     1
+    ],
+    "lengths": [
+     "same"
+    ],
+    "worst": 69950.193,
+    "worstAt": "kh, piece 0 at 27.22 m",
+    "perCh": {
+     "kh": 69950.193,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 0.03304
+   },
+   "width": {
+    "head": {
+     "v": 20.5469,
+     "m": -1.6685666286674343
+    },
+    "slope": -1.6685666286674343,
+    "joint": null,
+    "endIsHeadLevel": true,
+    "end": {
+     "v": 20.5469,
+     "m": 0
+    },
+    "swingMm": -2547.191,
+    "swingAt": 3.55,
+    "over1mmUntil": 14.35,
+    "knots": 7,
+    "minKnotGapM": 5
+   }
+  },
+  {
+   "head": "grab +4 end-3 r5",
+   "caller": "turnBy -90 over 200",
+   "slope": -1.6685666286674343,
+   "refused": null,
+   "refRefused": null,
+   "placedSame": true,
+   "vsRef": {
+    "count": [
+     1,
+     1
+    ],
+    "lengths": [
+     "same"
+    ],
+    "worst": 188884.934,
+    "worstAt": "kh, piece 0 at 18.00 m",
+    "perCh": {
+     "kh": 188884.934,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 0.3173
+   },
+   "vsTwin": {
+    "count": [
+     1,
+     1
+    ],
+    "lengths": [
+     "same"
+    ],
+    "worst": 188884.934,
+    "worstAt": "kh, piece 0 at 18.00 m",
+    "perCh": {
+     "kh": 188884.934,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 0.3173
+   },
+   "width": {
+    "head": {
+     "v": 20.5469,
+     "m": -1.6685666286674343
+    },
+    "slope": -1.6685666286674343,
+    "joint": null,
+    "endIsHeadLevel": true,
+    "end": {
+     "v": 20.5469,
+     "m": 0
+    },
+    "swingMm": -2547.191,
+    "swingAt": 3.55,
+    "over1mmUntil": 14.35,
+    "knots": 12,
+    "minKnotGapM": 5
+   }
+  },
+  {
+   "head": "grab +4 end-3 r5",
+   "caller": "corner 30 + extra 20 from 50",
+   "slope": -1.6685666286674343,
+   "refused": null,
+   "refRefused": null,
+   "placedSame": true,
+   "vsRef": {
+    "count": [
+     1,
+     1
+    ],
+    "lengths": [
+     "same"
+    ],
+    "worst": 39547.253,
+    "worstAt": "kh, piece 0 at 27.22 m",
+    "perCh": {
+     "kh": 39547.253,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 0.01879
+   },
+   "vsTwin": {
+    "count": [
+     1,
+     1
+    ],
+    "lengths": [
+     "same"
+    ],
+    "worst": 39547.253,
+    "worstAt": "kh, piece 0 at 27.22 m",
+    "perCh": {
+     "kh": 39547.253,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 0.01879
+   },
+   "width": {
+    "head": {
+     "v": 20.5469,
+     "m": -1.6685666286674343
+    },
+    "slope": -1.6685666286674343,
+    "joint": null,
+    "endIsHeadLevel": true,
+    "end": {
+     "v": 20.5469,
+     "m": 0
+    },
+    "swingMm": -2547.191,
+    "swingAt": 3.55,
+    "over1mmUntil": 14.35,
+    "knots": 15,
+    "minKnotGapM": 1.25
+   }
+  },
+  {
+   "head": "grab +4 end-3 r5",
+   "caller": "corner 30 + extra 20 from 10",
+   "slope": -1.6685666286674343,
+   "refused": null,
+   "refRefused": null,
+   "placedSame": true,
+   "vsRef": {
+    "count": [
+     1,
+     1
+    ],
+    "lengths": [
+     "same"
+    ],
+    "worst": 270474.509,
+    "worstAt": "kh, piece 0 at 19.53 m",
+    "perCh": {
+     "kh": 270474.509,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 0.08591
+   },
+   "vsTwin": {
+    "count": [
+     1,
+     1
+    ],
+    "lengths": [
+     "same"
+    ],
+    "worst": 270474.509,
+    "worstAt": "kh, piece 0 at 19.53 m",
+    "perCh": {
+     "kh": 270474.509,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 0.08591
+   },
+   "width": {
+    "head": {
+     "v": 20.5469,
+     "m": -1.6685666286674343
+    },
+    "slope": -1.6685666286674343,
+    "joint": null,
+    "endIsHeadLevel": true,
+    "end": {
+     "v": 20.5469,
+     "m": 0
+    },
+    "swingMm": -2547.191,
+    "swingAt": 3.55,
+    "over1mmUntil": 14.35,
+    "knots": 14,
+    "minKnotGapM": 1.25
+   }
+  },
+  {
+   "head": "grab +4 end-3 r5",
+   "caller": "sharp -60 R40 ramp8",
+   "slope": -1.6685666286674343,
+   "refused": null,
+   "refRefused": null,
+   "placedSame": true,
+   "vsRef": {
+    "count": [
+     2,
+     2
+    ],
+    "lengths": [
+     "40.2238 vs 40.3629",
+     "same"
+    ],
+    "worst": 1476897.839,
+    "worstAt": "kh, piece 0 at 2.66 m",
+    "perCh": {
+     "kh": 1476897.839,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 0.1391
+   },
+   "vsTwin": {
+    "count": [
+     2,
+     2
+    ],
+    "lengths": [
+     "40.2238 vs 40.3629",
+     "same"
+    ],
+    "worst": 1476897.839,
+    "worstAt": "kh, piece 0 at 2.66 m",
+    "perCh": {
+     "kh": 1476897.839,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 0.1391
+   },
+   "width": {
+    "head": {
+     "v": 20.5469,
+     "m": -1.6685666286674343
+    },
+    "slope": -1.6685666286674343,
+    "joint": null,
+    "endIsHeadLevel": true,
+    "end": {
+     "v": 20.5469,
+     "m": 0
+    },
+    "swingMm": -309.357,
+    "swingAt": 0.42,
+    "over1mmUntil": 1.7,
+    "knots": 25,
+    "minKnotGapM": 0.0846
+   }
+  },
+  {
+   "head": "grab +4 end-3 r5",
+   "caller": "sharp 90 R150 ramp4",
+   "slope": -1.6685666286674343,
+   "refused": null,
+   "refRefused": null,
+   "placedSame": true,
+   "vsRef": {
+    "count": [
+     2,
+     2
+    ],
+    "lengths": [
+     "234.2583 vs 234.3479",
+     "same"
+    ],
+    "worst": 405625.121,
+    "worstAt": "kh, piece 0 at 1.71 m",
+    "perCh": {
+     "kh": 405625.121,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 0.08967
+   },
+   "vsTwin": {
+    "count": [
+     2,
+     2
+    ],
+    "lengths": [
+     "234.2583 vs 234.3479",
+     "same"
+    ],
+    "worst": 405625.121,
+    "worstAt": "kh, piece 0 at 1.71 m",
+    "perCh": {
+     "kh": 405625.121,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 0.08967
+   },
+   "width": {
+    "head": {
+     "v": 20.5469,
+     "m": -1.6685666286674343
+    },
+    "slope": -1.6685666286674343,
+    "joint": null,
+    "endIsHeadLevel": true,
+    "end": {
+     "v": 20.5469,
+     "m": 0
+    },
+    "swingMm": -329.675,
+    "swingAt": 0.44,
+    "over1mmUntil": 1.38,
+    "knots": 122,
+    "minKnotGapM": 0.0074
+   }
+  },
+  {
+   "head": "grab +4 end-3 r5",
+   "caller": "sharp -60 R40 ramp1",
+   "slope": -1.6685666286674343,
+   "refused": null,
+   "refRefused": null,
+   "placedSame": true,
+   "vsRef": {
+    "count": [
+     2,
+     2
+    ],
+    "lengths": [
+     "same",
+     "same"
+    ],
+    "worst": 3787042.174,
+    "worstAt": "kh, piece 0 at 0.54 m",
+    "perCh": {
+     "kh": 3787042.174,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 0
+   },
+   "vsTwin": {
+    "count": [
+     2,
+     2
+    ],
+    "lengths": [
+     "same",
+     "same"
+    ],
+    "worst": 3787042.174,
+    "worstAt": "kh, piece 0 at 0.54 m",
+    "perCh": {
+     "kh": 3787042.174,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 0
+   },
+   "width": {
+    "head": {
+     "v": 20.5469,
+     "m": -1.6685666286674343
+    },
+    "slope": -1.6685666286674343,
+    "joint": null,
+    "endIsHeadLevel": true,
+    "end": {
+     "v": 20.5469,
+     "m": 0
+    },
+    "swingMm": -184.196,
+    "swingAt": 0.25,
+    "over1mmUntil": 0.72,
+    "knots": 45,
+    "minKnotGapM": 0.0096
+   }
+  },
+  {
+   "head": "grab +4 end-3 r5",
+   "caller": "jump (take-off)",
+   "slope": -1.6685666286674343,
+   "refused": null,
+   "refRefused": null,
+   "placedSame": true,
+   "vsRef": {
+    "count": [
+     3,
+     3
+    ],
+    "lengths": [
+     "same",
+     "same",
+     "same"
+    ],
+    "worst": 0,
+    "worstAt": "s, piece 0 at 0.56 m",
+    "perCh": {
+     "kh": 0,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 0
+   },
+   "vsTwin": {
+    "count": [
+     3,
+     3
+    ],
+    "lengths": [
+     "same",
+     "same",
+     "same"
+    ],
+    "worst": 0,
+    "worstAt": "s, piece 0 at 0.56 m",
+    "perCh": {
+     "kh": 0,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 0
+   },
+   "width": {
+    "head": {
+     "v": 20.5469,
+     "m": -1.6685666286674343
+    },
+    "slope": -1.6685666286674343,
+    "joint": null,
+    "endIsHeadLevel": true,
+    "end": {
+     "v": 20.5469,
+     "m": 0
+    },
+    "swingMm": -2547.191,
+    "swingAt": 3.55,
+    "over1mmUntil": 14.35,
+    "knots": 7,
+    "minKnotGapM": 5
+   }
+  },
+  {
+   "head": "grab +4 end-3 r5",
+   "caller": "level",
+   "slope": -1.6685666286674343,
+   "refused": null,
+   "refRefused": null,
+   "placedSame": true,
+   "vsRef": {
+    "count": [
+     1,
+     1
+    ],
+    "lengths": [
+     "same"
+    ],
+    "worst": 0,
+    "worstAt": "s, piece 0 at 0.56 m",
+    "perCh": {
+     "kh": 0,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 0
+   },
+   "vsTwin": {
+    "count": [
+     1,
+     1
+    ],
+    "lengths": [
+     "same"
+    ],
+    "worst": 0,
+    "worstAt": "s, piece 0 at 0.56 m",
+    "perCh": {
+     "kh": 0,
+     "kv": 0,
+     "phi": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    },
+    "endApartM": 0
+   },
+   "width": {
+    "head": {
+     "v": 20.5469,
+     "m": -1.6685666286674343
+    },
+    "slope": -1.6685666286674343,
+    "joint": null,
+    "endIsHeadLevel": true,
+    "end": {
+     "v": 20.5469,
+     "m": 0
+    },
+    "swingMm": -2547.191,
+    "swingAt": 3.55,
+    "over1mmUntil": 14.35,
+    "knots": 7,
+    "minKnotGapM": 5
+   }
+  }
+ ]
+}

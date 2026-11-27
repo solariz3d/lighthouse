@@ -1,0 +1,21 @@
+{"head":"level head","caller":"extend","pieces":[1,1],"addedLength":[100,100],"turnAddedDeg":[14.31799,14.31799],"endApartM":0,"afterEndFromLevelHeadM":0}
+{"head":"level head","caller":"turnBy 45","pieces":[1,1],"addedLength":[100,100],"turnAddedDeg":[45,45],"endApartM":0,"afterEndFromLevelHeadM":0}
+{"head":"level head","caller":"turnBy -90 over 200","pieces":[1,1],"addedLength":[200,200],"turnAddedDeg":[-90,-90],"endApartM":0,"afterEndFromLevelHeadM":0}
+{"head":"level head","caller":"corner 30 + extra 20 from 50","pieces":[1,1],"addedLength":[100,100],"turnAddedDeg":[49.99981,49.99981],"endApartM":0,"afterEndFromLevelHeadM":0}
+{"head":"level head","caller":"sharp -60 R40 ramp8","pieces":[2,2],"addedLength":[48.3629,48.3629],"turnAddedDeg":[-60,-60],"endApartM":0,"afterEndFromLevelHeadM":0}
+{"head":"level head","caller":"sharp 90 R150 ramp4","pieces":[2,2],"addedLength":[238.3479,238.3479],"turnAddedDeg":[90.00968,90.00968],"endApartM":0,"afterEndFromLevelHeadM":0}
+{"head":"level head","caller":"sharp -60 R40 ramp1","pieces":[2,2],"addedLength":[43.4492,43.4492],"turnAddedDeg":[-60.83086,-60.83086],"endApartM":0,"afterEndFromLevelHeadM":0}
+{"head":"E4","caller":"extend","pieces":[1,1],"addedLength":[100,100],"turnAddedDeg":[14.31799,14.31799],"endApartM":0,"afterEndFromLevelHeadM":0}
+{"head":"E4","caller":"turnBy 45","pieces":[1,1],"addedLength":[100,100],"turnAddedDeg":[45,45],"endApartM":0,"afterEndFromLevelHeadM":0}
+{"head":"E4","caller":"turnBy -90 over 200","pieces":[1,1],"addedLength":[200,200],"turnAddedDeg":[-90,-90],"endApartM":0,"afterEndFromLevelHeadM":0}
+{"head":"E4","caller":"corner 30 + extra 20 from 50","pieces":[1,1],"addedLength":[100,100],"turnAddedDeg":[49.99981,49.99981],"endApartM":0,"afterEndFromLevelHeadM":0}
+{"head":"E4","caller":"sharp -60 R40 ramp8","pieces":[2,2],"addedLength":[48.3629,48.3629],"turnAddedDeg":[-60,-60],"endApartM":0,"afterEndFromLevelHeadM":0}
+{"head":"E4","caller":"sharp 90 R150 ramp4","pieces":[2,2],"addedLength":[238.3479,238.3479],"turnAddedDeg":[90.00968,90.00968],"endApartM":0,"afterEndFromLevelHeadM":0}
+{"head":"E4","caller":"sharp -60 R40 ramp1","pieces":[2,2],"addedLength":[43.4492,43.4492],"turnAddedDeg":[-60.83086,-60.83086],"endApartM":0,"afterEndFromLevelHeadM":0}
+{"head":"E6","caller":"extend","pieces":[1,1],"addedLength":[100,100],"turnAddedDeg":[14.31799,14.31799],"endApartM":0,"afterEndFromLevelHeadM":0}
+{"head":"E6","caller":"turnBy 45","pieces":[1,1],"addedLength":[100,100],"turnAddedDeg":[45,45],"endApartM":0,"afterEndFromLevelHeadM":0}
+{"head":"E6","caller":"turnBy -90 over 200","pieces":[1,1],"addedLength":[200,200],"turnAddedDeg":[-90,-90],"endApartM":0,"afterEndFromLevelHeadM":0}
+{"head":"E6","caller":"corner 30 + extra 20 from 50","pieces":[1,1],"addedLength":[100,100],"turnAddedDeg":[49.99981,49.99981],"endApartM":0,"afterEndFromLevelHeadM":0}
+{"head":"E6","caller":"sharp -60 R40 ramp8","pieces":[2,2],"addedLength":[48.3629,48.3629],"turnAddedDeg":[-60,-60],"endApartM":0,"afterEndFromLevelHeadM":0}
+{"head":"E6","caller":"sharp 90 R150 ramp4","pieces":[2,2],"addedLength":[238.3479,238.3479],"turnAddedDeg":[90.00968,90.00968],"endApartM":0,"afterEndFromLevelHeadM":0}
+{"head":"E6","caller":"sharp -60 R40 ramp1","pieces":[2,2],"addedLength":[43.4492,43.4492],"turnAddedDeg":[-60.83086,-60.83086],"endApartM":0,"afterEndFromLevelHeadM":0}

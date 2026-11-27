@@ -1,0 +1,6 @@
+{"head":"lap level","perPieceEndApartM":[0,0,0],"lapEndApartM":0}
+{"head":"lap brush +1.37 end-5 r20","perPieceEndApartM":[0.00136,0.001022,0.00006425],"lapEndApartM":0.00006425}
+{"head":"lap brush +5 end-30 r40","perPieceEndApartM":[0.00136,0.001022,0.00006425],"lapEndApartM":0.00006425}
+{"head":"lap grab +2 end-10 r20","perPieceEndApartM":[0.00136,0.0009964,0.00001609],"lapEndApartM":0.00001609}
+{"head":"lap grab +2 end-0 r10","perPieceEndApartM":[0.001353,0.001,0.00003983],"lapEndApartM":0.00003983}
+{"head":"lap grab -2 end-2 r5","perPieceEndApartM":[0.00137,0.001008,0.00001091],"lapEndApartM":0.00001091}

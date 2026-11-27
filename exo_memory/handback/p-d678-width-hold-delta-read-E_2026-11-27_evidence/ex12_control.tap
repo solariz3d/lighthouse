@@ -1,0 +1,123 @@
+TAP version 13
+1..0
+# Subtest: core_additive.test.js
+ok 1 - core_additive.test.js
+  ---
+  duration_ms: 65.3407
+  type: 'test'
+  ...
+1..0
+# Subtest: core_at_start_f.test.js
+ok 2 - core_at_start_f.test.js
+  ---
+  duration_ms: 92.4993
+  type: 'test'
+  ...
+1..0
+# Subtest: core_bank_ramp.test.js
+ok 3 - core_bank_ramp.test.js
+  ---
+  duration_ms: 131.5255
+  type: 'test'
+  ...
+1..0
+# Subtest: core_bank_swell.test.js
+ok 4 - core_bank_swell.test.js
+  ---
+  duration_ms: 121.7412
+  type: 'test'
+  ...
+1..0
+# Subtest: core_bankswing.test.js
+ok 5 - core_bankswing.test.js
+  ---
+  duration_ms: 71.4011
+  type: 'test'
+  ...
+1..0
+# Subtest: core_changes.test.js
+ok 6 - core_changes.test.js
+  ---
+  duration_ms: 123.72
+  type: 'test'
+  ...
+1..0
+# Subtest: core_extend_at_start.test.js
+ok 7 - core_extend_at_start.test.js
+  ---
+  duration_ms: 108.8162
+  type: 'test'
+  ...
+# Subtest: row 2: on his piece the extra bank to -20° from 47.5 m is laid, reaches -20° as built, and before the mark the road is his piece's
+ok 8 - row 2: on his piece the extra bank to -20° from 47.5 m is laid, reaches -20° as built, and before the mark the road is his piece's
+  ---
+  duration_ms: 64.9498
+  type: 'test'
+  ...
+# Subtest: row 3: on his piece the extra bank to -45° from 47.5 m is laid, reaches -45° as built, and before the mark the road is his piece's
+ok 9 - row 3: on his piece the extra bank to -45° from 47.5 m is laid, reaches -45° as built, and before the mark the road is his piece's
+  ---
+  duration_ms: 29.9312
+  type: 'test'
+  ...
+# Subtest: row 11: what frees his piece, read apart: the road turns there (the same way as his first bank, +20°, is laid too); on a straight piece his −20° turns the bank back, and +20° is refused
+ok 10 - row 11: what frees his piece, read apart: the road turns there (the same way as his first bank, +20°, is laid too); on a straight piece his −20° turns the bank back, and +20° is refused
+  ---
+  duration_ms: 7.8978
+  type: 'test'
+  ...
+# Subtest: row 2: where the elimination swaps rows (uneven knots), the banded fit still equals the dense fit byte for byte
+ok 11 - row 2: where the elimination swaps rows (uneven knots), the banded fit still equals the dense fit byte for byte
+  ---
+  duration_ms: 370.7945
+  type: 'test'
+  ...
+# 72 of 400 pieces swap rows in the elimination
+# Subtest: row 3: a singular system (a free point whose support falls between two samples) is "the fit as it was", as in the dense fit
+ok 12 - row 3: a singular system (a free point whose support falls between two samples) is "the fit as it was", as in the dense fit
+  ---
+  duration_ms: 1.964
+  type: 'test'
+  ...
+# Subtest: row 2: a 15° cup brought home to 0 over 40 m is C2 at both ends of the fade
+ok 13 - row 2: a 15° cup brought home to 0 over 40 m is C2 at both ends of the fade
+  ---
+  duration_ms: 6.1983
+  type: 'test'
+  ...
+# Subtest: row 3: a 30° edge brought to 0 over 50 m is C2 at both ends
+ok 14 - row 3: a 30° edge brought to 0 over 50 m is C2 at both ends
+  ---
+  duration_ms: 2.0693
+  type: 'test'
+  ...
+1..0
+# Subtest: core_mirror_refusal.test.js
+ok 11 - core_mirror_refusal.test.js
+  ---
+  duration_ms: 64.0277
+  type: 'test'
+  ...
+1..0
+# Subtest: core_ramp.test.js
+ok 12 - core_ramp.test.js
+  ---
+  duration_ms: 63.6338
+  type: 'test'
+  ...
+1..0
+# Subtest: core_width_at_start_f.test.js
+ok 13 - core_width_at_start_f.test.js
+  ---
+  duration_ms: 98.3788
+  type: 'test'
+  ...
+1..17
+# tests 17
+# suites 0
+# pass 17
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 536.5275
