@@ -1,0 +1,20 @@
+E260 E260 H0 control: wound 340 -> 392 (middle 366), up 30 px {"selected":true,"middle0":366,"handle":true,"steps":[6.45,6.9,7.35,7.8,8.25,8.7,9.15,9.6,10.05,10.5,10.95,11.4,11.85,12.3,12.75,13.2,13.65,14.1,14.55,15,15.45,15.9,16.35,16.8,17.25,17.7,18.15,18.6,19.05,19.5],"firstStep":-359.55,"monotone":true,"last":19.5,"label":"bank 19.50°"}
+E260 E260 H1 wound 700 -> 760 (middle 730), up 30 px {"selected":true,"middle0":730,"handle":true,"steps":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"firstStep":-730,"monotone":true,"last":0,"label":"bank 0.00°"}
+E260 E260 H1b wound 700 -> 760 (middle 730), down 30 px {"selected":true,"middle0":730,"handle":true,"steps":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,359.65,359.2,358.75,358.3,357.85,357.4,356.95,356.5],"firstStep":-730,"monotone":false,"last":356.5,"label":"bank 356.50°"}
+E260 E260 H2 held at 710 (middle 710), up 30 px, across 720 {"selected":true,"middle0":710,"handle":true,"steps":[350.45,350.9,351.35,351.8,352.25,352.7,353.15,353.6,354.05,354.5,354.95,355.4,355.85,356.3,356.75,357.2,357.65,358.1,358.55,359,359.45,359.9,0,0,0,0,0,0,0,0],"firstStep":-359.55,"monotone":false,"last":0,"label":"bank -0.00°"}
+E260 E260 H3 wound -700 -> -760 (middle -730), down 30 px {"selected":true,"middle0":-730,"handle":true,"steps":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"firstStep":730,"monotone":true,"last":0,"label":"bank -0.00°"}
+E260 E260 H4 held at 350 (middle 350), up 60 px, across 360 {"selected":true,"middle0":350,"handle":true,"steps":[350.45,350.9,351.35,351.8,352.25,352.7,353.15,353.6,354.05,354.5,354.95,355.4,355.85,356.3,356.75,357.2,357.65,358.1,358.55,359,359.45,359.9,0.35,0.8,1.25,1.7,2.15,2.6,3.05,3.5,3.95,4.4,4.85,5.3,5.75,6.2,6.65,7.1,7.55,8,8.45,8.9,9.35,9.8,10.25,10.7,11.15,11.6,12.05,12.5,12.95,13.4,13.85,14.3,14.75,15.2,15.65,16.1,16.55,17],"firstStep":0.45,"monotone":false,"last":17,"label":"bank 17.00°"}
+✔ E260 H0 control: wound 340 -> 392 (middle 366), up 30 px (1818.3387ms)
+✔ E260 H1 wound 700 -> 760 (middle 730), up 30 px (1768.5731ms)
+✔ E260 H1b wound 700 -> 760 (middle 730), down 30 px (2157.4906ms)
+✔ E260 H2 held at 710 (middle 710), up 30 px, across 720 (1991.7479ms)
+✔ E260 H3 wound -700 -> -760 (middle -730), down 30 px (1782.3751ms)
+✔ E260 H4 held at 350 (middle 350), up 60 px, across 360 (3239.386ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 13004.9795

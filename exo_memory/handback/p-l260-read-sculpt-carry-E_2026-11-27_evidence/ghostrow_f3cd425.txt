@@ -1,0 +1,25 @@
+✖ D677 (ghost handle): from a head past one turn (−392, shown −32), a drag on the ghost's bank handle writes the field within one turn and Extend lays the road in the head's turn, one way, never back round (424.583ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 692.0315
+
+✖ failing tests:
+
+test at app\test\zz-e260-ghostrow.test.js:938:1
+✖ D677 (ghost handle): from a head past one turn (−392, shown −32), a drag on the ghost's bank handle writes the field within one turn and Extend lays the road in the head's turn, one way, never back round (424.583ms)
+  AssertionError [ERR_ASSERTION]: laid in the head's turn: the head is -36.500000001264496 for the field's -36.5
+      at TestContext.<anonymous> (C:\Users\zackn\Downloads\t180-wt-e-l260f\app\test\zz-e260-ghostrow.test.js:947:10)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

@@ -1,0 +1,8 @@
+== t180-wt-e-l260b
+{"what":"sculpt -10","piece":5,"closedBefore":true,"seamBefore":-360,"middle0":-376,"middle1":-26,"message":null,"closedAfter":true,"seamAfter":-360,"changed":true,"undoSameBytes":true}
+{"what":"sculpt +10","piece":5,"closedBefore":true,"seamBefore":-360,"middle0":-376,"middle1":-6,"message":null,"closedAfter":true,"seamAfter":-360,"changed":true,"undoSameBytes":true}
+{"what":"brush -10","piece":5,"closedBefore":true,"seamBefore":-360,"centre0":-376,"centre1":-50.486,"message":null,"closedAfter":true,"seamAfter":-360,"changed":true,"undoSameBytes":true}
+== t180-wt-e-l260
+{"what":"sculpt -10","piece":5,"closedBefore":true,"seamBefore":-360,"middle0":-376,"middle1":-386,"message":null,"closedAfter":true,"seamAfter":-360,"changed":true,"undoSameBytes":true}
+{"what":"sculpt +10","piece":5,"closedBefore":true,"seamBefore":-360,"middle0":-376,"middle1":-366,"message":null,"closedAfter":true,"seamAfter":-360,"changed":true,"undoSameBytes":true}
+{"what":"brush -10","piece":5,"closedBefore":true,"seamBefore":-360,"centre0":-376,"centre1":-385.3,"message":null,"closedAfter":true,"seamAfter":-360,"changed":true,"undoSameBytes":true}
