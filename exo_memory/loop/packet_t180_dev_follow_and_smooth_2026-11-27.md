@@ -49,3 +49,12 @@ to the builder's `main`. If a seat reads his words otherwise, say so in the hand
 6. **Names:** [T1] to [T5] labels only; no other author's track name in the repo, the plan or a hand-back.
 
 Hand-back to the librarian by `call_librarian`, claims marked checked or inferred.
+
+## Added 01:31, after his 01:29 words (verbatim in the brief, the 01:29 line)
+
+> "it isnt stealing the track and making it better, its helping it get closer to the point it was always meant to be."
+
+For item 3, from the librarian (a reading, not his order): "what it was always meant to be" is a claim about the author's
+intent, so the plan says how the test would tell **roughness the author fought** (mesh facets, a kink at a join between two
+modelled stretches, a bank that steps) from **roughness the author chose** (a bump, a crest, a deliberate kink). Smoothing
+the second is a change of design, not a repair. Say which measure separates them, or say that none on disk does.
