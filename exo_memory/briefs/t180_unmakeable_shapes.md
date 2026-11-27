@@ -83,3 +83,5 @@ degrees into the new 360 you know? 5. Not sure, what is smoothness limit?"
   - His word for ONE test install on L of `l-bankcarry-a` and `d677-right-width-b` together, once both are read. Not a release, not a merge to `main`. Packet `loop/packet_t180_test_install_on_L_2026-11-27.md`.
 - 02:52 (L), his word: "go", in answer to the librarian's "Still owed before I give the go: pane A's 720° fix and pane E's read of it, and pane B's hand-back on the right-side width and a read of that."
   - Read as, and told to him: install now what is ready; the reads follow. Packet `loop/packet_t180_test_install_on_L_2026-11-27.md`, the section "Changed 02:55".
+- 04:04 (L), his words: "lemme know when it is ready for me to test"
+  - Read as, and told to him: yes to a second test install on L (the ±720 fix, the SPLIT_HEAD words, the way back on a non-round width) once the last read is in; tell him when it is on the laptop. Packet `loop/packet_t180_test_install_2_on_L_2026-11-27.md`.
