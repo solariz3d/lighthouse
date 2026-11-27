@@ -1,0 +1,22 @@
+D678: the width hold's CHANGELOG says what E's delta read measured (words only)
+
+E's delta read of c2591bf..1074d5d found the code meets its bar and two sentences of the width
+hold's entry wrong, and one case the entry did not name:
+- Finish: "the closed lap's pieces end within 0.1 mm of a level head's" was true of the lap's
+  end only (the measure that gave it read the lap's last sample). The first two new pieces end
+  about 1.4 and 1.0 mm from where a level head's do.
+- Sharp: the width's bend after the +4 m grab is 5.0 to 9.0 per metre at the joint (8.95 with a
+  ramp of 1), not 4.4 to 7.2. The 0.1 m sample that gave the old figures missed the peak, which
+  sits at the joint.
+- Not named before: with a bank, cup or edge typed "early" in the same Extend, at a head where
+  the width is still changing, the width goes past the head's by about a third of the head's
+  change per metre times the early ramp's first step, holds about 10 m, and is back within 1 mm
+  by about 16 m (0.52 m after the +4 m grab on a 30 m piece, 1.30 m on 100 m). The 100 m
+  figures are E's too; with the 30 m ones alone, 30 m would read as the worst case.
+
+No code changes.
+
+Author: pane B (seat 12fb81f6, sibling-5bf9d657).
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_019eZQDNSTxuyVJh4jFxjswU

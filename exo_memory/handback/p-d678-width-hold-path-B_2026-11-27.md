@@ -500,3 +500,40 @@ because the try is not kept.
 - If the bar for Finish should be "the same head with its width made level", the try met it 5 of 5 (§3.4 (2)), with F-2 to F-4 as above. Re-applying it
   is `git apply` of the patch, and that is a new ruling's call.
 - For Track 2's reader: Finish is as at 346e2a0. The CHANGELOG at 1074d5d says so.
+
+## 4. The CHANGELOG, after E's delta read (words only, added to this file, 2026-11-27)
+
+- **Order:** the chair's message of 2026-11-27T19:37:25Z, citing `packet_t180_width_hold_path_2026-11-27.md` "Amended 13:4x" (:74, lighthouse 2a694fc8).
+  The read it collates is `handback/p-d678-width-hold-delta-read-E_2026-11-27.md` §4 to §6.
+- **Tier:** just do it. No code, no run.
+- **New tip:** builder `l264-extend-holds-width-b` 1074d5d → **15e7d62** (CHANGELOG.md only, 10 lines in, 6 out), pushed.
+
+      checked: git ls-remote origin refs/heads/l264-extend-holds-width-b → 15e7d6265fc4b3db5c3afb31a3dec10f797f68a5
+
+**Read against my own evidence first. None of the three reads wrong.**
+- **C1:** E traced my "ends within 6.4e-5 m" to `row1_678.js:31`, whose `endOf` takes the whole lap's last sample. That is the lap's end only. I never
+  measured a per-piece end, so nothing of mine contradicts E's 1.36 and 1.0 mm.
+- **C2:** my 4.4 to 7.2 came from the 0.1 m sample. E reads the spline at the joint, with a control on a known cubic (exact 23 read as 22.998 and
+  23.002), and its sample at 0.1 m gives my 7.15.
+- **F1:** E's figures re-derive from its control points. 0.1512 × 0.9375 / 3 = 0.047 m after the wide brush, and 1.67 × 0.9375 / 3 = 0.52 m after the
+  +4 m grab, on 30 m.
+
+**Two choices of mine:**
+- **The panel's word.** E drove the panel's `atStart` box (`atstart678.js:17`, through `extendOptions`). The app labels it "early" (CHANGELOG
+  "The 'start' boxes in Extend are now 'early'"; `panel.js:190`, "Reach this bank early"), so F1 says "early", not "at start".
+- **The 100 m figures** (E §6: 0.12 m and 1.30 m, step 2.3 m) are added beside the amendment's 30 m ones. With the 30 m ones alone, 30 m would read
+  as the worst case, and on 100 m the dip is deeper.
+- Left out: the amendment's "half as deep as at c2591bf". It holds on 30 m (521 against 1043 mm) and not on 100 m (1304 against 1391 mm, E §6).
+
+**The three sentences as written** (CHANGELOG.md at 15e7d62, the width-hold entry under "Changed"):
+- **C1:** "…its turn by under 2e-7 rad per metre, and its first two new pieces end about 1.4 and 1.0 mm from where a level head's do (the lap's own
+  end within 0.1 mm)."
+- **C2:** "…after that grab the width's second derivative reaches 5.0 to 9.0 per metre at the joint (8.95 with a ramp of 1)."
+- **F1:** "When a bank, cup or edge is typed with its "early" box ticked in the same Extend, at a head where the width is still changing, the width goes
+  past the head's the way it was heading by about a third of the head's change per metre times the early ramp's first step (0.94 m on a 30 m piece,
+  2.3 m on 100 m), stays there for about 10 m and comes back, within 1 mm by about 16 m: on a 30 m piece 47 mm after the wide brush and 0.52 m after
+  the +4 m grab, on a 100 m piece 0.12 m and 1.30 m."
+
+**Scan of the diff and the commit message** (in node; `scan678.js`, `keycheck678r1.js`):
+- Credential patterns: 0. The email's local part: 0. "keeper": 0.
+- The key's names: 0. The control, the key itself, reads 21.
