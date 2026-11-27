@@ -1,0 +1,14 @@
+== t180-wt-e-l264-base
+num typed 32.363: head 32.3831 1.752e-2; closed true; Finish's 3 pieces: w 31.000..67.483; last piece 55.264→31.000 max|w'| 0.7856
+num typed 35.975: head 36.0483 6.393e-2; closed true; Finish's 3 pieces: w 31.000..164.156; last piece 119.540→31.000 max|w'| 2.8675
+num typed 28.015: head 27.9710 -3.836e-2; Finish REFUSED FINISH_NO_ROUTE: fusal: BAD_WIDTH: the road's width must be positive, got -0.028122421296058246 m). Extend toward the start and try again
+map typed 32.363: head 32.3630 0.000e+0; closed true; Finish's 3 pieces: w 31.000..32.363; last piece 32.363→31.000 max|w'| 0.0270
+map typed 35.975: head 35.9750 0.000e+0; closed true; Finish's 3 pieces: w 31.000..35.975; last piece 35.975→31.000 max|w'| 0.0986
+map typed 28.015: head 28.0150 0.000e+0; closed true; Finish's 3 pieces: w 28.015..31.000; last piece 28.015→31.000 max|w'| 0.0591
+== t180-wt-e-l264
+num typed 32.363: head 32.3831 1.752e-2; closed true; Finish's 3 pieces: w 31.000..32.447; last piece 32.383→31.000 max|w'| 0.0274
+num typed 35.975: head 36.0483 6.393e-2; closed true; Finish's 3 pieces: w 31.000..36.281; last piece 36.048→31.000 max|w'| 0.1000
+num typed 28.015: head 27.9710 -3.836e-2; closed true; Finish's 3 pieces: w 27.831..31.000; last piece 27.971→31.000 max|w'| 0.0600
+map typed 32.363: head 32.3630 0.000e+0; closed true; Finish's 3 pieces: w 31.000..32.363; last piece 32.363→31.000 max|w'| 0.0270
+map typed 35.975: head 35.9750 0.000e+0; closed true; Finish's 3 pieces: w 31.000..35.975; last piece 35.975→31.000 max|w'| 0.0986
+map typed 28.015: head 28.0150 0.000e+0; closed true; Finish's 3 pieces: w 28.015..31.000; last piece 28.015→31.000 max|w'| 0.0591

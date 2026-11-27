@@ -1,0 +1,64 @@
+TAP version 13
+# Subtest: CONTROL: the hold's row file passes on an unmutated copy of src/, tools/ and app/
+ok 1 - CONTROL: the hold's row file passes on an unmutated copy of src/, tools/ and app/
+  ---
+  duration_ms: 837.2049
+  type: 'test'
+  ...
+# Subtest: a crashed inner run reads NOT TESTED, never a verdict (the crash stand-in, D352)
+ok 2 - a crashed inner run reads NOT TESTED, never a verdict (the crash stand-in, D352)
+  ---
+  duration_ms: 323.2301
+  type: 'test'
+  ...
+# Subtest: mutant H1 the width is never held: it goes on at the brush's slope, as before L264: applied, and caught
+ok 3 - mutant H1 the width is never held: it goes on at the brush's slope, as before L264: applied, and caught
+  ---
+  duration_ms: 778.1288
+  type: 'test'
+  ...
+# H1 the width is never held: it goes on at the brush's slope, as before L264: 2 of 5 run tests failed
+# Subtest: mutant H2 the hold is spread over the whole piece, not the first knot span: applied, and caught
+ok 4 - mutant H2 the hold is spread over the whole piece, not the first knot span: applied, and caught
+  ---
+  duration_ms: 814.607
+  type: 'test'
+  ...
+# H2 the hold is spread over the whole piece, not the first knot span: 1 of 5 run tests failed
+# Subtest: mutant H3 a held width's end is not pinned level: applied, and caught
+ok 5 - mutant H3 a held width's end is not pinned level: applied, and caught
+  ---
+  duration_ms: 822.7734
+  type: 'test'
+  ...
+# H3 a held width's end is not pinned level: 2 of 5 run tests failed
+# Subtest: mutant H4 the hold's blend starts level, not at the head's slope: applied, and caught
+ok 6 - mutant H4 the hold's blend starts level, not at the head's slope: applied, and caught
+  ---
+  duration_ms: 933.1538
+  type: 'test'
+  ...
+# H4 the hold's blend starts level, not at the head's slope: 1 of 5 run tests failed
+# Subtest: mutant H5 a typed width is held at the head's width instead: applied, and caught
+ok 7 - mutant H5 a typed width is held at the head's width instead: applied, and caught
+  ---
+  duration_ms: 921.747
+  type: 'test'
+  ...
+# H5 a typed width is held at the head's width instead: 1 of 5 run tests failed
+# Subtest: mutant H6 the joint kinks: the second control point is put at the head's width: applied, and caught
+ok 8 - mutant H6 the joint kinks: the second control point is put at the head's width: applied, and caught
+  ---
+  duration_ms: 775.3343
+  type: 'test'
+  ...
+# H6 the joint kinks: the second control point is put at the head's width: 2 of 5 run tests failed
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 6264.1516

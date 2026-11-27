@@ -1,0 +1,10 @@
+== t180-wt-e-l264-base
+grab end-5 r 20 w +1.37: msg brush widened to 20 m (asked 20 m), so the track outside it stays exac | head 20.4409 (-5.521e-2); Extend ends 14.9194 (-5.52e-2), max dev -5521.5 mm, joint ok, placed same true, other channels f19403b6d690
+grab end-10 r 20 w +2: msg brush widened to 20 m (asked 20 m), so the track outside it stays exac | head 20.1682 (-1.938e-1); Extend ends 0.7913 (-1.94e-1), max dev -19376.9 mm, joint ok, placed same true, other channels f19403b6d690
+grab end-0 r 10 w +2: msg brush widened to 10 m (asked 10 m), so the track outside it stays exac | head 21.1000 (2.079e-2); Extend ends 23.1790 (2.08e-2), max dev 2079.0 mm, joint ok, placed same true, other channels 599392ea2a03
+grab end-20 r 30 w -2: head 18.6487 (1.205e-1); Extend ends 30.7027 (1.21e-1), max dev 12054.0 mm, joint ok, placed same true, other channels f26b57732ed1
+== t180-wt-e-l264
+grab end-5 r 20 w +1.37: msg brush widened to 20 m (asked 20 m), so the track outside it stays exac | head 20.4409 (-5.521e-2); Extend ends 20.4409 (0.00e+0), max dev -204.7 mm, joint ok, placed same true, other channels f19403b6d690
+grab end-10 r 20 w +2: msg brush widened to 20 m (asked 20 m), so the track outside it stays exac | head 20.1682 (-1.938e-1); Extend ends 20.1682 (0.00e+0), max dev -718.3 mm, joint ok, placed same true, other channels f19403b6d690
+grab end-0 r 10 w +2: msg brush widened to 10 m (asked 10 m), so the track outside it stays exac | head 21.1000 (2.079e-2); Extend ends 21.1000 (0.00e+0), max dev 77.1 mm, joint ok, placed same true, other channels 599392ea2a03
+grab end-20 r 30 w -2: head 18.6487 (1.205e-1); Extend ends 18.6487 (0.00e+0), max dev 446.9 mm, joint ok, placed same true, other channels f26b57732ed1

@@ -1,0 +1,8 @@
+== t180-wt-e-l264-base
+brush +1.37 (head 32.363, -1.01e-3): closed true; Finish adds 942.0 m: w 32.363→31.416, max|w'| 0.0010, max|w''| 7.67e-7 | 364.0 m: w 31.416→31.049, max|w'| 0.0010, max|w''| 8.08e-7 | 943.0 m: w 31.049→31.000, max|w'| 0.0165, max|w''| 2.24e-3
+brush +5 (head 35.975, -3.66e-3): closed true; Finish adds 942.0 m: w 35.975→32.527, max|w'| 0.0037, max|w''| 7.71e-7 | 364.0 m: w 32.527→31.197, max|w'| 0.0037, max|w''| 1.61e-6 | 943.0 m: w 31.197→31.000, max|w'| 0.0600, max|w''| 8.16e-3
+brush -3 (head 28.015, 2.21e-3): closed true; Finish adds 942.0 m: w 28.015→30.092, max|w'| 0.0022, max|w''| 7.64e-7 | 364.0 m: w 30.092→30.894, max|w'| 0.0022, max|w''| 8.08e-7 | 943.0 m: w 30.894→31.000, max|w'| 0.0364, max|w''| 4.95e-3
+== t180-wt-e-l264
+brush +1.37 (head 32.363, -1.01e-3): closed true; Finish adds 942.0 m: w 32.363→32.363, max|w'| 0.0010, max|w''| 1.62e-4 | 364.0 m: w 32.363→32.363, max|w'| 0.0000, max|w''| 1.14e-11 | 943.0 m: w 32.363→31.000, max|w'| 0.0270, max|w''| 3.65e-3
+brush +5 (head 35.975, -3.66e-3): closed true; Finish adds 942.0 m: w 35.975→35.975, max|w'| 0.0036, max|w''| 5.87e-4 | 364.0 m: w 35.975→35.975, max|w'| 0.0000, max|w''| 1.42e-11 | 943.0 m: w 35.975→31.000, max|w'| 0.0985, max|w''| 1.33e-2
+brush -3 (head 28.015, 2.21e-3): closed true; Finish adds 942.0 m: w 28.015→28.015, max|w'| 0.0022, max|w''| 3.54e-4 | 364.0 m: w 28.015→28.015, max|w'| 0.0000, max|w''| 9.95e-12 | 943.0 m: w 28.015→31.000, max|w'| 0.0591, max|w''| 7.99e-3

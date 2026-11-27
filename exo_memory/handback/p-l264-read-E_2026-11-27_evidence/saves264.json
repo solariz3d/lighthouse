@@ -1,0 +1,60 @@
+{
+ "docs": 202,
+ "open": 184,
+ "closed": 14,
+ "refused": 4,
+ "notLevel": [],
+ "extended": [
+  {
+   "label": "E1125 #2 track, brushed at its head here",
+   "brushed": true,
+   "baseBrushMsg": "brush widened to 58 m (asked 20 m), so the track outside it stays exactly as it ",
+   "head": {
+    "v": 31.3624,
+    "m": -0.0011436342843013797
+   },
+   "base": {
+    "before": "adbb0fbdedaf",
+    "placedSameCore": true,
+    "placedSamePanel": true,
+    "laid": true,
+    "msg": null,
+    "corePiece": "5f40429d70dc",
+    "panelPiece": "5f40429d70dc",
+    "endW": {
+     "v": 31.248,
+     "m": -0.0011549999999999727
+    },
+    "joint": null,
+    "coreEndW": {
+     "v": 31.248,
+     "m": -0.0011549999999999727
+    }
+   },
+   "tipBrushMsg": "brush widened to 58 m (asked 20 m), so the track outside it stays exactly as it ",
+   "tip": {
+    "before": "adbb0fbdedaf",
+    "placedSameCore": true,
+    "placedSamePanel": true,
+    "laid": true,
+    "msg": null,
+    "corePiece": "ec1ba1919d55",
+    "panelPiece": "ec1ba1919d55",
+    "endW": {
+     "v": 31.3624,
+     "m": 0
+    },
+    "joint": null,
+    "coreEndW": {
+     "v": 31.3624,
+     "m": 0
+    }
+   }
+  }
+ ],
+ "headSlopesSummary": {
+  "level": 165,
+  "notLevel": 0,
+  "noWidth": 19
+ }
+}
