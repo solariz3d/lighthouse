@@ -227,4 +227,4 @@ The probe is `e5_265.js` (amend265.js's code unchanged, plus E5 and a new main),
 - **No pictures.**
 
 SOURCES: evidence e5_265.js, e5_265.json, frame150.js, frame150.txt; exo_memory/loop/plan_t180_sculpt_even_2026-11-27.md (amended 11:52Z); the chair's order 11:46:31Z and the librarian's ring 11:46Z
-NEXT: chair decides whether E5 is measured once more with λ read on the run's own section before it is shown to him; the banked row stays open for his call 11
+NEXT: chair rules on one more E5 measurement, with λ read on the run's own section, when it reads this section (the banked row stays open for his call 11)
