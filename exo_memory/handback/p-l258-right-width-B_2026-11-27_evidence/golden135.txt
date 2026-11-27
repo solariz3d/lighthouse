@@ -1,0 +1,8 @@
+bank default ease: as is differs; wd stripped SAME (pieces with wd 2, any non-zero 0)
+bank rounded: as is differs; wd stripped SAME (pieces with wd 2, any non-zero 0)
+bank swell: as is differs; wd stripped SAME (pieces with wd 2, any non-zero 0)
+bank shares at start: as is differs; wd stripped SAME (pieces with wd 2, any non-zero 0)
+bank numeric transition: as is differs; wd stripped SAME (pieces with wd 2, any non-zero 0)
+bank start map: as is differs; wd stripped SAME (pieces with wd 2, any non-zero 0)
+cup and edge: as is differs; wd stripped SAME (pieces with wd 2, any non-zero 0)
+turn only: as is differs; wd stripped SAME (pieces with wd 2, any non-zero 0)

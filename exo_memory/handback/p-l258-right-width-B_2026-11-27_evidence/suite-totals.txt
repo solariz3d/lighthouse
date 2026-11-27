@@ -1,0 +1,7 @@
+# tests 5046
+# pass 4995
+# fail 20
+# cancelled 0
+# skipped 28
+# todo 3
+# duration_ms 2742460.2073

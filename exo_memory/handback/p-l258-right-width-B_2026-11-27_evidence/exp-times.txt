@@ -1,0 +1,5 @@
+tip-start 07:31:20Z
+tip-exit 0
+base-start 07:32:17Z
+base-exit 0
+end 07:33:12Z

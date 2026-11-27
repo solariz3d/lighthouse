@@ -1,0 +1,14 @@
+# R6 an unspecified wd on a split piece does not continue from the piece before: 0 of 20 run tests failed
+# R7 a piece with no split has no wd at its end: 0 of 20 run tests failed
+# R18 the right width has no change floor of its own (1 m): 0 of 20 run tests failed
+# R19 a right width with no start shape does not follow the width's: 0 of 20 run tests failed
+# R20 the right width's two-share ramp is not the width's: 0 of 20 run tests failed
+# R21 Extend does not refuse a split tube itself (the document still does): 0 of 20 run tests failed
+# R22 close does not join wd at the seam: 0 of 20 run tests failed
+--- after (fix2.tap)
+# R6 an unspecified wd on a split piece does not continue from the piece before: 1 of 25 run tests failed
+# R18 the right width has no change floor of its own (1 m): 1 of 25 run tests failed
+# R19 a right width with no start shape does not follow the width's: 1 of 25 run tests failed
+# R20 the right width's two-share ramp is not the width's: 1 of 25 run tests failed
+# R21 Extend does not refuse a split tube itself (the document still does): 1 of 25 run tests failed
+# R22 close does not join wd at the seam: 1 of 25 run tests failed

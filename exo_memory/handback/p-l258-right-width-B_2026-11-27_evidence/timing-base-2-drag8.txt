@@ -1,0 +1,10 @@
+✔ row 8: a 1,000 m piece with a left edge typed, stretched on an empty track: the page works only on a move (at most 120 work frames a second), p95 within one frame at 144 Hz (6.9 ms) (7634.1551ms)
+ℹ p95 6.7 ms (median 4.2), 57.0 work frames a second
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 8087.202

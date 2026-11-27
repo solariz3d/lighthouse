@@ -1,0 +1,21 @@
+R6
+  original: wd start 3.5 end 3.5
+  mutant:   THROWS NO_CHANNEL NO_CHANNEL: channel wd is missing
+R7
+  original: {"v":0,"m":0}
+  mutant:   undefined
+R18
+  original: 40 ; 40 ; THROWS BAD_SECOND BAD_SECOND: the right width (wd) change 1 (its second right width), from 3.5 to 0, needs at least 40.0 m befor
+  mutant:   1 ; 40 ; laid, end 0
+R19
+  original: 5: w 0.4587 wd 0.4587, 10: w 0.9064 wd 0.9064, 15: w 0.9993 wd 0.9993
+  mutant:   5: w 0.4587 wd 0.2685, 10: w 0.9064 wd 0.7315, 15: w 0.9993 wd 0.9877
+R20
+  original: 5: w 0.4587 wd 0.4587, 10: w 0.9064 wd 0.9064, 15: w 0.9993 wd 0.9993
+  mutant:   5: w 0.4587 wd 0.2604, 10: w 0.9064 wd 0.7396, 15: w 0.9993 wd 0.993
+R21
+  original: THROWS BAD_TUBE BAD_TUBE: a tube's sides are one width (its section is one circle): the right side's own width is for a road t
+  mutant:   THROWS BAD_TUBE BAD_TUBE: piece 1 (p2): a tube's sides are one width (its section is one circle); a right side of its own is f
+R22
+  original: converged true; wd at the start 0, at the end 0; first piece split true
+  mutant:   converged true; wd at the start 0, at the end 2.0421; first piece split true

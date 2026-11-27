@@ -1,0 +1,37 @@
+#298 D642: dragging the extra bank back toward level on his p2 (a moving first ramp), the first time, costs a move within 2 × the same drag with 
+   at app/test/core-extra-bank-drag-cost.test.js:94:1
+   error: "the rolling drag's p95 is 13.1 ms a move, the early drag's 5.5 ms: 2.40 ×, over 2 ×" | code: 'ERR_ASSERTION' | name: 'AssertionError' | expected: true | actual: false | operator: '==' | stack: |- | TestContext.<anonymous> (<Downloads>\t180-b-l258-wr\app\test\core-extra-bank-drag-cost.test.js:101:10)
+#832 row 3: a 1,000 m and a 2,000 m piece stretched by its length handle: p95 within one frame at 165 Hz (6.0 ms)
+   at app/test/drag-frame.test.js:134:1
+   error: 'aqua, a 2000 m stretch drag: p95 6.2 / 6.9 ms (median 3.7 / 3.8), over 6 ms' | code: 'ERR_ASSERTION' | name: 'AssertionError' | expected: true | actual: false | operator: '==' | stack: |- | TestContext.<anonymous> (<Downloads>\t180-b-l258-wr\app\test\drag-frame.test.js:136:143)
+   diag: # p95 ms by look: {"aqua":[5.2],"skyline":[4.8],"glass":[4.8],"aurora":[4.8],"sigil":[4.5]} | # p95 ms by look: {"aqua":[5.2],"skyline":[4.9],"glass":[5.1],"aurora":[5.2],"sigil":[5.6]}
+#836 row 7: a 1,000 m piece with a left edge typed, turned after a placed piece: p95 within one frame at 144 Hz (6.9 ms)
+   at app/test/drag-frame.test.js:179:1
+   error: 'aqua, a 1000 m turn with a left edge typed after a placed piece drag: p95 9.6 / 7.8 ms (median 4.5 / 3.1), over 6.9 ms, 119.0 / 122.3 work frames a second' | code: 'ERR_ASSERTION' | name: 'AssertionError' | expected: true | actual: false | operator: '==' | stack: |- | edgeRow (<Downloads>\t180-b-l258-wr\app\test\drag-frame.test.js:176:10)
+   diag: # ghost stations during the drag 97, after the release 1001 | # p95 12.4 ms, 129.3 rebuilds a second
+#837 row 8: a 1,000 m piece with a left edge typed, stretched on an empty track: the page works only on a move (at most 120 work frames a second)
+   at app/test/drag-frame.test.js:188:1
+   error: 'aqua, a 1000 m stretch with a left edge typed on an empty track drag: p95 10.5 / 9.9 ms (median 3.3 / 3.2), over 6.9 ms, 82.3 / 80.7 work frames a second (at most 120)' | code: 'ERR_ASSERTION' | name: 'AssertionError' | expected: true | actual: false | operator: '==' | stack: |- | edgeRow (<Downloads>\t180-b-l258-wr\app\test\drag-frame.test.js:176:10)
+   diag: # p95 12.4 ms, 129.3 rebuilds a second | # p95 9.6 / 7.8 ms (median 4.5 / 3.1), 119.0 / 122.3 work frames a second
+#1481 row 1: letting go of a 1,000 m turn and length handle, every look: nothing it causes takes more than 6.0 ms
+   at app/test/release-frame.test.js:121:1
+   error: 'skyline, letting go of a 1,000 m stretch: handler 4.7, worst frame 10.5 / handler 4.3, worst frame 7.5 ms, over 6' | code: 'ERR_ASSERTION' | name: 'AssertionError' | expected: true | actual: false | operator: '==' | stack: |- | TestContext.<anonymous> (<Downloads>\t180-b-l258-wr\app\test\release-frame.test.js:125:12)
+#1516 row 1: Twist on a 1-piece window of a 12-piece track, every look: the work frames' p95 is within one frame at 165 Hz (6.0 ms)
+   at app/test/sculpt-frame.test.js:200:1
+   error: 'aqua, Twist on one piece of 12: p95 8.2 (median 3.1, 371 work frames), release 19.8, longest 24, whole after 111 ms [sculpt mode] / p95 8.1 (median 3.1, 373 work frames), release 20.9, longest 22, whole after 108 ms [sculpt mode], over 6 ms' | code: 'ERR_ASSERTION' | name: 'AssertionError' | expected: true | actual: false | operator: '==' | stack: |- | TestContext.<anonymous> (<Downloads>\t180-b-l258-wr\app\test\sculpt-frame.test.js:205:12)
+#1517 row 2: Grab, r = 200 m across three pieces of a 10 km open lap: p95 within one frame at 165 Hz (6.0 ms)
+   at app/test/sculpt-frame.test.js:210:1
+   error: 'Grab on a 10 km open lap: p95 28.5 (median 22.7, 116 work frames), release 4.1, longest 560, whole after 683 ms [sculpt mode] / p95 29.2 (median 23.3, 116 work frames), release 3.2, longest 575, whole after 691 ms [sculpt mode], over 6 ms' | code: 'ERR_ASSERTION' | name: 'AssertionError' | expected: true | actual: false | operator: '==' | stack: |- | TestContext.<anonymous> (<Downloads>\t180-b-l258-wr\app\test\sculpt-frame.test.js:213:10)
+#1518 row 3: Bend on a 10 km CLOSED lap: p95 within 6.0 ms during the drag, the release's handler within 6.0 ms, and the re-closed exact road whol
+   at app/test/sculpt-frame.test.js:216:1
+   error: 'Bend on a 10 km closed lap: p95 18.8 (median 9.2, 196 work frames), release 3.8, longest 89, whole after 2608 ms [sculpt mode] / p95 22.4 (median 9.0, 199 work frames), release 3.4, longest 83, whole after 2840 ms [sculpt mode] (bars: p95 6, release 6, closed and a station every 2 m within 10000 ms)' | code: 'ERR_ASSERTION' | name: 'AssertionError' | expected: true | actual: false | operator: '==' | stack: |- | TestContext.<anonymous> (<Downloads>\t180-b-l258-wr\app\test\sculpt-frame.test.js:219:10)
+   diag: # 10 km open, Grab r 200: p95 28.5 (median 22.7, 116 work frames), release 4.1, longest 560, whole after 683 ms [sculpt mode] / p95 29.2 (median 23.3, 116 work frames), release 3.2, longest 575, whole after 691 ms [sculpt mode]
+#1519 row 4a: Grab on the 360 deg tube oval (Twist is refused there: the user's call 3): p95 within 6.0 ms during the drag, no frame or task over 
+   at app/test/sculpt-frame.test.js:223:3
+   error: "Grab on the 360 deg tube oval (Twist is refused there: the user's call 3): p95 34.1 (median 25.7, 95 work frames), release 1.8, longest 102, whole after 368 ms [sculpt mode] / p95 35.9 (median 25.4, 99 work frames), release 1.4, longest 90, whole after 457 ms [sculpt mode] (bars: p95 6, longest 120, closed and a station every 2 m within 10000 ms)" | code: 'ERR_ASSERTION' | name: 'AssertionError' | expected: true | actual: false | operator: '==' | stack: |- | TestContext.<anonymous> (<Downloads>\t180-b-l258-wr\app\test\sculpt-frame.test.js:226:12)
+   diag: # 10 km open, Grab r 200: p95 28.5 (median 22.7, 116 work frames), release 4.1, longest 560, whole after 683 ms [sculpt mode] / p95 29.2 (median 23.3, 116 work frames), release 3.2, longest 575, whole after 691 ms [sculpt mode] | # 10 km closed, Bend r 200: p95 18.8 (median 9.2, 196 work frames), re
+#1520 row 4b: Twist on the same oval at a 280 deg sweep: p95 within 6.0 ms during the drag, no frame or task over 120 ms during it or for 10 s aft
+   at app/test/sculpt-frame.test.js:223:3
+   error: 'Twist on the same oval at a 280 deg sweep: p95 11.4 (median 5.3, 285 work frames), release 26.7, longest 72, whole after 213 ms [sculpt mode] / p95 11.4 (median 5.0, 307 work frames), release 23.7, longest 67, whole after 215 ms [sculpt mode] (bars: p95 6, longest 120, closed and a station every 2 m within 10000 ms)' | code: 'ERR_ASSERTION' | name: 'AssertionError' | expected: true | actual: false | operator: '==' | stack: |- | TestContext.<anonymous> (<Downloads>\t180-b-l258-wr\app\test\sculpt-frame.test.js:226:12)
+   diag: # 10 km closed, Bend r 200: p95 18.8 (median 9.2, 196 work frames), release 3.8, longest 89, whole after 2608 ms [sculpt mode] / p95 22.4 (median 9.0, 199 work frames), release 3.4, longest 83, whole after 2840 ms [sculpt mode]; the road at the end {"stations":5001,"gap":2,"closed":true,"pieces":50,
+failing rows: 10

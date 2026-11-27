@@ -1,0 +1,16 @@
+track 0 (466be1bb0c48bb74): same (test export, 11 files)
+track 1 (48a0b0963ce7fff8): DIFFERS: refused undefined / RED; folder0/.t180b-builder.json: 06610b95eead / absent; folder0/data/map.ini: a7a11819e801 / absent; folder0/data/surfaces.ini: 039e54dad3f8 / absent; folder0/map.png: 26e343ec75d6 / absent; folder0/models.ini: 1d42130f3427 / absent; folder0/t180b_laniakea.kn5: 9ea338004b9d / absent; folder0/ui/outline.png: 89f740dbe0ca / absent; folder0/ui/preview.png: 808eb3421463 / absent; folder0/ui/ui_track.json: 2bd6fd5a2008 / absent
+track 2 (459105d483b9e019): same (test export, 11 files)
+track 3 (bcbf14aef08b0903): same (test export, 11 files)
+track 4 (8abe61160c4f44af): same (test export, 11 files)
+track 5 (addcc7f8a2de52a4): same (test export, 11 files)
+track 6 (82bbac1cb6b1a847): DIFFERS: refused undefined / RED; folder0/.t180b-builder.json: 15c0930edd84 / absent; folder0/ai/fast_lane.ai: 9706baf14f0d / absent; folder0/data/map.ini: 5541b7ee5b7e / absent; folder0/data/surfaces.ini: 039e54dad3f8 / absent; folder0/map.png: 2a6fc9df1f43 / absent; folder0/models.ini: 574eb9984744 / absent; folder0/t180b_test_track_100.kn5: 674ce06ae442 / absent; folder0/ui/outline.png: c5be5af1c665 / absent; folder0/ui/preview.png: 808eb3421463 / absent; folder0/ui/ui_track.json: 439141384734 / absent
+track 7 (e06a15a4574ed9f5): same (test export, 11 files)
+track 8 (eff48ade8d3ed934): same (test export, 11 files)
+track 9 (f84e4d735309f1b6): same (test export, 11 files)
+track 10 (d0ed90bfdc460d26): same (test export, 11 files)
+track 11 (f84e4d735309f1b6): same (test export, 11 files)
+track 12 (f84e4d735309f1b6): same (test export, 11 files)
+track 13 (6de276dcd2bd27b2): same (test export, 11 files)
+controls: base true, branch true; skipped (not core) 2 / 2
+tracks: 12 of 14 the same, 2 differ; files compared at base: 151

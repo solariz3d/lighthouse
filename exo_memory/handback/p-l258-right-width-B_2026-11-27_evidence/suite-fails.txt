@@ -1,0 +1,76 @@
+#781 mutation X11 the new fields do not redraw the readout: applied, and caught by "xsec panel: the edge angle and the edge start each redraw…"
+   at app/test/core-xsec-mutation.test.js:110:3
+   error: 'NOT APPLIED: "for (const f of [edge, edgeR, start, tube]) f.oninput" occurs 0 times in app/core/panel.js' | code: 'ERR_ASSERTION' | name: 'AssertionError' | expected: true | actual: false | operator: '==' | stack: |- | TestContext.<anonymous> (<Downloads>\t180-b-l258-wr\app\test\core-xsec-mutation.test.js:112:12)
+#837 row 8: a 1,000 m piece with a left edge typed, stretched on an empty track: the page works only on a move (at most 120 work frames a second)
+   at app/test/drag-frame.test.js:188:1
+   error: 'aqua, a 1000 m stretch with a left edge typed on an empty track drag: p95 9.8 / 10.3 ms (median 3.2 / 3.2), over 6.9 ms, 84.3 / 89.3 work frames a second (at most 120)' | code: 'ERR_ASSERTION' | name: 'AssertionError' | expected: true | actual: false | operator: '==' | stack: |- | edgeRow (<Downloads>\t180-b-l258-wr\app\test\drag-frame.test.js:176:10)
+   diag: # p95 9.2 ms, 103.0 rebuilds a second | # p95 6.3 ms (median 3.7), 96.3 work frames a second
+#1481 row 1: letting go of a 1,000 m turn and length handle, every look: nothing it causes takes more than 6.0 ms
+   at app/test/release-frame.test.js:121:1
+   error: 'aurora, letting go of a 1,000 m turn: handler 4.8, worst frame 6.8 / handler 4.6, worst frame 14.3 ms, over 6' | code: 'ERR_ASSERTION' | name: 'AssertionError' | expected: true | actual: false | operator: '==' | stack: |- | TestContext.<anonymous> (<Downloads>\t180-b-l258-wr\app\test\release-frame.test.js:125:12)
+#2643 mutant M23 a legacy piece's text carries a c array: applied, and caught by "row 5"
+   at test/core_cup_mutation.test.js:118:3
+   error: |- | NOT APPLIED: the string occurs 0 times in src/core/document.js: CHANNELS.filter((ch) => (!OPTIONAL[ch] || P[OPTIONAL[ch]]) && (ch !== 'er' || is |  | 0 !== 1 |  | code: 'ERR_ASSERTION' | name: 'AssertionError' | expected: 1
+   diag: # M21 a legacy piece is rendered as a cup piece at c = 0: 1 of 4 run tests failed | # M22 a /2 piece is read as a cup piece: 2 of 4 run tests failed
+#2715 row 4: core/6 exactly when a negative edge appears; the 0.4.7 builder refuses it by name, and this one the next
+   at test/core_edgeneg.test.js:79:1
+   error: 'Missing expected exception.' | code: 'ERR_ASSERTION' | name: 'AssertionError' | stack: |- | TestContext.<anonymous> (<Downloads>\t180-b-l258-wr\test\core_edgeneg.test.js:85:10) | Test.runInAsyncScope (node:async_hooks:227:14) | Test.run (node:internal/test_runner/test:1325:25) | Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+#2747 L135 7: no second bank, the same bytes as before: eight extend calls equal their base documents, and `second: undefined` / `second: null` ch
+   at test/core_extend.test.js:161:1
+   error: |- | bank default ease | actual expected |  | '97da255e5d92731a13ad224f263f2b09c8b35c7b10272e055bf831ea
+#3251 mutant A5 startShapes takes any channel: applied, and caught by "refuses what is not"
+   at test/core_ramp_mutation.test.js:194:3
+   error: |- | NOT APPLIED: the string occurs 0 times in src/core/extend.js: if (!['c', 'e', 'er', 'w'].includes(ch)) throw |  | 0 !== 1 |  | code: 'ERR_ASSERTION' | name: 'AssertionError' | expected: 1
+   diag: # A3 the panel sends no start shape for the cup and the edge: 1 of 13 run tests failed | # A4 the right edge does not follow the edge's start shape: 1 of 13 run tests failed
+#3253 mutant A7 the width at start gets no start shape (the 20 m wedge again): applied, and caught by "32 → 55|mirrored|a 60 m piece"
+   at test/core_ramp_mutation.test.js:194:3
+   error: |- | NOT APPLIED: the string occurs 0 times in src/../app/core/panel.js:     if (!XS_START.has(ch) && ch !== 'w') continue; |  | 0 !== 1 |  | code: 'ERR_ASSERTION' | name: 'AssertionError' | expected: 1
+   diag: # A4 the right edge does not follow the edge's start shape: 1 of 13 run tests failed | # A6 the rise is measured on the ramp asked, not the length laid: 1 of 17 run tests failed
+#3279 mutant EX3 the width's floor is 30 m, under where its fit overshoots: applied, and caught by "row [57]:"
+   at test/core_ramp_mutation.test.js:194:3
+   error: |- | NOT APPLIED: the string occurs 0 times in src/core/extend.js: { w: 40, c: 26, e: 26, er: 26 } |  | 0 !== 1 |  | code: 'ERR_ASSERTION' | name: 'AssertionError' | expected: 1
+   diag: # EX1 the width, cup and edges are held to their old comfort length again: 4 of 18 run tests failed | # EX2 the comfort length no longer lays a tiny change (the measured floor alone): 1 of 13 run tests failed
+#3280 mutant EX4 the cup's floor is 20 m, under where its fit moves the road before the mark: applied, and caught by "row [57]:"
+   at test/core_ramp_mutation.test.js:194:3
+   error: |- | NOT APPLIED: the string occurs 0 times in src/core/extend.js: { w: 40, c: 26, e: 26, er: 26 } |  | 0 !== 1 |  | code: 'ERR_ASSERTION' | name: 'AssertionError' | expected: 1
+   diag: # EX1 the width, cup and edges are held to their old comfort length again: 4 of 18 run tests failed | # EX2 the comfort length no longer lays a tiny change (the measured floor alone): 1 of 13 run tests failed
+#3325 mutant R6 an unspecified wd on a split piece does not continue from the piece before: applied, and caught
+   at test/core_right_width_mutation.test.js:87:3
+   error: 'NOT CAUGHT: 20 pass, 0 fail' | code: 'ERR_ASSERTION' | name: 'AssertionError' | expected: true | actual: false | operator: '==' | stack: |- | TestContext.<anonymous> (<Downloads>\t180-b-l258-wr\test\core_right_width_mutation.test.js:98:14)
+   diag: # R4 a text with wd reads back without its split flag: 1 of 20 run tests failed | # R5 roadPiece drops the split flag: 10 of 20 run tests failed
+#3326 mutant R7 a piece with no split has no wd at its end: applied, and caught
+   at test/core_right_width_mutation.test.js:87:3
+   error: 'NOT CAUGHT: 20 pass, 0 fail' | code: 'ERR_ASSERTION' | name: 'AssertionError' | expected: true | actual: false | operator: '==' | stack: |- | TestContext.<anonymous> (<Downloads>\t180-b-l258-wr\test\core_right_width_mutation.test.js:98:14)
+   diag: # R5 roadPiece drops the split flag: 10 of 20 run tests failed | # R6 an unspecified wd on a split piece does not continue from the piece before: 0 of 20 run tests failed
+#3337 mutant R18 the right width has no change floor of its own (1 m): applied, and caught
+   at test/core_right_width_mutation.test.js:87:3
+   error: 'NOT CAUGHT: 20 pass, 0 fail' | code: 'ERR_ASSERTION' | name: 'AssertionError' | expected: true | actual: false | operator: '==' | stack: |- | TestContext.<anonymous> (<Downloads>\t180-b-l258-wr\test\core_right_width_mutation.test.js:98:14)
+   diag: # R16 a split head does not carry its split on: 3 of 20 run tests failed | # R17 a right width brought back to the width is not ended at 0: 2 of 20 run tests failed
+#3338 mutant R19 a right width with no start shape does not follow the width's: applied, and caught
+   at test/core_right_width_mutation.test.js:87:3
+   error: 'NOT CAUGHT: 20 pass, 0 fail' | code: 'ERR_ASSERTION' | name: 'AssertionError' | expected: true | actual: false | operator: '==' | stack: |- | TestContext.<anonymous> (<Downloads>\t180-b-l258-wr\test\core_right_width_mutation.test.js:98:14)
+   diag: # R17 a right width brought back to the width is not ended at 0: 2 of 20 run tests failed | # R18 the right width has no change floor of its own (1 m): 0 of 20 run tests failed
+#3339 mutant R20 the right width's two-share ramp is not the width's: applied, and caught
+   at test/core_right_width_mutation.test.js:87:3
+   error: 'NOT CAUGHT: 20 pass, 0 fail' | code: 'ERR_ASSERTION' | name: 'AssertionError' | expected: true | actual: false | operator: '==' | stack: |- | TestContext.<anonymous> (<Downloads>\t180-b-l258-wr\test\core_right_width_mutation.test.js:98:14)
+   diag: # R18 the right width has no change floor of its own (1 m): 0 of 20 run tests failed | # R19 a right width with no start shape does not follow the width's: 0 of 20 run tests failed
+#3340 mutant R21 Extend does not refuse a split tube itself (the document still does): applied, and caught
+   at test/core_right_width_mutation.test.js:87:3
+   error: 'NOT CAUGHT: 20 pass, 0 fail' | code: 'ERR_ASSERTION' | name: 'AssertionError' | expected: true | actual: false | operator: '==' | stack: |- | TestContext.<anonymous> (<Downloads>\t180-b-l258-wr\test\core_right_width_mutation.test.js:98:14)
+   diag: # R19 a right width with no start shape does not follow the width's: 0 of 20 run tests failed | # R20 the right width's two-share ramp is not the width's: 0 of 20 run tests failed
+#3341 mutant R22 close does not join wd at the seam: applied, and caught
+   at test/core_right_width_mutation.test.js:87:3
+   error: 'NOT CAUGHT: 20 pass, 0 fail' | code: 'ERR_ASSERTION' | name: 'AssertionError' | expected: true | actual: false | operator: '==' | stack: |- | TestContext.<anonymous> (<Downloads>\t180-b-l258-wr\test\core_right_width_mutation.test.js:98:14)
+   diag: # R20 the right width's two-share ramp is not the width's: 0 of 20 run tests failed | # R21 Extend does not refuse a split tube itself (the document still does): 0 of 20 run tests failed
+#3612 SCHEMA: new documents are t180b.core/4; /1, /2 and /3 text still loads; a piece without an edge or a tube carries none of e, s, t in its tex
+   at test/core_xsec.test.js:27:1
+   error: 'Missing expected exception.' | code: 'ERR_ASSERTION' | name: 'AssertionError' | expected: | operator: 'throws' | stack: |- | TestContext.<anonymous> (<Downloads>\t180-b-l258-wr\test\core_xsec.test.js:33:10) | Test.runInAsyncScope (node:async_hooks:227:14)
+   diag: # W19 a lifted sample's d1 ignored: caught by a road whose s is NOT arc length (a lifted sample, D186) rides right when its samples carry d1 = dpos/ds and d2; without them it is refused | # W17 closed seam: the wrap sample not appended: caught by a closed loop whose samples stop 20 m short of the se
+#3641 CONTROL: core_xsec, core_xsec_math and validate_xsec pass whole on an unmutated copy of src/, tools/ and app/
+   at test/core_xsec_mutation.test.js:124:1
+   error: |- | core_xsec.test.js: tests 22, fail 1 | X_tip >= 0 (T2) (431.5804ms) | ✔ CLOSE (E4 iii, T2): a lap whose seam would join a tube to a different cross-section is refused TUBE_SEAM; an edge still active at only one end is refused EDGE_SEAM (1.9449ms) | ✔ CLOSE: a lap whose edge ends at 0.004° (under the 0.01° seam tolerance) at a plain start closes, and the close leaves every edge array exactly as built (no row reaches e where only one end has it) (232.5348ms) | ✔ BRUSH (E2 iii): a brush on e, s or t reaching a piece without them is refused by name; one that takes e outside its range is refused BAD_EDGE (7.7993ms) | ℹ tests 22 | ℹ suites 0
+#3657 mutant KE3-4 every piece's text carries e, s and t: applied, and caught by "SCHEMA: new documents"
+   at test/core_xsec_mutation.test.js:139:3
+   error: |- | NOT APPLIED: the string occurs 0 times in src/core/document.js: CHANNELS.filter((ch) => (!OPTIONAL[ch] || P[OPTIONAL[ch]]) && (ch !== 'er' || is |  | 0 !== 1 |  | code: 'ERR_ASSERTION' | name: 'AssertionError' | expected: 1
+   diag: # KE2-7 a legacy piece's total cap ignores its own edge angle (e alone against 150): 1 of 1 run tests failed | # KE3-3 the schema is still /3: 1 of 2 run tests failed
+failing rows: 20

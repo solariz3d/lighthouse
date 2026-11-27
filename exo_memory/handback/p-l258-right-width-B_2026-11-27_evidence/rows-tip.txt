@@ -1,0 +1,28 @@
+✔ a right width typed alone is sent as its difference from the head's width; with the width typed, from the typed one; blank sends none (0.9978ms)
+✔ a right width with no width to measure it from is refused by name (0.2509ms)
+✔ a right width's change is sent against the width in force at its mark: the width's own change there, else its target (0.644ms)
+✔ the right width at the start: its ramp is the width's own early ramp (0.1477ms)
+✔ the mounted panel: "right width m" shows the head's right width, and typed it lays a piece whose right side has its own width; the width typed alone keeps the step (73.4723ms)
+✔ a piece whose right side differs is written as core/7 with its wd, reads back the same text, and only that piece carries wd (8.8012ms)
+✔ a track with no split writes today's schema and no wd, byte for byte as it was laid (2.1136ms)
+✔ a piece flagged split whose wd is 0 everywhere writes no wd and today's schema: the field is written only when it is used (1.125ms)
+✔ at width 19.1 and right width 22.6 the left half is 9.55 m and the right 11.3 m, and the line is the same sample for sample as with the sides equal (48.0464ms)
+✔ a 3.5 m one-sided step over 5 m adds no red and no amber: the checker reads the same faults with and without it (100.9571ms)
+✔ Extend: a typed right width splits the sides; the width typed alone moves both sides and keeps the step; on a track with no split, the width alone splits nothing (2.3023ms)
+✔ Extend: the right side's change at a mark is held to the mark and made after it, and early reaches it within the start, where the width's own early ramp reaches its own (3.6107ms)
+✔ the document refuses a right side of 0 m or less by name (BAD_WIDTH), and a split tube (BAD_TUBE) (1.2719ms)
+✔ the export: the road mesh's right side reaches 22.6/19.1 of the left's where the step is held, and both sides are equal where it is not (1049.3511ms)
+✔ close: a lap with a right width on one turn closes, and the right width is kept as it was laid (107.3075ms)
+✔ close: a lap that ends with a right width against a start whose sides are one width is refused by name (SPLIT_SEAM) (1.0953ms)
+✔ Sharp: after a right width the corner keeps it, and its tightest right-hand radius is held to the wider inner side (11.2 m, against 9.5 m with the sides equal); a left-hand one is unchanged (2312.4708ms)
+✔ a saved piece: a run with a right width is refused by name (SPLIT_RUN), never saved with both sides at the width; a run with none saves as before (2.4466ms)
+✔ the water: a stream poured at u -10.5 on the stepped side runs to the right side's own rim, -11.3 m, where it spills (22.8599ms)
+✔ Extend: a right width brought back to the width over a numeric transition ends exactly there, and the piece after it has its sides as one width again (no wd, no core/7) (1.0704ms)
+ℹ tests 20
+ℹ suites 0
+ℹ pass 20
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4168.6868

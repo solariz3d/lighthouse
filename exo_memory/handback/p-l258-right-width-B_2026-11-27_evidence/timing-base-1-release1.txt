@@ -1,0 +1,25 @@
+✖ row 1: letting go of a 1,000 m turn and length handle, every look: nothing it causes takes more than 6.0 ms (87283.7251ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 87765.6374
+
+✖ failing tests:
+
+test at app\test\release-frame.test.js:121:1
+✖ row 1: letting go of a 1,000 m turn and length handle, every look: nothing it causes takes more than 6.0 ms (87283.7251ms)
+  AssertionError [ERR_ASSERTION]: sigil, letting go of a 1,000 m turn: handler 2.3, worst frame 8.8 / handler 2.2, worst frame 8.8 ms, over 6
+      at TestContext.<anonymous> (<Downloads>\t180-b-l258-base\app\test\release-frame.test.js:125:12)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

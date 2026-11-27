@@ -1,0 +1,10 @@
+✔ row 1: letting go of a 1,000 m turn and length handle, every look: nothing it causes takes more than 6.0 ms (80408.0609ms)
+ℹ worst ms by case: {"aqua turn":[3.4],"aqua stretch":[4.4],"skyline turn":[9.2,4.1],"skyline stretch":[5.1],"glass turn":[8.4,4.3],"glass stretch":[3.3],"aurora turn":[5.2],"aurora stretch":[3.3],"sigil turn":[4.2],"sigil stretch":[5.4]}
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 80872.0781

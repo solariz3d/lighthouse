@@ -1,0 +1,7 @@
+#249 Extend refuses a right width on a tube in its own words (BAD_TUBE), not the document's
+   at test/core_right_width.test.js:223:1
+   error: "Extend's words (the document's name the piece first)" | code: 'ERR_ASSERTION' | name: 'AssertionError' | expected: | actual: "BAD_TUBE: a tube's sides are one width (its section is one circle): the right side's own width is for a road that is not a tube" | operator: 'match' | stack: |- | TestContext.<anonymous> (<Downloads>\t180-b-l258-wr\test\core_right_width.test.js:227:10)
+#251 CONTROL: both right-width row files pass on an unmutated copy of src/, tools/ and app/
+   at test/core_right_width_mutation.test.js:76:1
+   error: |- | tests 25, fail 1 | refuses a right width on a tube in its own words (BAD_TUBE), not the document's (1.3321ms) | ✔ close: a lap whose first and last pieces both have a right width closes with the right width joined at the seam (the end meets the start) (191.2321ms) | ℹ tests 25 | ℹ suites 0 | ℹ pass 24 | ℹ fail 1
+failing rows: 2

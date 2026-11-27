@@ -1,0 +1,78 @@
+✔ D642: dragging the extra bank back toward level on his p2 (a moving first ramp), the first time, costs a move within 2 × the same drag with the bank early (p95) (1387.7283ms)
+ℹ rolling (first drag) p95 8.3 ms a move, early p95 4.3 ms: 1.92 ×; both ended at -12.63°
+⚠ D642: dragging the extra bank on past what fits, into the hold, the first time, costs a move within 2 × the same drag with the bank early (p95) (1136.7981ms) # the approach to the hold builds one probe road a move (the core's probe cost, pane B): 2.8-3.1 × measured, the panel already at one question a move
+ℹ rolling (first drag, into the hold) p95 26.2 ms a move, early p95 4.2 ms: 6.29 ×; rolling held at -360°, early ended at -163.5°
+✔ D642: his p2's extra bank still reaches −88.45° from 500 (the bank-back he asked for), laid by the core (48.5199ms)
+✔ D642 3j: his p2's extra bank mark, dragged across 420-540 through the panel, lays at every from the panel keeps (1140.816ms)
+ℹ kept 121 distinct froms; refused 0
+✔ row 1: a 1,000 m turn dragged in every look: the work frames' p95 is within one frame at 165 Hz (6.0 ms) (36417.9627ms)
+ℹ p95 ms by look: {"aqua":[3.4],"skyline":[3.4],"glass":[3.6],"aurora":[3.5],"sigil":[3.3]}
+✔ row 2: a 2,000 m turn dragged in every look: p95 within one frame at 165 Hz (6.0 ms) (37231.7024ms)
+ℹ p95 ms by look: {"aqua":[3.7],"skyline":[4.2],"glass":[3.8],"aurora":[4.2],"sigil":[3.3]}
+✔ row 3: a 1,000 m and a 2,000 m piece stretched by its length handle: p95 within one frame at 165 Hz (6.0 ms) (14617.9214ms)
+ℹ p95 ms by length: {"1000":[3.3],"2000":[4.8]}
+✔ row 4: past the ordinary range the drag adapts and does not stall: a 20,000 m turn's p95 stays under 40 ms, at 20 or more rebuilds a second (11092.9722ms)
+ℹ 20,000 m: p95 9 ms, 48.7 rebuilds a second
+✔ row 5: the release is the exact road: a few hundred stations while the handle is held, a station every 2 m the moment it is let go (7427.654ms)
+ℹ ghost stations during the drag 97, after the release 1001
+✔ row 6: a 1,000 m piece with bank, cup and edge typed, stretched by its length handle: p95 within 0.4.19's cost with margin (13.4 ms) (7458.3625ms)
+ℹ p95 10.1 ms, 89.0 rebuilds a second
+✔ row 7: a 1,000 m piece with a left edge typed, turned after a placed piece: p95 within one frame at 144 Hz (6.9 ms) (10265.9275ms)
+ℹ p95 5.4 ms (median 4.0), 83.0 work frames a second
+✔ row 8: a 1,000 m piece with a left edge typed, stretched on an empty track: the page works only on a move (at most 120 work frames a second), p95 within one frame at 144 Hz (6.9 ms) (14551.4849ms)
+ℹ p95 8.1 / 6.8 ms (median 4.7 / 4.3), 64.0 / 55.7 work frames a second
+✖ row 9: after 21 km whose last piece still rolls at its end (his 88.45°), the next piece stretched by its length handle: p95 at most 2 x the same drag with that piece flat (a proposed bar) (71380.9625ms)
+ℹ p95 rolling 43.3 / 46.8 ms, flat 21.3 / 23.9 ms (2.03 x)
+✔ row 1: letting go of a 1,000 m turn and length handle, every look: nothing it causes takes more than 6.0 ms (74072.6107ms)
+ℹ worst ms by case: {"aqua turn":[4.6],"aqua stretch":[4.5],"skyline turn":[5.5],"skyline stretch":[5.1],"glass turn":[4.9],"glass stretch":[5.1],"aurora turn":[9.7,4.4],"aurora stretch":[4.2],"sigil turn":[4.6],"sigil stretch":[3.1]}
+✔ row 2: past the ordinary range it does not stall: letting go of a 20,000 m turn, nothing takes more than 120 ms, and the exact ghost is whole within 10 s (18378.3034ms)
+ℹ 20,000 m: handler 49.9, worst frame 54.8 ms; 10001 stations after 10 s
+✔ row 3: the exact ghost arrives and nothing blinks: after letting go of a 2,000 m turn the ghost is on show at every frame, and the exact one is in place within 1 s (6689.3769ms)
+ℹ 1086 frames watched; the exact ghost (1001 stations) after 90 ms; 0 without a ghost
+✔ row 4: a number typed into the Turn field on a 12-piece track: each change costs at most 6.0 ms at the 95th percentile, its longest frame with the handler counted in the first (7929.9028ms)
+ℹ a field change, its longest frame: p95 4.4 ms (median 2.9); handler and frames summed, not asserted: p95 8.6 ms (median 6.0)
+﹣ row 1: Twist on a 1-piece window of a 12-piece track, every look: the work frames' p95 is within one frame at 165 Hz (6.0 ms) (309.7009ms) # not timed: both heavy-run slots must be held by a live process (slot 1: pid 19320 alive, slot 2: free)
+﹣ row 2: Grab, r = 200 m across three pieces of a 10 km open lap: p95 within one frame at 165 Hz (6.0 ms) (0.187ms) # not timed: both heavy-run slots must be held by a live process (slot 1: pid 19320 alive, slot 2: free)
+﹣ row 3: Bend on a 10 km CLOSED lap: p95 within 6.0 ms during the drag, the release's handler within 6.0 ms, and the re-closed exact road whole within 10 s (0.0551ms) # not timed: both heavy-run slots must be held by a live process (slot 1: pid 19320 alive, slot 2: free)
+﹣ row 4a: Grab on the 360 deg tube oval (Twist is refused there: the user's call 3): p95 within 6.0 ms during the drag, no frame or task over 120 ms during it or for 10 s after, and the exact road whole within 10 s (0.0468ms) # not timed: both heavy-run slots must be held by a live process (slot 1: pid 19320 alive, slot 2: free)
+﹣ row 4b: Twist on the same oval at a 280 deg sweep: p95 within 6.0 ms during the drag, no frame or task over 120 ms during it or for 10 s after, and the exact road whole within 10 s (0.0642ms) # not timed: both heavy-run slots must be held by a live process (slot 1: pid 19320 alive, slot 2: free)
+✔ row 5: the release is the exact road: a station every 2 m again, and the document is bit for bit the one the shell's sculptOnce gives for the same brush and delta (15850.6506ms)
+ℹ s0 5100.00 m, delta 41 px, the brushed text 25815 characters
+ℹ tests 23
+ℹ suites 0
+ℹ pass 16
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 5
+ℹ todo 1
+ℹ duration_ms 339227.2772
+
+✖ failing tests:
+
+test at app\test\core-extra-bank-drag-cost.test.js:111:1
+⚠ D642: dragging the extra bank on past what fits, into the hold, the first time, costs a move within 2 × the same drag with the bank early (p95) (1136.7981ms) # the approach to the hold builds one probe road a move (the core's probe cost, pane B): 2.8-3.1 × measured, the panel already at one question a move
+  AssertionError [ERR_ASSERTION]: the rolling drag went past −88.45 and is held short of where the pointer went (-360°)
+      at TestContext.<anonymous> (<Downloads>\t180-b-l258-wr\app\test\core-extra-bank-drag-cost.test.js:117:10)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at app\test\drag-frame.test.js:209:1
+✖ row 9: after 21 km whose last piece still rolls at its end (his 88.45°), the next piece stretched by its length handle: p95 at most 2 x the same drag with that piece flat (a proposed bar) (71380.9625ms)
+  AssertionError [ERR_ASSERTION]: p95 rolling 43.3 / 46.8 ms, flat 21.3 / 23.9 ms (2.03 x): over 2 x
+      at TestContext.<anonymous> (<Downloads>\t180-b-l258-wr\app\test\drag-frame.test.js:218:10)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
