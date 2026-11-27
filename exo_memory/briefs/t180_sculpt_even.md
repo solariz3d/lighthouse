@@ -6,6 +6,7 @@
 - 2026-11-27 04:59 (L): "how has the sculpt feature changed? It worked before, but was wonky and wouldnt make consistent pieces, it would be like freehanding something that should have some form of snap to a position to make the surfaces even, for an example on the old sculpt, you could grab the edge of a turn to make it wider, but then it would be impossible to smooth out the rest of the turn where you didnt drag, becoming a battle to get it all the same thickness by hand and eye, leaving a scuffed look to the track that isnt completely smooth and seemless, you get what I mean?"
 - 2026-11-27 04:59 (L), right after: "its like trying to take a lump of playdough and stretch the edges into a half perfect circle from stretching it with your fingers, you pull the middle of the circle up, then the edges to make a curve but it will be janky"
 - 2026-11-27 05:00 (L): "idk how to explain it"
+- 2026-11-27 05:06 (L), in answer to the librarian's "Every Sculpt tool adds one bump ... You get a hump, then you add more humps next to it to even it out, and the seams between humps are the scuffed look.": "you got it spot on though about the humps"
 
 ## State (05:00, checked by the librarian at builder landing-1127-l263 c522ea6, the build installed on L)
 
