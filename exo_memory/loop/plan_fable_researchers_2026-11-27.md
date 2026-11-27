@@ -91,3 +91,13 @@ a named commit, the patch features it leans on, its licence, and what our plans 
 carry. R3 (how long an easing has to be) waits on it. R1, R2, R4, R5 and R6 still wait on his yes.
 
 **His word, 05:18:** "then once we learn more about the cars, thats when we can be closer to asking the right questions, surpirsing to me we got this far without it". So R1 to R6 are HELD, not just unanswered: the questions are redrafted with him after R0's note is in, from what the car's source says.
+
+## CORRECTION, 05:23: "What the room holds: no" was wrong
+
+I grepped the room's research folder and the builder's README and docs, and told him the car's source had never been read.
+The builder's checker carries it: `src/validate/limits.js` at c522ea6, `MACH6` (lines 8 to 75). Its downforce ray
+(`:42`: 0.4 m up, 1.0 m ahead, 1.0 m long, full within 0.5, none at 0.9) and its downforce (`:48`: 200 N per m/s, 850 kg) are
+said there to be read from the installed car's `script.lua`, and they equal the researcher's figures for v0.12.0. The same
+file holds limits measured from his own replays (chassis 40 g, proven 90 g, sustained 55 g, top speed 970 km/h).
+**So: the builder knew the car as installed; this seat did not know the builder knew.** What R0 adds is in the note's
+last section, "Against the builder's own car model".

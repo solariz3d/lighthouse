@@ -233,3 +233,20 @@ redistribution were found. Neither file says anything about tracks.
 
 ---
 **Librarian's check, 2026-11-27 05:22 (L):** four claims re-read against the clone and the installed car, 4 of 4 hold: the head sha and the tag (119 commits apart, `git rev-list --count v0.12.0..HEAD`); the installed downforce lines (`script.lua:377-386` at v0.12.0: base -200, the 0.5 to 0.9 fade, the 1.0 m ray); the head's lines (`script.lua:429-439`: base -150, the 2.0 m ray, the stalling term); `LICENSE.txt:1` and `:3`; the installed `ui_car.json` version 0.12.0. One track name of another author was bracketed by the librarian before the commit (1 place). The rest of the note is the researcher's and not re-read against the source.
+
+## Against the builder's own car model (added by the librarian, 05:23; checked by reading builder c522ea6 `src/validate/limits.js:8-75`)
+
+**The builder already carries the installed car's downforce.** `MACH6.downforceRay` (`limits.js:42`) is
+`{ upM: 0.4, aheadM: 1.0, lengthM: 1.0, fullWithinM: 0.5, noneAtM: 0.9 }` and `MACH6.downforce` (`:48`) is
+`{ nPerMps: 200, massKg: 850 }`, read (its comment says) from the installed car's script. They equal this note's figures
+for v0.12.0. The checker's gap search, the tube slot rule and the pit lane check are built on that ray.
+
+**What this note adds to it:**
+- **The installed car is not the head.** At the head the ray starts at the car's origin with no 1.0 m ahead, is 2.0 m long,
+  fades to zero at 2.0 m not 0.9, the base is 150 not 200, and a stalling term takes the force away under 0.5 m. Every
+  builder rule that uses `aheadM`, `lengthM` or `noneAtM` would read differently for that car. [inferred from the two
+  sets of figures; no builder rule was run]
+- **Not in the builder's model at all:** the drift angle the car corners at, the jacks needing a surface in reach, the
+  head's hovering AI that follows the AI line's position, and the licence.
+- **Where the builder knows more than the source:** its load limits and its 970 km/h top speed are measured from his laps.
+  The source states no g limit and only ">700 km/h".
