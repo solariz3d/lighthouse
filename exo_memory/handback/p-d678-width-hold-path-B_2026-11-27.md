@@ -323,3 +323,71 @@ E's F5: a typed width from a still-changing head ends 1.3 mm off level, older th
 **The unwelcome outcome registered in §0 did not happen:** inserting the hold's knots after the turn is laid left the end of Turn by −90 over 200
 within 7e-6 m of the level head's on every head (3e-6 m on the brushed ones, and from the width-only level head), not more than 1e-4 m away
 (`final_row1.txt`, endFromLevelM).
+
+## 3. Ruling 1: Finish, one bounded try (added to this file, 2026-11-27)
+
+- **Order:** the chair's ruling 1 (2026-11-27T18:35:02Z); the packet's "Amended 12:4x" (lighthouse 1d5e863a, `packet_t180_width_hold_path_2026-11-27.md:49-`).
+- **Base:** 346e2a051db61762224718e0c1417c86fd451f20 on `l264-extend-holds-width-b`, in my worktree `G:\consonance-scratch\b-hold`. The reference tree is
+  a detached worktree at 346e2a0, `G:\consonance-scratch\b-hold-346e2a0`, added for this.
+- **Tier:** PROVE IT. One attempt. If it misses, it is reverted and Finish stays as at 346e2a0, with one CHANGELOG sentence.
+
+### 3.0 Registration, written before any run of the try (not edited after the first run; corrections go below it)
+
+**The quantum** is §0's: every stored number is rounded to one step of 10^−DEC (`document.js:65`), so "one step" below is that channel's step.
+
+**The build, all of it, in one attempt:**
+1. `finish.js` `lay()`: the first new piece laid from the head is laid with `widthHold: 'later'`. That piece is Turn by's, or the straight's, or the
+   roll straight's when the roll goes first (`search`'s `base`). The pieces after it are laid as now.
+2. `turnby.js` `extendBy`: with `opts.widthHold === 'later'` it returns the solved piece without `withHold`. `extendList` is not changed: Finish
+   does not call it, and the width-hold harness's D10 anchors its line.
+3. `finish.js`: once the route has closed (`closeBanked` or `metAsLaid`, converged), the hold is laid on the first new piece. It is the hold extend plans
+   from the same head for a piece of that length (`extend(doc, { length, widthHold: 'plan' })`, null for a level head), laid by `layHold`, and the
+   document is checked and frozen. This comes before `rollPeak`, `roadHold`, `closerLoad` and `cupPeak` read the lap.
+
+**"Before the bank-as-built check", as I read it here.** Finish runs no bank-as-built check on the closed lap. The ones that exist are turnby's `checked`
+inside `extendTurnBy` and extend's own, and they run as each piece is laid, before close. With this build they read the first piece without the hold.
+The hold then changes no channel but w, beyond re-rounding (inferred: Boehm insertion moves each point by at most half a step, not measured here). The
+checks Finish runs on the closed lap come after the hold. This is a reading of the ruling, stated so it can be corrected.
+
+**Rows, as the amendment writes them, with what I measure each by:**
+- **F-1, the path and the bank.** From E's five brushed lap heads (brush +1.37 end−5 r20, brush +5 end−30 r40, grab +2 end−10 r20, grab +2 end−0 r10,
+  grab −2 end−2 r5: `closew678.js`'s and `row1_678.js`'s), Finish's three new pieces equal the level lap's (E's lap with no brush). That means the same
+  number of pieces, the same lengths, and every channel but w and wd within one step, sampled every 0.01 m (`row1_678.js` finish mode, `compare`).
+  w and wd are left out because the brushed head's own width differs. The ends are within 1e-4 m (as row 1).
+- **F-2, the width.** The first piece's width is still layHold's: `closew678.js` reads 0 control-point differences in 5 of 5. *Added by me:* that
+  check re-lays the hold with the same formula step 3 uses, so it is close to true by construction. The stronger reading is that the first piece's knots
+  and its w control points equal 346e2a0's, where the hold was laid before close, on all 5.
+- **F-3, a level head gives the same bytes.** `row3_678.js` part (1), Finish and the nine callers from level heads, read against the 346e2a0 tree. Also
+  Finish at each open head of his copies (`G:\consonance-scratch\b-wr-work\tracks`, numbered), on both trees: the same bytes, or the same refusal.
+- **F-4, the lap still closes.** On every head of F-1 the result is closed and passes `checkDoc`. The residual gap is under close's own 1 mm, with the
+  same plan word and window as the level lap.
+- *Added by me:* pieces 2 and 3 have the level lap's knot counts. If the first piece's placeholder width does not end level, the second piece gets its
+  own hold, and this row would show it.
+
+**What fails the try:** any of F-1 to F-4 not met by this one attempt. Then it is reverted, with no second attempt.
+
+**Predicted:** met. With the level knots in place, close, the bank plan and the cup read what they read from the level lap. In close's Newton step the
+width's seam row reads only w columns (inferred from `close.js` `valueChannels`, not checked), so the least-norm step on the path's columns is the level
+lap's. **Where it could miss:**
+- (a) close couples w to the other channels in a way I have not seen;
+- (b) close's convergence test reads the width's seam row, so a brushed head takes one more Newton step, which moves the path within close's tolerance
+  but by more than a step;
+- (c) the placeholder does not end level, so the second piece takes a hold of its own;
+- (d) the insertion after close re-rounds piece 1's bank or turn by more than a step.
+
+**The unwelcome outcome, in the words that would make it true:** "With the hold laid after close, Finish from a brushed lap head still lays its first
+piece's bank more than one step from the level lap's."
+
+**Default to refuted.** My bias: this route was my own open item 1, and I want it to work. The rows above are mechanical so that my wanting does not
+score them.
+
+**Not exercised by these rows:** the roll-first order (E's lap needs no roll), and his tracks with a head still changing (none of his 16 open heads is).
+
+**Tests and runs:**
+- A row red at 346e2a0, then green: Finish from E's brush +1.37 lap head against the level lap, the bank and turn within a step, and the first piece
+  holding the head's width.
+- Mutants in `core_width_hold_mutation.test.js`: F1, the first piece laid with its hold again; F2, the hold never laid after close; F3, `extendBy`
+  ignores `'later'`.
+- The harnesses that name the changed files: `app/test/core-close-mutation.test.js` (it names `src/core/finish.js`), `core_width_hold_mutation`,
+  `core_turnby_mutation` and `core_ramp_mutation`. Then the 194 row files that execute extend.js or turnby.js (finish.js requires turnby.js), all under
+  heavy-run at BelowNormal.
