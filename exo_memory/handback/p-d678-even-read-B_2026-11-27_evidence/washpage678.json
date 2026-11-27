@@ -1,0 +1,161 @@
+{
+ "started": "2026-11-27T20:56:29.077Z",
+ "tree": "G:\\consonance-scratch\\b-even-read",
+ "rows": [
+  {
+   "which": "bankW1_before",
+   "on": {
+    "ghost": "shown",
+    "handles": true,
+    "samples": 346,
+    "s0": 590,
+    "firstSharedS": 0,
+    "shared": 296,
+    "offPlacedHorizM": 0,
+    "at": null,
+    "offPlacedVertM": 0,
+    "lavenderPx": 66
+   },
+   "off": {
+    "ghost": "none",
+    "handles": false,
+    "lavenderPx": 66
+   }
+  },
+  {
+   "which": "bankW1_after",
+   "on": {
+    "ghost": "shown",
+    "handles": true,
+    "samples": 346,
+    "s0": 590,
+    "firstSharedS": 0,
+    "shared": 296,
+    "offPlacedHorizM": 1.9842163542857185,
+    "at": 236,
+    "offPlacedVertM": 0.7185104000000001,
+    "lavenderPx": 1214
+   },
+   "off": {
+    "ghost": "none",
+    "handles": false,
+    "lavenderPx": 66
+   }
+  },
+  {
+   "which": "bankT2b_before",
+   "on": {
+    "ghost": "shown",
+    "handles": true,
+    "samples": 346,
+    "s0": 590,
+    "firstSharedS": 0,
+    "shared": 296,
+    "offPlacedHorizM": 2.040000000000021,
+    "at": 380,
+    "offPlacedVertM": 0.2452,
+    "lavenderPx": 2662
+   },
+   "off": {
+    "ghost": "none",
+    "handles": false,
+    "lavenderPx": 66
+   }
+  },
+  {
+   "which": "flatT2b_after",
+   "on": {
+    "ghost": "shown",
+    "handles": true,
+    "samples": 346,
+    "s0": 590,
+    "firstSharedS": 0,
+    "shared": 296,
+    "offPlacedHorizM": 1.9408000000000298,
+    "at": 412,
+    "offPlacedVertM": 0,
+    "lavenderPx": 66
+   },
+   "off": {
+    "ghost": "none",
+    "handles": false,
+    "lavenderPx": 66
+   }
+  }
+ ],
+ "errors": [],
+ "titles": [
+  "zz-headless-test",
+  "zz-headless-test",
+  "zz-headless-test",
+  "zz-headless-test"
+ ],
+ "state": [
+  {
+   "which": "bankW1_before",
+   "restore": "restored"
+  },
+  {
+   "which": "bankW1_before",
+   "hud": "Build view · plain road (L)"
+  },
+  {
+   "which": "bankW1_before",
+   "grid": "ground"
+  },
+  {
+   "which": "bankW1_before",
+   "untick": "checked=false"
+  },
+  {
+   "which": "bankW1_after",
+   "restore": "restored"
+  },
+  {
+   "which": "bankW1_after",
+   "hud": "Build view · plain road (L)"
+  },
+  {
+   "which": "bankW1_after",
+   "grid": "ground"
+  },
+  {
+   "which": "bankW1_after",
+   "untick": "checked=false"
+  },
+  {
+   "which": "bankT2b_before",
+   "restore": "restored"
+  },
+  {
+   "which": "bankT2b_before",
+   "hud": "Build view · plain road (L)"
+  },
+  {
+   "which": "bankT2b_before",
+   "grid": "ground"
+  },
+  {
+   "which": "bankT2b_before",
+   "untick": "checked=false"
+  },
+  {
+   "which": "flatT2b_after",
+   "restore": "restored"
+  },
+  {
+   "which": "flatT2b_after",
+   "hud": "Build view · plain road (L)"
+  },
+  {
+   "which": "flatT2b_after",
+   "grid": "ground"
+  },
+  {
+   "which": "flatT2b_after",
+   "untick": "checked=false"
+  }
+ ],
+ "browserPid": 23096,
+ "ended": "2026-11-27T20:57:10.105Z"
+}
