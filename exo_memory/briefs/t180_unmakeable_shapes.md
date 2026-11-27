@@ -89,3 +89,5 @@ degrees into the new 360 you know? 5. Not sure, what is smoothness limit?"
   - In answer to the librarian's two options (1: Extend holds the width as the tooltip promises; 2: the narrowing carries on and the tooltip is reworded). Read as option 1, for the width. "Taper" was the librarian's word, explained to him. Packet `loop/packet_t180_extend_holds_width_after_brush_2026-11-27.md`. Asked of him, open: the same for the bank after a bank brush.
 - 04:29 (L), his words: "what should i test first in a list"; 04:31: "i am re exporting [one of his own tracks] rn to drive in game" (the track's name is bracketed here, as names are in this repo; the rest is verbatim)
   - State: the second test build (landing-1127-l263 c522ea6) is installed; he is driving an export from it. The quiet-machine timing lap waits until he is out of the game.
+- 04:46 (L), his words: "wtf my assetto crashed before i could save the lap replay, but it drove the same"
+  - State: the export from the second test build drove the same as before (his word). The crash is traced in `loop/stall_trace_game_crash_low_commit_2026-11-27.md`; not the track, by the game's log.
