@@ -128,3 +128,12 @@
 BASE: C:\Consonance\lighthouse 127cc407
 
 NEXT: librarian takes the plan and the mock to him; the build is his word after the mock, and §7's prediction is for a seat that wrote neither the plan nor the build.
+
+## Amendment, 07:1xZ: the six pictures are local, not committed
+
+- **The order:** the chair's of 07:06:23Z. Pictures of his app stay uncommitted (librarian ring fe9902a0).
+- **The six pictures stay at the paths above, on disk, untracked:** `mock_0_window.jpg`, `mock_1_ready.jpg`, `mock_2_ghost.jpg`, `mock_3_marked.jpg`, `mock_4_stopped.jpg`, `mock_5_sketch.png`.
+- **The committed evidence is the other 16 files** (about 0.2 MB). `mock_run.json` is among them.
+- **How:** 01f45353 and the six commits after it were rebuilt without those six paths, each with the same author, committer, dates and message.
+  - Main was moved by compare-and-swap from 1fafd8c8 to f146288b.
+  - My commit is now a619f516.
