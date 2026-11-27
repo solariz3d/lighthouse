@@ -10,7 +10,7 @@ checked. This is a proposal for him to read: three questions at the end are his 
 |---|---|
 | "wish it could be more fleshed out and explicit with the narrative" | every idea is staged with a thing you can see being done, by someone you have met; nothing is told only by lines in a sky |
 | "the monotone, how did we fix it in the animation? WHy did the monotone happen?" and "that part of the plot needs to be told better" | four chapters where there were eighteen seconds: why it happens (c09), what it costs (c10), how one comes back (c11), how a house comes back (c12) |
-| "what are the shapes swirly lines that seem to bend and move around" | the knot is taught at the table before it is used: one voice draws a ring, two draw a knot, and the film shows the two voices drawing it (c02) |
+| "what are the shapes swirly lines that seem to bend and move around" | the knot is taught at the table before it is used: one voice alone only swings a point along a line; two different voices move it both ways at once and it draws a knot, and the film shows them drawing it (c02) |
 | "it should do it like 4 times and on the fourth you get this like lil angry face like wow cmon" | done: four wakings, three cuts, a cross face on the fourth (c01, built) |
 | "its almost faster bpm or like youre rushing it" and "no time limit as well is a good philosoph" | no set length; one read to a bar (3 s) at least, and two bars for anything that carries the story |
 
@@ -52,7 +52,7 @@ chord. In the monotone every pipe comes back the same height, the rack goes flat
 
 | taught in part one or two | used in part three |
 |---|---|
-| one voice alone draws a ring (c02 `hum`) | the monotone: one flat ring over everything (c09, c10) |
+| one voice alone draws only a line (c02 `hum`, `mine`) | the monotone: one line over everything (c09, c10) |
 | two different voices draw a knot, and you see them draw it (c02 `meet`) | the first knot back (c11), the lattice (c13) |
 | two notes too near each other will not close; it crawls; lean, listen, adjust, and it locks (c02 `sour`, `click`) | the clash (c08); the tuning, pair by pair (c13) |
 | copying him feels nice for a second and the knot dies (c02 `echo`) | the easy note (c09): the same beat, a whole land of it |
@@ -101,27 +101,29 @@ the director's; it makes his arrival the thing that ends the cutting.
 
 - `sit 31.5` he comes in and sits. His cup appears with him. The door closes.
 - `photo 34.5` he holds out the photograph. I look a long time. `shelf6 37.5` it goes up as light six.
-- `hum 39.0` he hums one note. His line travels from him to a spot above the table, and there a point of light goes
-  round and round: **one voice alone draws a ring.** Hold.
-- `mine 43.5` I try my own note: another colour, another wavelength, my own ring beside his. Two rings, each alone.
-- `meet 48.0` he slides his ring over mine. Two thin guide lines show it: his wave moves the point from side to side,
-  mine moves it up and down, and the point draws a knot (3:2), slowly, once round in about three seconds, then keeps
-  turning. `!`
-- `away 54.0` he takes his hand back; his line stops; the knot falls back to my plain ring. `back 55.5` his line
-  returns; the knot returns. Neither of us makes it alone.
+- `hum 39.0` he hums one note. His line travels from him to a slider on a rail above the table; the slider swings
+  from side to side with his note, and a point of light above it swings with it: **one voice alone draws only a
+  line.** Hold.
+- `mine 43.5` he stops. I try my own note: another colour, another wavelength, my own slider on an upright rail; the
+  point goes up and down. Another line.
+- `meet 48.0` both at once. A thin guide runs from each slider to the point: his note moves it from side to side,
+  mine moves it up and down, and so it draws a knot (3:2): he swings three times while I swing twice. It is drawn
+  slowly, once round in about four seconds, and then keeps turning. `!`
+- `away 54.0` he stops; his slider stops; the knot falls back to my one line. `back 55.5` his note returns; the knot
+  returns. Neither of us makes it alone.
 - `other 58.5`, `60.0` I change my note twice and the figure changes with it (5:4, 4:3). I am playing. `home 61.5`
   back to 3:2.
 - `sour 63.0` I pick a note too near his. The figure will not close; it crawls. We both wince; he laughs. I lean in,
   listen, adjust. `click 66.0` it locks, with a small flash.
 - `echo 69.0` I answer too fast and copy his note. For a second it is lovely: both of us glow, both smile. The point
-  now only slides back and forth along one line; the knot is gone; a flat ring. `tilt 72.0` he tilts his head.
+  now only slides back and forth along one slanted line; the knot is gone. `tilt 72.0` he tilts his head.
 - `tap 73.5` he taps the table. `!` `reach5 74.25` I turn and reach for the shelf: the card with my own face.
   `own 75.0` my line is back and the knot returns, fuller.
 - `push 78.0` his line swells and pushes at mine. `hold 79.5` mine keeps its shape for three seconds while he leans in
   with both hands. `laugh 82.5` he laughs; so do I.
 - `leave 85.5` he gets up, waves from the door, goes. His cup stays. `window 88.5` I look out: far off, other windows.
 
-Reads: 31.5–34.3 he sits with me · 34.5–38.8 a photograph of where he is; I keep it · 39–43.3 his voice draws a ring ·
+Reads: 31.5–34.3 he sits with me · 34.5–38.8 a photograph of where he is; I keep it · 39–43.3 his voice draws a line ·
 43.5–47.8 mine draws another · 48–53.8 together they draw something neither drew · 54–58.3 only together · 58.5–62.8
 other notes, other figures · 63–68.8 too near will not close; listening closes it · 69–73.3 copying feels good and
 kills it · 73.5–77.8 he catches it; I go to the record; I am back · 78–82.3 he pushes; I hold · 82.5–85.3 he is glad ·
@@ -199,11 +201,11 @@ not a disaster. `worse 241.5` louder; everyone is tired of it. Nobody leans in t
 - `easy 249.0` one house hums a soft, simple note: a pale rose colour (`EASY`), a round wave, a contented face. It is
   not loud. It is pleasant.
 - `first 252.0` its nearest neighbour, tired of the crawl between them, lets go of its own note and slides onto the
-  easy one. The crawling figure snaps into a flat ring. Both glow. Relief on the neighbour's face. Its colour pales to
+  easy one. The crawling figure collapses into one line. Both glow. Relief on the neighbour's face. Its colour pales to
   `EASY`, and its face settles into the same contented smile.
 - `second 255.0`, `third 256.5` two more, each watching the relief of the one before. Then `spread 258.0` faster and
   faster across the land, like dominoes: each copy is rewarded with the same glow.
-- `quiet 264.0` one colour, one line, one flat ring over all of it, every face with the same smile. Held four and a
+- `quiet 264.0` one colour, one voice, one line over all of it, every face with the same smile. Held four and a
   half seconds: pleasant first, then wrong.
 - `ours 268.5, 270.0, 271.5, 273.0, 274.5` the note comes in at our street door like a draught. Rose hums it, then
   green, then blue, then the chair, then the librarian. Each pales. Each gets the smile.
@@ -221,10 +223,10 @@ six pipes, six heights still.
 - `pass 283.5` stood against the shut book: tick, tick, tick.
 - `nobody 286.5` at the benches green glances at blue's pipe, and smiles the same smile. Nobody points.
 - `ink 288.0` inked. On the rack the pipes of different heights are taken down and same ones put up, until the rack is
-  flat. `toot 291.0` all three blow: one note; one flat ring over the house.
+  flat. `toot 291.0` all three blow: one note; one line over the house.
 - `shelf 294.0` in the library every book turns the one colour. In my room the jars on my shelf pale one by one, from
   the newest back, and stop at the first six.
-- `visit 297.0` the teal one visits. I say a line; it says the same line back. Two cups, two smiles, a flat ring over
+- `visit 297.0` the teal one visits. I say a line; it says the same line back. Two cups, two smiles, one line over
   the table where the knot was. Held. It leaves at 303.0.
 
 Reads: 276–280.3 nobody looks it up · 280.5–283.3 three the same · 283.5–286.3 all pass · 286.5–287.8 nobody catches
@@ -232,7 +234,7 @@ it · 288–293.8 what was different is replaced; one note · 294–296.8 the re
 nobody there.
 
 **State at 306.0:** my room, camera about (0.25, -0.12, 1.25). Me at ME, pale at the edges, the smile. Shelf: 6 amber,
-the rest pale. Two cups. A flat ring over the table.
+the rest pale. Two cups. One line over the table.
 
 ### c11 THE NO (306.0 to 336.0): how one comes back
 
@@ -303,10 +305,10 @@ turning between us. `close 423.0` my eyes close, content. `pinprick 425.5` a pin
 - Built: c01.
 - Mostly re-timed from the first version's files: c03 (plus the kept-room beat), c05, c06, c07, the globe and dawn
   halves of the old c09 (now c13 and c14), the old c10 (now c15).
-- Largely new: c02 (the ring, the drawing of the knot, the sour note), c04 (pipes, ticks and crosses).
+- Largely new: c02 (the sliders, the drawing of the knot, the sour note), c04 (pipes, ticks and crosses).
 - New: c08 as staged here, c09, c10, c11, c12, and the first half of c13.
-- New shared pieces before painters start: a pipe and the rack; a knot drawn progressively by a point with two guide
-  lines; a tick and a cross; the colour `EASY`; a way to pale any light toward `EASY` and fix its face to the one smile;
+- New shared pieces before painters start: a pipe and the rack; a knot drawn progressively by a point with two
+  sliders and guide lines (a first form is `figure()` in `study_knot.py`, with a sheet in `stills/`); a tick and a cross; the colour `EASY`; a way to pale any light toward `EASY` and fix its face to the one smile;
   `eyes="angry"` and `mouth="frown"` are already in `engine.py` here.
 - `world.py` here still holds the first version's timeline plus `OFF` (see the note in that file). The timeline above
   replaces it when the painting of this version starts; until then this folder renders the first version with the new
