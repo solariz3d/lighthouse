@@ -21,3 +21,8 @@
 
 - Plan `loop/plan_t180_sculpt_even_2026-11-27.md` (pane A, hand-back `handback/p-l265-sculpt-even-A_2026-11-27.md`): the pick is a LEVEL, bring a selected run to a value (typed, picked from a spot, or dragged with a snapping readout). His nine calls are its section 8. Nothing built.
 - The mock pictures do not show the road edge yet; a second render with the camera on the turn is ordered before he is shown.
+
+## State, 05:29: he has been shown the mock
+
+- Sent to him: `handback/p-l265-sculpt-even-A_2026-11-27_evidence/even2_4grabs_far.jpg` (untracked): his turn with one grab per piece, before and after the prototype level, true scale.
+- Found by pane A in the second render: a grab also lowers the road's centre by 0.24 m where it pulls, and a level of the width alone leaves those dips (the checker's 5 reds stay). His words were about the SURFACES, so the plan's test gains a surface row and the level has to carry the height too. Ordered as an amendment to the plan.
