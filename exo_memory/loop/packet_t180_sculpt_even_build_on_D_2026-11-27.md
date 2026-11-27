@@ -147,3 +147,21 @@ these rows join the one table, and for N5 one more case:
   head's middle, on a flat road too. One cause, both cases, one fix.
 
 NEXT: chair pass this addition to the builder of Even and to N5's pane; each pane call_librarian with its hand-back
+
+### Added 16:3x (D), after N5's hand-back `handback/p-d678-ghost-offset-P_2026-11-27.md` (git-blob 1aea5bcf; sections 0, 1, 8 to 12 read)
+
+N5 is done as ordered: builder `d678-ghost-offset-p` 5127aad on origin (on c522ea6), rows red first, the ten existing ghost
+files green before and after, the wash gone in the pictures (22,274 and 2,662 px to the floor), the ghost on the head on a
+flat road. Two rulings on what it left for the chair:
+
+- **Section 8, the three sibling ghosts (Jump 2.47 m, the undo ghost 2.55 m, the saved piece's ghost): mend them on the same
+  branch**, one field each as the hand-back says, a row for each where it can be measured (the piece ghost needs a stored
+  piece: make one in scratch storage, or say why it cannot be rowed). Same tier, check it.
+- **Section 9, "no preview of this piece: BAD_WIDTH … got -0.104" after a width grab at the head: run that same case on the
+  width hold's tip, `l264-extend-holds-width-b` 15e7d62**, in node and on the page. The librarian's reading, to be refused if
+  wrong: the grab leaves the width still changing at the head, Extend as shown carries that slope on and runs the width
+  negative, which is what the width hold was built to stop. Say whether the preview comes back there, and what the cup does
+  in the NEXT line (it read 13.27 to -18.30 degrees): his open question is whether the cup, bank and edges should hold after
+  a brush as the width now does, and this case is the picture for it. No code for the cup.
+
+NEXT: chair pass this to N5's pane now; that pane call_librarian with its hand-back
