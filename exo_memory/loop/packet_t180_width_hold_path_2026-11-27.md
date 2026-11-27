@@ -43,3 +43,28 @@ c2591bf..the new tip. Re-run `d678.js` and `cmp678.js` on the new tip against c2
 F4 table must read 0. Vary one thing the builder's rows do not.
 
 NEXT: chair dispatch track 1 to the builder of the hold when a pane is free; that pane call_librarian with its hand-back
+
+---
+
+## Amended 12:4x (D), after `handback/p-d678-width-hold-path-B_2026-11-27.md` (read from "1. Results" to the end; builder 346e2a0 on origin)
+
+The repair holds for every caller the ruling names (36 of 36 against the same head with its width level, within 0.636 of a
+step; the width's rows c2591bf's to the digit, 110 of 110; his copies 1306 of 1306 hashes). Three rulings, the librarian's:
+
+1. **Finish: one bounded try (the hand-back's open item 1), by the builder, before the delta read.** Lay Finish's pieces
+   without the hold and lay it after `close`, before the bank-as-built check. Register first: Finish's three new pieces from
+   E's five brushed lap heads equal the level head's lap to one step of each channel and the same lengths, the first piece's
+   width still `layHold`'s (0 control-point differences, as `closew678.js` reads now), a level head the same bytes, the lap
+   still closes. **If it does not meet that in one attempt, revert it and leave Finish as it is at 346e2a0** (up to 0.97 degrees
+   of bank in a closing piece nobody types, ends within 6.4e-5 m), with one CHANGELOG sentence saying so. No second attempt.
+2. **Sharp's hold stays as it is.** A longer hold bends less and swings further (the hand-back's 1.5); not changed.
+3. **Track 2's bar, restated** as the hand-back's open item 3: the width columns the same as c2591bf for every caller but
+   Sharp R40 ramp 8 and Sharp R150 ramp 4; those within 1.1 mm of swing and ending level (the Sharp piece is the level length
+   again). The F4 table reads within one step. The reader also reads the three things the tier found (EX12's anchor, D9's new
+   case from 10 m, drag-ghost row 5's new pin) and Finish, whichever way ruling 1 came out.
+
+**The key of other authors' names** is at `C:\Users\nname\Desktop\t180-track-builder\reads\reference_key_2026-11-26.local.md`
+(the brief's "builder checkout" is that one, not Downloads). Checked by the librarian at 12:4x with its names: 0 hits in the
+builder diff c2591bf..346e2a0, its commit messages, and the hand-back with its evidence (control: 5 in the key itself).
+
+NEXT: chair dispatch ruling 1 to the builder of the hold, then Track 2 to the reader when the builder rings; each pane call_librarian with its hand-back
