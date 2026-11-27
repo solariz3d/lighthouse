@@ -326,3 +326,24 @@ Also **hold**, rates only: grx 1.82 / 1.91, krysha 2.14 / 2.09, mach6 on [other-
 
 - A break at 1.09 m/s sits under holds at 1.23 and 1.63. The mach6 that broke was sinking no faster before it broke than two passes that held. So on these replays the fast sink reads as the break's first frame, which the note names as a possibility and does not test.
 - **What would show it either way:** re-run the census with the looking-back rate for all 48 crossers and re-score P1 and the contact rule (one line in `census.js`, then `merge.js` and `score.js`). I did seven rows, not 48; five loaded road holds are unread by me (0.40, 0.41, 0.60, and the 33.3 Hz rows at 1.21 and 1.50). If the gap stays closed, the answer these replays give to his question is the note's first sentence and nothing more: they do not give one.
+
+## The librarian's check (2026-11-27, D, after the checker's section; nothing above is edited)
+
+- **`score.js` re-run by me** in `S/`: output identical to `S/score_out.txt` (`diff`). checked.
+- **The checker's item 6, run on every crossing pass, not seven.** A copy of the census (`G:/consonance-scratch/fable-break-back/`,
+  `census.js` with one added column, `sink_rate_back3` = the box's height three frames before the crossing minus its height at
+  the crossing, over three frames: the rate that reproduces H563's figures) was run through the room's lock on the 21 replays
+  that hold a crossing pass. 46 of the 47 crossers matched their rows, and on all 46 the census's own rate came out identical
+  to `passes.csv`, so the copy reads the same passes. checked: `E/librarian_back3_rows.json`.
+- **The gap closes.** Road passes at 50 g or more that reach 11 cm, by the looking-back rate (m/s):
+  - held (9): 0.04, 0.15, 0.63, 0.92, 0.99, 1.03, 1.19, 1.23, 1.63;
+  - broke (3): 1.09, 1.66, 1.96.
+  A break at 1.09 sits under three holds (1.19, 1.23, 1.63). With the census's rate the same twelve read held up to 1.57 and
+  broke from 1.82; that gap was the frame after the crossing. checked.
+- **What is left:** two of the three breaks are the two fastest sinkers of the twelve, and the third is seventh. That is a
+  lean, on three breaks, not a separator. The note's second bullet under "The answer" ("the one thing left standing") does
+  not stand as written; its first sentence does: these replays mostly do not give an answer.
+- The hangul's hold reads 0.63 and the mach6's 0.15 by this rate, H563's own figures to the digit, so this is H563's
+  formula (the checker inferred it from three rows; these are two more). checked, the same file.
+- Not done by me: P1 and the contact rule were not re-scored on the looking-back rate for landings and edge passes; the
+  33.3 Hz rows were not separated out.
