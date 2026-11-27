@@ -157,3 +157,23 @@ see, we didnt on the laptop. 4. Im not sure"
   bank, cup or edge typed "at start" in the same Extend leaves the width off the head's for about 10 m (47 mm after a wide
   brush, 0.52 m after a steep grab at the very end).
 - **His call, open:** the ramp's length (the page https://claude.ai/artifact/RgCdudZXMSSfbpm82Y7zEf).
+
+## The Type A lap and the Elysium copies, 2026-11-27 13:37 to 13:5x (D)
+
+His words: 13:37 "i think i need to do the type A replay, which track u want"; 13:38 "there are a shit ton of elysiums maybe
+we should clean it up with the right one to use, do you remember which one is the best real one?"; 13:40 "which one is plain
+elysium"; 13:42 "is there a way u can put the sci fi texture on the plain elysium and re export it as the same track>".
+
+- **Asked for the lap:** the Type A on plain ELYSIUM (`t180b_elysium`), hard into the helix; the other cars' October laps and
+  the two broken Mach 6 passes are on it.
+- **Done at 13:5x, at his 13:42 ask, with the game closed:** plain ELYSIUM now carries the sci-fi look. No re-export: the
+  copy ELYSIUM 0435 SCIFI (written 2026-11-01T03:50Z) has the same geometry stamp as plain ELYSIUM
+  (sha256 e68a5224…, both `.t180b-builder.json`), and checked mesh by mesh with `tools/kn5.cjs`: 154 of 157 road meshes the
+  same to 1e-6 m; the 3 that differ are the pit lane's way in and out (moved 7.9 m sideways) and its fill (0.2 mm). Its model,
+  AI line, map and preview were copied into `t180b_elysium` under the plain names; `surfaces.ini` was already the same file.
+- **The way back:** the whole folder as it was is at
+  `G:\consonance-scratch\elysium-backup\t180b_elysium.before-scifi-2026-11-27` (compared identical before the copy; its model
+  sha256 a7c986de…). The model in the game now is sha256 fb91078b….
+- **Not done:** no copy was moved out or deleted. A move-out of seven extras was proposed; his yes is needed.
+- **Open:** plain ELYSIUM was written again on 2026-10-31T22:56Z, after the other cars' laps (05:21Z to 06:58Z that day).
+  Whether its road then was this road is not checked.
