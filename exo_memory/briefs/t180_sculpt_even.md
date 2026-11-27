@@ -32,3 +32,4 @@
 - `loop/plan_t180_sculpt_even_2026-11-27.md` (amended 11:43Z, 11:52Z, 11:57Z): the level E5 brings the width, the centre's height and the sideways shift to values. From both flat starts all seven registered rows pass (spreads 0, the held rim 0.0000 m across, 0 reds). The rims rise 0.4353 m (his call 10). A banked turn whose bank changes along the run is NOT evened and not designed (his call 11).
 - Why a grab dips the road: it scales the section about the far rim, so on a cupped road the centre drops (0.2403 m on his example); cup 0 gives 0.
 - The plan's section 8, eleven calls, put to him with the librarian's leans. No build until his word.
+- 2026-11-27 06:01 (L), to the eleven calls with the librarian’s lean on each: "do what you think is best"

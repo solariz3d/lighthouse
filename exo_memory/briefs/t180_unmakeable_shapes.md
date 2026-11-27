@@ -124,3 +124,4 @@ degrees into the new 360 you know? 5. Not sure, what is smoothness limit?"
 - Not ordered. His 04:54 word on the update stands: "we will deal with that when the time comes".
 - 2026-11-27 05:44 (L), to "the smaller, slower cars are not in the public repository yet": "yes bc the update itsnt out yet"
 - 2026-11-27 05:45 (L): "we will refactor the builder when the update goes live, i wager we wont have to change much"
+- 2026-11-27 06:01 (L): "do what you think is best" (his answer to the Even plan’s calls; also read by the librarian as covering its lean on the width hold’s ripple, and told to him so)
