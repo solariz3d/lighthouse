@@ -1420,3 +1420,78 @@ the earlier pictures.
 | 15:4x | 2, the design pass | **done as a table and three plans (4.7)**; no candidate chosen |
 | 15:4x | 3, the words | **done** (4.5): no sentence says "stays where it is" |
 | 15:4x | 4, the two misses | **explained, not mended** (4.4); a ruling's two options given |
+
+## 5. The order of 23:26Z: the window's ends, the cost on a long lap, then B on its own branch
+
+The order is the chair's ring of 23:26:31Z. It carries out the packet's "Amended 17:4x" (`packet_t180_sculpt_even_build_on_D_2026-11-27.md:171-209`, room `04cf662d`).
+- The worktree: `G:/consonance-scratch/a-d678-r3/wt`, on `d678-even-a` at `bcedaaf`.
+- The tier is prove it.
+
+### 5.1 Item 1, the window's ends: registered at 23:36Z, before any code
+
+**What gets built.** After `evenWindow`'s refusals, `even()` refines the knots of every road piece over the window's two reaches to spans of at most 3.75 m, using `document.js` `refineKnots`. A new constant, `EVEN_END_SPAN_M`, holds the 3.75 m.
+- The reaches are [lo − margin − ramp, lo] and [hi, hi + margin + ramp], clipped to the road. These are not the reaches widened by the carry side. A refined piece before the run no longer has the coarse last span the carry side exists for, so the refined reach is the plain 50 m and adds no knots for nothing.
+- Even then takes the window again, on the refined track, and levels as built.
+- `changed` is counted against the track Even was given, not the refined one.
+- The carry side stays in `evenWindow`. It still acts when a margin is shorter than about two refined spans, and the shell asks `evenWindow` for its refusals when a drag opens.
+
+**The rows.** Each row is a test that is red on `bcedaaf` first, unless it is marked *measured*. "Every 1 m" uses the builder's fixture measures (`test/even_fixtures.js`), never Even's code.
+
+| row | what | on bcedaaf | predicted after |
+|---|---|---|---|
+| X1 (R1, the width) | flat and B-, untouched, Even 200..440 to 16, left and right: the width within 0.01 m of 16 over both margins (180..200, 440..460) | 2.7207 at 460 | about 0.0083 at 460 |
+| X2 (R1, the kept edge, B-) | B-, left and right: the kept edge within 0.01 m of the start over the margins | 0.1635 to 0.1673 | 0.0065 to 0.0070 |
+| X2f (R1, the kept edge, flat) | flat, left and right, the same bar | 0.1648 at 452 | **red, about 0.25 m at 180** (below) |
+| X3 (R2, K3) | B- with a grab at 470, at 485, at 175 and 465, the left edge kept: K3 (`centreOff`) within 0.01 m over the window | 0.0505 to 0.0544 | 0.0003 to 0.0006 |
+| X4 (outside, the channels) | every channel a piece carries, every 1 m outside the result's window, within one stored step of that channel (`D.DEC`: 1e-4 m for w, l, h, wd; 1e-9 for phi, kh, kv; 1e-6 for c, e, er, s, r, t); on X1 to X3 and on every row of the table | (bit for bit) | **red on phi with refineKnots as it is** (below) |
+| X5 (outside, the road as built) | *measured*: outside the window, the built centreline's position, both rims (`rimAcross`) and the built bank, every 1 m; on every row of the table and on his largest lap (item 2's copies) | 0 | within 1e-4 m on the fixtures; the long lap is not predicted |
+| X6 (the margins, the table) | *measured*: the width within 0.01 m of 16 over the margins on all 52 of A0's rows (`cand678.js`, A0 alone, X4 and X5 added to its measures) | off on 50 of 52, up to 9.29 m | within 0.01 m on every row |
+| X7 (K3, the table) | *measured*: K3 within 0.01 m on every B- row whose run is 200..440 | (cand.out k3) | within 0.01 m |
+| X8 (joints) | no joint the window touches steps (dv over 1e-4, dm over 1e-3); X1 to X3 and every row of the table | 0 | 0 |
+| X9 (reds) | no red that the same row lacks on `bcedaaf` (the refinement adds none); the reds against the start reported beside | R2: 1, 2, 3 against the start | none added; against the start 1, 1, 3 |
+| X10 (the words) | the first sentence says what holds outside the window, and says "20 m at the width" only if X6 holds on every row | - | - |
+
+**The predictions I can lose, stated now:**
+- **X2f stays red on `d678-even-a`, by about 0.24 m.** At s 180 the flat lead is still in its taper from the empty track's 31 m head. A0 lays the kept edge on the 12 m road it reads from the window's far end. With the control points free, Even reaches that target, about 0.25 m from the edge (4.4, `r12mend8.out`).
+  - That is A0's reading, not the knots. It is the "cannot reach" case the order allows: **R1 cannot be green under A0 on the flat fixture, by about 0.24 m.**
+  - On `d678-even-a`, X2's test asserts the B- rows. It names the flat rows and says why they are left out.
+  - Item 3's B keeps the edge where it is, so I predict X2f green there. If it is not, that is a result against B.
+- **X4 is red on phi with `refineKnots` as it is.**
+  - `insertKnots` re-quantises after every knot, so a span cut into several pieces carries up to half a step per insertion.
+  - The prototype moved phi by 1.07e-9 rad on R1 B-, which is 1.07 steps. It moved w, l and h by at most 6.1e-5 m, 0.61 steps; that is the figure the ruling quoted.
+  - **The remedy, registered now:** insert a span's knots with one rounding at the end (Boehm in full precision, then each new point rounded once), so every sample stays within half a step.
+  - It goes into `document.js` as an option of `refineKnots` that Sculpt's sharp brush does not pass, so the brush is unchanged. It is built test-first.
+  - If X4 turns out green on phi without it, the remedy is not built.
+- **X6 may fail on a row where the road is far from 16 at a margin's end.**
+  - The ramp's smootherstep leaks into the margin's last metre about 0.2% of the change per metre of difference: 0.0083 m for R1's 4 m.
+  - So a margin end where the road is more than about 4.8 m from 16 would miss 0.01 m. I know of no such row in the table: its widths are 12, 20 and the grabs' 16.
+  - The unwelcome outcome, in the words that would make it true: **"the margin is off by more than 0.01 m at its outer metre on row ⟨case, hold⟩, by ⟨x⟩ m"**. That would be reported, not mended.
+  - The mend I would name: hold at the value every control point whose support reaches into the margin.
+- **X5 on his largest lap may not hold at 1e-4 m.**
+  - The heading channel's rounding inside the window is carried along the rest of the lap.
+  - Sculpt's sharp brush already measures "up to 70 µm past its window" on a short track. A 27 km lap could carry more.
+  - If X5 fails there, the words do not say "a tenth of a millimetre"; they say what was measured.
+- **X9:** against the start, R2's reds stay at 1, 1 and 3. These are the level's own ramps on a banked road (L267), not the knots. Against `bcedaaf` the refinement adds none.
+
+**Tests amended by name, because the ruling relaxed bit for bit (each gets a comment saying so):**
+- `test/core_even.test.js`: the one-piece row's outside loop (`:40`), the `:98` loop, and K5 (the bank channel and the built bank inside the window, now within one stored step);
+- `app/test/sculpt-even.test.js` F4;
+- `app/test/sculpt-even-banked.test.js` K4 and K5;
+- `test/even_fixtures.js` `outsideChanges`, which becomes "within one stored step".
+
+**The mutants to be added to `test/core_even_mutation.test.js`:**
+- the refinement removed;
+- the span 7.5 m instead of 3.75;
+- the window not taken again after refining;
+- the near reach not refined;
+- the far reach not refined;
+- if the remedy is built, its single rounding dropped (X4 catches it).
+
+**The runs (prove it):**
+- Even's tests and its harness;
+- the rule run (every test file that executes `even.js` or `coreshell.js`);
+- if `document.js` changes, every test file that executes it, and the harnesses that name it, whole.
+
+All of these go through heavy-run at BelowNormal.
+
+**Falsifier:** item 1 as registered is refuted if X1, X3, X4 or X8 is red on any row once it is built, or if X6 fails on a row I did not name above.
