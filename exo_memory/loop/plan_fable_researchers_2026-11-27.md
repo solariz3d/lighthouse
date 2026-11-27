@@ -189,3 +189,5 @@ R1 to R6 above stay held; R5 (how other editors make things even) is being answe
 **Checked by the librarian before proposing:** his game documents are under `OneDriveDocumentsAssetto Corsa`; the replay folder on L holds 10 files, 48 MB, so a wide re-read of replays is not available on this machine (the 30 October passes were read on D). He has no `cfgextensiongeneral.ini` of his own, so the patch’s defaults apply offline: both offline-only protections are on for him offline [inferred from the absence of an override].
 
 **When:** after pane B’s timing session hands back (it holds both run slots and needs a quiet machine; the first study overlapped its first minutes, posted to the board). **Waits on his go, said as a go.**
+
+**His word, 06:23: "go"**, to the librarian’s "say go and I’ll start it once B is done". The second run is ordered. It starts when pane B’s timing session has handed back and the two pane packets have gone to the chair; if usage runs short before the reset, the researchers are cut before the builds (the librarian’s condition, told to him at 06:21).
