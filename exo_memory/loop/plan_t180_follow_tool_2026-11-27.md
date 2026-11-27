@@ -365,3 +365,146 @@ The figures in the mock's words are made up for the picture; only the words' sha
   - Fixed and re-run to 250 pieces: 2.8 → 15.9 ms a try (`laytime250_fixed.txt`), against the first run's 2.5 → 21.6 ms over the same lengths. Both ran under the other seats' load.
 - **The side survey's first draft paired the mesh's left edge with the line's left side.** But `crossSection`'s side(+1) walks along cross(f, n), which is the line's right. Fixed before it ran.
 - **The mock's first run failed on the same samples field.** Its second ran but drew the shadow 12 m wide against his road's 31 m, and its sketch was unreadable. Both were fixed, and the third run's pictures are the ones kept.
+
+---
+
+## Addendum, 2026-11-27 08:4xZ (L261 track 8, pane O): the shipped builder, the whole lap, and "smoother" as registered numbers
+
+**Why this plan is open again.**
+- **His words, in order** (verbatim in `briefs/t180_unmakeable_shapes.md`):
+  - 01:28: *"also, i think it would be cool to have a dev version of the builder, that can make the equation track from the reference it would be dope, and to test if it in a way can fix tracks, the original owner would still be the maker, but the builder smooths out the geometry in a way it cannot be done by hand, while keeping their design intent"*;
+  - 02:15: *"when i meant smooth it, i meant the geometry itself. not the track and the bumps"*;
+  - 02:20: *"sounds good"*;
+  - 02:29: *"make it just the regular version, i just realized it should be for everyone, its no different than putting someone elses work in blender to see how they did it, its not like someone will take tracks, just learn how to make them from the references"*.
+- **02:29 reverses his 01:11 answers 1 and 2** for this tool. The later word stands, and both stay on record. The packet's "Changed 02:31" section (room d6f861ab) reopens this plan for the **shipped builder**.
+- **§1's call 2, the copy question, is answered** by his 02:29 words.
+- **What stands as written:** §2 to §8, and §7's prediction (P1 to P3, D1 to D4). It is scored later by a seat that wrote neither this plan nor the build. D4 still reads from his by-eye measurement (L259 track 4).
+- **What follows** covers only what the packet asks: the whole lap, smoothing as numbers, what leaves the builder, how it meets the Track overlay window, cost, and names.
+
+### A1. The whole lap, not a stretch
+
+§3 and §4 follow a chosen stretch. A whole lap is the same chain run from the shadow's start to its end, in one document, plus five things.
+
+1. **Jumps.**
+   - §4 stops at a jump's lip. A whole lap lays the flight instead: Jump, then the six landing boxes typed from the shadow's pose either side of the gap.
+   - [T3]: the built flight's ends matched to 0.00 m and 0.00° (`handback/p-unmakeable-T3-O_2026-11-26.md`, "The jump").
+   - [T4]: the pose typed equals the pose got on 7 of 7 (`handback/p-unmakeable-T4-B_2026-11-26.md`, "The jumps").
+   - The road after the flight starts at its typed cross-section since C1 (`o-c1-landing-start`, merged into f3cd425 at 844f485; checked: `git log f3cd425`).
+   - [T4]'s five landings that missed on the cross-section are therefore inferred made by C1, not re-measured.
+2. **Closing.**
+   - Chained steering drifts little. checked, [T2]: chained by hand at 5 m, position never past 1.7 m on any of 7 stretches (`handback/p-unmakeable-T2-C_2026-11-26.md`, "Chained"). [T4]'s chain8 laid whole runs between jumps.
+   - At the lap's end the tool runs the builder's own Close the loop (`closeBest`, `app/core/coreshell.js:993`).
+   - It reports the gap it closed (metres, degrees) and the largest move Close made.
+   - **It leaves the lap open, and says so,** if Close would move any piece by more than the position bar.
+3. **A road passing close over itself: the whole lap stops there.**
+   - [T2]'s whole lap was refused at section 20 by `PASS_CLEARANCE`. checked, C's hand-back, "The count" and "The unmade classes": the read's own geometry passes closer than the builder allows, 16 stations in 6 places with the 2 m apron and 8 in 4 without. At sections 2/33 the two surfaces are 0.32 m apart.
+   - His answer at 11-26 23:00 keeps the margin.
+   - So the tool stops at the refused piece, keeps the ghost to there, and names the pass, the metres it lacks and Track ▸ Edge apron.
+   - It **does not move a road to make room on its own.** C's untried route (bend one pass by 0.2, 1.5, 3.0 and 4.7 m at the four places, apron 0, inside the 5 m position bar) is **his call**, as a "make room" option.
+4. **Sections no route made** are laid as close as the core allows and marked, by §5's rule, section by section. The catalogue's counts are what to expect:
+   - [T1]: 21 sections, 908 m;
+   - [T2]: 16 sections of cross-section, plus the close passes;
+   - [T3]: 3;
+   - [T4]: 5 (the shelf), plus 5 of 7 jumps' cross-section, which C1 since addresses;
+   - [T5]: 50 of 71.
+5. **The report, instead of a wrong road.** A lap report in the window, never in the document. It gives:
+   - metres made, laid but not made, and stopped at;
+   - for each marked stretch: its metres, its measure, by how much, and its class (2, 3, 7, or "not named", e.g. [T3]'s read-noise bends 46 and 96);
+   - it can be copied.
+
+**Time:**
+- inferred from §3's estimate (under 10 s a km with the tail read): a 20 to 36 km lap ([T2] is 36.3 km) takes about 3 to 6 minutes, with a progress line and Cancel.
+- Lay is one undo step, as in §4.
+
+### A2. "Smoother, keeping the design": what is on disk, and the registration
+
+**His requirement** (02:15): smooth *"the geometry itself"*, not *"the track and the bumps"*. The build has to keep a bump while removing a facet.
+
+**What is on disk** (checked, descriptive, not the test: `node --max-old-space-size=8192 o_facets.js <f3cd425 tree> <AC tracks> facets.json`, in the hand-back's evidence):
+- **Method:** 44 installed layouts with an AI line on L, four 250 m windows each, a ray down the surface normal every 0.25 m; 176,176 samples, 0 misses.
+- **The mesh creases along the centre line at least every 0.25 m** on most layouts (the median per-layout spacing is at the 0.25 m sampling floor; the largest is 0.75 m). Its 90th-percentile spacing is at most **1.75 m** on every layout.
+- **Each crease turns the surface a median 0.10°.** The 95th percentile is 0.41° on the median layout and 2.96° on the 90th-percentile one.
+- **Most of the height's roughness is at that scale:** the share of its second difference that a Gaussian of one crease spacing removes is a median 0.74 (0.55 to 0.94, p10 to p90).
+
+**So the separation is by length,** in three bands:
+
+| band | wavelength | what it is | what the tool does |
+|---|---|---|---|
+| **facet** | under 2 m | the modelled geometry's creases | removes them: the builder's road is a C2 spline inside each piece |
+| **design** | over 16 m | crests, dips, the bank's and the turn's shape | follows it (twice the 8 m steered piece) |
+| **gap** | 2 to 16 m | short features (a short bump, a step in the road mesh) the tool **cannot keep, whether or not the author meant them** | keeps nothing there, and **lists each one** over 0.1 m. It is **not counted as smoothing** |
+
+**Where the tool cannot tell** is exactly the gap band. It does not claim to have smoothed there; it reports what it lost.
+
+**The measures,** registered before any run: on both roads over the same stations, every 0.25 m along the reference's AI line, the equation road at the nearest point of its path.
+- **The channels:**
+  - height h (a ray down the surface normal at the centre);
+  - bank φ (the surface's slope across, ±2 m about the centre);
+  - plan curvature κ (the centre line: the mesh's cross-section centres for the original, the path for the equation road).
+- **The bands, by Gaussian low-pass:** G₂ (σ 1 m) and G₁₆ (σ 8 m).
+- **Facet roughness F:** the energy per metre of x − G₂x. It is differenced twice for h and once for φ and κ.
+- **Gap content M:** the energy of G₂x − G₁₆x.
+- **Design D:** G₁₆x.
+
+**What each result means, written now:**
+- **"It smooths":** F(equation) / F(original) ≤ 0.10 in all three channels.
+  - My prediction: met by construction, so it proves little alone.
+- **"It keeps the design":** all of these, on each scored track's made sections:
+  - the study's own bars on at least 95% of stations;
+  - |D_h| difference ≤ 0.25 m and |D_φ| difference ≤ 1.5° on at least 95% of stations;
+  - the lap's length within 0.5%;
+  - every design-band apex (a peak of |G₁₆κ| over 1/300 m⁻¹) matched within 5 m along the lap;
+  - at least 90% of design-band bumps kept. A bump is a peak of |G₁₆h − its 100 m running mean| over 0.3 m. It is kept when present within 5 m along with at least 70% of its height.
+- **"Smoother only by drifting":** it smooths, and it does not keep the design.
+- **"Inside and no smoother":** it keeps the design, but F's ratio is over 0.10 in some channel. That would mean the steering copied the creases.
+- **Reported, not scored:** M's ratio, and the gap-band features lost (count and metres).
+- **Not smoothed at all, listed and left out of the score:** the sections of classes 2 (until the right width lands), 3 and 7 (§5).
+
+**My prediction, said now:**
+- it smooths;
+- it keeps the design on at least 2 of the 3 scored tracks;
+- bumps of 30 m or longer are kept 90% or more;
+- bumps of 16 to 30 m are kept under 70%, because the steer aims pitch at each piece's end, not height.
+
+**Degenerating:** if bumps of 30 m or longer are kept under 90% on any scored track, "keeping their design intent" is false for this tool as planned. The steer would then need a height target, not pitch alone.
+
+**Who scores it:** a seat that wrote neither this plan nor the build, on the study tracks installed on L (three of the five), with the tool's own read. §7's known gap applies: "made" is measured by a new instrument against old section metres.
+
+### A3. What leaves the builder, and the reference's author (item 4, as changed)
+
+- **A followed road is an ordinary track of his:**
+  - saved as a `.t180track` of pieces. checked: `D.serialize` (`src/core/document.js`) writes `schema`, `generator`, `name`, `closed`, `start`, `nextId`, `spawns`, `pitLane`, `edgeApronM` and `pieces`, nothing else;
+  - exported like any other, its `ui_track.json` author his Settings ▸ Author name (`src/export/fromwords.js:187-196`, `src/export/trackfiles.js:119`).
+- **What the builder records about the reference today: nothing.** checked: `D.serialize` has no such field, and R1 to R4 of `reference-panel.test.js` prove nothing of the reference reaches a save, an undo step or an export.
+- **His call:** should an export name the reference's author? The options, not decided here:
+  - (a) nothing, as today;
+  - (b) the document notes the reference it was laid from (the layout, and its `ui_track.json` author). A stored-data change: a new optional field and a new schema, tier prove it;
+  - (c) with (b), the export's description names it.
+- **Unchanged:** no other author's track data enters the builder repo. The rows use our own shapes (§6).
+
+### A4. How the tool meets the Track overlay window
+
+**Follow is a section of the Track overlay window** (`loop/plan_t180_track_overlay_2026-11-27.md`).
+- It follows whatever the window shows: an installed layout with an AI line (§2), or one of his own saved tracks, whose path is already exact so it needs no mesh walk.
+- It lays into the open track. The window itself stays read only, and the Follow section is its one part given the shell.
+
+### A5. Cost and tier (beyond §6)
+
+- **Rows:** about 8 more, on top of §6's 3 source files, 3 test files, about 27 rows and the one undo step in `coreshell.js`:
+  - our own closed lap, followed back whole and closed inside the bars;
+  - a flight laid by its landing pose;
+  - a close-pass stop, with the core's words and nothing moved;
+  - the lap report lists every marked stretch;
+  - Cancel mid-lap keeps nothing;
+  - a lap is one undo step;
+  - a lap whose Close would move a piece past the bar is left open, and says so;
+  - a followed saved track of his own is the same road within 1 mm.
+- **No new native command.** The whole-lap steps use existing shell operations: `jump`, `moveLanding` and `closeBest`.
+- **The smoothing test is a measurement, not a feature.** It is the scorer's script, about 300 lines, local and uncommitted, because it reads other authors' tracks, as the studies' scripts did.
+- **Order:** the Track overlay window is built first (tier check it), since Follow mounts in it.
+- **Tier: prove it,** as in §6: geometry, and it writes the document. The 8 mutation harnesses that name `coreshell.js` run whole, plus a new one for `src/reference/follow.js`.
+- **In all:** about 35 rows.
+
+### A6. Names
+
+[T1] to [T5] only. Installed layouts are "layout N". The test shapes are our own. No track name is in this addendum or its evidence.

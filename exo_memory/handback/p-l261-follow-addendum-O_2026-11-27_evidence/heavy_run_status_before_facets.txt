@@ -1,0 +1,4 @@
+heavy-run status (C:\Consonance\data), read only:
+  EXCLUSIVE HOLD: none
+  slot 1: free
+  slot 2: held by 12fb81f6 pid 5508 (B L258 whole suite on e4e7ecc, since 2026-11-27T07:51:48.578Z)

@@ -1,0 +1,2 @@
+{"layouts":61,"measured":44,"edgeSpacingP50M":{"min":0.25,"median":0.25,"max":0.75},"edgeSpacingP90M":{"median":0.75,"max":1.75},"kinkP50Deg":0.1013,"kinkP95Deg":{"median":0.4116,"max":3.4891},"facetBandShare":{"min":0.1742,"median":0.7362,"max":0.9728},"layoutsSpacingAbove8m":0,"layoutsSpacingP90Above8m":0,"wallS":34}
+exit 0

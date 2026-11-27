@@ -1,0 +1,846 @@
+{
+ "summary": {
+  "layouts": 61,
+  "measured": 44,
+  "edgeSpacingP50M": {
+   "min": 0.25,
+   "median": 0.25,
+   "max": 0.75
+  },
+  "edgeSpacingP90M": {
+   "median": 0.75,
+   "max": 1.75
+  },
+  "kinkP50Deg": 0.1013,
+  "kinkP95Deg": {
+   "median": 0.4116,
+   "max": 3.4891
+  },
+  "facetBandShare": {
+   "min": 0.1742,
+   "median": 0.7362,
+   "max": 0.9728
+  },
+  "layoutsSpacingAbove8m": 0,
+  "layoutsSpacingP90Above8m": 0,
+  "wallS": 34
+ },
+ "rows": [
+  {
+   "n": 1,
+   "ai": "none"
+  },
+  {
+   "n": 2,
+   "ai": "none"
+  },
+  {
+   "n": 3,
+   "ai": "none"
+  },
+  {
+   "n": 4,
+   "ai": "none"
+  },
+  {
+   "n": 5,
+   "ai": "does not read"
+  },
+  {
+   "n": 6,
+   "ai": "none"
+  },
+  {
+   "n": 7,
+   "ai": "none"
+  },
+  {
+   "n": 8,
+   "tris": 497132,
+   "lapM": 4861,
+   "samples": 4004,
+   "miss": 0,
+   "edgeSpacingM": {
+    "p10": 0.25,
+    "p50": 0.25,
+    "p90": 0.75
+   },
+   "kinkDeg": {
+    "p50": 0.1099,
+    "p95": 0.4664
+   },
+   "facetBandShare": 0.6957
+  },
+  {
+   "n": 9,
+   "tris": 335202,
+   "lapM": 4590,
+   "samples": 4004,
+   "miss": 0,
+   "edgeSpacingM": {
+    "p10": 0.25,
+    "p50": 0.25,
+    "p90": 0.75
+   },
+   "kinkDeg": {
+    "p50": 0.0933,
+    "p95": 0.2845
+   },
+   "facetBandShare": 0.6755
+  },
+  {
+   "n": 10,
+   "tris": 332678,
+   "lapM": 4682,
+   "samples": 4004,
+   "miss": 0,
+   "edgeSpacingM": {
+    "p10": 0.25,
+    "p50": 0.25,
+    "p90": 0.75
+   },
+   "kinkDeg": {
+    "p50": 0.1,
+    "p95": 2.9637
+   },
+   "facetBandShare": 0.9051
+  },
+  {
+   "n": 11,
+   "tris": 392936,
+   "lapM": 6415,
+   "samples": 4004,
+   "miss": 0,
+   "edgeSpacingM": {
+    "p10": 0.25,
+    "p50": 0.5,
+    "p90": 1
+   },
+   "kinkDeg": {
+    "p50": 0.173,
+    "p95": 0.4695
+   },
+   "facetBandShare": 0.7761
+  },
+  {
+   "n": 12,
+   "tris": 392936,
+   "lapM": 11165,
+   "samples": 4004,
+   "miss": 0,
+   "edgeSpacingM": {
+    "p10": 0.25,
+    "p50": 0.5,
+    "p90": 1.5
+   },
+   "kinkDeg": {
+    "p50": 0.1636,
+    "p95": 0.3918
+   },
+   "facetBandShare": 0.3542
+  },
+  {
+   "n": 13,
+   "tris": 392936,
+   "lapM": 6450,
+   "samples": 4004,
+   "miss": 0,
+   "edgeSpacingM": {
+    "p10": 0.25,
+    "p50": 0.25,
+    "p90": 0.75
+   },
+   "kinkDeg": {
+    "p50": 0.1737,
+    "p95": 0.4631
+   },
+   "facetBandShare": 0.6753
+  },
+  {
+   "n": 14,
+   "tris": 219529,
+   "lapM": 3886,
+   "samples": 4004,
+   "miss": 0,
+   "edgeSpacingM": {
+    "p10": 0.25,
+    "p50": 0.5,
+    "p90": 0.75
+   },
+   "kinkDeg": {
+    "p50": 0.1402,
+    "p95": 0.4752
+   },
+   "facetBandShare": 0.7786
+  },
+  {
+   "n": 15,
+   "tris": 219529,
+   "lapM": 1914,
+   "samples": 4004,
+   "miss": 0,
+   "edgeSpacingM": {
+    "p10": 0.25,
+    "p50": 0.25,
+    "p90": 0.75
+   },
+   "kinkDeg": {
+    "p50": 0.1423,
+    "p95": 0.5675
+   },
+   "facetBandShare": 0.5493
+  },
+  {
+   "n": 16,
+   "tris": 52224,
+   "lapM": 2469,
+   "samples": 4004,
+   "miss": 0,
+   "edgeSpacingM": {
+    "p10": 0.25,
+    "p50": 0.25,
+    "p90": 0.25
+   },
+   "kinkDeg": {
+    "p50": 1.2172,
+    "p95": 3.4891
+   },
+   "facetBandShare": 0.9728
+  },
+  {
+   "n": 17,
+   "tris": 52224,
+   "lapM": 2469,
+   "samples": 4004,
+   "miss": 0,
+   "edgeSpacingM": {
+    "p10": 0.25,
+    "p50": 0.25,
+    "p90": 0.25
+   },
+   "kinkDeg": {
+    "p50": 1.2172,
+    "p95": 3.4891
+   },
+   "facetBandShare": 0.9728
+  },
+  {
+   "n": 18,
+   "tris": 52224,
+   "lapM": 2469,
+   "samples": 4004,
+   "miss": 0,
+   "edgeSpacingM": {
+    "p10": 0.25,
+    "p50": 0.25,
+    "p90": 0.25
+   },
+   "kinkDeg": {
+    "p50": 1.2172,
+    "p95": 3.4891
+   },
+   "facetBandShare": 0.9728
+  },
+  {
+   "n": 19,
+   "tris": 52224,
+   "lapM": 2469,
+   "samples": 4004,
+   "miss": 0,
+   "edgeSpacingM": {
+    "p10": 0.25,
+    "p50": 0.25,
+    "p90": 0.25
+   },
+   "kinkDeg": {
+    "p50": 1.2172,
+    "p95": 3.4891
+   },
+   "facetBandShare": 0.9728
+  },
+  {
+   "n": 20,
+   "tris": 52224,
+   "lapM": 2469,
+   "samples": 4004,
+   "miss": 0,
+   "edgeSpacingM": {
+    "p10": 0.25,
+    "p50": 0.25,
+    "p90": 0.25
+   },
+   "kinkDeg": {
+    "p50": 1.2172,
+    "p95": 3.4891
+   },
+   "facetBandShare": 0.9728
+  },
+  {
+   "n": 21,
+   "tris": 462524,
+   "lapM": 5160,
+   "samples": 4004,
+   "miss": 0,
+   "edgeSpacingM": {
+    "p10": 0.25,
+    "p50": 0.5,
+    "p90": 1
+   },
+   "kinkDeg": {
+    "p50": 0.0382,
+    "p95": 0.1398
+   },
+   "facetBandShare": 0.3301
+  },
+  {
+   "n": 22,
+   "tris": 462524,
+   "lapM": 8138,
+   "samples": 4004,
+   "miss": 0,
+   "edgeSpacingM": {
+    "p10": 0.25,
+    "p50": 0.75,
+    "p90": 1.25
+   },
+   "kinkDeg": {
+    "p50": 0.1065,
+    "p95": 0.3349
+   },
+   "facetBandShare": 0.9398
+  },
+  {
+   "n": 23,
+   "tris": 462524,
+   "lapM": 12157,
+   "samples": 4004,
+   "miss": 0,
+   "edgeSpacingM": {
+    "p10": 0.25,
+    "p50": 0.5,
+    "p90": 1.25
+   },
+   "kinkDeg": {
+    "p50": 0.1122,
+    "p95": 0.3388
+   },
+   "facetBandShare": 0.6374
+  },
+  {
+   "n": 24,
+   "tris": 462524,
+   "lapM": 1706,
+   "samples": 4004,
+   "miss": 0,
+   "edgeSpacingM": {
+    "p10": 0.25,
+    "p50": 0.25,
+    "p90": 1
+   },
+   "kinkDeg": {
+    "p50": 0.4655,
+    "p95": 1.5483
+   },
+   "facetBandShare": 0.6201
+  },
+  {
+   "n": 25,
+   "tris": 353671,
+   "lapM": 3557,
+   "samples": 4004,
+   "miss": 0,
+   "edgeSpacingM": {
+    "p10": 0.25,
+    "p50": 0.25,
+    "p90": 0.5
+   },
+   "kinkDeg": {
+    "p50": 0.0755,
+    "p95": 0.2317
+   },
+   "facetBandShare": 0.6835
+  },
+  {
+   "n": 26,
+   "tris": 335400,
+   "lapM": 10012,
+   "samples": 4004,
+   "miss": 0,
+   "edgeSpacingM": {
+    "p10": 0.25,
+    "p50": 0.5,
+    "p90": 1.25
+   },
+   "kinkDeg": {
+    "p50": 0.1688,
+    "p95": 1.1202
+   },
+   "facetBandShare": 0.9155
+  },
+  {
+   "n": 27,
+   "tris": 217652,
+   "lapM": 2394,
+   "samples": 4004,
+   "miss": 0,
+   "edgeSpacingM": {
+    "p10": 0.25,
+    "p50": 0.5,
+    "p90": 1.25
+   },
+   "kinkDeg": {
+    "p50": 0.0613,
+    "p95": 0.2733
+   },
+   "facetBandShare": 0.873
+  },
+  {
+   "n": 28,
+   "tris": 217652,
+   "lapM": 5753,
+   "samples": 4004,
+   "miss": 0,
+   "edgeSpacingM": {
+    "p10": 0.25,
+    "p50": 0.5,
+    "p90": 1.5
+   },
+   "kinkDeg": {
+    "p50": 0.0579,
+    "p95": 0.2713
+   },
+   "facetBandShare": 0.9334
+  },
+  {
+   "n": 29,
+   "tris": 1227197,
+   "lapM": 25219,
+   "samples": 4004,
+   "miss": 0,
+   "edgeSpacingM": {
+    "p10": 0.25,
+    "p50": 0.25,
+    "p90": 0.75
+   },
+   "kinkDeg": {
+    "p50": 0.1286,
+    "p95": 0.4525
+   },
+   "facetBandShare": 0.1742
+  },
+  {
+   "n": 30,
+   "tris": 1227102,
+   "lapM": 24189,
+   "samples": 4004,
+   "miss": 0,
+   "edgeSpacingM": {
+    "p10": 0.25,
+    "p50": 0.25,
+    "p90": 0.75
+   },
+   "kinkDeg": {
+    "p50": 0.1343,
+    "p95": 0.5231
+   },
+   "facetBandShare": 0.6577
+  },
+  {
+   "n": 31,
+   "tris": 765977,
+   "lapM": 20693,
+   "samples": 4004,
+   "miss": 0,
+   "edgeSpacingM": {
+    "p10": 0.25,
+    "p50": 0.25,
+    "p90": 0.75
+   },
+   "kinkDeg": {
+    "p50": 0.1566,
+    "p95": 0.4234
+   },
+   "facetBandShare": 0.6973
+  },
+  {
+   "n": 32,
+   "tris": 780529,
+   "lapM": 20693,
+   "samples": 4004,
+   "miss": 0,
+   "edgeSpacingM": {
+    "p10": 0.25,
+    "p50": 0.25,
+    "p90": 0.75
+   },
+   "kinkDeg": {
+    "p50": 0.1566,
+    "p95": 0.4234
+   },
+   "facetBandShare": 0.6973
+  },
+  {
+   "n": 33,
+   "tris": 460967,
+   "lapM": 5076,
+   "samples": 4004,
+   "miss": 0,
+   "edgeSpacingM": {
+    "p10": 0.25,
+    "p50": 0.25,
+    "p90": 0.5
+   },
+   "kinkDeg": {
+    "p50": 0.0933,
+    "p95": 0.3888
+   },
+   "facetBandShare": 0.587
+  },
+  {
+   "n": 34,
+   "tris": 461304,
+   "lapM": 5065,
+   "samples": 4004,
+   "miss": 0,
+   "edgeSpacingM": {
+    "p10": 0.25,
+    "p50": 0.25,
+    "p90": 0.5
+   },
+   "kinkDeg": {
+    "p50": 0.0959,
+    "p95": 0.4033
+   },
+   "facetBandShare": 0.5729
+  },
+  {
+   "n": 35,
+   "tris": 460967,
+   "lapM": 3564,
+   "samples": 4004,
+   "miss": 0,
+   "edgeSpacingM": {
+    "p10": 0.25,
+    "p50": 0.25,
+    "p90": 0.5
+   },
+   "kinkDeg": {
+    "p50": 0.0854,
+    "p95": 0.3762
+   },
+   "facetBandShare": 0.6366
+  },
+  {
+   "n": 36,
+   "tris": 461304,
+   "lapM": 3558,
+   "samples": 4004,
+   "miss": 0,
+   "edgeSpacingM": {
+    "p10": 0.25,
+    "p50": 0.25,
+    "p90": 0.5
+   },
+   "kinkDeg": {
+    "p50": 0.0873,
+    "p95": 0.3576
+   },
+   "facetBandShare": 0.6293
+  },
+  {
+   "n": 37,
+   "tris": 412723,
+   "lapM": 4285,
+   "samples": 4004,
+   "miss": 0,
+   "edgeSpacingM": {
+    "p10": 0.25,
+    "p50": 0.5,
+    "p90": 0.75
+   },
+   "kinkDeg": {
+    "p50": 0.037,
+    "p95": 0.5098
+   },
+   "facetBandShare": 0.2965
+  },
+  {
+   "n": 38,
+   "tris": 412723,
+   "lapM": 2315,
+   "samples": 4004,
+   "miss": 0,
+   "edgeSpacingM": {
+    "p10": 0.25,
+    "p50": 0.5,
+    "p90": 0.75
+   },
+   "kinkDeg": {
+    "p50": 0.0374,
+    "p95": 0.3809
+   },
+   "facetBandShare": 0.6769
+  },
+  {
+   "n": 39,
+   "tris": 602412,
+   "lapM": 5801,
+   "samples": 4004,
+   "miss": 0,
+   "edgeSpacingM": {
+    "p10": 0.25,
+    "p50": 0.25,
+    "p90": 1
+   },
+   "kinkDeg": {
+    "p50": 0.0279,
+    "p95": 0.5283
+   },
+   "facetBandShare": 0.8488
+  },
+  {
+   "n": 40,
+   "tris": 609837,
+   "lapM": 2943,
+   "samples": 4004,
+   "miss": 0,
+   "edgeSpacingM": {
+    "p10": 0.25,
+    "p50": 0.5,
+    "p90": 1.25
+   },
+   "kinkDeg": {
+    "p50": 0.0248,
+    "p95": 0.1684
+   },
+   "facetBandShare": 0.752
+  },
+  {
+   "n": 41,
+   "tris": 602265,
+   "lapM": 2598,
+   "samples": 4004,
+   "miss": 0,
+   "edgeSpacingM": {
+    "p10": 0.25,
+    "p50": 0.5,
+    "p90": 1.75
+   },
+   "kinkDeg": {
+    "p50": 0.0305,
+    "p95": 0.2919
+   },
+   "facetBandShare": 0.736
+  },
+  {
+   "n": 42,
+   "tris": 367901,
+   "lapM": 4743,
+   "samples": 4004,
+   "miss": 0,
+   "edgeSpacingM": {
+    "p10": 0.25,
+    "p50": 0.5,
+    "p90": 0.75
+   },
+   "kinkDeg": {
+    "p50": 0.0607,
+    "p95": 0.2222
+   },
+   "facetBandShare": 0.8439
+  },
+  {
+   "n": 43,
+   "tris": 152928,
+   "lapM": 3178,
+   "samples": 4004,
+   "miss": 0,
+   "edgeSpacingM": {
+    "p10": 0.25,
+    "p50": 0.25,
+    "p90": 0.75
+   },
+   "kinkDeg": {
+    "p50": 0.1288,
+    "p95": 0.9284
+   },
+   "facetBandShare": 0.9089
+  },
+  {
+   "n": 44,
+   "tris": 152928,
+   "lapM": 1718,
+   "samples": 4004,
+   "miss": 0,
+   "edgeSpacingM": {
+    "p10": 0.25,
+    "p50": 0.5,
+    "p90": 1.25
+   },
+   "kinkDeg": {
+    "p50": 0.0713,
+    "p95": 0.3995
+   },
+   "facetBandShare": 0.9351
+  },
+  {
+   "n": 45,
+   "tris": 152928,
+   "lapM": 4029,
+   "samples": 4004,
+   "miss": 0,
+   "edgeSpacingM": {
+    "p10": 0.25,
+    "p50": 0.5,
+    "p90": 1
+   },
+   "kinkDeg": {
+    "p50": 0.0969,
+    "p95": 0.7615
+   },
+   "facetBandShare": 0.8929
+  },
+  {
+   "n": 46,
+   "tris": 125773,
+   "lapM": 4188,
+   "samples": 4004,
+   "miss": 0,
+   "edgeSpacingM": {
+    "p10": 0.25,
+    "p50": 0.5,
+    "p90": 1
+   },
+   "kinkDeg": {
+    "p50": 0.0992,
+    "p95": 0.2784
+   },
+   "facetBandShare": 0.8487
+  },
+  {
+   "n": 47,
+   "tris": 357588,
+   "lapM": 2455,
+   "samples": 4004,
+   "miss": 0,
+   "edgeSpacingM": {
+    "p10": 0.25,
+    "p50": 0.25,
+    "p90": 0.25
+   },
+   "kinkDeg": {
+    "p50": 0.0706,
+    "p95": 0.2076
+   },
+   "facetBandShare": 0.7362
+  },
+  {
+   "n": 48,
+   "ai": "none"
+  },
+  {
+   "n": 49,
+   "tris": 428872,
+   "lapM": 5753,
+   "samples": 4004,
+   "miss": 0,
+   "edgeSpacingM": {
+    "p10": 0.25,
+    "p50": 0.25,
+    "p90": 0.75
+   },
+   "kinkDeg": {
+    "p50": 0.0738,
+    "p95": 0.2867
+   },
+   "facetBandShare": 0.8069
+  },
+  {
+   "n": 50,
+   "tris": 457216,
+   "lapM": 5195,
+   "samples": 4004,
+   "miss": 0,
+   "edgeSpacingM": {
+    "p10": 0.25,
+    "p50": 0.25,
+    "p90": 0.75
+   },
+   "kinkDeg": {
+    "p50": 0.1013,
+    "p95": 0.4116
+   },
+   "facetBandShare": 0.7045
+  },
+  {
+   "n": 51,
+   "ai": "none"
+  },
+  {
+   "n": 52,
+   "ai": "does not read"
+  },
+  {
+   "n": 53,
+   "ai": "none"
+  },
+  {
+   "n": 54,
+   "ai": "none"
+  },
+  {
+   "n": 55,
+   "ai": "none"
+  },
+  {
+   "n": 56,
+   "tris": 569436,
+   "lapM": 6942,
+   "samples": 4004,
+   "miss": 0,
+   "edgeSpacingM": {
+    "p10": 0.25,
+    "p50": 0.25,
+    "p90": 0.75
+   },
+   "kinkDeg": {
+    "p50": 0.1135,
+    "p95": 0.3592
+   },
+   "facetBandShare": 0.7822
+  },
+  {
+   "n": 57,
+   "ai": "none"
+  },
+  {
+   "n": 58,
+   "ai": "none"
+  },
+  {
+   "n": 59,
+   "ai": "none"
+  },
+  {
+   "n": 60,
+   "ai": "none"
+  },
+  {
+   "n": 61,
+   "tris": 1330225,
+   "lapM": 17116,
+   "samples": 4004,
+   "miss": 0,
+   "edgeSpacingM": {
+    "p10": 0.25,
+    "p50": 0.25,
+    "p90": 0.5
+   },
+   "kinkDeg": {
+    "p50": 0.2735,
+    "p95": 0.83
+   },
+   "facetBandShare": 0.7459
+  }
+ ]
+}
