@@ -16,3 +16,8 @@
 - **No tool sets a stretch to one even value.** A grep of `sculpt.js`, `coreshell.js` and `panel.js` for a plateau, a level or a set-over-a-run finds none.
 - Evidence for a refactor, from tonight's bank work: `handback/p-l260-sculpt-carry-A_2026-11-27.md`, "For a refactor of Sculpt".
 - Next: a plan and a mock, `loop/packet_t180_sculpt_even_2026-11-27.md`. Nothing is built before he has seen it.
+
+## State, 05:13: a plan and a mock exist
+
+- Plan `loop/plan_t180_sculpt_even_2026-11-27.md` (pane A, hand-back `handback/p-l265-sculpt-even-A_2026-11-27.md`): the pick is a LEVEL, bring a selected run to a value (typed, picked from a spot, or dragged with a snapping readout). His nine calls are its section 8. Nothing built.
+- The mock pictures do not show the road edge yet; a second render with the camera on the turn is ordered before he is shown.
