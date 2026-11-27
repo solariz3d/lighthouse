@@ -43,3 +43,14 @@ goes in at e4e7ecc as installed now (nothing new of it), the bank fix goes in al
    brush.
 
 Hand-back to the librarian by `call_librarian`, claims marked checked or inferred.
+
+## GO, 04:10: the last read is in; the code is clean
+
+`handback/p-l258-read-right-width-O_2026-11-27.md`, section "Delta read, 2026-11-27 10:1xZ" (room 3e744704): the rule B built
+holds everywhere O varied it, typed in the mounted panel; NOT CLEAN on one sentence of the CHANGELOG and one row's name
+(F3), which is words and goes to the right width's builder separately. The gate above is met.
+
+- **The tips are named, not "as they stand":** `l-bankcarry-a` **e7b9128** and `d677-right-width-b` **de6c069**. A later
+  commit on either branch (F3's words) is NOT in this install; if a ref has moved, merge the named commit.
+- Everything else as written above. In the hand-back's lines for him, do not say the file "goes back" to the old kind by
+  setting the right width back: F3 measured that a track keeps the new file kind while any stepped piece is in it.
