@@ -565,3 +565,203 @@ They are in `exo_memory/handback/p-d678-even-build-A_2026-11-27_evidence/`, made
   - a grab nearer the run's end (U4's rule came after its red);
   - a road whose width changes across the window (the 0.077 m residual);
   - a long closed lap's release (U6).
+
+## 3. The repair round (Track 1 of the packet's amendment, `:52`): registration, then results
+
+Written from 21:11Z on 2026-11-27, before any change to the branch. This is the hand-back's new section, in the same
+file.
+
+- **Base:** `d678-even-a` at 437590e, in worktree `G:/consonance-scratch/a-d678-r2/wt`.
+- **Tier:** prove it.
+- **Order:** items 3, 2, then 1. Item 2 changes the l that Even lays, and so the figures in B+'s sentence. Item 1's
+  equality rows are therefore run last, on the tree that holds item 2.
+
+### 3.1 The "before" on 437590e, measured this round
+
+Everything here is on his largest saved track, read from copies in the scratchpad named t01–t27:
+
+- 27,592 m, 44 pieces, a closed lap, 13,799 stations;
+- a run of two pieces at its middle, so the window is 627 m;
+- acs.exe not running at any run; both heavy-run slots free.
+
+checked: `node scratchpad/prof678r.js <wt> <copies>` → `prof_base4.out`. The figures below are copied from it.
+
+**Even itself.**
+- Time: 3,945 / 4,007 / 3,948 ms.
+- **Where it goes**, from a CPU profile (inclusive ms of 5,174 sampled):
+
+  | function | ms |
+  |---|---|
+  | toSegments | 3,867 |
+  | rimReader | 1,937 |
+  | levelTo | 404 |
+  | fitHeight | 376 |
+  | bankPlan | 185 |
+
+- One Even calls toSegments 14 times. The whole document's toSegments alone takes 390 ms.
+- So about three quarters of Even is re-segmenting the whole track for each intermediate document it makes:
+  - `sites678.js` finds 11 of the 14 calls missing the per-piece cache;
+  - inferred: they miss because the intermediate documents' pieces are new objects. The cause was not traced; one cache
+    does key on frozen pieces (`sculpt.js:53`, `pieceOffsets`).
+
+**One drag step** of the handle through the shell (`sculptTo`).
+- Time: 8,816 / 8,302 / 8,098 / 8,514 / 8,515 ms.
+- In a profiled step (10,475 ms sampled), two things take nearly all of it:
+  - the pass-clearance guard, 4,483 ms (D623, `passClearanceGuard` in `sculptTo`);
+  - evenIn, 3,807 ms.
+- **Against the frame bars the Sculpt drags already keep:**
+  - D421a's core step bar is 20.7 ms (`test/core_sculpt_modes.test.js`, `STEP_BAR_MS`). One step is over it by 8,077–8,795
+    ms (390–425 times).
+  - The page's work-frame bar is 6.0 ms (`app/test/sculpt-frame.test.js`, `BUDGET`). One step is over it by 8,092–8,810
+    ms.
+- Per the order, the drag step is not changed in this round.
+
+**The release** (`endSculpt`): 33,327 ms. Earlier runs, with `u6.js`: 35,404 and 34,545 ms.
+
+**The parts of the sentence check:**
+
+| part | ms |
+|---|---|
+| toPath | 427 |
+| a whole validate | 15,849 (stacked 10,381 of it) |
+| a validate bounded at the window's END (`uptoS`) | 13,470 |
+| the speed profile | about 8 |
+
+**A correction to 2.3, mine.**
+- 2.3 said a validate bounded at the window's end gives the same loads inside the window. True of the loads.
+- But bounded at the end only, it still checks every station before the window, and it costs 13,470 ms against 15,849.
+- The bound that cuts the cost is at both ends, starting at the window's first station. 2.3 did not measure that.
+
+**The release's words on 437590e**, the literal the off-page sentence is compared against.
+checked: `node scratchpad/capmsg.js <wt>` → `capmsg_437590e.out`.
+- **B+:** "Even: 16 m wide from 0.20 km to 0.44 km, eased back to the road over the 50 m either side; the left edge stays
+  where it was (Ctrl+Z puts it back). But from 0.21 km to 0.22 km the car now leaves the road on the new middle at the
+  checker's speed. The bank rolls there, and the middle has moved 1.9 m to one side: on the track as it stood, a car on
+  that line already leaves the road at 0.22 km (−4.4 g), and on the old middle it did not (+0.4 g), because the bank turns
+  about the middle. Even adds no bump of its own there. A longer bank change there, or a run that ends before it, would
+  clear it."
+- **B+0:** the same, with 2.0 m and −5.0 g.
+- **Bhold:** the first sentence only.
+- The release took 63.0, 51.5 and 22.3 ms on these small fixtures.
+
+### 3.2 Item 1 (U6): the sentence after the release, off the page
+
+**What will be built:**
+- **`src/validate/index.js`:** one narrow export, the load lines at the stations between two lap distances.
+  - It runs `core` from the window's first station to its last, with the whole track's speed profile, so each line is the
+    whole validate's.
+  - It returns lines only. A red or a lap read from part of a track is not the track's, so neither is returned.
+  - `validate` and `core` are unchanged.
+- **`app/core/evenwords.js`:** the check takes plain data, {before, after, window, value, hold}, and gives {message,
+  leaves}.
+  - It reads the loads bounded at the window.
+  - The words do not change.
+  - The whole-track form stays, as the on-page check the rows compare against.
+- **`src/core/even.js`:** the shift (the centre's move in the built plane) as a function of the two documents, so the job
+  computes what `res.shiftAt` did.
+- **`app/core/coreshell.js`:**
+  - The release and the typed value say the first sentence at once and start the check as a job.
+  - While it runs, state `evenCheck` reads "checking".
+  - Its answer is said only if the document is still the one the check was asked for; otherwise it is dropped.
+  - With no runner (the tests, a page with no Worker), the job runs on the page in a timer after the release, as the
+    overlap check does (`beginCheck`).
+- **`app/validate-ui/checkjob.js`, `checkworker.js`, `checkrunner.js`:**
+  - the check job gains Even's check, and the worker answers it;
+  - the page (`app/index.html`) gives the shell a runner: one worker per check, ended when it answers.
+
+**Rows, committed tests, each red on 437590e first:**
+
+| row | measures | passes | fails |
+|---|---|---|---|
+| E1 | the release through the shell, on B+, B+0 and Bhold | the first sentence only, and `evenCheck` is pending | the second sentence said at the release, or nothing pending |
+| E2 | the message when the job answers, on B+, B+0 and Bhold | equals, character for character, the on-page check's words on the same two documents; `evenLeaves` equals its leaves | any difference |
+| E3 | the bounded loads, on B+ and on a closed lap | at every station in the window, each centre line's load equals the whole validate's (`Object.is`) | a station that differs, or one missing |
+| E4 | Undo before the answer | the answer is dropped: the message stays Undo's, `evenLeaves` null | the stale sentence is said |
+| E5 | the typed value (`evenRun`), on B+ | as E1 and E2 | as E1 and E2 |
+
+- **P1 to P3** are amended by name, to read the sentence after the answer.
+- **How each is red on 437590e:**
+  - E1 and E5 are red by behaviour: the release says the whole sentence.
+  - E2, E3 and E4 are red by absence: there is no pending check and no bounded function. That is red, but not
+    behavioural.
+
+**Local, on his lap, with the game not running.**
+- **Gate:** the release returns within 1,000 ms.
+- **Reported, no bar:** evenRun's time, the job's time to the sentence, and one drag step (unchanged).
+- **Reported, not a gate:** B+'s and B+0's sentences against 437590e's literal. Item 2 moves the l Even lays, so the
+  figures may move.
+
+**Unwelcome, in the words that would make it true:**
+- "The release still takes more than 1 s on his lap."
+- "The bounded loads differ from the whole validate's at a window station."
+- "A sentence is said on a document it was not asked for."
+
+### 3.3 Item 2: the sideways shift fitted by least squares
+
+**What will be built:**
+- The held rim's sideways target becomes a function of s. Today the rule is set at each control point's knot average.
+- It is fitted by least squares at every quarter metre, with the joints as settle builds them.
+- `fitHeight` is generalised to a channel, so h and l share one fit.
+- The 'centre' hold is left as it is: its rows pass, and it is the narrowest reading.
+
+**Rows:**
+
+| row | measures | passes | fails |
+|---|---|---|---|
+| N1 | the narrows (`test/core_even.test.js`, "a road whose own width changes across the window"), held rim over the run | ≤ 0.01 m (the bar amended by name from 0.1) | > 0.01 m: said by how much, the bar not widened |
+| N2 | mine: a 20 m straight into a 12 m turn (four 60 m pieces of 30°) into a 20 m exit, right edge held, to 14 m; held rim over the run | ≤ 0.01 m | > 0.01 m: said by how much |
+
+- **On 437590e:** N1 reads 0.07737 m and N2 0.03026 m, so both are red. checked: `node scratchpad/n2probe.js <wt>`.
+- Every existing row stays green: F, K, P, the tool's rows and the panel's.
+- **Unwelcome:**
+  - "the least-squares fit does not reach 0.01 m on the narrows, by X m";
+  - "it reaches it and moves F3, K2 or K3 past the bar on the flat or banked fixtures".
+- **Prediction (mine):**
+  - N2 reaches the bar.
+  - N1 reaches it only if the carry side's fixed points leave the fit room. 60%.
+
+### 3.4 Item 3: H6, H7 and S6
+
+**H6** goes back into the harness's header as a named equivalent below the bar, with its measured figures (h ≤ 0.0019 m,
+K3 < 0.0004 m; section 2.3). It is not run as a mutant.
+
+**H7.** I probed for its fixture on 437590e before this registration (`h7probe.js`, `h7joint.js`, `h7climb.js`,
+`h7hill.js`):
+- **The layout:**
+  - a 65 m lead;
+  - z, 90 m, ending at 155;
+  - a, 45 m, from 155 to 200;
+  - the run, 200–440: four 60 m pieces of 30°;
+  - an exit;
+  - the window is 150–490.
+- **The joint z|a at 155 is covered in part:** z's last point is in reach and its last-but-one is not, while a's first
+  two points are in reach.
+- **On flat and banked roads** (bank 0 and ±20°, with and without climbs), H7 changes nothing: |h − real| is exactly 0,
+  over 8 variants.
+- **With a dip in the height across the window's start** (the core's brush, a hill on h at 175 m, r 30 m, −3 m):
+  - H7 moves h by up to 0.0161 m, at 159.75;
+  - K3 goes from 0.0388 to 0.0406 m;
+  - but the real build's K3 there is already 0.0388 m, over the 0.01 bar.
+- **The row registered:** H7 counts as caught if, on some fixture of this shape, a gate row is within its bar on the real
+  build and past it under H7.
+  - The scan: dips of 1–4 m and radius 10–30 m, centred from 150 to 175 m.
+  - If none is found, I say so with the figures, and H7 stays out with its fixture in the header.
+
+**S6** is accepted as a second guard; the header is unchanged.
+
+**Found, outside the order, reported only.** Even's height fit does not reach its in-plane target where the road has a
+height feature in the ramps:
+
+| fixture | K3 |
+|---|---|
+| the H7 fixture, dip at 175 m | 0.0388 m |
+| the same, with the piece before the run 30 m | 0.0606 m |
+| a dip at 465 m, in the far ramp | 0.113 m, at 479 |
+
+K3's bar is 0.01 m. checked: `node scratchpad/k3hill.js <wt>`. Not fixed here, because it is outside items 1–5; it is for
+the librarian.
+
+### 3.5 State at registration
+
+- **Builder:** `d678-even-a` at 437590e, unchanged.
+- **Lighthouse:** this section only.
