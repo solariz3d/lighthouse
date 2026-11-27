@@ -109,3 +109,103 @@ inferred: 7b3926e adds one row in one test file to 0023853 (`git diff --stat 002
 
 SOURCES: the packet's Track 7 and Amendment 01:25; handback/p-l260-sculpt-carry-A_2026-11-27.md (whole); builder git diff 2067c88 7b3926e; evidence/ (first_pass_E.md, e260_rows.part.js, h_tip.txt, h_base.txt, closed_sculpt.js, closed_sculpt.txt, touched_tip.txt, ghostrow_f3cd425.txt)
 NEXT: librarian route the ±720 hold to the chair when this is rung; a one-line completion of track 7 (no range on Sculpt's bank handle, or travel-driven) is the builder's if the chair sends it
+
+---
+
+## 2026-11-27 03:5x local (L): the ±720 completion, 7b3926e..e7b9128: CLEAN
+
+BASE: C:\Users\zackn\Downloads\t180-track-builder e7b9128 (`l-bankcarry-a`, one commit on 7b3926e; local, not pushed)
+
+**Verdict: CLEAN.** The hold my table above found is gone, by every input the handle has, and nothing else moved.
+- **No range on Sculpt's bank handle**, lifted only for that handle: `handles.js` `rangeOf`, read by `targetFor` and the wheel; `panel.js:1018`, the
+  Sculpt model's `ctx` for `bank` only.
+- None of the NOT CLEAN conditions I registered before opening A's section fired (`evidence/first_pass_02-38.md`).
+- The order: `packet_…:81`, "Amendment, 02:38". The object: A's section "Amendment 02:38", read whole after my first pass.
+
+**My middle-730 case, and the rest of my table, through the panel's own handle host** (`followMark`, 1 px a step, 0.45° a pixel), at e7b9128
+(`e261_tip.txt`; the cases are `e260_rows.part.js`, as before, plus `e261_rows.part.js`):
+
+| piece (its middle), gesture | 7b3926e (my table above) | e7b9128 |
+|---|---|---|
+| 700 → 760 (**730**), up 30 px | −10 on the first step, then held at 720 | **730 → 743.5**, first step +0.45 |
+| 700 → 760 (730), down 30 px | −10 at once, then on to 716.5 | 730 → 716.5, first step −0.45 |
+| held at 710, up 30 px | stops at 720 | 710 → 723.5 |
+| −700 → −760 (−730), down 30 px | +10 at once, then held at −720 | −730 → −743.5 |
+| 350, up 60 px across 360 | 350 → 377 | the same |
+| 730, up **400 px** | (not run) | → **910**, every one of 400 steps 0.45 |
+| held at ±1070, 30 px out across ±1080 | (not run) | → ±1083.5, every step 0.45 |
+| 730 held: ArrowUp, Up, Down, Down, Down; released; a wheel notch down | (A's probe: 720 at once) | 730.01, 730.02, 730.01, 730, 729.99; 729.99; wheel 729.98 |
+
+- The label still shows the bank within one turn (743.5 shows 23.50°, 910 shows 190.00°).
+- checked: A's rows 720a-720e state the same figures.
+
+**The ghost's bank handle keeps its ±720 by every input** (the order's item 2; `e261_tip.txt` G4). The ghost's bank handle, with the field typed:
+- **720:** a wheel notch up changes nothing (the field stays 720).
+- **719.99:** two ArrowUps give handle values 720 and 720.
+- **−720:** a wheel notch down changes nothing.
+- A drag is A's 720g (from 710, the value stops at 720).
+- Had the lift reached the ghost, the wheel at 720 would read 720.01.
+
+### The chair's three questions
+
+1. **Freeing the wheel and the arrow keys is inside the order, not a change he was not asked about.**
+   - checked: they are the same handle's inputs, and they clamped on the same lines (the arrows through `targetFor`, the wheel on its own copy of the
+     clamp, `handles.js:628`).
+   - checked: at 7b3926e they showed the very defect the order names. A wheel notch or an arrow on the 730 piece moved the road to 720 at once (A's
+     720e red and arrow probe; my G3 now steps by 0.01).
+   - inferred, from `rangeOf`: inside ±720 the lift changes nothing for them, because nothing there reached the range. It does not reach the ghost's
+     wheel or arrows (G4 above). "Sculpt's bank handle carries past ±720 as it does past ±360" covers every way that handle is moved.
+2. **My middle-730 case carries both ways, from its first step** (the table). A drag outward goes 730 → 743.5 and inward 730 → 716.5, each step
+   0.45, with no jump against the drag and no hold.
+3. **The timing red (`core-extra-bank-drag-cost` row 1, D642) is not the change, by reading. A clean timing is OWED; I timed nothing.**
+   - inferred: the row is a ratio of two p95s of the SAME extra-bank drag (the bank's ramp moving, against early), read in one process. That drag's
+     model (the ghost's) sets no `range`, so the change adds one `rangeOf` call per move to both sides of the ratio, and nothing else.
+   - inferred, from A's figures: A's alternating A/B (`l261/dragcost261.txt`) puts both trees across the 2× bar (the change 2.03 and 2.02, the base
+     2.13 and 1.97) and was taken under load, with P's whole suite in the other slot. It is evidence of noise at the bar, not a timing.
+   - **Owed: run row 1 on a quiet machine (no other heavy-run holder) at 7b3926e and at e7b9128, alternated as A did.** The landing pane's, or whoever
+     holds a quiet window.
+
+### Rows (checked, at e7b9128)
+
+- **The rows:** `node heavy-run.js --status && node heavy-run.js --run --priority belownormal … -- node --test` over `core-pieces-ui`,
+  `core-bank-carry`, `core-extra-bank-wind`, `handles`, `handle-step` and `core-bank-carry-mutation` → **145 of 145** (`touched261_tip.txt`). It ran
+  in slot 2, beside P's whole suite in slot 1.
+- **The harness:** its CONTROL runs all three row files whole on its copy, and it is green (A's 67-file run had it red on a missing `app/testhook`,
+  fixed in e7b9128). **Applied 13 / caught 13 / NOT APPLIED 0.**
+  - B10 and B11 are caught by rows 720a-d, B12 by 720e, B13 by the ghost's guard 720g.
+- **Not re-run by me:** A's 67 files (986 tests, 977 pass; its 2 fails are the harness control, fixed and green above, and the timing row, owed).
+
+### The CHANGELOG (checked by reading, against the runs)
+
+- **It names three holds after this, and each is there:**
+  - the ghost crossing a full turn from inside one (350 + 20 lays 10);
+  - the extra bank's one turn of its field (unchanged code);
+  - the ghost's ±720 (G4, 720g).
+- **It names no hold that is not there:** Sculpt's handle has none (the table).
+- "730 by a wheel notch up is 730.01" is A's 720e; my G3 gives the arrows.
+- **A note for his eye, not a defect of this commit.** "From a typed 710 a drag up stops at 720" is the handle's value. The ghost writes the field
+  within one turn (`panel.js:1089`), so the field reads 0 there (720g asserts it) and Extend lays 0.
+  - inferred, from `wrapTurn` (`x % 360`): the ghost's first step from a typed 710 already writes 350.45.
+  - That is the ghost's unchanged rule, his to rule on with the other ghost hold.
+
+### Older than the range (listed apart; not run)
+
+- inferred, by reading `handles.js:614` and `:335`: **a double-click on a bank handle resets it to 0**, so on a Sculpt piece at 730 it would unwind
+  730°, two turns. It was the same at 7b3926e: 0 never touched the range. It is a reset, not a hold, and outside this order. For his eye, beside
+  "keep rolling".
+
+### Corrections, mine
+
+- **My first attempt to append this section failed in a shell heredoc** (a quote inside it). Nothing was written, which I checked by the files'
+  tails and `git status` before writing it again.
+
+### The machine
+
+- **Worktree:** `Downloads\t180-wt-e-l260c` at e7b9128, checked clean (0 changes; the scratch copy `app/test/zz-e261-scratch.test.js` was deleted
+  first) and removed. `l-bankcarry-a` is still e7b9128.
+- **heavy-run:** both runs went through `--status && --run --priority belownormal`, in the background, in the free slot. No `cmd`.
+- **No browser. No timing.** His saves were not opened, and no track name is in this section or its evidence.
+- No push, landing or build.
+
+SOURCES: exo_memory/loop/packet_t180_overlay_and_sculpt_carry_2026-11-27.md:81; handback/p-l260-sculpt-carry-A_2026-11-27.md "Amendment 02:38" (whole); builder git diff 7b3926e e7b9128; evidence/ (first_pass_02-38.md, e261_rows.part.js, e261_tip.txt, touched261_tip.txt)
+NEXT: librarian route CLEAN to the chair when this is rung; the D642 row-1 timing on a quiet machine, both commits, is owed to whoever holds a quiet window

@@ -1,0 +1,34 @@
+E260 E260 H0 control: wound 340 -> 392 (middle 366), up 30 px {"selected":true,"middle0":366,"handle":true,"steps":[366.45,366.9,367.35,367.8,368.25,368.7,369.15,369.6,370.05,370.5,370.95,371.4,371.85,372.3,372.75,373.2,373.65,374.1,374.55,375,375.45,375.9,376.35,376.8,377.25,377.7,378.15,378.6,379.05,379.5],"firstStep":0.45,"monotone":true,"last":379.5,"label":"bank 19.50°"}
+E260 E260 H1 wound 700 -> 760 (middle 730), up 30 px {"selected":true,"middle0":730,"handle":true,"steps":[730.45,730.9,731.35,731.8,732.25,732.7,733.15,733.6,734.05,734.5,734.95,735.4,735.85,736.3,736.75,737.2,737.65,738.1,738.55,739,739.45,739.9,740.35,740.8,741.25,741.7,742.15,742.6,743.05,743.5],"firstStep":0.45,"monotone":true,"last":743.5,"label":"bank 23.50°"}
+E260 E260 H1b wound 700 -> 760 (middle 730), down 30 px {"selected":true,"middle0":730,"handle":true,"steps":[729.55,729.1,728.65,728.2,727.75,727.3,726.85,726.4,725.95,725.5,725.05,724.6,724.15,723.7,723.25,722.8,722.35,721.9,721.45,721,720.55,720.1,719.65,719.2,718.75,718.3,717.85,717.4,716.95,716.5],"firstStep":-0.45,"monotone":true,"last":716.5,"label":"bank 356.50°"}
+E260 E260 H2 held at 710 (middle 710), up 30 px, across 720 {"selected":true,"middle0":710,"handle":true,"steps":[710.45,710.9,711.35,711.8,712.25,712.7,713.15,713.6,714.05,714.5,714.95,715.4,715.85,716.3,716.75,717.2,717.65,718.1,718.55,719,719.45,719.9,720.35,720.8,721.25,721.7,722.15,722.6,723.05,723.5],"firstStep":0.45,"monotone":true,"last":723.5,"label":"bank 3.50°"}
+E260 E260 H3 wound -700 -> -760 (middle -730), down 30 px {"selected":true,"middle0":-730,"handle":true,"steps":[-730.45,-730.9,-731.35,-731.8,-732.25,-732.7,-733.15,-733.6,-734.05,-734.5,-734.95,-735.4,-735.85,-736.3,-736.75,-737.2,-737.65,-738.1,-738.55,-739,-739.45,-739.9,-740.35,-740.8,-741.25,-741.7,-742.15,-742.6,-743.05,-743.5],"firstStep":-0.45,"monotone":true,"last":-743.5,"label":"bank -23.50°"}
+E260 E260 H4 held at 350 (middle 350), up 60 px, across 360 {"selected":true,"middle0":350,"handle":true,"steps":[350.45,350.9,351.35,351.8,352.25,352.7,353.15,353.6,354.05,354.5,354.95,355.4,355.85,356.3,356.75,357.2,357.65,358.1,358.55,359,359.45,359.9,360.35,360.8,361.25,361.7,362.15,362.6,363.05,363.5,363.95,364.4,364.85,365.3,365.75,366.2,366.65,367.1,367.55,368,368.45,368.9,369.35,369.8,370.25,370.7,371.15,371.6,372.05,372.5,372.95,373.4,373.85,374.3,374.75,375.2,375.65,376.1,376.55,377],"firstStep":0.45,"monotone":true,"last":377,"label":"bank 17.00°"}
+E261 E261 G1 middle 730, up 400 px (two turns past) {"mid":730,"last":910,"first":0.45,"allShare":true,"minStep":0.45,"maxStep":0.45,"label":"bank 190.00°"}
+E261 E261 G2 held at 1070, up 30 px across 1080 {"mid":1070,"last":1083.5,"first":0.45,"allShare":true,"minStep":0.45,"maxStep":0.45,"label":"bank 3.50°"}
+E261 E261 G2b held at -1070, down 30 px across -1080 {"mid":-1070,"last":-1083.5,"first":0.45,"allShare":true,"minStep":0.45,"maxStep":0.45,"label":"bank -3.50°"}
+E261 G3 {"mid":730,"seq":[730.01,730.02,730.01,730,729.99],"released":729.99,"wheelDown":729.98}
+E261 G4 {"typed":"720","onStage":true,"sculpt":false,"afterArrows":"0","released":"0","afterWheel":"720","stepValues":[]}
+E261 G4 {"typed":"719.99","onStage":true,"sculpt":false,"afterArrows":"0","released":"0","afterWheel":"0","stepValues":[720,720]}
+E261 G4 {"typed":"-720","onStage":true,"sculpt":false,"afterArrows":"0","released":"0","afterWheel":"-720","stepValues":[]}
+✔ E260 H0 control: wound 340 -> 392 (middle 366), up 30 px (2072.2715ms)
+✔ E260 H1 wound 700 -> 760 (middle 730), up 30 px (1917.1453ms)
+✔ E260 H1b wound 700 -> 760 (middle 730), down 30 px (1864.3603ms)
+✔ E260 H2 held at 710 (middle 710), up 30 px, across 720 (1884.6653ms)
+✔ E260 H3 wound -700 -> -760 (middle -730), down 30 px (2023.3021ms)
+✔ E260 H4 held at 350 (middle 350), up 60 px, across 360 (3136.5472ms)
+✔ E261 G1 middle 730, up 400 px (two turns past) (17919.9008ms)
+✔ E261 G2 held at 1070, up 30 px across 1080 (1613.2056ms)
+✔ E261 G2b held at -1070, down 30 px across -1080 (1657.8702ms)
+✔ E261 G3 arrows on the held Sculpt mark at 730: up, up, down, down, down, then release; and a wheel notch down (579.4068ms)
+✔ E261 G4 the ghost's bank handle with the field typed 720: an arrow away from 0 while held, a wheel notch away from 0 (162.6922ms)
+✔ E261 G4 the ghost's bank handle with the field typed 719.99: an arrow away from 0 while held, a wheel notch away from 0 (140.7262ms)
+✔ E261 G4 the ghost's bank handle with the field typed -720: an arrow away from 0 while held, a wheel notch away from 0 (126.9656ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 35393.841
