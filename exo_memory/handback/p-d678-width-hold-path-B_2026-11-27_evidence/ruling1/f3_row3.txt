@@ -1,0 +1,29 @@
+level head | extend: same (f9defaaf959e5a4f / f9defaaf959e5a4f)
+level head | turnBy 45: same (82f07acee97a2025 / 82f07acee97a2025)
+level head | turnBy -90 over 200: same (a4013f24eed398d9 / a4013f24eed398d9)
+level head | corner 30 + extra 20 from 50: same (b1064cdeb1fb8a13 / b1064cdeb1fb8a13)
+level head | sharp -60 R40 ramp8: same (10b1abf0f71b3e1a / 10b1abf0f71b3e1a)
+level head | sharp 90 R150 ramp4: same (52fef7432b8573cd / 52fef7432b8573cd)
+level head | sharp -60 R40 ramp1: same (1577f4fea2cbd1ef / 1577f4fea2cbd1ef)
+level head | jump (take-off): same (46640eaed68fcdfe / 46640eaed68fcdfe)
+level head | level: same (f9defaaf959e5a4f / f9defaaf959e5a4f)
+level lap | finish: same (128cd8b9933f38c4 / 128cd8b9933f38c4)
+LEVEL HEADS: 10 of 10 the same bytes
+t01: open, head width slope 0 per m: extend same; turnBy 45 same
+t06: open, head width slope 0 per m: extend same; turnBy 45 same
+t07: open, head width slope 0 per m: extend same; turnBy 45 same
+t08: open, head width slope 0 per m: extend same; turnBy 45 same
+t09: open, head width slope 0 per m: extend same; turnBy 45 same
+t12: open, head width slope 0 per m: extend same; turnBy 45 same
+t13: open, head width slope 0 per m: extend same; turnBy 45 same
+t18: open, head width slope 0 per m: extend same; turnBy 45 same
+t19: open, head width slope 0 per m: extend same; turnBy 45 same
+t20: open, head width slope 0 per m: extend same; turnBy 45 same
+t21: open, head width slope 0 per m: extend same; turnBy 45 same
+t22: open, head width slope 0 per m: extend same; turnBy 45 same
+t23: open, head width slope 0 per m: extend same; turnBy 45 same
+t24: open, head width slope 0 per m: extend same; turnBy 45 same
+t25: open, head width slope 0 per m: extend same; turnBy 45 same
+t26: open, head width slope 0 per m: extend same; turnBy 45 same
+t27: refused on parse (BAD_DOC)
+HIS COPIES: 27 tracks, 1 refused on parse, 10 closed, 16 open (0 with a width still changing at the head); 32 of 32 lays the same bytes

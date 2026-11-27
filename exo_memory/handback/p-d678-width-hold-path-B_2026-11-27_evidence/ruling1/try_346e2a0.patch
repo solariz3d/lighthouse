@@ -1,0 +1,109 @@
+diff --git a/src/core/finish.js b/src/core/finish.js
+index 1898869..fbc4457 100644
+--- a/src/core/finish.js
++++ b/src/core/finish.js
+@@ -17,7 +17,7 @@
+ 'use strict';
+ const D = require('./document.js');
+ const { toPath } = require('./adapter.js');
+-const { extend, smoother } = require('./extend.js');
++const { extend, smoother, layHold } = require('./extend.js');
+ const { extendTurnBy } = require('./turnby.js');
+ const { close, residual } = require('./close.js');
+ const V = require('../validate/index.js'), { ROLL_AMBER_DEG_M } = V, { MACH6, G } = require('../validate/limits.js');
+@@ -130,20 +130,36 @@ function endPose(doc, step = 0.5) {
+ /** The route's pieces appended to doc: Turn by, the straight, Turn by (each left out when it is next to nothing), the climb rate eased to 0; then, when the
+  *  bank must come round, a straight of rollM metres that rolls to `bank` (radians) onto the start. A ROLL IS NEVER LAID IN A TURN: rolled in the turn of
+  *  the first try on ELYSIUM, the road met the car with no speed that holds it (the checker's red "no speed holds") for 480 m. */
+-function lay(doc, r, roll) {
++function lay(doc, r, roll, fromHead = true) {
+   let d = doc;
++  // D678 ruling 1: the first piece laid from the head is laid WITHOUT the width hold (widthHold 'later'), so Close, the bank plan and the cup read the level head's
++  // knots; holdAfterClose lays the hold once the lap is closed. The pieces after it start where it ends, at rest at the head's width. fromHead is false when
++  // `doc` already ends in the roll straight laid first (search's base, laid LATER itself)
++  const atHead = () => (fromHead && d === doc ? LATER : null);
+   // NOT mirrored in the flipped frame (corrected 2026-10-15): there the heading is only OFFSET by π (T = (−sin θ, 0, −cos θ) at pitch π), so a turn of the
+   // heading channel turns the road the same way; only the PITCH reverses (close.js residual). Mirroring the turns sent ELYSIUM's quarter turn the wrong way
+-  const turn = (a) => { if (Math.abs(a) >= MIN_TURN) d = extendTurnBy(d, { length: Math.max(MIN_TURN_M, Math.round(r.radiusM * Math.abs(a))), targets: { kv: 0 } }, a); };
++  const turn = (a) => { if (Math.abs(a) >= MIN_TURN) d = extendTurnBy(d, { length: Math.max(MIN_TURN_M, Math.round(r.radiusM * Math.abs(a))), targets: { kv: 0 }, ...atHead() }, a); };
+   turn(r.a1);
+   const alone = Math.abs(r.a1) < MIN_TURN && Math.abs(r.a2) < MIN_TURN;   // a route that is only a straight
+-  if (r.straightM >= MIN_STRAIGHT_M && !alone) d = extend(d, { length: Math.round(r.straightM), targets: { kh: 0, kv: 0 } });
+-  else if (alone && r.straightM >= MIN_STRAIGHT_ALONE_M) d = extend(d, { length: r.straightM, targets: { kh: 0, kv: 0 } });
++  if (r.straightM >= MIN_STRAIGHT_M && !alone) d = extend(d, { length: Math.round(r.straightM), targets: { kh: 0, kv: 0 }, ...atHead() });
++  else if (alone && r.straightM >= MIN_STRAIGHT_ALONE_M) d = extend(d, { length: r.straightM, targets: { kh: 0, kv: 0 }, ...atHead() });
+   turn(r.a2);
+-  if (roll) d = extend(d, { length: roll.lengthM, targets: { kh: 0, kv: 0, phi: roll.bank } });
++  if (roll) d = extend(d, { length: roll.lengthM, targets: { kh: 0, kv: 0, phi: roll.bank }, ...atHead() });
+   return d;
+ }
+ 
++/** D678 ruling 1 (the librarian's, after pane B's width-hold hand-back, open item 1): Finish lays its first new piece without the width hold (lay, `LATER`), so
++ *  Close's step, the bank plan (bankPlan reads Greville positions) and the cup come home on the level head's knots, and the hold is laid HERE, on the closed lap,
++ *  before the lap's own checks read it: the hold extend plans from the same head for a piece of that length (null at a level head: the document as closed),
++ *  inserted and laid by layHold (the width only; every other channel keeps its curve, re-rounded). `k` is the first new piece's index. */
++const LATER = Object.freeze({ widthHold: 'later' });
++function holdAfterClose(doc, closed, k) {
++  const P = closed.pieces[k];
++  if (!P || P.type !== 'road') return closed;
++  const hold = extend(doc, { length: P.length, widthHold: 'plan' });
++  return hold ? freeze(D.checkDoc({ ...closed, pieces: [...closed.pieces.slice(0, k), layHold(P, hold), ...closed.pieces.slice(k + 1)] })) : closed;
++}
++
+ /** The worst roll rate (°/m) on the pieces from index `from` on of a closed document, read as the checker reads it (validate's own rollRates, over its 20 m chord). */
+ function rollPeak(doc, from) {
+   const { segments, path } = toPath(doc, { step: 2 }), S = path.samples, ids = new Set(doc.pieces.slice(from).map((P) => P.id));
+@@ -676,7 +692,7 @@ function finishToStart(doc, { radii = RADII_M, rollGuess = ROLL_PEAK_OVER_MEAN }
+   // One order of laying: 'last' (the roll, if there is one, is the last piece onto the start: the shortest roads) or 'first' (the roll is laid at the end first, on its own straight, and
+   // the route runs from the upright end). Returns { result } | { tooFast } (the roll reads too fast: lengthen it and search again) | { fail } (what was refused, and the least bad road the car left).
+   const search = (mode, roll) => {
+-    const first = mode === 'first' && roll, base = first ? extend(doc, { length: roll.lengthM, targets: { kh: 0, kv: 0, phi: roll.bank } }) : doc, laidRoll = first ? null : roll;
++    const first = mode === 'first' && roll, base = first ? extend(doc, { length: roll.lengthM, targets: { kh: 0, kv: 0, phi: roll.bank }, ...LATER }) : doc, laidRoll = first ? null : roll;
+     const e1 = first ? endPose(base) : e;
+     // the route aims at the start, or, with a roll last, at the point that straight's length behind the start, on the start's heading
+     const back = laidRoll ? laidRoll.lengthM : 0, p0 = [doc.start.pos[0] - back * f0[0], doc.start.pos[2] - back * f0[1]];
+@@ -691,7 +707,7 @@ function finishToStart(doc, { radii = RADII_M, rollGuess = ROLL_PEAK_OVER_MEAN }
+     for (const r0 of all) {
+       let laid, r = r0;
+       try {
+-        laid = lay(base, r, laidRoll);
++        laid = lay(base, r, laidRoll, !first);
+         // RE-AIM: where the laid road really ends against the start, in plan, moves the aim by that much and the same word is laid again (the eased turns fall short of the circles)
+         let aim = p0;
+         for (let k = 0; k < REFINE_ROUNDS; k++) {
+@@ -700,7 +716,7 @@ function finishToStart(doc, { radii = RADII_M, rollGuess = ROLL_PEAK_OVER_MEAN }
+           aim = [aim[0] - miss[0], aim[1] - miss[1]];
+           const again = (r0.word.length === 2 ? oneTurnRoutes(e1.p, e1.th, aim, th0) : routes(e1.p, e1.th, aim, th0, r0.radiusM)).find((x) => x.word === r0.word);
+           if (!again) break;
+-          r = again; laid = lay(base, r, laidRoll);
++          r = again; laid = lay(base, r, laidRoll, !first);
+         }
+       } catch (err) { if (err.name !== 'CoreError') throw err; best = best || err.message; continue; }
+       const window = []; for (let i = doc.pieces.length; i < laid.pieces.length; i++) window.push(i);
+@@ -717,6 +733,7 @@ function finishToStart(doc, { radii = RADII_M, rollGuess = ROLL_PEAK_OVER_MEAN }
+       // unconverged: it refuses by name, close.js)
+       try { laid = cupHome(laid, window); res = closeBanked(laid, shut, bank); } catch (err) { if (err.name !== 'CoreError') throw err; res = metAsLaid(laid); if (!res) { best = best || err.message; continue; } }
+       if (!res.converged) { best = best || res.report; continue; }
++      res = { ...res, doc: holdAfterClose(doc, res.doc, doc.pieces.length) };   // D678 ruling 1: the width hold, laid on the closed lap before its checks read it
+       const peak = roll ? rollPeak(res.doc, doc.pieces.length) : 0;
+       if (peak > ROLL_AMBER_DEG_M) return { tooFast: peak };   // the roll reads too fast as the checker reads it: lengthen it and search again
+       const hold = roadHold(res.doc, doc.pieces.length);
+diff --git a/src/core/turnby.js b/src/core/turnby.js
+index 97a1f42..38093a9 100644
+--- a/src/core/turnby.js
++++ b/src/core/turnby.js
+@@ -143,11 +143,12 @@ function shortestTurnBy(doc, opts, aims = 0) {
+ }
+ const DEGS = (x) => `${((x * 180) / Math.PI).toFixed(1)}°`;
+ /** Extend with the piece solve(aims) makes, or refuse by name (TURN_TOO_SHORT with a turn aimed at, CLIMB_TOO_SHORT for a climb alone) with the shortest length that does it.
+- *  The width hold is laid on it after the solve (withHold); `later` (solveList) returns the solve's { doc, hold } instead, for the corners' knots to go in first. */
++ *  The width hold is laid on it after the solve (withHold); `later` (solveList) returns the solve's { doc, hold } instead, for the corners' knots to go in first.
++ *  opts.widthHold 'later' (finish.js lay, D678 ruling 1) returns the solved piece without its hold: Finish lays it after the lap is closed. */
+ function extendBy(doc, opts, aims, later = false) {
+   for (const k of ['turnDeg', 'climbDeg']) if (opts && k in opts) { const { [k]: _, ...rest } = opts; opts = rest; }   // the fields read as corners are extendCorner's
+   const r = solve(doc, opts, aims);
+-  if (r.converged) return later ? r : withHold(r.doc, r.hold);
++  if (r.converged) return later ? r : opts && opts.widthHold === 'later' ? r.doc : withHold(r.doc, r.hold);
+   const need = shortestTurnBy(doc, opts, aims), what = [aims.kh !== undefined ? `turn by ${DEGS(aims.kh)}` : null, aims.kv !== undefined ? `climb by ${DEGS(aims.kv)}` : null].filter(Boolean).join(' and ');
+   const ends = aims.kh !== undefined ? 'end straight' : 'end at a steady pitch';
+   throw Object.assign(new D.CoreError(aims.kh !== undefined ? 'TURN_TOO_SHORT' : 'CLIMB_TOO_SHORT', need === null ? `a ${opts.length} m piece cannot be shaped to ${what}` : `a ${opts.length} m piece is too short to ${what} and ${ends}: it needs at least ${need} m`), { needM: need });

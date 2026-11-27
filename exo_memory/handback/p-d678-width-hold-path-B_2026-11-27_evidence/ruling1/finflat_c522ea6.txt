@@ -1,0 +1,15 @@
+the level lap with sculpt on is the level lap: true
+
+brush +1.37 end-5 r20: head width {"v":32.363,"m":-0.0010050000000003223}; flat head {"v":32.363,"m":0}
+  (1) the head document against the level lap, all but w and wd: p0 knots 14/14 same | p1 knots 14/14 same | p2 knots 14/14 same | p3 knots 14/14 same | p4 knots 14/14 same | p5 knots 2/2 same
+  (2) Finish from the head against Finish from the same head, width level: p0 knots 47/47 same | p1 knots 18/18 same | p2 knots 47/47 same
+  (3) Finish from the head against Finish from the level lap: p0 knots 47/47 same | p1 knots 18/18 same | p2 knots 47/47 same
+  (4) Finish from the width-level head against Finish from the level lap: p0 knots 47/47 same | p1 knots 18/18 same | p2 knots 47/47 same
+
+brush +5 end-30 r40: head width {"v":33.5,"m":-0.1511849999999999}; flat head {"v":33.5,"m":0}
+  (1) the head document against the level lap, all but w and wd: p0 knots 14/14 same | p1 knots 14/14 same | p2 knots 14/14 same | p3 knots 14/14 same | p4 knots 14/14 same | p5 knots 2/2 same
+finflat678 failed: CoreError: FINISH_NO_ROUTE: no finish closes from here: the end is 360 m from the start, and none of the 20 routes tried (turn, straight, turn at radius 300, 450, 650, 200, 900 m) could be closed (the first refusal: BAD_WIDTH: the road's width must be positive, got -0.06310636942675152 m). Extend toward the start and try again
+    at Object.finishToStart (G:\consonance-scratch\b-hold-c522ea6\src\core\finish.js:775:9)
+    at G:\consonance-scratch\b-hold-work\finflat678.js:38:18 {
+  code: 'FINISH_NO_ROUTE'
+}

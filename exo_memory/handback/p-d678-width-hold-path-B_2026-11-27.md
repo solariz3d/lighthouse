@@ -391,3 +391,112 @@ score them.
 - The harnesses that name the changed files: `app/test/core-close-mutation.test.js` (it names `src/core/finish.js`), `core_width_hold_mutation`,
   `core_turnby_mutation` and `core_ramp_mutation`. Then the 194 row files that execute extend.js or turnby.js (finish.js requires turnby.js), all under
   heavy-run at BelowNormal.
+
+### 3.1 The verdict: missed in one attempt, reverted, pushed
+
+**F-1 was not met:** three of E's five heads miss it, the three Sculpt grabs. F-2, F-3 and F-4, and the knots row I added, were met. Per the ruling the
+try is reverted, and Finish is as at 346e2a0. Builder `l264-extend-holds-width-b` 346e2a0 → **1074d5d**, which adds one CHANGELOG sentence and changes
+no code. It is pushed.
+
+    checked: git -C G:\consonance-scratch\b-hold diff 346e2a0 HEAD --stat → CHANGELOG.md | 6 ++++-- (1 file)
+    checked: git ls-remote origin refs/heads/l264-extend-holds-width-b → 1074d5d8dbd730051fad6da250e91594e4ac9457 = HEAD
+
+The sentence, after Finish's exception in the width-hold entry: *"One try at laying that hold only once the lap is closed (D678) was measured against
+the bar set for it beforehand and missed it (after a grab with Sculpt, by more than a step of bank, as Finish from the same head with its width level
+also does), so it was not kept and Finish stays as described here."*
+
+The registered unwelcome outcome is true, in its own words, for the three grab heads. With the hold laid after close, Finish from those heads lays its
+first piece's bank 496.667, 264.717 and 496.667 steps from the level lap's. From the two brush heads it is 0.594 steps.
+
+### 3.2 The build as tried (the whole of it is kept as a patch)
+
+`..._evidence/ruling1/try_346e2a0.patch`, 109 lines; `git apply` re-lays it on 346e2a0.
+- `finish.js`: `lay()` takes `fromHead`. The first piece laid from the head gets `widthHold: 'later'`, whether that piece is Turn by's, the straight's or
+  the roll's. Under roll-first, `search`'s roll base gets it too.
+- `finish.js` `holdAfterClose(doc, closed, k)`: `extend(doc, { length, widthHold: 'plan' })` + `layHold` on piece k, then `checkDoc` and freeze. It is
+  called after `if (!res.converged) …` and before `rollPeak`.
+- `turnby.js` `extendBy`: under `'later'` it returns `r.doc`, without `withHold`. `extendList` is unchanged.
+- core-close-mutation's N2 anchor occurred once. The other anchors were not on changed lines. Syntax checked, and the file is CRLF.
+
+### 3.3 The rows, as registered (the try against the detached worktree at 346e2a0)
+
+**F-1, the three new pieces against the level lap's**, every channel but w and wd, sampled every 0.01 m (`row1_try.txt`, the `{"finish": …}` lines,
+`vsLevel`):
+
+| head | largest difference, in steps | where | end from the level lap's | F-1 |
+|---|---|---|---|---|
+| brush +1.37 end−5 r20 | kh 0.847, phi 0.594 | kh, piece 0 at 13.25 m | 7e-6 m | met |
+| brush +5 end−30 r40 | kh 0.847, phi 0.594 | kh, piece 0 at 13.25 m | 7e-6 m | met |
+| grab +2 end−10 r20 | **phi 1196.479**, kh 1.127 | phi, piece 1 at 67.06 m | 2.8e-5 m | **not met** |
+| grab +2 end−0 r10 | **phi 1196.479**, kh 1.57 | phi, piece 1 at 67.06 m | 1.5e-5 m | **not met** |
+| grab −2 end−2 r5 | **phi 1196.479**, kh 1 | phi, piece 1 at 67.06 m | 2.9e-5 m | **not met** |
+
+1196.479 steps of phi is 1.2e-6 rad, about 6.9e-5°. Against 346e2a0 (`vsRef`), the try moved piece 0's bank by up to 16,845,017 steps (0.9651°) toward
+the level lap's, on all five. For the bank, it did what it was built to do.
+
+**F-2, the width:**
+- `closew_try.txt`: 0 control-point differences, 5 of 5.
+- `fincheck_try.txt`: the first piece's knots (50) and its w control points equal 346e2a0's, 5 of 5.
+
+**F-3, level heads and his copies:**
+- `f3_row3.txt`: level heads give the same bytes, 10 of 10 (nine callers and Finish).
+- Of his 27 copies, 1 is refused on parse, 10 are closed and 16 are open, 0 of them with a width still changing. Extend and Turn by lay the same bytes,
+  32 of 32.
+- `f3_finbytes.txt`: under Finish, 16 of 16 give the same bytes or the same refusal: 11 laid, 5 refused, each with the same code and message hash.
+- Both ran under heavy-run at BelowNormal, 556 s and 591 s (`f3run.log`).
+
+**F-4, the lap closes** (`fincheck_try.txt`): 5 of 5 closed and passing `checkDoc`. The gap is 0.0051 to 0.0303 mm, the plan LSL and the window [6,7,8],
+the level lap's.
+
+**Added, the knots:** pieces 2 and 3 have 18 and 47 knots, the level lap's, 5 of 5. So risk (c), the placeholder not ending level, did not happen; nor did
+(d). Of (a) to (d), none was the cause (§3.4).
+
+**The other callers did not move:** row 1 again reads 36 rows with 7 fails (`row1_try.txt`, "ROWS 36, fail 7"), Track 1's 29 of 36 against the
+registered level head. `inferred:` they are the same 7 (the steep grab head), because the try changes `extendBy` only under `'later'`, which only Finish
+passes.
+
+### 3.4 Why the grab heads miss: the comparator, not the hold (a diagnostic run after the first result; not registered)
+
+`finflat678.js` compares each head with the same head made width-level: its last piece's last two w control points set equal, so its slope is 0.
+- (1) The grabbed head document against the level lap: the head piece has 8, 7 and 13 knots where the level lap has 2, and kh within 0.519, 0.549 and
+  0.382 steps. The brushed heads are the same as the level lap.
+- (2) On the try, Finish from the head against Finish from the same head width-level: **5 of 5 within 0.847 steps** (kh) and 0.594 (phi), pieces 2 and 3
+  the same. This is the hold's own effect after close.
+- (4) Finish from the width-level head against the level lap: the grabs differ by 496.667, 264.717 and 496.667 steps of phi in piece 0, and 1196.479 in
+  piece 1, the same as with the slope. The brushes are the same.
+- At 346e2a0, (4) is the same to the digit (`finflat_346e2a0.txt`). A width-level head takes no hold (`holdW` is undefined at slope 0), so this is Finish
+  carrying the grab's own turn on, on both trees.
+- c522ea6, which has no hold code, cannot serve as a control. Finish from the brush +5 head refuses there (BAD_WIDTH: the slope carried over 942 m runs
+  the width negative; `finflat_c522ea6.txt`).
+
+Read plainly, the bar failed on a bundle: the try, plus a comparator that a grab head cannot meet under any width code. This reading does not re-score
+the try. Under this ruling the bar was the bar.
+
+### 3.5 Tests, harnesses, tier
+
+None run for the commit: 1074d5d's code is 346e2a0's byte for byte, and its tier is §1.6. The registered test row and mutants F1 to F3 were not written,
+because the try is not kept.
+
+**The credential and key scan of the commit's diff and message:**
+- Token, key and password patterns: 0. The email's local part: 0. "keeper": 0.
+- The key's names (`keycheck678r1.js`, which takes the names from the key at run time and prints none): 0 hits; the control, the key itself, has 21.
+- In this file's evidence scripts there are 5 part-hits. All are one six-letter part of a key name that is the ordinary word in "BelowNormal" and
+  `PRIORITY_BELOW_…` (`keywhere678r1.js` prints them masked). No name occurs.
+
+### 3.6 Corrections
+
+1. **My registration had the wrong comparator for three of its five heads, and I held the fact that showed it.** §2 correction 2 had found that a grab
+   head is not a level head with only its width changing. I still registered E's grab heads against the unbrushed lap. The registered bar was missed
+   and is reported as missed. I did not re-score it against the width-level head.
+2. `row1_678.js`'s finish mode prints "FINISH ROWS 5, fail 5" because its `ok` also asks for 346e2a0 (`vsRef`) within a step, and that is what the try
+   is built to move. F-1 reads `vsLevel` alone.
+3. grep crashed during the email check (`grep.exe.stackdump` in the worktree at 13:07:59 local, mine, removed) and printed an empty count. The count was
+   re-run in node: 0.
+4. Five diagnostic runs (row1, finflat ×3, fincheck with closew) went outside heavy-run. Each was a single process at BelowNormal, 14 to 99 s. The F-3
+   runs went through it.
+
+### 3.7 For the chair (no second attempt is made here)
+
+- If the bar for Finish should be "the same head with its width made level", the try met it 5 of 5 (§3.4 (2)), with F-2 to F-4 as above. Re-applying it
+  is `git apply` of the patch, and that is a new ruling's call.
+- For Track 2's reader: Finish is as at 346e2a0. The CHANGELOG at 1074d5d says so.

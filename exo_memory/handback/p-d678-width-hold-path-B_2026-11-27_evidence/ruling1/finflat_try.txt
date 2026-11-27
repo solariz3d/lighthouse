@@ -1,0 +1,31 @@
+the level lap with sculpt on is the level lap: true
+
+brush +1.37 end-5 r20: head width {"v":32.363,"m":-0.0010050000000003223}; flat head {"v":32.363,"m":0}
+  (1) the head document against the level lap, all but w and wd: p0 knots 14/14 same | p1 knots 14/14 same | p2 knots 14/14 same | p3 knots 14/14 same | p4 knots 14/14 same | p5 knots 2/2 same
+  (2) Finish from the head against Finish from the same head, width level: p0 knots 50/47 kh 0.847 at 13.25, phi 0.594 at 22.16, r 0 at 0.81, s 0 at 0.10 | p1 knots 18/18 same | p2 knots 47/47 same
+  (3) Finish from the head against Finish from the level lap: p0 knots 50/47 kh 0.847 at 13.25, phi 0.594 at 22.16, r 0 at 0.81, s 0 at 0.10 | p1 knots 18/18 same | p2 knots 47/47 same
+  (4) Finish from the width-level head against Finish from the level lap: p0 knots 47/47 same | p1 knots 18/18 same | p2 knots 47/47 same
+
+brush +5 end-30 r40: head width {"v":33.5,"m":-0.1511849999999999}; flat head {"v":33.5,"m":0}
+  (1) the head document against the level lap, all but w and wd: p0 knots 14/14 same | p1 knots 14/14 same | p2 knots 14/14 same | p3 knots 14/14 same | p4 knots 14/14 same | p5 knots 2/2 same
+  (2) Finish from the head against Finish from the same head, width level: p0 knots 50/47 kh 0.847 at 13.25, phi 0.594 at 22.16, r 0 at 0.81, s 0 at 0.10 | p1 knots 18/18 same | p2 knots 47/47 same
+  (3) Finish from the head against Finish from the level lap: p0 knots 50/47 kh 0.847 at 13.25, phi 0.594 at 22.16, r 0 at 0.81, s 0 at 0.10 | p1 knots 18/18 same | p2 knots 47/47 same
+  (4) Finish from the width-level head against Finish from the level lap: p0 knots 47/47 same | p1 knots 18/18 same | p2 knots 47/47 same
+
+grab +2 end-10 r20: head width {"v":32.0682,"m":-0.1937690311548467}; flat head {"v":32.0682,"m":0}
+  (1) the head document against the level lap, all but w and wd: p0 knots 14/14 same | p1 knots 14/14 same | p2 knots 14/14 same | p3 knots 14/14 same | p4 knots 14/14 same | p5 knots 8/2 kh 0.519 at 54.69, r 0 at 0.42, s 0 at 0.29
+  (2) Finish from the head against Finish from the same head, width level: p0 knots 50/47 kh 0.344 at 3.02, phi 0.594 at 22.16, r 0 at 0.81, s 0 at 0.10 | p1 knots 18/18 same | p2 knots 47/47 same
+  (3) Finish from the head against Finish from the level lap: p0 knots 50/47 kh 1.127 at 11.45, phi 496.667 at 863.50, r 0 at 0.81, s 0 at 0.10 | p1 knots 18/18 kh 0.958 at 67.05, phi 1196.479 at 67.06 | p2 knots 47/47 kh 1 at 39.29, phi 324.667 at 98.23
+  (4) Finish from the width-level head against Finish from the level lap: p0 knots 47/47 kh 1.196 at 8.89, phi 496.667 at 863.50 | p1 knots 18/18 kh 0.958 at 67.05, phi 1196.479 at 67.06 | p2 knots 47/47 kh 1 at 39.29, phi 324.667 at 98.23
+
+grab +2 end-0 r10: head width {"v":33,"m":0.02079020790207852}; flat head {"v":33,"m":0}
+  (1) the head document against the level lap, all but w and wd: p0 knots 14/14 same | p1 knots 14/14 same | p2 knots 14/14 same | p3 knots 14/14 same | p4 knots 14/14 same | p5 knots 7/2 kh 0.549 at 57.20, r 0 at 42.65, s 0 at 26.58
+  (2) Finish from the head against Finish from the same head, width level: p0 knots 50/47 kh 0.373 at 14.71, phi 0.594 at 22.16, r 0 at 0.81, s 0 at 0.10 | p1 knots 18/18 same | p2 knots 47/47 same
+  (3) Finish from the head against Finish from the level lap: p0 knots 50/47 kh 1.57 at 9.38, phi 264.717 at 114.16, r 0 at 0.81, s 0 at 0.10 | p1 knots 18/18 kh 0.958 at 67.05, phi 1196.479 at 67.06 | p2 knots 47/47 kh 0.958 at 481.32, phi 324.667 at 98.23
+  (4) Finish from the width-level head against Finish from the level lap: p0 knots 47/47 kh 1.795 at 8.89, phi 264.717 at 114.16 | p1 knots 18/18 kh 0.958 at 67.05, phi 1196.479 at 67.06 | p2 knots 47/47 kh 0.958 at 481.32, phi 324.667 at 98.23
+
+grab -2 end-2 r5: head width {"v":29.5532,"m":0.64366712665747}; flat head {"v":29.5532,"m":0}
+  (1) the head document against the level lap, all but w and wd: p0 knots 14/14 same | p1 knots 14/14 same | p2 knots 14/14 same | p3 knots 14/14 same | p4 knots 14/14 same | p5 knots 13/2 kh 0.382 at 41.04, r 0 at 30.47, s 0 at 28.56
+  (2) Finish from the head against Finish from the same head, width level: p0 knots 50/47 kh 0.583 at 6.49, phi 0.594 at 22.16, r 0 at 0.81, s 0 at 0.10 | p1 knots 18/18 same | p2 knots 47/47 same
+  (3) Finish from the head against Finish from the level lap: p0 knots 50/47 kh 1 at 491.42, phi 496.667 at 863.50, r 0 at 0.81, s 0 at 0.10 | p1 knots 18/18 kh 0.958 at 67.05, phi 1196.479 at 67.06 | p2 knots 47/47 kh 1 at 39.29, phi 324.667 at 98.23
+  (4) Finish from the width-level head against Finish from the level lap: p0 knots 47/47 kh 1 at 491.42, phi 496.667 at 863.50 | p1 knots 18/18 kh 0.958 at 67.05, phi 1196.479 at 67.06 | p2 knots 47/47 kh 1 at 39.29, phi 324.667 at 98.23

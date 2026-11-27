@@ -1,0 +1,26 @@
+D678 ruling 1: Finish's hold laid after close was tried once, missed its bar, and is not kept
+
+The ruling allowed one try at laying Finish's width hold only once the lap is closed: the new
+pieces laid without it, then the hold laid on the closed lap's first new piece. Its bar was
+registered first: from E's five brushed lap heads, Finish's three new pieces within one stored
+step of the unbrushed lap's on every channel but w and wd. The try met that from the two brush
+heads (0.847 of a step) and missed it from the three Sculpt grab heads (up to 1196 steps of
+bank, about 6.9e-5 deg). The same grab heads with their width made level take no hold at all
+and miss by the same amount, on the try and at 346e2a0: the grab moves the head piece's turn by
+up to 0.55 of a step and gives it more knots, and Finish carries that on. The bar's comparator
+was the wrong one for a grab head; it was still the bar, so the try is reverted and Finish stays
+as at 346e2a0 (its first new piece's bank up to 0.97 deg from a level head's after a brush).
+
+The code is identical to 346e2a0; this commit adds one CHANGELOG sentence saying so. The try
+is kept as a patch with the measurements, outside this repository.
+
+Measured on the try, against a detached worktree at 346e2a0: the first new piece's width and
+knots 346e2a0's (0 control-point differences, 5 of 5); the lap closed, its gap under 0.031 mm,
+plan and window the unbrushed lap's (5 of 5); level heads the same bytes (10 of 10); the 16
+open tracks among the saved-track copies the same bytes or the same refusal under Finish
+(16 of 16), and under Extend and Turn by (32 of 32).
+
+Author: pane B (seat 12fb81f6, sibling-5bf9d657).
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_019eZQDNSTxuyVJh4jFxjswU

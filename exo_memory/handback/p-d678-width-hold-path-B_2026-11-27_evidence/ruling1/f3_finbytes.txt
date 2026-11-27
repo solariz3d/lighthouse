@@ -1,0 +1,18 @@
+t01: open, head width slope 0 per m: same (refused FINISH_LEAVES_ROAD: cf716920ff45a7e4 / refused FINISH_LEAVES_ROAD: cf716920ff45a7e4); 18702 ms / 20218 ms
+t06: open, head width slope 0 per m: same (378a1b6ed8d4bb35 / 378a1b6ed8d4bb35); 474 ms / 417 ms
+t07: open, head width slope 0 per m: same (refused FINISH_NO_ROUTE: 8391f57d28769aad / refused FINISH_NO_ROUTE: 8391f57d28769aad); 13291 ms / 13850 ms
+t08: open, head width slope 0 per m: same (c5d498afad76125f / c5d498afad76125f); 1071 ms / 979 ms
+t09: open, head width slope 0 per m: same (61ab6c7606f396b1 / 61ab6c7606f396b1); 1786 ms / 1591 ms
+t12: open, head width slope 0 per m: same (378a1b6ed8d4bb35 / 378a1b6ed8d4bb35); 413 ms / 453 ms
+t13: open, head width slope 0 per m: same (refused FINISH_LEAVES_ROAD: 9e05f4d1c016ee55 / refused FINISH_LEAVES_ROAD: 9e05f4d1c016ee55); 38648 ms / 38118 ms
+t18: open, head width slope 0 per m: same (4e2e61c796d6b748 / 4e2e61c796d6b748); 896 ms / 853 ms
+t19: open, head width slope 0 per m: same (refused FINISH_NO_ROUTE: ca04dffa253f44b3 / refused FINISH_NO_ROUTE: ca04dffa253f44b3); 9575 ms / 10012 ms
+t20: open, head width slope 0 per m: same (refused FINISH_LEAVES_ROAD: f7f49c2b08a2e7e3 / refused FINISH_LEAVES_ROAD: f7f49c2b08a2e7e3); 202411 ms / 198596 ms
+t21: open, head width slope 0 per m: same (731da36f516b988a / 731da36f516b988a); 2532 ms / 2731 ms
+t22: open, head width slope 0 per m: same (c2028473de14abae / c2028473de14abae); 782 ms / 733 ms
+t23: open, head width slope 0 per m: same (fb8905990ca351cc / fb8905990ca351cc); 2180 ms / 1922 ms
+t24: open, head width slope 0 per m: same (cf38e38315d4dadb / cf38e38315d4dadb); 576 ms / 671 ms
+t25: open, head width slope 0 per m: same (a41ddbb9f4a7e970 / a41ddbb9f4a7e970); 670 ms / 727 ms
+t26: open, head width slope 0 per m: same (d9a7cbdffa84184e / d9a7cbdffa84184e); 2262 ms / 2288 ms
+t27: refused on parse (BAD_DOC)
+FINISH ON HIS COPIES: 27 tracks, 1 refused on parse, 10 closed, 0 open with no road head, 16 open (0 with a width still changing at the head); 16 of 16 the same bytes or the same refusal
