@@ -104,3 +104,12 @@ What this changes:
   measured gain on [T3] is 0. O4 no longer has a measured case; the morning question changes accordingly.
 - O's [T3] counts on sections 37, 43, 45, 61 and 104 are 1-2 pieces high (plain equal pieces beat them); O's study already
   said "not proven minimal".
+
+## Amendment 2, ~21:15 local: the aim-vs-rows test came out NEITHER (pane B, registered first at b8c9cc9)
+
+`handback/p-faster-rows-aim-vs-rows-B_2026-11-26.md`. Under O4: (a) the aim given 3x the retypes and a finer grid adds 1
+section (2 counting one already made); (b) width, cup and edge row floors lifted to 20 m adds 0 (width refusals 392 to 0, yet
+width is still missed on two-thirds of attempts). By B's own registration, neither reading is the binding one.
+Class 1's cause is therefore OPEN. Untested candidates, named before the runs: the 20 m floor itself, the bank's law, the
+coupling between channels the instrument's per-channel solve does not model, and an aim better than the instrument's. The
+instrument is a script, not a person; a person aiming by eye against the reference overlay was never measured. O1 is parked.
