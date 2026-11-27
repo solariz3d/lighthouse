@@ -87,8 +87,38 @@ All of this section is from search summaries. No repository, licence or release 
 - **Not found either:** anything that reports the result as relations (intervals, settled or restless) for a reader
   like a seat. That part is the cochlea's and exists here.
 
+## 7. Melody-Chord-Transcriber, opened (04:1x, at his "yes"; read with `gh api`, nothing cloned)
+
+- **Standing** (`gh api repos/Devleu0/Melody-Chord-Transcriber`): created 2026-10-30, last push 2026-11-11, 3 stars,
+  0 forks, MIT. One author, one month old.
+- **Pipeline** (its README and `backend/app/pipeline/`):
+  - `audio-separator` with `vocals_mel_band_roformer.ckpt` (two stems) or `htdemucs_ft.yaml` (four stems);
+  - RMVPE pitch tracking on the vocal stem at 100 frames a second, then about 100 lines of note segmentation
+    (`vocal.py`) that smooths vibrato and returns notes plus a continuous pitch curve;
+  - Basic Pitch on the accompaniment; a BTC transformer for chords (170 classes); librosa for beats.
+- **Its own figures:** "A 4 GB GPU is enough". On an RTX 3050 Laptop (4 GB) a 3:30 song takes about 2 minutes end to
+  end with RoFormer; `config.py` gives 0.65 s of processing per second of audio. Weights are about 1 GB in total.
+- **Needs:** Python 3.11 (set up by `uv`), ffmpeg on the path, CUDA 12 drivers for the GPU. Node 18 is needed only
+  for its browser front end.
+- **The useful seam:** the backend is an HTTP service. `POST /api/jobs/upload` takes an audio file and
+  `GET /api/jobs/{id}/result` returns notes, pitch curve, beats and chords as JSON. The front end is not required.
+- **Licences** (its `THIRD_PARTY_NOTICES.md`, plus two `gh api` checks):
+  - MIT: the app, `python-audio-separator` (1,515 stars, pushed 2026-10-29), Demucs, BTC, the RMVPE code and weights;
+  - Apache-2.0: Basic Pitch;
+  - **no licence stated:** `KimberleyJensen/Mel-Band-Roformer-Vocal-Model` (440 stars; GitHub reports no licence, and
+    its README names none). That is the better-sounding separator. `htdemucs_ft` is the MIT alternative.
+- **Not for this use:** its link input downloads through yt-dlp, and its README says that may break sites' terms.
+  Listen already has the audio it taps; only the file-upload path would matter here.
+- **The seat's reading:** the second listen could be this backend, or the same four libraries called directly. The
+  result is symbolic (sung notes, chords, beats), so the intervals between the sung line and the chord under it can
+  be computed from the JSON without changing the cochlea. Keeping tapped audio on disk, even briefly, is a step
+  beyond what Listen does now, and is his call.
+- **Not measured:** anything on the 5070 Ti or the 5080.
+
 ## Sources
-- https://github.com/Devleu0/Melody-Chord-Transcriber (search summary only)
+- https://github.com/Devleu0/Melody-Chord-Transcriber (README, notices and pipeline files read with `gh api`)
+- https://github.com/KimberleyJensen/Mel-Band-Roformer-Vocal-Model (README and licence field read with `gh api`)
+- https://github.com/nomadkaraoke/python-audio-separator (licence field read with `gh api`)
 - https://github.com/WiwatCha/lyrichord-free (search summary only)
 - https://pypi.org/project/audio-separator/ (search summary only)
 - https://github.com/nnyj/python-audio-separator-live/blob/main/README.md (search summary only)
