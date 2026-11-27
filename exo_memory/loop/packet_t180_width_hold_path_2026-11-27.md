@@ -68,3 +68,23 @@ step; the width's rows c2591bf's to the digit, 110 of 110; his copies 1306 of 13
 builder diff c2591bf..346e2a0, its commit messages, and the hand-back with its evidence (control: 5 in the key itself).
 
 NEXT: chair dispatch ruling 1 to the builder of the hold, then Track 2 to the reader when the builder rings; each pane call_librarian with its hand-back
+
+---
+
+## Amended 13:4x (D), after the delta read `handback/p-d678-width-hold-delta-read-E_2026-11-27.md` (git-blob 8a4e9535; verdict, sections 4, 5, 6 and 8 read)
+
+The code meets ruling 3's bar. NOT CLEAN on two CHANGELOG sentences, and one case outside the bar. Words only; no code:
+
+- **C1:** "the closed lap's pieces end within 0.1 mm of a level head's" is true of the lap's end only. Say: the lap's end
+  within 0.1 mm; its first two new pieces end about 1.4 and 1.0 mm from a level head's.
+- **C2:** Sharp's bend after the steep grab is 5.0 to 9.0 per metre at the joint (8.95 with a ramp of 1), not 4.4 to 7.2: the
+  0.1 m sample missed the peak at the joint.
+- **F1, one sentence for a case nothing names:** when the width is still changing at the head and a bank, cup or edge is typed
+  "at start" in the same Extend, the width sits off the head's by about a third of the head's change per metre times the
+  ramp's first subdivision, for about 10 m, then returns (47 mm after the wide brush on a 30 m piece; 0.52 m after the steep
+  grab), and is within 1 mm by about 16 m. Not changed here: it is half as deep as at c2591bf and it is the hold's stated
+  design. Recorded as a known edge in `briefs/t180_unmakeable_shapes.md`.
+
+Then the reader's short read of those three sentences against its own figures, and the branch may ride the next test build.
+
+NEXT: chair dispatch the three CHANGELOG sentences to the builder of the hold, then the short read to the reader; each pane call_librarian

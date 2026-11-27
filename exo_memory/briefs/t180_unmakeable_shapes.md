@@ -144,3 +144,16 @@ see, we didnt on the laptop. 4. Im not sure"
   Active, and 2 road cars); 3 more replays in blackbox samples and Downloads are Mach 6 or unnamed. So there is no Type A
   telemetry on D yet.
 - 4: not decided. Only the width holds after a brush.
+
+## State, 2026-11-27 13:4x (D): Extend holds the width after a brush (his pick of 04:21 on L)
+
+- Builder branch `l264-extend-holds-width-b` 1074d5d, on origin, in no build yet. Read twice by a seat that wrote none of it
+  (`handback/p-d678-ripple-read-E_2026-11-27.md`, `handback/p-d678-width-hold-delta-read-E_2026-11-27.md`): the code is clean;
+  three CHANGELOG sentences are being corrected.
+- After a width brush, Extend as shown settles at the head's width within about 14 m, and the path of the next Turn, Sharp,
+  corner list, Jump or Level is the same as from a level head (within one rounding step).
+- **Known edges, not changed:** Finish from a brushed head lays its closing piece's bank up to 0.97 degrees differently and its
+  first two pieces end about 1.4 and 1.0 mm off (the lap closes); Sharp's short hold bends the edge hard after a steep grab; a
+  bank, cup or edge typed "at start" in the same Extend leaves the width off the head's for about 10 m (47 mm after a wide
+  brush, 0.52 m after a steep grab at the very end).
+- **His call, open:** the ramp's length (the page https://claude.ai/artifact/RgCdudZXMSSfbpm82Y7zEf).
