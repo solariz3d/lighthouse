@@ -1,0 +1,239 @@
+TAP version 13
+# Subtest: CONTROL: both right-width row files pass on an unmutated copy of src/, tools/ and app/
+ok 1 - CONTROL: both right-width row files pass on an unmutated copy of src/, tools/ and app/
+  ---
+  duration_ms: 5708.8955
+  type: 'test'
+  ...
+# Subtest: a crashed inner run reads NOT TESTED, never a verdict (the crash stand-in, D352)
+ok 2 - a crashed inner run reads NOT TESTED, never a verdict (the crash stand-in, D352)
+  ---
+  duration_ms: 460.2
+  type: 'test'
+  ...
+# Subtest: mutant R1 a piece flagged split with wd 0 everywhere counts as split: applied, and caught
+ok 3 - mutant R1 a piece flagged split with wd 0 everywhere counts as split: applied, and caught
+  ---
+  duration_ms: 5681.8953
+  type: 'test'
+  ...
+# R1 a piece flagged split with wd 0 everywhere counts as split: 1 of 26 run tests failed
+# Subtest: mutant R2 a split track is written with the schema before core/7: applied, and caught
+ok 4 - mutant R2 a split track is written with the schema before core/7: applied, and caught
+  ---
+  duration_ms: 5658.9766
+  type: 'test'
+  ...
+# R2 a split track is written with the schema before core/7: 2 of 26 run tests failed
+# Subtest: mutant R3 every split piece writes its wd, used or not: applied, and caught
+ok 5 - mutant R3 every split piece writes its wd, used or not: applied, and caught
+  ---
+  duration_ms: 5797.5991
+  type: 'test'
+  ...
+# R3 every split piece writes its wd, used or not: 1 of 26 run tests failed
+# Subtest: mutant R4 a text with wd reads back without its split flag: applied, and caught
+ok 6 - mutant R4 a text with wd reads back without its split flag: applied, and caught
+  ---
+  duration_ms: 7749.4747
+  type: 'test'
+  ...
+# R4 a text with wd reads back without its split flag: 1 of 26 run tests failed
+# Subtest: mutant R5 roadPiece drops the split flag: applied, and caught
+ok 7 - mutant R5 roadPiece drops the split flag: applied, and caught
+  ---
+  duration_ms: 5610.3737
+  type: 'test'
+  ...
+# R5 roadPiece drops the split flag: 12 of 26 run tests failed
+# Subtest: mutant R6 an unspecified wd on a split piece does not continue from the piece before: applied, and caught
+ok 8 - mutant R6 an unspecified wd on a split piece does not continue from the piece before: applied, and caught
+  ---
+  duration_ms: 6289.5083
+  type: 'test'
+  ...
+# R6 an unspecified wd on a split piece does not continue from the piece before: 1 of 26 run tests failed
+# Subtest: mutant R8 a split piece is not checked at all: applied, and caught
+ok 9 - mutant R8 a split piece is not checked at all: applied, and caught
+  ---
+  duration_ms: 6011.2734
+  type: 'test'
+  ...
+# R8 a split piece is not checked at all: 1 of 26 run tests failed
+# Subtest: mutant R9 a right side of 0 m or less is not refused: applied, and caught
+ok 10 - mutant R9 a right side of 0 m or less is not refused: applied, and caught
+  ---
+  duration_ms: 5794.5226
+  type: 'test'
+  ...
+# R9 a right side of 0 m or less is not refused: 1 of 26 run tests failed
+# Subtest: mutant R10 a split tube is not refused by the document: applied, and caught
+ok 11 - mutant R10 a split tube is not refused by the document: applied, and caught
+  ---
+  duration_ms: 5978.888
+  type: 'test'
+  ...
+# R10 a split tube is not refused by the document: 1 of 26 run tests failed
+# Subtest: mutant R11 the cross-section ignores wd: applied, and caught
+ok 12 - mutant R11 the cross-section ignores wd: applied, and caught
+  ---
+  duration_ms: 4585.6701
+  type: 'test'
+  ...
+# R11 the cross-section ignores wd: 4 of 26 run tests failed
+# Subtest: mutant R12 the LEFT side is widened instead: applied, and caught
+ok 13 - mutant R12 the LEFT side is widened instead: applied, and caught
+  ---
+  duration_ms: 4582.3673
+  type: 'test'
+  ...
+# R12 the LEFT side is widened instead: 4 of 26 run tests failed
+# Subtest: mutant R13 the right side is narrowed by the same ratio: applied, and caught
+ok 14 - mutant R13 the right side is narrowed by the same ratio: applied, and caught
+  ---
+  duration_ms: 4986.144
+  type: 'test'
+  ...
+# R13 the right side is narrowed by the same ratio: 4 of 26 run tests failed
+# Subtest: mutant R14 a width-split piece is not built on the cross-section path: applied, and caught
+ok 15 - mutant R14 a width-split piece is not built on the cross-section path: applied, and caught
+  ---
+  duration_ms: 5536.4791
+  type: 'test'
+  ...
+# R14 a width-split piece is not built on the cross-section path: 4 of 26 run tests failed
+# Subtest: mutant R15 a typed right width does not split the piece: applied, and caught
+ok 16 - mutant R15 a typed right width does not split the piece: applied, and caught
+  ---
+  duration_ms: 5020.1519
+  type: 'test'
+  ...
+# R15 a typed right width does not split the piece: 13 of 26 run tests failed
+# Subtest: mutant R16 a split head does not carry its split on: applied, and caught
+ok 17 - mutant R16 a split head does not carry its split on: applied, and caught
+  ---
+  duration_ms: 4484.258
+  type: 'test'
+  ...
+# R16 a split head does not carry its split on: 4 of 26 run tests failed
+# Subtest: mutant R17 a right width brought back to the width is not ended at 0: applied, and caught
+ok 18 - mutant R17 a right width brought back to the width is not ended at 0: applied, and caught
+  ---
+  duration_ms: 6092.1419
+  type: 'test'
+  ...
+# R17 a right width brought back to the width is not ended at 0: 2 of 26 run tests failed
+# Subtest: mutant R18 the right width has no change floor of its own (1 m): applied, and caught
+ok 19 - mutant R18 the right width has no change floor of its own (1 m): applied, and caught
+  ---
+  duration_ms: 6445.9344
+  type: 'test'
+  ...
+# R18 the right width has no change floor of its own (1 m): 1 of 26 run tests failed
+# Subtest: mutant R19 a right width with no start shape does not follow the width's: applied, and caught
+ok 20 - mutant R19 a right width with no start shape does not follow the width's: applied, and caught
+  ---
+  duration_ms: 5898.2319
+  type: 'test'
+  ...
+# R19 a right width with no start shape does not follow the width's: 1 of 26 run tests failed
+# Subtest: mutant R20 the right width's two-share ramp is not the width's: applied, and caught
+ok 21 - mutant R20 the right width's two-share ramp is not the width's: applied, and caught
+  ---
+  duration_ms: 5662.4499
+  type: 'test'
+  ...
+# R20 the right width's two-share ramp is not the width's: 1 of 26 run tests failed
+# Subtest: mutant R21 Extend does not refuse a split tube itself (the document still does): applied, and caught
+ok 22 - mutant R21 Extend does not refuse a split tube itself (the document still does): applied, and caught
+  ---
+  duration_ms: 5709.4634
+  type: 'test'
+  ...
+# R21 Extend does not refuse a split tube itself (the document still does): 1 of 26 run tests failed
+# Subtest: mutant R22 close does not join wd at the seam: applied, and caught
+ok 23 - mutant R22 close does not join wd at the seam: applied, and caught
+  ---
+  duration_ms: 5864.4002
+  type: 'test'
+  ...
+# R22 close does not join wd at the seam: 1 of 26 run tests failed
+# Subtest: mutant R23 close joins a split end to an unsplit one: applied, and caught
+ok 24 - mutant R23 close joins a split end to an unsplit one: applied, and caught
+  ---
+  duration_ms: 5837.4925
+  type: 'test'
+  ...
+# R23 close joins a split end to an unsplit one: 1 of 26 run tests failed
+# Subtest: mutant R24 a run with a right width is saved: applied, and caught
+ok 25 - mutant R24 a run with a right width is saved: applied, and caught
+  ---
+  duration_ms: 5871.4101
+  type: 'test'
+  ...
+# R24 a run with a right width is saved: 1 of 26 run tests failed
+# Subtest: mutant R25 Sharp probes a split head with its sides equal: applied, and caught
+ok 26 - mutant R25 Sharp probes a split head with its sides equal: applied, and caught
+  ---
+  duration_ms: 4626.6774
+  type: 'test'
+  ...
+# R25 Sharp probes a split head with its sides equal: 1 of 26 run tests failed
+# Subtest: mutant R26 a saved piece at a split head is refused in the stored channel's name: applied, and caught
+ok 27 - mutant R26 a saved piece at a split head is refused in the stored channel's name: applied, and caught
+  ---
+  duration_ms: 5743.914
+  type: 'test'
+  ...
+# R26 a saved piece at a split head is refused in the stored channel's name: 1 of 26 run tests failed
+# Subtest: mutant R27 any joint refused at a split head is said as the right width's: applied, and caught
+ok 28 - mutant R27 any joint refused at a split head is said as the right width's: applied, and caught
+  ---
+  duration_ms: 5942.226
+  type: 'test'
+  ...
+# R27 any joint refused at a split head is said as the right width's: 1 of 26 run tests failed
+# Subtest: mutant P1 the right width is sent as typed, not as its difference from the width: applied, and caught
+ok 29 - mutant P1 the right width is sent as typed, not as its difference from the width: applied, and caught
+  ---
+  duration_ms: 5872.6576
+  type: 'test'
+  ...
+# P1 the right width is sent as typed, not as its difference from the width: 2 of 26 run tests failed
+# Subtest: mutant P2 a right width's change is sent against the head's width, not the width at its mark: applied, and caught
+ok 30 - mutant P2 a right width's change is sent against the head's width, not the width at its mark: applied, and caught
+  ---
+  duration_ms: 5748.7778
+  type: 'test'
+  ...
+# P2 a right width's change is sent against the head's width, not the width at its mark: 1 of 26 run tests failed
+# Subtest: mutant P3 the shell's head reads no wd: applied, and caught
+ok 31 - mutant P3 the shell's head reads no wd: applied, and caught
+  ---
+  duration_ms: 5780.5355
+  type: 'test'
+  ...
+# P3 the shell's head reads no wd: 1 of 26 run tests failed
+# Subtest: mutant P4 the field shows the width, not the right width: applied, and caught
+ok 32 - mutant P4 the field shows the width, not the right width: applied, and caught
+  ---
+  duration_ms: 5544.9182
+  type: 'test'
+  ...
+# P4 the field shows the width, not the right width: 1 of 26 run tests failed
+# Subtest: mutant P5 the right width's early ramp is not the width's: applied, and caught
+ok 33 - mutant P5 the right width's early ramp is not the width's: applied, and caught
+  ---
+  duration_ms: 5581.8545
+  type: 'test'
+  ...
+# P5 the right width's early ramp is not the width's: 1 of 26 run tests failed
+1..33
+# tests 33
+# suites 0
+# pass 33
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 182250.9376

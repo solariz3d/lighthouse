@@ -148,3 +148,96 @@ The 28 skips: 5 are sculpt-frame's rows, which run only when `CONSONANCE_DATA` n
 
 SOURCES: git rev-parse/ls-remote for d677-right-width-b and landing-1126-batch; suite.tap and suite2.tap through tapfails.js and harnesscount.js; fix1.tap, fix2.tap; expcmp.js and cmpexp.js runs; timing.cmd and timing2.cmd outputs; survivors.js and golden135.js; leftovers.js; heavy-run.js --status; tasklist
 NEXT: librarian call_chair with this hand-back's path when it has read it, for a reader of d677-right-width-b e4e7ecc
+
+---
+
+## F1: a saved piece added at a split head, in his words (2026-11-27, 09:4xZ)
+
+**Order:** the chair's 09:16:26Z order. The object is O's read, `handback/p-l258-read-right-width-O_2026-11-27.md` (room ed2ef01e), section "F1" (line 102), read whole. The librarian's leg is note 711dbdb4: "O's first option only … a row for it, red first, and the limit named in the CHANGELOG beside SPLIT_RUN." Not the second option.
+
+**New tip: `d677-right-width-b` 8b7cafc** (8b7cafc8ba524a118c2e1459e3d5c883ee128075), one commit on e4e7ecc. Checked: `git log -2`, `f1-commit-stat.txt`.
+- **Not pushed.** `git ls-remote origin refs/heads/d677-right-width-b` still reads e4e7ecc (checked). The local branch is "ahead 1".
+- **Not in tonight's test build.** P merged e4e7ecc; 8b7cafc is on no other branch.
+- **Worktree:** `<Downloads>\t180-b-l258-f1`, clean at the end (`git status --short` empty) and **removed** (checked: `git worktree remove`, then `ls`).
+- P's worktree and the landing branch were not opened.
+- No landing, build, install, merge, push or release.
+
+**First line:** the refusal now names the right width and the width, says what lets the piece in, and fires only when the right width is the joint's one fault.
+- The row was red at e4e7ecc with O's exact text, and is green on 8b7cafc.
+- The touched rows pass 141 of 141.
+- The right-width harness: 31 of 31 applied and caught, control ok.
+- Nothing laid changed.
+
+### What changed (checked: `git show --stat 8b7cafc`, 7 files, +48/−5)
+
+- **`src/core/piece.js` `insert`:** when Add's own joint is refused (JOINT) and `onlyRightWidth` holds, it throws `SPLIT_HEAD` instead. He reads (checked, through the shell, `f1shell-fix.txt`):
+  > SPLIT_HEAD: the road's right side has its own width at the head (right width 22.6 m, width 19.1 m), which a saved piece cannot carry on yet; Extend with right width m set to the width (19.1), then add the piece
+- **`onlyRightWidth`:** the document's own `jointProblem` fails at the head, and passes when the head's wd is the run's 0. So the words are said only when wd is the joint's one fault.
+  - There is no second tolerance and no reading of message text.
+  - An edgeless piece at an edged split head is still refused on its edge (`JOINT … e starts at 0`). The right width does not cure that, so it is not named (checked: the row's last two asserts, `f1probe-fix.txt`).
+- **`src/core/document.js`:** exports `jointProblem`, one name added to `module.exports`.
+- **Not changed:**
+  - The piece is still refused, and nothing is carried. O's second option, carrying wd through the inserted piece, is not done.
+  - A saved piece that starts with a jump is laid at a split head, before and after (checked: `f1probe-e4e7ecc.txt`, `f1probe-fix.txt`: "laid: 5 pieces, head wd {v:0, m:0}").
+  - `keepStart` is unchanged. The shell never passes it (checked: `app/core/coreshell.js` `insertPiece` and `showPiece` call `PC.insert(…, { mirror })`). At a split head it still says PIECE_START, on kh in my probe.
+- **CHANGELOG:** in the right-width entry, beside `SPLIT_RUN`: "For the same reason a saved piece is not added where the road's right side has its own width (`SPLIT_HEAD`, which names the right width and the width there): Extend with right width m set to the width first, then add the piece. A saved piece that starts with a jump is still added there, its landing one width, as the landing after a Jump is."
+  - `src/core/README.md` and `MAP.md`: their `SPLIT_RUN` lines name `SPLIT_HEAD` too.
+
+### The row, red first (checked)
+
+- The row is `test/core_right_width.test.js`, "a saved piece added at a head whose right side has its own width is refused in his words (SPLIT_HEAD), and is laid once the right width is back at the width". It asserts five things:
+  1. the code, for the piece and its mirror;
+  2. the two widths in his field's name;
+  3. the way in;
+  4. no `wd` in the words;
+  5. laid after `extend(… targets: { wd: 0 })`, and the edged head still JOINT on `e`.
+- **Red at e4e7ecc plus the row:** 21 tests, 20 pass, 1 fail. The fail is the new row: "JOINT: piece 3 (p4): wd starts at 0, the previous piece ends at 3.5 …", O's text (`f1-red.tap`, `f1-red-fails.txt`).
+- **Green on the fix:** 21 of 21 (`f1-green.tap`).
+- **Through the shell** (`f1shell.js` on the fix, `f1shell-fix.txt`):
+  - the click (`showPiece`) shows no ghost and the words;
+  - Add (`insertPiece`) leaves the pieces 3 → 3 with the words;
+  - after an Extend with `targets: { wd: 0 }`, the click shows the ghost and Add lays it (4 → 5, "added the piece …").
+- **Inferred, not driven:** that typing the width into "right width m" sends that same wd 0. `app/core/panel.js:227` sends `targets.wd = wR - ref`, so yes by the code. The panel itself was not clicked.
+
+### The tier (checked)
+
+- **Touched rows**, at BelowNormal, no slot (light): **141 of 141 pass**, 0 fail, 0 skipped (`rows-touched.cmd`, `f1-touched.tap`, 09:26:14Z–09:27:35Z). The five files:
+  - `core_right_width`;
+  - `core-right-width-panel`;
+  - `core_piece`;
+  - `core-pieces-ui` (its "headless" preview is a fake, no browser);
+  - `piece-ghost`.
+- **The right-width harness**, under heavy-run at BelowNormal (`harness-f1.cmd`, `f1-harness.tap`, `f1-harness-heavyrun.txt`):
+  - It asked at 09:27:54Z and waited behind P (L262's whole suite) and A (L261). It ran 182 s and ended at 09:41:05Z.
+  - **33 of 33 pass:** the CONTROL, the crash stand-in and 31 mutants.
+  - `harnesscount.js`: **applied 31 / caught 31 / NOT APPLIED 0**, control ok (`f1-harness-count.txt`).
+  - New: **R26** (the words never said: `if (false)`) and **R27** (any JOINT at a split head said as SPLIT_HEAD, without the wd-only test).
+  - Inferred, not read per row: R27 is caught by the edged-head assert, the only one that tells the two apart.
+- **The piece harness is not run** (not in the tier). Its 64 mutant strings still occur exactly once each in 8b7cafc's `piece.js`. That is static only, `applied.js` → `applied-f1.txt` (it reads the harness as text). The same check gives 31 of 31 for the right-width harness.
+- **Not run:** the whole suite and every other harness.
+
+### A limit, named (inferred from the code, not seen)
+
+- The words print the head's two widths. A head whose right width equals the width but whose wd is still changing (a slope, no step) is refused too, and would read "right width 19.1 m, width 19.1 m".
+- Extend's pieces end their ramps level, so I have not made one.
+
+### Correction, mine
+
+- **I ran the right-width harness by accident, outside heavy-run and at normal priority.** To check each mutant still applies, I `require`d `test/core_right_width_mutation.test.js` from `node -e` to read its `MUTANTS`. Requiring it registered its 31 mutant tests, and node ran them.
+- It began about 09:23Z, beside P's and A's runs, and took no slot. The call's 120 s timeout moved it to the background, and I stopped it then (TaskStop), about 2 minutes in.
+- **Left:** no node process (checked: `Win32_Process` by command line). One temp copy, `t180-wd-mut-yekr0w`, was mine by content (its copy holds `SPLIT_HEAD`, which no other tree has) and is removed.
+- The check was redone reading the harness as text (`applied.js`), and the harness's count above is the heavy-run one.
+
+### Names and the machine
+
+- **Privacy grep** over the builder diff's added lines: 0 (checked).
+- **Names:** `node namecheck258.js <scratch>/l243/survey.json f1-added.txt` → 65 terms, 1 hit, on #31, the common word "road". The rows use synthetic roads only; no save of his was opened in this section.
+- **`<temp>\t180-wd-mut-*`** after the harness: 0 (checked).
+- **The sculpt-frame timing:** still owed, not started, by the order.
+
+**Evidence:** 18 files added to `p-l258-right-width-B_2026-11-27_evidence/`, 56 → 74, none overwritten: `f1probe.js`, `f1probe-e4e7ecc.txt`, `f1probe-fix.txt`, `f1shell.js`, `f1shell-fix.txt`, `applied.js`, `applied-f1.txt`, `rowsf1.cmd`, `rows-touched.cmd`, `harness-f1.cmd`, `f1-red.tap`, `f1-red-fails.txt`, `f1-green.tap`, `f1-touched.tap`, `f1-harness.tap`, `f1-harness-heavyrun.txt`, `f1-harness-count.txt`, `f1-commit-stat.txt`.
+
+**Who acts next:** O reads the delta e4e7ecc..8b7cafc. Landing 8b7cafc is a named landing pane's, after that read, and not tonight's test build.
+
+SOURCES: handback/p-l258-read-right-width-O_2026-11-27.md:102 (ed2ef01e); librarian note 711dbdb4; git log/show --stat/rev-parse/ls-remote for d677-right-width-b; f1-red.tap, f1-green.tap, f1-touched.tap, f1-harness.tap through tapfails.js and harnesscount.js; f1probe.js and f1shell.js runs; applied.js; namecheck258.js; heavy-run.js --status
+NEXT: librarian call_chair with this hand-back's path when it has read the F1 section, for O's read of d677-right-width-b e4e7ecc..8b7cafc

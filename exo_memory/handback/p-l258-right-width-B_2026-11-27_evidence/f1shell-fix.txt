@@ -1,0 +1,5 @@
+click (showPiece): ghost none; message: SPLIT_HEAD: the road's right side has its own width at the head (right width 22.6 m, width 19.1 m), which a saved piece cannot carry on yet; Extend with right width m set to the width (19.1), then add the piece
+Add (insertPiece): pieces 3 -> 3; message: SPLIT_HEAD: the road's right side has its own width at the head (right width 22.6 m, width 19.1 m), which a saved piece cannot carry on yet; Extend with right width m set to the width (19.1), then add the piece
+Extend, right width back at the width: pieces 4; head wd {"v":0,"m":0}; message: null
+click again: ghost shown; message: null
+Add again: pieces 4 -> 5; message: added the piece "plain" at the head: 1 piece (Ctrl+Z takes it back)

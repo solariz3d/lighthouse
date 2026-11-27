@@ -1,0 +1,15 @@
+﻿split head wd {"v":3.5,"m":0}; back head wd {"v":0,"m":0}
+road-first piece at the split head
+  THROWS SPLIT_HEAD: SPLIT_HEAD: the road's right side has its own width at the head (right width 22.6 m, width 19.1 m), which a saved piece cannot carry on yet; Extend with right width m set to the width (19.1), then add the piece
+its mirror at the split head
+  THROWS SPLIT_HEAD: SPLIT_HEAD: the road's right side has its own width at the head (right width 22.6 m, width 19.1 m), which a saved piece cannot carry on yet; Extend with right width m set to the width (19.1), then add the piece
+keepStart at the split head
+  THROWS PIECE_START: PIECE_START: the piece's own start values do not meet the head: JOINT: piece 3 (p4): kh starts at 0, the previous piece ends at 0.002497948 (every road joint must meet smoothly: the same value and slope in every channel); add it without keeping its own start to continue from the head
+road-first piece after the right width is back at the width
+  laid: 5 pieces, head wd {"v":0,"m":0}
+jump-first piece at the split head
+  laid: 5 pieces, head wd {"v":0,"m":0}
+jump-first piece after the width is back
+  laid: 6 pieces, head wd {"v":0,"m":0}
+edgeless piece at an edged split head
+  THROWS JOINT: JOINT: piece 2 (p3): e starts at 0, the previous piece ends at 10 (every road joint must meet smoothly: the same value and slope in every channel)

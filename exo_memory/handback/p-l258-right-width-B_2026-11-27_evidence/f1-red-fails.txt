@@ -1,0 +1,4 @@
+#14 a saved piece added at a head whose right side has its own width is refused in his words (SPLIT_HEAD), and is laid once the right width is b
+   at test/core_right_width.test.js:181:1
+   error: |- | JOINT: piece 3 (p4): wd starts at 0, the previous piece ends at 3.5 (every road joint must meet smoothly: the same value and slope in every channel) | actual expected |  | 'JOSPLINT_HEAD' | 
+failing rows: 1

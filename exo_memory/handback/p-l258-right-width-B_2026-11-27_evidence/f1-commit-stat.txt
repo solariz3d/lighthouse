@@ -1,0 +1,11 @@
+8b7cafc8ba524a118c2e1459e3d5c883ee128075
+D677 (b) L258 B, F1: a saved piece added at a split head is refused in his words (SPLIT_HEAD)
+
+ CHANGELOG.md                           |  4 +++-
+ MAP.md                                 |  2 +-
+ src/core/README.md                     |  2 +-
+ src/core/document.js                   |  2 +-
+ src/core/piece.js                      | 19 ++++++++++++++++++-
+ test/core_right_width.test.js          | 21 +++++++++++++++++++++
+ test/core_right_width_mutation.test.js |  3 +++
+ 7 files changed, 48 insertions(+), 5 deletions(-)

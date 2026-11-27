@@ -1,0 +1,2 @@
+test/core_piece_mutation.test.js: mutants 64, edits 64, applied once 64, not 0
+test/core_right_width_mutation.test.js: mutants 31, edits 31, applied once 31, not 0

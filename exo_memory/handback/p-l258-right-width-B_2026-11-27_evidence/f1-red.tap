@@ -1,0 +1,158 @@
+TAP version 13
+# Subtest: a piece whose right side differs is written as core/7 with its wd, reads back the same text, and only that piece carries wd
+ok 1 - a piece whose right side differs is written as core/7 with its wd, reads back the same text, and only that piece carries wd
+  ---
+  duration_ms: 11.3677
+  type: 'test'
+  ...
+# Subtest: a track with no split writes today's schema and no wd, byte for byte as it was laid
+ok 2 - a track with no split writes today's schema and no wd, byte for byte as it was laid
+  ---
+  duration_ms: 2.0398
+  type: 'test'
+  ...
+# Subtest: a piece flagged split whose wd is 0 everywhere writes no wd and today's schema: the field is written only when it is used
+ok 3 - a piece flagged split whose wd is 0 everywhere writes no wd and today's schema: the field is written only when it is used
+  ---
+  duration_ms: 1.2036
+  type: 'test'
+  ...
+# Subtest: at width 19.1 and right width 22.6 the left half is 9.55 m and the right 11.3 m, and the line is the same sample for sample as with the sides equal
+ok 4 - at width 19.1 and right width 22.6 the left half is 9.55 m and the right 11.3 m, and the line is the same sample for sample as with the sides equal
+  ---
+  duration_ms: 55.0692
+  type: 'test'
+  ...
+# Subtest: a 3.5 m one-sided step over 5 m adds no red and no amber: the checker reads the same faults with and without it
+ok 5 - a 3.5 m one-sided step over 5 m adds no red and no amber: the checker reads the same faults with and without it
+  ---
+  duration_ms: 121.3525
+  type: 'test'
+  ...
+# Subtest: Extend: a typed right width splits the sides; the width typed alone moves both sides and keeps the step; on a track with no split, the width alone splits nothing
+ok 6 - Extend: a typed right width splits the sides; the width typed alone moves both sides and keeps the step; on a track with no split, the width alone splits nothing
+  ---
+  duration_ms: 2.4392
+  type: 'test'
+  ...
+# Subtest: Extend: the right side's change at a mark is held to the mark and made after it, and early reaches it within the start, where the width's own early ramp reaches its own
+ok 7 - Extend: the right side's change at a mark is held to the mark and made after it, and early reaches it within the start, where the width's own early ramp reaches its own
+  ---
+  duration_ms: 5.5195
+  type: 'test'
+  ...
+# Subtest: the document refuses a right side of 0 m or less by name (BAD_WIDTH), and a split tube (BAD_TUBE)
+ok 8 - the document refuses a right side of 0 m or less by name (BAD_WIDTH), and a split tube (BAD_TUBE)
+  ---
+  duration_ms: 1.539
+  type: 'test'
+  ...
+# Subtest: the export: the road mesh's right side reaches 22.6/19.1 of the left's where the step is held, and both sides are equal where it is not
+ok 9 - the export: the road mesh's right side reaches 22.6/19.1 of the left's where the step is held, and both sides are equal where it is not
+  ---
+  duration_ms: 1276.3427
+  type: 'test'
+  ...
+# Subtest: close: a lap with a right width on one turn closes, and the right width is kept as it was laid
+ok 10 - close: a lap with a right width on one turn closes, and the right width is kept as it was laid
+  ---
+  duration_ms: 138.6668
+  type: 'test'
+  ...
+# Subtest: close: a lap that ends with a right width against a start whose sides are one width is refused by name (SPLIT_SEAM)
+ok 11 - close: a lap that ends with a right width against a start whose sides are one width is refused by name (SPLIT_SEAM)
+  ---
+  duration_ms: 1.3838
+  type: 'test'
+  ...
+# Subtest: Sharp: after a right width the corner keeps it, and its tightest right-hand radius is held to the wider inner side (11.2 m, against 9.5 m with the sides equal); a left-hand one is unchanged
+ok 12 - Sharp: after a right width the corner keeps it, and its tightest right-hand radius is held to the wider inner side (11.2 m, against 9.5 m with the sides equal); a left-hand one is unchanged
+  ---
+  duration_ms: 2539.6426
+  type: 'test'
+  ...
+# Subtest: a saved piece: a run with a right width is refused by name (SPLIT_RUN), never saved with both sides at the width; a run with none saves as before
+ok 13 - a saved piece: a run with a right width is refused by name (SPLIT_RUN), never saved with both sides at the width; a run with none saves as before
+  ---
+  duration_ms: 2.3397
+  type: 'test'
+  ...
+# Subtest: a saved piece added at a head whose right side has its own width is refused in his words (SPLIT_HEAD), and is laid once the right width is back at the width
+not ok 14 - a saved piece added at a head whose right side has its own width is refused in his words (SPLIT_HEAD), and is laid once the right width is back at the width
+  ---
+  duration_ms: 2.2055
+  type: 'test'
+  location: '<Downloads>\\t180-b-l258-f1\\test\\core_right_width.test.js:181:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    JOINT: piece 3 (p4): wd starts at 0, the previous piece ends at 3.5 (every road joint must meet smoothly: the same value and slope in every channel)
+    actual expected
+    
+    'JOSPLINT_HEAD'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'SPLIT_HEAD'
+  actual: 'JOINT'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (<Downloads>\t180-b-l258-f1\test\core_right_width.test.js:186:12)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: the water: a stream poured at u -10.5 on the stepped side runs to the right side's own rim, -11.3 m, where it spills
+ok 15 - the water: a stream poured at u -10.5 on the stepped side runs to the right side's own rim, -11.3 m, where it spills
+  ---
+  duration_ms: 22.3011
+  type: 'test'
+  ...
+# Subtest: Extend: a right width brought back to the width over a numeric transition ends exactly there, and the piece after it has its sides as one width again (no wd, no core/7)
+ok 16 - Extend: a right width brought back to the width over a numeric transition ends exactly there, and the piece after it has its sides as one width again (no wd, no core/7)
+  ---
+  duration_ms: 1.172
+  type: 'test'
+  ...
+# Subtest: the document: a split piece made with its wd left out carries the right width on from the end before it, value and slope, as an offset does
+ok 17 - the document: a split piece made with its wd left out carries the right width on from the end before it, value and slope, as an offset does
+  ---
+  duration_ms: 0.6883
+  type: 'test'
+  ...
+# Subtest: Extend: a right width's change has the width's floor: its shortest is the width's for the same change, and one asked shorter is refused by name (BAD_SECOND)
+ok 18 - Extend: a right width's change has the width's floor: its shortest is the width's for the same change, and one asked shorter is refused by name (BAD_SECOND)
+  ---
+  duration_ms: 0.6401
+  type: 'test'
+  ...
+# Subtest: Extend: a right width with no start shape of its own follows the width's two-share ramp, and one given the same shares lays the same ramp
+ok 19 - Extend: a right width with no start shape of its own follows the width's two-share ramp, and one given the same shares lays the same ramp
+  ---
+  duration_ms: 2.0568
+  type: 'test'
+  ...
+# Subtest: Extend refuses a right width on a tube in its own words (BAD_TUBE), not the document's
+ok 20 - Extend refuses a right width on a tube in its own words (BAD_TUBE), not the document's
+  ---
+  duration_ms: 0.3024
+  type: 'test'
+  ...
+# Subtest: close: a lap whose first and last pieces both have a right width closes with the right width joined at the seam (the end meets the start)
+ok 21 - close: a lap whose first and last pieces both have a right width closes with the right width joined at the seam (the end meets the start)
+  ---
+  duration_ms: 105.5675
+  type: 'test'
+  ...
+1..21
+# tests 21
+# suites 0
+# pass 20
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 4550.579
+exit 1 
