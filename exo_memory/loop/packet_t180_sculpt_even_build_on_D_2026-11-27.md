@@ -128,3 +128,22 @@ before and after pictures of the banked turn with Sculpt off. Its own branch on 
 **N2 (the grab along the slope) and N4 (the test build) of the night's packet now wait on item 2 and on his look.**
 
 NEXT: chair pass items 1 to 4 to the builder of Even now and dispatch N5 to a free pane; each pane call_librarian with its hand-back
+
+### Added 15:5x (D), from the read's 2.4 and its section 3 (`handback/p-d678-even-read-B_2026-11-27.md` at 788f25a, both read)
+
+The read's verdict is unchanged, NOT CLEAN; its section 3 is the routing list. For the builder's design pass (item 2 above),
+these rows join the one table, and for N5 one more case:
+- **A run from the track's start: the kept edge moves 9.31 m.** Every track begun on an empty board has the 31 m lead easing to
+  the first width, so this is on his own tracks. It is the first row of the table, not an edge case.
+- A Width stroke reaching the far window end (0.91 m from the road, 0.067 m from the stroke; and the width reads 16.11 m at
+  460 where it should be 16: measure the margin's width on every row).
+- **Keeping the middle over a hill and a swerve he made:** the height and the sideways shift go back to the untouched road's
+  (2.00 to 0) and the message says "the middle stays where it was". Whether Even should touch a hill he brushed is part of
+  the same question for him: what Even leaves alone.
+- One piece with the grabbed edge kept: 3.96 m, the same words.
+- Passed as registered, nothing to do: split pieces refused by name, typed values and their refusals, Undo and Redo, the open
+  end's untouched case.
+- **N5:** the same missing offset puts the next piece's ghost 1.94 m beside the head after an Even or a grab that moves the
+  head's middle, on a flat road too. One cause, both cases, one fix.
+
+NEXT: chair pass this addition to the builder of Even and to N5's pane; each pane call_librarian with its hand-back
