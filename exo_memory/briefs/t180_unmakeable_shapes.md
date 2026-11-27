@@ -97,3 +97,17 @@ degrees into the new 360 you know? 5. Not sure, what is smoothness limit?"
 - 04:54 (L), his words: "do you think there could be a fix we make for it? Its like for the version we use, or rather, the version the newest t-180s work on, soon there will be an update to t-180s from the creator, but we will deal with that when the time comes"
   - State: answered as a lean (trace file, "His question"); the census of D's crash reports goes into the L to D handoff. Not builder work, no lap ordered.
 - 04:56 (L), his words: "its okay forget it for now" (the replay crash; nothing owed, the census does not go to D)
+
+## His words, 2026-11-27 05:41 and 05:42 (L): online physics
+
+- 05:39: "you would be wrong for the type a, it clips the worst from people have said."
+- 05:41: "also one problem i havent even mentioned that is a mountain potentially, for some reason, the physics in online server is different than offline, and clipping can be worse on loops and corkscrews. We have no data to go off of for that though"
+- 05:42: "But with how good the tracks are in offline, it is more than safe to assume it will still be better than handmade tracks in online servers"
+
+**State, 05:42 (the librarian's, checked unless marked):**
+- The record holds nothing on it: no brief, research note or T-180 hand-back names online play (grep of `briefs`, `research`, `loop/*t180*`, `handback`). The builder at c522ea6 has no word of it in `src`, `app`, `docs` or the README. Every limit in `src/validate/limits.js` was measured offline.
+- The car's source has no online switch: no script line at the tag or the head tests for an online session. [inferred] So a difference online comes from the game, the shader patch or the server, not from the car's script choosing to act differently.
+- One lead, not a finding: the installed shader patch's own defaults (`assettocorsa\extension\config\general.ini:100`) say of its raycasting engine option "Intel Embree is in experimental stage currently and not available online", and another physics option (`:175`) "Affects offline races only. For online races option can be enabled by a server configuration." So some physics options are settable offline and fixed or off online. Which he runs offline was not read (he has no `cfg\extension\general.ini` of his own at the path tried).
+- Two outside searches (generic terms) found release notes saying finished physics experiments cannot be turned off online, and nothing on loops or corkscrews.
+- **How data could be made, not ordered:** the game ships its own server program; one car, one track, driven offline and then on a server on his own machine, two replays, read with the builder's replay tools section by section.
+- Not started. His 05:42 word parks it.
