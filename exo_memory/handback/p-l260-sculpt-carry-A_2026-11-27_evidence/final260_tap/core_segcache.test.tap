@@ -1,0 +1,58 @@
+TAP version 13
+# Subtest: row 1: after every kind of edit the cached segments equal a fresh conversion, and unchanged pieces are reused
+ok 1 - row 1: after every kind of edit the cached segments equal a fresh conversion, and unchanged pieces are reused
+  ---
+  duration_ms: 451.713
+  type: 'test'
+  ...
+# Subtest: row 1b: a climb brushed on a piece BEFORE a jump changes the jump that follows it, though the jump piece itself is untouched (the cache keys the pitch carried in)
+ok 2 - row 1b: a climb brushed on a piece BEFORE a jump changes the jump that follows it, though the jump piece itself is untouched (the cache keys the pitch carried in)
+  ---
+  duration_ms: 24.7876
+  type: 'test'
+  ...
+# Subtest: row 2: every saved fixture, opened and extended, gives the same segments as a fresh conversion
+ok 3 - row 2: every saved fixture, opened and extended, gives the same segments as a fresh conversion
+  ---
+  duration_ms: 166.9072
+  type: 'test'
+  ...
+# Subtest: row 2b: each fixture grown piece by piece through ONE cache, then shrunk back, equals a fresh conversion at every length (a cup followed by a legacy piece, which Extend never makes, is in a file)
+ok 4 - row 2b: each fixture grown piece by piece through ONE cache, then shrunk back, equals a fresh conversion at every length (a cup followed by a legacy piece, which Extend never makes, is in a file)
+  ---
+  duration_ms: 124.9531
+  type: 'test'
+  ...
+# Subtest: row 2c: the SAME later piece after a changed earlier one is rebuilt, because what it morphs from changed (the cache keys the incoming cross-section, not only the piece)
+ok 5 - row 2c: the SAME later piece after a changed earlier one is rebuilt, because what it morphs from changed (the cache keys the incoming cross-section, not only the piece)
+  ---
+  duration_ms: 89.9443
+  type: 'test'
+  ...
+# Subtest: row 2d: a brush step inside the FIRST piece of a closed tube lap rebuilds that piece only: every later piece, handed the same cross-section by value (a new object), is reused (D421: they were rebuilt at every step)
+ok 6 - row 2d: a brush step inside the FIRST piece of a closed tube lap rebuilds that piece only: every later piece, handed the same cross-section by value (a new object), is reused (D421: they were rebuilt at every step)
+  ---
+  duration_ms: 293.3023
+  type: 'test'
+  ...
+# Subtest: row 3: a cached segment is frozen all the way down, so writing to a shared one throws
+ok 7 - row 3: a cached segment is frozen all the way down, so writing to a shared one throws
+  ---
+  duration_ms: 8.9478
+  type: 'test'
+  ...
+# Subtest: row 4: without a cache nothing changes: every call builds fresh, unfrozen segments
+ok 8 - row 4: without a cache nothing changes: every call builds fresh, unfrozen segments
+  ---
+  duration_ms: 7.6872
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1384.1364

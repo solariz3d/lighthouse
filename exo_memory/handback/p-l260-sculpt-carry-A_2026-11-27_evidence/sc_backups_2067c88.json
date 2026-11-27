@@ -1,0 +1,1510 @@
+{
+ "tree": "t180-wt-l260-base",
+ "head": "2067c88",
+ "tracks": [
+  {
+   "track": "b01",
+   "pieces": 39,
+   "drags": [
+    {
+     "k": 0,
+     "before": 0,
+     "after": 10,
+     "msg": null,
+     "doc": "a36f7004ab66f51f"
+    },
+    {
+     "k": 1,
+     "before": 70.332696,
+     "after": 80.332696,
+     "msg": null,
+     "doc": "6f105b81f4659872"
+    },
+    {
+     "k": 2,
+     "before": 90,
+     "after": 100,
+     "msg": null,
+     "doc": "1883cc033779d2a4"
+    },
+    {
+     "k": 3,
+     "before": 90,
+     "after": 100,
+     "msg": null,
+     "doc": "72c216c8edb568dc"
+    },
+    {
+     "k": 4,
+     "before": 90,
+     "after": 100,
+     "msg": null,
+     "doc": "622021db6f5e47f3"
+    },
+    {
+     "k": 5,
+     "before": 90,
+     "after": 100,
+     "msg": null,
+     "doc": "5041c04ebb22a40f"
+    },
+    {
+     "k": 6,
+     "before": 90,
+     "after": 100,
+     "msg": null,
+     "doc": "5c750d921389c6f1"
+    },
+    {
+     "k": 7,
+     "before": 90,
+     "after": 100,
+     "msg": null,
+     "doc": "b2f0c0f78de31dd4"
+    },
+    {
+     "k": 8,
+     "before": 90,
+     "after": 100,
+     "msg": null,
+     "doc": "6274c7673a93dca5"
+    },
+    {
+     "k": 9,
+     "before": 90,
+     "after": 100,
+     "msg": null,
+     "doc": "b4330b4de1267c56"
+    },
+    {
+     "k": 10,
+     "before": 90,
+     "after": 100,
+     "msg": null,
+     "doc": "d81a4de679ad15a7"
+    },
+    {
+     "k": 11,
+     "before": 90,
+     "after": 100,
+     "msg": null,
+     "doc": "c736696101d6f4c6"
+    },
+    {
+     "k": 12,
+     "before": 90,
+     "after": 100,
+     "msg": null,
+     "doc": "67615de4bdf731fc"
+    },
+    {
+     "k": 13,
+     "before": 90,
+     "after": 100,
+     "msg": null,
+     "doc": "c6dc4d74898ec7ab"
+    },
+    {
+     "k": 14,
+     "before": 90,
+     "after": 100,
+     "msg": null,
+     "doc": "05e2a055b4175a74"
+    },
+    {
+     "k": 15,
+     "before": 45,
+     "after": 55,
+     "msg": null,
+     "doc": "c6542a21ee2fe29e"
+    },
+    {
+     "k": 16,
+     "before": -58.48,
+     "after": -48.48,
+     "msg": null,
+     "doc": "3c23f4263c390ffb"
+    },
+    {
+     "k": 17,
+     "before": -13.105255,
+     "after": -3.105255,
+     "msg": null,
+     "doc": "0e2498ff2656b0f8"
+    },
+    {
+     "k": 18,
+     "before": -12,
+     "after": -2,
+     "msg": null,
+     "doc": "6ac9a7c00907ac69"
+    },
+    {
+     "k": 19,
+     "before": -12,
+     "after": -2,
+     "msg": null,
+     "doc": "907d86a448201d43"
+    },
+    {
+     "k": 20,
+     "before": -12,
+     "after": -2,
+     "msg": null,
+     "doc": "20b5493fc7aed04d"
+    },
+    {
+     "k": 21,
+     "before": -12,
+     "after": -2,
+     "msg": "brush widened to 60 m (asked 50 m), so the track outside it stays exactly as it ",
+     "doc": "466240d25b292fd7"
+    },
+    {
+     "k": 22,
+     "before": -6,
+     "after": 4,
+     "msg": null,
+     "doc": "bd801ed10072a088"
+    },
+    {
+     "k": 23,
+     "before": 9.058508,
+     "after": 19.058508,
+     "msg": null,
+     "doc": "0f13f33a6197bde7"
+    },
+    {
+     "k": 24,
+     "before": 55.698282,
+     "after": 65.698282,
+     "msg": null,
+     "doc": "738149833945a540"
+    },
+    {
+     "k": 25,
+     "before": 3,
+     "after": 13,
+     "msg": null,
+     "doc": "628d86cdf32f8c96"
+    },
+    {
+     "k": 26,
+     "before": 3,
+     "after": 13,
+     "msg": null,
+     "doc": "6af553062b830141"
+    },
+    {
+     "k": 27,
+     "before": 0,
+     "after": 10,
+     "msg": null,
+     "doc": "08c76818c810c066"
+    },
+    {
+     "k": 28,
+     "before": 5.500076,
+     "after": 15.500076,
+     "msg": null,
+     "doc": "cd4dd50494573979"
+    },
+    {
+     "k": 29,
+     "before": 11,
+     "after": 21,
+     "msg": null,
+     "doc": "e2ede88950540559"
+    },
+    {
+     "k": 30,
+     "before": 30,
+     "after": 40,
+     "msg": null,
+     "doc": "7365329434b4c478"
+    },
+    {
+     "k": 31,
+     "before": 15,
+     "after": 25,
+     "msg": null,
+     "doc": "e5680a9d252a6b07"
+    },
+    {
+     "k": 32,
+     "before": -7,
+     "after": 3,
+     "msg": null,
+     "doc": "1e8a3e78d73d182e"
+    },
+    {
+     "k": 33,
+     "before": 7,
+     "after": 17,
+     "msg": null,
+     "doc": "914fea4c09faad9e"
+    },
+    {
+     "k": 34,
+     "before": -7,
+     "after": 3,
+     "msg": null,
+     "doc": "cc44b2c765ceef63"
+    },
+    {
+     "k": 35,
+     "before": 7,
+     "after": 17,
+     "msg": null,
+     "doc": "b891d3473e0ee50b"
+    },
+    {
+     "k": 36,
+     "before": 3.5,
+     "after": 13.5,
+     "msg": null,
+     "doc": "136ceae6ff3c1d13"
+    },
+    {
+     "k": 37,
+     "before": 64.990469,
+     "after": 74.990469,
+     "msg": null,
+     "doc": "056ef86242959a4f"
+    },
+    {
+     "k": 38,
+     "before": 1.072643,
+     "after": 11.072643,
+     "msg": null,
+     "doc": "77096682f63fe361"
+    }
+   ],
+   "maxAbsMiddle": 90,
+   "brush": {
+    "piece": 19,
+    "msg": null,
+    "doc": "b42d3f080bacce6c"
+   }
+  },
+  {
+   "track": "b02",
+   "pieces": 39,
+   "drags": [
+    {
+     "k": 0,
+     "before": 0,
+     "after": 10,
+     "msg": null,
+     "doc": "a36f7004ab66f51f"
+    },
+    {
+     "k": 1,
+     "before": 70.332696,
+     "after": 80.332696,
+     "msg": null,
+     "doc": "6f105b81f4659872"
+    },
+    {
+     "k": 2,
+     "before": 90,
+     "after": 100,
+     "msg": null,
+     "doc": "1883cc033779d2a4"
+    },
+    {
+     "k": 3,
+     "before": 90,
+     "after": 100,
+     "msg": null,
+     "doc": "72c216c8edb568dc"
+    },
+    {
+     "k": 4,
+     "before": 90,
+     "after": 100,
+     "msg": null,
+     "doc": "622021db6f5e47f3"
+    },
+    {
+     "k": 5,
+     "before": 90,
+     "after": 100,
+     "msg": null,
+     "doc": "5041c04ebb22a40f"
+    },
+    {
+     "k": 6,
+     "before": 90,
+     "after": 100,
+     "msg": null,
+     "doc": "5c750d921389c6f1"
+    },
+    {
+     "k": 7,
+     "before": 90,
+     "after": 100,
+     "msg": null,
+     "doc": "b2f0c0f78de31dd4"
+    },
+    {
+     "k": 8,
+     "before": 90,
+     "after": 100,
+     "msg": null,
+     "doc": "6274c7673a93dca5"
+    },
+    {
+     "k": 9,
+     "before": 90,
+     "after": 100,
+     "msg": null,
+     "doc": "b4330b4de1267c56"
+    },
+    {
+     "k": 10,
+     "before": 90,
+     "after": 100,
+     "msg": null,
+     "doc": "d81a4de679ad15a7"
+    },
+    {
+     "k": 11,
+     "before": 90,
+     "after": 100,
+     "msg": null,
+     "doc": "c736696101d6f4c6"
+    },
+    {
+     "k": 12,
+     "before": 90,
+     "after": 100,
+     "msg": null,
+     "doc": "67615de4bdf731fc"
+    },
+    {
+     "k": 13,
+     "before": 90,
+     "after": 100,
+     "msg": null,
+     "doc": "c6dc4d74898ec7ab"
+    },
+    {
+     "k": 14,
+     "before": 90,
+     "after": 100,
+     "msg": null,
+     "doc": "05e2a055b4175a74"
+    },
+    {
+     "k": 15,
+     "before": 45,
+     "after": 55,
+     "msg": null,
+     "doc": "c6542a21ee2fe29e"
+    },
+    {
+     "k": 16,
+     "before": -58.48,
+     "after": -48.48,
+     "msg": null,
+     "doc": "3c23f4263c390ffb"
+    },
+    {
+     "k": 17,
+     "before": -13.105255,
+     "after": -3.105255,
+     "msg": null,
+     "doc": "0e2498ff2656b0f8"
+    },
+    {
+     "k": 18,
+     "before": -12,
+     "after": -2,
+     "msg": null,
+     "doc": "6ac9a7c00907ac69"
+    },
+    {
+     "k": 19,
+     "before": -12,
+     "after": -2,
+     "msg": null,
+     "doc": "907d86a448201d43"
+    },
+    {
+     "k": 20,
+     "before": -12,
+     "after": -2,
+     "msg": null,
+     "doc": "20b5493fc7aed04d"
+    },
+    {
+     "k": 21,
+     "before": -12,
+     "after": -2,
+     "msg": "brush widened to 60 m (asked 50 m), so the track outside it stays exactly as it ",
+     "doc": "466240d25b292fd7"
+    },
+    {
+     "k": 22,
+     "before": -6,
+     "after": 4,
+     "msg": null,
+     "doc": "bd801ed10072a088"
+    },
+    {
+     "k": 23,
+     "before": 9.058508,
+     "after": 19.058508,
+     "msg": null,
+     "doc": "0f13f33a6197bde7"
+    },
+    {
+     "k": 24,
+     "before": 55.698282,
+     "after": 65.698282,
+     "msg": null,
+     "doc": "738149833945a540"
+    },
+    {
+     "k": 25,
+     "before": 3,
+     "after": 13,
+     "msg": null,
+     "doc": "628d86cdf32f8c96"
+    },
+    {
+     "k": 26,
+     "before": 3,
+     "after": 13,
+     "msg": null,
+     "doc": "6af553062b830141"
+    },
+    {
+     "k": 27,
+     "before": 0,
+     "after": 10,
+     "msg": null,
+     "doc": "08c76818c810c066"
+    },
+    {
+     "k": 28,
+     "before": 5.500076,
+     "after": 15.500076,
+     "msg": null,
+     "doc": "cd4dd50494573979"
+    },
+    {
+     "k": 29,
+     "before": 11,
+     "after": 21,
+     "msg": null,
+     "doc": "e2ede88950540559"
+    },
+    {
+     "k": 30,
+     "before": 30,
+     "after": 40,
+     "msg": null,
+     "doc": "7365329434b4c478"
+    },
+    {
+     "k": 31,
+     "before": 15,
+     "after": 25,
+     "msg": null,
+     "doc": "e5680a9d252a6b07"
+    },
+    {
+     "k": 32,
+     "before": -7,
+     "after": 3,
+     "msg": null,
+     "doc": "1e8a3e78d73d182e"
+    },
+    {
+     "k": 33,
+     "before": 7,
+     "after": 17,
+     "msg": null,
+     "doc": "914fea4c09faad9e"
+    },
+    {
+     "k": 34,
+     "before": -7,
+     "after": 3,
+     "msg": null,
+     "doc": "cc44b2c765ceef63"
+    },
+    {
+     "k": 35,
+     "before": 7,
+     "after": 17,
+     "msg": null,
+     "doc": "b891d3473e0ee50b"
+    },
+    {
+     "k": 36,
+     "before": 3.5,
+     "after": 13.5,
+     "msg": null,
+     "doc": "136ceae6ff3c1d13"
+    },
+    {
+     "k": 37,
+     "before": 64.990469,
+     "after": 74.990469,
+     "msg": null,
+     "doc": "056ef86242959a4f"
+    },
+    {
+     "k": 38,
+     "before": 1.072643,
+     "after": 11.072643,
+     "msg": null,
+     "doc": "77096682f63fe361"
+    }
+   ],
+   "maxAbsMiddle": 90,
+   "brush": {
+    "piece": 19,
+    "msg": null,
+    "doc": "b42d3f080bacce6c"
+   }
+  },
+  {
+   "track": "b03",
+   "pieces": 2,
+   "drags": [
+    {
+     "k": 0,
+     "before": 0,
+     "after": 10,
+     "msg": null,
+     "doc": "168a4e1ddd8db34c"
+    },
+    {
+     "k": 1,
+     "before": 16.046834,
+     "after": 26.046834,
+     "msg": null,
+     "doc": "a8d784740767db3c"
+    }
+   ],
+   "maxAbsMiddle": 16.046834,
+   "brush": {
+    "piece": 1,
+    "msg": null,
+    "doc": "a213e1fb82039332"
+   }
+  },
+  {
+   "track": "b04",
+   "pieces": 1,
+   "drags": [
+    {
+     "k": 0,
+     "before": 0,
+     "after": 10,
+     "msg": null,
+     "doc": "9288dc3bca94ade2"
+    }
+   ],
+   "maxAbsMiddle": 0,
+   "brush": {
+    "piece": 0,
+    "msg": null,
+    "doc": "4213ef91e46535c9"
+   }
+  },
+  {
+   "track": "b05",
+   "pieces": 1,
+   "drags": [
+    {
+     "k": 0,
+     "before": 0,
+     "after": 10,
+     "msg": null,
+     "doc": "9288dc3bca94ade2"
+    }
+   ],
+   "maxAbsMiddle": 0,
+   "brush": {
+    "piece": 0,
+    "msg": null,
+    "doc": "4213ef91e46535c9"
+   }
+  },
+  {
+   "track": "b06",
+   "pieces": 32,
+   "drags": [
+    {
+     "k": 0,
+     "before": 0,
+     "after": 10,
+     "msg": null,
+     "doc": "329def98a3db1fba"
+    },
+    {
+     "k": 1,
+     "before": 70.332696,
+     "after": 80.332696,
+     "msg": null,
+     "doc": "943a8d51e0422889"
+    },
+    {
+     "k": 2,
+     "before": 90,
+     "after": 100,
+     "msg": null,
+     "doc": "a3b968e69a0542b5"
+    },
+    {
+     "k": 3,
+     "before": 90,
+     "after": 100,
+     "msg": null,
+     "doc": "c28319e40acadc31"
+    },
+    {
+     "k": 4,
+     "before": 90,
+     "after": 100,
+     "msg": null,
+     "doc": "36d1fec98532c7f0"
+    },
+    {
+     "k": 5,
+     "before": 90,
+     "after": 100,
+     "msg": null,
+     "doc": "ba534d55b8b8f36c"
+    },
+    {
+     "k": 6,
+     "before": 90,
+     "after": 100,
+     "msg": null,
+     "doc": "d5e9d6e736581287"
+    },
+    {
+     "k": 7,
+     "before": 90,
+     "after": 100,
+     "msg": null,
+     "doc": "c82a108b80d09059"
+    },
+    {
+     "k": 8,
+     "before": 90,
+     "after": 100,
+     "msg": null,
+     "doc": "7f6515907387a7e2"
+    },
+    {
+     "k": 9,
+     "before": 90,
+     "after": 100,
+     "msg": null,
+     "doc": "01ae41fd4dd63a55"
+    },
+    {
+     "k": 10,
+     "before": 90,
+     "after": 100,
+     "msg": null,
+     "doc": "564cb0dcf50ef9ae"
+    },
+    {
+     "k": 11,
+     "before": 90,
+     "after": 100,
+     "msg": null,
+     "doc": "225df85bac085e83"
+    },
+    {
+     "k": 12,
+     "before": 90,
+     "after": 100,
+     "msg": null,
+     "doc": "ee28312d3be52e1e"
+    },
+    {
+     "k": 13,
+     "before": 90,
+     "after": 100,
+     "msg": null,
+     "doc": "ed7f18e66227e9d5"
+    },
+    {
+     "k": 14,
+     "before": 90,
+     "after": 100,
+     "msg": null,
+     "doc": "568c8d332144413a"
+    },
+    {
+     "k": 15,
+     "before": 45,
+     "after": 55,
+     "msg": null,
+     "doc": "13c7efe991a095a9"
+    },
+    {
+     "k": 16,
+     "before": -58.48,
+     "after": -48.48,
+     "msg": null,
+     "doc": "1055622205077188"
+    },
+    {
+     "k": 17,
+     "before": -13.105255,
+     "after": -3.105255,
+     "msg": null,
+     "doc": "9f54cd612d30f891"
+    },
+    {
+     "k": 18,
+     "before": -12,
+     "after": -2,
+     "msg": null,
+     "doc": "18c8b617f3f44227"
+    },
+    {
+     "k": 19,
+     "before": -12,
+     "after": -2,
+     "msg": null,
+     "doc": "43aee5c8d582bf00"
+    },
+    {
+     "k": 20,
+     "before": -12,
+     "after": -2,
+     "msg": null,
+     "doc": "5e2c9805467cc731"
+    },
+    {
+     "k": 21,
+     "before": -12,
+     "after": -2,
+     "msg": "brush widened to 60 m (asked 50 m), so the track outside it stays exactly as it ",
+     "doc": "c4b165283128f12d"
+    },
+    {
+     "k": 22,
+     "before": -6,
+     "after": 4,
+     "msg": null,
+     "doc": "758f3caeb80bf268"
+    },
+    {
+     "k": 23,
+     "before": 0,
+     "after": 10,
+     "msg": null,
+     "doc": "83f10d4f0de88ded"
+    },
+    {
+     "k": 24,
+     "before": 0,
+     "after": 10,
+     "msg": null,
+     "doc": "22612c48841992fd"
+    },
+    {
+     "k": 25,
+     "before": 3,
+     "after": 13,
+     "msg": null,
+     "doc": "9efb7413637c7948"
+    },
+    {
+     "k": 26,
+     "before": 3,
+     "after": 13,
+     "msg": null,
+     "doc": "308e2860466d50a6"
+    },
+    {
+     "k": 27,
+     "before": 0,
+     "after": 10,
+     "msg": null,
+     "doc": "67cc629ba160a65d"
+    },
+    {
+     "k": 28,
+     "before": 5.500076,
+     "after": 15.500076,
+     "msg": null,
+     "doc": "c63cab833dd516a7"
+    },
+    {
+     "k": 29,
+     "before": 11,
+     "after": 21,
+     "msg": null,
+     "doc": "281d9247b8d484d2"
+    },
+    {
+     "k": 30,
+     "before": 30,
+     "after": 40,
+     "msg": null,
+     "doc": "63f2fb7d8e21efd8"
+    },
+    {
+     "k": 31,
+     "before": 15,
+     "after": 25,
+     "msg": null,
+     "doc": "35a4cf4752e3f21f"
+    }
+   ],
+   "maxAbsMiddle": 90,
+   "brush": {
+    "piece": 16,
+    "msg": null,
+    "doc": "7eb00d3be0f59254"
+   }
+  },
+  {
+   "track": "b07",
+   "pieces": 37,
+   "drags": [
+    {
+     "k": 0,
+     "before": 0,
+     "after": 10,
+     "msg": null,
+     "doc": "e6ecbe0fb1daf939"
+    },
+    {
+     "k": 1,
+     "before": 70.332696,
+     "after": 80.332696,
+     "msg": null,
+     "doc": "34c491d0b06dc42c"
+    },
+    {
+     "k": 2,
+     "before": 90,
+     "after": 100,
+     "msg": null,
+     "doc": "64cbfbcded028893"
+    },
+    {
+     "k": 3,
+     "before": 90,
+     "after": 100,
+     "msg": null,
+     "doc": "59cc5b465ff6740d"
+    },
+    {
+     "k": 4,
+     "before": 90,
+     "after": 100,
+     "msg": null,
+     "doc": "c6f8f1ca1860d967"
+    },
+    {
+     "k": 5,
+     "before": 90,
+     "after": 100,
+     "msg": null,
+     "doc": "e7b1fabfb4c0b3e7"
+    },
+    {
+     "k": 6,
+     "before": 90,
+     "after": 100,
+     "msg": null,
+     "doc": "c885e94027eed3ed"
+    },
+    {
+     "k": 7,
+     "before": 90,
+     "after": 100,
+     "msg": null,
+     "doc": "21ac5f1e814c64f0"
+    },
+    {
+     "k": 8,
+     "before": 90,
+     "after": 100,
+     "msg": null,
+     "doc": "3e4925858df43725"
+    },
+    {
+     "k": 9,
+     "before": 90,
+     "after": 100,
+     "msg": null,
+     "doc": "cd03ad8ad26e7d30"
+    },
+    {
+     "k": 10,
+     "before": 90,
+     "after": 100,
+     "msg": null,
+     "doc": "88cf7bf9cf70245f"
+    },
+    {
+     "k": 11,
+     "before": 90,
+     "after": 100,
+     "msg": null,
+     "doc": "4e3adc78c1a0cfc5"
+    },
+    {
+     "k": 12,
+     "before": 90,
+     "after": 100,
+     "msg": null,
+     "doc": "5392459b087b2a43"
+    },
+    {
+     "k": 13,
+     "before": 90,
+     "after": 100,
+     "msg": null,
+     "doc": "a6465495d12bf753"
+    },
+    {
+     "k": 14,
+     "before": 90,
+     "after": 100,
+     "msg": null,
+     "doc": "9fe8a6ada44938cd"
+    },
+    {
+     "k": 15,
+     "before": 45,
+     "after": 55,
+     "msg": null,
+     "doc": "8de6a314320dde12"
+    },
+    {
+     "k": 16,
+     "before": -58.48,
+     "after": -48.48,
+     "msg": null,
+     "doc": "720867ed44153a34"
+    },
+    {
+     "k": 17,
+     "before": -13.105255,
+     "after": -3.105255,
+     "msg": null,
+     "doc": "e7866ff31aeab73a"
+    },
+    {
+     "k": 18,
+     "before": -12,
+     "after": -2,
+     "msg": null,
+     "doc": "cd699cdaf591140f"
+    },
+    {
+     "k": 19,
+     "before": -12,
+     "after": -2,
+     "msg": null,
+     "doc": "0b0692f9ccd2f18c"
+    },
+    {
+     "k": 20,
+     "before": -12,
+     "after": -2,
+     "msg": null,
+     "doc": "bc27b045e34dbc5e"
+    },
+    {
+     "k": 21,
+     "before": -12,
+     "after": -2,
+     "msg": "brush widened to 60 m (asked 50 m), so the track outside it stays exactly as it ",
+     "doc": "f26cbfadaeeac5c9"
+    },
+    {
+     "k": 22,
+     "before": -6,
+     "after": 4,
+     "msg": null,
+     "doc": "016493f82d6248e0"
+    },
+    {
+     "k": 23,
+     "before": 0,
+     "after": 10,
+     "msg": null,
+     "doc": "1e7fa1634ead6605"
+    },
+    {
+     "k": 24,
+     "before": 0,
+     "after": 10,
+     "msg": null,
+     "doc": "0c2a09a1f503caeb"
+    },
+    {
+     "k": 25,
+     "before": 3,
+     "after": 13,
+     "msg": null,
+     "doc": "faf6f179c697b8c6"
+    },
+    {
+     "k": 26,
+     "before": 3,
+     "after": 13,
+     "msg": null,
+     "doc": "af5af29337e947ab"
+    },
+    {
+     "k": 27,
+     "before": 0,
+     "after": 10,
+     "msg": null,
+     "doc": "f0552ee8870a0506"
+    },
+    {
+     "k": 28,
+     "before": 5.500076,
+     "after": 15.500076,
+     "msg": null,
+     "doc": "248fa2bf4a48bc50"
+    },
+    {
+     "k": 29,
+     "before": 11,
+     "after": 21,
+     "msg": null,
+     "doc": "75c9e8e252915de0"
+    },
+    {
+     "k": 30,
+     "before": 30,
+     "after": 40,
+     "msg": null,
+     "doc": "41bf240587cf65d5"
+    },
+    {
+     "k": 31,
+     "before": 15,
+     "after": 25,
+     "msg": null,
+     "doc": "0ad2bb09922be9c7"
+    },
+    {
+     "k": 32,
+     "before": -7,
+     "after": 3,
+     "msg": null,
+     "doc": "1a0bd82a6e9a5980"
+    },
+    {
+     "k": 33,
+     "before": 7,
+     "after": 17,
+     "msg": null,
+     "doc": "71296f0869f42011"
+    },
+    {
+     "k": 34,
+     "before": -7,
+     "after": 3,
+     "msg": null,
+     "doc": "c718a8d741a4c471"
+    },
+    {
+     "k": 35,
+     "before": 7,
+     "after": 17,
+     "msg": null,
+     "doc": "ab87bea5758ae41e"
+    },
+    {
+     "k": 36,
+     "before": 3.5,
+     "after": 13.5,
+     "msg": null,
+     "doc": "6df45b8a8ace6730"
+    }
+   ],
+   "maxAbsMiddle": 90,
+   "brush": {
+    "piece": 18,
+    "msg": null,
+    "doc": "637f9322fb2bd47e"
+   }
+  },
+  {
+   "track": "b08",
+   "pieces": 8,
+   "drags": [
+    {
+     "k": 0,
+     "before": 0,
+     "after": 10,
+     "msg": null,
+     "doc": "332df286210ecdc5"
+    },
+    {
+     "k": 1,
+     "before": 15.885,
+     "after": 25.885,
+     "msg": null,
+     "doc": "0345a239dc49dded"
+    },
+    {
+     "k": 2,
+     "before": 8.17504,
+     "after": 18.17504,
+     "msg": null,
+     "doc": "220add40dbd3c820"
+    },
+    {
+     "k": 3,
+     "before": 15,
+     "after": 25,
+     "msg": null,
+     "doc": "61bad9cee3779611"
+    },
+    {
+     "k": 4,
+     "before": 0,
+     "after": 10,
+     "msg": null,
+     "doc": "fbc363326b89d463"
+    },
+    {
+     "k": 5,
+     "before": 0,
+     "after": 10,
+     "msg": null,
+     "doc": "e455a76bb74ede82"
+    },
+    {
+     "k": 6,
+     "before": 0,
+     "after": 10,
+     "msg": null,
+     "doc": "1279403afc20ff90"
+    },
+    {
+     "k": 7,
+     "before": 0,
+     "after": 10,
+     "msg": null,
+     "doc": "4abffb8762feada8"
+    }
+   ],
+   "maxAbsMiddle": 15.885,
+   "brush": {
+    "piece": 4,
+    "msg": null,
+    "doc": "60b0f07912daf074"
+   }
+  },
+  {
+   "track": "b09",
+   "pieces": 12,
+   "drags": [
+    {
+     "k": 0,
+     "before": 0,
+     "after": 10,
+     "msg": null,
+     "doc": "055009e0c95c44e7"
+    },
+    {
+     "k": 1,
+     "before": 15.885,
+     "after": 25.885,
+     "msg": null,
+     "doc": "dab11af6c101a67c"
+    },
+    {
+     "k": 2,
+     "before": 8.17504,
+     "after": 18.17504,
+     "msg": null,
+     "doc": "4be3c3612f93c42b"
+    },
+    {
+     "k": 3,
+     "before": 15,
+     "after": 25,
+     "msg": null,
+     "doc": "d1d03073e1a8eec4"
+    },
+    {
+     "k": 4,
+     "before": 0,
+     "after": 10,
+     "msg": null,
+     "doc": "8d676a5c316670d3"
+    },
+    {
+     "k": 5,
+     "before": 0,
+     "after": 10,
+     "msg": null,
+     "doc": "79ba926d987fadb4"
+    },
+    {
+     "k": 6,
+     "before": 0,
+     "after": 10,
+     "msg": null,
+     "doc": "1404c92de464a43e"
+    },
+    {
+     "k": 7,
+     "before": 0,
+     "after": 10,
+     "msg": null,
+     "doc": "e6764fe384b73888"
+    },
+    {
+     "k": 8,
+     "before": 22.035994,
+     "after": 32.035994,
+     "msg": null,
+     "doc": "b9386c711504adbe"
+    },
+    {
+     "k": 9,
+     "before": 8.17504,
+     "after": 18.17504,
+     "msg": null,
+     "doc": "92204de6b7830da8"
+    },
+    {
+     "k": 10,
+     "before": 5,
+     "after": 15,
+     "msg": null,
+     "doc": "b86f4632405297fb"
+    },
+    {
+     "k": 11,
+     "before": 0,
+     "after": 10,
+     "msg": null,
+     "doc": "3926d084358975b6"
+    }
+   ],
+   "maxAbsMiddle": 22.035994,
+   "brush": {
+    "piece": 6,
+    "msg": null,
+    "doc": "2dfb47a4d5af74d0"
+   }
+  },
+  {
+   "track": "b10",
+   "pieces": 12,
+   "drags": [
+    {
+     "k": 0,
+     "before": 0,
+     "after": 10,
+     "msg": null,
+     "doc": "a598b0fa0b7353a3"
+    },
+    {
+     "k": 1,
+     "before": 15.885,
+     "after": 25.885,
+     "msg": null,
+     "doc": "99ec771ca5c57926"
+    },
+    {
+     "k": 2,
+     "before": 8.17504,
+     "after": 18.17504,
+     "msg": null,
+     "doc": "d71605c75de8b1a5"
+    },
+    {
+     "k": 3,
+     "before": 15,
+     "after": 25,
+     "msg": null,
+     "doc": "a2679cfaa6c80bc6"
+    },
+    {
+     "k": 4,
+     "before": 0,
+     "after": 10,
+     "msg": null,
+     "doc": "6b7b16d810410b92"
+    },
+    {
+     "k": 5,
+     "before": 0,
+     "after": 10,
+     "msg": null,
+     "doc": "11442ff688be8d1f"
+    },
+    {
+     "k": 6,
+     "before": 0,
+     "after": 10,
+     "msg": null,
+     "doc": "9021597e5cf86cf8"
+    },
+    {
+     "k": 7,
+     "before": 0,
+     "after": 10,
+     "msg": null,
+     "doc": "8d20d94daf80b317"
+    },
+    {
+     "k": 8,
+     "before": 22.035994,
+     "after": 32.035994,
+     "msg": null,
+     "doc": "b2cfa3fee566b6ca"
+    },
+    {
+     "k": 9,
+     "before": 8.17504,
+     "after": 18.17504,
+     "msg": null,
+     "doc": "95cb5fa238e39380"
+    },
+    {
+     "k": 10,
+     "before": 5,
+     "after": 15,
+     "msg": null,
+     "doc": "924a6a2863510fce"
+    },
+    {
+     "k": 11,
+     "before": 0,
+     "after": 10,
+     "msg": null,
+     "doc": "6e636577a00197f5"
+    }
+   ],
+   "maxAbsMiddle": 22.035994,
+   "brush": {
+    "piece": 6,
+    "msg": null,
+    "doc": "3a0798e2d25bc9c5"
+   }
+  },
+  {
+   "track": "b11",
+   "pieces": 13,
+   "drags": [
+    {
+     "k": 0,
+     "before": 0,
+     "after": 10,
+     "msg": null,
+     "doc": "c54b8e6af26f29f0"
+    },
+    {
+     "k": 1,
+     "before": 15.885,
+     "after": 25.885,
+     "msg": null,
+     "doc": "dd1e9dc59624ff4d"
+    },
+    {
+     "k": 2,
+     "before": 8.17504,
+     "after": 18.17504,
+     "msg": null,
+     "doc": "2d3f5a2e72396427"
+    },
+    {
+     "k": 3,
+     "before": 15,
+     "after": 25,
+     "msg": null,
+     "doc": "42f036cd4459da02"
+    },
+    {
+     "k": 4,
+     "before": 0,
+     "after": 10,
+     "msg": null,
+     "doc": "a07ad2356d7986bd"
+    },
+    {
+     "k": 5,
+     "before": 0,
+     "after": 10,
+     "msg": null,
+     "doc": "02c3ffc733dc3f36"
+    },
+    {
+     "k": 6,
+     "before": 0,
+     "after": 10,
+     "msg": null,
+     "doc": "8476c6d8371ebcca"
+    },
+    {
+     "k": 7,
+     "before": 0,
+     "after": 10,
+     "msg": null,
+     "doc": "fd6190bd20c99cbf"
+    },
+    {
+     "k": 8,
+     "before": 22.035994,
+     "after": 32.035994,
+     "msg": null,
+     "doc": "c7a9008791ec8ca3"
+    },
+    {
+     "k": 9,
+     "before": 8.17504,
+     "after": 18.17504,
+     "msg": null,
+     "doc": "ded41028248b9285"
+    },
+    {
+     "k": 10,
+     "before": 5,
+     "after": 15,
+     "msg": null,
+     "doc": "3bc45e6d89aa7955"
+    },
+    {
+     "k": 11,
+     "before": 0,
+     "after": 10,
+     "msg": null,
+     "doc": "c40dc783469b5978"
+    },
+    {
+     "k": 12,
+     "before": 0,
+     "after": 10,
+     "msg": null,
+     "doc": "5e4f7d6d24703d44"
+    }
+   ],
+   "maxAbsMiddle": 22.035994,
+   "brush": {
+    "piece": 6,
+    "msg": null,
+    "doc": "0fbcd831fd3c690d"
+   }
+  }
+ ]
+}

@@ -1,0 +1,157 @@
+TAP version 13
+# C-L230 handle drag changed the doc: [33mtrue[39m [1mnull[22m
+# C-L230 pieces before [33m3[39m after jump [33m6[39m msg Jump placed: move its landing by hand.
+# C-L230 undos [{"undo":1,"pieces":3,"undoGhost":true,"events":"t180-ghost","ghostM":970,"docM":750,"lengthBox":"120","turnBox":""},{"undo":2,"pieces":3,"undoGhost":false,"events":"t180-ghost-clear","ghostM":null,"docM":750,"lengthBox":"120","turnBox":""},{"undo":3,"pieces":3,"undoGhost":false,"events":"","ghostM":null,"docM":750,"lengthBox":"120","turnBox":""}]
+# C-L230 redos [{"redo":1,"pieces":3,"undoGhost":false,"events":"","lengthBox":"120","turnBox":""},{"redo":2,"pieces":3,"undoGhost":false,"events":"","lengthBox":"120","turnBox":""},{"redo":3,"pieces":6,"undoGhost":false,"events":"","lengthBox":"120","turnBox":""}]
+# C-L230 jump added pieces [33m0[39m metres 0.0 types 
+# C-L230 after undo of jump: events t180-ghost | ghost metres beyond placed 0.0 | jump flag [90mundefined[39m | shell undoGhost.removed [33m1[39m
+# C-L230 Level events after undo t180-ghost | shell undoGhost [33mtrue[39m
+# C-L230 Level | the ghost sent is the shell undo ghost: [33mtrue[39m | Extend from the given-back boxes lays the removed piece: [33mfalse[39m | ghost m 500.0 removed doc m 500.0
+# C-L230 Level events after undo t180-ghost | shell undoGhost [33mtrue[39m
+# C-L230 Level | the ghost sent is the shell undo ghost: [33mtrue[39m | Extend from the given-back boxes lays the removed piece: [33mtrue[39m | ghost m 500.0 removed doc m 500.0
+# C-L230 Turn to grid refused: the end is already on the 15° grid (heading 0.00°): use Straight
+# C-L230 Turn to grid refused: the end is already on the 15° grid (heading 0.00°): use Straight
+# C-L230 Turn by events after undo t180-ghost | shell undoGhost [33mtrue[39m
+# C-L230 Turn by | the ghost sent is the shell undo ghost: [33mtrue[39m | Extend from the given-back boxes lays the removed piece: [33mfalse[39m | ghost m 500.0 removed doc m 500.0
+# C-L230 Turn by events after undo t180-ghost | shell undoGhost [33mtrue[39m
+# C-L230 Turn by | the ghost sent is the shell undo ghost: [33mtrue[39m | Extend from the given-back boxes lays the removed piece: [33mtrue[39m | ghost m 500.0 removed doc m 500.0
+# C-L230 Sharp events after undo t180-ghost | shell undoGhost [33mtrue[39m
+# C-L230 Sharp | the ghost sent is the shell undo ghost: [33mtrue[39m | Extend from the given-back boxes lays the removed piece: [33mfalse[39m | ghost m 399.2 removed doc m 399.2
+# C-L230 Sharp events after undo t180-ghost | shell undoGhost [33mtrue[39m
+# C-L230 Sharp | the ghost sent is the shell undo ghost: [33mtrue[39m | Extend from the given-back boxes lays the removed piece: [33mtrue[39m | ghost m 399.2 removed doc m 399.2
+# C-L230 C2 after first undo {"len":"250","turn":"60"} | after typing 77 then the Undo button {"len":"200","turn":"45","pieces":1,"ug":true,"events":"t180-ghost-clear,t180-ghost"}
+# C-L230 C2k after undo 250 | typed 77 then Ctrl+Z {"len":"250","pieces":2} | Ctrl+Z again {"len":"200","turn":"45","pieces":1}
+# C-L230 Level | pieces removed [33m1[39m | sent is st.undoGhost.candidate: [33mtrue[39m | shown m 200.0 | removed m 200.0 | shown == removed: [33mtrue[39m | shown == Extend of the boxes: [33mfalse[39m | readout header undone
+# C-L230 Turn by | pieces removed [33m1[39m | sent is st.undoGhost.candidate: [33mtrue[39m | shown m 200.0 | removed m 200.0 | shown == removed: [33mtrue[39m | shown == Extend of the boxes: [33mfalse[39m | readout header undone
+# C-L230 Sharp | pieces removed [33m2[39m | sent is st.undoGhost.candidate: [33mtrue[39m | shown m 99.2 | removed m 99.2 | shown == removed: [33mtrue[39m | shown == Extend of the boxes: [33mfalse[39m | readout header undone
+# C-L230 Jump | pieces removed [33m3[39m | sent is st.undoGhost.candidate: [33mtrue[39m | shown m 300.0 | removed m 300.0 | shown == removed: [33mtrue[39m | shown == Extend of the boxes: [33mfalse[39m | readout header undone
+# C-L230 Extend (control) | pieces removed [33m1[39m | sent is st.undoGhost.candidate: [33mfalse[39m | shown m 200.0 | removed m 200.0 | shown == removed: [33mtrue[39m | shown == Extend of the boxes: [33mtrue[39m | readout header next
+# Subtest: C1: brush, handle drag, jump; undo three times, redo three times: same bytes, no stale ghost or boxes
+ok 1 - C1: brush, handle drag, jump; undo three times, redo three times: same bytes, no stale ghost or boxes
+  ---
+  duration_ms: 206.6434
+  type: 'test'
+  ...
+# Subtest: C1b: an undone Jump shows the jump that was removed, not an Extend piece
+ok 2 - C1b: an undone Jump shows the jump that was removed, not an Extend piece
+  ---
+  duration_ms: 28.5613
+  type: 'test'
+  ...
+# Subtest: C3: an undone Level: the preview is the road the undo removed
+ok 3 - C3: an undone Level: the preview is the road the undo removed
+  ---
+  duration_ms: 67.422
+  type: 'test'
+  ...
+# Subtest: C3b: an undone Level: the SAME command pressed on the given-back boxes lays the removed piece (amended by name, L229 addendum 3: was Extend on the boxes)
+ok 4 - C3b: an undone Level: the SAME command pressed on the given-back boxes lays the removed piece (amended by name, L229 addendum 3: was Extend on the boxes)
+  ---
+  duration_ms: 72.247
+  type: 'test'
+  ...
+# Subtest: C3: an undone Turn to grid: the preview is the road the undo removed
+ok 5 - C3: an undone Turn to grid: the preview is the road the undo removed
+  ---
+  duration_ms: 14.3476
+  type: 'test'
+  ...
+# Subtest: C3b: an undone Turn to grid: the SAME command pressed on the given-back boxes lays the removed piece (amended by name, L229 addendum 3: was Extend on the boxes)
+ok 6 - C3b: an undone Turn to grid: the SAME command pressed on the given-back boxes lays the removed piece (amended by name, L229 addendum 3: was Extend on the boxes)
+  ---
+  duration_ms: 13.2
+  type: 'test'
+  ...
+# Subtest: C3: an undone Turn by: the preview is the road the undo removed
+ok 7 - C3: an undone Turn by: the preview is the road the undo removed
+  ---
+  duration_ms: 39.2171
+  type: 'test'
+  ...
+# Subtest: C3b: an undone Turn by: the SAME command pressed on the given-back boxes lays the removed piece (amended by name, L229 addendum 3: was Extend on the boxes)
+ok 8 - C3b: an undone Turn by: the SAME command pressed on the given-back boxes lays the removed piece (amended by name, L229 addendum 3: was Extend on the boxes)
+  ---
+  duration_ms: 39.4078
+  type: 'test'
+  ...
+# Subtest: C3: an undone Sharp: the preview is the road the undo removed
+ok 9 - C3: an undone Sharp: the preview is the road the undo removed
+  ---
+  duration_ms: 222.9386
+  type: 'test'
+  ...
+# Subtest: C3b: an undone Sharp: the SAME command pressed on the given-back boxes lays the removed piece (amended by name, L229 addendum 3: was Extend on the boxes)
+ok 10 - C3b: an undone Sharp: the SAME command pressed on the given-back boxes lays the removed piece (amended by name, L229 addendum 3: was Extend on the boxes)
+  ---
+  duration_ms: 367.0181
+  type: 'test'
+  ...
+# Subtest: C2: undo, type in a box, Undo button: whose numbers are in the boxes
+ok 11 - C2: undo, type in a box, Undo button: whose numbers are in the boxes
+  ---
+  duration_ms: 70.3844
+  type: 'test'
+  ...
+# Subtest: C2k: the same with Ctrl+Z (the guard first puts the typed box back, then undoes)
+ok 12 - C2k: the same with Ctrl+Z (the guard first puts the typed box back, then undoes)
+  ---
+  duration_ms: 52.9096
+  type: 'test'
+  ...
+# Subtest: C4: undo of Level: the preview's ghost is the road that was removed
+ok 13 - C4: undo of Level: the preview's ghost is the road that was removed
+  ---
+  duration_ms: 40.8108
+  type: 'test'
+  ...
+# Subtest: C4: undo of Turn by: the preview's ghost is the road that was removed
+ok 14 - C4: undo of Turn by: the preview's ghost is the road that was removed
+  ---
+  duration_ms: 30.9802
+  type: 'test'
+  ...
+# Subtest: C4: undo of Sharp: the preview's ghost is the road that was removed
+ok 15 - C4: undo of Sharp: the preview's ghost is the road that was removed
+  ---
+  duration_ms: 176.8643
+  type: 'test'
+  ...
+# Subtest: C4: undo of Jump: the preview's ghost is the road that was removed
+ok 16 - C4: undo of Jump: the preview's ghost is the road that was removed
+  ---
+  duration_ms: 47.9809
+  type: 'test'
+  ...
+# Subtest: C4: undo of Extend (control): the preview's ghost is the road that was removed
+ok 17 - C4: undo of Extend (control): the preview's ghost is the road that was removed
+  ---
+  duration_ms: 41.9126
+  type: 'test'
+  ...
+# Subtest: T1: undo of Turn to grid: the preview shows the road Turn to grid laid, and the boxes are given back
+ok 18 - T1: undo of Turn to grid: the preview shows the road Turn to grid laid, and the boxes are given back
+  ---
+  duration_ms: 64.0791
+  type: 'test'
+  ...
+# Subtest: T2: undo of Turn to grid gives the grid step back: the same command on the given-back boxes lays the removed piece
+ok 19 - T2: undo of Turn to grid gives the grid step back: the same command on the given-back boxes lays the removed piece
+  ---
+  duration_ms: 62.943
+  type: 'test'
+  ...
+# Subtest: V4: after an undone Turn to grid the grid step box and the Settings menu read the same step
+ok 20 - V4: after an undone Turn to grid the grid step box and the Settings menu read the same step
+  ---
+  duration_ms: 49.8546
+  type: 'test'
+  ...
+1..20
+# tests 20
+# suites 0
+# pass 20
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1905.9648

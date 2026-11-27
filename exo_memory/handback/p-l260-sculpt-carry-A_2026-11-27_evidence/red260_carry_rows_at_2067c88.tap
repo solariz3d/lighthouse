@@ -1,0 +1,100 @@
+TAP version 13
+# Subtest: W5 (−, a guard): with the bank flowing through its marks, from a head at -392 (shown -32) the unused extra bank handle offers the field's -60, not -420
+ok 1 - W5 (−, a guard): with the bank flowing through its marks, from a head at -392 (shown -32) the unused extra bank handle offers the field's -60, not -420
+  ---
+  duration_ms: 90.6224
+  type: 'test'
+  ...
+# Subtest: W5 (+, a guard): with the bank flowing through its marks, from a head at 392 (shown 32) the unused extra bank handle offers the field's 60, not 420
+ok 2 - W5 (+, a guard): with the bank flowing through its marks, from a head at 392 (shown 32) the unused extra bank handle offers the field's 60, not 420
+  ---
+  duration_ms: 24.5797
+  type: 'test'
+  ...
+# Subtest: S1 (−): a Sculpt bank drag of -10 on a piece rolling -340 → -392 moves its middle -366 → -376, every step by its own share, never round a turn; the handle shows -16
+not ok 3 - S1 (−): a Sculpt bank drag of -10 on a piece rolling -340 → -392 moves its middle -366 → -376, every step by its own share, never round a turn; the handle shows -16
+  ---
+  duration_ms: 154.0639
+  type: 'test'
+  location: 'C:\\Users\\zackn\\Downloads\\t180-wt-l260-base\\app\\test\\core-bank-carry.test.js:190:3'
+  failureType: 'testCodeFailure'
+  error: 'step 1: the middle is -6.499999959150129, want -366.49999998285443'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    C:\Users\zackn\Downloads\t180-wt-l260-base\app\test\core-bank-carry.test.js:194:36
+    Array.forEach (<anonymous>)
+    TestContext.<anonymous> (C:\Users\zackn\Downloads\t180-wt-l260-base\app\test\core-bank-carry.test.js:194:11)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: S1 (+): a Sculpt bank drag of 10 on a piece rolling 340 → 392 moves its middle 366 → 376, every step by its own share, never round a turn; the handle shows 16
+not ok 4 - S1 (+): a Sculpt bank drag of 10 on a piece rolling 340 → 392 moves its middle 366 → 376, every step by its own share, never round a turn; the handle shows 16
+  ---
+  duration_ms: 95.0461
+  type: 'test'
+  location: 'C:\\Users\\zackn\\Downloads\\t180-wt-l260-base\\app\\test\\core-bank-carry.test.js:190:3'
+  failureType: 'testCodeFailure'
+  error: 'step 1: the middle is 6.499999959150129, want 366.49999998285443'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    C:\Users\zackn\Downloads\t180-wt-l260-base\app\test\core-bank-carry.test.js:194:36
+    Array.forEach (<anonymous>)
+    TestContext.<anonymous> (C:\Users\zackn\Downloads\t180-wt-l260-base\app\test\core-bank-carry.test.js:194:11)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: S2: a Sculpt bank drag across a full turn on a piece inside one turn (350 by +20, −350 by −20) rolls on to ±370, with no step jumping round a turn; the handle shows ±10
+not ok 5 - S2: a Sculpt bank drag across a full turn on a piece inside one turn (350 by +20, −350 by −20) rolls on to ±370, with no step jumping round a turn; the handle shows ±10
+  ---
+  duration_ms: 67.6615
+  type: 'test'
+  location: 'C:\\Users\\zackn\\Downloads\\t180-wt-l260-base\\app\\test\\core-bank-carry.test.js:198:1'
+  failureType: 'testCodeFailure'
+  error: '350 by 20, step 10: the middle is 0, want 360.00000000113704'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    C:\Users\zackn\Downloads\t180-wt-l260-base\app\test\core-bank-carry.test.js:203:36
+    Array.forEach (<anonymous>)
+    TestContext.<anonymous> (C:\Users\zackn\Downloads\t180-wt-l260-base\app\test\core-bank-carry.test.js:203:11)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: S3: the bank brush carries too: on upright road by +370 or −370 its centre rolls on to about ±370 (not ±10), +300 stays about 300; and on a piece wound to −366 a brush of −10 moves it exactly as it moves the same ramp one turn up (−6), on past −366
+not ok 6 - S3: the bank brush carries too: on upright road by +370 or −370 its centre rolls on to about ±370 (not ±10), +300 stays about 300; and on a piece wound to −366 a brush of −10 moves it exactly as it moves the same ramp one turn up (−6), on past −366
+  ---
+  duration_ms: 10.3922
+  type: 'test'
+  location: 'C:\\Users\\zackn\\Downloads\\t180-wt-l260-base\\app\\test\\core-bank-carry.test.js:207:1'
+  failureType: 'testCodeFailure'
+  error: 'a brush by 370 on upright road: its centre is 9.850016647492629, want about 370'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (C:\Users\zackn\Downloads\t180-wt-l260-base\app\test\core-bank-carry.test.js:213:43)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 2
+# fail 4
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 620.0169

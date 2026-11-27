@@ -1,0 +1,58 @@
+TAP version 13
+# Subtest: row 1: a route step tints exactly the moved batches in the tool's colour with the placed arrays; a shape step tints nothing
+ok 1 - row 1: a route step tints exactly the moved batches in the tool's colour with the placed arrays; a shape step tints nothing
+  ---
+  duration_ms: 782.4924
+  type: 'test'
+  ...
+# Subtest: row 2: the renderer draws each tinted chunk's edge lines in its tint and every other line as before, with no draw and no upload added
+ok 2 - row 2: the renderer draws each tinted chunk's edge lines in its tint and every other line as before, with no draw and no upload added
+  ---
+  duration_ms: 334.4238
+  type: 'test'
+  ...
+# Subtest: row 3: hover: a route tool's wash is a line across the road at every station past the window's end; a shape or local tool has none; the same hover builds nothing again
+ok 3 - row 3: hover: a route tool's wash is a line across the road at every station past the window's end; a shape or local tool has none; the same hover builds nothing again
+  ---
+  duration_ms: 204.7354
+  type: 'test'
+  ...
+# Subtest: row 4: a closed lap: the hover hatches the last and first road pieces; a drag that opened the lap draws the last piece's hatch under its move
+ok 4 - row 4: a closed lap: the hover hatches the last and first road pieces; a drag that opened the lap draws the last piece's hatch under its move
+  ---
+  duration_ms: 386.0868
+  type: 'test'
+  ...
+# Subtest: row D467: the start pieces a release moved are hatched with no hover, both at full strength; nothing when they did not move
+ok 5 - row D467: the start pieces a release moved are hatched with no hover, both at full strength; nothing when they did not move
+  ---
+  duration_ms: 264.4112
+  type: 'test'
+  ...
+# Subtest: row D467 frame: the preview draws the start pieces' hatch after such a release, and not after an undo
+ok 6 - row D467 frame: the preview draws the start pieces' hatch after such a release, and not after an undo
+  ---
+  duration_ms: 1064.1624
+  type: 'test'
+  ...
+# Subtest: row D467 frame (straight start): the preview draws the start pieces' hatch after such a release, and not after an undo
+ok 7 - row D467 frame (straight start): the preview draws the start pieces' hatch after such a release, and not after an undo
+  ---
+  duration_ms: 896.6628
+  type: 'test'
+  ...
+# Subtest: row D498: on a closed lap that ends on a flight, the hatch marks the last ROAD piece (the one the seam tries move), not the flight
+ok 8 - row D498: on a closed lap that ends on a flight, the hatch marks the last ROAD piece (the one the seam tries move), not the flight
+  ---
+  duration_ms: 198.671
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 4380.873

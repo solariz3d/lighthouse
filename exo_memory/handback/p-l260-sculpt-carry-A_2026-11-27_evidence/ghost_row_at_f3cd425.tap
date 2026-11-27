@@ -1,0 +1,28 @@
+TAP version 13
+# Subtest: D677 (ghost handle): from a head past one turn (−392, shown −32), a drag on the ghost's bank handle writes the field within one turn and Extend lays the road in the head's turn, one way, never back round
+not ok 1 - D677 (ghost handle): from a head past one turn (−392, shown −32), a drag on the ghost's bank handle writes the field within one turn and Extend lays the road in the head's turn, one way, never back round
+  ---
+  duration_ms: 374.4804
+  type: 'test'
+  location: 'C:\\Users\\zackn\\Downloads\\t180-wt-l260-f3\\app\\test\\core-pieces-ui.test.js:938:1'
+  failureType: 'testCodeFailure'
+  error: "laid in the head's turn: the head is -36.500000001264496 for the field's -36.5"
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (C:\Users\zackn\Downloads\t180-wt-l260-f3\app\test\core-pieces-ui.test.js:947:10)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3)
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 588.6251

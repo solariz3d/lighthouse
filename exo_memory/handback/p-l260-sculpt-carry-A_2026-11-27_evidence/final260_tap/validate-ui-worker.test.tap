@@ -1,0 +1,40 @@
+TAP version 13
+# Subtest: row 1: the job's answer equals the page controller's after a place, an undo, a redo, a hill brush, a brush stroke held open and the CSP switch
+ok 1 - row 1: the job's answer equals the page controller's after a place, an undo, a redo, a hill brush, a brush stroke held open and the CSP switch
+  ---
+  duration_ms: 718.8833
+  type: 'test'
+  ...
+# Subtest: row 2: the runner drops an answer older than the one shown, says what is pending, and passes on failures
+ok 2 - row 2: the runner drops an answer older than the one shown, says what is pending, and passes on failures
+  ---
+  duration_ms: 0.8075
+  type: 'test'
+  ...
+# Subtest: row 3: the worker script checks only the newest document of those that arrive while it is busy, with one job throughout
+ok 3 - row 3: the worker script checks only the newest document of those that arrive while it is busy, with one job throughout
+  ---
+  duration_ms: 84.7409
+  type: 'test'
+  ...
+# Subtest: row 4: the panel with a worker says "checking…" until the answer comes, then the verdict; a document the worker cannot take is checked on the page
+ok 4 - row 4: the panel with a worker says "checking…" until the answer comes, then the verdict; a document the worker cannot take is checked on the page
+  ---
+  duration_ms: 340.9444
+  type: 'test'
+  ...
+# Subtest: row 5: a Close press is handed the reds of a finished answer for the document it checked, and none from a drag, a check put off, or an older document
+ok 5 - row 5: a Close press is handed the reds of a finished answer for the document it checked, and none from a drag, a check put off, or an older document
+  ---
+  duration_ms: 254.753
+  type: 'test'
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 5
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1611.2115

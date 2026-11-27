@@ -1,0 +1,149 @@
+TAP version 13
+# fatal: bad revision '510510e9'
+# Subtest: row 1: a flat track draws the ground grid only: no lattice, no levels, no labels, no drop lines
+ok 1 - row 1: a flat track draws the ground grid only: no lattice, no levels, no labels, no drop lines
+  ---
+  duration_ms: 2.7329
+  type: 'test'
+  ...
+# Subtest: row 2: a track with height draws the lattice, and it spans the track's lowest to its highest point, with level labels, verticals, rings and drop lines
+ok 2 - row 2: a track with height draws the lattice, and it spans the track's lowest to its highest point, with level labels, verticals, rings and drop lines
+  ---
+  duration_ms: 1.1014
+  type: 'test'
+  ...
+# Subtest: row 3: the line count stays bounded however long the track is (a 14 km one is about a thousand pairs, the grid itself well under)
+ok 3 - row 3: the line count stays bounded however long the track is (a 14 km one is about a thousand pairs, the grid itself well under)
+  ---
+  duration_ms: 46.1228
+  type: 'test'
+  ...
+# Subtest: row 4: the modes force what they say; off draws nothing; the guides can run without the grid; a bad mode is refused
+ok 4 - row 4: the modes force what they say; off draws nothing; the guides can run without the grid; a bad mode is refused
+  ---
+  duration_ms: 4.2497
+  type: 'test'
+  ...
+# Subtest: row 5: the centre is the box's middle unless set; the two axes and the vertical pass through it, three strokes each
+ok 5 - row 5: the centre is the box's middle unless set; the two axes and the vertical pass through it, three strokes each
+  ---
+  duration_ms: 1.4842
+  type: 'test'
+  ...
+# Subtest: row 6: the gap reads a KNOWN offset: a straight at x = 10 mirrored about x = 0 is 20 m away everywhere; a line at z = 60 mirrored about z = 50 is 20 m
+ok 6 - row 6: the gap reads a KNOWN offset: a straight at x = 10 mirrored about x = 0 is 20 m away everywhere; a line at z = 60 mirrored about z = 50 is 20 m
+  ---
+  duration_ms: 2.0662
+  type: 'test'
+  ...
+# Subtest: row 7: an oval's mirror gap is about 0 about its own centre, for left/right, front/back and both
+ok 7 - row 7: an oval's mirror gap is about 0 about its own centre, for left/right, front/back and both
+  ---
+  duration_ms: 491.2396
+  type: 'test'
+  ...
+# Subtest: row 8: the mirror modes flip what they say: x flips x, z flips z, both is the half turn, and height never changes
+ok 8 - row 8: the mirror modes flip what they say: x flips x, z flips z, both is the half turn, and height never changes
+  ---
+  duration_ms: 1.082
+  type: 'test'
+  ...
+# Subtest: row 9: the dashes alternate on and off along the line, never stall on a boundary, and cover about half of it
+ok 9 - row 9: the dashes alternate on and off along the line, never stall on a boundary, and cover about half of it
+  ---
+  duration_ms: 0.5123
+  type: 'test'
+  ...
+# Subtest: row 10: a point projects and the pointer ray through it lands back on it on the base plane (the centre handle's drag)
+ok 10 - row 10: a point projects and the pointer ray through it lands back on it on the base plane (the centre handle's drag)
+  ---
+  duration_ms: 0.7002
+  type: 'test'
+  ...
+# Subtest: row 11: through the real shell and the preview: a flat track draws the ground grid, a hilly one the lattice; the modes and the mirror follow setGuides, and each change is announced once
+ok 11 - row 11: through the real shell and the preview: a flat track draws the ground grid, a hilly one the lattice; the modes and the mirror follow setGuides, and each change is announced once
+  ---
+  duration_ms: 91.484
+  type: 'test'
+  ...
+# Subtest: row 11b: the plan follows the track: a flat track replaced by a hilly one is drawn as the lattice, with no setGuides call; the layer is given every frame's plan and is disposed with the preview
+ok 12 - row 11b: the plan follows the track: a flat track replaced by a hilly one is drawn as the lattice, with no setGuides call; the layer is given every frame's plan and is disposed with the preview
+  ---
+  duration_ms: 59.3612
+  type: 'test'
+  ...
+# Subtest: row 12: with no gridMode and no ground the preview draws no grid, as before; ground: true is the old grid at y = 0
+ok 13 - row 12: with no gridMode and no ground the preview draws no grid, as before; ground: true is the old grid at y = 0
+  ---
+  duration_ms: 104.0069
+  type: 'test'
+  ...
+# Subtest: row 13: the layer puts a label at each level in view and the handle at the centre, and dragging the handle moves the centre to the point under the pointer
+ok 14 - row 13: the layer puts a label at each level in view and the handle at the centre, and dragging the handle moves the centre to the point under the pointer
+  ---
+  duration_ms: 5.241
+  type: 'test'
+  ...
+# Subtest: row 14: the camera panel's buttons send the events the preview takes, follow its state, and say the numbers in words
+ok 15 - row 14: the camera panel's buttons send the events the preview takes, follow its state, and say the numbers in words
+  ---
+  duration_ms: 1.0943
+  type: 'test'
+  ...
+# Subtest: row 15: the whole lap is the preview's: nothing in src/, the export or the document changed (the diff against the base), and the sealed fixtures are untouched
+ok 16 - row 15: the whole lap is the preview's: nothing in src/, the export or the document changed (the diff against the base), and the sealed fixtures are untouched
+  ---
+  duration_ms: 33.4769
+  type: 'test'
+  ...
+# Subtest: row 16: the gap search is EXACT: the same largest, mean and count as measuring every mirrored point against every segment, on asymmetric, open, closed, lifted, far-centre and long tracks
+ok 17 - row 16: the gap search is EXACT: the same largest, mean and count as measuring every mirrored point against every segment, on asymmetric, open, closed, lifted, far-centre and long tracks
+  ---
+  duration_ms: 13194.4843
+  type: 'test'
+  ...
+# Subtest: row 17: the search is CHEAP and does not depend on how far the mirror lies: a few dozen segment tests per point, not every segment (B: 95 to 230 ms a rebuild)
+ok 18 - row 17: the search is CHEAP and does not depend on how far the mirror lies: a few dozen segment tests per point, not every segment (B: 95 to 230 ms a rebuild)
+  ---
+  duration_ms: 44.5376
+  type: 'test'
+  ...
+# Subtest: row 18: the segment tree is built once per path: a centre drag or a change of mirror reuses it; a new path builds its own, and the answer is the same either way
+ok 19 - row 18: the segment tree is built once per path: a centre drag or a change of mirror reuses it; a new path builds its own, and the answer is the same either way
+  ---
+  duration_ms: 30.6602
+  type: 'test'
+  ...
+# Subtest: row 19: the mirror ghost's line count is BOUNDED however long the track is (B: 3,249 lines on 14 km coiled into a 300 m box, 8,316 on 40 km), and a short track keeps its short dashes
+ok 20 - row 19: the mirror ghost's line count is BOUNDED however long the track is (B: 3,249 lines on 14 km coiled into a 300 m box, 8,316 on 40 km), and a short track keeps its short dashes
+  ---
+  duration_ms: 423.6254
+  type: 'test'
+  ...
+# Subtest: row 21 (B's regression): through the real shell and track model, an open track's gap is right after every extend and brush, though the path object is the same one edited in place
+ok 21 - row 21 (B's regression): through the real shell and track model, an open track's gap is right after every extend and brush, though the path object is the same one edited in place
+  ---
+  duration_ms: 267.1455
+  type: 'test'
+  ...
+# Subtest: row 22: an open track WITH a lift (a hill from the height brush) too: the gap is right after every extend and height brush
+ok 22 - row 22: an open track WITH a lift (a hill from the height brush) too: the gap is right after every extend and height brush
+  ---
+  duration_ms: 200.6733
+  type: 'test'
+  ...
+# Subtest: row 23: what the memo keys on: every in-place change of a path gives it a NEW head (the geometry's own finish), so a tree for the old head is never used; and a changed path with no head still gets a new tree
+ok 23 - row 23: what the memo keys on: every in-place change of a path gives it a NEW head (the geometry's own finish), so a tree for the old head is never used; and a changed path with no head still gets a new tree
+  ---
+  duration_ms: 92.2063
+  type: 'test'
+  ...
+1..23
+# tests 23
+# suites 0
+# pass 23
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 15354.969

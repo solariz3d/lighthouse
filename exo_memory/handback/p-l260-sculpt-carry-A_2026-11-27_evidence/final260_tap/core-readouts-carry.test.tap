@@ -1,0 +1,64 @@
+TAP version 13
+# Subtest: row 1: every piece's readout at once is pieceReadout's, bit for bit: a closed lap, a lap with a jump, a closed tube, offsets, an empty track
+ok 1 - row 1: every piece's readout at once is pieceReadout's, bit for bit: a closed lap, a lap with a jump, a closed tube, offsets, an empty track
+  ---
+  duration_ms: 6194.7207
+  type: 'test'
+  ...
+# Subtest: row 2: the carry: after a Grab on piece 6 of 12, the pieces before and after the window keep their readouts (the same objects), and every readout is still pieceReadout's
+ok 2 - row 2: the carry: after a Grab on piece 6 of 12, the pieces before and after the window keep their readouts (the same objects), and every readout is still pieceReadout's
+  ---
+  duration_ms: 197.3656
+  type: 'test'
+  ...
+# Subtest: row 3: a heading change reads again a piece WITH offsets and a piece whose corner reaches the change, and carries one with neither
+ok 3 - row 3: a heading change reads again a piece WITH offsets and a piece whose corner reaches the change, and carries one with neither
+  ---
+  duration_ms: 564.0521
+  type: 'test'
+  ...
+# Subtest: row 4: a re-close that rewrites every piece reads every piece again; so does a start pitch change
+ok 4 - row 4: a re-close that rewrites every piece reads every piece again; so does a start pitch change
+  ---
+  duration_ms: 10354.2328
+  type: 'test'
+  ...
+# Subtest: row 5: refused as pieceReadout refuses: a bad document throws BAD_DOC by name when a piece is read; a carry from a document of other pieces reads them all
+ok 5 - row 5: refused as pieceReadout refuses: a bad document throws BAD_DOC by name when a piece is read; a carry from a document of other pieces reads them all
+  ---
+  duration_ms: 449.0161
+  type: 'test'
+  ...
+# Subtest: row 6: the shell's pieceReadouts: one answer per document, the fresh readouts after a Grab, carrying the pieces outside the window
+ok 6 - row 6: the shell's pieceReadouts: one answer per document, the fresh readouts after a Grab, carrying the pieces outside the window
+  ---
+  duration_ms: 202.0024
+  type: 'test'
+  ...
+# Subtest: row 7: a flight is always read again: a Twist at the end of the road before it changes the bank it takes off with, though the flight is the very same piece at the same pitch
+ok 7 - row 7: a flight is always read again: a Twist at the end of the road before it changes the bank it takes off with, though the flight is the very same piece at the same pitch
+  ---
+  duration_ms: 301.0978
+  type: 'test'
+  ...
+# Subtest: row 8: a corner whose pieces read differently is read again though the pitch is the same: the climb corner's first piece made anew (a new id), a turn corner's piece with its knots moved
+ok 8 - row 8: a corner whose pieces read differently is read again though the pitch is the same: the climb corner's first piece made anew (a new id), a turn corner's piece with its knots moved
+  ---
+  duration_ms: 15.5399
+  type: 'test'
+  ...
+# Subtest: row 9: a frozen piece's kept whole-piece reads are the reads: a frozen lap reads as its unfrozen copy (read afresh), turn and climb kept apart; an unfrozen piece changed in place reads its change
+ok 9 - row 9: a frozen piece's kept whole-piece reads are the reads: a frozen lap reads as its unfrozen copy (read afresh), turn and climb kept apart; an unfrozen piece changed in place reads its change
+  ---
+  duration_ms: 455.5761
+  type: 'test'
+  ...
+1..9
+# tests 9
+# suites 0
+# pass 9
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 18973.3438

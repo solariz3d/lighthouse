@@ -1,0 +1,48 @@
+TAP version 13
+# Subtest: D259 (amended D677 (2)): a Sculpt bank drag from 350 by +20 rolls on to about 370, from -350 by -20 to about -370, and 300 stays about 300; the handle's label shows them within one turn
+not ok 1 - D259 (amended D677 (2)): a Sculpt bank drag from 350 by +20 rolls on to about 370, from -350 by -20 to about -370, and 300 stays about 300; the handle's label shows them within one turn
+  ---
+  duration_ms: 202.2794
+  type: 'test'
+  location: 'C:\\Users\\zackn\\Downloads\\t180-wt-l260-base\\app\\test\\core-sculpt.test.js:199:1'
+  failureType: 'testCodeFailure'
+  error: '350.00 by 20: got 9.999999983418546, want 369.9999998875645 (from 349.9999998875645)'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    near (C:\Users\zackn\Downloads\t180-wt-l260-base\app\test\core-sculpt.test.js:198:46)
+    TestContext.<anonymous> (C:\Users\zackn\Downloads\t180-wt-l260-base\app\test\core-sculpt.test.js:204:38)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3)
+  ...
+# Subtest: D259 (amended D677 (2)): a value brush on bank past one turn rolls on (by +370 gives about 370, by -370 about -370), and within a turn it is applied as given (+300)
+not ok 2 - D259 (amended D677 (2)): a value brush on bank past one turn rolls on (by +370 gives about 370, by -370 about -370), and within a turn it is applied as given (+300)
+  ---
+  duration_ms: 81.302
+  type: 'test'
+  location: 'C:\\Users\\zackn\\Downloads\\t180-wt-l260-base\\app\\test\\core-sculpt.test.js:208:1'
+  failureType: 'testCodeFailure'
+  error: 'a brush by 370 at its centre: got 9.850016647492629, want 370 (from 0)'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    near (C:\Users\zackn\Downloads\t180-wt-l260-base\app\test\core-sculpt.test.js:198:46)
+    TestContext.<anonymous> (C:\Users\zackn\Downloads\t180-wt-l260-base\app\test\core-sculpt.test.js:213:5)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 0
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 465.6192

@@ -1,0 +1,85 @@
+TAP version 13
+# Subtest: CONTROL: core-bank-carry.test.js and core-extra-bank-wind.test.js pass whole on an unmutated copy
+ok 1 - CONTROL: core-bank-carry.test.js and core-extra-bank-wind.test.js pass whole on an unmutated copy
+  ---
+  duration_ms: 11529.5575
+  type: 'test'
+  ...
+# Subtest: a crashed inner run reads NOT TESTED, never a verdict (the crash stand-in, D352)
+ok 2 - a crashed inner run reads NOT TESTED, never a verdict (the crash stand-in, D352)
+  ---
+  duration_ms: 529.4914
+  type: 'test'
+  ...
+# Subtest: mutant B1 a typed bank is wrapped within one turn again (the rule before D677): applied, and caught by "W1"
+ok 3 - mutant B1 a typed bank is wrapped within one turn again (the rule before D677): applied, and caught by "W1"
+  ---
+  duration_ms: 772.5191
+  type: 'test'
+  ...
+# B1 a typed bank is wrapped within one turn again (the rule before D677): 2 of 3 run tests failed
+# Subtest: mutant B2 the head's whole turns are not carried: applied, and caught by "W3"
+ok 4 - mutant B2 the head's whole turns are not carried: applied, and caught by "W3"
+  ---
+  duration_ms: 638.9864
+  type: 'test'
+  ...
+# B2 the head's whole turns are not carried: 1 of 2 run tests failed
+# Subtest: mutant B3 the head's turns are its nearest whole turn, not the whole turns it has made (-340 counts as -360): applied, and caught by "W1"
+ok 5 - mutant B3 the head's turns are its nearest whole turn, not the whole turns it has made (-340 counts as -360): applied, and caught by "W1"
+  ---
+  duration_ms: 767.3286
+  type: 'test'
+  ...
+# B3 the head's turns are its nearest whole turn, not the whole turns it has made (-340 counts as -360): 2 of 3 run tests failed
+# Subtest: mutant B4 an extra bank row is wrapped within one turn again: applied, and caught by "W2"
+ok 6 - mutant B4 an extra bank row is wrapped within one turn again: applied, and caught by "W2"
+  ---
+  duration_ms: 788.7079
+  type: 'test'
+  ...
+# B4 an extra bank row is wrapped within one turn again: 1 of 2 run tests failed
+# Subtest: mutant B5 the extra bank's offer is read in absolute degrees, not the field's turn: applied, and caught by "W4"
+ok 7 - mutant B5 the extra bank's offer is read in absolute degrees, not the field's turn: applied, and caught by "W4"
+  ---
+  duration_ms: 606.336
+  type: 'test'
+  ...
+# B5 the extra bank's offer is read in absolute degrees, not the field's turn: 1 of 2 run tests failed
+# Subtest: mutant B6 a bank typed past one turn is written back into the field wrapped again (D641 (f) before D677): applied, and caught by "D641 \\(f\\)"
+ok 8 - mutant B6 a bank typed past one turn is written back into the field wrapped again (D641 (f) before D677): applied, and caught by "D641 \\(f\\)"
+  ---
+  duration_ms: 748.0063
+  type: 'test'
+  ...
+# B6 a bank typed past one turn is written back into the field wrapped again (D641 (f) before D677): 1 of 2 run tests failed
+# Subtest: mutant B7 a Sculpt bank drag past a turn is wrapped within one turn again (his 2026-10-06 rule, before D677 (2)): applied, and caught by "S1"
+ok 9 - mutant B7 a Sculpt bank drag past a turn is wrapped within one turn again (his 2026-10-06 rule, before D677 (2)): applied, and caught by "S1"
+  ---
+  duration_ms: 827.1514
+  type: 'test'
+  ...
+# B7 a Sculpt bank drag past a turn is wrapped within one turn again (his 2026-10-06 rule, before D677 (2)): 2 of 3 run tests failed
+# Subtest: mutant B8 the bank brush alone is wrapped within one turn again (Sculpt's handle carries): applied, and caught by "S3"
+ok 10 - mutant B8 the bank brush alone is wrapped within one turn again (Sculpt's handle carries): applied, and caught by "S3"
+  ---
+  duration_ms: 548.0227
+  type: 'test'
+  ...
+# B8 the bank brush alone is wrapped within one turn again (Sculpt's handle carries): 1 of 2 run tests failed
+# Subtest: mutant B9 the flowing bank's offer is read in absolute degrees (E's mutant F1 on 2067c88: the flow branch's - headTurns() removed): applied, and caught by "W5"
+ok 11 - mutant B9 the flowing bank's offer is read in absolute degrees (E's mutant F1 on 2067c88: the flow branch's - headTurns() removed): applied, and caught by "W5"
+  ---
+  duration_ms: 621.2285
+  type: 'test'
+  ...
+# B9 the flowing bank's offer is read in absolute degrees (E's mutant F1 on 2067c88: the flow branch's - headTurns() removed): 2 of 3 run tests failed
+1..11
+# tests 11
+# suites 0
+# pass 11
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 18455.9694

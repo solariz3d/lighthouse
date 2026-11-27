@@ -1,0 +1,154 @@
+TAP version 13
+# Subtest: xsec extendOptions: each field is its channel target, in the seal's units
+ok 1 - xsec extendOptions: each field is its channel target, in the seal's units
+  ---
+  duration_ms: 1.1281
+  type: 'test'
+  ...
+# Subtest: xsec extendOptions: nothing is clamped; the core's guards refuse by name (E2 KE2-2)
+ok 2 - xsec extendOptions: nothing is clamped; the core's guards refuse by name (E2 KE2-2)
+  ---
+  duration_ms: 0.6026
+  type: 'test'
+  ...
+# Subtest: xsec extendOptions: bank winds past ±180 (the spiral, S1 iv)
+ok 3 - xsec extendOptions: bank winds past ±180 (the spiral, S1 iv)
+  ---
+  duration_ms: 0.1032
+  type: 'test'
+  ...
+# Subtest: xsec extendOptions: the new fields take the "at start" box like the others
+ok 4 - xsec extendOptions: the new fields take the "at start" box like the others
+  ---
+  duration_ms: 0.2749
+  type: 'test'
+  ...
+# Subtest: xsec headState (A's core): a non-tube head shows tube sweep 0 ("none"); an edge head and a tube head show the document's values
+ok 5 - xsec headState (A's core): a non-tube head shows tube sweep 0 ("none"); an edge head and a tube head show the document's values
+  ---
+  duration_ms: 102.3318
+  type: 'test'
+  ...
+# Subtest: xsec panel: the three fields are on the panel and show the head; left as shown they send nothing
+ok 6 - xsec panel: the three fields are on the panel and show the head; left as shown they send nothing
+  ---
+  duration_ms: 42.7644
+  type: 'test'
+  ...
+# Subtest: xsec panel: a changed field is a target, and its cell shows the DOCUMENT, not the typed value
+ok 7 - xsec panel: a changed field is a target, and its cell shows the DOCUMENT, not the typed value
+  ---
+  duration_ms: 12.7174
+  type: 'test'
+  ...
+# Subtest: xsec panel: the edge angle and the edge start each redraw the readout on their own, with no other field typed after them
+ok 8 - xsec panel: the edge angle and the edge start each redraw the readout on their own, with no other field typed after them
+  ---
+  duration_ms: 8.7303
+  type: 'test'
+  ...
+# Subtest: xsec panel: after Extend the fields read back what the document holds
+ok 9 - xsec panel: after Extend the fields read back what the document holds
+  ---
+  duration_ms: 17.7065
+  type: 'test'
+  ...
+# Subtest: xsec panel (A's core): each cross-section cell is the core's own readout of the candidate
+ok 10 - xsec panel (A's core): each cross-section cell is the core's own readout of the candidate
+  ---
+  duration_ms: 35.2924
+  type: 'test'
+  ...
+# Subtest: xsec panel: a core that reports no cross-section readout shows — in those cells
+ok 11 - xsec panel: a core that reports no cross-section readout shows — in those cells
+  ---
+  duration_ms: 4.4207
+  type: 'test'
+  ...
+# Subtest: xsec panel: a core refusal is shown by its name (BAD_TUBE, BAD_EDGE: A's contract)
+ok 12 - xsec panel: a core refusal is shown by its name (BAD_TUBE, BAD_EDGE: A's contract)
+  ---
+  duration_ms: 10.4506
+  type: 'test'
+  ...
+# Subtest: xsec panel: a piece is a cup OR a tube — changing one puts the other back and disables it
+ok 13 - xsec panel: a piece is a cup OR a tube — changing one puts the other back and disables it
+  ---
+  duration_ms: 10.3496
+  type: 'test'
+  ...
+# Subtest: xsec panel: a cup and a tube sent together anyway are refused by name (BAD_TARGET)
+ok 14 - xsec panel: a cup and a tube sent together anyway are refused by name (BAD_TARGET)
+  ---
+  duration_ms: 1.3543
+  type: 'test'
+  ...
+# Subtest: xsec panel: a refusal the REAL core makes on Extend is shown in the panel with its name
+ok 15 - xsec panel: a refusal the REAL core makes on Extend is shown in the panel with its name
+  ---
+  duration_ms: 2.8899
+  type: 'test'
+  ...
+# Subtest: xsec panel: the bank field takes any number and shows it within one turn, its sign kept: 360 is a full turn of roll, and -540 rolls to -540 and shows -180 (D259, D677)
+ok 16 - xsec panel: the bank field takes any number and shows it within one turn, its sign kept: 360 is a full turn of roll, and -540 rolls to -540 and shows -180 (D259, D677)
+  ---
+  duration_ms: 47.6151
+  type: 'test'
+  ...
+# Subtest: xsec panel: a spiral of -90° pieces typed on to -360 rolls the last piece on the same way to a full turn, never back
+ok 17 - xsec panel: a spiral of -90° pieces typed on to -360 rolls the last piece on the same way to a full turn, never back
+  ---
+  duration_ms: 100.7162
+  type: 'test'
+  ...
+# Subtest: xsec head marker: the mast follows the road's U, right side up when inverted
+ok 18 - xsec head marker: the mast follows the road's U, right side up when inverted
+  ---
+  duration_ms: 0.4496
+  type: 'test'
+  ...
+# Subtest: xsec head marker: inside a closed tube the marker keeps to the room it has
+ok 19 - xsec head marker: inside a closed tube the marker keeps to the room it has
+  ---
+  duration_ms: 0.1839
+  type: 'test'
+  ...
+# Subtest: xsec head marker: the clearance of a closed tube is 0.9 of its roof and of its reach
+ok 20 - xsec head marker: the clearance of a closed tube is 0.9 of its roof and of its reach
+  ---
+  duration_ms: 1.7643
+  type: 'test'
+  ...
+# Subtest: xsec head marker: the preview hands the closed tube's room to the marker it draws
+ok 21 - xsec head marker: the preview hands the closed tube's room to the marker it draws
+  ---
+  duration_ms: 53.4474
+  type: 'test'
+  ...
+# Subtest: xsec validation words: the tube-too-narrow and roll-rate reds read in plain words, the id in the tooltip
+ok 22 - xsec validation words: the tube-too-narrow and roll-rate reds read in plain words, the id in the tooltip
+  ---
+  duration_ms: 0.6982
+  type: 'test'
+  ...
+# Subtest: xsec the panel loads in the webview loader with no node built-in (D186)
+ok 23 - xsec the panel loads in the webview loader with no node built-in (D186)
+  ---
+  duration_ms: 47.6572
+  type: 'test'
+  ...
+# Subtest: xsec panel: the left and right edge fields take a negative number, with no min, and Extend places it (D406)
+ok 24 - xsec panel: the left and right edge fields take a negative number, with no min, and Extend places it (D406)
+  ---
+  duration_ms: 45.7383
+  type: 'test'
+  ...
+1..24
+# tests 24
+# suites 0
+# pass 24
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 821.4111

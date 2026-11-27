@@ -1,0 +1,58 @@
+TAP version 13
+# Subtest: every pit-lane gap the panel accepts on the flat control exports with no red
+ok 1 - every pit-lane gap the panel accepts on the flat control exports with no red
+  ---
+  duration_ms: 454.3283
+  type: 'test'
+  ...
+# Subtest: a gap of 0 is refused by name: the message gives the smallest gap, and the document is unchanged
+ok 2 - a gap of 0 is refused by name: the message gives the smallest gap, and the document is unchanged
+  ---
+  duration_ms: 11.0078
+  type: 'test'
+  ...
+# Subtest: a gap just under the smallest is refused; the smallest itself is laid
+ok 3 - a gap just under the smallest is refused; the smallest itself is laid
+  ---
+  duration_ms: 9.8467
+  type: 'test'
+  ...
+# Subtest: an existing lane whose gap is set to 0 keeps its old gap, and is still removed by unticking
+ok 4 - an existing lane whose gap is set to 0 keeps its old gap, and is still removed by unticking
+  ---
+  duration_ms: 12.5714
+  type: 'test'
+  ...
+# Subtest: a stored document whose lane has a gap of 0 still loads, gap and all (stored data is not re-judged)
+ok 5 - a stored document whose lane has a gap of 0 still loads, gap and all (stored data is not re-judged)
+  ---
+  duration_ms: 11.6642
+  type: 'test'
+  ...
+# Subtest: a saved lane whose gap is under the smallest still takes a width edit in the panel, and keeps its gap
+ok 6 - a saved lane whose gap is under the smallest still takes a width edit in the panel, and keeps its gap
+  ---
+  duration_ms: 33.3995
+  type: 'test'
+  ...
+# Subtest: a saved lane whose gap is under the smallest: a gap changed to another value under it is refused, and raised to the smallest it is laid
+ok 7 - a saved lane whose gap is under the smallest: a gap changed to another value under it is refused, and raised to the smallest it is laid
+  ---
+  duration_ms: 7.7712
+  type: 'test'
+  ...
+# Subtest: the panel: a refused gap puts the gap box back to the lane's stored gap
+ok 8 - the panel: a refused gap puts the gap box back to the lane's stored gap
+  ---
+  duration_ms: 13.1264
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 781.9631

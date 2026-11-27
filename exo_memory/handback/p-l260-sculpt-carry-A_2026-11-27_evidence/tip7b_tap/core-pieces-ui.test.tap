@@ -1,0 +1,352 @@
+TAP version 13
+# Subtest: row 1c: on a CLOSED lap a shift-click across the start line takes the SHORT way: the pieces either side of the line; Save keeps them, Delete says CLOSED
+ok 1 - row 1c: on a CLOSED lap a shift-click across the start line takes the SHORT way: the pieces either side of the line; Save keeps them, Delete says CLOSED
+  ---
+  duration_ms: 255.665
+  type: 'test'
+  ...
+# Subtest: row 1d: where the run across the start line CANNOT be saved (a cup at one side of it, a plain piece at the other) and the inside run can, the inside run is selected and the line says why
+ok 2 - row 1d: where the run across the start line CANNOT be saved (a cup at one side of it, a plain piece at the other) and the inside run can, the inside run is selected and the line says why
+  ---
+  duration_ms: 220.9144
+  type: 'test'
+  ...
+# Subtest: row 1e: a tie stays inside the lap even when the lengths are decimals whose sums differ in the last bit (A's tiefloat case)
+ok 3 - row 1e: a tie stays inside the lap even when the lengths are decimals whose sums differ in the last bit (A's tiefloat case)
+  ---
+  duration_ms: 4.3878
+  type: 'test'
+  ...
+# Subtest: row 1: select a piece, shift-click a run (the first piece selected stays the anchor), an out-of-range piece is refused, and any change of the document drops the selection
+ok 4 - row 1: select a piece, shift-click a run (the first piece selected stays the anchor), an out-of-range piece is refused, and any change of the document drops the selection
+  ---
+  duration_ms: 151.9631
+  type: 'test'
+  ...
+# Subtest: row 2: Save as piece stores exactly the core's text; a name already used is refused and the stored piece untouched; a bad name and a mixed run are refused by name
+ok 5 - row 2: Save as piece stores exactly the core's text; a name already used is refused and the stored piece untouched; a bad name and a mixed run are refused by name
+  ---
+  duration_ms: 122.2191
+  type: 'test'
+  ...
+# Subtest: row 3: the library lists name, length, turn, climb and a thumbnail; an unreadable file and a whole track are LISTED with the reason
+ok 6 - row 3: the library lists name, length, turn, climb and a thumbnail; an unreadable file and a whole track are LISTED with the reason
+  ---
+  duration_ms: 71.6539
+  type: 'test'
+  ...
+# Subtest: row 4: Add at head is the core's insert as ONE undo step, mirrored on request; closed, missing and damaged are refused by name with nothing changed
+ok 7 - row 4: Add at head is the core's insert as ONE undo step, mirrored on request; closed, missing and damaged are refused by name with nothing changed
+  ---
+  duration_ms: 149.0262
+  type: 'test'
+  ...
+# Subtest: row 5 (REQUIRED, through the app): a track built by saving a run and adding it back through the shell is the SAME DOCUMENT and exports the SAME BYTES
+ok 8 - row 5 (REQUIRED, through the app): a track built by saving a run and adding it back through the shell is the SAME DOCUMENT and exports the SAME BYTES
+  ---
+  duration_ms: 4336.9065
+  type: 'test'
+  ...
+# Subtest: row 6: rename (the new name must be free; the file's own name changes) and delete of a saved piece
+ok 9 - row 6: rename (the new name must be free; the file's own name changes) and delete of a saved piece
+  ---
+  duration_ms: 64.128
+  type: 'test'
+  ...
+# Subtest: row 6b: a CASE-ONLY rename (Run to run) works where names are case-blind (C, look F2), on a case-sensitive store too, and a failure on the way never loses the piece
+ok 10 - row 6b: a CASE-ONLY rename (Run to run) works where names are case-blind (C, look F2), on a case-sensitive store too, and a failure on the way never loses the piece
+  ---
+  duration_ms: 116.801
+  type: 'test'
+  ...
+# Subtest: row 7: delete at the open end is simple (one undo step, ids kept); a closed track refuses by name
+ok 11 - row 7: delete at the open end is simple (one undo step, ids kept); a closed track refuses by name
+  ---
+  duration_ms: 190.7401
+  type: 'test'
+  ...
+# Subtest: row 8: delete in the MIDDLE is previewed (displacement, overlap check); Apply writes the backup FIRST and is one undo step; a failed copy refuses; Cancel, a stale preview, and DELETE_REJOIN
+ok 12 - row 8: delete in the MIDDLE is previewed (displacement, overlap check); Apply writes the backup FIRST and is one undo step; a failed copy refuses; Cancel, a stale preview, and DELETE_REJOIN
+  ---
+  duration_ms: 1994.0359
+  type: 'test'
+  ...
+# Subtest: row 8b: the delete preview's overlap check finds a road running into itself (a two-circle coil, as TEST 1 stacked) and reports where
+ok 13 - row 8b: the delete preview's overlap check finds a road running into itself (a two-circle coil, as TEST 1 stacked) and reports where
+  ---
+  duration_ms: 5458.6439
+  type: 'test'
+  ...
+# Subtest: row 9: the preview shows a delete's proposal as a ghost (dropped on Cancel and on Apply), and the selection highlight lands where the preview's own pick says the piece is
+ok 14 - row 9: the preview shows a delete's proposal as a ghost (dropped on Cancel and on Apply), and the selection highlight lands where the preview's own pick says the piece is
+  ---
+  duration_ms: 743.9249
+  type: 'test'
+  ...
+# Subtest: row 10: the panel: a click selects the piece under it and a shift-click the run; a drag, an armed brush and a click on nothing do not select; Save as piece, the list, Add at head with Mirror, Rename, Delete with its confirm
+ok 15 - row 10: the panel: a click selects the piece under it and a shift-click the run; a drag, an armed brush and a click on nothing do not select; Save as piece, the list, Add at head with Mirror, Rename, Delete with its confirm
+  ---
+  duration_ms: 253.2693
+  type: 'test'
+  ...
+# Subtest: row 10b: the panel: a middle delete shows the preview in words (what moves, the overlap check) with Apply and Cancel; a mixed run says why it cannot be saved
+ok 16 - row 10b: the panel: a middle delete shows the preview in words (what moves, the overlap check) with Apply and Cancel; a mixed run says why it cannot be saved
+  ---
+  duration_ms: 692.1121
+  type: 'test'
+  ...
+# Subtest: row 11d (D331 B, amended): as corners the ghost has the corner handles, turnDeg and climbDeg, labelled in degrees, even with the fields blank; "turn & climb as" rate gives the rate handles back
+ok 17 - row 11d (D331 B, amended): as corners the ghost has the corner handles, turnDeg and climbDeg, labelled in degrees, even with the fields blank; "turn & climb as" rate gives the rate handles back
+  ---
+  duration_ms: 134.3793
+  type: 'test'
+  ...
+# Subtest: row 11e (D331): as a corner, a Shift drag of 37 px on the turn handle is 37 × 0.01° of corner, and the placed piece turns exactly that and ends at rate 0
+ok 18 - row 11e (D331): as a corner, a Shift drag of 37 px on the turn handle is 37 × 0.01° of corner, and the placed piece turns exactly that and ends at rate 0
+  ---
+  duration_ms: 174.8319
+  type: 'test'
+  ...
+# Subtest: row 11e (D331): as a corner, a Shift drag of 23 px on the climb handle is 23 × 0.01° of corner, and the placed piece climbs exactly that and ends at rate 0
+ok 19 - row 11e (D331): as a corner, a Shift drag of 23 px on the climb handle is 23 × 0.01° of corner, and the placed piece climbs exactly that and ends at rate 0
+  ---
+  duration_ms: 222.5136
+  type: 'test'
+  ...
+# Subtest: row 11: Extend's handles: on the ghost and only while there is one; a drag types into the matching field and reaches no document until Extend; mirrored handles change the same field; Extend places what was dragged
+ok 20 - row 11: Extend's handles: on the ghost and only while there is one; a drag types into the matching field and reaches no document until Extend; mirrored handles change the same field; Extend places what was dragged
+  ---
+  duration_ms: 434.3968
+  type: 'test'
+  ...
+# Subtest: row 11b: no ghost, no handles; a press ON a handle is the handle's and the camera keeps a press anywhere else (in Build no press is a brush); the cup's handles go with the cup field; the switch turns them off
+ok 21 - row 11b: no ghost, no handles; a press ON a handle is the handle's and the camera keeps a press anywhere else (in Build no press is a brush); the cup's handles go with the cup field; the switch turns them off
+  ---
+  duration_ms: 233.3162
+  type: 'test'
+  ...
+# Subtest: row 11c: the preview mounts AFTER the panel, so the first ask for the ghost can go to nobody: the handles ask again about every half second and appear once it listens (found in the real window)
+ok 22 - row 11c: the preview mounts AFTER the panel, so the first ask for the ghost can go to nobody: the handles ask again about every half second and appear once it listens (found in the real window)
+  ---
+  duration_ms: 648.306
+  type: 'test'
+  ...
+# Subtest: row 12: Sculpt through the panel: the strip offers the tools; ONE selected piece gets its handles; a drag reshapes that piece, is ONE undo step and the centreline does not move; Undo gives it back
+ok 23 - row 12: Sculpt through the panel: the strip offers the tools; ONE selected piece gets its handles; a drag reshapes that piece, is ONE undo step and the centreline does not move; Undo gives it back
+  ---
+  duration_ms: 454.5725
+  type: 'test'
+  ...
+# Subtest: row 13: the preview's ghostInfo (what the handles read): none without a ghost, the path's samples and where the new piece starts with one, none for a delete preview's ghost, none after clearGhost
+ok 24 - row 13: the preview's ghostInfo (what the handles read): none without a ghost, the path's samples and where the new piece starts with one, none for a delete preview's ghost, none after clearGhost
+  ---
+  duration_ms: 489.3074
+  type: 'test'
+  ...
+# Subtest: row 14: the Jump button (D258, the free jump): beside Extend; the old Add-jump fields are gone; hover shows a jump ghost with no Extend handles on it; a click is ONE undo step with the note; a refusal says why; Undo gives the fields back
+ok 25 - row 14: the Jump button (D258, the free jump): beside Extend; the old Add-jump fields are gone; hover shows a jump ghost with no Extend handles on it; a click is ONE undo step with the note; a refusal says why; Undo gives the fields back
+  ---
+  duration_ms: 1332.8984
+  type: 'test'
+  ...
+# Subtest: row 14b: the landing boxes appear while a landing is the head, show the pose in metres and degrees, a typed value is ONE undo step, a refusal says why in words, and an Extend fixes the landing
+ok 26 - row 14b: the landing boxes appear while a landing is the head, show the pose in metres and degrees, a typed value is ONE undo step, a refusal says why in words, and an Extend fixes the landing
+  ---
+  duration_ms: 442.6069
+  type: 'test'
+  ...
+# Subtest: row 14c: the landing's four handles (D278: BESIDE the Extend ghost's, where D258 had them replace it: row 14d); a drag moves the number of its box in ONE undo step; Shift is one step a pixel (D330), Ctrl snaps; two quick presses reset one; an Extend takes them away
+ok 27 - row 14c: the landing's four handles (D278: BESIDE the Extend ghost's, where D258 had them replace it: row 14d); a drag moves the number of its box in ONE undo step; Shift is one step a pixel (D330), Ctrl snaps; two quick presses reset one; an Extend takes them away
+  ---
+  duration_ms: 1122.4154
+  type: 'test'
+  ...
+# Subtest: row 14d (D278, the user: "after placing jump piece, it doesnt go back to regular track manipulation with the base equation, it stays the heading, sideways, and height"): right after Jump the Extend ghost's handles are up BESIDE the landing's four; an Extend handle types into its field and edits no document; a landing handle still moves the landing in ONE undo step; Extend fixes the landing, and its handles go
+ok 28 - row 14d (D278, the user: "after placing jump piece, it doesnt go back to regular track manipulation with the base equation, it stays the heading, sideways, and height"): right after Jump the Extend ghost's handles are up BESIDE the landing's four; an Extend handle types into its field and edits no document; a landing handle still moves the landing in ONE undo step; Extend fixes the landing, and its handles go
+  ---
+  duration_ms: 4944.5901
+  type: 'test'
+  ...
+# Subtest: row 14e (D278): a hover on Jump shows the jump ghost with no Extend handles on it, while a landing's own handles stay; a hover on Extend with a landing as the head shows the Extend ghost's handles; Sculpt takes the landing's handles away as before
+ok 29 - row 14e (D278): a hover on Jump shows the jump ghost with no Extend handles on it, while a landing's own handles stay; a hover on Extend with a landing as the head shows the Extend ghost's handles; Sculpt takes the landing's handles away as before
+  ---
+  duration_ms: 3020.6124
+  type: 'test'
+  ...
+# Subtest: row 16: the Grip field in Extend (D261): it shows the head's grip, "grip like…" fills it from a known track, a changed value is the new piece's grip and the next piece keeps it, the words say untested outside 60 to 110 and that the checker does not model grip; 49, 151 and 100.5 are refused; Undo gives the head's back
+ok 30 - row 16: the Grip field in Extend (D261): it shows the head's grip, "grip like…" fills it from a known track, a changed value is the new piece's grip and the next piece keeps it, the words say untested outside 60 to 110 and that the checker does not model grip; 49, 151 and 100.5 are refused; Undo gives the head's back
+  ---
+  duration_ms: 316.4591
+  type: 'test'
+  ...
+# Subtest: row 16b: the selected pieces' grip (D261): the box shows the pieces' grip (blank where they differ), Set grip is ONE undo step on the road pieces and keeps the selection, "grip like…" fills the box, 49/151/100.5 are refused in words, 100 writes no grip, a flight alone is refused, Undo restores
+ok 31 - row 16b: the selected pieces' grip (D261): the box shows the pieces' grip (blank where they differ), Set grip is ONE undo step on the road pieces and keeps the selection, "grip like…" fills the box, 49/151/100.5 are refused in words, 100 writes no grip, a flight alone is refused, Undo restores
+  ---
+  duration_ms: 309.4099
+  type: 'test'
+  ...
+# Subtest: row 16c: the track coloured by grip (D261): blue below 100, white at 100, orange above; the layer draws each road piece in its colour only while "colour by grip" is ticked; the hover label says "grip 85%" for a piece off 100 (always while the view is on) and nothing for a plain piece
+ok 32 - row 16c: the track coloured by grip (D261): blue below 100, white at 100, orange above; the layer draws each road piece in its colour only while "colour by grip" is ticked; the hover label says "grip 85%" for a piece off 100 (always while the view is on) and nothing for a plain piece
+  ---
+  duration_ms: 196.8974
+  type: 'test'
+  ...
+# Subtest: row 17: the grip UI modules load in the webview loader with NO node built-in (D263: piecesui and griplayer required src/core/document.js, which pulls tools/piecewise.cjs and node's fs, and the panel failed to load), and their copy of the grip numbers is the core's
+ok 33 - row 17: the grip UI modules load in the webview loader with NO node built-in (D263: piecesui and griplayer required src/core/document.js, which pulls tools/piecewise.cjs and node's fs, and the panel failed to load), and their copy of the grip numbers is the core's
+  ---
+  duration_ms: 62.3428
+  type: 'test'
+  ...
+# Subtest: row 18: the CHEAP ghost while a handle is dragged (D266 item 2): every step of a drag asks the preview for a cheap ghost, the release asks for the full one, typing in a field and hovering Extend ask for the full one
+ok 34 - row 18: the CHEAP ghost while a handle is dragged (D266 item 2): every step of a drag asks the preview for a cheap ghost, the release asks for the full one, typing in a field and hovering Extend ask for the full one
+  ---
+  duration_ms: 124.8374
+  type: 'test'
+  ...
+# Subtest: row 19: no help paragraph stays in the left column (D267): the tube width, the grip, the turn-0 hint, the jump and the landing show only a few words or nothing, and the words are tooltips
+ok 35 - row 19: no help paragraph stays in the left column (D267): the tube width, the grip, the turn-0 hint, the jump and the landing show only a few words or nothing, and the words are tooltips
+  ---
+  duration_ms: 237.9966
+  type: 'test'
+  ...
+# Subtest: row 19b: the values of the piece being edited are drawn LARGE over the 3D view (D267): length, turn, climb, bank and width, updated as a handle is dragged or a field is typed, hidden on a closed loop
+ok 36 - row 19b: the values of the piece being edited are drawn LARGE over the 3D view (D267): length, turn, climb, bank and width, updated as a handle is dragged or a field is typed, hidden on a closed loop
+  ---
+  duration_ms: 595.4177
+  type: 'test'
+  ...
+# Subtest: row 19c: the share codes are in the File menu as "Copy track code" and "Paste track code…" (D267; D355 moved them from the ⋯ menu), not a section of the left column; the code itself is unchanged
+ok 37 - row 19c: the share codes are in the File menu as "Copy track code" and "Paste track code…" (D267; D355 moved them from the ⋯ menu), not a section of the left column; the code itself is unchanged
+  ---
+  duration_ms: 83.21
+  type: 'test'
+  ...
+# Subtest: row 20: the saved pieces are a drop-down bin in the top bar, not a section of the left column (D269): a row per piece with its thumbnail, name and summary; Add at head, Add mirrored, Rename and Delete; a click on the row adds it; the empty words are in the menu; Save as piece stays with the selection
+ok 38 - row 20: the saved pieces are a drop-down bin in the top bar, not a section of the left column (D269): a row per piece with its thumbnail, name and summary; Add at head, Add mirrored, Rename and Delete; a click on the row adds it; the empty words are in the menu; Save as piece stays with the selection
+  ---
+  duration_ms: 186.5064
+  type: 'test'
+  ...
+# Subtest: row 20b: the Pieces menu opens and closes: it lists the pieces when opened, Esc closes it, a press outside closes it, a press inside does not; Esc with it closed does nothing; the top bar has the button beside Open… and Previous versions…
+ok 39 - row 20b: the Pieces menu opens and closes: it lists the pieces when opened, Esc closes it, a press outside closes it, a press inside does not; Esc with it closed does nothing; the top bar has the button beside Open… and Previous versions…
+  ---
+  duration_ms: 129.8788
+  type: 'test'
+  ...
+# Subtest: row 15: the preview's ghostInfo says whether the ghost is a jump's and carries its segments (what the handles and the flight overlay read)
+ok 40 - row 15: the preview's ghostInfo says whether the ghost is a jump's and carries its segments (what the handles and the flight overlay read)
+  ---
+  duration_ms: 90.4174
+  type: 'test'
+  ...
+# Subtest: D259 (amended D677): a typed 300 stays 300, and a typed 400 rolls on to 400 while the field shows 40
+ok 41 - D259 (amended D677): a typed 300 stays 300, and a typed 400 rolls on to 400 while the field shows 40
+  ---
+  duration_ms: 214.2522
+  type: 'test'
+  ...
+# Subtest: D259: dragging the bank handle from 350 by about +20 gives about 10 (not 370), and from -350 by about -20 gives about -10; Extend applies what the field shows
+ok 42 - D259: dragging the bank handle from 350 by about +20 gives about 10 (not 370), and from -350 by about -20 gives about -10; Extend applies what the field shows
+  ---
+  duration_ms: 379.0107
+  type: 'test'
+  ...
+# Subtest: D677 (ghost handle): from a head past one turn (−392, shown −32), a drag on the ghost's bank handle writes the field within one turn and Extend lays the road in the head's turn, one way, never back round
+ok 43 - D677 (ghost handle): from a head past one turn (−392, shown −32), a drag on the ghost's bank handle writes the field within one turn and Extend lays the road in the head's turn, one way, never back round
+  ---
+  duration_ms: 229.4265
+  type: 'test'
+  ...
+# Subtest: row 18b: a length drag previews whole 2 m, and the release previews the exact length the field shows
+ok 44 - row 18b: a length drag previews whole 2 m, and the release previews the exact length the field shows
+  ---
+  duration_ms: 134.5366
+  type: 'test'
+  ...
+# Subtest: row 18c: a ghost whose sliced build needs more frames than the retry is still shown: the handles do not ask again while the preview is building one (D426)
+ok 45 - row 18c: a ghost whose sliced build needs more frames than the retry is still shown: the handles do not ask again while the preview is building one (D426)
+  ---
+  duration_ms: 192.3002
+  type: 'test'
+  ...
+# Subtest: row 22 (D430): an EMPTIED turn, climb, bank or cup is 0, not the head's value: the new piece eases to 0, and the box shows 0 once the change is committed
+ok 46 - row 22 (D430): an EMPTIED turn, climb, bank or cup is 0, not the head's value: the new piece eases to 0, and the box shows 0 once the change is committed
+  ---
+  duration_ms: 250.4661
+  type: 'test'
+  ...
+# Subtest: row 22b (D430): a field left as shown still continues the head; an emptied width keeps its old meaning (blank: the head's; 0 is no width)
+ok 47 - row 22b (D430): a field left as shown still continues the head; an emptied width keeps its old meaning (blank: the head's; 0 is no width)
+  ---
+  duration_ms: 234.2011
+  type: 'test'
+  ...
+# Subtest: row 22c (D430): as a corner the turn and climb fields rest blank, so a blank there is untouched: the track keeps turning, it does not ease to straight
+ok 48 - row 22c (D430): as a corner the turn and climb fields rest blank, so a blank there is untouched: the track keeps turning, it does not ease to straight
+  ---
+  duration_ms: 224.2625
+  type: 'test'
+  ...
+# Subtest: a selected piece lends its values to the Extend fields: Extend places a piece like it; a run lends nothing; clearing shows the head
+ok 49 - a selected piece lends its values to the Extend fields: Extend places a piece like it; a run lends nothing; clearing shows the head
+  ---
+  duration_ms: 95.5524
+  type: 'test'
+  ...
+# Subtest: D331 B: with the turn read as a corner (the default), a selected piece lends the degrees it turns, and Extend places a piece that turns them and ends straight
+ok 50 - D331 B: with the turn read as a corner (the default), a selected piece lends the degrees it turns, and Extend places a piece that turns them and ends straight
+  ---
+  duration_ms: 139.7402
+  type: 'test'
+  ...
+# Subtest: row 16 (D335): a steady bank drag on a placed piece's sculpt mark, the pointer following the mark as the road rolls, rises all the way, lands on 180 and never goes back (the axis fixed at the grab stalled it near 165)
+ok 51 - row 16 (D335): a steady bank drag on a placed piece's sculpt mark, the pointer following the mark as the road rolls, rises all the way, lands on 180 and never goes back (the axis fixed at the grab stalled it near 165)
+  ---
+  duration_ms: 13989.7921
+  type: 'test'
+  ...
+# Subtest: row 16b (D335): a slow bank drag on a sculpt mark is 0.01 degree a pixel with no key, and the piece reads what the handle says
+ok 52 - row 16b (D335): a slow bank drag on a sculpt mark is 0.01 degree a pixel with no key, and the piece reads what the handle says
+  ---
+  duration_ms: 3540.0121
+  type: 'test'
+  ...
+# Subtest: D677 (2): a steady bank drag on the Sculpt mark of a piece wound past a turn (340 → 392, its middle at 366) rises from 366 and never goes back round a turn
+ok 53 - D677 (2): a steady bank drag on the Sculpt mark of a piece wound past a turn (340 → 392, its middle at 366) rises from 366 and never goes back round a turn
+  ---
+  duration_ms: 2378.1299
+  type: 'test'
+  ...
+# Subtest: row 21: in Sculpt, a Tube sweep drag on a closed tube is refused in plain words: "Sculpt can't change the sweep of a closed tube…", not the core's
+ok 54 - row 21: in Sculpt, a Tube sweep drag on a closed tube is refused in plain words: "Sculpt can't change the sweep of a closed tube…", not the core's
+  ---
+  duration_ms: 189.1988
+  type: 'test'
+  ...
+# Subtest: row D464: Sculpt's how-to line and value line read as instructions, not errors: class hint, painted in the text colour
+ok 55 - row D464: Sculpt's how-to line and value line read as instructions, not errors: class hint, painted in the text colour
+  ---
+  duration_ms: 128.7576
+  type: 'test'
+  ...
+# Subtest: row 25 (D519, amended D520): Grab on the road: the pressed point follows the pointer and a rim keeps the far rim (built again and read), a dot opens at its own station, off the road is Grab as before
+ok 56 - row 25 (D519, amended D520): Grab on the road: the pressed point follows the pointer and a rim keeps the far rim (built again and read), a dot opens at its own station, off the road is Grab as before
+  ---
+  duration_ms: 397.242
+  type: 'test'
+  ...
+# Subtest: row 25b (D519): with another key the press keeps that key's one channel wherever it lands; the shell says what the piece is and why a channel would be refused
+ok 57 - row 25b (D519): with another key the press keeps that key's one channel wherever it lands; the shell says what the piece is and why a channel would be refused
+  ---
+  duration_ms: 130.6673
+  type: 'test'
+  ...
+1..57
+# tests 57
+# suites 0
+# pass 57
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 53933.679

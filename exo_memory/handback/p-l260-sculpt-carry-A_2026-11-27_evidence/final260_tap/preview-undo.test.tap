@@ -1,0 +1,40 @@
+TAP version 13
+# Subtest: row 1: place then undo restores the track without meshing it, equal to a fresh full build, and placing again from it equals a fresh build
+ok 1 - row 1: place then undo restores the track without meshing it, equal to a fresh full build, and placing again from it equals a fresh build
+  ---
+  duration_ms: 525.3401
+  type: 'test'
+  ...
+# Subtest: row 2: with a hill on the track (the lift), place then undo is restored and equal to a fresh full build
+ok 2 - row 2: with a hill on the track (the lift), place then undo is restored and equal to a fresh full build
+  ---
+  duration_ms: 283.1188
+  type: 'test'
+  ...
+# Subtest: row 3: a brush between the placement and the undo drops the copy: the undo rebuilds, and equals a fresh full build
+ok 3 - row 3: a brush between the placement and the undo drops the copy: the undo rebuilds, and equals a fresh full build
+  ---
+  duration_ms: 287.5451
+  type: 'test'
+  ...
+# Subtest: row 5: a SCULPT of the restored track (it re-places the path's blocks in place) still equals a fresh full build: the restored samples read the blocks the path holds
+ok 4 - row 5: a SCULPT of the restored track (it re-places the path's blocks in place) still equals a fresh full build: the restored samples read the blocks the path holds
+  ---
+  duration_ms: 285.0643
+  type: 'test'
+  ...
+# Subtest: row 4: two placements undone in a row: the first is restored, the second rebuilt, both equal a fresh full build
+ok 5 - row 4: two placements undone in a row: the first is restored, the second rebuilt, both equal a fresh full build
+  ---
+  duration_ms: 371.4538
+  type: 'test'
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 5
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1947.2725

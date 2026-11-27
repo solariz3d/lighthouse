@@ -1,0 +1,28 @@
+TAP version 13
+# Subtest: D677 (2): a steady bank drag on the Sculpt mark of a piece wound past a turn (340 → 392, its middle at 366) rises from 366 and never goes back round a turn
+not ok 1 - D677 (2): a steady bank drag on the Sculpt mark of a piece wound past a turn (340 → 392, its middle at 366) rises from 366 and never goes back round a turn
+  ---
+  duration_ms: 1569.6617
+  type: 'test'
+  location: 'C:\\Users\\zackn\\Downloads\\t180-wt-l260-base\\app\\test\\core-pieces-ui.test.js:1104:1'
+  failureType: 'testCodeFailure'
+  error: 'it rises from 366: first 6.44999997591853, last 19.499999992041943'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (C:\Users\zackn\Downloads\t180-wt-l260-base\app\test\core-pieces-ui.test.js:1112:10)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3)
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1822.2327

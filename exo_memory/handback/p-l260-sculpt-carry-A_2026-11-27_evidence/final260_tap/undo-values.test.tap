@@ -1,0 +1,52 @@
+TAP version 13
+# Subtest: R6: a plain piece: Extend, Undo gives the typed values back, and Extend again lays the same piece
+ok 1 - R6: a plain piece: Extend, Undo gives the typed values back, and Extend again lays the same piece
+  ---
+  duration_ms: 169.9406
+  type: 'test'
+  ...
+# Subtest: R6: a piece with an extra turn row: Extend, Undo gives the typed values back, and Extend again lays the same piece
+ok 2 - R6: a piece with an extra turn row: Extend, Undo gives the typed values back, and Extend again lays the same piece
+  ---
+  duration_ms: 54.8746
+  type: 'test'
+  ...
+# Subtest: R6: the S as driven (turn 0, +92 from 80, -91 from 200, flow through its marks): Extend, Undo gives the typed values back, and Extend again lays the same piece
+ok 3 - R6: the S as driven (turn 0, +92 from 80, -91 from 200, flow through its marks): Extend, Undo gives the typed values back, and Extend again lays the same piece
+  ---
+  duration_ms: 190.6892
+  type: 'test'
+  ...
+# Subtest: P7: the S is typeable: turn 0 with extra turn rows sends turnDeg 0, and a plain turn 0 still sends none
+ok 4 - P7: the S is typeable: turn 0 with extra turn rows sends turnDeg 0, and a plain turn 0 still sends none
+  ---
+  duration_ms: 194.8466
+  type: 'test'
+  ...
+# Subtest: R7: save, open, undo gives the values back from the undo file; an undo file without them opens as before
+ok 5 - R7: save, open, undo gives the values back from the undo file; an undo file without them opens as before
+  ---
+  duration_ms: 60.7853
+  type: 'test'
+  ...
+# Subtest: R8: the released reader (builder main 3b33b38) opens an undo file that carries `made`, history intact
+ok 6 - R8: the released reader (builder main 3b33b38) opens an undo file that carries `made`, history intact
+  ---
+  duration_ms: 610.9641
+  type: 'test'
+  ...
+# Subtest: R9b: with no values kept, the undone piece is shown with words saying they are read from the shape, and the boxes are NOT filled
+ok 7 - R9b: with no values kept, the undone piece is shown with words saying they are read from the shape, and the boxes are NOT filled
+  ---
+  duration_ms: 39.3447
+  type: 'test'
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 7
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1510.771
