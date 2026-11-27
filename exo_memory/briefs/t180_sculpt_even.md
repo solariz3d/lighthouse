@@ -40,3 +40,7 @@
 - On a flat road the tool’s rows all pass, as before.
 - Stage 2 (the build) not started. A second probe is written: `loop/packet_t180_sculpt_even_banked_probe2_2026-11-27.md`. Its ring is held while the width-hold builder works.
 - Found by the planner: the plan’s banked test road banked the turn away from its centre (4 reds of its own); banked into the turn it has none.
+
+**His word, 2026-11-27 07:19 (L):**
+> "try to stop new work in motion, when all is done, push the relevant handoffs so we can pick up on desktop, then after, give me a solid run down of tonights work and where its headed"
+The second probe is not dispatched; it is queued for D in the handoff.
