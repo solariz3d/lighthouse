@@ -150,3 +150,83 @@ B's figures for them stand as B's.
 BASE: C:\Users\zackn\Downloads\t180-track-builder f3cd425
 
 NEXT: librarian takes CLEAN to the chair, with F1 named for B or the landing (the refusal's words, or carrying wd through an inserted piece), when it has read this; the sculpt-frame timing stays owed to a seat with both slots.
+
+## Delta read, 2026-11-27 09:5xZ: B's F1, e4e7ecc..8b7cafc — NOT CLEAN
+
+**Order:** the chair's of 09:44:20Z.
+- **Base:** builder `d677-right-width-b` **8b7cafc**, one commit on e4e7ecc; local only, not pushed, not in the installed build. Read in my own detached worktree `C:\Consonance\t180-wt-o-l258f`, removed at hand-back.
+- **The objects:** B's section "F1: a saved piece added at a split head, in his words" (`handback/p-l258-right-width-B_2026-11-27.md`, room 154220e5), read whole, against my F1 above.
+- **The diff** (checked: `git diff e4e7ecc 8b7cafc`): 7 files, +48/−5.
+  - `piece.js` `insert` throws `SPLIT_HEAD` when Add's `JOINT` refusal has `onlyRightWidth`.
+  - `document.js` exports `jointProblem`.
+  - The rest is one row, two mutants (R26, R27), and the CHANGELOG, README and MAP lines.
+
+**Verdict: NOT CLEAN, on the words' truth (F2).** The guard is sound.
+
+### The guard: sound (checked)
+
+**From the code:**
+- `onlyRightWidth` only changes the words of a refusal Add has already made (`e.code === 'JOINT'`). It never lays anything itself, so it cannot let a bad joint through. `appendPiece` still decides.
+- It holds when `jointProblem` fails at the head and passes with the head's `wd` set to 0. So any other fault keeps the original `JOINT`.
+- `jointProblem` names the first failing channel in `CHANNELS` order, and `wd` is last. So the other fault is the one he reads.
+
+**Varied** (`o_f1.js` → `f1.json`):
+
+| head and piece | he reads |
+|---|---|
+| an edged split head, plain piece | "JOINT: … e starts at 0, the previous piece ends at 10": the edge, not hidden |
+| a cup split head, legacy piece | "PIECE_KIND: a legacy piece cannot be added after a cup piece …": the kind first |
+| a cup split head, cup piece, and its mirror | SPLIT_HEAD: the right width is the one fault |
+| a right side narrower than the width (wd −3.5) | "right width 15.6 m, width 19.1 m": true. Followed, the piece is laid |
+
+### F2: followed as written, the words do not let the piece in when the width is not a two-decimal number (checked)
+
+`o_f1.js` → `f1.json`:
+- **The run:** through the core shell, a split head, a saved plain piece added (refused), then the words' own advice typed as he would type it. That is right width m = the number the words give, the width field left as shown, sent through the panel's own `extendOptions`, one Extend of 100 m. Then the piece added again.
+
+| head | words say | wd sent | after the Extend | second add |
+|---|---|---|---|---|
+| B's: width 19.1 | "(19.1)" | 0 | ends at wd 0 | **laid** |
+| width 19.1346 (typed) | "(19.13)" | **−0.0046** | still split, wd −0.0046, core/7 | **refused again** |
+| width 19.1, then Sculpt's width brush (+1.37) at the head: width 20.463 | "(20.46)" | **−0.003** | still split, wd −0.003, core/7 | **refused again** |
+
+- **The second refusal reads:** *"SPLIT_HEAD: the road's right side has its own width at the head (right width 19.13 m, width 19.13 m), which a saved piece cannot carry on yet; Extend with right width m set to the width (19.13), then add the piece"*.
+  - Both widths now read the same, and the advice is the same.
+  - **Following the words leads back to the same refusal.** In the brushed case they read "right width 20.36 m, width 20.36 m".
+- **Why** (from the code; checked by the numbers above):
+  - The words round both widths to two decimals (`+x.toFixed(2)`), as the panel shows its fields (`app/core/panel.js` `show`, two decimals).
+  - But the panel sends a typed right width against the head's **unrounded** width (`targets.wd = wR - ref`, `ref = head.w`, `panel.js:227`).
+  - Extend snaps a right width to exactly 0 only when the target is exactly 0 (`extend.js`, `endAsked === 0`).
+  - So a width with more decimals leaves a few millimetres of `wd`, and the road stays split.
+- **Reachable:** a Sculpt width brush leaves such widths. It is an ordinary edit, the third row.
+
+**The ways out** (`f1_wayout.txt`):
+- Typing the width field as well (width m 19.13 and right width m 19.13) sends wd 0. The piece then ends at 0, and the next add is laid.
+- So does typing the width to four decimals (19.1346), which the panel never shows him.
+- **Neither is what the words say.**
+
+**My correction, against my first read above.** The same trap is in e4e7ecc, before this delta, and my CLEAN did not see it: I tried no head with a non-round width.
+- The CHANGELOG's way back, *"to go back, set the right width back to the width (the piece then writes no `wd`, and the file is core/4, /5 or /6 again)"*, fails the same way for such a width.
+- Typed as shown, the right width ends 3 to 5 mm off. Every piece after it stays split, and the file stays core/7.
+- 8b7cafc turns that into an instruction he is given at the moment he is stuck.
+
+**What would close it,** for B (inferred, not built), with a row on a head whose width is not a two-decimal number (19.1346, and one left by the width brush):
+- **One rule:** a typed right width equal to the width *as the panel shows it* means "back to the width". The panel sends wd 0, or Extend takes any wd target within the display's half step (0.005 m) as 0.
+- **Not enough alone:** printing the width to four decimals in the words. The panel's own field still shows two.
+
+### What B's section says that holds (checked)
+
+- The words name his field, "right width m", and the head's two widths. They give no `wd`.
+- The jump-first run is still laid at a split head. B checked that; I did not re-run it.
+- The row is red at e4e7ecc with my text (B's figures). B's mutants R26 and R27 read right.
+- **Not re-run here:** B's touched rows (141 of 141) and the harness (31 / 31). They stand as B's.
+
+### The machine
+
+- My worktree removed (`git worktree remove`). No process of mine running.
+- His saves were not opened in this section. The roads are synthetic; no names.
+- I ran no heavy run: one probe at BelowNormal, after `heavy-run.js --status`, taking no slot, with both slots held by P and A.
+
+**Evidence added to `p-l258-read-right-width-O_2026-11-27_evidence/`:** `o_f1.js` → `f1.json`, `f1_wayout.txt` (the `node -e` that made it is in the section above), `heavy_run_status_f1.txt`.
+
+NEXT: librarian takes NOT CLEAN to the chair with F2 for B (a right width typed as the width is shown goes back to the width, with a row on a non-round width), when it has read this section.

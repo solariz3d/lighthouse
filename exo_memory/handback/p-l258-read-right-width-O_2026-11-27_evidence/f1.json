@@ -1,0 +1,93 @@
+[
+ {
+  "case": "B's head: width 19.1, right width 22.6",
+  "headW": 19.1,
+  "headWd": 3.5,
+  "panelShowsWidth": "19.1",
+  "panelShowsRightWidth": "22.6",
+  "firstAdd": "SPLIT_HEAD: the road's right side has its own width at the head (right width 22.6 m, width 19.1 m), which a saved piece cannot carry on yet; Extend with right width m set to the width (19.1), then add the piece",
+  "laidFirst": 0,
+  "wordsSay": "19.1",
+  "extendSent": {
+   "wd": 0
+  },
+  "afterExtend": {
+   "split": true,
+   "endWd": 0,
+   "schema": "t180b.core/7",
+   "message": null
+  },
+  "secondAdd": "added the piece \"plain\" at the head: 1 piece (Ctrl+Z takes it back)",
+  "laidSecond": 1
+ },
+ {
+  "case": "a head of width 19.1346 (typed with four decimals), right width +3.5",
+  "headW": 19.1346,
+  "headWd": 3.5,
+  "panelShowsWidth": "19.13",
+  "panelShowsRightWidth": "22.63",
+  "firstAdd": "SPLIT_HEAD: the road's right side has its own width at the head (right width 22.63 m, width 19.13 m), which a saved piece cannot carry on yet; Extend with right width m set to the width (19.13), then add the piece",
+  "laidFirst": 0,
+  "wordsSay": "19.13",
+  "extendSent": {
+   "wd": -0.0045999999999999375
+  },
+  "afterExtend": {
+   "split": true,
+   "endWd": -0.0046,
+   "schema": "t180b.core/7",
+   "message": null
+  },
+  "secondAdd": "SPLIT_HEAD: the road's right side has its own width at the head (right width 19.13 m, width 19.13 m), which a saved piece cannot carry on yet; Extend with right width m set to the width (19.13), then add the piece",
+  "laidSecond": 0
+ },
+ {
+  "case": "width 19.1, right +3.5, then Sculpt's width brush (+1.37) at the head",
+  "headW": 20.463,
+  "headWd": 3.5,
+  "panelShowsWidth": "20.46",
+  "panelShowsRightWidth": "23.96",
+  "firstAdd": "SPLIT_HEAD: the road's right side has its own width at the head (right width 23.96 m, width 20.46 m), which a saved piece cannot carry on yet; Extend with right width m set to the width (20.46), then add the piece",
+  "laidFirst": 0,
+  "wordsSay": "20.46",
+  "extendSent": {
+   "wd": -0.0030000000000001137
+  },
+  "afterExtend": {
+   "split": true,
+   "endWd": -0.003,
+   "schema": "t180b.core/7",
+   "message": null
+  },
+  "secondAdd": "SPLIT_HEAD: the road's right side has its own width at the head (right width 20.36 m, width 20.36 m), which a saved piece cannot carry on yet; Extend with right width m set to the width (20.36), then add the piece",
+  "laidSecond": 0
+ },
+ {
+  "case": "a right side narrower than the width (wd -3.5)",
+  "headW": 19.1,
+  "headWd": -3.5,
+  "panelShowsWidth": "19.1",
+  "panelShowsRightWidth": "15.6",
+  "firstAdd": "SPLIT_HEAD: the road's right side has its own width at the head (right width 15.6 m, width 19.1 m), which a saved piece cannot carry on yet; Extend with right width m set to the width (19.1), then add the piece",
+  "laidFirst": 0,
+  "wordsSay": "19.1",
+  "extendSent": {
+   "wd": 0
+  },
+  "afterExtend": {
+   "split": true,
+   "endWd": 0,
+   "schema": "t180b.core/7",
+   "message": null
+  },
+  "secondAdd": "added the piece \"plain\" at the head: 1 piece (Ctrl+Z takes it back)",
+  "laidSecond": 1
+ },
+ {
+  "case": "two faults, and the kinds",
+  "edged": "JOINT: JOINT: piece 3 (p4): e starts at 0, the previous piece ends at 10 (every road joint must meet smoothly: the same value and slope in every channel)",
+  "cuppedLegacyPiece": "PIECE_KIND: PIECE_KIND: a legacy piece cannot be added after a cup piece (the track would have to change cross-section back, which Extend cannot do either); save the run as a cup piece",
+  "cuppedCupPiece": "SPLIT_HEAD: SPLIT_HEAD: the road's right side has its own width at the head (right width 22.6 m, width 19.1 m), which a saved piece cannot carry on yet; Extend with right width m set to the width (19.1), then add the piece",
+  "cuppedCupPieceMirror": "SPLIT_HEAD: SPLIT_HEAD: the road's right side has its own width at the head (right width 22.6 m, width 19.1 m), which a saved piece cannot carry on yet; Extend with right width m set to the width (19.1), then add the piece"
+ }
+]
