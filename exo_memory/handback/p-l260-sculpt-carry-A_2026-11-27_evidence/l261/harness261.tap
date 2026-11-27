@@ -1,0 +1,113 @@
+TAP version 13
+# Subtest: CONTROL: core-bank-carry.test.js, core-extra-bank-wind.test.js and core-pieces-ui.test.js pass whole on an unmutated copy
+ok 1 - CONTROL: core-bank-carry.test.js, core-extra-bank-wind.test.js and core-pieces-ui.test.js pass whole on an unmutated copy
+  ---
+  duration_ms: 57128.387
+  type: 'test'
+  ...
+# Subtest: a crashed inner run reads NOT TESTED, never a verdict (the crash stand-in, D352)
+ok 2 - a crashed inner run reads NOT TESTED, never a verdict (the crash stand-in, D352)
+  ---
+  duration_ms: 3019.2215
+  type: 'test'
+  ...
+# Subtest: mutant B1 a typed bank is wrapped within one turn again (the rule before D677): applied, and caught by "W1"
+ok 3 - mutant B1 a typed bank is wrapped within one turn again (the rule before D677): applied, and caught by "W1"
+  ---
+  duration_ms: 1499.7753
+  type: 'test'
+  ...
+# B1 a typed bank is wrapped within one turn again (the rule before D677): 2 of 3 run tests failed
+# Subtest: mutant B2 the head's whole turns are not carried: applied, and caught by "W3"
+ok 4 - mutant B2 the head's whole turns are not carried: applied, and caught by "W3"
+  ---
+  duration_ms: 1322.2448
+  type: 'test'
+  ...
+# B2 the head's whole turns are not carried: 1 of 2 run tests failed
+# Subtest: mutant B3 the head's turns are its nearest whole turn, not the whole turns it has made (-340 counts as -360): applied, and caught by "W1"
+ok 5 - mutant B3 the head's turns are its nearest whole turn, not the whole turns it has made (-340 counts as -360): applied, and caught by "W1"
+  ---
+  duration_ms: 824.6225
+  type: 'test'
+  ...
+# B3 the head's turns are its nearest whole turn, not the whole turns it has made (-340 counts as -360): 2 of 3 run tests failed
+# Subtest: mutant B4 an extra bank row is wrapped within one turn again: applied, and caught by "W2"
+ok 6 - mutant B4 an extra bank row is wrapped within one turn again: applied, and caught by "W2"
+  ---
+  duration_ms: 780.9153
+  type: 'test'
+  ...
+# B4 an extra bank row is wrapped within one turn again: 1 of 2 run tests failed
+# Subtest: mutant B5 the extra bank's offer is read in absolute degrees, not the field's turn: applied, and caught by "W4"
+ok 7 - mutant B5 the extra bank's offer is read in absolute degrees, not the field's turn: applied, and caught by "W4"
+  ---
+  duration_ms: 632.9902
+  type: 'test'
+  ...
+# B5 the extra bank's offer is read in absolute degrees, not the field's turn: 1 of 2 run tests failed
+# Subtest: mutant B6 a bank typed past one turn is written back into the field wrapped again (D641 (f) before D677): applied, and caught by "D641 \\(f\\)"
+ok 8 - mutant B6 a bank typed past one turn is written back into the field wrapped again (D641 (f) before D677): applied, and caught by "D641 \\(f\\)"
+  ---
+  duration_ms: 877.7057
+  type: 'test'
+  ...
+# B6 a bank typed past one turn is written back into the field wrapped again (D641 (f) before D677): 1 of 2 run tests failed
+# Subtest: mutant B7 a Sculpt bank drag past a turn is wrapped within one turn again (his 2026-10-06 rule, before D677 (2)): applied, and caught by "S1"
+ok 9 - mutant B7 a Sculpt bank drag past a turn is wrapped within one turn again (his 2026-10-06 rule, before D677 (2)): applied, and caught by "S1"
+  ---
+  duration_ms: 1277.1119
+  type: 'test'
+  ...
+# B7 a Sculpt bank drag past a turn is wrapped within one turn again (his 2026-10-06 rule, before D677 (2)): 2 of 3 run tests failed
+# Subtest: mutant B8 the bank brush alone is wrapped within one turn again (Sculpt's handle carries): applied, and caught by "S3"
+ok 10 - mutant B8 the bank brush alone is wrapped within one turn again (Sculpt's handle carries): applied, and caught by "S3"
+  ---
+  duration_ms: 616.0465
+  type: 'test'
+  ...
+# B8 the bank brush alone is wrapped within one turn again (Sculpt's handle carries): 1 of 2 run tests failed
+# Subtest: mutant B9 the flowing bank's offer is read in absolute degrees (E's mutant F1 on 2067c88: the flow branch's - headTurns() removed): applied, and caught by "W5"
+ok 11 - mutant B9 the flowing bank's offer is read in absolute degrees (E's mutant F1 on 2067c88: the flow branch's - headTurns() removed): applied, and caught by "W5"
+  ---
+  duration_ms: 719.0064
+  type: 'test'
+  ...
+# B9 the flowing bank's offer is read in absolute degrees (E's mutant F1 on 2067c88: the flow branch's - headTurns() removed): 2 of 3 run tests failed
+# Subtest: mutant B10 Sculpt's bank handle is held at the bank kind's ±720 again (the Sculpt model no longer lifts its range): applied, and caught by "row 720[a-d]"
+ok 12 - mutant B10 Sculpt's bank handle is held at the bank kind's ±720 again (the Sculpt model no longer lifts its range): applied, and caught by "row 720[a-d]"
+  ---
+  duration_ms: 9223.0475
+  type: 'test'
+  ...
+# B10 Sculpt's bank handle is held at the bank kind's ±720 again (the Sculpt model no longer lifts its range): 4 of 5 run tests failed
+# Subtest: mutant B11 a drag's value is held at its kind's range whatever the model says (targetFor): applied, and caught by "row 720[a-d]"
+ok 13 - mutant B11 a drag's value is held at its kind's range whatever the model says (targetFor): applied, and caught by "row 720[a-d]"
+  ---
+  duration_ms: 9428.612
+  type: 'test'
+  ...
+# B11 a drag's value is held at its kind's range whatever the model says (targetFor): 4 of 5 run tests failed
+# Subtest: mutant B12 a wheel notch is held at its kind's range whatever the model says: applied, and caught by "row 720e"
+ok 14 - mutant B12 a wheel notch is held at its kind's range whatever the model says: applied, and caught by "row 720e"
+  ---
+  duration_ms: 1212.5852
+  type: 'test'
+  ...
+# B12 a wheel notch is held at its kind's range whatever the model says: 1 of 1 run tests failed
+# Subtest: mutant B13 every bank handle loses its range, the ghost's too (which is his to rule on): applied, and caught by "row 720g"
+ok 15 - mutant B13 every bank handle loses its range, the ghost's too (which is his to rule on): applied, and caught by "row 720g"
+  ---
+  duration_ms: 956.7292
+  type: 'test'
+  ...
+# B13 every bank handle loses its range, the ghost's too (which is his to rule on): 1 of 1 run tests failed
+1..15
+# tests 15
+# suites 0
+# pass 15
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 89611.4168

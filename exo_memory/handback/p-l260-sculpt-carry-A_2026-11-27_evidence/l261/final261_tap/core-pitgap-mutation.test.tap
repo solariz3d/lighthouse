@@ -1,0 +1,88 @@
+TAP version 13
+# Subtest: control: the unmutated temp copy passes every pit-gap row
+ok 1 - control: the unmutated temp copy passes every pit-gap row
+  ---
+  duration_ms: 871.3569
+  type: 'test'
+  ...
+# Subtest: mutation P1 the shell lays any gap: applied, and caught by "every pit-lane gap the panel accepts…"
+ok 2 - mutation P1 the shell lays any gap: applied, and caught by "every pit-lane gap the panel accepts…"
+  ---
+  duration_ms: 806.8287
+  type: 'test'
+  ...
+# Subtest: mutation P9 an unchanged gap under the smallest is judged too (every edit of a saved lane under it refused): applied, and caught by "still takes a width edit in the panel…"
+ok 3 - mutation P9 an unchanged gap under the smallest is judged too (every edit of a saved lane under it refused): applied, and caught by "still takes a width edit in the panel…"
+  ---
+  duration_ms: 996.0333
+  type: 'test'
+  ...
+# Subtest: mutation P10 the gap is compared with the NEW lane's own (an existing lane's gap never judged): applied, and caught by "a gap changed to another value under it is refused…"
+ok 4 - mutation P10 the gap is compared with the NEW lane's own (an existing lane's gap never judged): applied, and caught by "a gap changed to another value under it is refused…"
+  ---
+  duration_ms: 982.5888
+  type: 'test'
+  ...
+# Subtest: mutation P11 the panel does not draw the stored lane after a refusal: applied, and caught by "a refused gap puts the gap box back…"
+ok 5 - mutation P11 the panel does not draw the stored lane after a refusal: applied, and caught by "a refused gap puts the gap box back…"
+  ---
+  duration_ms: 1296.4874
+  type: 'test'
+  ...
+# Subtest: mutation P12 the panel redraws only when the document changed (the refused value stays): applied, and caught by "a refused gap puts the gap box back…"
+ok 6 - mutation P12 the panel redraws only when the document changed (the refused value stays): applied, and caught by "a refused gap puts the gap box back…"
+  ---
+  duration_ms: 919.5759
+  type: 'test'
+  ...
+# Subtest: mutation P2 the smallest gap itself is refused: applied, and caught by "a gap just under the smallest is refused…"
+ok 7 - mutation P2 the smallest gap itself is refused: applied, and caught by "a gap just under the smallest is refused…"
+  ---
+  duration_ms: 786.4266
+  type: 'test'
+  ...
+# Subtest: mutation P5 the refusal says why and lays the lane anyway: applied, and caught by "a gap of 0 is refused by name…"
+ok 8 - mutation P5 the refusal says why and lays the lane anyway: applied, and caught by "a gap of 0 is refused by name…"
+  ---
+  duration_ms: 676.5684
+  type: 'test'
+  ...
+# Subtest: mutation P6 the refusal does not give the smallest gap: applied, and caught by "a gap of 0 is refused by name…"
+ok 9 - mutation P6 the refusal does not give the smallest gap: applied, and caught by "a gap of 0 is refused by name…"
+  ---
+  duration_ms: 882.5748
+  type: 'test'
+  ...
+# Subtest: mutation P7 removing the lane (null) reads its gap: applied, and caught by "still removed by unticking…"
+ok 10 - mutation P7 removing the lane (null) reads its gap: applied, and caught by "still removed by unticking…"
+  ---
+  duration_ms: 916.0376
+  type: 'test'
+  ...
+# Subtest: mutation P3 the smallest gap is 0: applied, and caught by "every pit-lane gap the panel accepts…"
+ok 11 - mutation P3 the smallest gap is 0: applied, and caught by "every pit-lane gap the panel accepts…"
+  ---
+  duration_ms: 802.2222
+  type: 'test'
+  ...
+# Subtest: mutation P4 the smallest gap is 0.01 m (a gap the export refuses on the flat control): applied, and caught by "every pit-lane gap the panel accepts…"
+ok 12 - mutation P4 the smallest gap is 0.01 m (a gap the export refuses on the flat control): applied, and caught by "every pit-lane gap the panel accepts…"
+  ---
+  duration_ms: 957.942
+  type: 'test'
+  ...
+# Subtest: mutation P8 stored lanes are re-judged by the floor: applied, and caught by "a stored document whose lane has a gap of 0 still loads…"
+ok 13 - mutation P8 stored lanes are re-judged by the floor: applied, and caught by "a stored document whose lane has a gap of 0 still loads…"
+  ---
+  duration_ms: 1020.9184
+  type: 'test'
+  ...
+1..13
+# tests 13
+# suites 0
+# pass 13
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 11990.6037

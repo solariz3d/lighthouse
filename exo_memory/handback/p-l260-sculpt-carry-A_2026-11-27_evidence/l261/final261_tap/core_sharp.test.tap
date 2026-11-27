@@ -1,0 +1,94 @@
+TAP version 13
+# Subtest: Sharp 90° at R 22, width 24: turns 90° within 0.01° on the path, holds R, enters and exits within 8 m, the Straight after it turns 0.0°, and is green at full speed
+ok 1 - Sharp 90° at R 22, width 24: turns 90° within 0.01° on the path, holds R, enters and exits within 8 m, the Straight after it turns 0.0°, and is green at full speed
+  ---
+  duration_ms: 173.2078
+  type: 'test'
+  ...
+# Subtest: Sharp 90° at R 24.25, width 45: turns 90° within 0.01° on the path, holds R, enters and exits within 8 m, the Straight after it turns 0.0°, and is green at full speed
+ok 2 - Sharp 90° at R 24.25, width 45: turns 90° within 0.01° on the path, holds R, enters and exits within 8 m, the Straight after it turns 0.0°, and is green at full speed
+  ---
+  duration_ms: 164.5354
+  type: 'test'
+  ...
+# Subtest: Sharp at 45°, 135°, 180° and −90° (R 22, width 24): each exact within 0.01° and exiting straight
+ok 3 - Sharp at 45°, 135°, 180° and −90° (R 22, width 24): each exact within 0.01° and exiting straight
+  ---
+  duration_ms: 398.3807
+  type: 'test'
+  ...
+# Subtest: the minimum radius is the geometry's: width 45 refuses R 22 (the fold) and names the tightest, which is green, and 0.2 m under it is refused; nothing changes
+ok 4 - the minimum radius is the geometry's: width 45 refuses R 22 (the fold) and names the tightest, which is green, and 0.2 m under it is refused; nothing changes
+  ---
+  duration_ms: 5676.8973
+  type: 'test'
+  ...
+# Subtest: width 24: R 11 is refused for the fold, and the tightest named is green with 0.2 m under it refused
+ok 5 - width 24: R 11 is refused for the fold, and the tightest named is green with 0.2 m under it refused
+  ---
+  duration_ms: 1556.5542
+  type: 'test'
+  ...
+# Subtest: a corner smaller than its own ramps, a zero angle, a bad radius and a closed loop are refused by name
+ok 6 - a corner smaller than its own ramps, a zero angle, a bad radius and a closed loop are refused by name
+  ---
+  duration_ms: 1.1195
+  type: 'test'
+  ...
+# Subtest: a track with a Sharp corner survives a save and reopen: the same pieces, knots and path
+ok 7 - a track with a Sharp corner survives a save and reopen: the same pieces, knots and path
+  ---
+  duration_ms: 79.6674
+  type: 'test'
+  ...
+# Subtest: the broad curve is not Sharp's: placing a Sharp corner leaves what Extend's eased turn and Turn by build byte-identical
+ok 8 - the broad curve is not Sharp's: placing a Sharp corner leaves what Extend's eased turn and Turn by build byte-identical
+  ---
+  duration_ms: 78.4575
+  type: 'test'
+  ...
+# Subtest: D677 row 1: an amber-only corner (R 26 m, -69°, width 29, bank 44°) is laid, and the checker shows its amber on it
+ok 9 - D677 row 1: an amber-only corner (R 26 m, -69°, width 29, bank 44°) is laid, and the checker shows its amber on it
+  ---
+  duration_ms: 729.4694
+  type: 'test'
+  ...
+# Subtest: D677 row 2: a corner with a real red still refuses, by name: width 24 at R 11 folds, the message names the fold, and nothing changes
+ok 10 - D677 row 2: a corner with a real red still refuses, by name: width 24 at R 11 folds, the message names the fold, and nothing changes
+  ---
+  duration_ms: 723.5696
+  type: 'test'
+  ...
+# Subtest: D677 row 3: where only ambers fired, tightestSharp names a radius no larger than the one that lays, set by a red just under it
+ok 11 - D677 row 3: where only ambers fired, tightestSharp names a radius no larger than the one that lays, set by a red just under it
+  ---
+  duration_ms: 3288.6824
+  type: 'test'
+  ...
+# Subtest: D677 row 4: an off-camber corner that leaves the surface at full speed (a red from the bank) still refuses, by name, and names the radius where the red ends
+ok 12 - D677 row 4: an off-camber corner that leaves the surface at full speed (a red from the bank) still refuses, by name, and names the radius where the red ends
+  ---
+  duration_ms: 12429.0877
+  type: 'test'
+  ...
+# Subtest: a negative radius is refused by name (BAD_TARGET), and nothing changes
+ok 13 - a negative radius is refused by name (BAD_TARGET), and nothing changes
+  ---
+  duration_ms: 0.4425
+  type: 'test'
+  ...
+# Subtest: a closed track is refused CLOSED even at a radius too tight for it (the closed loop is named before any fold)
+ok 14 - a closed track is refused CLOSED even at a radius too tight for it (the closed loop is named before any fold)
+  ---
+  duration_ms: 0.2854
+  type: 'test'
+  ...
+1..14
+# tests 14
+# suites 0
+# pass 14
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 25459.3613

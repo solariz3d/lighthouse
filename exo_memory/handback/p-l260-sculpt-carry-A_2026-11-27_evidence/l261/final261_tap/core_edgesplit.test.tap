@@ -1,0 +1,58 @@
+TAP version 13
+# Subtest: row 1: an edge angle typed alone sets both sides, and the file is what it was before er (core/4, no er)
+ok 1 - row 1: an edge angle typed alone sets both sides, and the file is what it was before er (core/4, no er)
+  ---
+  duration_ms: 23.4571
+  type: 'test'
+  ...
+# Subtest: row 2: e 30 and er 0 bank the left rim 30° past the cup and leave the right rim at the cup; the file is core/5 and round-trips
+ok 2 - row 2: e 30 and er 0 bank the left rim 30° past the cup and leave the right rim at the cup; the file is core/5 and round-trips
+  ---
+  duration_ms: 20.9912
+  type: 'test'
+  ...
+# Subtest: row 3: the piece after a split piece continues each side on its own, with no step at the joint
+ok 3 - row 3: the piece after a split piece continues each side on its own, with no step at the joint
+  ---
+  duration_ms: 2.3277
+  type: 'test'
+  ...
+# Subtest: row 4: a right edge past the cap is refused by name, as the edge angle is
+ok 4 - row 4: a right edge past the cap is refused by name, as the edge angle is
+  ---
+  duration_ms: 2.4058
+  type: 'test'
+  ...
+# Subtest: row 5: a core/4 edge file reads with its right side equal to its left
+ok 5 - row 5: a core/4 edge file reads with its right side equal to its left
+  ---
+  duration_ms: 1.3146
+  type: 'test'
+  ...
+# Subtest: row 7: Flatten road for pit lowers BOTH sides' edges (a right-side lane on a split or symmetric edge must not keep a 20° right rim)
+ok 6 - row 7: Flatten road for pit lowers BOTH sides' edges (a right-side lane on a split or symmetric edge must not keep a 20° right rim)
+  ---
+  duration_ms: 24.476
+  type: 'test'
+  ...
+# Subtest: row 8: a saved piece keeps its sides, its mirror swaps them, and a symmetric saved piece writes no er (its file is what it was)
+ok 7 - row 8: a saved piece keeps its sides, its mirror swaps them, and a symmetric saved piece writes no er (its file is what it was)
+  ---
+  duration_ms: 7.0942
+  type: 'test'
+  ...
+# Subtest: row 6: the panel turns the right edge field into the er target; blank leaves it to follow the edge angle
+ok 8 - row 6: the panel turns the right edge field into the er target; blank leaves it to follow the edge angle
+  ---
+  duration_ms: 0.4134
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 210.4974

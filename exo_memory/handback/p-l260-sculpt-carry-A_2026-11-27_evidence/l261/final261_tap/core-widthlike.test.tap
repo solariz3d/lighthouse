@@ -1,0 +1,46 @@
+TAP version 13
+# Subtest: the entries: "24 m road (21–28)", narrowest first, one per known track, a placeholder first, and a pick is the median as text
+ok 1 - the entries: "24 m road (21–28)", narrowest first, one per known track, a placeholder first, and a pick is the median as text
+  ---
+  duration_ms: 0.9991
+  type: 'test'
+  ...
+# Subtest: CLOSED ONLY: a track whose read did not close is in the file but never offered, in either wording: the real ones (the 21 m road and the 34 m (32–53) one) and a synthetic one
+ok 2 - CLOSED ONLY: a track whose read did not close is in the file but never offered, in either wording: the real ones (the 21 m road and the 34 m (32–53) one) and a synthetic one
+  ---
+  duration_ms: 0.2236
+  type: 'test'
+  ...
+# Subtest: a TUBE (sweep 360): the figures are the distance ROUND, each entry says how wide that is across (w/π), and the note says w is round the tube
+ok 3 - a TUBE (sweep 360): the figures are the distance ROUND, each entry says how wide that is across (w/π), and the note says w is round the tube
+  ---
+  duration_ms: 0.1498
+  type: 'test'
+  ...
+# Subtest: the PANEL: the drop-down sits beside the width field, lists the known tracks, and a pick types the median into the width (the ghost and the readout follow)
+ok 4 - the PANEL: the drop-down sits beside the width field, lists the known tracks, and a pick types the median into the width (the ghost and the readout follow)
+  ---
+  duration_ms: 61.8766
+  type: 'test'
+  ...
+# Subtest: the PANEL on a tube: the sweep at 360 turns the entries to round-and-across and shows the note; back below 360 they read plain again; the note follows the width
+ok 5 - the PANEL on a tube: the sweep at 360 turns the entries to round-and-across and shows the note; back below 360 they read plain again; the note follows the width
+  ---
+  duration_ms: 3.3129
+  type: 'test'
+  ...
+# Subtest: the PANEL at a tube head: the sweep field SHOWS the head's 360, so the entries read round and across with nothing typed
+ok 6 - the PANEL at a tube head: the sweep field SHOWS the head's 360, so the entries read round and across with nothing typed
+  ---
+  duration_ms: 17.3481
+  type: 'test'
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 239.7411

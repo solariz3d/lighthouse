@@ -1,0 +1,220 @@
+TAP version 13
+# Subtest: control: the unmutated temp copy passes every cross-section test
+ok 1 - control: the unmutated temp copy passes every cross-section test
+  ---
+  duration_ms: 971.8105
+  type: 'test'
+  ...
+# Subtest: a crashed inner run reads NOT TESTED, never a verdict (the crash stand-in, D352)
+ok 2 - a crashed inner run reads NOT TESTED, never a verdict (the crash stand-in, D352)
+  ---
+  duration_ms: 463.3916
+  type: 'test'
+  ...
+# Subtest: a crash after an unrelated failing row reads NOT TESTED, never NOT CAUGHT (the second stand-in, D353)
+ok 3 - a crash after an unrelated failing row reads NOT TESTED, never NOT CAUGHT (the second stand-in, D353)
+  ---
+  duration_ms: 814.2561
+  type: 'test'
+  ...
+# Subtest: a load throw in a run of one file reads NOT CAUGHT as before, never NOT TESTED (the load-throw stand-in, D354)
+ok 4 - a load throw in a run of one file reads NOT CAUGHT as before, never NOT TESTED (the load-throw stand-in, D354)
+  ---
+  duration_ms: 760.7056
+  type: 'test'
+  ...
+# Subtest: mutation X1 the edge angle sent in radians: applied, and caught by "xsec extendOptions: each field is its channel target…"
+ok 5 - mutation X1 the edge angle sent in radians: applied, and caught by "xsec extendOptions: each field is its channel target…"
+  ---
+  duration_ms: 939.009
+  type: 'test'
+  ...
+# Subtest: mutation X2 the panel clamps the edge, hiding the core guard (KE2-2): applied, and caught by "xsec extendOptions: nothing is clamped…"
+ok 6 - mutation X2 the panel clamps the edge, hiding the core guard (KE2-2): applied, and caught by "xsec extendOptions: nothing is clamped…"
+  ---
+  duration_ms: 932.6102
+  type: 'test'
+  ...
+# Subtest: mutation X3 the tube field is not sent: applied, and caught by "xsec extendOptions: each field is its channel target…"
+ok 7 - mutation X3 the tube field is not sent: applied, and caught by "xsec extendOptions: each field is its channel target…"
+  ---
+  duration_ms: 929.0234
+  type: 'test'
+  ...
+# Subtest: mutation X4 the edge start sent on the edge channel: applied, and caught by "xsec extendOptions: each field is its channel target…"
+ok 8 - mutation X4 the edge start sent on the edge channel: applied, and caught by "xsec extendOptions: each field is its channel target…"
+  ---
+  duration_ms: 1160.1323
+  type: 'test'
+  ...
+# Subtest: mutation X5 the bank wrapped to ±180 (S1): applied, and caught by "xsec extendOptions: bank winds past…"
+ok 9 - mutation X5 the bank wrapped to ±180 (S1): applied, and caught by "xsec extendOptions: bank winds past…"
+  ---
+  duration_ms: 1065.5913
+  type: 'test'
+  ...
+# Subtest: mutation X6 (KS1-2) max="180" on the bank input: applied, and caught by "xsec panel: the bank field takes any number…"
+ok 10 - mutation X6 (KS1-2) max="180" on the bank input: applied, and caught by "xsec panel: the bank field takes any number…"
+  ---
+  duration_ms: 936.1528
+  type: 'test'
+  ...
+# Subtest: mutation X7 (KE7-1, UI) the edge cell shows the typed target: applied, and caught by "xsec panel: a changed field is a target…"
+ok 11 - mutation X7 (KE7-1, UI) the edge cell shows the typed target: applied, and caught by "xsec panel: a changed field is a target…"
+  ---
+  duration_ms: 942.6062
+  type: 'test'
+  ...
+# Subtest: mutation X8 (KE7-2) the edge cell wired to the cup values: applied, and caught by "xsec panel (A…"
+ok 12 - mutation X8 (KE7-2) the edge cell wired to the cup values: applied, and caught by "xsec panel (A…"
+  ---
+  duration_ms: 970.6092
+  type: 'test'
+  ...
+# Subtest: mutation X9 the edge start shown to one decimal: applied, and caught by "xsec panel: a changed field is a target…"
+ok 13 - mutation X9 the edge start shown to one decimal: applied, and caught by "xsec panel: a changed field is a target…"
+  ---
+  duration_ms: 1012.7936
+  type: 'test'
+  ...
+# Subtest: mutation X10 the edge field is not on the panel: applied, and caught by "xsec panel: the three fields are on the panel…"
+ok 14 - mutation X10 the edge field is not on the panel: applied, and caught by "xsec panel: the three fields are on the panel…"
+  ---
+  duration_ms: 866.0371
+  type: 'test'
+  ...
+# Subtest: mutation X11 the new fields do not redraw the readout: applied, and caught by "xsec panel: the edge angle and the edge start each redraw…"
+ok 15 - mutation X11 the new fields do not redraw the readout: applied, and caught by "xsec panel: the edge angle and the edge start each redraw…"
+  ---
+  duration_ms: 949.1023
+  type: 'test'
+  ...
+# Subtest: mutation X12 an untouched edge field is sent as a target: applied, and caught by "xsec panel: the three fields are on the panel…"
+ok 16 - mutation X12 an untouched edge field is sent as a target: applied, and caught by "xsec panel: the three fields are on the panel…"
+  ---
+  duration_ms: 1132.4224
+  type: 'test'
+  ...
+# Subtest: mutation X13 the edge has no "at start": applied, and caught by "xsec extendOptions: the new fields take the "at start" box…"
+ok 17 - mutation X13 the edge has no "at start": applied, and caught by "xsec extendOptions: the new fields take the "at start" box…"
+  ---
+  duration_ms: 947.8008
+  type: 'test'
+  ...
+# Subtest: mutation X14 the head state drops the cross-section channels: applied, and caught by "xsec headState…"
+ok 18 - mutation X14 the head state drops the cross-section channels: applied, and caught by "xsec headState…"
+  ---
+  duration_ms: 1058.9159
+  type: 'test'
+  ...
+# Subtest: mutation X15 the default edge start is the plan's stale 0.70: applied, and caught by "xsec headState…"
+ok 19 - mutation X15 the default edge start is the plan's stale 0.70: applied, and caught by "xsec headState…"
+  ---
+  duration_ms: 891.9778
+  type: 'test'
+  ...
+# Subtest: mutation X16 (X2 ii) the mast stands on world y: applied, and caught by "xsec head marker: the mast follows the road's U…"
+ok 20 - mutation X16 (X2 ii) the mast stands on world y: applied, and caught by "xsec head marker: the mast follows the road's U…"
+  ---
+  duration_ms: 992.0171
+  type: 'test'
+  ...
+# Subtest: mutation X17 the mast is not held below the roof: applied, and caught by "xsec head marker: inside a closed tube…"
+ok 21 - mutation X17 the mast is not held below the roof: applied, and caught by "xsec head marker: inside a closed tube…"
+  ---
+  duration_ms: 976.3293
+  type: 'test'
+  ...
+# Subtest: mutation X18 the cross and ring reach through the wall: applied, and caught by "xsec head marker: inside a closed tube…"
+ok 22 - mutation X18 the cross and ring reach through the wall: applied, and caught by "xsec head marker: inside a closed tube…"
+  ---
+  duration_ms: 955.8823
+  type: 'test'
+  ...
+# Subtest: mutation X19 an open tube read as closed: applied, and caught by "xsec head marker: the clearance of a closed tube…"
+ok 23 - mutation X19 an open tube read as closed: applied, and caught by "xsec head marker: the clearance of a closed tube…"
+  ---
+  duration_ms: 939.2926
+  type: 'test'
+  ...
+# Subtest: mutation X20 the roof read sideways: applied, and caught by "xsec head marker: the clearance of a closed tube…"
+ok 24 - mutation X20 the roof read sideways: applied, and caught by "xsec head marker: the clearance of a closed tube…"
+  ---
+  duration_ms: 919.4165
+  type: 'test'
+  ...
+# Subtest: mutation X21 the preview never hands the room to the marker: applied, and caught by "xsec head marker: the preview hands…"
+ok 25 - mutation X21 the preview never hands the room to the marker: applied, and caught by "xsec head marker: the preview hands…"
+  ---
+  duration_ms: 986.3898
+  type: 'test'
+  ...
+# Subtest: mutation X22 the tube-too-narrow red has no words: applied, and caught by "xsec validation words…"
+ok 26 - mutation X22 the tube-too-narrow red has no words: applied, and caught by "xsec validation words…"
+  ---
+  duration_ms: 986.5165
+  type: 'test'
+  ...
+# Subtest: mutation X23 the roll-rate red has no words: applied, and caught by "xsec validation words…"
+ok 27 - mutation X23 the roll-rate red has no words: applied, and caught by "xsec validation words…"
+  ---
+  duration_ms: 955.1255
+  type: 'test'
+  ...
+# Subtest: mutation X24 the readout swallows the refusal's name: applied, and caught by "xsec panel: a core refusal is shown by its name…"
+ok 28 - mutation X24 the readout swallows the refusal's name: applied, and caught by "xsec panel: a core refusal is shown by its name…"
+  ---
+  duration_ms: 934.7398
+  type: 'test'
+  ...
+# Subtest: mutation X25 a typed tube leaves the cup enabled: applied, and caught by "xsec panel: a piece is a cup OR a tube…"
+ok 29 - mutation X25 a typed tube leaves the cup enabled: applied, and caught by "xsec panel: a piece is a cup OR a tube…"
+  ---
+  duration_ms: 961.8487
+  type: 'test'
+  ...
+# Subtest: mutation X29 a non-tube head shows the sweep the core keeps internally (RULING 2): applied, and caught by "xsec headState…"
+ok 30 - mutation X29 a non-tube head shows the sweep the core keeps internally (RULING 2): applied, and caught by "xsec headState…"
+  ---
+  duration_ms: 1057.0272
+  type: 'test'
+  ...
+# Subtest: mutation X30 the head piece is never read as a tube: applied, and caught by "xsec headState…"
+ok 31 - mutation X30 the head piece is never read as a tube: applied, and caught by "xsec headState…"
+  ---
+  duration_ms: 981.0062
+  type: 'test'
+  ...
+# Subtest: mutation X31 the tube-too-narrow words keep the first, wrong 9.43 m: applied, and caught by "xsec validation words…"
+ok 32 - mutation X31 the tube-too-narrow words keep the first, wrong 9.43 m: applied, and caught by "xsec validation words…"
+  ---
+  duration_ms: 1150.7552
+  type: 'test'
+  ...
+# Subtest: mutation X27 a new document leaves a field disabled: applied, and caught by "xsec panel: a piece is a cup OR a tube…"
+ok 33 - mutation X27 a new document leaves a field disabled: applied, and caught by "xsec panel: a piece is a cup OR a tube…"
+  ---
+  duration_ms: 922.0698
+  type: 'test'
+  ...
+# Subtest: mutation X28 the cup-or-tube rule is never wired: applied, and caught by "xsec panel: a piece is a cup OR a tube…"
+ok 34 - mutation X28 the cup-or-tube rule is never wired: applied, and caught by "xsec panel: a piece is a cup OR a tube…"
+  ---
+  duration_ms: 982.8702
+  type: 'test'
+  ...
+# Subtest: mutation X32 a typed full turn is wrapped to none again: applied, and caught by "xsec panel: a spiral of -90° pieces typed on to -360…"
+ok 35 - mutation X32 a typed full turn is wrapped to none again: applied, and caught by "xsec panel: a spiral of -90° pieces typed on to -360…"
+  ---
+  duration_ms: 949.7446
+  type: 'test'
+  ...
+1..35
+# tests 35
+# suites 0
+# pass 35
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 33471.9469

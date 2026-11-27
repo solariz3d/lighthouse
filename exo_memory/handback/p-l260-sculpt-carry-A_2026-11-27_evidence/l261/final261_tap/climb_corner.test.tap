@@ -1,0 +1,64 @@
+TAP version 13
+# Subtest: row 1 (B), flat: the climb field as a corner, typed 10, changes the pitch by 10.00° and ends at a climb rate of 0
+ok 1 - row 1 (B), flat: the climb field as a corner, typed 10, changes the pitch by 10.00° and ends at a climb rate of 0
+  ---
+  duration_ms: 14.5326
+  type: 'test'
+  ...
+# Subtest: row 1 (B), banked 53.5°: the climb field as a corner, typed 10, changes the pitch by 10.00° and ends at a climb rate of 0
+ok 2 - row 1 (B), banked 53.5°: the climb field as a corner, typed 10, changes the pitch by 10.00° and ends at a climb rate of 0
+  ---
+  duration_ms: 4.8327
+  type: 'test'
+  ...
+# Subtest: row 1b (B): the climb as a rate, one switch away, is today's option and piece exactly
+ok 3 - row 1b (B): the climb as a rate, one switch away, is today's option and piece exactly
+  ---
+  duration_ms: 1.308
+  type: 'test'
+  ...
+# Subtest: row 1c (B): as a corner, a typed climb 0 still eases to a climb rate of 0; a turn and a climb typed together are both corners
+ok 4 - row 1c (B): as a corner, a typed climb 0 still eases to a climb rate of 0; a turn and a climb typed together are both corners
+  ---
+  duration_ms: 0.1444
+  type: 'test'
+  ...
+# Subtest: row 2 (C), flat: the climb eases in and out symmetrically; a turn and a climb in one piece are each exact and each symmetric
+ok 5 - row 2 (C), flat: the climb eases in and out symmetrically; a turn and a climb in one piece are each exact and each symmetric
+  ---
+  duration_ms: 16.0953
+  type: 'test'
+  ...
+# Subtest: row 2 (C), banked 53.5°: the climb eases in and out symmetrically; a turn and a climb in one piece are each exact and each symmetric
+ok 6 - row 2 (C), banked 53.5°: the climb eases in and out symmetrically; a turn and a climb in one piece are each exact and each symmetric
+  ---
+  duration_ms: 7.8607
+  type: 'test'
+  ...
+# Subtest: row 2b (B): Turn by keeps a climb typed as a corner (as it keeps a climb rate typed in the fields): its piece turns its own angle and climbs the corner
+ok 7 - row 2b (B): Turn by keeps a climb typed as a corner (as it keeps a climb rate typed in the fields): its piece turns its own angle and climbs the corner
+  ---
+  duration_ms: 0.9346
+  type: 'test'
+  ...
+# Subtest: row 3 (A): the climb corner: the pitch change since the climb rate was last 0, where it began, and "ends climbing at" its rate while it does
+ok 8 - row 3 (A): the climb corner: the pitch change since the climb rate was last 0, where it began, and "ends climbing at" its rate while it does
+  ---
+  duration_ms: 1.8503
+  type: 'test'
+  ...
+# Subtest: row 4: past an inversion heading and pitch still compose: a 180° climb turns the road over, a 90° turn on the far side turns θ by 90°, and T is (cos p sin θ, sin p, cos p cos θ)
+ok 9 - row 4: past an inversion heading and pitch still compose: a 180° climb turns the road over, a 90° turn on the far side turns θ by 90°, and T is (cos p sin θ, sin p, cos p cos θ)
+  ---
+  duration_ms: 15.4166
+  type: 'test'
+  ...
+1..9
+# tests 9
+# suites 0
+# pass 9
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 188.9545

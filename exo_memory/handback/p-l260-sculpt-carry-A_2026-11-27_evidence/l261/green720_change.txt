@@ -1,0 +1,17 @@
+[32m✔ D259 (amended D677): a typed 300 stays 300, and a typed 400 rolls on to 400 while the field shows 40 [90m(308.8398ms)[39m[39m
+[32m✔ D677 (ghost handle): from a head past one turn (−392, shown −32), a drag on the ghost's bank handle writes the field within one turn and Extend lays the road in the head's turn, one way, never back round [90m(217.663ms)[39m[39m
+[32m✔ D677 (2): a steady bank drag on the Sculpt mark of a piece wound past a turn (340 → 392, its middle at 366) rises from 366 and never goes back round a turn [90m(1215.9286ms)[39m[39m
+[32m✔ D677 (2) row 720a: a steady bank drag on the Sculpt mark of a piece held at 710, dragged up 30 px across 720, rises on past 720 (710 → 723.5; 7b3926e: stopped at 720) [90m(1425.7464ms)[39m[39m
+[32m✔ D677 (2) row 720b: a steady bank drag on the Sculpt mark of a piece wound 700 → 760 (its middle 730), dragged up 30 px, rises from 730 (730 → 743.5; 7b3926e: −10 on the first step, then held at 720) [90m(1285.793ms)[39m[39m
+[32m✔ D677 (2) row 720c: a steady bank drag on the Sculpt mark of a piece wound 700 → 760 (its middle 730), dragged down 30 px, comes down from 730 (730 → 716.5; 7b3926e: −10 on the first step, then held at 720) [90m(1328.871ms)[39m[39m
+[32m✔ D677 (2) row 720d: a steady bank drag on the Sculpt mark of a piece the mirror, wound −700 → −760 (its middle −730), dragged down 30 px, goes on down from −730 (−730 → −743.5; 7b3926e: +10 on the first step, then held at −720) [90m(1357.7923ms)[39m[39m
+[32m✔ D677 (2) row 720e: a wheel notch over the Sculpt bank mark of a piece whose middle is 730 is one step (0.01) either way, never a jump to 720 (7b3926e: 720) [90m(307.1723ms)[39m[39m
+[32m✔ D677 (2) row 720g, a guard: the ghost's bank handle keeps the bank kind's range (±720), unchanged by row 720a's fix: from a typed 710 a drag up 30 px stops at 720, which it writes into the field within one turn (0). Whether it carries is his to rule on [90m(94.4485ms)[39m[39m
+[34mℹ tests 9[39m
+[34mℹ suites 0[39m
+[34mℹ pass 9[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 7712.2922[39m

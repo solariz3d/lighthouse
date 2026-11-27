@@ -1,0 +1,106 @@
+TAP version 13
+# Subtest: L139 S1: every field (turn, climb, bank, width, cup, left and right edge) has its list of changes right after its row; each change is a numbered then/from row with a remove
+ok 1 - L139 S1: every field (turn, climb, bank, width, cup, left and right edge) has its list of changes right after its row; each change is a numbered then/from row with a remove
+  ---
+  duration_ms: 46.1535
+  type: 'test'
+  ...
+# Subtest: L139 S2: a field's rows are off, and not sent, while it has no target; on again with one
+ok 2 - L139 S2: a field's rows are off, and not sent, while it has no target; on again with one
+  ---
+  duration_ms: 7.5185
+  type: 'test'
+  ...
+# Subtest: L139 S3: a dragged change keeps its share of the piece (lengthen: the marks spread apart); a typed from stays metres; a cleared one is laid by the rule
+ok 3 - L139 S3: a dragged change keeps its share of the piece (lengthen: the marks spread apart); a typed from stays metres; a cleared one is laid by the rule
+  ---
+  duration_ms: 69.5591
+  type: 'test'
+  ...
+# Subtest: L139 S4: the options carry each field's list in the core's units; as corners, his snake (+60 −60 +60) is turnDeg plus changes.turnDeg
+ok 4 - L139 S4: the options carry each field's list in the core's units; as corners, his snake (+60 −60 +60) is turnDeg plus changes.turnDeg
+  ---
+  duration_ms: 349.2022
+  type: 'test'
+  ...
+# Subtest: L139 S5: every minimum is the core's secondMinM, asked per segment with its two targets (no number copied); none exported → 85%; never before an early first ramp ends
+ok 5 - L139 S5: every minimum is the core's secondMinM, asked per segment with its two targets (no number copied); none exported → 85%; never before an early first ramp ends
+  ---
+  duration_ms: 0.5588
+  type: 'test'
+  ...
+# Subtest: L139 S6: Undo gives back every field's list (count, values, shares, typed froms); a new document clears them all
+ok 6 - L139 S6: Undo gives back every field's list (count, values, shares, typed froms); a new document clears them all
+  ---
+  duration_ms: 141.2916
+  type: 'test'
+  ...
+# Subtest: L139 S7: one mark per change, in its field's handle colour (handles.js) and place across the road
+ok 7 - L139 S7: one mark per change, in its field's handle colour (handles.js) and place across the road
+  ---
+  duration_ms: 42.9998
+  type: 'test'
+  ...
+# Subtest: L139 S8: a mark is short strokes across the road at its field's place: bank on both edges, climb at the centre, cup at ±0.3, turn outside and width inside the edge
+ok 8 - L139 S8: a mark is short strokes across the road at its field's place: bank on both edges, climb at the centre, cup at ±0.3, turn outside and width inside the edge
+  ---
+  duration_ms: 0.8334
+  type: 'test'
+  ...
+# Subtest: L139 S9: a mark is dragged along the piece: the press on it is taken from the handles beneath, each move gives that change the nearest station, the release ends it
+ok 9 - L139 S9: a mark is dragged along the piece: the press on it is taken from the handles beneath, each move gives that change the nearest station, the release ends it
+  ---
+  duration_ms: 1.7383
+  type: 'test'
+  ...
+# Subtest: L139 S10: in the panel a mark drag sets that change's from (as its share) and nothing else; one Ctrl+Z (the undo guard) puts it back
+ok 10 - L139 S10: in the panel a mark drag sets that change's from (as its share) and nothing else; one Ctrl+Z (the undo guard) puts it back
+  ---
+  duration_ms: 72.3629
+  type: 'test'
+  ...
+# Subtest: L139 O1: a field's offer shows exactly when its free stretch reaches its change's own minimum, where the user drew it within that room; again after each change; never without a target; one per field
+ok 11 - L139 O1: a field's offer shows exactly when its free stretch reaches its change's own minimum, where the user drew it within that room; again after each change; never without a target; one per field
+  ---
+  duration_ms: 16.4743
+  type: 'test'
+  ...
+# Subtest: L139 O2: shortening hides the offer at the same length lengthening showed it, with no lingering step
+ok 12 - L139 O2: shortening hides the offer at the same length lengthening showed it, with no lingering step
+  ---
+  duration_ms: 5.8714
+  type: 'test'
+  ...
+# Subtest: L139 O3: dragging an offer makes exactly one change, from the offer's place, its then where the drag reached; a press with no movement makes none; one Ctrl+Z removes it; the document is untouched
+ok 13 - L139 O3: dragging an offer makes exactly one change, from the offer's place, its then where the drag reached; a press with no movement makes none; one Ctrl+Z removes it; the document is untouched
+  ---
+  duration_ms: 28.1675
+  type: 'test'
+  ...
+# Subtest: L139 O4: on the real core, a bank offer dragged at the place it appears is laid (form (ii): its own default drag is not refused for room)
+ok 14 - L139 O4: on the real core, a bank offer dragged at the place it appears is laid (form (ii): its own default drag is not refused for room)
+  ---
+  duration_ms: 19.2017
+  type: 'test'
+  ...
+# Subtest: L139 O5: on the real core, his snake through the panel (corner +60, then −60, then +60 over 900 m, untyped marks) is one piece ending +60° from where it began, and straight
+ok 15 - L139 O5: on the real core, his snake through the panel (corner +60, then −60, then +60 over 900 m, untyped marks) is one piece ending +60° from where it began, and straight
+  ---
+  duration_ms: 82.1663
+  type: 'test'
+  ...
+# Subtest: L139 K1: his picture's −90° corner with a second corner change (+90°), its mark left to the panel, is laid by the real core on a 500 m piece, not refused
+ok 16 - L139 K1: his picture's −90° corner with a second corner change (+90°), its mark left to the panel, is laid by the real core on a 500 m piece, not refused
+  ---
+  duration_ms: 19.7611
+  type: 'test'
+  ...
+1..16
+# tests 16
+# suites 0
+# pass 16
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1088.5506

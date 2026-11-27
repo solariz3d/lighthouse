@@ -153,6 +153,7 @@ Output: `evidence/final260.jsonl` and `final260_tap/`.
 2. **The handle's shown value and its dragged value are in different turns, and only one line keeps them apart.**
    - `panel.js:1087` takes `delta = value − sculptDrag.base`, where the base is the unwrapped middle (`panel.js:1016`). The label wraps (`handles.js:341`).
    - The carry is right only because that base is unwrapped, and no row pinned that until S1. A refactor that reads the base from what the label shows would unwind every wound piece by a turn again.
+   - *(Added at the 02:38 amendment, as E asked.)* **A third frame: the dragged value was also CLAMPED** to the bank kind's ±720 (`handles.js:54`, applied in `targetFor` :325 and in the wheel :622 at 7b3926e), while the base it is measured from was not. Past ±720 the drag stopped, and on a piece past it the first step moved the road against the drag. So the handle's value lived in three frames at once: wrapped in the label, unwrapped in the base, clamped in the drag. Fixed for Sculpt's bank handle only (below, "Amendment 02:38"); the ghost's bank handle shares the kind and keeps the clamp.
 3. **A channel's policy sits inside the generic brush pipeline.** `brushTo` special-cased `b.channel === 'phi'` before the Sculpt ratio (`delta / sculptRatio(b)`, `coreshell.js:909`; `sculptRatio` :612) on the same delta, and the order of the two mattered: the wrap was taken on the asked delta, then scaled.
 4. **Two entry paths into one drag, tested apart.** Tests drive the shell API (`core-sculpt`, S1 to S3); the app drives the panel's handle host (`panel.js:1083-1092`); only `core-pieces-ui` rows 16 and 16b drove the second, within one turn, until this lap's 7b3926e row.
 5. **The brush's gain at its centre depends on context**: 0.985 (r 100 on flat road), 0.995 (Sculpt), 0.94 (r 60 on a 150 m ramp, measured here). Every bank row must carry a tolerance or a twin, and core-sculpt's shared tolerance helper had the old rule inside it (`|got| < 360`).
@@ -182,3 +183,195 @@ Output: `evidence/final260.jsonl` and `final260_tap/`.
 
 SOURCES: exo_memory/loop/packet_t180_overlay_and_sculpt_carry_2026-11-27.md (40e922ab, 746af9db); exo_memory/handback/p-l258-read-bankcarry-E_2026-11-27.md; exo_memory/handback/p-l258-bankcarry-A_2026-11-27.md; exo_memory/briefs/t180_unmakeable_shapes.md:68; builder git diff 2067c88 0023853; evidence/ (proto260.js, proto260_at_*.txt, red260_*.tap, ghost_row_at_*.tap, sculpt260.js, sc_*.json, run260.txt, final260.jsonl, final260_tap/, leftovers260_*.txt)
 NEXT: librarian call_chair with this pointer when you have read it; E reads the delta 2067c88..0023853; the landing pane pushes l-bankcarry-a 0023853
+
+---
+
+## Amendment 02:38 (2026-11-27, L261 dispatch of 08:35:39Z): Sculpt's bank handle carries past ±720 too; builder `l-bankcarry-a` e7b9128, local, not pushed
+
+**The orders, read whole:**
+- the packet's "Amendment, 02:38" (`exo_memory/loop/packet_t180_overlay_and_sculpt_carry_2026-11-27.md:81`, 945af22e);
+- E's read of 2067c88..7b3926e (`exo_memory/handback/p-l260-read-sculpt-carry-E_2026-11-27.md`, 6f7cc01c), with its table and its cases (`…_evidence/e260_rows.part.js`, `h_tip.txt`);
+- the chair's 09:38:51Z order to rerun the void timing run.
+
+**Tip: `e7b9128`** (e7b91287d8e2b8b6d3e6c55bf72c2d5f4a548c63): one commit on 7b3926e, on `l-bankcarry-a`, made in my worktree `Downloads\t180-wt-l261-carry` (removed after; the commit is on the branch).
+- `git diff --stat 7b3926e e7b9128`: 5 files, +84/−16 (`CHANGELOG.md`, `app/core/handles.js`, `app/core/panel.js`, `app/test/core-bank-carry-mutation.test.js`, `app/test/core-pieces-ui.test.js`).
+- **Not pushed by me.** checked: `git rev-parse --short origin/l-bankcarry-a` → **7b3926e** (2067c88 when L260 closed; someone's push and a fetch have landed since). So e7b9128 is one commit ahead of origin.
+- Evidence for this section: `…_evidence/l261/`.
+
+### Item 1, the choice: no range on Sculpt's bank handle, not "drive it by its travel" (checked)
+
+**What changed:**
+- `app/core/handles.js` `rangeOf(K, ctx)` (:332): a handle's value is held in its kind's range, unless the model passes `ctx.range === false` for that handle. `targetFor` (:325) and the wheel (:628) clamp to it. Before, both clamped to `K.min, K.max` directly.
+- `app/core/panel.js:1018`, the Sculpt model: its `ctx` for `'bank'` adds `range: false`. Width and cup keep their ranges.
+
+**Why this one, and not driving it by travel:**
+- **It is the brush's rule.** The brush has no range, and the core lays any bank.
+- **The panel's arithmetic needs no change.** It stays `delta = value − base` (`panel.js:1087`), with the base being the unwrapped middle. With no clamp, `value − base` is the travel (rounded to 0.01, as it was inside ±720).
+- **Driving by travel would need a second protocol.** The handle reports an absolute value to the host (`host.apply(h, value)`), and the label, the readout and the drag tick read that value. Driving by travel would mean the handle reporting travel instead, for this one model.
+- **It reaches two gestures E's table does not list.**
+  - The wheel has its own clamp (`handles.js:622` at 7b3926e).
+  - The arrow keys go through `targetFor`.
+  - Driving the drag by travel would have left the wheel's clamp in place.
+- **Nothing else moves:**
+  - The ghost's model (`panel.js:973`) passes no `range`, so its bank handle keeps ±720 (item 2).
+  - The extra bank kinds keep their own ±360 (`handles.js:125`, D641 R1). `range` is read only where a model sets it.
+
+### Item 3, red first through the panel's handle host (checked)
+
+The rows: `app/test/core-pieces-ui.test.js` rows 720a to 720e, built on E's cases. The helper `woundSculpt` (:1124) builds the wound pieces with E's 900 m lead. The drags use `followMark`, the pointer stepping 1 px a millisecond along the mark's current screen axis, 30 steps.
+
+**What each drag row asserts:**
+- **The first step moves the road with the drag.** This is the order's "fail if the first step moves the road against the drag".
+- **Every step, including the first one from the middle, is one pixel's share: 0.45°.** So a jump, a hold or a step back each fails.
+
+Commands:
+- Red: `node --test --test-name-pattern "row 720" app/test/core-pieces-ui.test.js` on the rows with 7b3926e's code (`l261/red720_at_7b3926e.txt`, 08:41:35Z).
+- Green: the same rows, plus the file's other D677 rows, on the change (`l261/green720_change.txt`).
+
+| row | the piece (its middle), the gesture | at 7b3926e (red) | on the change (green) |
+|---|---|---|---|
+| 720a | held at 710, up 30 px across 720 | step 23 moved 0.100 (719.90 → 720.00), then held at 720 | 710 → 723.5, every step 0.45 |
+| 720b | 700 → 760 (730), up 30 px | first step 730 → 720.0000000080687, against the drag, then 720 | 730 → 743.5 |
+| 720c | 700 → 760 (730), down 30 px | step 1 moved 10.000 (730 → 720 at once), then 21 steps at 720, ending 716.5 | 730 → 716.5, every step 0.45 |
+| 720d | −700 → −760 (−730), down 30 px | first step −730 → −720.0000000080687, against the drag, then −720 | −730 → −743.5 |
+| 720e | 700 → 760 (730), a wheel notch up, then down | up: 720.0000000080687 | up 730.01, down 730 |
+| 720g (guard) | the ghost, the field typed 710, its bank handle up 30 px | stops at 720, field `0` (green) | the same (green) |
+
+- **The arrow keys: checked by a probe, not a row.** The probe is `l261/arrow_probe.part.js`, appended to a copy of `core-pieces-ui` and deleted after. While the 730 mark is held, ArrowUp, ArrowUp, ArrowDown, then release:
+  - at 7b3926e's code: 720, 720, 720, released 720;
+  - on the change: 730.01, 730.02, 730.01, released 730.01.
+  - The arrows share `targetFor`'s line with the drag rows (mutant B11), so I did not add a row for them.
+- 7b3926e's code for the red run and the probe: the two code files were swapped in from `git show 7b3926e:…`, then restored from a backup. Checked: `git diff --stat` was the same before and after.
+
+### Item 2, the ghost's bank handle is not changed (checked)
+
+- `panel.js` changes in one line, the Sculpt model's `ctx`. The ghost's model (`:973`) and the ghost's write into the field (`:1089`) are untouched.
+- **Row 720g pins the ghost's ±720.** From a typed 710, a drag up 30 px stops at 720 and writes `0` into the field. It was green at 7b3926e and is green on the change.
+  - The mutant that lifts the range for every bank handle (B13) is caught by it.
+  - Whether the ghost carries is his to rule on. The row is a guard, not a ruling.
+
+### Item 4, the CHANGELOG (checked by reading the diff)
+
+**The entry "A Sculpt bank drag and the bank brush carry past a full turn too":**
+- It now says Sculpt's bank handle also stopped at ±720 until a read measured it. It says what that did (a piece held at 710 stopped at 720; on a piece at 730 the first step of a drag, an arrow or a wheel notch moved the road to 720, against an outward drag) and that it now has no range, as the brush has none.
+- **The holds it names after this, three:**
+  - the ghost handle crossing a full turn from inside one (350 + 20 lays 10);
+  - the extra bank handle's hold at one turn of its field;
+  - the ghost's bank handle's ±720 (from a typed 710, a drag up stops at 720).
+- Each of the three is pinned by a green row (`core-pieces-ui` D259; `core-extra-bank-wind` D641; 720g).
+- **Not named, because it is not a drag's hold:** the whole-turn edge (E10). It is a typed value, and it stays with him.
+- "To go back, revert the commit" now reads "the commits".
+- His words are not quoted, and no track name appears: checked, `git diff 7b3926e` has 0 hits for "keep rolling" and 0 for his 27 track names (`l261/namecheck.js`).
+
+### Item 5, the refactor list
+
+Point 2 of "For a refactor of Sculpt" above gains the clamp, marked as added here: the handle's value lived in three frames at once (wrapped in the label, unwrapped in the base, clamped in the drag).
+
+### Item 6, the tier (checked)
+
+**The files that reach the touched code, by a stated rule:**
+- The rule is `l261/rule261.js` (output `l261/rule261.txt`). It lists every test file under `app/test` and `test` whose static require closure reaches `app/core/handles.js` or `app/core/panel.js` (57), or that reads or mutates either file's text (9 more). That is 66 of 384.
+- `core-pitgap-mutation`, whose inner rows (`core-pitgap`) are on the list, makes **67** (`l261/tier261.txt`).
+
+**The command:** `node heavy-run.js --status && node heavy-run.js --run --priority belownormal --cmd "A L261: the 67 …" -- node run_touched.js <carry worktree> <out> <the 67>`, in the background, started 09:01:48Z. Output: `l261/final261.jsonl` and `l261/final261_tap/`.
+
+**The tree it ran:** the working tree whose content is e7b9128, except one line added afterwards to the harness's copy list (`app/testhook`). The harness was rerun on that line (below).
+
+**67 files, 986 tests, 977 pass, 2 fail, 6 skipped, 1 todo** (1,302 s of runs).
+- **The rows:**
+  - `core-pieces-ui` 63/63;
+  - `core-bank-carry` 13/13;
+  - `core-sculpt` 15/15;
+  - `core-extra-bank-wind` 3/3;
+  - `handles` 45/45;
+  - `handle-step` 6/6.
+- **The other harnesses, every anchor applied:**
+  - `core-close-mutation` 63/63;
+  - `core-mutation` 70/70;
+  - `core-xsec-mutation` 35/35;
+  - `core-pitgap-mutation` 13/13;
+  - `core_early_turn_climb_mutation` 7/7;
+  - `core_landing_xsec_mutation` 20/20.
+- **Fail 1, the bank-carry harness's CONTROL.** Row 18c: "Cannot find module '../testhook/probe.js'". My copy list lacked `app/testhook`. That run's mutant verdicts are void. Fixed in e7b9128, and rerun green (below).
+- **Fail 2, `core-extra-bank-drag-cost` row 1 (D642), a timing ratio.** It is red at 7b3926e too, under the same load (below).
+- **Skipped:**
+  - `sculpt-frame`'s 5 timing rows, not timed, as at L260;
+  - `turn_corner` row 4, which wants one of his saves copied in. I made no copy: his saves were not opened this lap.
+- **Todo:** `core-extra-bank-drag-cost` row 2's own.
+
+**The rerun** (`l261/dragcost261.js`, through `--status && --run --priority belownormal`, ran 09:41:12–09:42:56Z):
+- **The bank-carry harness: 15 of 15** (`l261/harness261.tap`, 89.6 s).
+  - The CONTROL, running all three files whole on the copy, is green.
+  - The crash stand-in reads NOT TESTED.
+  - **Applied 13, caught 13, NOT APPLIED 0.** The failures per mutant:
+
+    | mutant | B1 | B2 | B3 | B4 | B5 | B6 | B7 | B8 | B9 | B10 | B11 | B12 | B13 |
+    |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+    | failed of run | 2/3 | 1/2 | 2/3 | 1/2 | 1/2 | 1/2 | 2/3 | 1/2 | 2/3 | 4/5 | 4/5 | 1/1 | 1/1 |
+
+  - **B10 and B11 run 5 rows, not 4.** The pattern "row 720[a-d]" also matches 720g, whose title says "row 720a's fix". The 4 failures are the 4 drag rows; the guard passed, as it should.
+- **The new mutants:**
+
+  | mutant | the edit | caught by |
+  |---|---|---|
+  | B10 | the Sculpt model no longer lifts its bank range (`panel.js`) | rows 720a-d |
+  | B11 | `targetFor` clamps to the kind's range whatever the model says | rows 720a-d |
+  | B12 | the wheel clamps to the kind's range whatever the model says | row 720e |
+  | B13 | every bank handle loses its range, the ghost's too | row 720g |
+
+- **D642 row 1, alternated in one job, change then base** (`l261/dragcost261.txt`; the bar is the rolling drag's p95 within 2× the early drag's):
+
+  | run | tree | rolling p95 / early p95 | ratio | row 1 |
+  |---|---|---|---|---|
+  | 09:41:12Z | the change | 12.7 / 6.3 ms | 2.03 × | fail |
+  | 09:41:17Z | 7b3926e | 13.2 / 6.2 ms | 2.13 × | fail |
+  | 09:41:22Z | the change | 10.9 / 5.4 ms | 2.02 × | fail |
+  | 09:41:27Z | 7b3926e | 11.4 / 5.8 ms | 1.97 × | pass |
+
+  - checked: **red at the base too**, in the same job and under the same load.
+  - inferred: noise at the bar, not this change.
+    - The extra bank's drag passes the change only through one `rangeOf` call per move (its model sets no `range`).
+    - At L251 this row was red at a base and green on a rerun.
+    - Both trees straddle 2× here: change mean 2.03, base mean 2.05.
+  - The other machine work at the time: P's whole suite or B's F1 mutants in the other slot.
+
+### His saved tracks
+
+- **inferred: unaffected.** The change binds only where a Sculpt bank value passes ±720.
+- His largest middle bank is 90°, and no track or backup is wound past a turn. Both were checked at L260 (`sc_*.json`) and at L258.
+- Not re-run this lap: the order's tier did not ask for it, and his saves were not opened.
+
+### Corrections (mine)
+
+1. **My hand-back above and the CHANGELOG at 0023853 missed a hold.** They said Sculpt's handle and the brush "now send the change as given" and named two holds at one turn. Sculpt's bank handle also held at ±720, and I never dragged past it. E found it through the handle host. The CHANGELOG is corrected; the sentence above stays as written, as a trace.
+2. **My first version of the rows did not fail on 720c at 7b3926e.** The inward drag's first step was a 10° jump the drag's own way, and the drag still ended where its travel took it. I added the per-step share check, and then it was red.
+3. **I ran inside B's exclusive timing hold.** The hold was `12fb81f6`, since 08:41:47Z, and I did not read `heavy-run --status` first.
+   - The runs: the 9-row green run (about 08:41:52–08:42:03Z), the two arrow probes (about 08:42:20–08:42:25Z) and the static rule scan (about 08:44Z).
+   - The red run ended at 08:41:35Z, before the hold.
+   - I said so on the board at once, so B can drop those windows. After that, I waited out the hold with a no-op run, whose wait was heavy-run's own; the hold was gone at 09:01:43Z.
+4. **My first timing rerun never ran. This is the chair's catch** (09:38:51Z; trace `exo_memory/loop/stall_trace_lockbn_cmd_c_mangled_2026-11-12.md`, aff290b4).
+   - I launched it as `heavy-run … -- cmd /c dragcost.cmd`. Git Bash turned `/c` into `C:/`, so cmd sat as an idle interactive shell.
+   - It held slot 2 from 09:24:34Z until the librarian stopped it at 09:38:02Z, about 13.5 minutes, delaying B's F1 run. Its task notification said "completed", and its figures are void: there were none.
+   - My second try ran `node` directly, but behind `--status | tail -3 &&`, which takes tail's exit code, so the gate could not stop it. It was waiting with no slot when I stopped it (TaskStop) and relaunched with `--status &&` and a `node` program.
+   - checked: at 09:39:22Z the wrapper (pid 10204, BelowNormal) was waiting; the run's four timestamped results show it ran.
+5. **The NEXT line closing the L260 section names 0023853** ("E reads the delta 2067c88..0023853; the landing pane pushes l-bankcarry-a 0023853"). The tip was 7b3926e by then: the tip line at the top of this file and my ring said so. The line is left as written.
+6. **The heredoc changed my backslashes twice** (a rule script and the redaction script). Both failed loudly and were rewritten. Between the failed redaction and the fixed one, unredacted TAP copies sat in the uncommitted evidence folder for about a minute; never committed. checked: 2 redacted (the `core-extra-handles` X8 title, as at L258 and L260), then 0 name hits over `l261/`.
+
+### The machine
+
+- **Worktrees:** `t180-wt-l261-carry` (the branch, e7b9128) and `t180-wt-l261-base` (7b3926e, detached, for the timing A/B), both checked clean (0 changes), then removed.
+  - No worktree holds `l-bankcarry-a`: checked, `git rev-parse --short l-bankcarry-a` → e7b9128.
+- **heavy-run:**
+  - the 67 (09:01:48–09:23:48Z, in the free slot, beside P's landing work in the other);
+  - the rerun (09:41Z);
+  - both in the background at BelowNormal.
+  - The small row runs and the probes ran directly, three of them inside B's hold (correction 3).
+- **Chrome:** `sculpt-frame` is the one Chrome test in the 67. Leftovers: 0 tab proxies and 0 orphan browsers, before and after (`l261/leftovers261_before.txt`, `_after.txt`; tab proxies UNCALIBRATED, the control made none).
+- **Untouched:** his app, his AC folder, his saves (not opened this lap), the ghost handle, and E's, B's and P's trees.
+- **Track names:** this section, its evidence and its map line have 0 hits for his 27 track names (`l261/namecheck.js`).
+  - `exo_memory/map/A.md` at HEAD already held 2 hits, in older entries, not this lap's.
+  - I did not open which name or entry they are (they may be common words), and did not edit them. Flagged for the librarian.
+- No landing, build, install, merge or push.
+
+SOURCES: exo_memory/loop/packet_t180_overlay_and_sculpt_carry_2026-11-27.md:81 (945af22e); exo_memory/handback/p-l260-read-sculpt-carry-E_2026-11-27.md (6f7cc01c) and its evidence (e260_rows.part.js, h_tip.txt); exo_memory/loop/stall_trace_lockbn_cmd_c_mangled_2026-11-12.md (aff290b4); builder git diff 7b3926e e7b9128; evidence/l261/ (red720_at_7b3926e.txt, green720_change.txt, arrow_probe.part.js, arrow_7b3926e.txt, arrow_change.txt, rule261.js, rule261.txt, tier261.txt, final261.jsonl, final261_tap/, dragcost261.js, dragcost261.txt, harness261.tap, leftovers261_*.txt, namecheck.js, redact.js)
+NEXT: librarian call_chair with this pointer when you have read it; E reads the delta 7b3926e..e7b9128; the landing pane pushes l-bankcarry-a e7b9128

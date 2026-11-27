@@ -1,0 +1,40 @@
+TAP version 13
+# Subtest: row 1: through each of the ribbon's rolling joints, the built roll rate stays at least half its mid-piece rate
+ok 1 - row 1: through each of the ribbon's rolling joints, the built roll rate stays at least half its mid-piece rate
+  ---
+  duration_ms: 36.0233
+  type: 'test'
+  ...
+# Subtest: row 2: the carry moves nothing it should not: the bank at every joint it carries is the document's
+ok 2 - row 2: the carry moves nothing it should not: the bank at every joint it carries is the document's
+  ---
+  duration_ms: 23.4354
+  type: 'test'
+  ...
+# Subtest: row 3: the built roll stays C2 through the joints: its rate moves by at most 0.01 °/m from one sample to the next
+ok 3 - row 3: the built roll stays C2 through the joints: its rate moves by at most 0.01 °/m from one sample to the next
+  ---
+  duration_ms: 16.4476
+  type: 'test'
+  ...
+# Subtest: row 4: where the roll does not run on the same way across a joint, the carry does not act there
+ok 4 - row 4: where the roll does not run on the same way across a joint, the carry does not act there
+  ---
+  duration_ms: 3.1742
+  type: 'test'
+  ...
+# Subtest: row 5: after the next piece is added, the piece before is built carried: the cached build equals a fresh one
+ok 5 - row 5: after the next piece is added, the piece before is built carried: the cached build equals a fresh one
+  ---
+  duration_ms: 16.2251
+  type: 'test'
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 5
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 213.3786

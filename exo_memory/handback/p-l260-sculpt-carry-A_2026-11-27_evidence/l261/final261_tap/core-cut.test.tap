@@ -1,0 +1,46 @@
+TAP version 13
+# Subtest: row 1: Cut here on a closed lap's middle run previews first; Apply copies the track to its backups, then cuts as one undo step (open, rotated); Undo gives the lap back
+ok 1 - row 1: Cut here on a closed lap's middle run previews first; Apply copies the track to its backups, then cuts as one undo step (open, rotated); Undo gives the lap back
+  ---
+  duration_ms: 196.2211
+  type: 'test'
+  ...
+# Subtest: row 2: a copy that cannot be written refuses the cut by name, and nothing changes
+ok 2 - row 2: a copy that cannot be written refuses the cut by name, and nothing changes
+  ---
+  duration_ms: 121.776
+  type: 'test'
+  ...
+# Subtest: row 3: Cancel drops the preview; so does any change of the track, and a new selection
+ok 3 - row 3: Cancel drops the preview; so does any change of the track, and a new selection
+  ---
+  duration_ms: 135.3885
+  type: 'test'
+  ...
+# Subtest: row 4: what the cut does to the start line, the hotlap and the pit lane is said in the preview and in the message after
+ok 4 - row 4: what the cut does to the start line, the hotlap and the pit lane is said in the preview and in the message after
+  ---
+  duration_ms: 92.7251
+  type: 'test'
+  ...
+# Subtest: row 5: a cut the core refuses says why and previews nothing
+ok 5 - row 5: a cut the core refuses says why and previews nothing
+  ---
+  duration_ms: 31.5063
+  type: 'test'
+  ...
+# Subtest: row 6: Edit ▸ Selection lists Cut here after Delete selected; disabled with nothing selected; it starts the preview; Apply cut and Cancel cut show only while a cut is previewed
+ok 6 - row 6: Edit ▸ Selection lists Cut here after Delete selected; disabled with nothing selected; it starts the preview; Apply cut and Cancel cut show only while a cut is previewed
+  ---
+  duration_ms: 144.2629
+  type: 'test'
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 909.6593

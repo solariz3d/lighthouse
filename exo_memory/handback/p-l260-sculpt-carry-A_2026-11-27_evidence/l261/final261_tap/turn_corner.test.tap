@@ -1,0 +1,64 @@
+TAP version 13
+# Subtest: row 1: the heading change of a turning piece is the same on a road banked 126° as on a flat road (the turn is about world up)
+ok 1 - row 1: the heading change of a turning piece is the same on a road banked 126° as on a flat road (the turn is about world up)
+  ---
+  duration_ms: 11.647
+  type: 'test'
+  ...
+# Subtest: row 2 (B), flat: the turn field as a corner (the panel's default), typed 90, turns the heading by 90.00° and ends straight; turn 0 at start after it adds 0.00°
+ok 2 - row 2 (B), flat: the turn field as a corner (the panel's default), typed 90, turns the heading by 90.00° and ends straight; turn 0 at start after it adds 0.00°
+  ---
+  duration_ms: 6.7664
+  type: 'test'
+  ...
+# Subtest: row 2 (B), banked 53.5°: the turn field as a corner (the panel's default), typed 90, turns the heading by 90.00° and ends straight; turn 0 at start after it adds 0.00°
+ok 3 - row 2 (B), banked 53.5°: the turn field as a corner (the panel's default), typed 90, turns the heading by 90.00° and ends straight; turn 0 at start after it adds 0.00°
+  ---
+  duration_ms: 4.9781
+  type: 'test'
+  ...
+# Subtest: row 2b (B): the rate meaning, one switch away, makes today's piece exactly: the save's way still turns 99.65° with its ease-out
+ok 4 - row 2b (B): the rate meaning, one switch away, makes today's piece exactly: the save's way still turns 99.65° with its ease-out
+  ---
+  duration_ms: 3.6412
+  type: 'test'
+  ...
+# Subtest: row 2c (B): as a corner, a typed 0 still eases to straight (a rate of 0, not an S-bend back), and a field left as shown continues
+ok 5 - row 2c (B): as a corner, a typed 0 still eases to straight (a rate of 0, not an S-bend back), and a field left as shown continues
+  ---
+  duration_ms: 0.1612
+  type: 'test'
+  ...
+# Subtest: row 3 (C), flat: Extend's corner, Turn by and Turn to grid peak within 10% of the middle and let go no faster than they built up
+ok 6 - row 3 (C), flat: Extend's corner, Turn by and Turn to grid peak within 10% of the middle and let go no faster than they built up
+  ---
+  duration_ms: 18.7963
+  type: 'test'
+  ...
+# Subtest: row 3 (C), banked 53.5°: Extend's corner, Turn by and Turn to grid peak within 10% of the middle and let go no faster than they built up
+ok 7 - row 3 (C), banked 53.5°: Extend's corner, Turn by and Turn to grid peak within 10% of the middle and let go no faster than they built up
+  ---
+  duration_ms: 8.8249
+  type: 'test'
+  ...
+# Subtest: row 3b (C): from a head still turning the same way, the turn rate rises to its peak without first dipping (the head's rate fades into the ease, not out of it)
+ok 8 - row 3b (C): from a head still turning the same way, the turn rate rises to its peak without first dipping (the head's rate fades into the ease, not out of it)
+  ---
+  duration_ms: 4.137
+  type: 'test'
+  ...
+# Subtest: row 4: the user's save opens unchanged: it round-trips byte for byte and builds the identical track (pinned before B and C)
+ok 9 - row 4: the user's save opens unchanged: it round-trips byte for byte and builds the identical track (pinned before B and C) # SKIP fixtures-d332/eq-ELYSIUM.t180track is the user's save, kept out of the repository; copy it in read only to run this row
+  ---
+  duration_ms: 0.0878
+  type: 'test'
+  ...
+1..9
+# tests 9
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 1
+# todo 0
+# duration_ms 183.9981

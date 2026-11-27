@@ -1,0 +1,118 @@
+TAP version 13
+# Subtest: soundFor: a placed piece, an undo and a closed loop each name their sound; nothing else does
+ok 1 - soundFor: a placed piece, an undo and a closed loop each name their sound; nothing else does
+  ---
+  duration_ms: 0.6318
+  type: 'test'
+  ...
+# Subtest: stepOf: the melody step follows the piece count, one step per piece at any pace, round the 64
+ok 2 - stepOf: the melody step follows the piece count, one step per piece at any pace, round the 64
+  ---
+  duration_ms: 0.3988
+  type: 'test'
+  ...
+# Subtest: swellDb: a place rises from its floor at step 1 to its peak over steps 45 to 52 and eases back to the floor by step 64, gently, round the 64
+ok 3 - swellDb: a place rises from its floor at step 1 to its peak over steps 45 to 52 and eases back to the floor by step 64, gently, round the 64
+  ---
+  duration_ms: 0.4084
+  type: 'test'
+  ...
+# Subtest: the five melodies: 64 steps each of a bass, a chord of four and a melody note on top, each melody its own
+ok 4 - the five melodies: 64 steps each of a bass, a chord of four and a melody note on top, each melody its own
+  ---
+  duration_ms: 0.2368
+  type: 'test'
+  ...
+# Subtest: a launch picks one of the five melodies from its random draw, hands it to the engine, saves nothing, and refuses a draw outside 0..1
+ok 5 - a launch picks one of the five melodies from its random draw, hands it to the engine, saves nothing, and refuses a draw outside 0..1
+  ---
+  duration_ms: 0.8303
+  type: 'test'
+  ...
+# Subtest: the tick melody is 128 steps (16 notes × 8 chords), in a playable range, and moves
+ok 6 - the tick melody is 128 steps (16 notes × 8 chords), in a playable range, and moves
+  ---
+  duration_ms: 0.1031
+  type: 'test'
+  ...
+# Subtest: tickPlan: a tick when a whole number is crossed or landed on, never for a move inside one, never twice on the same mark
+ok 7 - tickPlan: a tick when a whole number is crossed or landed on, never for a move inside one, never twice on the same mark
+  ---
+  duration_ms: 0.1761
+  type: 'test'
+  ...
+# Subtest: tickPlan: length, cup, width and turn walk the melody forward as the value rises and back as it falls
+ok 8 - tickPlan: length, cup, width and turn walk the melody forward as the value rises and back as it falls
+  ---
+  duration_ms: 0.0874
+  type: 'test'
+  ...
+# Subtest: tickPlan: climb rises in pitch with its value, bank arpeggiates and wraps, neither moves the melody
+ok 9 - tickPlan: climb rises in pitch with its value, bank arpeggiates and wraps, neither moves the melody
+  ---
+  duration_ms: 0.1343
+  type: 'test'
+  ...
+# Subtest: tickPlan: every handle labelled climb pitches by its value, and every one labelled turn pans, the corner kinds as the rate ones
+ok 10 - tickPlan: every handle labelled climb pitches by its value, and every one labelled turn pans, the corner kinds as the rate ones
+  ---
+  duration_ms: 8.1614
+  type: 'test'
+  ...
+# Subtest: tickPlan: turn pans into the ear of the turn (the handle's + is left); width spreads the tick from mono at 1 m to full stereo at 50 m
+ok 11 - tickPlan: turn pans into the ear of the turn (the handle's + is left); width spreads the tick from mono at 1 m to full stereo at 50 m
+  ---
+  duration_ms: 0.1354
+  type: 'test'
+  ...
+# Subtest: the player: nothing before the first press; after it, place, undo and the loop close play their parts, at the piece count's step
+ok 12 - the player: nothing before the first press; after it, place, undo and the loop close play their parts, at the piece count's step
+  ---
+  duration_ms: 0.2272
+  type: 'test'
+  ...
+# Subtest: the player: handle steps tick on whole numbers with the handle's own plan, and each handle keeps its own place in the melody
+ok 13 - the player: handle steps tick on whole numbers with the handle's own plan, and each handle keeps its own place in the melody
+  ---
+  duration_ms: 0.2434
+  type: 'test'
+  ...
+# Subtest: a fast drag: ticks come at least 35 ms apart, about 28 a second at most; the ones in between are dropped, never played late
+ok 14 - a fast drag: ticks come at least 35 ms apart, about 28 a second at most; the ones in between are dropped, never played late
+  ---
+  duration_ms: 0.2753
+  type: 'test'
+  ...
+# Subtest: mute and volume: remembered, clamped, reach the engine, and a bad volume is refused; muted, nothing plays
+ok 15 - mute and volume: remembered, clamped, reach the engine, and a bad volume is refused; muted, nothing plays
+  ---
+  duration_ms: 0.252
+  type: 'test'
+  ...
+# Subtest: the default volume: nothing saved plays at 0.45; a saved volume, 0.6 included, is kept as saved; a saved value that is not a number falls back to 0.45
+ok 16 - the default volume: nothing saved plays at 0.45; a saved volume, 0.6 included, is kept as saved; a saved value that is not a number falls back to 0.45
+  ---
+  duration_ms: 0.1585
+  type: 'test'
+  ...
+# Subtest: a window with no audio still mounts and stays silent; an engine that throws is logged, not thrown
+ok 17 - a window with no audio still mounts and stays silent; an engine that throws is logged, not thrown
+  ---
+  duration_ms: 0.2119
+  type: 'test'
+  ...
+# Subtest: the engine builds its graph and every voice runs: ticks (plain, panned, spread), place and undo of every step, the loop close
+ok 18 - the engine builds its graph and every voice runs: ticks (plain, panned, spread), place and undo of every step, the loop close
+  ---
+  duration_ms: 10.5683
+  type: 'test'
+  ...
+1..18
+# tests 18
+# suites 0
+# pass 18
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 95.2784

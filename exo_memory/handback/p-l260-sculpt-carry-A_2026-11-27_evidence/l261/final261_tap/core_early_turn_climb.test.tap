@@ -1,0 +1,40 @@
+TAP version 13
+# Subtest: row 1: his p33's early climb (0 → −2.513e-3 /m on 750 m) changes the curvature no faster than the bar (it was 3.18 times)
+ok 1 - row 1: his p33's early climb (0 → −2.513e-3 /m on 750 m) changes the curvature no faster than the bar (it was 3.18 times)
+  ---
+  duration_ms: 14.7427
+  type: 'test'
+  ...
+# Subtest: row 2: his p33's early turn (0 → −4.346e-3 /m on 750 m) changes the curvature no faster than the bar
+ok 2 - row 2: his p33's early turn (0 → −4.346e-3 /m on 750 m) changes the curvature no faster than the bar
+  ---
+  duration_ms: 6.8602
+  type: 'test'
+  ...
+# Subtest: row 3: the ramp follows the change: a small change keeps 20 m, a large one grows to at most half the piece, a short piece keeps its own length
+ok 3 - row 3: the ramp follows the change: a small change keeps 20 m, a large one grows to at most half the piece, a short piece keeps its own length
+  ---
+  duration_ms: 1.282
+  type: 'test'
+  ...
+# Subtest: row 4: nothing overshoots: the laid climb stays between where it starts and its target
+ok 4 - row 4: nothing overshoots: the laid climb stays between where it starts and its target
+  ---
+  duration_ms: 3.8815
+  type: 'test'
+  ...
+# Subtest: row 5: nothing else moves: the cross-section and width ramps are as they were, and a turn read as a corner takes no transition
+ok 5 - row 5: nothing else moves: the cross-section and width ramps are as they were, and a turn read as a corner takes no transition
+  ---
+  duration_ms: 0.3056
+  type: 'test'
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 5
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 158.3514

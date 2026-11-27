@@ -1,0 +1,130 @@
+TAP version 13
+# Subtest: control: the unmutated copy passes every row of both files
+ok 1 - control: the unmutated copy passes every row of both files
+  ---
+  duration_ms: 19600.6531
+  type: 'test'
+  ...
+# Subtest: a crashed inner run reads NOT TESTED, never a verdict (the crash stand-in, D352)
+ok 2 - a crashed inner run reads NOT TESTED, never a verdict (the crash stand-in, D352)
+  ---
+  duration_ms: 379.0185
+  type: 'test'
+  ...
+# Subtest: mutation X1 the landing ignores the typed start (endState as before): applied, and caught by C-2|C-3|C-6
+ok 3 - mutation X1 the landing ignores the typed start (endState as before): applied, and caught by C-2|C-3|C-6
+  ---
+  duration_ms: 448.5393
+  type: 'test'
+  ...
+# Subtest: mutation X2 every channel of first starts the landing (a turn, climb, offset or bank too): applied, and caught by C-4
+ok 4 - mutation X2 every channel of first starts the landing (a turn, climb, offset or bank too): applied, and caught by C-4
+  ---
+  duration_ms: 9453.2912
+  type: 'test'
+  ...
+# Subtest: mutation X3 the typed start keeps the take-off's slope (not at rest): applied, and caught by C-2
+ok 5 - mutation X3 the typed start keeps the take-off's slope (not at rest): applied, and caught by C-2
+  ---
+  duration_ms: 382.8075
+  type: 'test'
+  ...
+# Subtest: mutation X4 any track counts as ending in a flight (first read after road): applied, and caught by ROAD
+ok 6 - mutation X4 any track counts as ending in a flight (first read after road): applied, and caught by ROAD
+  ---
+  duration_ms: 395.9149
+  type: 'test'
+  ...
+# Subtest: mutation X5 startTyped is the empty track only (as before): applied, and caught by PLAIN|BY NAME
+ok 7 - mutation X5 startTyped is the empty track only (as before): applied, and caught by PLAIN|BY NAME
+  ---
+  duration_ms: 3878.3821
+  type: 'test'
+  ...
+# Subtest: mutation X6 a cup given as the landing's start does not make it a cup piece: applied, and caught by PLAIN
+ok 8 - mutation X6 a cup given as the landing's start does not make it a cup piece: applied, and caught by PLAIN
+  ---
+  duration_ms: 4217.6942
+  type: 'test'
+  ...
+# Subtest: mutation X7 an edge given as the landing's start does not make it an edge piece: applied, and caught by PLAIN
+ok 9 - mutation X7 an edge given as the landing's start does not make it an edge piece: applied, and caught by PLAIN
+  ---
+  duration_ms: 3885.1474
+  type: 'test'
+  ...
+# Subtest: mutation X8 the landing's start edge is not checked against the cap by name: applied, and caught by BY NAME
+ok 10 - mutation X8 the landing's start edge is not checked against the cap by name: applied, and caught by BY NAME
+  ---
+  duration_ms: 521.7705
+  type: 'test'
+  ...
+# Subtest: mutation X9 the landing's start right edge is not checked against the cap by name: applied, and caught by BY NAME
+ok 11 - mutation X9 the landing's start right edge is not checked against the cap by name: applied, and caught by BY NAME
+  ---
+  duration_ms: 659.0758
+  type: 'test'
+  ...
+# Subtest: mutation X10 the landing's start edges are not checked against the floor by name: applied, and caught by BY NAME
+ok 12 - mutation X10 the landing's start edges are not checked against the floor by name: applied, and caught by BY NAME
+  ---
+  duration_ms: 470.2155
+  type: 'test'
+  ...
+# Subtest: mutation S1 Sharp's radius probe starts at the take-off's cross-section after a flight: applied, and caught by Sharp
+ok 13 - mutation S1 Sharp's radius probe starts at the take-off's cross-section after a flight: applied, and caught by Sharp
+  ---
+  duration_ms: 17478.7041
+  type: 'test'
+  ...
+# Subtest: mutation S2 Sharp's probe takes the take-off's kind (a cup typed after a flight is probed as the take-off was): applied, and caught by A's F1
+ok 14 - mutation S2 Sharp's probe takes the take-off's kind (a cup typed after a flight is probed as the take-off was): applied, and caught by A's F1
+  ---
+  duration_ms: 2139.4202
+  type: 'test'
+  ...
+# Subtest: mutation S3 Sharp's probe drops the right edge (its right edge is its left): applied, and caught by A's F2
+ok 15 - mutation S3 Sharp's probe drops the right edge (its right edge is its left): applied, and caught by A's F2
+  ---
+  duration_ms: 4680.6187
+  type: 'test'
+  ...
+# Subtest: mutation X11 landingKind is always the head's kind: applied, and caught by A's F1
+ok 16 - mutation X11 landingKind is always the head's kind: applied, and caught by A's F1
+  ---
+  duration_ms: 2128.6652
+  type: 'test'
+  ...
+# Subtest: mutation P1 the panel sends no first after a flight: applied, and caught by panel
+ok 17 - mutation P1 the panel sends no first after a flight: applied, and caught by panel
+  ---
+  duration_ms: 588.0133
+  type: 'test'
+  ...
+# Subtest: mutation P2 the panel sends every typed target as the landing's start (the turn, climb and bank too): applied, and caught by C-4 \\(panel
+ok 18 - mutation P2 the panel sends every typed target as the landing's start (the turn, climb and bank too): applied, and caught by C-4 \\(panel
+  ---
+  duration_ms: 442.1583
+  type: 'test'
+  ...
+# Subtest: mutation P3 the mounted panel never says the track ends in a flight: applied, and caught by mounted
+ok 19 - mutation P3 the mounted panel never says the track ends in a flight: applied, and caught by mounted
+  ---
+  duration_ms: 501.2304
+  type: 'test'
+  ...
+# Subtest: mutation P4 a later change after a flight is asked with the head's start (a ramp from the take-off): applied, and caught by later width change
+ok 20 - mutation P4 a later change after a flight is asked with the head's start (a ramp from the take-off): applied, and caught by later width change
+  ---
+  duration_ms: 465.9518
+  type: 'test'
+  ...
+1..20
+# tests 20
+# suites 0
+# pass 20
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 72784.3971

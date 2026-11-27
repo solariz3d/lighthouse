@@ -1,0 +1,46 @@
+TAP version 13
+# Subtest: row 1, the cause: a piece eased to a turn rate turns −90° and ENDS at that rate, so "turn 0 at start" after it still turns about −1.35°
+ok 1 - row 1, the cause: a piece eased to a turn rate turns −90° and ENDS at that rate, so "turn 0 at start" after it still turns about −1.35°
+  ---
+  duration_ms: 12.3653
+  type: 'test'
+  ...
+# Subtest: row 2 (B1, B2): Turn by −90 turns −90° within 0.01° on the path and in the readout, and ends with turn rate 0, C1 from the head
+ok 2 - row 2 (B1, B2): Turn by −90 turns −90° within 0.01° on the path and in the readout, and ends with turn rate 0, C1 from the head
+  ---
+  duration_ms: 72.2922
+  type: 'test'
+  ...
+# Subtest: row 3 (B3): a Straight after Turn by reads 0.0° change
+ok 3 - row 3 (B3): a Straight after Turn by reads 0.0° change
+  ---
+  duration_ms: 36.7555
+  type: 'test'
+  ...
+# Subtest: row 4: from a head that is STILL TURNING (the eased −90° piece), Turn by +90 is still exact and still ends at rate 0
+ok 4 - row 4: from a head that is STILL TURNING (the eased −90° piece), Turn by +90 is still exact and still ends at rate 0
+  ---
+  duration_ms: 40.5371
+  type: 'test'
+  ...
+# Subtest: row 5 (B4): a piece too short to shape is refused by name with the shortest length that works, which then works; a closed loop is refused
+ok 5 - row 5 (B4): a piece too short to shape is refused by name with the shortest length that works, which then works; a closed loop is refused
+  ---
+  duration_ms: 17.9958
+  type: 'test'
+  ...
+# Subtest: row 6 (B6, amended D331 C): Turn by −90 over 750 m eases in and out symmetrically: its peak within 10% of the middle, its let-go no steeper than its build-up, no tighter than today's curve ended
+ok 6 - row 6 (B6, amended D331 C): Turn by −90 over 750 m eases in and out symmetrically: its peak within 10% of the middle, its let-go no steeper than its build-up, no tighter than today's curve ended
+  ---
+  duration_ms: 9.6346
+  type: 'test'
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 330.2204

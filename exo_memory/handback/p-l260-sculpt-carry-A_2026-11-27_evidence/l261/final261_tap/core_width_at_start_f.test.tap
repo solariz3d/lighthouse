@@ -1,0 +1,40 @@
+TAP version 13
+# Subtest: his case, 32 → 55 m at start on a 1,000 m piece: F over 300 m, the rate peaking at 20 m, done by about 235 m, each side within 1 cm of F over the rise and 4 cm in the fade
+ok 1 - his case, 32 → 55 m at start on a 1,000 m piece: F over 300 m, the rate peaking at 20 m, done by about 235 m, each side within 1 cm of F over the rise and 4 cm in the fade
+  ---
+  duration_ms: 18.6231
+  type: 'test'
+  ...
+# Subtest: no step at the joint: the width and its rate carry on from the 32 m road (C1), and the first 5 m barely widen
+ok 2 - no step at the joint: the width and its rate carry on from the 32 m road (C1), and the first 5 m barely widen
+  ---
+  duration_ms: 9.5502
+  type: 'test'
+  ...
+# Subtest: a narrowing, 55 → 32, is the same ramp mirrored
+ok 3 - a narrowing, 55 → 32, is the same ramp mirrored
+  ---
+  duration_ms: 12.5748
+  type: 'test'
+  ...
+# Subtest: a short piece takes half of it, and a 60 m piece the swell's halves (its 30 m ramp is laid in 22.5 m, too short for a 20 m rise)
+ok 4 - a short piece takes half of it, and a 60 m piece the swell's halves (its 30 m ramp is laid in 22.5 m, too short for a 20 m rise)
+  ---
+  duration_ms: 1.7245
+  type: 'test'
+  ...
+# Subtest: nothing ticked: no start shape and no transition; extend without a width start shape lays its ramp as before
+ok 5 - nothing ticked: no start shape and no transition; extend without a width start shape lays its ramp as before
+  ---
+  duration_ms: 2.525
+  type: 'test'
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 5
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 154.031

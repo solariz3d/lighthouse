@@ -1,0 +1,57 @@
+TAP version 13
+# Subtest: CONTROL: the whole of core_early_turn_climb.test.js passes on an unmutated copy of src/, tools/ and app/
+ok 1 - CONTROL: the whole of core_early_turn_climb.test.js passes on an unmutated copy of src/, tools/ and app/
+  ---
+  duration_ms: 484.0553
+  type: 'test'
+  ...
+# Subtest: a crashed inner run reads NOT TESTED, never a verdict (the crash stand-in)
+ok 2 - a crashed inner run reads NOT TESTED, never a verdict (the crash stand-in)
+  ---
+  duration_ms: 375.418
+  type: 'test'
+  ...
+# Subtest: mutant E1 the early turn and climb are back to a flat 20 m: applied, and caught by "row 1|row 2|row 3"
+ok 3 - mutant E1 the early turn and climb are back to a flat 20 m: applied, and caught by "row 1|row 2|row 3"
+  ---
+  duration_ms: 494.1041
+  type: 'test'
+  ...
+# E1 the early turn and climb are back to a flat 20 m: 3 of 3 run tests failed
+# Subtest: mutant E2 the change is measured from 0, not from where the track is: applied, and caught by "row 3"
+ok 4 - mutant E2 the change is measured from 0, not from where the track is: applied, and caught by "row 3"
+  ---
+  duration_ms: 430.8017
+  type: 'test'
+  ...
+# E2 the change is measured from 0, not from where the track is: 1 of 1 run tests failed
+# Subtest: mutant E3 no half-piece cap: applied, and caught by "row 3"
+ok 5 - mutant E3 no half-piece cap: applied, and caught by "row 3"
+  ---
+  duration_ms: 435.6102
+  type: 'test'
+  ...
+# E3 no half-piece cap: 1 of 1 run tests failed
+# Subtest: mutant E4 the spread loosened to 2: applied, and caught by "row 1|row 2"
+ok 6 - mutant E4 the spread loosened to 2: applied, and caught by "row 1|row 2"
+  ---
+  duration_ms: 840.6844
+  type: 'test'
+  ...
+# E4 the spread loosened to 2: 2 of 2 run tests failed
+# Subtest: mutant E5 a piece shorter than 20 m gets 20 m: applied, and caught by "row 3"
+ok 7 - mutant E5 a piece shorter than 20 m gets 20 m: applied, and caught by "row 3"
+  ---
+  duration_ms: 454.3209
+  type: 'test'
+  ...
+# E5 a piece shorter than 20 m gets 20 m: 1 of 1 run tests failed
+1..7
+# tests 7
+# suites 0
+# pass 7
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3583.2446

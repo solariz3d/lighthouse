@@ -1,0 +1,76 @@
+TAP version 13
+# Subtest: row 1: on his track and on ELYSIUM, wherever the bank changes, the built roll acceleration stays under the 3 g bar at a wheel 10 m out at 170 m/s, or as gently as its piece allows
+ok 1 - row 1: on his track and on ELYSIUM, wherever the bank changes, the built roll acceleration stays under the 3 g bar at a wheel 10 m out at 170 m/s, or as gently as its piece allows
+  ---
+  duration_ms: 506.5805
+  type: 'test'
+  ...
+# Subtest: row 2: each kind of corner on its own stays under the bar, or as gently as its piece allows: off the straight, turning back, into and out of a hold, through level on to a slow roll
+ok 2 - row 2: each kind of corner on its own stays under the bar, or as gently as its piece allows: off the straight, turning back, into and out of a hold, through level on to a slow roll
+  ---
+  duration_ms: 110.7415
+  type: 'test'
+  ...
+# Subtest: row 3: the bank's targets and holds are kept: where the document's bank is flat or rolls steadily for 200 m either side, the built bank is the document's
+ok 3 - row 3: the bank's targets and holds are kept: where the document's bank is flat or rolls steadily for 200 m either side, the built bank is the document's
+  ---
+  duration_ms: 151.8564
+  type: 'test'
+  ...
+# Subtest: row 4: a bank that never changes faster than the bar is built exactly as the document lays it
+ok 4 - row 4: a bank that never changes faster than the bar is built exactly as the document lays it
+  ---
+  duration_ms: 17.7231
+  type: 'test'
+  ...
+# Subtest: row 6: where the bank rolls steadily, the built roll's rate holds through every 2 m segment, never sagging at a segment's ends
+ok 5 - row 6: where the bank rolls steadily, the built roll's rate holds through every 2 m segment, never sagging at a segment's ends
+  ---
+  duration_ms: 67.3233
+  type: 'test'
+  ...
+# Subtest: row 7: every joint keeps its own bank: the built bank at each joint is the bank the piece ends at, on his track and on ELYSIUM
+ok 6 - row 7: every joint keeps its own bank: the built bank at each joint is the bank the piece ends at, on his track and on ELYSIUM
+  ---
+  duration_ms: 278.3563
+  type: 'test'
+  ...
+# Subtest: row 8: a change inside one piece moves no bank past its two neighbours, on his track and on ELYSIUM
+ok 7 - row 8: a change inside one piece moves no bank past its two neighbours, on his track and on ELYSIUM
+  ---
+  duration_ms: 11190.8953
+  type: 'test'
+  ...
+# Subtest: row 9: the document's turning points are kept: where its bank turns back inside a piece, the built bank reaches the same extreme
+ok 8 - row 9: the document's turning points are kept: where its bank turns back inside a piece, the built bank reaches the same extreme
+  ---
+  duration_ms: 71.5524
+  type: 'test'
+  ...
+# Subtest: row 10: no rounding overshoots: in every piece the built bank stays within the bank the document gives that piece, to 0.1°
+ok 9 - row 10: no rounding overshoots: in every piece the built bank stays within the bank the document gives that piece, to 0.1°
+  ---
+  duration_ms: 574.5805
+  type: 'test'
+  ...
+# Subtest: row 11: where the road turns, the rounding moves the bank by at most 4°, on ELYSIUM
+ok 10 - row 11: where the road turns, the rounding moves the bank by at most 4°, on ELYSIUM
+  ---
+  duration_ms: 531.6408
+  type: 'test'
+  ...
+# Subtest: row 5: after the next piece is added, or a piece next to it is edited, the pieces whose corner it rounds are rebuilt: the cached build equals a fresh one
+ok 11 - row 5: after the next piece is added, or a piece next to it is edited, the pieces whose corner it rounds are rebuilt: the cached build equals a fresh one
+  ---
+  duration_ms: 681.7548
+  type: 'test'
+  ...
+1..11
+# tests 11
+# suites 0
+# pass 11
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 14359.6303

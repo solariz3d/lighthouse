@@ -1,0 +1,52 @@
+TAP version 13
+# Subtest: swell: on his piece the bank's rate rises to one peak and falls, with no flat stretch and no second rise (no plateau)
+ok 1 - swell: on his piece the bank's rate rises to one peak and falls, with no flat stretch and no second rise (no plateau)
+  ---
+  duration_ms: 25.8549
+  type: 'test'
+  ...
+# Subtest: swell: the kink (the rate's largest change over 2 m) is at most half of what it was
+ok 2 - swell: the kink (the rate's largest change over 2 m) is at most half of what it was
+  ---
+  duration_ms: 6.45
+  type: 'test'
+  ...
+# Subtest: swell: the bank is moving by 10 m and well under way by 20 m, peaks under the checker's roll amber, reaches -41.38 at the ramp's end and holds it
+ok 3 - swell: the bank is moving by 10 m and well under way by 20 m, peaks under the checker's roll amber, reaches -41.38 at the ramp's end and holds it
+  ---
+  duration_ms: 36.7239
+  type: 'test'
+  ...
+# Subtest: swell: the checker's roll stays under the amber for a bank of 8 to 180 degrees at start
+ok 4 - swell: the checker's roll stays under the amber for a bank of 8 to 180 degrees at start
+  ---
+  duration_ms: 166.0978
+  type: 'test'
+  ...
+# Subtest: swell: the 20 m floor holds, and the half-piece cap bends to the roll bar's length only where the swell laid within it would pass the amber
+ok 5 - swell: the 20 m floor holds, and the half-piece cap bends to the roll bar's length only where the swell laid within it would pass the amber
+  ---
+  duration_ms: 6.1904
+  type: 'test'
+  ...
+# Subtest: swell: the bank with its box off, a cup or edge at start, and turn and width at start lay the same bytes as before
+ok 6 - swell: the bank with its box off, a cup or edge at start, and turn and width at start lay the same bytes as before
+  ---
+  duration_ms: 10.9005
+  type: 'test'
+  ...
+# Subtest: swell: extend refuses a bank shape it does not know, by name
+ok 7 - swell: extend refuses a bank shape it does not know, by name
+  ---
+  duration_ms: 0.6813
+  type: 'test'
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 7
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 385.2962

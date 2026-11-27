@@ -1,0 +1,46 @@
+TAP version 13
+# Subtest: row 1: a wheel notch over a handle dispatches exactly one step with the new value; a notch at a clamp dispatches none
+ok 1 - row 1: a wheel notch over a handle dispatches exactly one step with the new value; a notch at a clamp dispatches none
+  ---
+  duration_ms: 2.6379
+  type: 'test'
+  ...
+# Subtest: row 1b: a double-click reset (a value moved, as the wheel moves one) dispatches one step with the value it reset to
+ok 2 - row 1b: a double-click reset (a value moved, as the wheel moves one) dispatches one step with the value it reset to
+  ---
+  duration_ms: 0.6387
+  type: 'test'
+  ...
+# Subtest: row 2: an arrow nudge on a held handle dispatches exactly one step with the new value
+ok 3 - row 2: an arrow nudge on a held handle dispatches exactly one step with the new value
+  ---
+  duration_ms: 0.3975
+  type: 'test'
+  ...
+# Subtest: row 3: through sound.js, every notch ticks (onto a whole number and off it); a drag after a scroll ticks only where it crosses one itself
+ok 4 - row 3: through sound.js, every notch ticks (onto a whole number and off it); a drag after a scroll ticks only where it crosses one itself
+  ---
+  duration_ms: 0.9027
+  type: 'test'
+  ...
+# Subtest: row 4: the wheel, an arrow nudge and a reset send their step with single: true; the steps of a drag carry no flag
+ok 5 - row 4: the wheel, an arrow nudge and a reset send their step with single: true; the steps of a drag carry no flag
+  ---
+  duration_ms: 0.4797
+  type: 'test'
+  ...
+# Subtest: row 5: through sound.js, 10 notches up give 10 ticks walking the melody 10 places, and 10 down walk it back; 10 drag steps of 0.01 tick only on the whole number
+ok 6 - row 5: through sound.js, 10 notches up give 10 ticks walking the melody 10 places, and 10 down walk it back; 10 drag steps of 0.01 tick only on the whole number
+  ---
+  duration_ms: 0.4122
+  type: 'test'
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 84.8045

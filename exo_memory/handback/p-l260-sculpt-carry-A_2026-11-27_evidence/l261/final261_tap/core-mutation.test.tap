@@ -1,0 +1,498 @@
+TAP version 13
+# Subtest: control: the unmutated temp copy passes every core-shell test
+ok 1 - control: the unmutated temp copy passes every core-shell test
+  ---
+  duration_ms: 55590.3814
+  type: 'test'
+  ...
+# D412 wide: "the layout" runs 4 rows
+# D412 wide: "the rate brush" runs 3 rows
+# D412 wide: "extendOptions" runs 3 rows
+# Subtest: a crashed inner run reads NOT TESTED, never a verdict (the crash stand-in, D352)
+ok 2 - a crashed inner run reads NOT TESTED, never a verdict (the crash stand-in, D352)
+  ---
+  duration_ms: 393.4269
+  type: 'test'
+  ...
+# Subtest: a crash after an unrelated failing row reads NOT TESTED, never NOT CAUGHT (the second stand-in, D353)
+ok 3 - a crash after an unrelated failing row reads NOT TESTED, never NOT CAUGHT (the second stand-in, D353)
+  ---
+  duration_ms: 823.2915
+  type: 'test'
+  ...
+# Subtest: a load throw in a run of several files reads NOT TESTED and names the files (the load-throw stand-in, D354)
+ok 4 - a load throw in a run of several files reads NOT TESTED and names the files (the load-throw stand-in, D354)
+  ---
+  duration_ms: 701.808
+  type: 'test'
+  ...
+# Subtest: a load throw in one file does not hide a crash after a failing row in another: NOT TESTED (F1, D354)
+ok 5 - a load throw in one file does not hide a crash after a failing row in another: NOT TESTED (F1, D354)
+  ---
+  duration_ms: 773.9582
+  type: 'test'
+  ...
+# Subtest: mutation G-D483a the chords kept for the next cheap ghost are the ones handed out (no snapshot): applied, and caught by "a chord handed out with a cheap ghost…"
+ok 6 - mutation G-D483a the chords kept for the next cheap ghost are the ones handed out (no snapshot): applied, and caught by "a chord handed out with a cheap ghost…"
+  ---
+  duration_ms: 523.4386
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation G-D483b one object reached from both sides is always the same: applied, and caught by "sameContent: one object reached from both sides…"
+ok 7 - mutation G-D483b one object reached from both sides is always the same: applied, and caught by "sameContent: one object reached from both sides…"
+  ---
+  duration_ms: 462.4102
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation G-D483c a getter counts as a value: applied, and caught by "sameContent: one object reached from both sides…"
+ok 8 - mutation G-D483c a getter counts as a value: applied, and caught by "sameContent: one object reached from both sides…"
+  ---
+  duration_ms: 484.2747
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation G-D483d the snapshot copies no object (a change in place reaches it): applied, and caught by "snapshot: a change made in place…"
+ok 9 - mutation G-D483d the snapshot copies no object (a change in place reaches it): applied, and caught by "snapshot: a change made in place…"
+  ---
+  duration_ms: 541.1839
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation G-D483e every new chord is taken as the same as the last ghost has it: applied, and caught by "a chord handed out with a cheap ghost…"
+ok 10 - mutation G-D483e every new chord is taken as the same as the last ghost has it: applied, and caught by "a chord handed out with a cheap ghost…"
+  ---
+  duration_ms: 634.3172
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation R1 the sign of an angle flipped: applied, and caught by "the strings…"
+ok 11 - mutation R1 the sign of an angle flipped: applied, and caught by "the strings…"
+  ---
+  duration_ms: 955.2276
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation R2 zero is signed: applied, and caught by "the strings…"
+ok 12 - mutation R2 zero is signed: applied, and caught by "the strings…"
+  ---
+  duration_ms: 511.2972
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation R3 bank shown as its end value, not the change: applied, and caught by "the strings…"
+ok 13 - mutation R3 bank shown as its end value, not the change: applied, and caught by "the strings…"
+  ---
+  duration_ms: 727.4341
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation R4 rounding without the binary guard: applied, and caught by "the strings…"
+ok 14 - mutation R4 rounding without the binary guard: applied, and caught by "the strings…"
+  ---
+  duration_ms: 483.3976
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation R5 the head keep-out ignored: applied, and caught by "the layout…"
+ok 15 - mutation R5 the head keep-out ignored: applied, and caught by "the layout…"
+  ---
+  duration_ms: 782.7497
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation R6 labels may overlap: applied, and caught by "the layout…"
+ok 16 - mutation R6 labels may overlap: applied, and caught by "the layout…"
+  ---
+  duration_ms: 519.0562
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation R7 anchors cached by the path object: applied, and caught by "the labels follow a path the preview extends IN PLACE…"
+ok 17 - mutation R7 anchors cached by the path object: applied, and caught by "the labels follow a path the preview extends IN PLACE…"
+  ---
+  duration_ms: 911.0872
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation R8 the layer is not put back in the page: applied, and caught by "the labels follow a path the preview extends IN PLACE…"
+ok 18 - mutation R8 the layer is not put back in the page: applied, and caught by "the labels follow a path the preview extends IN PLACE…"
+  ---
+  duration_ms: 801.6131
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation R11 a label never slides off its piece's middle: applied, and caught by "a piece whose middle is behind the camera…"
+ok 19 - mutation R11 a label never slides off its piece's middle: applied, and caught by "a piece whose middle is behind the camera…"
+  ---
+  duration_ms: 671.7681
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation R13 the head's label may be culled: applied, and caught by "the layout: the head's own label is never culled…"
+ok 20 - mutation R13 the head's label may be culled: applied, and caught by "the layout: the head's own label is never culled…"
+  ---
+  duration_ms: 1097.0085
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation R14 a head piece with nothing on screen has no label: applied, and caught by "the head's own piece is labelled even when none of it is on screen…"
+ok 21 - mutation R14 a head piece with nothing on screen has no label: applied, and caught by "the head's own piece is labelled even when none of it is on screen…"
+  ---
+  duration_ms: 599.3555
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation R15 the road bleeds through the label: applied, and caught by "the label box holds only…"
+ok 22 - mutation R15 the road bleeds through the label: applied, and caught by "the label box holds only…"
+  ---
+  duration_ms: 546.2271
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation R16 the label box has a border and round corners again: applied, and caught by "the label box holds only…"
+ok 23 - mutation R16 the label box has a border and round corners again: applied, and caught by "the label box holds only…"
+  ---
+  duration_ms: 562.1874
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation R17 the head's fallback place may cover the head: applied, and caught by "the layout: the head's own label is never culled…"
+ok 24 - mutation R17 the head's fallback place may cover the head: applied, and caught by "the layout: the head's own label is never culled…"
+  ---
+  duration_ms: 536.4709
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation R18 a label may be placed under a panel: applied, and caught by "the layout: no label is placed under a panel…"
+ok 25 - mutation R18 a label may be placed under a panel: applied, and caught by "the layout: no label is placed under a panel…"
+  ---
+  duration_ms: 524.3105
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation R12 no ring clears a large head keep-out: applied, and caught by "the layout: a label anchored on a large head keep-out…"
+ok 26 - mutation R12 no ring clears a large head keep-out: applied, and caught by "the layout: a label anchored on a large head keep-out…"
+  ---
+  duration_ms: 520.1371
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation R9 the panel readout waits for the next state change: applied, and caught by "the panel shows the ghost…"
+ok 27 - mutation R9 the panel readout waits for the next state change: applied, and caught by "the panel shows the ghost…"
+  ---
+  duration_ms: 539.9335
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation R10 the ghost readout is the LAST placed piece, not the candidate: applied, and caught by "the panel shows the ghost…"
+ok 28 - mutation R10 the ghost readout is the LAST placed piece, not the candidate: applied, and caught by "the panel shows the ghost…"
+  ---
+  duration_ms: 521.4184
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation U1 the cup field is not sent to the core: applied, and caught by "extendOptions: the cup field is the target c…"
+ok 29 - mutation U1 the cup field is not sent to the core: applied, and caught by "extendOptions: the cup field is the target c…"
+  ---
+  duration_ms: 599.1117
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation U2 the cup is sent in radians: applied, and caught by "extendOptions: the cup field is the target c…"
+ok 30 - mutation U2 the cup is sent in radians: applied, and caught by "extendOptions: the cup field is the target c…"
+  ---
+  duration_ms: 937.7746
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation U3 the panel clamps the cup, hiding the core guard: applied, and caught by "extendOptions: the cup field is the target c…"
+ok 31 - mutation U3 the panel clamps the cup, hiding the core guard: applied, and caught by "extendOptions: the cup field is the target c…"
+  ---
+  duration_ms: 533.6758
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation U4 the cup cell shows the typed target, not the document: applied, and caught by "the readout shows cup from → to…"
+ok 32 - mutation U4 the cup cell shows the typed target, not the document: applied, and caught by "the readout shows cup from → to…"
+  ---
+  duration_ms: 560.5735
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation U5 (K7-4) the cup cell wired to the bank values: applied, and caught by "the readout shows cup from → to…"
+ok 33 - mutation U5 (K7-4) the cup cell wired to the bank values: applied, and caught by "the readout shows cup from → to…"
+  ---
+  duration_ms: 923.1988
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation U6 (K7-3) the cup shown in radians: applied, and caught by "the readout shows cup from → to…"
+ok 34 - mutation U6 (K7-3) the cup shown in radians: applied, and caught by "the readout shows cup from → to…"
+  ---
+  duration_ms: 563.1587
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation U7 the cup field does not redraw the readout: applied, and caught by "the cup cell follows the cup field…"
+ok 35 - mutation U7 the cup field does not redraw the readout: applied, and caught by "the cup cell follows the cup field…"
+  ---
+  duration_ms: 568.0145
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation U8 the brush has no cup channel: applied, and caught by "the brush's channel list gains cup…"
+ok 36 - mutation U8 the brush has no cup channel: applied, and caught by "the brush's channel list gains cup…"
+  ---
+  duration_ms: 549.9292
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation U9 the cup field is not on the panel: applied, and caught by "the Extend panel has a "cup °" field…"
+ok 37 - mutation U9 the cup field is not on the panel: applied, and caught by "the Extend panel has a "cup °" field…"
+  ---
+  duration_ms: 513.0404
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation V1 the at-start boxes are ignored: applied, and caught by "extendOptions "at start"…"
+ok 38 - mutation V1 the at-start boxes are ignored: applied, and caught by "extendOptions "at start"…"
+  ---
+  duration_ms: 752.1298
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation V2 an untouched field is sent at start: applied, and caught by "extendOptions "at start"…"
+ok 39 - mutation V2 an untouched field is sent at start: applied, and caught by "extendOptions "at start"…"
+  ---
+  duration_ms: 507.4984
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation V3 the span is not held to the piece: applied, and caught by "extendOptions "at start"…"
+ok 40 - mutation V3 the span is not held to the piece: applied, and caught by "extendOptions "at start"…"
+  ---
+  duration_ms: 476.4415
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation V4 transition sent as one number for all channels: applied, and caught by "extendOptions "at start"…"
+ok 41 - mutation V4 transition sent as one number for all channels: applied, and caught by "extendOptions "at start"…"
+  ---
+  duration_ms: 505.0694
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation V5 a field sent on the wrong channel: applied, and caught by "extendOptions "at start"…"
+ok 42 - mutation V5 a field sent on the wrong channel: applied, and caught by "extendOptions "at start"…"
+  ---
+  duration_ms: 486.6297
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation V6 the panel never passes the boxes: applied, and caught by "the panel: an "at start" box…"
+ok 43 - mutation V6 the panel never passes the boxes: applied, and caught by "the panel: an "at start" box…"
+  ---
+  duration_ms: 526.4578
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation V7 ticking a box does not redraw: applied, and caught by "the panel: an "at start" box…"
+ok 44 - mutation V7 ticking a box does not redraw: applied, and caught by "the panel: an "at start" box…"
+  ---
+  duration_ms: 533.0707
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation C1 a brush frame builds on the last frame, not the drag's base: applied, and caught by "the rate brush…"
+ok 45 - mutation C1 a brush frame builds on the last frame, not the drag's base: applied, and caught by "the rate brush…"
+  ---
+  duration_ms: 750.4698
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation C2 the drag never ends in the history: applied, and caught by "the rate brush…"
+ok 46 - mutation C2 the drag never ends in the history: applied, and caught by "the rate brush…"
+  ---
+  duration_ms: 785.1432
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation C3 the local brush is not the default: applied, and caught by "the local (height / sideways) brush…"
+ok 47 - mutation C3 the local brush is not the default: applied, and caught by "the local (height / sideways) brush…"
+  ---
+  duration_ms: 723.8125
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation C20 sideways is sent as a hill: applied, and caught by "the local (height / sideways) brush…"
+ok 48 - mutation C20 sideways is sent as a hill: applied, and caught by "the local (height / sideways) brush…"
+  ---
+  duration_ms: 836.4732
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation C21 with E's brush, every channel is sent as rate: applied, and caught by "with E's brush, the rate brush goes through it…"
+ok 49 - mutation C21 with E's brush, every channel is sent as rate: applied, and caught by "with E's brush, the rate brush goes through it…"
+  ---
+  duration_ms: 526.5186
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation C4 a second close runs again: applied, and caught by "close: one click…"
+ok 50 - mutation C4 a second close runs again: applied, and caught by "close: one click…"
+  ---
+  duration_ms: 748.5148
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation C5 the heading brush may open a closed loop: applied, and caught by "close: one click…"
+ok 51 - mutation C5 the heading brush may open a closed loop: applied, and caught by "close: one click…"
+  ---
+  duration_ms: 666.8436
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation C7 export runs on an open track: applied, and caught by "export: an open track is refused…"
+ok 52 - mutation C7 export runs on an open track: applied, and caught by "export: an open track is refused…"
+  ---
+  duration_ms: 561.0049
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation C8 the list shows the piece builder's tracks too: applied, and caught by "save and open use their own prefix…"
+ok 53 - mutation C8 the list shows the piece builder's tracks too: applied, and caught by "save and open use their own prefix…"
+  ---
+  duration_ms: 536.0277
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation C12 turn is degrees per metre, not per 100 m: applied, and caught by "extendOptions…"
+ok 54 - mutation C12 turn is degrees per metre, not per 100 m: applied, and caught by "extendOptions…"
+  ---
+  duration_ms: 520.8008
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation C14 the pick takes the farthest station: applied, and caught by "the pick…"
+ok 55 - mutation C14 the pick takes the farthest station: applied, and caught by "the pick…"
+  ---
+  duration_ms: 478.139
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation C15 the pick sees through the back of the camera: applied, and caught by "the pick…"
+ok 56 - mutation C15 the pick sees through the back of the camera: applied, and caught by "the pick…"
+  ---
+  duration_ms: 807.7118
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation C16 the ghost is not what extend builds: applied, and caught by "the ghost of an extension…"
+ok 57 - mutation C16 the ghost is not what extend builds: applied, and caught by "the ghost of an extension…"
+  ---
+  duration_ms: 655.3964
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation C17 export goes to the word exporter: applied, and caught by "export: an open track is refused…"
+ok 58 - mutation C17 export goes to the word exporter: applied, and caught by "export: an open track is refused…"
+  ---
+  duration_ms: 951.6694
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation C18 the close does not go round the user's straights: applied, and caught by "close: one click…"
+ok 59 - mutation C18 the close does not go round the user's straights: applied, and caught by "close: one click…"
+  ---
+  duration_ms: 765.9254
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation C19 the export is handed no start layout: applied, and caught by "export: an open track is refused…"
+ok 60 - mutation C19 the export is handed no start layout: applied, and caught by "export: an open track is refused…"
+  ---
+  duration_ms: 1162.686
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation C22 the widened radius is not shown: applied, and caught by "a brush E widened says so…"
+ok 61 - mutation C22 the widened radius is not shown: applied, and caught by "a brush E widened says so…"
+  ---
+  duration_ms: 576.7184
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation L1 the track model ignores the lift: applied, and caught by "the track model draws the LIFTED road…"
+ok 62 - mutation L1 the track model ignores the lift: applied, and caught by "the track model draws the LIFTED road…"
+  ---
+  duration_ms: 592.0458
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation L2 a lift-only change is taken as the same track: applied, and caught by "the track model draws the LIFTED road…"
+ok 63 - mutation L2 a lift-only change is taken as the same track: applied, and caught by "the track model draws the LIFTED road…"
+  ---
+  duration_ms: 1002.5848
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation L3 the mesh is not keyed by the lift: applied, and caught by "the track model draws the LIFTED road…"
+ok 64 - mutation L3 the mesh is not keyed by the lift: applied, and caught by "the track model draws the LIFTED road…"
+  ---
+  duration_ms: 656.9125
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation L4 the export does not lift the path: applied, and caught by "the export lifts the path…"
+ok 65 - mutation L4 the export does not lift the path: applied, and caught by "the export lifts the path…"
+  ---
+  duration_ms: 3349.6798
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation C23 the radiusUsed E reports is not read: applied, and caught by "landed core: a narrow brush…"
+ok 66 - mutation C23 the radiusUsed E reports is not read: applied, and caught by "landed core: a narrow brush…"
+  ---
+  duration_ms: 594.7757
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation C24 sharp is never passed to E: applied, and caught by "the sharp opt-in…"
+ok 67 - mutation C24 sharp is never passed to E: applied, and caught by "the sharp opt-in…"
+  ---
+  duration_ms: 753.8986
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation P1 the export starts at the origin: applied, and caught by "a lap that starts pitched…"
+ok 68 - mutation P1 the export starts at the origin: applied, and caught by "a lap that starts pitched…"
+  ---
+  duration_ms: 793.5826
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation P2 the preview starts at the origin: applied, and caught by "a lap that starts pitched…"
+ok 69 - mutation P2 the preview starts at the origin: applied, and caught by "a lap that starts pitched…"
+  ---
+  duration_ms: 746.3829
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation P3 the shell does not hand on the start: applied, and caught by "a lap that starts pitched…"
+ok 70 - mutation P3 the shell does not hand on the start: applied, and caught by "a lap that starts pitched…"
+  ---
+  duration_ms: 678.1314
+  type: 'test'
+  ...
+# D412 path: narrowed
+1..70
+# tests 70
+# suites 0
+# pass 70
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 103589.7873

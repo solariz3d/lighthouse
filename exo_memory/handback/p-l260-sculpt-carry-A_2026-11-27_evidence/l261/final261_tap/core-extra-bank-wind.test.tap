@@ -1,0 +1,28 @@
+TAP version 13
+# Subtest: D641 R1 (down): at his HUD's piece, a long drag on the extra bank handle holds at one turn: it never winds past ±360° nor jumps back round
+ok 1 - D641 R1 (down): at his HUD's piece, a long drag on the extra bank handle holds at one turn: it never winds past ±360° nor jumps back round
+  ---
+  duration_ms: 4644.7474
+  type: 'test'
+  ...
+# Subtest: D641 R1 (up): at his HUD's piece, a long drag on the extra bank handle holds at one turn: it never winds past ±360° nor jumps back round
+ok 2 - D641 R1 (up): at his HUD's piece, a long drag on the extra bank handle holds at one turn: it never winds past ±360° nor jumps back round
+  ---
+  duration_ms: 4352.5669
+  type: 'test'
+  ...
+# Subtest: D641 (f): a bank typed as −654.70 and committed keeps −654.70 in the field, the value the road is laid with (D677)
+ok 3 - D641 (f): a bank typed as −654.70 and committed keeps −654.70 in the field, the value the road is laid with (D677)
+  ---
+  duration_ms: 130.3627
+  type: 'test'
+  ...
+1..3
+# tests 3
+# suites 0
+# pass 3
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 9345.5958

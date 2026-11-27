@@ -1,0 +1,92 @@
+[31m✖ D677 (2) row 720a: a steady bank drag on the Sculpt mark of a piece held at 710, dragged up 30 px across 720, rises on past 720 (710 → 723.5; 7b3926e: stopped at 720) [90m(1365.1054ms)[39m[39m
+[31m✖ D677 (2) row 720b: a steady bank drag on the Sculpt mark of a piece wound 700 → 760 (its middle 730), dragged up 30 px, rises from 730 (730 → 743.5; 7b3926e: −10 on the first step, then held at 720) [90m(1247.9202ms)[39m[39m
+[31m✖ D677 (2) row 720c: a steady bank drag on the Sculpt mark of a piece wound 700 → 760 (its middle 730), dragged down 30 px, comes down from 730 (730 → 716.5; 7b3926e: −10 on the first step, then held at 720) [90m(1247.8084ms)[39m[39m
+[31m✖ D677 (2) row 720d: a steady bank drag on the Sculpt mark of a piece the mirror, wound −700 → −760 (its middle −730), dragged down 30 px, goes on down from −730 (−730 → −743.5; 7b3926e: +10 on the first step, then held at −720) [90m(1194.3028ms)[39m[39m
+[31m✖ D677 (2) row 720e: a wheel notch over the Sculpt bank mark of a piece whose middle is 730 is one step (0.01) either way, never a jump to 720 (7b3926e: 720) [90m(235.5022ms)[39m[39m
+[32m✔ D677 (2) row 720g, a guard: the ghost's bank handle keeps the bank kind's range (±720), unchanged by row 720a's fix: from a typed 710 a drag up 30 px stops at 720, which it writes into the field within one turn (0). Whether it carries is his to rule on [90m(92.7894ms)[39m[39m
+[34mℹ tests 6[39m
+[34mℹ suites 0[39m
+[34mℹ pass 1[39m
+[34mℹ fail 5[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 5543.7356[39m
+
+[31m✖ failing tests:[39m
+
+test at app\test\core-pieces-ui.test.js:1139:3
+[31m✖ D677 (2) row 720a: a steady bank drag on the Sculpt mark of a piece held at 710, dragged up 30 px across 720, rises on past 720 (710 → 723.5; 7b3926e: stopped at 720) [90m(1365.1054ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: step 23 moved 0.100, not 0.45: 710 → 710.45 710.90 711.35 711.80 712.25 712.70 713.15 713.60 714.05 714.50 714.95 715.40 715.85 716.30 716.75 717.20 717.65 718.10 718.55 719.00 719.45 719.90 720.00 720.00 720.00 720.00 720.00 720.00 720.00 720.00
+  
+  22 !== -1
+  
+      at TestContext.<anonymous> [90m(C:\Users\zackn\Downloads\t180-wt-l261-carry\[39mapp\test\core-pieces-ui.test.js:1145:12[90m)[39m
+  [90m    at async Test.run (node:internal/test_runner/test:1332:7)[39m
+  [90m    at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33m22[39m,
+    expected: [33m-1[39m,
+    operator: [32m'strictEqual'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at app\test\core-pieces-ui.test.js:1139:3
+[31m✖ D677 (2) row 720b: a steady bank drag on the Sculpt mark of a piece wound 700 → 760 (its middle 730), dragged up 30 px, rises from 730 (730 → 743.5; 7b3926e: −10 on the first step, then held at 720) [90m(1247.9202ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: the first step moves the road with the drag: 730 → 720.0000000080687 (720.00 720.00 720.00 720.00 720.00 720.00 720.00 720.00 720.00 720.00 720.00 720.00 720.00 720.00 720.00 720.00 720.00 720.00 720.00 720.00 720.00 720.00 720.00 720.00 720.00 720.00 720.00 720.00 720.00 720.00)
+      at TestContext.<anonymous> [90m(C:\Users\zackn\Downloads\t180-wt-l261-carry\[39mapp\test\core-pieces-ui.test.js:1141:12[90m)[39m
+  [90m    at async Test.run (node:internal/test_runner/test:1332:7)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at app\test\core-pieces-ui.test.js:1139:3
+[31m✖ D677 (2) row 720c: a steady bank drag on the Sculpt mark of a piece wound 700 → 760 (its middle 730), dragged down 30 px, comes down from 730 (730 → 716.5; 7b3926e: −10 on the first step, then held at 720) [90m(1247.8084ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: step 1 moved 10.000, not 0.45: 730 → 720.00 720.00 720.00 720.00 720.00 720.00 720.00 720.00 720.00 720.00 720.00 720.00 720.00 720.00 720.00 720.00 720.00 720.00 720.00 720.00 720.00 720.00 719.65 719.20 718.75 718.30 717.85 717.40 716.95 716.50
+  
+  0 !== -1
+  
+      at TestContext.<anonymous> [90m(C:\Users\zackn\Downloads\t180-wt-l261-carry\[39mapp\test\core-pieces-ui.test.js:1145:12[90m)[39m
+  [90m    at async Test.run (node:internal/test_runner/test:1332:7)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33m0[39m,
+    expected: [33m-1[39m,
+    operator: [32m'strictEqual'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at app\test\core-pieces-ui.test.js:1139:3
+[31m✖ D677 (2) row 720d: a steady bank drag on the Sculpt mark of a piece the mirror, wound −700 → −760 (its middle −730), dragged down 30 px, goes on down from −730 (−730 → −743.5; 7b3926e: +10 on the first step, then held at −720) [90m(1194.3028ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: the first step moves the road with the drag: -730 → -720.0000000080687 (-720.00 -720.00 -720.00 -720.00 -720.00 -720.00 -720.00 -720.00 -720.00 -720.00 -720.00 -720.00 -720.00 -720.00 -720.00 -720.00 -720.00 -720.00 -720.00 -720.00 -720.00 -720.00 -720.00 -720.00 -720.00 -720.00 -720.00 -720.00 -720.00 -720.00)
+      at TestContext.<anonymous> [90m(C:\Users\zackn\Downloads\t180-wt-l261-carry\[39mapp\test\core-pieces-ui.test.js:1141:12[90m)[39m
+  [90m    at async Test.run (node:internal/test_runner/test:1332:7)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at app\test\core-pieces-ui.test.js:1149:1
+[31m✖ D677 (2) row 720e: a wheel notch over the Sculpt bank mark of a piece whose middle is 730 is one step (0.01) either way, never a jump to 720 (7b3926e: 720) [90m(235.5022ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: a notch up is 730.01: 730 → 720.0000000080687
+      at TestContext.<anonymous> [90m(C:\Users\zackn\Downloads\t180-wt-l261-carry\[39mapp\test\core-pieces-ui.test.js:1152:34[90m)[39m
+  [90m    at async Test.run (node:internal/test_runner/test:1332:7)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }

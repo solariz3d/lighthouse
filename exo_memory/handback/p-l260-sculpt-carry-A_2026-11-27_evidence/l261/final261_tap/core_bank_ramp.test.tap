@@ -1,0 +1,76 @@
+TAP version 13
+# Subtest: rampShape with equal shares IS roundedLinear (the rounded ramp and the swell keep their exact values)
+ok 1 - rampShape with equal shares IS roundedLinear (the rounded ramp and the swell keep their exact values)
+  ---
+  duration_ms: 1.3353
+  type: 'test'
+  ...
+# Subtest: rampShape 0.1 / 0.9: S runs 0 to 1, its rate and the rate's slope are 0 at both ends (C2), and it never turns back
+ok 2 - rampShape 0.1 / 0.9: S runs 0 to 1, its rate and the rate's slope are 0 at both ends (C2), and it never turns back
+  ---
+  duration_ms: 1.9198
+  type: 'test'
+  ...
+# Subtest: rampShape refuses shares that are not a ramp: each above 0, at most 1 together
+ok 3 - rampShape refuses shares that are not a ramp: each above 0, at most 1 together
+  ---
+  duration_ms: 6.8814
+  type: 'test'
+  ...
+# Subtest: on his piece, rise 0.1 / fall 0.9 over 500 m: the bank reaches -41.38 at the ramp's end and holds, C2 at the joint and at the ramp's end, one way only
+ok 4 - on his piece, rise 0.1 / fall 0.9 over 500 m: the bank reaches -41.38 at the ramp's end and holds, C2 at the joint and at the ramp's end, one way only
+  ---
+  duration_ms: 14.9826
+  type: 'test'
+  ...
+# Subtest: on his piece the quick rise leans sooner than the swell over the same 151 m, and the long fade rolls slower than both
+ok 5 - on his piece the quick rise leans sooner than the swell over the same 151 m, and the long fade rolls slower than both
+  ---
+  duration_ms: 16.9244
+  type: 'test'
+  ...
+# Subtest: on his piece the laid bank follows the asked shares (0.1 / 0.9 over 500 m, compressed to 375 m): within 1.2° of that curve, and far from equal shares
+ok 6 - on his piece the laid bank follows the asked shares (0.1 / 0.9 over 500 m, compressed to 375 m): within 1.2° of that curve, and far from equal shares
+  ---
+  duration_ms: 2.967
+  type: 'test'
+  ...
+# Subtest: every candidate, A to F, at 41.38, 20 and 54 degrees: the laid bank stays within 0.25° of its asked curve on the laid length (the order asks 0.5°; it lays 0.17°, and knots spread over the length asked lay 0.37°)
+ok 7 - every candidate, A to F, at 41.38, 20 and 54 degrees: the laid bank stays within 0.25° of its asked curve on the laid length (the order asks 0.5°; it lays 0.17°, and knots spread over the length asked lay 0.37°)
+  ---
+  duration_ms: 46.4003
+  type: 'test'
+  ...
+# Subtest: the shaped fit moves nothing else: box-off, whole-piece, cup, edge, width and turn at start, and an unshaped bank at start are byte for byte as before
+ok 8 - the shaped fit moves nothing else: box-off, whole-piece, cup, edge, width and turn at start, and an unshaped bank at start are byte for byte as before
+  ---
+  duration_ms: 12.6072
+  type: 'test'
+  ...
+# Subtest: L135 1 (AMENDED D642): his 750 m piece, bank 30° (default ease) then back to level from 572 m: at 572 the bank of the whole-piece ramp alone, 0 at 750 with slope 0, one way up to the mark, one top after it, no curvature either side of 572
+ok 9 - L135 1 (AMENDED D642): his 750 m piece, bank 30° (default ease) then back to level from 572 m: at 572 the bank of the whole-piece ramp alone, 0 at 750 with slope 0, one way up to the mark, one top after it, no curvature either side of 572
+  ---
+  duration_ms: 11.2746
+  type: 'test'
+  ...
+# Subtest: L135 2: the steeper case, 30° then 50° from 609 m: holds 30° from the first ramp's end to 609 m, reaches 50° at the end with slope 0, rises one way, no curvature either side of from
+ok 10 - L135 2: the steeper case, 30° then 50° from 609 m: holds 30° from the first ramp's end to 609 m, reaches 50° at the end with slope 0, rises one way, no curvature either side of from
+  ---
+  duration_ms: 4.3118
+  type: 'test'
+  ...
+# Subtest: L135 5: the roll rate, read by the checker (src/validate rollRates over its 20 m chord): his 750 m case stays under the 0.9338 °/m amber on both ramps; a second bank squeezed into 20 m goes over it, so the checker's warning fires
+ok 11 - L135 5: the roll rate, read by the checker (src/validate rollRates over its 20 m chord): his 750 m case stays under the 0.9338 °/m amber on both ramps; a second bank squeezed into 20 m goes over it, so the checker's warning fires
+  ---
+  duration_ms: 81.7153
+  type: 'test'
+  ...
+1..11
+# tests 11
+# suites 0
+# pass 11
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 345.5891

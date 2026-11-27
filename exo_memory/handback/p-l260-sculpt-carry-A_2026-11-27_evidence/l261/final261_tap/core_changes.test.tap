@@ -1,0 +1,220 @@
+TAP version 13
+# Subtest: L139 1 kh: a change of kh from 550 m holds the first value to its mark (docLeak ≤ 1% of the change), then ends at -0.0033333333333333335 with slope 0
+ok 1 - L139 1 kh: a change of kh from 550 m holds the first value to its mark (docLeak ≤ 1% of the change), then ends at -0.0033333333333333335 with slope 0
+  ---
+  duration_ms: 20.305
+  type: 'test'
+  ...
+# Subtest: L139 1 kv: a change of kv from 800 m holds the first value to its mark (docLeak ≤ 1% of the change), then ends at 0 with slope 0
+ok 2 - L139 1 kv: a change of kv from 800 m holds the first value to its mark (docLeak ≤ 1% of the change), then ends at 0 with slope 0
+  ---
+  duration_ms: 10.9488
+  type: 'test'
+  ...
+# Subtest: L139 1 phi: a change of phi from 700 m holds the first value to its mark (docLeak ≤ 1% of the change), then ends at 0 with slope 0 and curvature 0
+ok 3 - L139 1 phi: a change of phi from 700 m holds the first value to its mark (docLeak ≤ 1% of the change), then ends at 0 with slope 0 and curvature 0
+  ---
+  duration_ms: 13.2532
+  type: 'test'
+  ...
+# Subtest: L139 1 w: a change of w from 600 m holds the first value to its mark (docLeak ≤ 1% of the change), then ends at 40 with slope 0
+ok 4 - L139 1 w: a change of w from 600 m holds the first value to its mark (docLeak ≤ 1% of the change), then ends at 40 with slope 0
+  ---
+  duration_ms: 6.5515
+  type: 'test'
+  ...
+# Subtest: L139 1 c: a change of c from 600 m holds the first value to its mark (docLeak ≤ 1% of the change), then ends at 10 with slope 0 and curvature 0
+ok 5 - L139 1 c: a change of c from 600 m holds the first value to its mark (docLeak ≤ 1% of the change), then ends at 10 with slope 0 and curvature 0
+  ---
+  duration_ms: 6.0371
+  type: 'test'
+  ...
+# Subtest: L139 1 e: a change of e from 500 m holds the first value to its mark (docLeak ≤ 1% of the change), then ends at 0 with slope 0 and curvature 0
+ok 6 - L139 1 e: a change of e from 500 m holds the first value to its mark (docLeak ≤ 1% of the change), then ends at 0 with slope 0 and curvature 0
+  ---
+  duration_ms: 6.9351
+  type: 'test'
+  ...
+# Subtest: L139 1 er: a change of er from 500 m holds the first value to its mark (docLeak ≤ 1% of the change), then ends at 25 with slope 0 and curvature 0
+ok 7 - L139 1 er: a change of er from 500 m holds the first value to its mark (docLeak ≤ 1% of the change), then ends at 25 with slope 0 and curvature 0
+  ---
+  duration_ms: 4.4909
+  type: 'test'
+  ...
+# Subtest: L139 2: two changes on the turn (1/300 → −1/300 from 450, → 0 from 750): the first value holds to mark 1, −1/300 is reached at 750 with slope ~0, and the piece ends straight
+ok 8 - L139 2: two changes on the turn (1/300 → −1/300 from 450, → 0 from 750): the first value holds to mark 1, −1/300 is reached at 750 with slope ~0, and the piece ends straight
+  ---
+  duration_ms: 5.6274
+  type: 'test'
+  ...
+# Subtest: L139 3: the L135 form `second: { phi: { from, target } }` is a one-item list: the same document as `changes: { phi: [{ from, target }] }`
+ok 9 - L139 3: the L135 form `second: { phi: { from, target } }` is a one-item list: the same document as `changes: { phi: [{ from, target }] }`
+  ---
+  duration_ms: 6.3323
+  type: 'test'
+  ...
+# Subtest: L139 4 (E §M3): three fields, three marks; each holds to its own mark within 1% of its change, and the six orders of the fields give the same document
+ok 10 - L139 4 (E §M3): three fields, three marks; each holds to its own mark within 1% of its change, and the six orders of the fields give the same document
+  ---
+  duration_ms: 54.21
+  type: 'test'
+  ...
+# Subtest: L139 4b (the amendment): M3 with two changes on the turn (→ −1/300 from 450, → 0 from 650) holds every field to every mark
+ok 11 - L139 4b (the amendment): M3 with two changes on the turn (→ −1/300 from 450, → 0 from 650) holds every field to every mark
+  ---
+  duration_ms: 11.1353
+  type: 'test'
+  ...
+# Subtest: L139 5a: secondMinM is the core's, one function: bank 31.5·√Δ°, turn and climb max(20, 3·|Δ|/ROUTE_BAR), width 40 m, cup and edges 26 m (or less for a tiny change), never under 20 m
+ok 12 - L139 5a: secondMinM is the core's, one function: bank 31.5·√Δ°, turn and climb max(20, 3·|Δ|/ROUTE_BAR), width 40 m, cup and edges 26 m (or less for a tiny change), never under 20 m
+  ---
+  duration_ms: 0.7753
+  type: 'test'
+  ...
+# Subtest: L139 5b kh: a change shorter than its minimum by 0.1 m is refused by name (BAD_SECOND, the field, the change and the minimum); at the minimum it is laid
+ok 13 - L139 5b kh: a change shorter than its minimum by 0.1 m is refused by name (BAD_SECOND, the field, the change and the minimum); at the minimum it is laid
+  ---
+  duration_ms: 1.6442
+  type: 'test'
+  ...
+# Subtest: L139 5b kv: a change shorter than its minimum by 0.1 m is refused by name (BAD_SECOND, the field, the change and the minimum); at the minimum it is laid
+ok 14 - L139 5b kv: a change shorter than its minimum by 0.1 m is refused by name (BAD_SECOND, the field, the change and the minimum); at the minimum it is laid
+  ---
+  duration_ms: 0.8737
+  type: 'test'
+  ...
+# Subtest: L139 5b phi: a change shorter than its minimum by 0.1 m is refused by name (BAD_SECOND, the field, the change and the minimum); at the minimum it is laid
+ok 15 - L139 5b phi: a change shorter than its minimum by 0.1 m is refused by name (BAD_SECOND, the field, the change and the minimum); at the minimum it is laid
+  ---
+  duration_ms: 11.7488
+  type: 'test'
+  ...
+# Subtest: L139 5b w: a change shorter than its minimum by 0.1 m is refused by name (BAD_SECOND, the field, the change and the minimum); at the minimum it is laid
+ok 16 - L139 5b w: a change shorter than its minimum by 0.1 m is refused by name (BAD_SECOND, the field, the change and the minimum); at the minimum it is laid
+  ---
+  duration_ms: 1.2404
+  type: 'test'
+  ...
+# Subtest: L139 5b c: a change shorter than its minimum by 0.1 m is refused by name (BAD_SECOND, the field, the change and the minimum); at the minimum it is laid
+ok 17 - L139 5b c: a change shorter than its minimum by 0.1 m is refused by name (BAD_SECOND, the field, the change and the minimum); at the minimum it is laid
+  ---
+  duration_ms: 2.5619
+  type: 'test'
+  ...
+# Subtest: L139 5c: a segment between two marks is held to the minimum as well (a change 10 m after the one before it is refused, naming change 1, the segment it starts)
+ok 18 - L139 5c: a segment between two marks is held to the minimum as well (a change 10 m after the one before it is refused, naming change 1, the segment it starts)
+  ---
+  duration_ms: 0.4238
+  type: 'test'
+  ...
+# Subtest: L139 6: refusals by name: no first target, marks out of order, a mark before the first ramp ends, a channel with no change, a target out of range
+ok 19 - L139 6: refusals by name: no first target, marks out of order, a mark before the first ramp ends, a channel with no change, a target out of range
+  ---
+  duration_ms: 2.4365
+  type: 'test'
+  ...
+# Subtest: L139 7: no change asked, the same bytes: `changes` undefined, null, {} and empty lists leave a piece as it was; his sketch with its typed from 637.5 is refused by name (E 711d7d10 item 6)
+ok 20 - L139 7: no change asked, the same bytes: `changes` undefined, null, {} and empty lists leave a piece as it was; his sketch with its typed from 637.5 is refused by name (E 711d7d10 item 6)
+  ---
+  duration_ms: 16.9364
+  type: 'test'
+  ...
+# Subtest: L139 8: mirror negates the turn and the bank changes and not the width or the cup; save and open round-trip them
+ok 21 - L139 8: mirror negates the turn and the bank changes and not the width or the cup; save and open round-trip them
+  ---
+  duration_ms: 9.3876
+  type: 'test'
+  ...
+# Subtest: L139 9 (E §M2, the S; AMENDED D642): a corner +90 with an extra −90 from 350 on a 700 m piece ends on the heading it started on (0.01°), its turn 0 and slope 0
+ok 22 - L139 9 (E §M2, the S; AMENDED D642): a corner +90 with an extra −90 from 350 on a 700 m piece ends on the heading it started on (0.01°), its turn 0 and slope 0
+  ---
+  duration_ms: 61.0397
+  type: 'test'
+  ...
+# Subtest: L139 10 (the amendment; AMENDED D642): a snake, +60 with extras −60 from 300 and +60 from 600 over 900 m, ends at +60 and straight, each extra turning its own angle over its span
+ok 23 - L139 10 (the amendment; AMENDED D642): a snake, +60 with extras −60 from 300 and +60 from 600 over 900 m, ends at +60 and straight, each extra turning its own angle over its span
+  ---
+  duration_ms: 43.5978
+  type: 'test'
+  ...
+# Subtest: L139 11 (the amendment; AMENDED D642): a climb list over an inversion (+120°, an extra −120° from 500 on 1,000 m) pitches the corner's own to 500 and ends at a steady pitch, 0° in all
+ok 24 - L139 11 (the amendment; AMENDED D642): a climb list over an inversion (+120°, an extra −120° from 500 on 1,000 m) pitches the corner's own to 500 and ends at a steady pitch, 0° in all
+  ---
+  duration_ms: 7.816
+  type: 'test'
+  ...
+# Subtest: L139 12 (E §M2): a corner after a corner needs the shortest corner from the straight it starts on: 0.1 m under it is refused by name, at it it is laid
+ok 25 - L139 12 (E §M2): a corner after a corner needs the shortest corner from the straight it starts on: 0.1 m under it is refused by name, at it it is laid
+  ---
+  duration_ms: 6.7073
+  type: 'test'
+  ...
+# Subtest: L139 13: corner lists are refused by name when they make no sense: no first corner, a turn rate change on a corner, marks out of order
+ok 26 - L139 13: corner lists are refused by name when they make no sense: no first corner, a turn rate change on a corner, marks out of order
+  ---
+  duration_ms: 1.4234
+  type: 'test'
+  ...
+# Subtest: L139 14: a corner list with no change is the corner as before (the same bytes as turnDeg alone)
+ok 27 - L139 14: a corner list with no change is the corner as before (the same bytes as turnDeg alone)
+  ---
+  duration_ms: 2.0781
+  type: 'test'
+  ...
+# Subtest: L139 15 (E addendum X2): a climb RATE list through an inversion (0 → 0.005 /m over 120 m, → −0.005 from 500, → 0 from 800) holds each value to its mark and ends level-rate
+ok 28 - L139 15 (E addendum X2): a climb RATE list through an inversion (0 → 0.005 /m over 120 m, → −0.005 from 500, → 0 from 800) holds each value to its mark and ends level-rate
+  ---
+  duration_ms: 14.321
+  type: 'test'
+  ...
+# Subtest: L139 R2: laid BY THE PANEL, his 11-05 picture (750 m assumed): a −90° corner, bank 66.14° then 0, cup 15.5, the panel's default from: the built road's roll accelerates under the bar (× 1.05) from 20 m before the change's mark to 20 m into the next piece
+ok 29 - L139 R2: laid BY THE PANEL, his 11-05 picture (750 m assumed): a −90° corner, bank 66.14° then 0, cup 15.5, the panel's default from: the built road's roll accelerates under the bar (× 1.05) from 20 m before the change's mark to 20 m into the next piece
+  ---
+  duration_ms: 66.1483
+  type: 'test'
+  ...
+# Subtest: L139 R2: laid BY THE PANEL, the same, bank "early": the built road's roll accelerates under the bar (× 1.05) from 20 m before the change's mark to 20 m into the next piece
+ok 30 - L139 R2: laid BY THE PANEL, the same, bank "early": the built road's roll accelerates under the bar (× 1.05) from 20 m before the change's mark to 20 m into the next piece
+  ---
+  duration_ms: 22.9884
+  type: 'test'
+  ...
+# Subtest: L139 R2: laid BY THE PANEL, the same on a straight road (turn as a rate, none typed): the built road's roll accelerates under the bar (× 1.05) from 20 m before the change's mark to 20 m into the next piece
+ok 31 - L139 R2: laid BY THE PANEL, the same on a straight road (turn as a rate, none typed): the built road's roll accelerates under the bar (× 1.05) from 20 m before the change's mark to 20 m into the next piece
+  ---
+  duration_ms: 18.2889
+  type: 'test'
+  ...
+# Subtest: L139 R2: laid BY THE PANEL, his sketch (L136): 270° corner, climb −6, bank −28.47 early then 0, width 30, cup 15 early: the built road's roll accelerates under the bar (× 1.05) from 20 m before the change's mark to 20 m into the next piece
+ok 32 - L139 R2: laid BY THE PANEL, his sketch (L136): 270° corner, climb −6, bank −28.47 early then 0, width 30, cup 15 early: the built road's roll accelerates under the bar (× 1.05) from 20 m before the change's mark to 20 m into the next piece
+  ---
+  duration_ms: 23.8486
+  type: 'test'
+  ...
+# Subtest: L139 R1 turnDeg 90°: a corner change shorter than the knot floor by 0.2 m is refused by name; at it, the corners are laid exact and end at a rate of 0
+ok 33 - L139 R1 turnDeg 90°: a corner change shorter than the knot floor by 0.2 m is refused by name; at it, the corners are laid exact and end at a rate of 0
+  ---
+  duration_ms: 2.8933
+  type: 'test'
+  ...
+# Subtest: L139 R1 turnDeg 30°: a corner change shorter than the knot floor by 0.2 m is refused by name; at it, the corners are laid exact and end at a rate of 0
+ok 34 - L139 R1 turnDeg 30°: a corner change shorter than the knot floor by 0.2 m is refused by name; at it, the corners are laid exact and end at a rate of 0
+  ---
+  duration_ms: 2.3105
+  type: 'test'
+  ...
+# Subtest: L139 R1 climbDeg 40°: a corner change shorter than the knot floor by 0.2 m is refused by name; at it, the corners are laid exact and end at a rate of 0
+ok 35 - L139 R1 climbDeg 40°: a corner change shorter than the knot floor by 0.2 m is refused by name; at it, the corners are laid exact and end at a rate of 0
+  ---
+  duration_ms: 2.0128
+  type: 'test'
+  ...
+1..35
+# tests 35
+# suites 0
+# pass 35
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 620.1521

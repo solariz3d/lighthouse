@@ -1,0 +1,46 @@
+TAP version 13
+# Subtest: at start: bank 20° on a 1,000 m piece after a straight rolls under the checker's amber, reaches 20° within its ramp, and holds it
+ok 1 - at start: bank 20° on a 1,000 m piece after a straight rolls under the checker's amber, reaches 20° within its ramp, and holds it
+  ---
+  duration_ms: 43.3972
+  type: 'test'
+  ...
+# Subtest: at start: 54° of bank comes in over about 197 m, under the amber; 5° keeps the 20 m floor
+ok 2 - at start: 54° of bank comes in over about 197 m, under the amber; 5° keeps the 20 m floor
+  ---
+  duration_ms: 58.2698
+  type: 'test'
+  ...
+# Subtest: at start: the change is measured from the head, so a road already banked 15° going to 180° takes the roll bar's 600.8 m, where from flat it is 655.4
+ok 3 - at start: the change is measured from the head, so a road already banked 15° going to 180° takes the roll bar's 600.8 m, where from flat it is 655.4
+  ---
+  duration_ms: 13.0591
+  type: 'test'
+  ...
+# Subtest: at start: the cup and the edges come in no faster than the roll amber either; a short piece is never laid faster than before
+ok 4 - at start: the cup and the edges come in no faster than the roll amber either; a short piece is never laid faster than before
+  ---
+  duration_ms: 8.6807
+  type: 'test'
+  ...
+# Subtest: at start: the turn is sized to its change (51.5 m), the small climb keeps 20 m, the width takes F (half this 400 m piece, 200 m); nothing ticked sends no transition, and the bytes Extend lays are as asked
+ok 5 - at start: the turn is sized to its change (51.5 m), the small climb keeps 20 m, the width takes F (half this 400 m piece, 200 m); nothing ticked sends no transition, and the bytes Extend lays are as asked
+  ---
+  duration_ms: 3.3686
+  type: 'test'
+  ...
+# Subtest: L135 3: bank 30° "at start" on his 750 m piece, then back to level from 577 m: the at-start ramp reaches 30° at its end, holds to 577, falls to 0 at the end with slope 0, no curvature either side of from
+ok 6 - L135 3: bank 30° "at start" on his 750 m piece, then back to level from 577 m: the at-start ramp reaches 30° at its end, holds to 577, falls to 0 at the end with slope 0, no curvature either side of from
+  ---
+  duration_ms: 7.5242
+  type: 'test'
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 257.9284

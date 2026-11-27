@@ -1,0 +1,130 @@
+TAP version 13
+# Subtest: C1: the extra bank's tick is labelled with where it starts, where it ends and how long it rolls: "Extra bank · 500.00 m → end · rolls over 500.00 m · drag to start earlier or later"
+ok 1 - C1: the extra bank's tick is labelled with where it starts, where it ends and how long it rolls: "Extra bank · 500.00 m → end · rolls over 500.00 m · drag to start earlier or later"
+  ---
+  duration_ms: 105.4672
+  type: 'test'
+  ...
+# Subtest: C2: the label follows the from: slid by its handle to 420 m, and dragged by its tick to 640.5 m
+ok 2 - C2: the label follows the from: slid by its handle to 420 m, and dragged by its tick to 640.5 m
+  ---
+  duration_ms: 49.7936
+  type: 'test'
+  ...
+# Subtest: C3: the stretch the tick tints runs from its from to the piece's end (the next change's mark when there is one), and follows the from
+ok 3 - C3: the stretch the tick tints runs from its from to the piece's end (the next change's mark when there is one), and follows the from
+  ---
+  duration_ms: 62.5392
+  type: 'test'
+  ...
+# Subtest: C4: the stretch on the ghost: its first station is the tick's, its last the stretch's end, the road's full width across
+ok 4 - C4: the stretch on the ghost: its first station is the tick's, its last the stretch's end, the road's full width across
+  ---
+  duration_ms: 1.2817
+  type: 'test'
+  ...
+# Subtest: C5: turn and climb share the path: their ticks read "Extra turn · … · turns over …" and "Extra climb · … · climbs over …"
+ok 5 - C5: turn and climb share the path: their ticks read "Extra turn · … · turns over …" and "Extra climb · … · climbs over …"
+  ---
+  duration_ms: 24.6799
+  type: 'test'
+  ...
+# Subtest: C6: the extra handle's hover names its sideways drag and where it starts now, and follows the from; a field's own handle has no such line
+ok 6 - C6: the extra handle's hover names its sideways drag and where it starts now, and follows the from; a field's own handle has no such line
+  ---
+  duration_ms: 0.2776
+  type: 'test'
+  ...
+# Subtest: C7: the handles tell which handle is hovered or dragged (active), so the panel can light its tick
+ok 7 - C7: the handles tell which handle is hovered or dragged (active), so the panel can light its tick
+  ---
+  duration_ms: 2.5319
+  type: 'test'
+  ...
+# Subtest: C8: in the panel, the extra bank's tick is lit while its handle is hovered or dragged, and only then
+ok 8 - C8: in the panel, the extra bank's tick is lit while its handle is hovered or dragged, and only then
+  ---
+  duration_ms: 25.4162
+  type: 'test'
+  ...
+# Subtest: R1: dragging the tick itself, the label's number and the stretch's start follow the drag before release
+ok 9 - R1: dragging the tick itself, the label's number and the stretch's start follow the drag before release
+  ---
+  duration_ms: 3.8466
+  type: 'test'
+  ...
+# Subtest: R2a: a label whose place falls on a handle's screen box is nudged off it
+ok 10 - R2a: a label whose place falls on a handle's screen box is nudged off it
+  ---
+  duration_ms: 1.3404
+  type: 'test'
+  ...
+# Subtest: R2b: a label is kept below the HUD's bottom edge
+ok 11 - R2b: a label is kept below the HUD's bottom edge
+  ---
+  duration_ms: 1.2988
+  type: 'test'
+  ...
+# Subtest: R2c: the panel hands the marks' layer each handle's screen box (and its tip) to keep a label off
+ok 12 - R2c: the panel hands the marks' layer each handle's screen box (and its tip) to keep a label off
+  ---
+  duration_ms: 18.7636
+  type: 'test'
+  ...
+# Subtest: D1: at rest, no label box and no label text, and one dot per mark, on the mark
+ok 13 - D1: at rest, no label box and no label text, and one dot per mark, on the mark
+  ---
+  duration_ms: 0.4036
+  type: 'test'
+  ...
+# Subtest: D2: the pointer over one dot shows that mark's label (and no dot for it); off it, the label goes
+ok 14 - D2: the pointer over one dot shows that mark's label (and no dot for it); off it, the label goes
+  ---
+  duration_ms: 0.6971
+  type: 'test'
+  ...
+# Subtest: D3: a lit mark (its extra handle hovered or dragged) shows its label and no dot
+ok 15 - D3: a lit mark (its extra handle hovered or dragged) shows its label and no dot
+  ---
+  duration_ms: 1.132
+  type: 'test'
+  ...
+# Subtest: D4: a mark just added shows its label for about 2 s, then is a dot; marks there at the first draw do not
+ok 16 - D4: a mark just added shows its label for about 2 s, then is a dot; marks there at the first draw do not
+  ---
+  duration_ms: 0.6771
+  type: 'test'
+  ...
+# Subtest: D5: the dot is grabbed as the tick was: a press on it and a drag move the mark
+ok 17 - D5: the dot is grabbed as the tick was: a press on it and a drag move the mark
+  ---
+  duration_ms: 0.5113
+  type: 'test'
+  ...
+# Subtest: D6 (pane C's V4, L241 read): the ghost goes for a draw and comes back with the same marks: nothing was added, so no label shows
+ok 18 - D6 (pane C's V4, L241 read): the ghost goes for a draw and comes back with the same marks: nothing was added, so no label shows
+  ---
+  duration_ms: 0.2735
+  type: 'test'
+  ...
+# Subtest: E1 (L251): a shown label is a window element over the stage, after the marks' canvas (so over it), taking no pointer events: its words are the label's two lines, its box the one placed, and no word is written on the canvas
+ok 19 - E1 (L251): a shown label is a window element over the stage, after the marks' canvas (so over it), taking no pointer events: its words are the label's two lines, its box the one placed, and no word is written on the canvas
+  ---
+  duration_ms: 0.3987
+  type: 'test'
+  ...
+# Subtest: E2 (L251): a 60-step drag of the tick makes and removes no element: the one window is moved and its words follow, and the count of window nodes is the same at every step
+ok 20 - E2 (L251): a 60-step drag of the tick makes and removes no element: the one window is moved and its words follow, and the count of window nodes is the same at every step
+  ---
+  duration_ms: 17.796
+  type: 'test'
+  ...
+1..20
+# tests 20
+# suites 0
+# pass 20
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 494.2438
