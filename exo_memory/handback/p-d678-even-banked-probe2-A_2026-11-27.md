@@ -306,3 +306,11 @@ What the run adds, after the fact and to be read as such (my stake is in 3):
   cce6f88a…).** Equal to 4 places, not in bytes.
 - **The evidence's `run.log`** drops the scratch log's 3 "heavy-run: waiting" lines (58 lines → 55); nothing else differs.
   `even678.json` is copied whole.
+
+### Correction found after the hand-back (17:24Z, while starting probe 3)
+
+- **The run overlapped his driving, and I had not checked.**
+  - checked: `Get-Process acs` → acs.exe started 16:35:39Z. The probe ran 16:39:29–17:03:36Z.
+  - checked: my session record shows no acs.exe check on 2026-11-27 before 17:13Z.
+  - The run held heavy-run's below-normal priority and its 8-of-16 CPU cap, but the standing rule is to run nothing while he drives, and I broke it.
+  - The figures are unaffected (the probe has no clock in it); the cost was his machine's.
