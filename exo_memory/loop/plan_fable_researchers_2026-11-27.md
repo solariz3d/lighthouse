@@ -245,3 +245,21 @@ all 14 (`research/t180_cars_clipping_potential_2026-11-27.md`). If that is the w
 sink speed, no car breaks more often than another. *It fails* if one car breaks at a sink speed where the others hold, on at
 least three passes; then something that differs between cars (thrust, wheel placement, the fin) is doing it, and the study
 names which differs for that car.
+
+**13:50 (D), his words:** "i got a recording of elysium type a, and even a thunderhead type a where it shows a perfect clip on
+the corkscrew that sends me to the shadow realm". Not a go.
+
+**Checked at 13:5x (the same parser; names bracketed here):** three new replays, all the Type A.
+- On his own builder-made track, the one the other cars drove: 190.6 s, 12,706 frames (sha256 the third listed in the note of
+  this time). One reset at t 20.02 s. Which of its drops are breaks needs the road's surface; not read by me.
+- On [T1], two saves of one session (25.95 and 25.97 MB): 67.7 s, 4,511 frames. The car goes over the top of the corkscrew
+  inverted (its up axis reads -1.00 at t 63.93 s, 56 m above where it entered), comes down the far side, and between t 64.56
+  and 64.65 s loses 54 km/h in under 0.09 s (397 to 343 km/h); from t 65.0 it falls at a steady 335 km/h, tumbling, with no
+  further change of speed, to the end of the file (158 m of drop). So the last contact is at about t 64.6 s. Where the road is
+  at that frame is the census's first job.
+- Speeds on the same two tracks, every replay: the Type A's are the Mach 6's (p95 519 km/h on [T1] against the Mach 6's 493 to
+  565 over 16 replays; 820 km/h on his own track against 797 to 875). So "the Type A is faster" is not what these show.
+  *Caught before it was said:* my first print multiplied the parser's speed, already in km/h, by 3.6.
+
+**So the run now has a Type A break on a fast roll, the case P2 is about, and P3 has its missing car.** The Type A line under
+"what it cannot settle" above is struck by this entry; online against offline still stands.
