@@ -165,3 +165,45 @@ flat road. Two rulings on what it left for the chair:
   a brush as the width now does, and this case is the picture for it. No code for the cup.
 
 NEXT: chair pass this to N5's pane now; that pane call_librarian with its hand-back
+
+---
+
+## Amended 17:4x (D), after the repair round and the design pass `handback/p-d678-even-build-A_2026-11-27.md` sections 4.1, 4.3, 4.4, 4.7 to 4.9 (git-blob ac480a43; read; `plan678_2.jpg` looked at)
+
+Builder `d678-even-a` bcedaaf on origin: the release returns in 2 ms on his largest lap (U6 done). The design table (28 cases,
+208 rows) says: as built (A0) the kept edge is exact where its reading of the old road is right and wrong by METRES where it is
+not (9.31 m on a run from the track's start, the first row); kept where it is (B) never moves the kept edge by metres, keeps
+his hill, adds 1 red where the others add 33 to 35, and misses its own claim by a median 0.08 m; the mended rule (A) is B on
+every flat row and A0 on banked ones, so it is not a third behaviour; eased between its ends (C) is off the untouched road
+everywhere. All three registered unwelcome outcomes are true. **The choice between A0 and B is his, with the three plans; it
+is put to him in the morning page.** The librarian's lean, said as a lean: B. Until he chooses, the work below serves both.
+
+### For the builder of Even, in this order, rows registered before each
+
+1. **The window's ends (the hand-back's 4.4, ruling (i)).** "Nothing outside the stretch changes" is relaxed from bit for bit
+   to **within one stored step of each channel** (the prototype moved at most 6.1e-5 m where the step is 1e-4 m). Build the
+   knot refinement over the window's two reaches at spans of 3.75 m, by `refineKnots`, test-first: R1 and R2 green, the
+   margins' width within 0.01 m of the value on every row of the table, K3 within 0.01 m, no joint step, no new red. The
+   words then say what holds outside ("unchanged to a tenth of a millimetre"). On `d678-even-a`.
+2. **The cost on a long lap.** On his largest lap one drag step takes 6.8 to 7.0 s, a typed width 7.2 to 7.9 s and Even itself
+   3.2 s; nearly all of it is the whole lap rebuilt (`toSegments` through the rim reader and the bank plan) and the
+   pass-clearance guard. **Measure first, on the same lap at c522ea6:** one step of an existing Sculpt drag (the Width tool and
+   a grab), so we know what he lives with today. Then bound Even's own share to the window's pieces and register the bar from
+   that measurement (my lean: an Even drag step no slower than today's grab step on that lap, and inside the frame bar on the
+   fixtures). If the guard is the same cost under today's drags, say so plainly: that is then a finding about long laps, not
+   about Even, and it is not mended here. On `d678-even-a`.
+3. **B, built properly, on a sibling branch `d678-even-b`** from the tip after 1 and 2: the kept edge (or the middle) kept
+   where it is; the sideways least-squares fit the 14:5x order asked for and 15:4x stopped (the reference is now right, so
+   the fit is to the right line), with B's own claim as the bar: within 0.01 m of where it is now over the run on every row
+   of the table, and where it is not, by how much; a hill and a swerve he made stay; the words true to B, with the one line
+   of guidance its behaviour needs ("keep the edge you did not move, or the middle"); the mutants. `d678-even-a` keeps A0
+   with its words true to A0. Both branches carry 1 and 2.
+4. Then a reader who wrote none of it reads both tips' deltas, varying the table's hardest rows and the long lap.
+
+### The night's packet, changed
+
+- **N4 (the test build, not installed) is prepared with `d678-even-b`**, the width hold 15e7d62 and the ghost branch 8c78a59,
+  once 4 is clean. It carries the librarian's lean, not his choice; if he picks A0 it is prepared again.
+- **N2 (the grab along the slope) follows 3**, on a side branch of `d678-even-b`, as written.
+
+NEXT: chair pass items 1 to 3 to the builder of Even now; that pane call_librarian with its hand-back after each of 1+2 and 3
