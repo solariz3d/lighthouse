@@ -1,0 +1,1361 @@
+{
+ "started": "2026-11-27T11:56:23.740Z",
+ "tree": "C:\\Users\\zackn\\Downloads\\t180-wt-l265e-even",
+ "mechanism": [],
+ "rows": [
+  {
+   "name": "start base",
+   "w": {
+    "min": 12,
+    "max": 12,
+    "spread": 0
+   },
+   "l": {
+    "min": 0,
+    "max": 0,
+    "spread": 0
+   },
+   "h": {
+    "min": 0,
+    "max": 0,
+    "spread": 0
+   },
+   "phi": {
+    "min": 0,
+    "max": 0,
+    "spread": 0
+   },
+   "inLat": {
+    "min": 5.9418,
+    "max": 5.9418,
+    "spread": 0
+   },
+   "inZ": {
+    "min": 0.714,
+    "max": 0.714,
+    "spread": 0
+   },
+   "outLat": {
+    "min": -5.9418,
+    "max": -5.9418,
+    "spread": 0
+   },
+   "outZ": {
+    "min": 0.714,
+    "max": 0.714,
+    "spread": 0
+   },
+   "inPlan": {
+    "min": 6,
+    "max": 6,
+    "spread": 0
+   },
+   "outPlan": {
+    "min": -6,
+    "max": -6,
+    "spread": 0
+   },
+   "profile": {
+    "w": [
+     12,
+     12,
+     12,
+     12,
+     12,
+     12,
+     12,
+     12,
+     12,
+     12,
+     12,
+     12,
+     12
+    ],
+    "h": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "check": {
+    "red": 0,
+    "amber": 0,
+    "redOnRun": 0,
+    "redInWindow": 0,
+    "redList": [],
+    "amberList": [],
+    "rawKeys": []
+   }
+  },
+  {
+   "name": "start T1",
+   "w": {
+    "min": 12,
+    "max": 16.0392,
+    "spread": 4.0392
+   },
+   "l": {
+    "min": -2,
+    "max": 0,
+    "spread": 2
+   },
+   "h": {
+    "min": -0.2403,
+    "max": 0,
+    "spread": 0.2403
+   },
+   "phi": {
+    "min": 0,
+    "max": 0,
+    "spread": 0
+   },
+   "inLat": {
+    "min": 5.897,
+    "max": 5.948,
+    "spread": 0.051
+   },
+   "inZ": {
+    "min": 0.714,
+    "max": 0.9126,
+    "spread": 0.1985
+   },
+   "outLat": {
+    "min": -9.9016,
+    "max": -5.9418,
+    "spread": 3.9599
+   },
+   "outZ": {
+    "min": 0.714,
+    "max": 0.9126,
+    "spread": 0.1985
+   },
+   "inPlan": {
+    "min": 6,
+    "max": 6.0196,
+    "spread": 0.0196
+   },
+   "outPlan": {
+    "min": -10.0196,
+    "max": -6,
+    "spread": 4.0196
+   },
+   "profile": {
+    "w": [
+     12,
+     12,
+     12,
+     12,
+     12,
+     12.7773,
+     16.0392,
+     12.7773,
+     12,
+     12,
+     12,
+     12,
+     12
+    ],
+    "h": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     -0.0463,
+     -0.2403,
+     -0.0463,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "check": {
+    "red": 2,
+    "amber": 0,
+    "redOnRun": 2,
+    "redInWindow": 2,
+    "redList": [
+     {
+      "s": 294,
+      "s1": 300,
+      "reason": "leaves-surface"
+     },
+     {
+      "s": 340,
+      "s1": 346,
+      "reason": "leaves-surface"
+     }
+    ],
+    "amberList": [],
+    "rawKeys": [
+     "s0",
+     "s1",
+     "u",
+     "reason",
+     "source",
+     "worst"
+    ]
+   }
+  },
+  {
+   "name": "start T2b",
+   "w": {
+    "min": 14.06,
+    "max": 16.12,
+    "spread": 2.06
+   },
+   "l": {
+    "min": -2.04,
+    "max": -1.02,
+    "spread": 1.02
+   },
+   "h": {
+    "min": -0.2452,
+    "max": -0.1226,
+    "spread": 0.1226
+   },
+   "phi": {
+    "min": 0,
+    "max": 0,
+    "spread": 0
+   },
+   "inLat": {
+    "min": 5.897,
+    "max": 5.924,
+    "spread": 0.027
+   },
+   "inZ": {
+    "min": 0.8068,
+    "max": 0.915,
+    "spread": 0.1082
+   },
+   "outLat": {
+    "min": -9.9811,
+    "max": -7.964,
+    "spread": 2.017
+   },
+   "outZ": {
+    "min": 0.8068,
+    "max": 0.915,
+    "spread": 0.1082
+   },
+   "inPlan": {
+    "min": 6.01,
+    "max": 6.02,
+    "spread": 0.01
+   },
+   "outPlan": {
+    "min": -10.1,
+    "max": -8.05,
+    "spread": 2.05
+   },
+   "profile": {
+    "w": [
+     14.06,
+     15.8929,
+     15.8929,
+     16.12,
+     15.8929,
+     15.8929,
+     16.12,
+     15.8929,
+     15.8929,
+     16.12,
+     15.8929,
+     15.8929,
+     14.06
+    ],
+    "h": [
+     -0.1226,
+     -0.2317,
+     -0.2317,
+     -0.2452,
+     -0.2317,
+     -0.2317,
+     -0.2452,
+     -0.2317,
+     -0.2317,
+     -0.2452,
+     -0.2317,
+     -0.2317,
+     -0.1226
+    ]
+   },
+   "check": {
+    "red": 2,
+    "amber": 6,
+    "redOnRun": 0,
+    "redInWindow": 2,
+    "redList": [
+     {
+      "s": 192,
+      "s1": 196,
+      "reason": "leaves-surface"
+     },
+     {
+      "s": 444,
+      "s1": 448,
+      "reason": "leaves-surface"
+     }
+    ],
+    "amberList": [
+     {
+      "s": 440,
+      "s1": 440,
+      "reason": "load-above-proven"
+     },
+     {
+      "s": 230,
+      "s1": 230,
+      "reason": "load-on-the-chassis"
+     },
+     {
+      "s": 290,
+      "s1": 290,
+      "reason": "load-on-the-chassis"
+     },
+     {
+      "s": 350,
+      "s1": 350,
+      "reason": "load-on-the-chassis"
+     },
+     {
+      "s": 410,
+      "s1": 410,
+      "reason": "load-on-the-chassis"
+     },
+     {
+      "s": 440,
+      "s1": 440,
+      "reason": "load-on-the-chassis"
+     }
+    ],
+    "rawKeys": [
+     "s0",
+     "s1",
+     "u",
+     "reason",
+     "source",
+     "worst"
+    ]
+   }
+  },
+  {
+   "name": "E5 base: w to 16, h and the held rim read on the run's own section (s 490)",
+   "lam": 5.9418,
+   "H": 0,
+   "readAt": 490,
+   "w": {
+    "min": 16,
+    "max": 16,
+    "spread": 0
+   },
+   "l": {
+    "min": -1.9408,
+    "max": -1.9408,
+    "spread": 0
+   },
+   "h": {
+    "min": 0,
+    "max": 0,
+    "spread": 0
+   },
+   "phi": {
+    "min": 0,
+    "max": 0,
+    "spread": 0
+   },
+   "inLat": {
+    "min": 5.9417,
+    "max": 5.9417,
+    "spread": 0
+   },
+   "inZ": {
+    "min": 1.1493,
+    "max": 1.1493,
+    "spread": 0
+   },
+   "outLat": {
+    "min": -9.8233,
+    "max": -9.8233,
+    "spread": 0
+   },
+   "outZ": {
+    "min": 1.1493,
+    "max": 1.1493,
+    "spread": 0
+   },
+   "inPlan": {
+    "min": 6.0592,
+    "max": 6.0592,
+    "spread": 0
+   },
+   "outPlan": {
+    "min": -9.9408,
+    "max": -9.9408,
+    "spread": 0
+   },
+   "profile": {
+    "w": [
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16
+    ],
+    "h": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "heldRimMoved": {
+    "lat": 0,
+    "z": 0.4353
+   },
+   "outsideMaxChange": 0,
+   "piecesSameObject": 0,
+   "check": {
+    "red": 0,
+    "amber": 0,
+    "redOnRun": 0,
+    "redInWindow": 0,
+    "redList": [],
+    "amberList": [],
+    "rawKeys": [],
+    "redNotInBase": 0,
+    "redInWindowNotInBase": 0
+   },
+   "heldRimFromLam": 0.0001,
+   "heldRimFromBeforeAnyGrab": {
+    "lat": 0,
+    "z": 0.4353
+   }
+  },
+  {
+   "name": "E5 T1: w to 16, h and the held rim read on the run's own section (s 490)",
+   "lam": 5.9418,
+   "H": 0,
+   "readAt": 490,
+   "w": {
+    "min": 16,
+    "max": 16,
+    "spread": 0
+   },
+   "l": {
+    "min": -1.9408,
+    "max": -1.9408,
+    "spread": 0
+   },
+   "h": {
+    "min": 0,
+    "max": 0,
+    "spread": 0
+   },
+   "phi": {
+    "min": 0,
+    "max": 0,
+    "spread": 0
+   },
+   "inLat": {
+    "min": 5.9417,
+    "max": 5.9417,
+    "spread": 0
+   },
+   "inZ": {
+    "min": 1.1493,
+    "max": 1.1493,
+    "spread": 0
+   },
+   "outLat": {
+    "min": -9.8233,
+    "max": -9.8233,
+    "spread": 0
+   },
+   "outZ": {
+    "min": 1.1493,
+    "max": 1.1493,
+    "spread": 0
+   },
+   "inPlan": {
+    "min": 6.0592,
+    "max": 6.0592,
+    "spread": 0
+   },
+   "outPlan": {
+    "min": -9.9408,
+    "max": -9.9408,
+    "spread": 0
+   },
+   "profile": {
+    "w": [
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16
+    ],
+    "h": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "heldRimMoved": {
+    "lat": 0.0447,
+    "z": 0.4353
+   },
+   "outsideMaxChange": 0,
+   "piecesSameObject": 0,
+   "check": {
+    "red": 0,
+    "amber": 0,
+    "redOnRun": 0,
+    "redInWindow": 0,
+    "redList": [],
+    "amberList": [],
+    "rawKeys": [],
+    "redNotInBase": 0,
+    "redInWindowNotInBase": 0
+   },
+   "heldRimFromLam": 0.0001,
+   "heldRimFromBeforeAnyGrab": {
+    "lat": 0,
+    "z": 0.4353
+   }
+  },
+  {
+   "name": "E5 T2b: w to 16, h and the held rim read on the run's own section (s 490)",
+   "lam": 5.9418,
+   "H": 0,
+   "readAt": 490,
+   "w": {
+    "min": 16,
+    "max": 16,
+    "spread": 0
+   },
+   "l": {
+    "min": -1.9408,
+    "max": -1.9408,
+    "spread": 0
+   },
+   "h": {
+    "min": 0,
+    "max": 0,
+    "spread": 0
+   },
+   "phi": {
+    "min": 0,
+    "max": 0,
+    "spread": 0
+   },
+   "inLat": {
+    "min": 5.9417,
+    "max": 5.9417,
+    "spread": 0
+   },
+   "inZ": {
+    "min": 1.1493,
+    "max": 1.1493,
+    "spread": 0
+   },
+   "outLat": {
+    "min": -9.8233,
+    "max": -9.8233,
+    "spread": 0
+   },
+   "outZ": {
+    "min": 1.1493,
+    "max": 1.1493,
+    "spread": 0
+   },
+   "inPlan": {
+    "min": 6.0592,
+    "max": 6.0592,
+    "spread": 0
+   },
+   "outPlan": {
+    "min": -9.9408,
+    "max": -9.9408,
+    "spread": 0
+   },
+   "profile": {
+    "w": [
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16,
+     16
+    ],
+    "h": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "heldRimMoved": {
+    "lat": 0.0447,
+    "z": 0.3425
+   },
+   "outsideMaxChange": 0,
+   "piecesSameObject": 0,
+   "check": {
+    "red": 0,
+    "amber": 0,
+    "redOnRun": 0,
+    "redInWindow": 0,
+    "redList": [],
+    "amberList": [],
+    "rawKeys": [],
+    "redNotInBase": 0,
+    "redInWindowNotInBase": 0
+   },
+   "heldRimFromLam": 0.0001,
+   "heldRimFromBeforeAnyGrab": {
+    "lat": 0,
+    "z": 0.4353
+   }
+  }
+ ],
+ "test": [
+  {
+   "name": "flat, from T1",
+   "pass": true,
+   "rows": {
+    "width": true,
+    "outerEdge": true,
+    "heldRim": true,
+    "outside": true,
+    "surface": true,
+    "redsOnRun": true,
+    "noNewRedInWindow": true
+   },
+   "numbers": {
+    "w": 0,
+    "l": 0,
+    "h": 0,
+    "lam": 5.9418,
+    "H": 0,
+    "heldFromLam": 0.0001,
+    "heldFromBeforeAnyGrab": {
+     "lat": 0,
+     "z": 0.4353
+    },
+    "heldMovedFromStart": {
+     "lat": 0.0447,
+     "z": 0.4353
+    },
+    "inLat": {
+     "min": 5.9417,
+     "max": 5.9417,
+     "spread": 0
+    },
+    "inZ": {
+     "min": 1.1493,
+     "max": 1.1493,
+     "spread": 0
+    },
+    "outLat": {
+     "min": -9.8233,
+     "max": -9.8233,
+     "spread": 0
+    },
+    "outside": 0,
+    "red": 0,
+    "redOnRun": 0,
+    "redInWindow": 0,
+    "redInWindowNotInBase": 0,
+    "amber": 0
+   }
+  },
+  {
+   "name": "flat, from T2b",
+   "pass": true,
+   "rows": {
+    "width": true,
+    "outerEdge": true,
+    "heldRim": true,
+    "outside": true,
+    "surface": true,
+    "redsOnRun": true,
+    "noNewRedInWindow": true
+   },
+   "numbers": {
+    "w": 0,
+    "l": 0,
+    "h": 0,
+    "lam": 5.9418,
+    "H": 0,
+    "heldFromLam": 0.0001,
+    "heldFromBeforeAnyGrab": {
+     "lat": 0,
+     "z": 0.4353
+    },
+    "heldMovedFromStart": {
+     "lat": 0.0447,
+     "z": 0.3425
+    },
+    "inLat": {
+     "min": 5.9417,
+     "max": 5.9417,
+     "spread": 0
+    },
+    "inZ": {
+     "min": 1.1493,
+     "max": 1.1493,
+     "spread": 0
+    },
+    "outLat": {
+     "min": -9.8233,
+     "max": -9.8233,
+     "spread": 0
+    },
+    "outside": 0,
+    "red": 0,
+    "redOnRun": 0,
+    "redInWindow": 0,
+    "redInWindowNotInBase": 0,
+    "amber": 0
+   }
+  }
+ ],
+ "errors": [],
+ "width": {
+  "base": [
+   {
+    "s": 0,
+    "wChannel": 31,
+    "wdChannel": 0,
+    "sectionW": 31,
+    "heldRim": [
+     15.2494,
+     2.3166
+    ],
+    "seg": 0,
+    "segLength": 2
+   },
+   {
+    "s": 10,
+    "wChannel": 30.8623,
+    "wdChannel": 0,
+    "sectionW": 30.8623,
+    "heldRim": [
+     15.1817,
+     2.3063
+    ],
+    "seg": 5,
+    "segLength": 2
+   },
+   {
+    "s": 25,
+    "wChannel": 30.1836,
+    "wdChannel": 0,
+    "sectionW": 30.1825,
+    "heldRim": [
+     14.8473,
+     2.2556
+    ],
+    "seg": 12,
+    "segLength": 2
+   },
+   {
+    "s": 50,
+    "wChannel": 28.0313,
+    "wdChannel": 0,
+    "sectionW": 28.0313,
+    "heldRim": [
+     13.7891,
+     2.0948
+    ],
+    "seg": 25,
+    "segLength": 2
+   },
+   {
+    "s": 75,
+    "wChannel": 24.9883,
+    "wdChannel": 0,
+    "sectionW": 24.9879,
+    "heldRim": [
+     12.292,
+     1.8674
+    ],
+    "seg": 37,
+    "segLength": 2
+   },
+   {
+    "s": 100,
+    "wChannel": 21.5,
+    "wdChannel": 0,
+    "sectionW": 21.5,
+    "heldRim": [
+     10.5762,
+     1.6067
+    ],
+    "seg": 50,
+    "segLength": 2
+   },
+   {
+    "s": 125,
+    "wChannel": 18.0117,
+    "wdChannel": 0,
+    "sectionW": 18.0121,
+    "heldRim": [
+     8.8629,
+     1.3369
+    ],
+    "seg": 62,
+    "segLength": 2
+   },
+   {
+    "s": 150,
+    "wChannel": 14.9687,
+    "wdChannel": 0,
+    "sectionW": 14.9687,
+    "heldRim": [
+     7.3838,
+     1.0329
+    ],
+    "seg": 75,
+    "segLength": 2
+   },
+   {
+    "s": 175,
+    "wChannel": 12.8164,
+    "wdChannel": 0,
+    "sectionW": 12.8175,
+    "heldRim": [
+     6.3403,
+     0.7963
+    ],
+    "seg": 87,
+    "segLength": 2
+   },
+   {
+    "s": 180,
+    "wChannel": 12.532,
+    "wdChannel": 0,
+    "sectionW": 12.532,
+    "heldRim": [
+     6.2013,
+     0.7671
+    ],
+    "seg": 90,
+    "segLength": 2
+   },
+   {
+    "s": 190,
+    "wChannel": 12.1377,
+    "wdChannel": 0,
+    "sectionW": 12.1377,
+    "heldRim": [
+     6.009,
+     0.7276
+    ],
+    "seg": 95,
+    "segLength": 2
+   },
+   {
+    "s": 199,
+    "wChannel": 12.0014,
+    "wdChannel": 0,
+    "sectionW": 12.0028,
+    "heldRim": [
+     5.9431,
+     0.7143
+    ],
+    "seg": 99,
+    "segLength": 2
+   },
+   {
+    "s": 200,
+    "wChannel": 12,
+    "wdChannel": 0,
+    "sectionW": 12,
+    "heldRim": [
+     5.9418,
+     0.714
+    ],
+    "seg": 100,
+    "segLength": 2
+   },
+   {
+    "s": 201,
+    "wChannel": 12,
+    "wdChannel": 0,
+    "sectionW": 12,
+    "heldRim": [
+     5.9418,
+     0.714
+    ],
+    "seg": 100,
+    "segLength": 2
+   },
+   {
+    "s": 210,
+    "wChannel": 12,
+    "wdChannel": 0,
+    "sectionW": 12,
+    "heldRim": [
+     5.9418,
+     0.714
+    ],
+    "seg": 105,
+    "segLength": 2
+   },
+   {
+    "s": 320,
+    "wChannel": 12,
+    "wdChannel": 0,
+    "sectionW": 12,
+    "heldRim": [
+     5.9418,
+     0.714
+    ],
+    "seg": 160,
+    "segLength": 2
+   },
+   {
+    "s": 440,
+    "wChannel": 12,
+    "wdChannel": 0,
+    "sectionW": 12,
+    "heldRim": [
+     5.9418,
+     0.714
+    ],
+    "seg": 220,
+    "segLength": 2
+   },
+   {
+    "s": 450,
+    "wChannel": 12,
+    "wdChannel": 0,
+    "sectionW": 12,
+    "heldRim": [
+     5.9418,
+     0.714
+    ],
+    "seg": 225,
+    "segLength": 2
+   },
+   {
+    "s": 490,
+    "wChannel": 12,
+    "wdChannel": 0,
+    "sectionW": 12,
+    "heldRim": [
+     5.9418,
+     0.714
+    ],
+    "seg": 245,
+    "segLength": 2
+   },
+   {
+    "s": 550,
+    "wChannel": 12,
+    "wdChannel": 0,
+    "sectionW": 12,
+    "heldRim": [
+     5.9418,
+     0.714
+    ],
+    "seg": 275,
+    "segLength": 2
+   },
+   {
+    "s": 589,
+    "wChannel": 12,
+    "wdChannel": 0,
+    "sectionW": 12,
+    "heldRim": [
+     5.9418,
+     0.714
+    ],
+    "seg": 294,
+    "segLength": 2
+   }
+  ],
+  "piece0": {
+   "length": 200,
+   "knots": [
+    5,
+    10,
+    20,
+    40,
+    60,
+    80,
+    100,
+    120,
+    140,
+    160,
+    180,
+    190,
+    195
+   ],
+   "w": [
+    31,
+    31,
+    30.9763,
+    30.8385,
+    30.373,
+    29.138,
+    26.972,
+    24.35,
+    21.5,
+    18.65,
+    16.028,
+    13.862,
+    12.627,
+    12.1615,
+    12.0237,
+    12,
+    12
+   ],
+   "keys": [
+    "channels",
+    "family",
+    "id",
+    "knots",
+    "length",
+    "type"
+   ]
+  },
+  "lead400": [
+   {
+    "s": 0,
+    "wChannel": 31,
+    "wdChannel": 0,
+    "sectionW": 31,
+    "heldRim": [
+     15.2494,
+     2.3166
+    ],
+    "seg": 0,
+    "segLength": 2
+   },
+   {
+    "s": 50,
+    "wChannel": 30.1836,
+    "wdChannel": 0,
+    "sectionW": 30.1836,
+    "heldRim": [
+     14.8478,
+     2.2556
+    ],
+    "seg": 25,
+    "segLength": 2
+   },
+   {
+    "s": 100,
+    "wChannel": 28.0313,
+    "wdChannel": 0,
+    "sectionW": 28.0313,
+    "heldRim": [
+     13.7891,
+     2.0948
+    ],
+    "seg": 50,
+    "segLength": 2
+   },
+   {
+    "s": 150,
+    "wChannel": 24.9883,
+    "wdChannel": 0,
+    "sectionW": 24.9883,
+    "heldRim": [
+     12.2922,
+     1.8674
+    ],
+    "seg": 75,
+    "segLength": 2
+   },
+   {
+    "s": 199,
+    "wChannel": 21.5712,
+    "wdChannel": 0,
+    "sectionW": 21.5712,
+    "heldRim": [
+     10.6113,
+     1.612
+    ],
+    "seg": 99,
+    "segLength": 2
+   },
+   {
+    "s": 250,
+    "wChannel": 18.0117,
+    "wdChannel": 0,
+    "sectionW": 18.0117,
+    "heldRim": [
+     8.8627,
+     1.3368
+    ],
+    "seg": 125,
+    "segLength": 2
+   },
+   {
+    "s": 350,
+    "wChannel": 12.8164,
+    "wdChannel": 0,
+    "sectionW": 12.8164,
+    "heldRim": [
+     6.3398,
+     0.7962
+    ],
+    "seg": 175,
+    "segLength": 2
+   },
+   {
+    "s": 399,
+    "wChannel": 12.0004,
+    "wdChannel": 0,
+    "sectionW": 12.0007,
+    "heldRim": [
+     5.9421,
+     0.7141
+    ],
+    "seg": 199,
+    "segLength": 2
+   },
+   {
+    "s": 401,
+    "wChannel": 12,
+    "wdChannel": 0,
+    "sectionW": 12,
+    "heldRim": [
+     5.9418,
+     0.714
+    ],
+    "seg": 200,
+    "segLength": 2
+   }
+  ],
+  "lead60": [
+   {
+    "s": 0,
+    "wChannel": 31,
+    "wdChannel": 0,
+    "sectionW": 31,
+    "heldRim": [
+     15.2494,
+     2.3166
+    ],
+    "seg": 0,
+    "segLength": 2
+   },
+   {
+    "s": 10,
+    "wChannel": 29.5926,
+    "wdChannel": 0,
+    "sectionW": 29.5926,
+    "heldRim": [
+     14.5571,
+     2.2115
+    ],
+    "seg": 5,
+    "segLength": 2
+   },
+   {
+    "s": 30,
+    "wChannel": 21.5,
+    "wdChannel": 0,
+    "sectionW": 21.5,
+    "heldRim": [
+     10.5762,
+     1.6067
+    ],
+    "seg": 15,
+    "segLength": 2
+   },
+   {
+    "s": 59,
+    "wChannel": 12.0157,
+    "wdChannel": 0,
+    "sectionW": 12.031,
+    "heldRim": [
+     5.9569,
+     0.7171
+    ],
+    "seg": 29,
+    "segLength": 2
+   },
+   {
+    "s": 61,
+    "wChannel": 12,
+    "wdChannel": 0,
+    "sectionW": 12,
+    "heldRim": [
+     5.9418,
+     0.714
+    ],
+    "seg": 30,
+    "segLength": 2
+   },
+   {
+    "s": 100,
+    "wChannel": 12,
+    "wdChannel": 0,
+    "sectionW": 12,
+    "heldRim": [
+     5.9418,
+     0.714
+    ],
+    "seg": 50,
+    "segLength": 2
+   },
+   {
+    "s": 150,
+    "wChannel": 12,
+    "wdChannel": 0,
+    "sectionW": 12,
+    "heldRim": [
+     5.9418,
+     0.714
+    ],
+    "seg": 75,
+    "segLength": 2
+   },
+   {
+    "s": 199,
+    "wChannel": 12,
+    "wdChannel": 0,
+    "sectionW": 12,
+    "heldRim": [
+     5.9418,
+     0.714
+    ],
+    "seg": 99,
+    "segLength": 2
+   },
+   {
+    "s": 201,
+    "wChannel": 12,
+    "wdChannel": 0,
+    "sectionW": 12,
+    "heldRim": [
+     5.9418,
+     0.714
+    ],
+    "seg": 100,
+    "segLength": 2
+   }
+  ]
+ },
+ "reads": {
+  "base": {
+   "near": {
+    "s": 150,
+    "lam": 7.3838,
+    "H": 0,
+    "sectionW": 14.9687,
+    "wChannel": 14.9687
+   },
+   "far": {
+    "s": 490,
+    "lam": 5.9418,
+    "H": 0,
+    "sectionW": 12,
+    "wChannel": 12
+   }
+  },
+  "T1": {
+   "near": {
+    "s": 150,
+    "lam": 7.3838,
+    "H": 0,
+    "sectionW": 14.9687,
+    "wChannel": 14.9687
+   },
+   "far": {
+    "s": 490,
+    "lam": 5.9418,
+    "H": 0,
+    "sectionW": 12,
+    "wChannel": 12
+   }
+  },
+  "T2b": {
+   "near": {
+    "s": 150,
+    "lam": 7.3838,
+    "H": 0,
+    "sectionW": 14.9688,
+    "wChannel": 14.9688
+   },
+   "far": {
+    "s": 490,
+    "lam": 5.9418,
+    "H": 0,
+    "sectionW": 12,
+    "wChannel": 12
+   }
+  }
+ },
+ "ended": "2026-11-27T11:56:33.440Z"
+}

@@ -228,3 +228,39 @@ The probe is `e5_265.js` (amend265.js's code unchanged, plus E5 and a new main),
 
 SOURCES: evidence e5_265.js, e5_265.json, frame150.js, frame150.txt; exo_memory/loop/plan_t180_sculpt_even_2026-11-27.md (amended 11:52Z); the chair's order 11:46:31Z and the librarian's ring 11:46Z
 NEXT: chair rules on one more E5 measurement, with λ read on the run's own section, when it reads this section (the banked row stays open for his call 11)
+
+## E5 measured again, the held rim read on the run's own section; the start's width, 2026-11-27 11:57Z (the chair's order of 11:54:27Z)
+
+The probe is `e5b_265.js` (amend265.js's code unchanged, plus E5 with its reading station and the width readings), with every figure in `e5b_265.json`. The plan is amended in place, marked *[amended 11:57Z]*. Plan only; no build, no page. Nothing more on the banked start (call 11).
+
+**(a) E5 from T1 and T2b, with λ read at the window's far end, s 490.** Both starts are untouched there and the section is the run's own: 12.00 m, the held rim 5.9418 m across, H 0. checked:
+
+| start | width spread | sideways spread | height spread | held rim off λ | held rim moved from the turn before any grab (across / up) | reds on the run | reds in the window, not in the base |
+|---|---|---|---|---|---|---|---|
+| T1 (flat) | 0 | 0 | 0 | 0.0001 | 0.0000 / 0.4353 | 0 | 0 |
+| T2b (flat) | 0 | 0 | 0 | 0.0001 | 0.0000 / 0.4353 | 0 | 0 |
+
+- **The registered test as amended: all seven rows pass from both starts.** Outside is unchanged and there are 0 ambers.
+- **The road widened 3.88 m outward and not at all inward:** the outer rim is at 9.8233 m right, and the inner rim at 5.9417 m.
+- **The held rim stands 0.4353 m higher than before any grab.** E5 holds the centre's height, and at 16 m this section's rims stand 1.149 m above it. Row 3 asks for the place across; the height is his call 10.
+- **The levelled road is the same from both starts and from the base.**
+
+**(b) The width at s 150: the fixture's own width change, not a finding about the builder. checked** (`e5b_265.json` `width`):
+- **The width channel reads what the built section reads:** 31 at s 0, 21.5 at s 100, 14.9687 at s 150, 12.0014 at s 199, 12 from s 200. They differ by at most 0.0014 m at the 21 stations read.
+- **The cause:** the first Extend on an empty track starts from a head 31 m wide (`src/core/document.js:667`: `s0.width > 0 ? s0.width : 31`), and the first piece eases to the typed 12 m. Its control points run 31 → 12 (`piece0.w`).
+- **It follows the piece:** with a 400 m lead the ease runs to s 400 (24.99 at s 150), and with a 60 m lead to s 60 (12 from s 61).
+
+**My errors, named:**
+- **I wrote "its width channel reads 12" at s 150 (the 11:52Z section, and the plan) without reading it.** frame150.js printed the cup and edge channels, not the width. It reads 14.9687.
+- **The plan's setup line "12 m wide everywhere" was wrong for the lead,** in the plan since d7342b61. Every figure over the turn is unaffected. Both are struck and corrected in the plan.
+
+**The machine:**
+- **The one probe:** `node consonance/tools/heavy-run.js --status && node consonance/tools/heavy-run.js --run --priority belownormal --cmd "A L265 corrected E5: …" -- node e5b_265.js <tree> <out>`, run 11:56:23 to 11:56:33Z, node only.
+  - Both slots were free. No cmd in the chain.
+  - checked at 11:56:26Z: its node child, pid 24092, was at BelowNormal with 2.98 s of CPU.
+- **Source read, not run:** `document.js:667`.
+- **The worktree** `t180-wt-l265e-even` at c522ea6: checked clean, then removed.
+- **No pictures.**
+
+SOURCES: evidence e5b_265.js, e5b_265.json; builder c522ea6 src/core/document.js:667; exo_memory/loop/plan_t180_sculpt_even_2026-11-27.md (amended 11:57Z); the chair's order 11:54:27Z, the librarian's ring 11:54Z
+NEXT: librarian takes the plan to him when the chair releases it, with E5 measured even from both flat starts and calls 10 and 11 his to make

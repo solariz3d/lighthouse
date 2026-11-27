@@ -23,7 +23,7 @@
 
 **The setup** (checked, `even265.json` `setup`), built through the core shell (`app/core/coreshell.js`), as the app drives it:
 - **The road:** a 200 m straight lead, then **a left turn of 4 pieces** (60 m, 30° each: 120° over 240 m, from s 200 to 440), then a 150 m straight exit.
-- **Its shape:** 12 m wide everywhere, flat.
+- **Its shape:** ~~12 m wide everywhere, flat.~~ *[amended 11:57Z, `e5b_265.json` `width`]* The turn and the exit are 12 m wide. The lead eases from 31 m at s 0 to 12 m at s 200 (12.0014 at s 199), because the first Extend on an empty track starts from a 31 m head (`src/core/document.js:667`). Flat. Every figure over the turn is unaffected.
 - **His gesture:** the zone grab on the **outer (right) rim** (`app/core/zonegrab.js` `frameAt` and `follow`; `coreshell.js` `beginFollow`). The rim is pulled straight out until the pressed spot reads 16 m.
   - The grab radius is 30 m, the strip's default (`panel.js:807`).
   - The far rim stays put, as D522 made it.
@@ -152,10 +152,20 @@ The second render showed this first (hand-back, "Second render").
   - **The scuffs are replaced whole:** the levelled road reads the same from both starts as from the base.
   - **The rims sit 0.435 m higher on the run** (1.1493 m above the line, against 0.714 m where the run is untouched), as designed for holding the centre's height.
 - *[amended 11:52Z]* **But E5 did not hold the inner edge where the turn had it. Row 3 fails in substance.**
-  - The probe read λ (the held rim's place where the run is untouched) at the window's outer start, s 150. There the first piece's built section is 14.97 m wide while its width channel reads 12: 21.5 m at s 100, 12.53 m at s 180, 12.00 m from s 200 on (`frame150.js`; the cause was not found).
+  - The probe read λ (the held rim's place where the run is untouched) at the window's outer start, s 150. There the first piece's built section is 14.97 m wide ~~while its width channel reads 12~~: 21.5 m at s 100, 12.53 m at s 180, 12.00 m from s 200 on (`frame150.js`~~; the cause was not found~~). *[amended 11:57Z, `e5b_265.json` `width`]* **The width channel reads the same:** 14.9687 at s 150, 31 at s 0. Channel and section agree to 0.0014 m at every station read.
+  - **This is the fixture's own width change:** the first piece eases from the 31 m head of an empty track to the typed 12 m (`document.js:667`).
+  - **It follows the piece, not the track's start:** with a 400 m lead it runs to s 400, with a 60 m lead to s 60.
+  - **Not a disagreement in the builder.** "Its width channel reads 12" was my unchecked claim, and it was wrong.
   - So λ was 7.3838 m, not the turn's 5.9418 m, and l came out −0.4987 m. The inner rim went 1.44 m inward: the road widened 2.44 m outward and 1.44 m inward.
   - The probe's own row 3 check passed only because it measured against that λ.
-  - inferred, not measured: with λ read on the run's own section (5.9418 m, as at s 201 to 490), l is −1.9407 m. That is E2's measured geometry with l 0.059 m different and the height levelled; E2 from the base drew 0 reds.
+  - ~~inferred, not measured:~~ with λ read on the run's own section (5.9418 m, as at s 201 to 490), l is −1.9407 m. That is E2's measured geometry with l 0.059 m different and the height levelled; E2 from the base drew 0 reds.
+  - *[amended 11:57Z, measured: `e5b_265.js`, `e5b_265.json`, run 11:56:23 to 11:56:33Z]* **E5 with the held rim read on the run's own section** (the window's far end, s 490: λ 5.9418 m, H 0, section 12.00 m), from T1 and from T2b:
+    - **The spreads:** width 0, sideways 0, height 0 over the run.
+    - **The held rim:** 5.9417 m across along the whole run, 0.0001 m off λ. Against the turn before any grab: 0.0000 m across and 0.4353 m up. It rises by design, because E5 holds the centre's height (call 10).
+    - **The outer rim** sits at 9.8233 m to the right: the road widened 3.88 m outward and not at all inward.
+    - **The checker:** 0 reds on the run and 0 in the window; 0 ambers.
+    - **Outside the window:** unchanged. The levelled road is the same from both starts and from the base.
+  - **Where the build reads the held rim's place** (inferred): on the run's own untouched metres, or picked. A window's end can lie in a neighbour's own width change, as the near end did here.
 - *[amended 11:52Z]* **On the turn banked 20°, E5 does not even it.** It does not hold, and here is why. Nothing further is designed.
   - **Width, height and outside pass:** width spread 0, height spread 0, outside unchanged.
   - **The outer edge's place across spreads 0.951 m** (from T1) and 0.729 m (from T2b), and **the held rim is 0.0276 / 0.0114 m off λ.** The base's bank runs 0 to 20° along the run (each turn piece's own bank ramp), so the rims' places across and up change with the bank; the inner rim's height runs 1.149 to 3.776 m. There is no single cross-section on this run to level to while the bank is kept.
@@ -252,6 +262,12 @@ Searches were generic: "Unity terrain Set Height tool flatten manual", "Unreal E
 - E5 is designed to pass it (item 2 (b′)) and is not measured.
 - *[amended 11:52Z, `e5_265.json` `test`]* **E5, measured:**
   - **Flat, from T1 and from T2b:** all seven rows pass as the probe checked them: spreads 0, 0 reds, outside unchanged. But **row 3 fails in substance.** The probe took the held edge's place at s 150, in the first piece's widened start, and put the inner rim 1.44 m inward of the turn's (item 2 (b′)). Row 3 must read the place on the run's own section.
+  - *[amended 11:57Z, `e5b_265.json` `test`]* **Measured again with the place read on the run's own section: E5 passes all seven rows from T1 and from T2b.**
+    - The width, outer-edge and height spreads are 0.
+    - The held rim is 0.0000 m across from the turn before any grab.
+    - Outside is unchanged, with 0 reds on the run, 0 in the window, 0 ambers.
+    - The held rim stands 0.4353 m higher than before any grab. Row 3 asks for its place across; its height is his call 10.
+    - The banked row stays open (call 11).
   - **Banked 20°, from T1 and from T2b: E5 fails.** It passes rows 1, 4 and 6 (width 0, outside unchanged, height 0). It fails row 2 (outer edge 0.951 / 0.729 m), row 3 (0.0276 / 0.0114 m), and row 7 (4 reds on the run, the base's own; 2 / 1 new in the window).
   - **The banked row stays open.** It needs a banked base the checker passes, and a level that carries the bank (item 2 (b′)).
 
