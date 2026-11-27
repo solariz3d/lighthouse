@@ -68,3 +68,59 @@
 
 SOURCES: exo_memory/loop/plan_t180_sculpt_even_2026-11-27.md; exo_memory/briefs/t180_sculpt_even.md (43f860f0); exo_memory/loop/packet_t180_sculpt_even_2026-11-27.md (5cbf97f6); evidence even265.js, even265.json
 NEXT: librarian takes the plan and the mock to him when he next looks; the chair decides whether a second mock render (the camera on the turn) is wanted; the build waits on his calls (plan §8)
+
+## Second render, 2026-11-27 11:24Z (the chair's L265 same lap, 11:14:05Z)
+
+**The pictures, untracked** in the evidence folder:
+- `even2_8grabs_{start,middle,close,higher,far}.jpg`;
+- `even2_4grabs_{start,middle,close,higher,far}.jpg`.
+
+Each picture puts before and after side by side at the page's own pixels: two 900 × 1000 shots, not scaled. Each shot has a small "mock · not built" panel at its top right, and the header gives the camera's height and px per metre. **Look first at `even2_4grabs_far.jpg`, then `even2_8grabs_higher.jpg`.**
+
+**The chair's condition. checked by eye, with the scale beside each** (`render265b.json` `frames`):
+- **The 8-grab before (the plan's T2b): its scallops are not visible at true scale from any overhead camera I tried:** 15, 35, 75 and 151 m up, at 55, 23.6, 11.0 and 5.5 px a metre.
+  - The ripple is 0.28 m (corrected below). That is 1.5 px at 151 m up.
+  - At 15 m up it is 15 px, but the frame is 17 m tall, shorter than one 30 m hump.
+  - Before and after look the same.
+  - The prediction written before the run (`prediction265b.md`) said this. It held.
+- **The 4-grab before (the plan's T2a, one snapped grab per piece): its 4 m scallops are plain** at 74 and 150 m up, and the after is even. The prediction held.
+- Nothing is exaggerated. **The camera was placed by his own controls:**
+  - the focus a click on a red sends (s + 45 m);
+  - a right-drag down to the free camera's −89°;
+  - wheel notches, 4 m each.
+  - The page's pointer lock was switched off so the drag reads the plain pointer, which is the preview's own fallback.
+
+**Its limits. checked:**
+- **The left column did not clear away.** It covers the left 255 px of each 900 px shot. At 35 and 15 m up, the road's inner half is behind it. The outer edge is in view in every framing.
+- **The start framings do not show the pinch at the turn's start:** it lies under the column.
+- **Before and after are not shot from the same spot.** The focus follows the road's centre line, which moves when the width moves.
+  - 8-grab pair: 0.24 to 0.25 m apart (6 px at 35 m up).
+  - 4-grab pair: 2.9 to 4.4 m apart (24 px at 150 m up). The after's road sits slightly off the before's; the scallops do not depend on it.
+- **A third render could fix both** (hide the column; read one pose from the before and set it for the after). It was not run, because the order allowed one. The chair's call.
+
+**Found, not asked. checked** (`hcheck265b.js` → `hcheck265b.txt`; `even265.json` `grabs[].follow`):
+- **Every grab also lowers the road's centre by 0.24 m where it pulls:** `h −0.2403` in each follow.
+- **The level prototype sets only w and l, so it leaves those dips:**
+  - after the 4-grab level, h is still −0.24 at the piece middles and 0 at the joints (spread 0.24 m);
+  - after the 8-grab level, h runs −0.12 to −0.25 over the turn.
+- **The page's checker draws the same 5 reds before and after on the 4-grab turn,** at 200–210, 250–270, 310–330, 370–390 and 430–438 m. inferred: they come from the height dips, since the width is even after.
+- **So the registered test (plan §6) can pass on width while the surface stays uneven.** It measures width and edges only, and his words were about the surfaces. Either the level carries the height the grab moved, or the test gains a surface row (h spread over the run). This is for the chair; the plan is not changed.
+
+**A correction to my own figure. checked:**
+- The plan (the verdict, §1 T2b, the baseline line) and this hand-back quote the 8-grab middle ripple as 0.25 m (15.87 to 16.12). That was read off the 10 m profile.
+- Sampled every 1 m it is **15.84 to 16.12, 0.28 m** (`render265b.json` `measured.before8.wFrom230To410`).
+- The committed rows themselves re-derive unchanged (`check.same: true` for T2b, T2a and E2 after T2b).
+
+**The machine:**
+- **The one probe:** `node consonance/tools/heavy-run.js --status && node consonance/tools/heavy-run.js --run --priority belownormal --cmd "A L265 second render: …" -- node render265b.js <tree> <evidence> <raw>`, run 11:23:28 to 11:24:31Z.
+  - Both slots were free at the start. No cmd anywhere in the chain.
+  - checked at 11:23:31Z: its node child, pid 17908, was at BelowNormal with 1.91 s of CPU.
+- **Headless:** the shared launcher, never focused. The title read zz-headless-test at every read. Page errors: 0.
+- **Leftovers:** tab proxies UNCALIBRATED, 0 before and after; 0 orphan browsers (`leftovers265b_before.txt`, `_after.txt`).
+- **The height check** was a sub-second node read, not through heavy-run.
+- **The worktree** `t180-wt-l265b-even` at c522ea6: checked clean, then removed. B's worktree was not touched.
+
+**Committed evidence:** `render265b.js`, `render265b.json`, `prediction265b.md`, `hcheck265b.js`, `hcheck265b.txt`, `leftovers265b_before.txt`, `leftovers265b_after.txt`. Not committed: the 10 pictures.
+
+SOURCES: evidence render265b.json, prediction265b.md, hcheck265b.txt; even265.json (d7342b61); the chair's L265 same-lap order 11:14:05Z
+NEXT: librarian shows him even2_4grabs_far.jpg, saying the 8-grab scallops are not visible at true scale; the chair decides on a third render and on a surface row for the registered test

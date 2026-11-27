@@ -1,0 +1,9 @@
+leftovers · 2026-11-27T11:23:15.062Z · read-only
+tab proxies          UNCALIBRATED (read 0, and the control made none (0 → 0 → 0))
+worktrees            Consonance/lighthouse 29 linked + main
+strays               not scanned (give --strays <folder> --prefix <name>-)
+fake roots           0
+orphan browsers      0 headless roots whose parent is gone
+our long-running     2 (older than 120 min, infrastructure left out)
+  pid 23808  5h 2m  node.exe  C:\Program Files\nodejs\node.exe "C:\Program Files\nodejs\node.exe"  "C:\Consonance\lighthouse\consonance\tools\head-watch.js"
+  pid 5620  5h 1m  powershell.exe  C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -ExecutionP…
