@@ -1,0 +1,6 @@
+extend driver: the silhouette moves in 499 of 1600 columns, at most 1 px (column 112: 397 -> 396)
+extend driver-edge: the silhouette moves in 217 of 1600 columns, at most 2 px (column 1570: 413 -> 411)
+sharp driver: the silhouette moves in 142 of 1600 columns, at most 61 px (column 1405: 361 -> 422)
+sharp driver-edge: the silhouette moves in 534 of 1600 columns, at most 68 px (column 1323: 456 -> 388)
+driver columns moving more than 2 px: [33m3[39m 1397:363>422 1401:362>422 1405:361>422
+driver-edge columns moving more than 2 px: [33m10[39m 1281:398>457 1285:397>457 1288:457>396 1293:457>395 1294:395>457 1298:394>457 1306:457>392 1311:391>457 1315:390>457 1323:456>388

@@ -1,0 +1,6 @@
+extend driver 1600x900: 500 pixels differ by more than 8 (0.035%), largest 125, in x 112..1593, y 394..434
+extend driver-edge 1600x900: 226 pixels differ by more than 8 (0.016%), largest 127, in x 726..1599, y 394..481
+extend above 1200x2000: 15037 pixels differ by more than 8 (0.627%), largest 134, in x 46..1130, y 6..1387
+sharp driver 1600x900: 413 pixels differ by more than 8 (0.029%), largest 147, in x 0..1588, y 361..623
+sharp driver-edge 1600x900: 895 pixels differ by more than 8 (0.062%), largest 146, in x 0..1577, y 360..571
+sharp above 1200x2000: 1690 pixels differ by more than 8 (0.070%), largest 156, in x 68..1199, y 37..1999
