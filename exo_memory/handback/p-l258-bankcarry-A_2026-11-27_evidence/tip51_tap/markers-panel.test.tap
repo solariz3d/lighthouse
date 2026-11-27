@@ -1,0 +1,46 @@
+TAP version 13
+# Subtest: the panel drops the default layout on the first straight long enough, and says what stops it before that
+ok 1 - the panel drops the default layout on the first straight long enough, and says what stops it before that
+  ---
+  duration_ms: 25.5058
+  type: 'test'
+  ...
+# Subtest: once edited the layout is kept, and its markers ride along when an upstream word is sculpted
+ok 2 - once edited the layout is kept, and its markers ride along when an upstream word is sculpted
+  ---
+  duration_ms: 11.7606
+  type: 'test'
+  ...
+# Subtest: a slot edited slot by slot, and an overlap it causes is red in the panel
+ok 3 - a slot edited slot by slot, and an overlap it causes is red in the panel
+  ---
+  duration_ms: 8.4949
+  type: 'test'
+  ...
+# Subtest: slot edits accumulate: an edit to a second slot keeps the first
+ok 4 - slot edits accumulate: an edit to a second slot keeps the first
+  ---
+  duration_ms: 8.7828
+  type: 'test'
+  ...
+# Subtest: removing the word the layout sits on turns the panel red (anchors), not silent
+ok 5 - removing the word the layout sits on turns the panel red (anchors), not silent
+  ---
+  duration_ms: 5.8086
+  type: 'test'
+  ...
+# Subtest: the markers panel loads through A's webview loader and exports mount(root, shell)
+ok 6 - the markers panel loads through A's webview loader and exports mount(root, shell)
+  ---
+  duration_ms: 16.3734
+  type: 'test'
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 243.9805

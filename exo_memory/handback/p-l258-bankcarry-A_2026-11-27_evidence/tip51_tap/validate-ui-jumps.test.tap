@@ -1,0 +1,58 @@
+TAP version 13
+# Subtest: a document with one jump counts 1 jump, even while the jump is the open head and waits for its landing
+ok 1 - a document with one jump counts 1 jump, even while the jump is the open head and waits for its landing
+  ---
+  duration_ms: 42.0231
+  type: 'test'
+  ...
+# Subtest: a pending jump is still counted: a jump placed first (no take-off road) is 1 jump, 1 waiting
+ok 2 - a pending jump is still counted: a jump placed first (no take-off road) is 1 jump, 1 waiting
+  ---
+  duration_ms: 3.8032
+  type: 'test'
+  ...
+# Subtest: the load graph is hidden (no model) while there is no speed, so no empty grey bar
+ok 3 - the load graph is hidden (no model) while there is no speed, so no empty grey bar
+  ---
+  duration_ms: 7.8715
+  type: 'test'
+  ...
+# Subtest: with a design speed the graph is drawn: one point per station, the hardest line's load, the car's two limits
+ok 4 - with a design speed the graph is drawn: one point per station, the hardest line's load, the car's two limits
+  ---
+  duration_ms: 10.4372
+  type: 'test'
+  ...
+# Subtest: the graph takes the HARDEST line at every station, wherever across the road it is (a right turn: the left wall)
+ok 5 - the graph takes the HARDEST line at every station, wherever across the road it is (a right turn: the left wall)
+  ---
+  duration_ms: 12.7895
+  type: 'test'
+  ...
+# Subtest: the graph shades the red and amber stretches behind the curve
+ok 6 - the graph shades the red and amber stretches behind the curve
+  ---
+  duration_ms: 13.7273
+  type: 'test'
+  ...
+# Subtest: through the shell: the head is red exactly when it is the flight of a jump; landing road clears it
+ok 7 - through the shell: the head is red exactly when it is the flight of a jump; landing road clears it
+  ---
+  duration_ms: 6.0606
+  type: 'test'
+  ...
+# Subtest: jump arcs: a jump whose landing lip is behind its take-off lip draws no arc, and nothing throws
+ok 8 - jump arcs: a jump whose landing lip is behind its take-off lip draws no arc, and nothing throws
+  ---
+  duration_ms: 9.3838
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 247.9318

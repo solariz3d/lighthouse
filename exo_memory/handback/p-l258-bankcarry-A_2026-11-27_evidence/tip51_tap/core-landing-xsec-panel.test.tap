@@ -1,0 +1,40 @@
+TAP version 13
+# Subtest: C-2 (panel): after a bare flight, the typed width, cup, edges and edge start go in as `first`; nothing typed sends no first
+ok 1 - C-2 (panel): after a bare flight, the typed width, cup, edges and edge start go in as `first`; nothing typed sends no first
+  ---
+  duration_ms: 1.3419
+  type: 'test'
+  ...
+# Subtest: C-4 (panel): after a flight the turn, climb and bank typed are targets only, never the landing's start (it starts level at the flight's bank)
+ok 2 - C-4 (panel): after a flight the turn, climb and bank typed are targets only, never the landing's start (it starts level at the flight's bank)
+  ---
+  duration_ms: 0.1935
+  type: 'test'
+  ...
+# Subtest: C-2 (panel): on a track that does not end in a flight, nothing changes: no first after road; an empty track sends every typed target, as before
+ok 3 - C-2 (panel): on a track that does not end in a flight, nothing changes: no first after road; an empty track sends every typed target, as before
+  ---
+  duration_ms: 0.1169
+  type: 'test'
+  ...
+# Subtest: C-2 (panel): the mounted panel, after a bare flight, lays the landing AT the typed width (the shell's Extend), not a ramp from the take-off's 26 m
+ok 4 - C-2 (panel): the mounted panel, after a bare flight, lays the landing AT the typed width (the shell's Extend), not a ramp from the take-off's 26 m
+  ---
+  duration_ms: 60.8198
+  type: 'test'
+  ...
+# Subtest: C-2 (panel): after a bare flight, a later width change is asked of the core with the landing's TYPED start, exactly as on an empty track (no first ramp moving under it)
+ok 5 - C-2 (panel): after a bare flight, a later width change is asked of the core with the landing's TYPED start, exactly as on an empty track (no first ramp moving under it)
+  ---
+  duration_ms: 0.7177
+  type: 'test'
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 5
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 264.2121

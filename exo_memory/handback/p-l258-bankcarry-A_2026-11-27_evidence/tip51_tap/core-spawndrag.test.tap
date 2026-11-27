@@ -1,0 +1,136 @@
+TAP version 13
+# Subtest: row 1: the pole gap is an optional spawns field: absent = the old 10 m and the same text as before; a number round-trips; nonsense is refused
+ok 1 - row 1: the pole gap is an optional spawns field: absent = the old 10 m and the same text as before; a number round-trips; nonsense is refused
+  ---
+  duration_ms: 32.9154
+  type: 'test'
+  ...
+# Subtest: row 2: the pole gap is where the export puts the pole slot (and 10 m when the block has none)
+ok 2 - row 2: the pole gap is where the export puts the pole slot (and 10 m when the block has none)
+  ---
+  duration_ms: 2334.6935
+  type: 'test'
+  ...
+# Subtest: row 3: a start drag is ONE undo step; on an automatic track it first writes the automatic spawns ("start placed by hand"), inside the same step, and undo puts the track back to automatic
+ok 3 - row 3: a start drag is ONE undo step; on an automatic track it first writes the automatic spawns ("start placed by hand"), inside the same step, and undo puts the track back to automatic
+  ---
+  duration_ms: 125.3439
+  type: 'test'
+  ...
+# Subtest: row 4: a drag that moved nothing leaves no undo step; a second drag cannot open inside the first; ending with none open is harmless
+ok 4 - row 4: a drag that moved nothing leaves no undo step; a second drag cannot open inside the first; ending with none open is harmless
+  ---
+  duration_ms: 112.556
+  type: 'test'
+  ...
+# Subtest: row 5: the automatic start on a LATER piece cannot be grabbed (a hand-placed line goes on the first piece): the press is taken, says why in words, and nothing changes
+ok 5 - row 5: the automatic start on a LATER piece cannot be grabbed (a hand-placed line goes on the first piece): the press is taken, says why in words, and nothing changes
+  ---
+  duration_ms: 167.4366
+  type: 'test'
+  ...
+# Subtest: row 6: pickStation: the road under the pointer to a fraction of a metre (continuous, not stepped to the 2 m stations), limited to a stretch and to where the road is
+ok 6 - row 6: pickStation: the road under the pointer to a fraction of a metre (continuous, not stepped to the 2 m stations), limited to a stretch and to where the road is
+  ---
+  duration_ms: 269.8769
+  type: 'test'
+  ...
+# Subtest: row 7: hitMarks: the line, a grid box, the hotlap and nothing; the hotlap beats a box and a box beats the line when the pointer is as near to both; pit boxes are not grabbed
+ok 7 - row 7: hitMarks: the line, a grid box, the hotlap and nothing; the hotlap beats a box and a box beats the line when the pointer is as near to both; pit boxes are not grabbed
+  ---
+  duration_ms: 157.7291
+  type: 'test'
+  ...
+# Subtest: row 8: the maths: the line moves by the pointer's travel and is clamped to the first piece; the pack changes only the pole gap, clamped; the hotlap lands on the piece under the pointer
+ok 8 - row 8: the maths: the line moves by the pointer's travel and is clamped to the first piece; the pack changes only the pole gap, clamped; the hotlap lands on the piece under the pointer
+  ---
+  duration_ms: 0.4953
+  type: 'test'
+  ...
+# Subtest: row 9: DRAG THE LINE +N m along the road: along moves by N (within 0.5 m), the world line follows, the panel's number follows while the drag is open, one Undo restores
+ok 9 - row 9: DRAG THE LINE +N m along the road: along moves by N (within 0.5 m), the world line follows, the panel's number follows while the drag is open, one Undo restores
+  ---
+  duration_ms: 300.5701
+  type: 'test'
+  ...
+# Subtest: row 10: the line cannot leave the first piece: dragged far past either end it stops at 0 and at the piece's length
+ok 10 - row 10: the line cannot leave the first piece: dragged far past either end it stops at 0 and at the piece's length
+  ---
+  duration_ms: 248.4633
+  type: 'test'
+  ...
+# Subtest: row 11: DRAG THE PACK: any slot moves the whole pack along the road (only the pole gap changes), the two staggered columns and the spacing are kept, and the line stays
+ok 11 - row 11: DRAG THE PACK: any slot moves the whole pack along the road (only the pole gap changes), the two staggered columns and the spacing are kept, and the line stays
+  ---
+  duration_ms: 176.599
+  type: 'test'
+  ...
+# Subtest: row 12: dragging the pack toward the line stops a metre behind it, and the pack drags BOTH ways
+ok 12 - row 12: dragging the pack toward the line stops a metre behind it, and the pack drags BOTH ways
+  ---
+  duration_ms: 195.2105
+  type: 'test'
+  ...
+# Subtest: row 13: dragging the LINE carries the pack with it: every slot keeps its distance behind the line
+ok 13 - row 13: dragging the LINE carries the pack with it: every slot keeps its distance behind the line
+  ---
+  duration_ms: 180.7379
+  type: 'test'
+  ...
+# Subtest: row 14: DRAG THE HOTLAP anywhere on the track: onto a later piece it sets that piece and the distance into it (and the world marker follows)
+ok 14 - row 14: DRAG THE HOTLAP anywhere on the track: onto a later piece it sets that piece and the distance into it (and the world marker follows)
+  ---
+  duration_ms: 225.03
+  type: 'test'
+  ...
+# Subtest: row 15: the FIRST drag on an automatic track writes the spawns first ("start placed by hand") and the panel numbers show it; the TEST export and the panel read the dragged positions
+ok 15 - row 15: the FIRST drag on an automatic track writes the spawns first ("start placed by hand") and the panel numbers show it; the TEST export and the panel read the dragged positions
+  ---
+  duration_ms: 2807.3828
+  type: 'test'
+  ...
+# Subtest: row 16: the panel has the pole gap box: it shows 10 by default, takes a typed number (clamped), and follows a pack drag
+ok 16 - row 16: the panel has the pole gap box: it shows 10 by default, takes a typed number (clamped), and follows a pack drag
+  ---
+  duration_ms: 224.2901
+  type: 'test'
+  ...
+# Subtest: row 17: NO POINTER LOCK, the camera never sees a press on a mark, and a press anywhere else is left alone
+ok 17 - row 17: NO POINTER LOCK, the camera never sees a press on a mark, and a press anywhere else is left alone
+  ---
+  duration_ms: 193.3467
+  type: 'test'
+  ...
+# Subtest: row 18: Escape ends the drag where it is (one step); unmounting in the middle of a drag closes it; the camera does not move: the press is the whole of the drag's input
+ok 18 - row 18: Escape ends the drag where it is (one step); unmounting in the middle of a drag closes it; the camera does not move: the press is the whole of the drag's input
+  ---
+  duration_ms: 186.0813
+  type: 'test'
+  ...
+# Subtest: row 19: the pick follows the grabbed mark's own height: on a cupped road the line hangs 2 m above the path, and a metre of hand travel is still a metre (without the lift it is out by a few per cent)
+ok 19 - row 19: the pick follows the grabbed mark's own height: on a cupped road the line hangs 2 m above the path, and a metre of hand travel is still a metre (without the lift it is out by a few per cent)
+  ---
+  duration_ms: 158.3484
+  type: 'test'
+  ...
+# Subtest: row 20: the preview draws the AUTOMATIC start too (a line, a pack and a hotlap to grab), and a track with no road yet draws nothing
+ok 20 - row 20: the preview draws the AUTOMATIC start too (a line, a pack and a hotlap to grab), and a track with no road yet draws nothing
+  ---
+  duration_ms: 174.6884
+  type: 'test'
+  ...
+# Subtest: row 21: a handle under the pointer is the handle's: the press, and the hover cursor, are left alone when the host says one is there, whatever order the listeners run in
+ok 21 - row 21: a handle under the pointer is the handle's: the press, and the hover cursor, are left alone when the host says one is there, whatever order the listeners run in
+  ---
+  duration_ms: 175.0611
+  type: 'test'
+  ...
+1..21
+# tests 21
+# suites 0
+# pass 21
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 8756.2992

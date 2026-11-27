@@ -1,0 +1,52 @@
+TAP version 13
+# Subtest: row 1: the track model: a CHEAP ghost of a 1000 m tube meshes at most a quarter of the vertices, has the same path, touches nothing placed, and the full ghost after it is the full ghost without it
+ok 1 - row 1: the track model: a CHEAP ghost of a 1000 m tube meshes at most a quarter of the vertices, has the same path, touches nothing placed, and the full ghost after it is the full ghost without it
+  ---
+  duration_ms: 983.2354
+  type: 'test'
+  ...
+# Subtest: row 3: a short plain piece: cheap is still a ghost of the same path, with no more vertices than the full one
+ok 2 - row 3: a short plain piece: cheap is still a ghost of the same path, with no more vertices than the full one
+  ---
+  duration_ms: 38.6399
+  type: 'test'
+  ...
+# Subtest: row 2: the preview: showGhost(candidate, { cheap: true }) keeps ghostInfo (the same samples, segments and s0) and the placed track; a plain showGhost is the full ghost
+ok 3 - row 2: the preview: showGhost(candidate, { cheap: true }) keeps ghostInfo (the same samples, segments and s0) and the placed track; a plain showGhost is the full ghost
+  ---
+  duration_ms: 648.7074
+  type: 'test'
+  ...
+# Subtest: row 4: a long plain piece's cheap ghost shares one row grid across its new segments at 1600 m
+ok 4 - row 4: a long plain piece's cheap ghost shares one row grid across its new segments at 1600 m
+  ---
+  duration_ms: 82.1667
+  type: 'test'
+  ...
+# Subtest: row 5: an empty run and a run of one segment are coarsened as before
+ok 5 - row 5: an empty run and a run of one segment are coarsened as before
+  ---
+  duration_ms: 3.3083
+  type: 'test'
+  ...
+# Subtest: row 6: a cheap ghost after a cheap ghost reuses the unchanged chords and draws the same as one built fresh
+ok 6 - row 6: a cheap ghost after a cheap ghost reuses the unchanged chords and draws the same as one built fresh
+  ---
+  duration_ms: 312.4123
+  type: 'test'
+  ...
+# Subtest: row 7: reuseMesh keeps its old rule unless asked: a different count needs `grow`, and a closed loop is refused with it
+ok 7 - row 7: reuseMesh keeps its old rule unless asked: a different count needs `grow`, and a closed loop is refused with it
+  ---
+  duration_ms: 4.7552
+  type: 'test'
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 7
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2386.9527

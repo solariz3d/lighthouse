@@ -1,0 +1,499 @@
+{
+ "tree": "t180-wt-l258-tip",
+ "head": "2067c88",
+ "n": 16,
+ "tracks": [
+  {
+   "track": "t01",
+   "bytes": 3150,
+   "sidecar": false,
+   "open": {
+    "bad": "BAD_DOC"
+   }
+  },
+  {
+   "track": "t02",
+   "bytes": 3685,
+   "sidecar": false,
+   "open": {
+    "schema": "t180b.core/2",
+    "sameBytes": false,
+    "stable": true,
+    "pieces": 3,
+    "serSha": "cea8a3707e0a05d1"
+   },
+   "shell": {
+    "opened": true,
+    "message": null,
+    "undoDepth": 0,
+    "savedSame": false,
+    "savedSha": "cea8a3707e0a05d1",
+    "savedEqSer": true,
+    "sidecarSame": null,
+    "sidecarSha": "a1bf7c561670e578"
+   },
+   "panel": {
+    "shownBank": "0",
+    "headBankDeg": 0,
+    "optionsSha": "19933010d7699988"
+   },
+   "typed": {
+    "typed": 10,
+    "laid": true,
+    "message": null,
+    "headBankDeg": 10,
+    "docSha": "ec7a71e8c0e3e38b"
+   }
+  },
+  {
+   "track": "t03",
+   "bytes": 56331,
+   "sidecar": true,
+   "open": {
+    "schema": "t180b.core/5",
+    "sameBytes": false,
+    "stable": true,
+    "pieces": 39,
+    "serSha": "80cc88b95e024d28"
+   },
+   "shell": {
+    "opened": true,
+    "message": null,
+    "undoDepth": 0,
+    "savedSame": false,
+    "savedSha": "80cc88b95e024d28",
+    "savedEqSer": true,
+    "sidecarSame": false,
+    "sidecarSha": "70435ceb45a61aa6"
+   },
+   "panel": {
+    "shownBank": "0",
+    "headBankDeg": 0,
+    "optionsSha": "19933010d7699988"
+   },
+   "typed": {
+    "typed": 10,
+    "laid": false,
+    "message": " |  |  | No saved pieces yet: select pieces on the track and press Save as piece. | CLOSED: a closed track has no open end; open it first | end heading 360.00°,",
+    "headBankDeg": 0,
+    "docSha": "80cc88b95e024d28"
+   }
+  },
+  {
+   "track": "t04",
+   "bytes": 2779,
+   "sidecar": true,
+   "open": {
+    "schema": "t180b.core/4",
+    "sameBytes": true,
+    "stable": true,
+    "pieces": 3,
+    "serSha": "459105d483b9e019"
+   },
+   "shell": {
+    "opened": true,
+    "message": null,
+    "undoDepth": 2,
+    "savedSame": true,
+    "savedSha": "459105d483b9e019",
+    "savedEqSer": true,
+    "sidecarSame": true,
+    "sidecarSha": "c173fceb20dbfa9f"
+   },
+   "panel": {
+    "shownBank": "0",
+    "headBankDeg": 0,
+    "optionsSha": "19933010d7699988"
+   },
+   "typed": {
+    "typed": 10,
+    "laid": true,
+    "message": null,
+    "headBankDeg": 10,
+    "docSha": "73b8a79981e6bfc4"
+   }
+  },
+  {
+   "track": "t05",
+   "bytes": 3251,
+   "sidecar": true,
+   "open": {
+    "schema": "t180b.core/4",
+    "sameBytes": true,
+    "stable": true,
+    "pieces": 3,
+    "serSha": "bcbf14aef08b0903"
+   },
+   "shell": {
+    "opened": true,
+    "message": null,
+    "undoDepth": 2,
+    "savedSame": true,
+    "savedSha": "bcbf14aef08b0903",
+    "savedEqSer": true,
+    "sidecarSame": true,
+    "sidecarSha": "40773117819d9480"
+   },
+   "panel": {
+    "shownBank": "26",
+    "headBankDeg": 26,
+    "optionsSha": "19933010d7699988"
+   },
+   "typed": {
+    "typed": 36,
+    "laid": true,
+    "message": null,
+    "headBankDeg": 36,
+    "docSha": "808f64ce6d29cab6"
+   }
+  },
+  {
+   "track": "t06",
+   "bytes": 2475,
+   "sidecar": true,
+   "open": {
+    "schema": "t180b.core/4",
+    "sameBytes": true,
+    "stable": true,
+    "pieces": 3,
+    "serSha": "8abe61160c4f44af"
+   },
+   "shell": {
+    "opened": true,
+    "message": null,
+    "undoDepth": 2,
+    "savedSame": true,
+    "savedSha": "8abe61160c4f44af",
+    "savedEqSer": true,
+    "sidecarSame": true,
+    "sidecarSha": "534a23756dab180a"
+   },
+   "panel": {
+    "shownBank": "0",
+    "headBankDeg": 0,
+    "optionsSha": "19933010d7699988"
+   },
+   "typed": {
+    "typed": 10,
+    "laid": true,
+    "message": null,
+    "headBankDeg": 10,
+    "docSha": "aac362d6df5c5e38"
+   }
+  },
+  {
+   "track": "t07",
+   "bytes": 4688,
+   "sidecar": true,
+   "open": {
+    "schema": "t180b.core/4",
+    "sameBytes": true,
+    "stable": true,
+    "pieces": 2,
+    "serSha": "addcc7f8a2de52a4"
+   },
+   "shell": {
+    "opened": true,
+    "message": null,
+    "undoDepth": 2,
+    "savedSame": true,
+    "savedSha": "addcc7f8a2de52a4",
+    "savedEqSer": true,
+    "sidecarSame": true,
+    "sidecarSha": "60d23f9382b2f78e"
+   },
+   "panel": {
+    "shownBank": "4.58",
+    "headBankDeg": 4.58,
+    "optionsSha": "19933010d7699988"
+   },
+   "typed": {
+    "typed": 14.58,
+    "laid": true,
+    "message": null,
+    "headBankDeg": 14.58,
+    "docSha": "5b398c078a1fce98"
+   }
+  },
+  {
+   "track": "t08",
+   "bytes": 18896,
+   "sidecar": true,
+   "open": {
+    "schema": "t180b.core/4",
+    "sameBytes": true,
+    "stable": true,
+    "pieces": 13,
+    "serSha": "82bbac1cb6b1a847"
+   },
+   "shell": {
+    "opened": true,
+    "message": null,
+    "undoDepth": 16,
+    "savedSame": true,
+    "savedSha": "82bbac1cb6b1a847",
+    "savedEqSer": true,
+    "sidecarSame": true,
+    "sidecarSha": "b042638b4bc6699c"
+   },
+   "panel": {
+    "shownBank": "0",
+    "headBankDeg": 0,
+    "optionsSha": "19933010d7699988"
+   },
+   "typed": {
+    "typed": 10,
+    "laid": false,
+    "message": " |  |  | No saved pieces yet: select pieces on the track and press Save as piece. | CLOSED: a closed track has no open end; open it first | end heading 360.00°,",
+    "headBankDeg": 0,
+    "docSha": "82bbac1cb6b1a847"
+   }
+  },
+  {
+   "track": "t09",
+   "bytes": 4661,
+   "sidecar": true,
+   "open": {
+    "schema": "t180b.core/4",
+    "sameBytes": true,
+    "stable": true,
+    "pieces": 2,
+    "serSha": "e06a15a4574ed9f5"
+   },
+   "shell": {
+    "opened": true,
+    "message": null,
+    "undoDepth": 2,
+    "savedSame": true,
+    "savedSha": "e06a15a4574ed9f5",
+    "savedEqSer": true,
+    "sidecarSame": true,
+    "sidecarSha": "77a293037f5b8062"
+   },
+   "panel": {
+    "shownBank": "-50",
+    "headBankDeg": -50,
+    "optionsSha": "19933010d7699988"
+   },
+   "typed": {
+    "typed": -40,
+    "laid": true,
+    "message": null,
+    "headBankDeg": -40,
+    "docSha": "96235bf72a71338c"
+   }
+  },
+  {
+   "track": "t10",
+   "bytes": 4166,
+   "sidecar": true,
+   "open": {
+    "schema": "t180b.core/4",
+    "sameBytes": true,
+    "stable": true,
+    "pieces": 2,
+    "serSha": "eff48ade8d3ed934"
+   },
+   "shell": {
+    "opened": true,
+    "message": null,
+    "undoDepth": 2,
+    "savedSame": true,
+    "savedSha": "eff48ade8d3ed934",
+    "savedEqSer": true,
+    "sidecarSame": true,
+    "sidecarSha": "16f705cab8b20e08"
+   },
+   "panel": {
+    "shownBank": "0",
+    "headBankDeg": 0,
+    "optionsSha": "19933010d7699988"
+   },
+   "typed": {
+    "typed": 10,
+    "laid": true,
+    "message": null,
+    "headBankDeg": 10,
+    "docSha": "1d938c6c3222e277"
+   }
+  },
+  {
+   "track": "t11",
+   "bytes": 1532,
+   "sidecar": true,
+   "open": {
+    "schema": "t180b.core/4",
+    "sameBytes": true,
+    "stable": true,
+    "pieces": 1,
+    "serSha": "f84e4d735309f1b6"
+   },
+   "shell": {
+    "opened": true,
+    "message": null,
+    "undoDepth": 1,
+    "savedSame": true,
+    "savedSha": "f84e4d735309f1b6",
+    "savedEqSer": true,
+    "sidecarSame": true,
+    "sidecarSha": "8c76b0f4cff3b414"
+   },
+   "panel": {
+    "shownBank": "0",
+    "headBankDeg": 0,
+    "optionsSha": "19933010d7699988"
+   },
+   "typed": {
+    "typed": 10,
+    "laid": true,
+    "message": null,
+    "headBankDeg": 10,
+    "docSha": "54c0c33957fa71d7"
+   }
+  },
+  {
+   "track": "t12",
+   "bytes": 8003,
+   "sidecar": true,
+   "open": {
+    "schema": "t180b.core/4",
+    "sameBytes": true,
+    "stable": true,
+    "pieces": 2,
+    "serSha": "d0ed90bfdc460d26"
+   },
+   "shell": {
+    "opened": true,
+    "message": null,
+    "undoDepth": 2,
+    "savedSame": true,
+    "savedSha": "d0ed90bfdc460d26",
+    "savedEqSer": true,
+    "sidecarSame": true,
+    "sidecarSha": "600da74db699ae8c"
+   },
+   "panel": {
+    "shownBank": "28.6",
+    "headBankDeg": 28.6,
+    "optionsSha": "19933010d7699988"
+   },
+   "typed": {
+    "typed": 38.6,
+    "laid": true,
+    "message": null,
+    "headBankDeg": 38.6,
+    "docSha": "7a5a4452cf659b16"
+   }
+  },
+  {
+   "track": "t13",
+   "bytes": 1532,
+   "sidecar": true,
+   "open": {
+    "schema": "t180b.core/4",
+    "sameBytes": true,
+    "stable": true,
+    "pieces": 1,
+    "serSha": "f84e4d735309f1b6"
+   },
+   "shell": {
+    "opened": true,
+    "message": null,
+    "undoDepth": 1,
+    "savedSame": true,
+    "savedSha": "f84e4d735309f1b6",
+    "savedEqSer": true,
+    "sidecarSame": true,
+    "sidecarSha": "8c76b0f4cff3b414"
+   },
+   "panel": {
+    "shownBank": "0",
+    "headBankDeg": 0,
+    "optionsSha": "19933010d7699988"
+   },
+   "typed": {
+    "typed": 10,
+    "laid": true,
+    "message": null,
+    "headBankDeg": 10,
+    "docSha": "54c0c33957fa71d7"
+   }
+  },
+  {
+   "track": "t14",
+   "bytes": 1532,
+   "sidecar": true,
+   "open": {
+    "schema": "t180b.core/4",
+    "sameBytes": true,
+    "stable": true,
+    "pieces": 1,
+    "serSha": "f84e4d735309f1b6"
+   },
+   "shell": {
+    "opened": true,
+    "message": null,
+    "undoDepth": 1,
+    "savedSame": true,
+    "savedSha": "f84e4d735309f1b6",
+    "savedEqSer": true,
+    "sidecarSame": true,
+    "sidecarSha": "8c76b0f4cff3b414"
+   },
+   "panel": {
+    "shownBank": "0",
+    "headBankDeg": 0,
+    "optionsSha": "19933010d7699988"
+   },
+   "typed": {
+    "typed": 10,
+    "laid": true,
+    "message": null,
+    "headBankDeg": 10,
+    "docSha": "54c0c33957fa71d7"
+   }
+  },
+  {
+   "track": "t15",
+   "bytes": 5822,
+   "sidecar": true,
+   "open": {
+    "schema": "t180b.core/4",
+    "sameBytes": true,
+    "stable": true,
+    "pieces": 3,
+    "serSha": "6de276dcd2bd27b2"
+   },
+   "shell": {
+    "opened": true,
+    "message": null,
+    "undoDepth": 3,
+    "savedSame": true,
+    "savedSha": "6de276dcd2bd27b2",
+    "savedEqSer": true,
+    "sidecarSame": true,
+    "sidecarSha": "b064da8e703ab27c"
+   },
+   "panel": {
+    "shownBank": "0",
+    "headBankDeg": 0,
+    "optionsSha": "19933010d7699988"
+   },
+   "typed": {
+    "typed": 10,
+    "laid": true,
+    "message": null,
+    "headBankDeg": 10,
+    "docSha": "37df969ba5a79c7d"
+   }
+  },
+  {
+   "track": "t16",
+   "bytes": 5068,
+   "sidecar": false,
+   "open": {
+    "bad": "BAD_DOC"
+   }
+  }
+ ]
+}

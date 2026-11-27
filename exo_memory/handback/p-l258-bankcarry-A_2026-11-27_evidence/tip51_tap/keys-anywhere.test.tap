@@ -1,0 +1,58 @@
+TAP version 13
+# Subtest: Ctrl+Z, Ctrl+Y and Ctrl+Shift+Z act on the TRACK with the focus in a NUMBER field, and the field's own text-undo is stopped
+ok 1 - Ctrl+Z, Ctrl+Y and Ctrl+Shift+Z act on the TRACK with the focus in a NUMBER field, and the field's own text-undo is stopped
+  ---
+  duration_ms: 64.757
+  type: 'test'
+  ...
+# Subtest: the same from a checkbox and a select
+ok 2 - the same from a checkbox and a select
+  ---
+  duration_ms: 70.9113
+  type: 'test'
+  ...
+# Subtest: a TEXT-ENTRY field (the track name, the share code box) keeps Ctrl+Z / Ctrl+Y for its own text: the track is untouched
+ok 3 - a TEXT-ENTRY field (the track name, the share code box) keeps Ctrl+Z / Ctrl+Y for its own text: the track is untouched
+  ---
+  duration_ms: 73.7135
+  type: 'test'
+  ...
+# Subtest: Ctrl+Backspace and Ctrl+S in ANY field stay the field's (a word is deleted, the head is NOT), and outside a field they still act
+ok 4 - Ctrl+Backspace and Ctrl+S in ANY field stay the field's (a word is deleted, the head is NOT), and outside a field they still act
+  ---
+  duration_ms: 86.0865
+  type: 'test'
+  ...
+# Subtest: keyAction: a caller that passes no inText (app/shell.js's own tests) keeps the OLD rule, any field keeps every key
+ok 5 - keyAction: a caller that passes no inText (app/shell.js's own tests) keeps the OLD rule, any field keeps every key
+  ---
+  duration_ms: 0.3405
+  type: 'test'
+  ...
+# Subtest: the Undo and Redo buttons name their keys in their tooltips
+ok 6 - the Undo and Redo buttons name their keys in their tooltips
+  ---
+  duration_ms: 2.0116
+  type: 'test'
+  ...
+# Subtest: Tab in a text field (or any field) leaves Sculpt as it was and stays the browser's; outside a field it switches the mode
+ok 7 - Tab in a text field (or any field) leaves Sculpt as it was and stays the browser's; outside a field it switches the mode
+  ---
+  duration_ms: 88.1155
+  type: 'test'
+  ...
+# Subtest: Tab with a button focused (after a click) moves the focus as the browser does and does not toggle Sculpt; with nothing focused it still toggles
+ok 8 - Tab with a button focused (after a click) moves the focus as the browser does and does not toggle Sculpt; with nothing focused it still toggles
+  ---
+  duration_ms: 13.3573
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 606.4016

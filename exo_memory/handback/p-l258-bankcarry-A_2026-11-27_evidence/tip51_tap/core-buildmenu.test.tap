@@ -1,0 +1,88 @@
+TAP version 13
+# Subtest: row 1: Build lists its items in the brief's order, in contract M's shapes
+ok 1 - row 1: Build lists its items in the brief's order, in contract M's shapes
+  ---
+  duration_ms: 173.9698
+  type: 'test'
+  ...
+# Subtest: row 2: a command moved to Build still does what its button did: Straight, Level, To floor and Jump each place their piece, one undo step each
+ok 2 - row 2: a command moved to Build still does what its button did: Straight, Level, To floor and Jump each place their piece, one undo step each
+  ---
+  duration_ms: 319.4163
+  type: 'test'
+  ...
+# Subtest: row 3: a "…" item opens a popover with today's fields and button in the panel's field style; its button works from there; closing it puts them back
+ok 3 - row 3: a "…" item opens a popover with today's fields and button in the panel's field style; its button works from there; closing it puts them back
+  ---
+  duration_ms: 246.6962
+  type: 'test'
+  ...
+# Subtest: row 4: Sculpt mode turns Sculpt on and off; the Sculpt strip (tool, radius, sharp) shows only in Sculpt, and in Sculpt Build's commands that place or close are disabled "in Sculpt"
+ok 4 - row 4: Sculpt mode turns Sculpt on and off; the Sculpt strip (tool, radius, sharp) shows only in Sculpt, and in Sculpt Build's commands that place or close are disabled "in Sculpt"
+  ---
+  duration_ms: 73.2818
+  type: 'test'
+  ...
+# Subtest: row 5: Close the loop from Build starts the close as the button did; on a closed loop it is disabled and does nothing
+ok 5 - row 5: Close the loop from Build starts the close as the button did; on a closed loop it is disabled and does nothing
+  ---
+  duration_ms: 207.6641
+  type: 'test'
+  ...
+# Subtest: row 6: the left side keeps the brief's list, every field shown, and nothing else shows there; the moved controls are still in the panel, held out of sight
+ok 6 - row 6: the left side keeps the brief's list, every field shown, and nothing else shows there; the moved controls are still in the panel, held out of sight
+  ---
+  duration_ms: 66.4765
+  type: 'test'
+  ...
+# Subtest: row 7: the selection box shows only with a selection, and while a delete it started is previewed
+ok 7 - row 7: the selection box shows only with a selection, and while a delete it started is previewed
+  ---
+  duration_ms: 339.5224
+  type: 'test'
+  ...
+# Subtest: row 8: Edit's selection items (piecesui via M): disabled with nothing selected; with a selection they save, set the grip, delete and clear
+ok 8 - row 8: Edit's selection items (piecesui via M): disabled with nothing selected; with a selection they save, set the grip, delete and clear
+  ---
+  duration_ms: 104.1281
+  type: 'test'
+  ...
+# Subtest: row 9: the six keys through S: the panel starts from what S holds, follows S.on, and a setting survives a reload
+ok 9 - row 9: the six keys through S: the panel starts from what S holds, follows S.on, and a setting survives a reload
+  ---
+  duration_ms: 143.6522
+  type: 'test'
+  ...
+# Subtest: row 10: a blocked store throws nothing: the panel mounts and a setting holds for the session; with no settings module at all the panel still mounts
+ok 10 - row 10: a blocked store throws nothing: the panel mounts and a setting holds for the session; with no settings module at all the panel still mounts
+  ---
+  duration_ms: 136.2161
+  type: 'test'
+  ...
+# Subtest: row 11: the grid step picked in Build ▸ Turn to grid… is saved: S holds it, the Settings menu hears it, and it is the step after a reload
+ok 11 - row 11: the grid step picked in Build ▸ Turn to grid… is saved: S holds it, the Settings menu hears it, and it is the step after a reload
+  ---
+  duration_ms: 121.6737
+  type: 'test'
+  ...
+# Subtest: row 12: Undo that gives the undone piece its turn-and-climb mode back saves the mode, so Settings and the panel agree
+ok 12 - row 12: Undo that gives the undone piece its turn-and-climb mode back saves the mode, so Settings and the panel agree
+  ---
+  duration_ms: 104.3352
+  type: 'test'
+  ...
+# Subtest: row 13: Level end of <piece> names the selected piece, levels its end in one undo step, and with none selected says why
+ok 13 - row 13: Level end of <piece> names the selected piece, levels its end in one undo step, and with none selected says why
+  ---
+  duration_ms: 257.5394
+  type: 'test'
+  ...
+1..13
+# tests 13
+# suites 0
+# pass 13
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2514.7196

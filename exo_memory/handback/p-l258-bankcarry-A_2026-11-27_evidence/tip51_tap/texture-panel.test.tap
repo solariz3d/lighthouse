@@ -1,0 +1,58 @@
+TAP version 13
+# Subtest: an added PNG is decoded at once and listed; a slot set to it reaches the one texture set
+ok 1 - an added PNG is decoded at once and listed; a slot set to it reaches the one texture set
+  ---
+  duration_ms: 8.1665
+  type: 'test'
+  ...
+# Subtest: a slot edit is one undo step, and undo takes the texture back out of the set
+ok 2 - a slot edit is one undo step, and undo takes the texture back out of the set
+  ---
+  duration_ms: 2.4971
+  type: 'test'
+  ...
+# Subtest: a bad file, a bad name, a duplicate name and a missing image are refused in the panel, by name
+ok 3 - a bad file, a bad name, a duplicate name and a missing image are refused in the panel, by name
+  ---
+  duration_ms: 2.3608
+  type: 'test'
+  ...
+# Subtest: an image still used by a slot cannot be removed; once the slot is cleared it can
+ok 4 - an image still used by a slot cannot be removed; once the slot is cleared it can
+  ---
+  duration_ms: 2.1731
+  type: 'test'
+  ...
+# Subtest: a non-power-of-two image is added with its warning shown
+ok 5 - a non-power-of-two image is added with its warning shown
+  ---
+  duration_ms: 0.4695
+  type: 'test'
+  ...
+# Subtest: a file name becomes a texture name the document accepts
+ok 6 - a file name becomes a texture name the document accepts
+  ---
+  duration_ms: 0.3192
+  type: 'test'
+  ...
+# Subtest: a made texture in a slot replaces an image there, reaches the set, and shows in the live budget
+ok 7 - a made texture in a slot replaces an image there, reaches the set, and shows in the live budget
+  ---
+  duration_ms: 26.8474
+  type: 'test'
+  ...
+# Subtest: a look saved as a pack imports into another session and is worn by every word of its font in one undo step
+ok 8 - a look saved as a pack imports into another session and is worn by every word of its font in one undo step
+  ---
+  duration_ms: 36.3857
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 245.8578

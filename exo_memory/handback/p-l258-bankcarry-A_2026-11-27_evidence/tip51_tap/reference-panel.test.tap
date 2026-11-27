@@ -1,0 +1,178 @@
+TAP version 13
+# Subtest: P1: every installed layout is listed; one with no AI line says so and cannot be picked
+ok 1 - P1: every installed layout is listed; one with no AI line says so and cannot be picked
+  ---
+  duration_ms: 5.1371
+  type: 'test'
+  ...
+# Subtest: P2: pick draws it on his start; Show off hides it and keeps the pick and the nudge; Show on draws it again; Clear drops both
+ok 2 - P2: pick draws it on his start; Show off hides it and keeps the pick and the nudge; Show on draws it again; Clear drops both
+  ---
+  duration_ms: 64.0675
+  type: 'test'
+  ...
+# Subtest: P3: a line that does not read is refused in words, the one shown before is taken down, and its entry is marked
+ok 3 - P3: a line that does not read is refused in words, the one shown before is taken down, and its entry is marked
+  ---
+  duration_ms: 4.8493
+  type: 'test'
+  ...
+# Subtest: P4: a layout carrying another layout's line is said so, and so is a line far off its stated length; a line of its own says nothing
+ok 4 - P4: a layout carrying another layout's line is said so, and so is a line far off its stated length; a line of its own says nothing
+  ---
+  duration_ms: 3.3611
+  type: 'test'
+  ...
+# Subtest: P5: a later pick wins over an earlier one still being read
+ok 5 - P5: a later pick wins over an earlier one still being read
+  ---
+  duration_ms: 1.6597
+  type: 'test'
+  ...
+# Subtest: RD1: Road draws the kn5's road placed by the layout's AI line: Line and Road lie on each other across under one nudge; Road is set down on its road, flush with his
+ok 6 - RD1: Road draws the kn5's road placed by the layout's AI line: Line and Road lie on each other across under one nudge; Road is set down on its road, flush with his
+  ---
+  duration_ms: 23.8606
+  type: 'test'
+  ...
+# Subtest: RD2: a road that does not read is refused in words and the one shown before is taken down; the same layout's Line still draws
+ok 7 - RD2: a road that does not read is refused in words and the one shown before is taken down; the same layout's Line still draws
+  ---
+  duration_ms: 11.5785
+  type: 'test'
+  ...
+# Subtest: RD3: a layout with no AI line is drawn as Road, placed by the start its kn5 names; with no start it is refused in words; in Line it stays greyed
+ok 8 - RD3: a layout with no AI line is drawn as Road, placed by the start its kn5 names; with no start it is refused in words; in Line it stays greyed
+  ---
+  duration_ms: 25.9008
+  type: 'test'
+  ...
+# Subtest: P6 (E's V3e): Road shows one layout; he picks another, its road still reading, and changes to Line: his newest pick is drawn, as Line
+ok 9 - P6 (E's V3e): Road shows one layout; he picks another, its road still reading, and changes to Line: his newest pick is drawn, as Line
+  ---
+  duration_ms: 6.2563
+  type: 'test'
+  ...
+# Subtest: P7 (E's V3f): nothing shown, Road; a road still reading when he changes to Line: it is drawn in the mode the panel names
+ok 10 - P7 (E's V3f): nothing shown, Road; a road still reading when he changes to Line: it is drawn in the mode the panel names
+  ---
+  duration_ms: 2.665
+  type: 'test'
+  ...
+# Subtest: P8: a pick that ended, cleared while it read or refused, is not drawn by a later mode change
+ok 11 - P8: a pick that ended, cleared while it read or refused, is not drawn by a later mode change
+  ---
+  duration_ms: 1.6755
+  type: 'test'
+  ...
+# Subtest: P9 (E's V3i): Road; a layout with no AI line picked, its road still reading; changed to Line: nothing is asked, Line says it has nothing to draw, and back in Road his pick is drawn
+ok 12 - P9 (E's V3i): Road; a layout with no AI line picked, its road still reading; changed to Line: nothing is asked, Line says it has nothing to draw, and back in Road his pick is drawn
+  ---
+  duration_ms: 1.0314
+  type: 'test'
+  ...
+# Subtest: P10 (E's V3j): a layout with no AI line SHOWN as Road; changed to Line, then back to Road: drawn again, with its nudge
+ok 13 - P10 (E's V3j): a layout with no AI line SHOWN as Road; changed to Line, then back to Road: drawn again, with its nudge
+  ---
+  duration_ms: 0.9765
+  type: 'test'
+  ...
+# Subtest: P11: a layout with no AI line kept in Line is let go by Clear, and by another pick: the change back to Road draws nothing, or the other
+ok 14 - P11: a layout with no AI line kept in Line is let go by Clear, and by another pick: the change back to Road draws nothing, or the other
+  ---
+  duration_ms: 3.2322
+  type: 'test'
+  ...
+# Subtest: RD4 (E's V1n, which replaces E's V1): a layout with no AI line: greyed in Line; in Road listed "(no AI line: placed by its start)", drawn by its start on his start, its road the only read
+ok 15 - RD4 (E's V1n, which replaces E's V1): a layout with no AI line: greyed in Line; in Road listed "(no AI line: placed by its start)", drawn by its start on his start, its road the only read
+  ---
+  duration_ms: 13.3325
+  type: 'test'
+  ...
+# Subtest: N1: a nudge value that is not a number, typed or given, keeps the nudge it had (the box shows it again), and nothing moves
+ok 16 - N1: a nudge value that is not a number, typed or given, keeps the nudge it had (the box shows it again), and nothing moves
+  ---
+  duration_ms: 16.0641
+  type: 'test'
+  ...
+# Subtest: L1: the panel's look is one class on the page's own pane tokens, with nothing inline, so a look can style it
+ok 17 - L1: the panel's look is one class on the page's own pane tokens, with nothing inline, so a look can style it
+  ---
+  duration_ms: 0.9778
+  type: 'test'
+  ...
+# Subtest: L2 (L256, the landing on L249): every look styles the reference panel in its menus' own rule, so it wears that look's pane ground, edge and blur
+ok 18 - L2 (L256, the landing on L249): every look styles the reference panel in its menus' own rule, so it wears that look's pane ground, edge and blur
+  ---
+  duration_ms: 30.4928
+  type: 'test'
+  ...
+# Subtest: R1 (line): the document: nothing of the reference enters it, and the shell is not told of any of it
+ok 19 - R1 (line): the document: nothing of the reference enters it, and the shell is not told of any of it
+  ---
+  duration_ms: 37.9768
+  type: 'test'
+  ...
+# Subtest: R1 (road): the document: nothing of the reference enters it, and the shell is not told of any of it
+ok 20 - R1 (road): the document: nothing of the reference enters it, and the shell is not told of any of it
+  ---
+  duration_ms: 47.6282
+  type: 'test'
+  ...
+# Subtest: R2 (line): a save: the track file and its undo file are byte for byte the same with a reference shown
+ok 21 - R2 (line): a save: the track file and its undo file are byte for byte the same with a reference shown
+  ---
+  duration_ms: 27.4897
+  type: 'test'
+  ...
+# Subtest: R2 (road): a save: the track file and its undo file are byte for byte the same with a reference shown
+ok 22 - R2 (road): a save: the track file and its undo file are byte for byte the same with a reference shown
+  ---
+  duration_ms: 27.0257
+  type: 'test'
+  ...
+# Subtest: R3 (line): an undo step: the reference is none; Ctrl+Z undoes his last edit, and the reference stays shown through it
+ok 23 - R3 (line): an undo step: the reference is none; Ctrl+Z undoes his last edit, and the reference stays shown through it
+  ---
+  duration_ms: 34.9993
+  type: 'test'
+  ...
+# Subtest: R3 (road): an undo step: the reference is none; Ctrl+Z undoes his last edit, and the reference stays shown through it
+ok 24 - R3 (road): an undo step: the reference is none; Ctrl+Z undoes his last edit, and the reference stays shown through it
+  ---
+  duration_ms: 25.7867
+  type: 'test'
+  ...
+# Subtest: R4 (line): an export: every file is byte for byte the same with a reference shown
+ok 25 - R4 (line): an export: every file is byte for byte the same with a reference shown
+  ---
+  duration_ms: 3917.2881
+  type: 'test'
+  ...
+# Subtest: R4 (road): an export: every file is byte for byte the same with a reference shown
+ok 26 - R4 (road): an export: every file is byte for byte the same with a reference shown
+  ---
+  duration_ms: 3930.6386
+  type: 'test'
+  ...
+# Subtest: D1: the reference goes down before his road and writes no depth, so his road is drawn over it wherever they overlap
+ok 27 - D1: the reference goes down before his road and writes no depth, so his road is drawn over it wherever they overlap
+  ---
+  duration_ms: 2.3526
+  type: 'test'
+  ...
+# Subtest: D2: the shadow's colour is the skin's --reference token, REFERENCE.colour when it sets none
+ok 28 - D2: the shadow's colour is the skin's --reference token, REFERENCE.colour when it sets none
+  ---
+  duration_ms: 2.0119
+  type: 'test'
+  ...
+1..28
+# tests 28
+# suites 0
+# pass 28
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 8515.1597

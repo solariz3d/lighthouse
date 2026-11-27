@@ -1,0 +1,124 @@
+TAP version 13
+# Subtest: L140 G1: with the bank set, a drag on the bank handle changes the bank and makes no change
+ok 1 - L140 G1: with the bank set, a drag on the bank handle changes the bank and makes no change
+  ---
+  duration_ms: 195.917
+  type: 'test'
+  ...
+# Subtest: L140 G2: with the climb set (as a rate), a drag on the climb handle changes the climb and makes no change
+ok 2 - L140 G2: with the climb set (as a rate), a drag on the climb handle changes the climb and makes no change
+  ---
+  duration_ms: 63.4873
+  type: 'test'
+  ...
+# Subtest: L140 G3: with the turn set, a drag on the bank handle changes the bank, not the turn
+ok 3 - L140 G3: with the turn set, a drag on the bank handle changes the bank, not the turn
+  ---
+  duration_ms: 67.3292
+  type: 'test'
+  ...
+# Subtest: L140 G4: a drag on the bank handle never moves another field's mark (a turn change starting at the bank handle's station)
+ok 4 - L140 G4: a drag on the bank handle never moves another field's mark (a turn change starting at the bank handle's station)
+  ---
+  duration_ms: 76.1513
+  type: 'test'
+  ...
+# Subtest: L140 G5: a new extra change starts where it is put, by default halfway along the piece, and the slide moves it
+ok 5 - L140 G5: a new extra change starts where it is put, by default halfway along the piece, and the slide moves it
+  ---
+  duration_ms: 105.1395
+  type: 'test'
+  ...
+# Subtest: L140 G6: an extra change dragged toward level and let go 10 px short of it ends level
+ok 6 - L140 G6: an extra change dragged toward level and let go 10 px short of it ends level
+  ---
+  duration_ms: 47.8321
+  type: 'test'
+  ...
+# Subtest: L140 G7: on a 300 m piece, a bank change dragged to level is laid (held where it fits), not refused
+ok 7 - L140 G7: on a 300 m piece, a bank change dragged to level is laid (held where it fits), not refused
+  ---
+  duration_ms: 180.4225
+  type: 'test'
+  ...
+# Subtest: L140 G8: shortening a piece never leaves a change short of its minimum: it is moved earlier and still laid
+ok 8 - L140 G8: shortening a piece never leaves a change short of its minimum: it is moved earlier and still laid
+  ---
+  duration_ms: 361.1944
+  type: 'test'
+  ...
+# Subtest: L140 G9: a mark dragged toward its neighbour stops at the neighbour plus the minimum, and the piece is laid
+ok 9 - L140 G9: a mark dragged toward its neighbour stops at the neighbour plus the minimum, and the piece is laid
+  ---
+  duration_ms: 75.2965
+  type: 'test'
+  ...
+# Subtest: L140 G10: a press with no movement on a mark that sits on a handle reaches the handle beneath
+ok 10 - L140 G10: a press with no movement on a mark that sits on a handle reaches the handle beneath
+  ---
+  duration_ms: 54.4549
+  type: 'test'
+  ...
+# Subtest: L140 R1: one extra handle per field: once its change is made, no second extra handle appears for that field
+ok 11 - L140 R1: one extra handle per field: once its change is made, no second extra handle appears for that field
+  ---
+  duration_ms: 63.3584
+  type: 'test'
+  ...
+# Subtest: L140 R2: his S: a 1,000 m piece turning -90, its extra turn of +90 starts HALFWAY (500 m), and the core lays it
+ok 12 - L140 R2: his S: a 1,000 m piece turning -90, its extra turn of +90 starts HALFWAY (500 m), and the core lays it
+  ---
+  duration_ms: 34.8
+  type: 'test'
+  ...
+# Subtest: L140 R2b: every field's extra change starts halfway by default (the bank, on 1,000 m)
+ok 13 - L140 R2b: every field's extra change starts halfway by default (the bank, on 1,000 m)
+  ---
+  duration_ms: 45.0897
+  type: 'test'
+  ...
+# Subtest: L140 R3: seen from far off, his 1,000 m piece about 500 px long on screen as in his picture, every extra handle stands more than three hit radii (36 px) from every other handle
+ok 14 - L140 R3: seen from far off, his 1,000 m piece about 500 px long on screen as in his picture, every extra handle stands more than three hit radii (36 px) from every other handle
+  ---
+  duration_ms: 52.1184
+  type: 'test'
+  ...
+# Subtest: D641 R4 (1.6×): every field set and the camera 1.6× as far as the default (E's cameras), the extra width and cup stand more than 36 px from every other handle too (E's item 1: 26.54 / 16.99 px to the width handle)
+ok 15 - D641 R4 (1.6×): every field set and the camera 1.6× as far as the default (E's cameras), the extra width and cup stand more than 36 px from every other handle too (E's item 1: 26.54 / 16.99 px to the width handle)
+  ---
+  duration_ms: 71.6661
+  type: 'test'
+  ...
+# Subtest: D641 R5 (E's N1): on 300 m with bank 30, a FIRST extra-bank value that cannot fit (-58.2, one call, as a fast flick's first frame) is held where it fits from its own start (150), and the first bank keeps its room
+ok 16 - D641 R5 (E's N1): on 300 m with bank 30, a FIRST extra-bank value that cannot fit (-58.2, one call, as a fast flick's first frame) is held where it fits from its own start (150), and the first bank keeps its room
+  ---
+  duration_ms: 113.0362
+  type: 'test'
+  ...
+# Subtest: D641 R6 (E's item 2): on 1,000 m with a -90 corner, the extra turn dragged to within the snap of +90 lands on +90 exactly, so the S ends dead straight (E: -1,100 px gave +90.97)
+ok 17 - D641 R6 (E's item 2): on 1,000 m with a -90 corner, the extra turn dragged to within the snap of +90 lands on +90 exactly, so the S ends dead straight (E: -1,100 px gave +90.97)
+  ---
+  duration_ms: 38.4743
+  type: 'test'
+  ...
+# Subtest: D641 R7 (E's item 3, the edges): with the left edge set on 1,000 m, one later change made from its offer leaves no second offer for that edge (E: three changes, from 500, 797.63, 930.7)
+ok 18 - D641 R7 (E's item 3, the edges): with the left edge set on 1,000 m, one later change made from its offer leaves no second offer for that edge (E: three changes, from 500, 797.63, 930.7)
+  ---
+  duration_ms: 82.1947
+  type: 'test'
+  ...
+# Subtest: the extra turn's grab stands on its purple from mark, and a press there dragged along the road slides where the extra turn kicks in (the bank keeps its value)
+ok 19 - the extra turn's grab stands on its purple from mark, and a press there dragged along the road slides where the extra turn kicks in (the bank keeps its value)
+  ---
+  duration_ms: 55.4955
+  type: 'test'
+  ...
+1..19
+# tests 19
+# suites 0
+# pass 19
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1998.3976

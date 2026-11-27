@@ -1,0 +1,82 @@
+TAP version 13
+# Subtest: D385 carry: a corner of 30 placed, then Extend with the fields untouched, places a second 30 corner, ending straight
+ok 1 - D385 carry: a corner of 30 placed, then Extend with the fields untouched, places a second 30 corner, ending straight
+  ---
+  duration_ms: 106.3143
+  type: 'test'
+  ...
+# Subtest: D385 carry: the climb the same way: a climb corner of 10 placed, then Extend untouched, places a second 10
+ok 2 - D385 carry: the climb the same way: a climb corner of 10 placed, then Extend untouched, places a second 10
+  ---
+  duration_ms: 41.5751
+  type: 'test'
+  ...
+# Subtest: D385 carry: clear the field after a carried corner and the next piece goes straight; a typed 0 is not carried
+ok 3 - D385 carry: clear the field after a carried corner and the next piece goes straight; a typed 0 is not carried
+  ---
+  duration_ms: 49.1062
+  type: 'test'
+  ...
+# Subtest: D385 carry: Undo gives back the undone piece's own corner; Redo and a new document clear it
+ok 4 - D385 carry: Undo gives back the undone piece's own corner; Redo and a new document clear it
+  ---
+  duration_ms: 28.2863
+  type: 'test'
+  ...
+# Subtest: D385 carry: a selected piece lends its own corner, and Extend from it carries that corner
+ok 5 - D385 carry: a selected piece lends its own corner, and Extend from it carries that corner
+  ---
+  duration_ms: 21.1217
+  type: 'test'
+  ...
+# Subtest: D385 carry: rate mode is unchanged: after an Extend the turn field shows the head's rate
+ok 6 - D385 carry: rate mode is unchanged: after an Extend the turn field shows the head's rate
+  ---
+  duration_ms: 19.1473
+  type: 'test'
+  ...
+# Subtest: D385 edges: the fields are "left edge °" and "right edge °"; there is no "edge angle °"
+ok 7 - D385 edges: the fields are "left edge °" and "right edge °"; there is no "edge angle °"
+  ---
+  duration_ms: 2.4048
+  type: 'test'
+  ...
+# Subtest: D385 edges: each field shows its own side at the head
+ok 8 - D385 edges: each field shows its own side at the head
+  ---
+  duration_ms: 43.6665
+  type: 'test'
+  ...
+# Subtest: D385 edges: the shell's headState and pieceState carry the right edge er (the panel cannot read the document in the webview)
+ok 9 - D385 edges: the shell's headState and pieceState carry the right edge er (the panel cannot read the document in the webview)
+  ---
+  duration_ms: 17.5659
+  type: 'test'
+  ...
+# Subtest: D385 edges: typing the left edge alone leaves the right as it was
+ok 10 - D385 edges: typing the left edge alone leaves the right as it was
+  ---
+  duration_ms: 30.2275
+  type: 'test'
+  ...
+# Subtest: D385 edges: typing the right edge alone leaves the left as it was
+ok 11 - D385 edges: typing the right edge alone leaves the left as it was
+  ---
+  duration_ms: 34.2678
+  type: 'test'
+  ...
+# Subtest: D385 edges: on an empty track, the left edge typed alone is the left side only (the right starts at 0)
+ok 12 - D385 edges: on an empty track, the left edge typed alone is the left side only (the right starts at 0)
+  ---
+  duration_ms: 14.7704
+  type: 'test'
+  ...
+1..12
+# tests 12
+# suites 0
+# pass 12
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 598.102

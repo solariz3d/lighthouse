@@ -1,0 +1,196 @@
+TAP version 13
+# Subtest: an unsaved edit is autosaved after the pause, as a core autosave holding the document's canonical text
+ok 1 - an unsaved edit is autosaved after the pause, as a core autosave holding the document's canonical text
+  ---
+  duration_ms: 25.1193
+  type: 'test'
+  ...
+# Subtest: a crash leaves the autosave; the next start OFFERS it (never applies it), and restore brings the track back unsaved
+ok 2 - a crash leaves the autosave; the next start OFFERS it (never applies it), and restore brings the track back unsaved
+  ---
+  duration_ms: 18.4522
+  type: 'test'
+  ...
+# Subtest: Discard clears the offer and the file; Save under a name clears the autosave; a clean exit clears it
+ok 3 - Discard clears the offer and the file; Save under a name clears the autosave; a clean exit clears it
+  ---
+  duration_ms: 26.8433
+  type: 'test'
+  ...
+# Subtest: a damaged autosave that cannot be kept aside is left on disk for the whole session, and the app starts anyway, saying so
+ok 4 - a damaged autosave that cannot be kept aside is left on disk for the whole session, and the app starts anyway, saying so
+  ---
+  duration_ms: 12.967
+  type: 'test'
+  ...
+# Subtest: a damaged autosave (not JSON) is kept as a "damaged autosave" backup BEFORE the session autosaves over it
+ok 5 - a damaged autosave (not JSON) is kept as a "damaged autosave" backup BEFORE the session autosaves over it
+  ---
+  duration_ms: 12.2762
+  type: 'test'
+  ...
+# Subtest: a damaged autosave (a core autosave whose document does not parse) is kept as a "damaged autosave" backup BEFORE the session autosaves over it
+ok 6 - a damaged autosave (a core autosave whose document does not parse) is kept as a "damaged autosave" backup BEFORE the session autosaves over it
+  ---
+  duration_ms: 12.2305
+  type: 'test'
+  ...
+# Subtest: a damaged autosave (JSON that is not a record) is kept as a "damaged autosave" backup BEFORE the session autosaves over it
+ok 7 - a damaged autosave (JSON that is not a record) is kept as a "damaged autosave" backup BEFORE the session autosaves over it
+  ---
+  duration_ms: 11.7433
+  type: 'test'
+  ...
+# Subtest: a damaged autosave whose copy FAILS is never written over, an edit later
+ok 8 - a damaged autosave whose copy FAILS is never written over, an edit later
+  ---
+  duration_ms: 5.5978
+  type: 'test'
+  ...
+# Subtest: an autosave from the OLD Pieces builder is kept aside as a saved word track, named in the message, never overwritten unread
+ok 9 - an autosave from the OLD Pieces builder is kept aside as a saved word track, named in the message, never overwritten unread
+  ---
+  duration_ms: 2.868
+  type: 'test'
+  ...
+# Subtest: a Pieces autosave that cannot be kept aside is left as it was, and that session does not autosave over it
+ok 10 - a Pieces autosave that cannot be kept aside is left as it was, and that session does not autosave over it
+  ---
+  duration_ms: 4.7681
+  type: 'test'
+  ...
+# Subtest: an equation track's code is its t180b.core/4 text, compressed and checksummed like every code, and reads back exactly
+ok 11 - an equation track's code is its t180b.core/4 text, compressed and checksummed like every code, and reads back exactly
+  ---
+  duration_ms: 10.6585
+  type: 'test'
+  ...
+# Subtest: an old Pieces code (a word track, a piece) is REFUSED BY NAME, and nothing changes
+ok 12 - an old Pieces code (a word track, a piece) is REFUSED BY NAME, and nothing changes
+  ---
+  duration_ms: 6.957
+  type: 'test'
+  ...
+# Subtest: a pasted code whose document is not a valid equation track is refused, and nothing changes
+ok 13 - a pasted code whose document is not a valid equation track is refused, and nothing changes
+  ---
+  duration_ms: 4.2779
+  type: 'test'
+  ...
+# Subtest: the share panel, loaded as the page loads it (with the core's node shim), opens an equation code
+ok 14 - the share panel, loaded as the page loads it (with the core's node shim), opens an equation code
+  ---
+  duration_ms: 42.3056
+  type: 'test'
+  ...
+# Subtest: a module that cannot load is the app's failure, never reported as a malformed code
+ok 15 - a module that cannot load is the app's failure, never reported as a malformed code
+  ---
+  duration_ms: 32.0093
+  type: 'test'
+  ...
+# Subtest: Install to AC writes exactly the files Export writes, byte for byte, under the saved name
+ok 16 - Install to AC writes exactly the files Export writes, byte for byte, under the saved name
+  ---
+  duration_ms: 4134.78
+  type: 'test'
+  ...
+# Subtest: backupNow writes the track AS IT IS NOW under its eq- name (or "unsaved"), and says why
+ok 17 - backupNow writes the track AS IT IS NOW under its eq- name (or "unsaved"), and says why
+  ---
+  duration_ms: 19.1444
+  type: 'test'
+  ...
+# Subtest: backupNow resolves null where there is nothing to write to, and REJECTS when the write fails (the caller then refuses its operation)
+ok 18 - backupNow resolves null where there is nothing to write to, and REJECTS when the write fails (the caller then refuses its operation)
+  ---
+  duration_ms: 6.6623
+  type: 'test'
+  ...
+# Subtest: Previous versions lists the open track's backups newest first, with time, length and closed, and opens one as an unsaved COPY
+ok 19 - Previous versions lists the open track's backups newest first, with time, length and closed, and opens one as an unsaved COPY
+  ---
+  duration_ms: 149.5566
+  type: 'test'
+  ...
+# Subtest: an UNSAVED track's copy from before Close is listed in Previous versions and opens as a copy (B's D239 look, F3a)
+ok 20 - an UNSAVED track's copy from before Close is listed in Previous versions and opens as a copy (B's D239 look, F3a)
+  ---
+  duration_ms: 139.7035
+  type: 'test'
+  ...
+# Subtest: the page: Save sends the local time for the backup's name, the three backup commands are wired and registered, and there is a Previous versions picker
+ok 21 - the page: Save sends the local time for the backup's name, the three backup commands are wired and registered, and there is a Previous versions picker
+  ---
+  duration_ms: 2.822
+  type: 'test'
+  ...
+# Subtest: each shortcut fires on the equation page: Ctrl+Z undo, Ctrl+Shift+Z and Ctrl+Y redo, Ctrl+S save, Ctrl+Backspace removes the head
+ok 22 - each shortcut fires on the equation page: Ctrl+Z undo, Ctrl+Shift+Z and Ctrl+Y redo, Ctrl+S save, Ctrl+Backspace removes the head
+  ---
+  duration_ms: 43.2906
+  type: 'test'
+  ...
+# Subtest: no shortcut fires while a TEXT field has focus, and a bare Backspace does nothing
+ok 23 - no shortcut fires while a TEXT field has focus, and a bare Backspace does nothing
+  ---
+  duration_ms: 22.9971
+  type: 'test'
+  ...
+# Subtest: keyAction is MOVED, not copied: app/shell.js re-exports the very function, and the page binds app/core/keys.js to the core shell
+ok 24 - keyAction is MOVED, not copied: app/shell.js re-exports the very function, and the page binds app/core/keys.js to the core shell
+  ---
+  duration_ms: 7.9061
+  type: 'test'
+  ...
+# Subtest: removeHead: one undo step; an empty track is refused by name; a closed loop opens again and says Ctrl+Z puts it back
+ok 25 - removeHead: one undo step; an empty track is refused by name; a closed loop opens again and says Ctrl+Z puts it back
+  ---
+  duration_ms: 153.9236
+  type: 'test'
+  ...
+# Subtest: the guide's steps are the equation builder's: extend, brush, close, colours, export, grid
+ok 26 - the guide's steps are the equation builder's: extend, brush, close, colours, export, grid
+  ---
+  duration_ms: 0.435
+  type: 'test'
+  ...
+# Subtest: extending 3 pieces, a brush stroke and Close the loop complete their steps in the real core shell
+ok 27 - extending 3 pieces, a brush stroke and Close the loop complete their steps in the real core shell
+  ---
+  duration_ms: 197.5496
+  type: 'test'
+  ...
+# Subtest: the grid-and-mirror step is a reading step: Next completes it and finishes the guide
+ok 28 - the grid-and-mirror step is a reading step: Next completes it and finishes the guide
+  ---
+  duration_ms: 0.4684
+  type: 'test'
+  ...
+# Subtest: app/index.html holds ONE builder: no mode switch, no ?mode, no t180.mode, no piece-builder shell or palette
+ok 29 - app/index.html holds ONE builder: no mode switch, no ?mode, no t180.mode, no piece-builder shell or palette
+  ---
+  duration_ms: 1.938
+  type: 'test'
+  ...
+# Subtest: the equation page mounts the four carried features and clears the autosave on a clean exit
+ok 30 - the equation page mounts the four carried features and clears the autosave on a clean exit
+  ---
+  duration_ms: 1.2806
+  type: 'test'
+  ...
+# Subtest: the removed piece-builder modules are gone, and the shared ones the equation page and the exporter use are kept
+ok 31 - the removed piece-builder modules are gone, and the shared ones the equation page and the exporter use are kept
+  ---
+  duration_ms: 0.9434
+  type: 'test'
+  ...
+1..31
+# tests 31
+# suites 0
+# pass 31
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 5360.4193

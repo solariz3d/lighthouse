@@ -1,0 +1,40 @@
+TAP version 13
+# Subtest: row 1: a commit or a drag that leaves the document as it was adds no undo step
+ok 1 - row 1: a commit or a drag that leaves the document as it was adds no undo step
+  ---
+  duration_ms: 146.2232
+  type: 'test'
+  ...
+# Subtest: row 2: a reopened history shares unchanged pieces between its steps, as a history made in this session does
+ok 2 - row 2: a reopened history shares unchanged pieces between its steps, as a history made in this session does
+  ---
+  duration_ms: 82.3471
+  type: 'test'
+  ...
+# Subtest: row 3: undo and redo say what they changed, and say so when there is nothing
+ok 3 - row 3: undo and redo say what they changed, and say so when there is nothing
+  ---
+  duration_ms: 60.5345
+  type: 'test'
+  ...
+# Subtest: row 4: the checker keeps its result when only the start moved, and re-checks when the road changed
+ok 4 - row 4: the checker keeps its result when only the start moved, and re-checks when the road changed
+  ---
+  duration_ms: 843.866
+  type: 'test'
+  ...
+# Subtest: row 5: removing pieces from the end without an undo copy builds no full mesh, and equals a fresh full build
+ok 5 - row 5: removing pieces from the end without an undo copy builds no full mesh, and equals a fresh full build
+  ---
+  duration_ms: 224.6493
+  type: 'test'
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 5
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1555.3273

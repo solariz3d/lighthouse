@@ -1,0 +1,130 @@
+TAP version 13
+# Subtest: property (the preview's SHARED path): after every random edit the result equals a full validate exactly
+ok 1 - property (the preview's SHARED path): after every random edit the result equals a full validate exactly
+  ---
+  duration_ms: 3315.9354
+  type: 'test'
+  ...
+# Subtest: property (the controller's own path): after every random edit the result equals a full validate exactly
+ok 2 - property (the controller's own path): after every random edit the result equals a full validate exactly
+  ---
+  duration_ms: 2944.5296
+  type: 'test'
+  ...
+# Subtest: undo of a placement and removing the head are a TRIM (shared path), each exactly a full validate
+ok 3 - undo of a placement and removing the head are a TRIM (shared path), each exactly a full validate
+  ---
+  duration_ms: 19.9517
+  type: 'test'
+  ...
+# Subtest: undo of a placement and removing the head are a TRIM (own path), each exactly a full validate
+ok 4 - undo of a placement and removing the head are a TRIM (own path), each exactly a full validate
+  ---
+  duration_ms: 22.5973
+  type: 'test'
+  ...
+# Subtest: the property test reaches STACKED road: the edits lay road over road, and it still equals a full validate
+ok 5 - the property test reaches STACKED road: the edits lay road over road, and it still equals a full validate
+  ---
+  duration_ms: 7343.9844
+  type: 'test'
+  ...
+# Subtest: a STALE shared path (built for another document) is not used: the controller grows its own, and stays exact
+ok 6 - a STALE shared path (built for another document) is not used: the controller grows its own, and stays exact
+  ---
+  duration_ms: 14.6994
+  type: 'test'
+  ...
+# Subtest: a shared path the preview REBUILT (a new object) is viewed afresh, never spliced onto the old view
+ok 7 - a shared path the preview REBUILT (a new object) is viewed afresh, never spliced onto the old view
+  ---
+  duration_ms: 9.5623
+  type: 'test'
+  ...
+# Subtest: a drag held OPEN on a mid-track word: every tick is windowed and exact where settled, and ending it equals a full validate
+ok 8 - a drag held OPEN on a mid-track word: every tick is windowed and exact where settled, and ending it equals a full validate
+  ---
+  duration_ms: 836.9165
+  type: 'test'
+  ...
+# Subtest: never a stale "clean": a settled station clipping road that the drag moved shows RED during the drag, and the moved road shows PENDING
+ok 9 - never a stale "clean": a settled station clipping road that the drag moved shows RED during the drag, and the moved road shows PENDING
+  ---
+  duration_ms: 6216.4045
+  type: 'test'
+  ...
+# Subtest: a windowed result revalidated from BEYOND its pending start still finishes the whole track exactly
+ok 10 - a windowed result revalidated from BEYOND its pending start still finishes the whole track exactly
+  ---
+  duration_ms: 14.7772
+  type: 'test'
+  ...
+# Subtest: the panel says what is pending: the load graph shades it to the track end, the summary counts no deferred jump as waiting
+ok 11 - the panel says what is pending: the load graph shades it to the track end, the summary counts no deferred jump as waiting
+  ---
+  duration_ms: 29.4224
+  type: 'test'
+  ...
+# Subtest: the window ends at the second word after the dragged one; none when that is past the end
+ok 12 - the window ends at the second word after the dragged one; none when that is past the end
+  ---
+  duration_ms: 0.2065
+  type: 'test'
+  ...
+# Subtest: the preview's 0.5 m path viewed at 2 m IS buildPath at 2 m, value for value; grown in place, the view follows it exactly
+ok 13 - the preview's 0.5 m path viewed at 2 m IS buildPath at 2 m, value for value; grown in place, the view follows it exactly
+  ---
+  duration_ms: 22.2051
+  type: 'test'
+  ...
+# Subtest: a path that cannot be viewed exactly is refused (null), so the controller grows its own
+ok 14 - a path that cannot be viewed exactly is refused (null), so the controller grows its own
+  ---
+  duration_ms: 5.3153
+  type: 'test'
+  ...
+# Subtest: the station-pair stacking check finds exactly what measuring every surface point finds, on tracks that stack
+ok 15 - the station-pair stacking check finds exactly what measuring every surface point finds, on tracks that stack
+  ---
+  duration_ms: 1552.791
+  type: 'test'
+  ...
+# Subtest: the stacking check on a CLOSED loop: the start and end are one pass (s wraps), exactly as measuring every point
+ok 16 - the stacking check on a CLOSED loop: the start and end are one pass (s wraps), exactly as measuring every point
+  ---
+  duration_ms: 23252.2661
+  type: 'test'
+  ...
+# Subtest: on a level straight at a constant speed only gravity acts: each line reads fN = cos ψ and fLat = sign(u)·sin ψ
+ok 17 - on a level straight at a constant speed only gravity acts: each line reads fN = cos ψ and fLat = sign(u)·sin ψ
+  ---
+  duration_ms: 1.5811
+  type: 'test'
+  ...
+# Subtest: a closed loop: every drag tick defers the lap, and ending the drag proves it, equal to a full validate's lap
+ok 18 - a closed loop: every drag tick defers the lap, and ending the drag proves it, equal to a full validate's lap
+  ---
+  duration_ms: 22660.8076
+  type: 'test'
+  ...
+# Subtest: lapOf proves a deferred lap exactly as an undeferred validate does, and returns any other lap unchanged
+ok 19 - lapOf proves a deferred lap exactly as an undeferred validate does, and returns any other lap unchanged
+  ---
+  duration_ms: 22216.4418
+  type: 'test'
+  ...
+# Subtest: rangeLevels gives every station the level rangeLevel gives it, ranges touching, nested and out of order
+ok 20 - rangeLevels gives every station the level rangeLevel gives it, ranges touching, nested and out of order
+  ---
+  duration_ms: 2.5677
+  type: 'test'
+  ...
+1..20
+# tests 20
+# suites 0
+# pass 20
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 90701.3259

@@ -1,0 +1,64 @@
+TAP version 13
+# Subtest: the first word builds and colours the whole track (full), and an empty document shows nothing
+ok 1 - the first word builds and colours the whole track (full), and an empty document shows nothing
+  ---
+  duration_ms: 17.9061
+  type: 'test'
+  ...
+# Subtest: placing at the head is an APPEND: extendPath, revalidate, only the new span re-coloured, and equal to a full run
+ok 2 - placing at the head is an APPEND: extendPath, revalidate, only the new span re-coloured, and equal to a full run
+  ---
+  duration_ms: 23.9667
+  type: 'test'
+  ...
+# Subtest: a drag on an earlier word is a SCULPT from that word, and still equals a full run
+ok 3 - a drag on an earlier word is a SCULPT from that word, and still equals a full run
+  ---
+  duration_ms: 30.5377
+  type: 'test'
+  ...
+# Subtest: removing the head is a trim, its undo is an append, and both still equal a full run
+ok 4 - removing the head is a trim, its undo is an append, and both still equal a full run
+  ---
+  duration_ms: 23.0805
+  type: 'test'
+  ...
+# Subtest: the CSP switch re-validates for vanilla AC: a 60° wall turns red, and back
+ok 5 - the CSP switch re-validates for vanilla AC: a 60° wall turns red, and back
+  ---
+  duration_ms: 13.0349
+  type: 'test'
+  ...
+# Subtest: a jump placed at the open head is drawn once it has landing road (its own ramp, or the next word)
+ok 6 - a jump placed at the open head is drawn once it has landing road (its own ramp, or the next word)
+  ---
+  duration_ms: 9.6439
+  type: 'test'
+  ...
+# Subtest: changes arriving before the scheduled update are coalesced into one update
+ok 7 - changes arriving before the scheduled update are coalesced into one update
+  ---
+  duration_ms: 11.628
+  type: 'test'
+  ...
+# Subtest: E's panels load through A's webview loader (app/lib/cjs.js), and each exports mount(root, shell)
+ok 8 - E's panels load through A's webview loader (app/lib/cjs.js), and each exports mount(root, shell)
+  ---
+  duration_ms: 34.1265
+  type: 'test'
+  ...
+# Subtest: D256: the validation panel has no design-speed slider and no off box; its one control is the CSP box, and it checks at full speed
+ok 9 - D256: the validation panel has no design-speed slider and no off box; its one control is the CSP box, and it checks at full speed
+  ---
+  duration_ms: 13.626
+  type: 'test'
+  ...
+1..9
+# tests 9
+# suites 0
+# pass 9
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 318.9578
