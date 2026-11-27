@@ -96,3 +96,5 @@ buildable now. **Next step, for D's handoff:** read every crash report on D with
 for the replay ones, note from each report's `csp.ini` and log what was live at the switch (camera script, gamepad
 script, extended replay streams). Tonight's `csp.ini` names a chase camera script and a gamepad script as custom
 implementations. Not ordered as a lap.
+
+**Dropped by his word, 04:56:** "its okay forget it for now". The census is NOT put in the handoff to D and nothing is owed on the replay crash. This file stays as the record if it comes up again.

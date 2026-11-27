@@ -96,3 +96,4 @@ degrees into the new 360 you know? 5. Not sure, what is smoothness limit?"
 - 04:51 (L), his words: "i have a feeling all of csp is a shitshow of human slop lmfao but it works"
 - 04:54 (L), his words: "do you think there could be a fix we make for it? Its like for the version we use, or rather, the version the newest t-180s work on, soon there will be an update to t-180s from the creator, but we will deal with that when the time comes"
   - State: answered as a lean (trace file, "His question"); the census of D's crash reports goes into the L to D handoff. Not builder work, no lap ordered.
+- 04:56 (L), his words: "its okay forget it for now" (the replay crash; nothing owed, the census does not go to D)
