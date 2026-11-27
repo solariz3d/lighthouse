@@ -1495,3 +1495,30 @@ The order is the chair's ring of 23:26:31Z. It carries out the packet's "Amended
 All of these go through heavy-run at BelowNormal.
 
 **Falsifier:** item 1 as registered is refuted if X1, X3, X4 or X8 is red on any row once it is built, or if X6 fails on a row I did not name above.
+
+### 5.2 Item 2, the cost on a long lap: registered at 23:54Z, before any timing
+
+**Read before registering (no timing yet):**
+- checked: `git show c522ea6:app/core/coreshell.js | grep passClearanceGuard` → the guard is called at `:476` (`commit`, a typed edit) and `:1109` (the level-end drag), and nowhere in a Sculpt brush's step. At `bcedaaf` it is also called at `:982`, `if (b.mode === 'even')`. So today's Width-tool step and grab step do not run the guard, and Even's step does. The guard is therefore not "the same cost under today's drags": on a drag step it is Even's own.
+- checked: `src/validate/passclear.js` `passClearance(path, segments, { from })` queries every station from index `from` to the end of the path, each against every other station. `passClearanceGuard` sets `from` to the first station whose position changed bit for bit, and runs the rule twice, before and after. On a closed lap with the run in the middle, that is about half the lap read twice per step.
+- inferred: with item 1, the built road after the window may differ from the start by a fraction of a millimetre, not bit for bit. The heading channel's new control points are stored at its step and carried along the lap. If so, the guard's "first station that moved" stays at the window's start and its read runs to the lap's end whatever is bounded. X5 measures it.
+
+**The rows.** All are timed on his largest closed lap by road length, from copies of his saves (t01..t27), at the run `prof678g.js` picked: the first two-piece run outward from the lap's middle that Even does not refuse. The script is `tim678.js` (scratch, copied to the evidence folder with its output). It goes through the core shell, and every tree times the same place on the same lap.
+
+| row | tree | what |
+|---|---|---|
+| T1 | c522ea6 | the Width tool: one drag step (`beginBrush { tool: 'width', s0: the run's middle, r: 30 }`, then `brushTo`): a warm-up, then 5 steps of different sizes, the median; one step profiled |
+| T2 | c522ea6 | a grab at the same place (`beginFollow`, then `brushTo` of the zone grab's `follow`), measured the same way |
+| T3 | d678-even-a with item 1 | Even's drag step on the run (`beginSculpt { tool: 'even', hold: 'left' }`, then `sculptTo`), measured the same way, with its profile split into `even()` (rim reader, bank plan, level, fit), `resolvedOf` and the guard |
+| T4 | the same tree | T1 and T2 again, so a change in what a step costs between the two trees is seen and not put down to Even |
+
+**The bar, registered from T2 once it is read and before any bounding code:** an Even drag step is no slower than today's grab step on that lap (the median of T3 after the bounding at most the median of T2). On the fixtures it stays inside the frame bar the build already had. If the bounding cannot reach that, the hand-back says by how much and where the time goes.
+
+**Predictions I can lose:**
+- T1 and T2 run to seconds on that lap, not milliseconds. That is the whole lap resolved per step (`resolvedOf`), Even or not.
+- T3 is about T2 plus Even's `even()` (whole-lap `toSegments` and `bankPlan` in the rim reader) plus the guard. The guard is the largest single share.
+- Bounding `even()` to the window's pieces removes its whole-lap share. Bounding the guard needs its read to stop at the window's last moved station, which the sub-millimetre move after the window (above) prevents unless the guard is told the window. If it cannot be done without changing the guard for `commit` and the level-end drag, that is reported and not mended here.
+
+**Falsifier:** the bar is refuted if, after the bounding, the median of T3 is above the median of T2 on that lap. The finding "the guard is Even's own on a drag step" is refuted if T2's profile shows `passClearanceGuard` or `passClearance`.
+
+**The timing run.** No other heavy run may be going: my two runs (the table and Even's harness) finish first. Before and during the run, `tasklist` must show no `acs.exe`. The run is marked `--timing` (O's N1 rule at `a5514a23`, read at 23:5xZ: a label is never read for a timing session).
