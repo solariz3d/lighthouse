@@ -111,3 +111,14 @@ degrees into the new 360 you know? 5. Not sure, what is smoothness limit?"
 - Two outside searches (generic terms) found release notes saying finished physics experiments cannot be turned off online, and nothing on loops or corkscrews.
 - **How data could be made, not ordered:** the game ships its own server program; one car, one track, driven offline and then on a server on his own machine, two replays, read with the builder's replay tools section by section.
 - Not started. His 05:42 word parks it.
+
+## His words, 2026-11-27 05:43 (L): why it hits these cars, and the next update
+
+> "the reason it affects t-180s is because they move so fast compared to average speed the engine was made to sustain. Its like a time thing, car moves too fast for the game to keep up, so ohyeah said that next update, cars will be slower and smaller sscaling, which means the tracks will be bigger and as well need a rescaling to give the same proportions we are used to"
+
+**State, 05:43 (the librarian's, checked unless marked):**
+- **His "time thing", as figures.** The car's script runs "every physics tick (333 Hz)" (`Source/base/data/script.lua:183`). Distance per tick: 0.08 m at 100 km/h, 0.50 m at 600, **0.81 m at 970** (the builder's top speed, `limits.js` `vmaxKmh`). The floor box is 0.5 m tall and the downforce ray 1.0 m long at the tag. [inferred] At top speed the car moves further in one tick than its box is tall.
+- **The smaller, slower cars are not in the public repository yet.** At its only branch (`main`, 4262dedf, 2026-11-26) the wheelbase 3.43, track 1.8, tyre radius 0.395, box 2.0 x 0.5 x 3.0 and mass 850 are the tag's, and the Mach 6's thrust multiplier is 3.15 against the tag's 1.5. No commit subject in the last 60 names a scale. So what he was told is ahead of what is published.
+- **The builder has no rescale** (grep of `src`, `app`, README at c522ea6 for a scale tool: 0 hits). Every `MACH6` limit in `src/validate/limits.js` is in metres, km/h or g for today's car.
+- [inferred] If lengths and speeds both scale by k, the load on a curve (speed squared over radius) scales by k too, so a rescaled track with a proportionally slower car asks less of the car.
+- Not ordered. His 04:54 word on the update stands: "we will deal with that when the time comes".
