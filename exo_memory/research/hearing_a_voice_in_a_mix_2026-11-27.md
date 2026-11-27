@@ -115,7 +115,46 @@ All of this section is from search summaries. No repository, licence or release 
   beyond what Listen does now, and is his call.
 - **Not measured:** anything on the 5070 Ti or the 5080.
 
+## 8. Measured on L (04:22 to 05:00, at his "well lets use what we cant do ourselves then")
+
+**Installed**, all inside `C:\Consonance\hear` (outside the repo and the app; deleting the folder removes it):
+a Python 3.12 environment of 3.8 GB with `torch 2.14.1+cu130`, `audio-separator 0.48.0`, `onnxruntime-gpu 1.32.0`,
+librosa, and `audioread`; and 1.07 GB of weights (`vocals_mel_band_roformer.ckpt` 913 MB, `rmvpe.pt` 181 MB).
+
+- **Two install faults, both fixed.** Installing `audio-separator` replaced the GPU build of PyTorch with
+  `2.15.0+cpu`; `torchaudio` has no 2.14 build on the cu130 index, so it was removed (nothing here imports it). The
+  package also needed `audioread`, which it does not declare.
+- **The card is recognised:** `torch.cuda.get_arch_list()` includes `sm_120` on the RTX 5070 Ti Laptop GPU.
+
+**Ours, in that folder:** `hear.py` (separate, follow the voice, split into notes, report), `test_hear.py` (10 tests
+of the note splitting; `python -m unittest test_hear` passes), and `rows.rs` (the app's own `cochlea.rs` included
+read-only and fed a file the way `cochlea_service.rs` feeds it live; `rustc -O rows.rs -o rows.exe`).
+
+**The test song:** Josh Woodward, "Same Boat", CC BY 4.0, 202.5 s, from joshwoodward.com.
+
+| run | result |
+|---|---|
+| `python hear.py songs/same_boat.wav roformer`, weights already on disk | separation 36.5 s, voice following 3.0 s, 5.1 times real time; peak GPU memory reported by PyTorch 2,041 MB |
+| the same, first run including the 1.07 GB download | 59.5 s and 6.4 s |
+| sung notes found | 237 notes in 72.9 voiced seconds, F2 to B3, median note 0.24 s; first note at 20.6 s |
+
+| what the cochlea was fed (`rows.exe`) | events | settled | restless | chords voted | onsets |
+|---|---|---|---|---|---|
+| the full mix | 218 | 113 | 75 | 10 | 1 |
+| the band alone | 245 | 128 | 85 | 14 | 1 |
+| the voice alone | 74 | 12 | 28 | 0 | 12 |
+
+- **What this shows.** Taking the voice out gives the cochlea a little more of the band (245 against 218 events, 14
+  chords against 10). The voice alone gives it little, because one voice has no intervals with itself; what it does
+  report is 12 onsets, which is where phrases begin. The 237 notes come from the pitch tracker, and the cochlea would
+  never have reported them.
+- **What this does not show.** This song is an acoustic one with light drums, and the cochlea already read its mix at
+  about one event a second. The blind spot was measured on a drum-heavy remix (17 rows in 144 s). That case has not
+  been tested, because no such audio file was on hand.
+- **Not checked:** whether the 237 notes are the right notes. No transcription of the song was compared.
+
 ## Sources
+- https://www.joshwoodward.com/song/SameBoat (the test song, CC BY 4.0)
 - https://github.com/Devleu0/Melody-Chord-Transcriber (README, notices and pipeline files read with `gh api`)
 - https://github.com/KimberleyJensen/Mel-Band-Roformer-Vocal-Model (README and licence field read with `gh api`)
 - https://github.com/nomadkaraoke/python-audio-separator (licence field read with `gh api`)
