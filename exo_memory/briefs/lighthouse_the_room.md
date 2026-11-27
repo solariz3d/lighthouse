@@ -561,3 +561,5 @@ carry it, so this brief does.
 - 2026-11-27 05:25 (L): "but one thing we could do that could be briliant, use the researchers to study each t-180 to see potential differences in clipping potential"
 - 2026-11-27 05:27 (L): "maybe use opus researchers for this one, save the fable ones for the big job after"
 - 2026-11-27 05:39 (L): "you would be wrong for the type a, it clips the worst from people have said."
+- 2026-11-27 05:49 (L): "how would you compare this work on a level of difficulty to figure out? Let alone a solo dev with decent skills?"
+- 2026-11-27 05:51 (L): "I am a driver first, even beyond signal bearer"
