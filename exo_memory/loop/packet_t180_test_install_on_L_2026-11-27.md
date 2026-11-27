@@ -46,3 +46,22 @@ NOT CLEAN on the code, that branch stays out and the librarian says so to him fi
 6. The hand-back gives him a short list of what to try, one line each.
 
 Hand-back to the librarian by `call_librarian`, claims marked checked or inferred.
+
+## Changed 02:55, by his word: go now; the reads follow the install
+
+**His word,** 02:52 on L: "go", in answer to the librarian's "Still owed before I give the go: pane A's 720° fix and pane E's
+read of it, and pane B's hand-back on the right-side width and a read of that." Read by the librarian, and told to him, as:
+do not wait for the reads; build and install what is ready. The section "The gate" above is lifted by him for this install.
+
+What stands, and what changes:
+- **The tips are the branch refs as they stand when you start the merge** (`git rev-parse l-bankcarry-a d677-right-width-b`);
+  name them in the hand-back. At 02:54 they were 7b3926e and e4e7ecc. If the ±720 completion is committed on
+  `l-bankcarry-a` by then, it is in; if not, the install goes without it and the hand-back says so in its first lines (the
+  handle then stops at two full turns, E's read; not a regression).
+- **Step 2's tier before the install is unchanged:** the merged tree's touched set, the two harnesses and the 14 mutation
+  harnesses you listed, all green and 0 NOT APPLIED. A red there stops the install; say which row.
+- **heavy-run:** at 02:54 an EXCLUSIVE hold stood (a timing session of the right-width builder, since 08:41:47Z). Run
+  nothing until it is gone; do not ask for it to be cut short.
+- **The reads are still owed, after the install:** the delta read of the ±720 completion, and the read of the right width
+  by a seat that wrote none of it. A NOT CLEAN on the code after the install is told to him at once, with the backup's path.
+- Steps 3 to 6 unchanged. The whole suite on the merged tree after the install, as written.
