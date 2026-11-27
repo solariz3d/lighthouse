@@ -1,0 +1,21 @@
+[
+ {
+  "case": "Test export of a split road with a right-side pit lane (whole field set): written, the lane, the AI line",
+  "laneSelfCheckRed": 0,
+  "laneSelfCheckFirst": [],
+  "pitMessage": "pit lane set",
+  "files": 11,
+  "pitFiles": [],
+  "aiHeldStep570m": {
+   "left": 9.55,
+   "right": 11.3,
+   "pos": [
+    201.16,
+    0,
+    496.99
+   ]
+  },
+  "lane": null,
+  "expectGapM": 6
+ }
+]

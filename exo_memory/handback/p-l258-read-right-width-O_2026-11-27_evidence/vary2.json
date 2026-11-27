@@ -1,0 +1,92 @@
+[
+ {
+  "case": "Sharp 60 deg at R 150 (the width allows 138.3) after the split head",
+  "message": null,
+  "added": [
+   "152.2177m split",
+   "15m split"
+  ],
+  "wdEach": [
+   [
+    3.5,
+    3.5
+   ],
+   [
+    3.5,
+    3.5
+   ]
+  ],
+  "rightHalfFirst": {
+   "right": 11.3,
+   "left": 9.55
+  }
+ },
+ {
+  "case": "Jump at the split head, then Extend 80 m after the landing",
+  "jumpMessage": "Jump placed: move its landing by hand.",
+  "jumpAdded": [
+   "40m split",
+   "flight",
+   "60m"
+  ],
+  "landingWd": [
+   3.5,
+   3.5
+  ],
+  "landingSides": {
+   "right": 11.3,
+   "left": 9.55
+  },
+  "extendMessage": null,
+  "extendAdded": [
+   "80m"
+  ],
+  "extendWd": [
+   [
+    0,
+    0
+   ]
+  ],
+  "takeoffEndSides": {
+   "right": 11.3,
+   "left": 9.55
+  }
+ },
+ {
+  "case": "Insert a saved plain piece at the split head, THROUGH THE SHELL (the message he reads)",
+  "message": "JOINT: piece 3 (p4): wd starts at 0, the previous piece ends at 3.5 (every road joint must meet smoothly: the same value and slope in every channel)",
+  "piecesAfter": 3,
+  "piecesBefore": 3
+ },
+ {
+  "case": "Insert the same saved piece after the right width is brought back to the width",
+  "message": "added the piece \"plain\" at the head: 1 piece (Ctrl+Z takes it back)",
+  "inserted": 1
+ },
+ {
+  "case": "A split track saved, opened again, and undone one step (its undo file kept)",
+  "schema": "t180b.core/7",
+  "reopenedMessage": "undid: piece p2 placed",
+  "piecesOpened": 3,
+  "afterOneUndo": 2,
+  "afterTwoUndos": 1,
+  "undoFile": true
+ },
+ {
+  "case": "Test export of a split road with a right-side pit lane (whole field set): written, the lane, the AI line",
+  "pitMessage": "BAD_PIT_LANE: pitLane: .leave must be { word, along }",
+  "files": 11,
+  "pitFiles": [],
+  "aiHeldStep570m": {
+   "left": 9.55,
+   "right": 11.3,
+   "pos": [
+    201.16,
+    0,
+    496.99
+   ]
+  },
+  "lane": null,
+  "expectGapM": 6
+ }
+]

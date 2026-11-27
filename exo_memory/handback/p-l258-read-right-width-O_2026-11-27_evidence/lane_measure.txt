@@ -1,0 +1,2 @@
+split (right half 11.3) {"red":0,"at_s":670,"roadEdgeFromCentre":11.245,"laneInnerFromRoadEdge":6}
+same road, sides equal (9.55) {"red":0,"at_s":670,"roadEdgeFromCentre":9.503,"laneInnerFromRoadEdge":6}

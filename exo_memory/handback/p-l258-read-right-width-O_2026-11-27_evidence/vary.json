@@ -1,0 +1,315 @@
+{
+ "H": [
+  {
+   "case": "Extend 80 m, nothing typed",
+   "message": null,
+   "added": [
+    "80m split"
+   ],
+   "headWd": 3.5,
+   "firstRoadStartWd": 3.5,
+   "firstRoadEndWd": 3.5,
+   "rightHalfAtJoint": 11.3,
+   "rightHalfAtHeadEnd": 11.3,
+   "schema": "t180b.core/7"
+  },
+  {
+   "case": "Level 80 m",
+   "message": null,
+   "added": [
+    "80m split"
+   ],
+   "headWd": 3.5,
+   "firstRoadStartWd": 3.5,
+   "firstRoadEndWd": 3.5,
+   "rightHalfAtJoint": 11.3,
+   "rightHalfAtHeadEnd": 11.3,
+   "schema": "t180b.core/7"
+  },
+  {
+   "case": "Turn by 30 deg, 120 m",
+   "message": null,
+   "added": [
+    "120m split"
+   ],
+   "headWd": 3.5,
+   "firstRoadStartWd": 3.5,
+   "firstRoadEndWd": 3.5,
+   "rightHalfAtJoint": 11.3,
+   "rightHalfAtHeadEnd": 11.3,
+   "schema": "t180b.core/7"
+  },
+  {
+   "case": "Turn to grid, 120 m",
+   "message": null,
+   "added": [
+    "120m split"
+   ],
+   "headWd": 3.5,
+   "firstRoadStartWd": 3.5,
+   "firstRoadEndWd": 3.5,
+   "rightHalfAtJoint": 11.3,
+   "rightHalfAtHeadEnd": 11.3,
+   "schema": "t180b.core/7"
+  },
+  {
+   "case": "Sharp 60 deg R 40",
+   "message": "SHARP_TOO_TIGHT: R 40 m is too tight for this width (leaves-surface): tightest at this width: 138.3 m",
+   "added": [],
+   "headWd": 3.5,
+   "firstRoadStartWd": null,
+   "firstRoadEndWd": null,
+   "rightHalfAtJoint": null,
+   "rightHalfAtHeadEnd": 11.3,
+   "schema": "t180b.core/7"
+  },
+  {
+   "case": "Jump (free flight and its default landing)",
+   "threw": "Cannot read properties of null (reading 'u')"
+  },
+  {
+   "case": "Jump, then Extend 80 m after the landing deleted? no: Extend after the landing",
+   "threw": "Cannot read properties of null (reading 'u')"
+  },
+  {
+   "case": "Extend 60 m with the width alone typed (w 25)",
+   "message": null,
+   "added": [
+    "60m split"
+   ],
+   "headWd": 3.5,
+   "firstRoadStartWd": 3.5,
+   "firstRoadEndWd": 3.5,
+   "rightHalfAtJoint": 11.31,
+   "rightHalfAtHeadEnd": 11.3,
+   "schema": "t180b.core/7"
+  },
+  {
+   "case": "Insert a saved plain piece at the split head",
+   "laid": false,
+   "refused": "JOINT: JOINT: piece 3 (p4): wd starts at 0, the previous piece ends at 3.5 (every road joint must meet smoothly: the same value and slope in every channel)"
+  },
+  {
+   "case": "Delete inside the split run (the step up; then the hold)",
+   "step up (2)": {
+    "laid": true,
+    "pieces": 5,
+    "wdAtJoints": [
+     [
+      0,
+      0
+     ],
+     [
+      0,
+      0
+     ],
+     [
+      0,
+      3.5
+     ],
+     [
+      3.5,
+      0
+     ],
+     [
+      0,
+      0
+     ]
+    ],
+    "schema": "t180b.core/7"
+   },
+   "hold (3)": {
+    "laid": true,
+    "pieces": 5,
+    "wdAtJoints": [
+     [
+      0,
+      0
+     ],
+     [
+      0,
+      0
+     ],
+     [
+      0,
+      3.5
+     ],
+     [
+      3.5,
+      0
+     ],
+     [
+      0,
+      0
+     ]
+    ],
+    "schema": "t180b.core/7"
+   }
+  },
+  {
+   "case": "Smooth ramps on a road with a split run",
+   "laid": true,
+   "wdKept": true,
+   "splitFlagsKept": true
+  },
+  {
+   "case": "Sculpt: a width brush (+2 m) on the held split piece",
+   "message": "brush widened to 60 m (asked 30 m), so the track outside it stays exactly as it was · the brush was widened from 30 m to 60 m, 3 knot spans, the smallest that moves whole control points",
+   "wdUnchanged": true,
+   "rightMid": [
+    11.3,
+    12.243
+   ],
+   "leftMid": [
+    9.55,
+    10.493
+   ]
+  }
+ ],
+ "W": [
+  {
+   "case": "narrow right: w 20, wd -18 (right side 2 m, half 1 m)",
+   "laid": true,
+   "schema": "t180b.core/7",
+   "endLeft": 10,
+   "endRight": 1,
+   "minRight": 1
+  },
+  {
+   "case": "right side 0: w 20, wd -20",
+   "laid": false,
+   "refused": "BAD_WIDTH: BAD_WIDTH: piece 1 (p2): the road's right side must be wider than 0 m, but its width plus wd is 0 m at a control point (the right side is w + wd)"
+  },
+  {
+   "case": "wide right: w 10, wd +40 (right half 25 m)",
+   "laid": true,
+   "schema": "t180b.core/7",
+   "endLeft": 5,
+   "endRight": 25,
+   "minRight": 11.613
+  },
+  {
+   "case": "a cup piece (c 30) with wd +6",
+   "laid": true,
+   "schema": "t180b.core/7",
+   "endLeft": 8,
+   "endRight": 11,
+   "minRight": 8.103
+  },
+  {
+   "case": "an edge piece (e 25, er 10, s 0.6) with wd +6",
+   "laid": true,
+   "schema": "t180b.core/7",
+   "endLeft": 8,
+   "endRight": 11,
+   "minRight": 8.992
+  },
+  {
+   "case": "the flat family with wd +6",
+   "laid": true,
+   "schema": "t180b.core/7",
+   "endLeft": 8,
+   "endRight": 11,
+   "minRight": 8.992
+  }
+ ],
+ "C": [
+  {
+   "case": "split all the way round (wd 3 from the start)",
+   "converged": true,
+   "closed": true,
+   "schema": "t180b.core/7",
+   "seamWd": [
+    3,
+    3
+   ],
+   "splitFlags": 8
+  },
+  {
+   "case": "split in the middle only (wd 0 -> 4 -> 0)",
+   "converged": true,
+   "closed": true,
+   "schema": "t180b.core/7",
+   "seamWd": [
+    0,
+    0
+   ],
+   "splitFlags": 3
+  },
+  {
+   "case": "Bank the lap on a lap split all the way round",
+   "message": "banked the lap: 8 pieces (p1, p2, p3, p4, p5, p6, p7, p8), up to 66.5° into their turns; the route did not move (Ctrl+Z takes the bank back)",
+   "changed": true,
+   "wdKept": true
+  }
+ ],
+ "X": [
+  {
+   "case": "pass clearance reads the widened side (its own section of a split segment)",
+   "exports": [
+    "passClearance",
+    "CAR_MARGIN_M",
+    "SEPARATION_M",
+    "_internal"
+   ],
+   "segRight": 11.3,
+   "segLeft": 9.55,
+   "expectRight": 11.3,
+   "expectLeft": 9.55
+  },
+  {
+   "case": "the test export of a split road with a pit lane on its right: written, its AI line sides, the lane",
+   "pitMessage": "BAD_PIT_LANE: pitLane: missing divergeM, mergeM, speedKmh",
+   "files": 11,
+   "pitFiles": [],
+   "lengthM": 1120,
+   "aiAt": {
+    "straight60m": {
+     "left": 9.55,
+     "right": 9.55
+    },
+    "heldStep570m": {
+     "left": 9.55,
+     "right": 11.3
+    },
+    "afterBack860m": {
+     "left": 9.55,
+     "right": 9.55
+    }
+   },
+   "expect": {
+    "left": 9.55,
+    "right": 11.3
+   }
+  }
+ ],
+ "O": {
+  "tracks": {
+   "n": 14,
+   "sameOnBoth": 14,
+   "savedAsOwnText": 12,
+   "refusedOnBoth": 0,
+   "differ": []
+  },
+  "backups": {
+   "n": 11,
+   "sameOnBoth": 11,
+   "savedAsOwnText": 9,
+   "refusedOnBoth": 0,
+   "differ": []
+  },
+  "undoSteps": {
+   "n": 121,
+   "sameOnBoth": 121,
+   "savedAsOwnText": 118,
+   "refusedOnBoth": 0,
+   "differ": []
+  },
+  "editedOnBoth": {
+   "n": 14,
+   "same": 14,
+   "differ": [],
+   "skipped": 2
+  }
+ }
+}

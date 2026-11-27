@@ -1,0 +1,12 @@
+heavy-run status (C:\Consonance\data), read only:
+  EXCLUSIVE HOLD: none
+  slot 1: held by 6e6e002c pid 12084 (P L262: merge the two tips on f3cd425, the tier (touched set + 2 harnesses + 14 mutation harnesses), the build, since 2026-11-27T09:01:41.551Z)
+  slot 2: held by 6fe15f0a pid 33496 (A L261: the 67 that reach handles.js or panel.js, on l-bankcarry-a 7b3926e + the ±720 change (worktree t180-wt-l261-carry), incl. core-bank-carry-mutation B1-B13, since 2026-11-27T09:02:06.278Z)
+heavy-run status (C:\Consonance\data), read only:
+  EXCLUSIVE HOLD: none
+  slot 1: held by 6e6e002c pid 12084 (P L262: merge the two tips on f3cd425, the tier (touched set + 2 harnesses + 14 mutation harnesses), the build, since 2026-11-27T09:01:41.551Z)
+  slot 2: held by 6fe15f0a pid 33496 (A L261: the 67 that reach handles.js or panel.js, on l-bankcarry-a 7b3926e + the ±720 change (worktree t180-wt-l261-carry), incl. core-bank-carry-mutation B1-B13, since 2026-11-27T09:02:06.278Z)
+heavy-run status (C:\Consonance\data), read only:
+  EXCLUSIVE HOLD: none
+  slot 1: held by 6e6e002c pid 12084 (P L262: merge the two tips on f3cd425, the tier (touched set + 2 harnesses + 14 mutation harnesses), the build, since 2026-11-27T09:01:41.551Z)
+  slot 2: held by 6fe15f0a pid 33496 (A L261: the 67 that reach handles.js or panel.js, on l-bankcarry-a 7b3926e + the ±720 change (worktree t180-wt-l261-carry), incl. core-bank-carry-mutation B1-B13, since 2026-11-27T09:02:06.278Z)
