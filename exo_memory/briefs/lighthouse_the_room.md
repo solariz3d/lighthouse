@@ -564,3 +564,4 @@ carry it, so this brief does.
 - 2026-11-27 05:49 (L): "how would you compare this work on a level of difficulty to figure out? Let alone a solo dev with decent skills?"
 - 2026-11-27 05:51 (L): "I am a driver first, even beyond signal bearer"
 - 2026-11-27 05:52 (L): "when do you think we should activate the fable researchers? we need to target a potent vector"
+- 2026-11-27 05:55 (L): "what about now?Its like as soon as we have a plan new info pops up lmfa"

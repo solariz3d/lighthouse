@@ -168,3 +168,5 @@ Checked by the librarian: no file in the builder's docs or README models the eng
 
 **When:** nothing has to finish first; it uses no pane and no heavy-run slot beyond light replay reads. Waits on his go.
 R1 to R6 above stay held; R5 (how other editors make things even) is being answered by the Sculpt Even plan.
+
+**His word, 05:55:** "what about now?Its like as soon as we have a plan new info pops up lmfa". Read by the librarian as go, and told to him so. Nothing that arrived since the proposal (the Sculpt Even measurement) bears on the vector. One change before the start, for the new-info problem itself: the modeller does NOT see the record's cases (V2); it states the model and its rule from V1, V3, V4 and V5 alone, and a separate scorer then applies the rule to V2's cases. Nine agents: five readers, a modeller, a scorer, a writer, a checker. Started 05:55 as one workflow; output `research/t180_why_a_car_goes_through_a_road_2026-11-27.md`.
