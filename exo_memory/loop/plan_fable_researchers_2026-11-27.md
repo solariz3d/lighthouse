@@ -101,3 +101,38 @@ said there to be read from the installed car's `script.lua`, and they equal the 
 file holds limits measured from his own replays (chassis 40 g, proven 90 g, sustained 55 g, top speed 970 km/h).
 **So: the builder knew the car as installed; this seat did not know the builder knew.** What R0 adds is in the note's
 last section, "Against the builder's own car model".
+
+## His idea, 05:26: study each T-180 for differences in clipping potential
+
+> "but one thing we could do that could be briliant, use the researchers to study each t-180 to see potential differences in clipping potential"
+
+**Where it meets the record:** the builder's limits are written per car and filled for one. `src/validate/limits.js:2-3` at
+c522ea6: "Per car, from its open config …; the Mach 6 is the only car FINDINGS measured, so it is the default." His idea
+fills the other rows.
+
+**Scouted by the librarian in the clone (sha 4262dedf), before planning:**
+- The repository holds 14 T-180s (7 by the repository's author, one of them with no data folder; 7 by a second author),
+  2 + 1 prototypes and one other car, over one shared `Source/base`.
+- **No T-180 has its own bottom box, suspension file or tyre file.** The box that meets the road is the base's
+  (`Source/base/data/colliders.ini`: centre 0, 0.2, 0; size 2.0, 0.5, 3.0). The six installed collision meshes I sized are
+  all 12,929 B, so probably one mesh (not hashed yet).
+- **What differs per car is in small add-on files:** `car.addon.ini` (13 cars), `power.lut` (12), `drivetrain.ini` (10),
+  `final.rto` (10), `suspensions.addon.ini` (7), `aero.addon.ini` (6), and `car_config.lua` (13: thrust, drift helper
+  angles, one or two turbines, jack size).
+
+**So the split is by quantity across all 14 cars, not one researcher per car** (they share one base; a per-car reader would
+re-read the same base 14 times). Every car gets a row in every table.
+
+| | reads, for all 14 | gives |
+|---|---|---|
+| C1 | what can touch the road: the box, the collision mesh (hash each installed one), tyre radius, and every per-car suspension and car add-on | how low each car sits and how far it can sink, against the Mach 6 |
+| C2 | what presses the car down and what resists: mass, springs, bump stops, the scripted downforce's per-car cases, the aero add-ons | the load at which each should reach its stops, against the Mach 6 |
+| C3 | what makes it fast: power, gearing, turbines, thrust | each car's speed potential against the Mach 6, since load on a given curve grows with speed squared |
+| C4 | installed against the repository, car by car (versions, the readable installed files; `data.acd` is not unpacked) | which figures above are what he actually drives |
+| then | one writer joins the four tables into `research/t180_cars_clipping_potential_2026-11-27.md`, ranks the cars, and registers a prediction per car; a checker reopens every cited line | |
+
+**The limit, said before it runs:** the source gives POTENTIAL. The Mach 6's 40 g and 47 g were measured from his replay
+(`limits.js`, `chassisG`). For the other 13 the note can only predict a shift from the Mach 6; a lap of his in that car on
+a track he has already measured is what would score it.
+
+Six agents in all. Waits on his go, and on one choice: the cars as installed (v0.12.0), the head, or both.

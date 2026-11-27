@@ -558,3 +558,4 @@ carry it, so this brief does.
 - 2026-11-27 05:16 (L): "do you even understand how a t-180s works from the opensource ohyeah github repo? Maybe we should get a refresher"
 - 2026-11-27 05:17 (L): "you know where to look right? There is a creator named Ohyeah, and has the full project on github for the assetto corsa t-180 mod"
 - 2026-11-27 05:18 (L): "then once we learn more about the cars, thats when we can be closer to asking the right questions, surpirsing to me we got this far without it"
+- 2026-11-27 05:25 (L): "but one thing we could do that could be briliant, use the researchers to study each t-180 to see potential differences in clipping potential"
