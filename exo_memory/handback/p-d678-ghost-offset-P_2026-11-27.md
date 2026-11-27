@@ -258,11 +258,140 @@ My first flat document for the pictures was A's flat turn, with a Sculpt width g
   - Not timed: no timing figures while his game may run.
   - The drag and cheap ghost rows are green.
 
-BASE: Downloads\t180-wt-p-d678 c522ea6 (the packet's base, landing-1127-l263; the branch is 2f3f8b7, 88c4d47, 5127aad on it)
+## 13. Step 2 (added 16:4x): the sibling ghosts mended; the no-preview case on the width hold's tip
 
-SOURCES: exo_memory/loop/packet_t180_sculpt_even_build_on_D_2026-11-27.md (N5, :132); exo_memory/handback/p-d678-even-read-B_2026-11-27.md
-(2.1, 2.4); t180 app/core/coreshell.js, app/preview/trackmodel.js, app/test/ghost-offset.test.js, CHANGELOG.md at 5127aad; the evidence
-folder's TAP files, outputs and pictures named in each section; C:\Consonance\data\push-gate.jsonl (the 22:09:40.570Z row)
+This answers the chair's second N5 step (sent 2026-11-27T22:26:58Z), on the librarian's ruling in
+`exo_memory/loop/packet_t180_sculpt_even_build_on_D_2026-11-27.md`, "Added 16:3x" (`:151-`).
+- Sections 8 and 9 above are what it rules on; they keep their words.
+- The trailer below replaces step 1's. Step 1's lines are in git at dbcba583.
 
-NEXT: librarian read this hand-back and collate it into the D678 pass when it rings; the chair decides on the three sibling ghosts (section 8)
-and the width-grab observation (section 9) when it next routes D678
+### 13.1 The three sibling ghosts, mended on the same branch
+
+Three new rows in `app/test/ghost-offset.test.js`, all on row 4's road (a sideways grab moved the head 1.66 m):
+
+| row | ghost | measured against | at 5127aad | at 8c78a59 |
+|---|---|---|---|---|
+| 5 | Jump (`candidateJump`) | where `jump()` places it | red, **2.4675 m** at s 2098 | green |
+| 6 | the undo ghost (Extend, then Undo) | the track before the Undo | red, **2.5518 m** at s 2100 | green |
+| 7 | the saved piece's ghost (`showPiece`) | where `placePiece` lays it | red, **1.6647 m** at s 2000 | green |
+
+**Row 7's stored piece** lives in a storage held in memory, so nothing is written to disk:
+- One 100 m straight, written by `piece.js` `saveRun` the way Save as piece writes it.
+- The storage answers only what `showPiece` and `placePiece` read: `listPieces`, `openPiece` and the autosave stubs.
+
+**The rows and the mend:**
+- checked: `S\n5s-red-5127aad.tap` (985d3f8, the rows on 5127aad's code) → tests 7, pass 4, fail 3, with the figures above.
+- **The mend (8c78a59) changes one field in each sender**, as section 8 said: `candidateJump`, `undoGhostOf` and `showPiece`'s
+  candidate now hand on `liftFor(<their document>)`, for `d`, `was` and `after` respectively.
+- checked: `S\n5s-green.tap` → tests 7, pass 7.
+- checked: `S\anchors.js` → 51 anchors in `coreshell.js` and `trackmodel.js`, 0 not exactly once.
+- checked: `S\ghost-after2.tap` (8c78a59, section 5's 11 files under heavy-run at BelowNormal) → tests 76, pass 76, fail 0. That is the 69
+  existing rows plus N5's seven.
+- The CHANGELOG's N5 "Fixed" entry now names all three.
+
+### 13.2 Section 9's case on the width hold's tip (15e7d62)
+
+**The setup**
+- A detached worktree at `l264-extend-holds-width-b` 15e7d62, `Downloads\t180-wt-p-d678-hold`. It was clean, and it is removed now.
+- The case is section 9's: A's flat turn, head at 590, with a Sculpt width grab (one rim held) at s 575, over r 30, to 16 m.
+- Then the next 100 m piece, with every field left as shown. The panel sends no target for those:
+  `extendOptions({ length: 100 })` = `{ length: 100, targets: {} }`.
+
+**In node**
+
+checked: `S\noprev.js`, run on c522ea6's core and on 15e7d62 →
+
+| | c522ea6's core | 15e7d62 |
+|---|---|---|
+| the head's width, and how fast it is changing | 14.1259 m, **−0.2635 m per m** | the same |
+| the next piece's ghost | refused: BAD_WIDTH "the road's width must be positive, got -0.1041800000000001 m" | **built** |
+| Extend | refused, same words | placed |
+| the new piece's width at 0, 50 and 100 m | 14.1259, 0.9499, **−12.2261** | 14.1259, 14.1259, 14.1259 |
+| the NEXT line's cup (the readout) | 13.2697° → **−18.2964°** | 13.2697° → 13.2697° |
+
+"c522ea6's core" means this branch's worktree, which changes no file under `src/core`.
+- checked: `git diff c522ea6 HEAD --stat -- src/core` → 0 lines.
+
+**On the page**
+
+checked: `S\pics-hold.out` (15e7d62, one headless page under heavy-run at BelowNormal) → the ghost is shown and read back (346 stations, s0 590).
+
+Read off the pictures, because my script's text read found neither line (`note: null` and `nextLine: null` on this page, so its selector is unproven):
+
+| picture | "no preview" note | ghost | NEXT line |
+|---|---|---|---|
+| `S\pics\n5_before_flatHead-widthgrab_sculpt-off_handles-on.png` (c522ea6) | "no preview of this piece: BAD_WIDTH: the road's width must be positive, got -0.1041800000000001 m" | none | "cup 13.27° → −18.30°" |
+| `S\pics\n5_hold15e7d62_flatW_sculpt-off_handles-on.png` (15e7d62) | none | drawn | "cup 13.27", one value with no arrow |
+
+Both pictures show 14.13 in the width field.
+
+**The librarian's reading holds.**
+- The grab leaves the width falling 0.2635 m per m at the head.
+- At c522ea6, Extend with the fields as shown carries that on: extend.js says a channel with no target "goes on as v + m*s". The width is 0.95 m
+  at 50 m and −12.23 m at 100 m.
+  - inferred: it crosses 0 near 53.6 m (14.1259 / 0.2635).
+- The hold brings the width to rest, and **the preview comes back, in node and on the page.**
+
+**One thing 15e7d62 leaves: the ghost that comes back is off by up to 2 m.**
+- checked: the page's read-back (`S\pics-hold.out`) → the ghost lies **1.0602 m** beside the placed road at the head. It is up to 2.0196 m
+  across and 0.2427 m vertically.
+- That is N5's own fault: 15e7d62 does not carry 5127aad, and the grab moved `l` to −1.0526 m at the head.
+  - inferred: with this branch beside it, the offset is 0. Not run together.
+
+**What the cup does in the NEXT line**
+- The cup does not run on in this case. The width does, and the cup reading follows it.
+- These pieces carry no cup of their own:
+  - checked: `S\legacycup.out` → family `bowl`, `cup` not set.
+  - checked: `S\noprev-*.out` → the `c` channel reads 0 all along the new piece.
+- So the NEXT line's cup is the legacy profile's edge angle, worked from the width (`src/core/readout.js:255`, `D.legacyEdgeDeg(family, w, r)`).
+  - checked: `S\legacycup.out` → `legacyEdgeDeg('bowl', 14.1259, 2.993)` = 13.269704675, and at −12.2261 it is −18.296358650000002.
+  - These are the readout's two numbers exactly.
+- So **13.27° → −18.30° is a width of 14.13 m running to −12.23 m, read as an edge angle.** Hold the width, and the cup reading holds.
+
+**For his question (should cup, bank and edges hold after a brush?), this case is a picture of the width only.**
+- It shows nothing about a cup, bank or edge that a brush left still changing.
+- I tried once to make the cup case in node (`S\cupcase.js`):
+  - The road: cup 20° typed on every piece, then a cup brush (Sculpt off: under Sculpt the c brush at 575 was refused, SCULPT_CHANNEL) at 575, +10.
+  - The brush widened to 56.25 m and left the head's cup at 20°, not changing. So no case of a brushed cup running on was made.
+  - I did not go further: no cup code was asked for, and building that case is a step past the order.
+- inferred: the picture he needs is a brush on a cup the road carries itself (not the legacy edge), whose falloff ends at the head while the cup
+  is still moving.
+
+**A number nobody asked for: the hold's ramp dips.**
+- checked: `S\cupcase-15e7d62.out` (dip) → the new piece's width falls to **13.7237 m at 3.5 m**, 0.4022 m under the head's 14.1259 m. It is
+  back to 14.1259 m by 20 m and holds there.
+- The hold's commit (e112a14) measured 3.7 mm on its own case, where the width at the head was changing at −0.001005 m per m. This head changes
+  0.2635 m per m, 262 times faster.
+  - inferred: the dip grows with the head's rate. The joint keeps the head's slope (that commit: "The joint stays C1 (roadPiece holds the
+    head's value and slope)"), so the width keeps falling for the first metres of the ramp before it turns.
+- That is 40 cm over 20 m on a 14 m road. It is for the hold's builder to weigh; not photographed.
+
+**Also seen:** the checker's red at 556–564 m and amber at 570–576 m, the same in both pictures. That is the grabbed road itself, not this case.
+
+### 13.3 Housekeeping and the branch
+
+- **The headless page:** one page, `--mute-audio`, title `zz-headless-test`, errors 0, fatal none, profile removed.
+  - TabProxyWindows: 0 before and 0 after (`S\tabproxy-before-pics-hold.txt`, `S\tabproxy-after-pics-hold.txt`).
+- **heavy-run:** the page and the 11-file run each waited for a slot, as the chair asked. Each ran on its first try, at BelowNormal, labelled
+  "(not a timing session)".
+- **The node reads** (`noprev.js`, `cupcase.js`, `legacycup.js`) ran lockless as single node processes, with no exclusive hold and no timing
+  session named.
+- **Processes:** checked: a command-line search → 0 left.
+- **The 15e7d62 worktree** was clean, with no links, and was removed with `git worktree remove`.
+- **The credential scan:** checked: the two new commits' 55 added lines and their messages → emails 0, account paths 0, key shapes 0, the
+  reference key's track names 0.
+- **The push:** checked: `git push origin d678-ghost-offset-p` → 5127aad..8c78a59, exit 0.
+  - The push gate's row: 2026-11-27T22:38:16.755Z, allow.
+  - `ls-remote` → 8c78a59c08e3749f2681b14853f5ed4f840a898f = HEAD.
+  - No build, no install, no merge.
+- **The code map** is not changed: no file was created, split or deleted.
+
+BASE: Downloads\t180-wt-p-d678 5127aad (step 2's base; the branch is now 985d3f8, 8c78a59 on it; step 1's base was c522ea6); 15e7d62 (l264-extend-holds-width-b), read only
+
+SOURCES: exo_memory/loop/packet_t180_sculpt_even_build_on_D_2026-11-27.md (N5 :132; "Added 16:3x" :151-); exo_memory/handback/p-d678-even-read-B_2026-11-27.md
+(2.1, 2.4); t180 app/core/coreshell.js, app/preview/trackmodel.js, app/test/ghost-offset.test.js, CHANGELOG.md at 8c78a59; t180 src/core/readout.js:255;
+e112a14's message; the evidence folder's TAP files, outputs and pictures named in each section; C:\Consonance\data\push-gate.jsonl (the 22:09:40.570Z and
+22:38:16.755Z rows)
+
+NEXT: librarian read section 13 and collate it into the D678 pass when it rings; the chair routes the hold's 0.40 m ramp dip (13.2) to the hold's builder,
+and puts the cup-case picture (13.2) to him with his open question, when it next routes D678
