@@ -58,3 +58,13 @@ For item 3, from the librarian (a reading, not his order): "what it was always m
 intent, so the plan says how the test would tell **roughness the author fought** (mesh facets, a kink at a join between two
 modelled stretches, a bank that steps) from **roughness the author chose** (a bump, a crest, a deliberate kink). Smoothing
 the second is a change of design, not a repair. Say which measure separates them, or say that none on disk does.
+
+## Corrected 02:16, by his word (verbatim in the brief, the 02:15 line)
+
+> "when i meant smooth it, i meant the geometry itself. not the track and the bumps"
+
+The 01:31 section above put "roughness the author chose" to him as a caution. He never proposed to touch it. Read item 3
+as his requirement, not a doubt: **smooth the modelled geometry (facets, steps between modelled stretches); keep the track's
+own shape, its bumps and crests included.** The plan still has to say how the tool keeps a bump while removing a facet
+(what length scale or measure separates them, and what it does where it cannot tell), because that is what the requirement
+asks of the build.
