@@ -138,3 +138,33 @@ a track he has already measured is what would score it.
 Six agents in all. Waits on his go, and on one choice: the cars as installed (v0.12.0), the head, or both.
 
 **His word, 05:28:** "maybe use opus researchers for this one, save the fable ones for the big job after". Read as go, on Opus. He did not choose installed, head or both: the librarian's stated default is run, the cars as installed (tag v0.12.0) with a column for what the head changes. Started as one workflow: four readers, a writer, a checker.
+
+## His question, 05:52, and the librarian's proposal (05:53): one vector, why a fast car goes through a road
+
+> "when do you think we should activate the fable researchers? we need to target a potent vector"
+
+**The vector proposed:** what happens, step by step, when a car at these speeds goes through a road, and what a road can do
+about it. Four things from tonight point at this one root:
+- his 05:43 words (the car moves too fast for the game to keep up); as a figure, 0.81 m per 333 Hz step at 970 km/h against a 0.5 m box;
+- the Type A (`research/t180_cars_body_against_box_2026-11-27.md`: a body 0.59 m outside the one collision mesh, drawn 0.10 m low);
+- online play differing, worst on loops and corkscrews (his 05:41 words; no data);
+- the car author's own answer to it being smaller, slower cars (his 05:43 words).
+
+**What is already on disk, so nobody works it out again:** the builder's limits are measured outcomes, not a model:
+`src/validate/limits.js:8-75` (chassis 40 g, sustained 55 g for 0.5 s, proven 90 g); `src/export/catch.js:1-12` (a second road
+surface under the road, built after a replay in which a car held 56 to 62 g on seven passes and on the eighth "went through
+the road 0.4 s after its peak, 2.2 m in three frames"; the road is "one zero-thickness surface (CSP's soft block, MAX_DEPTH 4)").
+Checked by the librarian: no file in the builder's docs or README models the engine's collision step.
+
+**Five readers, one writer, one checker (Fable), each reader a different door to the same question:**
+| | reads | gives |
+|---|---|---|
+| V1 | how the game and the shader patch test a car's box, mesh and tyres against a track each step: the patch's own config files on this machine, the collision library's manual, public sources | the step-by-step mechanism, and the conditions under which a body passes a surface |
+| V2 | the record's own cases: every time a car went through a road in the builder's findings and replay reads | each case re-read per step (depth per step against clearance); the scoring set for the model |
+| V3 | what a road alone can do against it: thickness, catch layers, triangle size, facing, a physics surface that differs from the drawn one; from physics-engine practice and other fast-vehicle games | measures the builder could apply at export, each with what it costs |
+| V4 | loops and corkscrews: how fast the road's facing turns per step at speed, against the builder's roll-rate lines | the geometric quantity that should predict clipping there |
+| V5 | online: what is fixed or forced for the driver's own car on a server; then the design of the local-server pair of laps | what could differ, and the experiment that would show it |
+| then | the writer states one per-step model and REGISTERS what it predicts for V2's cases before scoring it against them; the checker reopens the citations | |
+
+**When:** nothing has to finish first; it uses no pane and no heavy-run slot beyond light replay reads. Waits on his go.
+R1 to R6 above stay held; R5 (how other editors make things even) is being answered by the Sculpt Even plan.
