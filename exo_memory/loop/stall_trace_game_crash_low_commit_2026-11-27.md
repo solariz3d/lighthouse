@@ -67,3 +67,20 @@ exception record and the module list). Checked:
 **What would find it:** every crash report on D read with the same script. If the replay ones share one address in
 Custom Shaders Patch 0.2.11, that address with the reports is what its author can act on; it is not a thing the builder
 can patch. Owed to D, at his word.
+
+## SECOND CORRECTION, 04:53 (clock read, not guessed; the "04:58" above was about 04:51): L holds 12 crash reports, not 2
+
+I had listed the folder's six newest files and counted two. All 12 read with `_evidence/mdmp.js` (`node mdmp.js <dump>`;
+each report is a zip holding the dump, the game's log and `race.ini`). Checked:
+
+| reports | exception | where | at what moment | on |
+|---|---|---|---|---|
+| **11** (09-13 x3, 11-01 x2, 11-18 x5, 11-20) | access violation, read of 0x90 | `acs.exe + 0x2A62EC` (8) or `+ 0x2A62E0` (3) | loading the track's `ai/fast_lane.ai` | [another author's T-180 test track] 6; his own builder exports 5 ([one] 2 on 11-01, [another] 3 on 11-18) |
+| **1** (tonight) | access violation, read of 0x7ECD002DB414 | Custom Shaders Patch `dwrite.dll + 0x101C3F3`, 0.2.11.0 | the switch to the replay after a lap | his own export, no AI line |
+
+- **The 11 are the fault already on record:** `briefs/t180_export_ai_line.md` (opened 2026-11-18; `AISpline::calculateNormals`
+  on a near-vertical step of the exported line; exporter fix on `l217-ai-line` 102496e) and
+  `handback/p-d603-laniakea-C_2026-11-01.md`. **Not in that brief, as far as a grep shows:** 6 of the 11 are on a track the
+  builder did not make, with that track's own AI line (382,736 B, a `.bak` of the same size beside it). Not opened further.
+- **Tonight's is the only report of the replay fault on L.** One report is no pattern; his desktop is where a pattern could be read.
+- All 12 are with the same car, one car on track.

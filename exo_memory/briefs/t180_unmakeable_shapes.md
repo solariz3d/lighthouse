@@ -93,3 +93,4 @@ degrees into the new 360 you know? 5. Not sure, what is smoothness limit?"
   - State: the export from the second test build drove the same as before (his word). The crash is traced in `loop/stall_trace_game_crash_low_commit_2026-11-27.md`; not the track, by the game's log.
 - 04:49 (L), his words: "the same bug sometimes rarely happens on my desktop too with more ram 64gb, so idk if its that, ever since i started to race t-180s on assetto it has always been a rare transient problem with the replays, could be big to some how patch for the community but good luck finding that"
   - State: the librarian's memory cause is refuted (trace file, its CORRECTION section). The fault is in Custom Shaders Patch 0.2.11 at the replay switch. Not builder work; a census of D's crash reports is the next step if he wants it.
+- 04:51 (L), his words: "i have a feeling all of csp is a shitshow of human slop lmfao but it works"
