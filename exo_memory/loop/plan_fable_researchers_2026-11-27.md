@@ -49,3 +49,29 @@ Left out on purpose: the replay crash (dropped by him at 04:56); the exported AI
 - Cost: not measured. A guess of the librarian's: four or five researchers and one checker, some millions of tokens
   together. The usage ledger will say after.
 - Each note goes to the pane whose plan it feeds, through the chair, as a pointer.
+
+## Revised 05:15, at his word: "wait lets plan again how to use the researchers right if we figured new shit out"
+
+**What is new since the table above** (each with its file):
+- R3 as written is mostly answered: pane A's prototype brings a run to a value with 0.0000 m of spread
+  (`loop/plan_t180_sculpt_even_2026-11-27.md`, sections 1 and 2). What that plan leaves open is not the mathematics: the
+  ramp's length (its call 3, "30 m as a first guess"), a closed lap's seam, and the ROUTE "even", a hand-bent turn made a
+  true arc (its call 8).
+- A's read of other editors reached three pages; one was refused (the same plan, section 5).
+
+**The librarian's reading, to be confirmed by him, not a finding:** three open things are one question asked three times.
+The follow tool (a measured road into clean pieces), "smooth the geometry, keep the bumps", and a hand-bent turn made
+even are each "from a rough curve to the clean one it was meant to be". If so, the researchers are best spent on that one
+question from different sides, and less on scattered ones.
+
+| | question | feeds | change |
+|---|---|---|---|
+| R1 | A measured or hand-shaped line into the fewest straights, arcs and easing curves inside a tolerance, and where one element ends and the next begins | the follow tool; class 1's open cause; the route "even" (A's call 8) | sharpened: now also his own hand-bent turns |
+| R2 | Modelled roughness against designed shape, as scales and as a number | the follow tool's addendum and its registered smoothing test | kept |
+| R3 | How long an easing has to be: the rules road, rail and ride designers use for how fast a bend, a bank or a width may change at a given speed | the ramp length in Even (A's call 3); the bank's ramps (`loop/plan_t180_smooth_banked_turns_2026-11-24.md`) | REPLACES the mathematics question |
+| R4 | Timing tests that sit at their limits | the timing rows read by hand at every landing | kept |
+| R5 | How spline road and track editors let a user make things even, constrain them and snap them, and what their users complain of | a Sculpt refactor (`handback/p-l260-sculpt-carry-A_2026-11-27.md`, "For a refactor of Sculpt"); goes past A's three pages | NEW |
+| R6 (optional) | What authors and communities ask of derived work | his open call on naming a reference's author | was R5 |
+
+Still nothing started. Asked of him: whether the playdough picture was about the SHAPE of the curve as well as its width
+(it decides whether R1 covers his own turns), and which of these he wants.

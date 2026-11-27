@@ -554,3 +554,4 @@ carry it, so this brief does.
 - 2026-11-27 00:23 (L), his words: "back, there should be the relevant handoffs and points to start the work back up from where desktop left off", then "for track builder too". D's room handoff read (`loop/handoff_lighthouse_2026-11-26-D.md`): nothing of the room is in motion; one call of his is open there (end only your own processes, by pid).
 - 2026-11-27 05:11 (L): "we have tons of usage to use, do you think you wanna do a small gathering of fable researchers to help in some way? Lets plan on how they help first"
   - State: a plan for his yes, `loop/plan_fable_researchers_2026-11-27.md`. Nothing started.
+- 2026-11-27 05:14 (L): "wait lets plan again how to use the researchers right if we figured new shit out"
