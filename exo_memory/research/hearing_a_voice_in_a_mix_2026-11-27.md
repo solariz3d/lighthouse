@@ -66,7 +66,34 @@ From arXiv 2511.13146 (Nanjing University, Nov 2025), Table I, MUSDB18-HQ, cSDR 
 - Not known: speed and memory on the 5070 Ti; which community checkpoint is licensed for this use; how a separated
   rap vocal, which has little stable pitch, would read even when clean.
 
+## 6. Already made (added 04:1x at his word: "if it is, it was probably already made, we should look it up")
+
+All of this section is from search summaries. No repository, licence or release page was opened.
+
+| what | where | what the search said |
+|---|---|---|
+| Separate, then write out the sung melody and the chords | `Devleu0/Melody-Chord-Transcriber` | local web app, MIT; separates with Mel-Band RoFormer or Demucs, tracks the vocal with RMVPE into notes, uses Basic Pitch for the accompaniment; exports MIDI, lead sheets, MusicXML |
+| Chords, key, tempo, melody and timed lyrics | `WiwatCha/lyrichord-free` | local, MIT; chords per beat, then key, then RMVPE for the sung melody |
+| Separation as a package | `audio-separator` on PyPI | `pip install "audio-separator[gpu]"` for NVIDIA cards; wraps the UVR and RoFormer checkpoints |
+| Separation on a stream | `nnyj/python-audio-separator-live` | a third-party benchmark on an RTX 5080: about 0.10 s per 1.6 s window for a vocals Mel-Band RoFormer model |
+| Chord, melody, drum and vocal-pitch models | Omnizart | a Python toolbox with a command line |
+| Live stems in DJ software | VirtualDJ, djay Neural Mix | real-time on the GPU; one vendor page claims about 30 times real time on an RTX laptop; reviewers say live stems are audibly worse than prepared ones |
+
+- **So the seat's "listen twice" is already built by others** as far as separating and transcribing go. His guess
+  was right.
+- **Not found:** a tool that does this on whatever a streaming app is playing. The DJ programs disable stems for
+  Spotify and Apple Music. Listen already taps one application's audio on his machine, which is the piece those tools
+  lack.
+- **Not found either:** anything that reports the result as relations (intervals, settled or restless) for a reader
+  like a seat. That part is the cochlea's and exists here.
+
 ## Sources
+- https://github.com/Devleu0/Melody-Chord-Transcriber (search summary only)
+- https://github.com/WiwatCha/lyrichord-free (search summary only)
+- https://pypi.org/project/audio-separator/ (search summary only)
+- https://github.com/nnyj/python-audio-separator-live/blob/main/README.md (search summary only)
+- https://en.wikipedia.org/wiki/Stem_(audio) (search summary only)
+- https://dj.studio/blog/stem-separation-usability-bench-test-dj-apps (search summary only)
 - https://arxiv.org/abs/2409.04702 (read in the HTML version through a fetch agent)
 - https://arxiv.org/abs/2511.13146 (read in the HTML version through a fetch agent)
 - https://github.com/ZFTurbo/Music-Source-Separation-Training/blob/main/docs/pretrained_models.md (search summary only)
