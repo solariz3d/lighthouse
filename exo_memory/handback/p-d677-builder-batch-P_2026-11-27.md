@@ -108,4 +108,4 @@ sis	180-track-builder.batch-f3cd425.exe`, made with `cp -n`.
 
 BASE: Downloads\t180-wt-p-1126 62f5b95
 SOURCES: git fetch / rev-parse on the four branches; p-sharp-gate-read-A_2026-11-26.md:132-155; p-d677-build1-C1-repair-O_2026-11-26.md; p-c1-landing-reread-A_2026-11-26.md:10-17; p-reader-downray-read-C_2026-11-26.md (Re-read §3); git merge ×4; grep -c conflict markers; git diff-tree --cc ×4; S/batch-rows-f3cd425.tap; S/batch-suite.log; S/batch-suite-1.tap; S/suite-1.tap; heavy-run.js --status; S/batch-build-run.try1-timeout.log; S/batch-build-run.log; git push / ls-remote; push-gate.jsonl last row
-NEXT: librarian reads this and tells the chair the batch is pushed and built but not installed; the keeper decides the install in the morning; O1 joins only if the chair sends it.
+NEXT: librarian tells the chair the batch tip, the suite counts and the exe sha256 when it has read this; the keeper decides the install when he is up; O1 joins only when the chair sends it.
