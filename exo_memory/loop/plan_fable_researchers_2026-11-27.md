@@ -230,3 +230,18 @@ timing session". Output: `research/t180_what_separates_a_break_2026-11-27.md` wi
 names stay out; replays are read, never copied into the repo.
 
 **What it cannot settle:** the Type A (no replay), and online against offline (every replay here is his own session).
+
+**His words, 13:35 (D):** "could be good, i swear on one of our tracks or a track cant remember, maybe thunderhead, i recorded
+like half of the t-180s in a lap time replay with telemetry already". Not a go.
+
+**Checked at 13:3x (the same parser, every replay on D):** they are here. On the night of 2026-10-30 to 10-31, on one of his
+own builder-made tracks and its stiffer-road copy, single-car replays of the Augury, Demo (2), Gigerbon, GRX (3), Hangul and
+Krysha (2), plus a GRX and a Mach 6 Active on two test tracks; earlier, 2 Talon and 1 Gladiator replays on other tracks. Nine
+T-180 kinds besides the Mach 6, 15 replays. None is the Type A or the Fumee. They are from the night of the H563 study, so
+some of its seven passes may be these cars; the census says which.
+
+**So a third registration, P3, the cars:** the per-car study found one collision box, one tyre, one spring and one mass for
+all 14 (`research/t180_cars_clipping_potential_2026-11-27.md`). If that is the whole story, then on the same track, at the same
+sink speed, no car breaks more often than another. *It fails* if one car breaks at a sink speed where the others hold, on at
+least three passes; then something that differs between cars (thrust, wheel placement, the fin) is doing it, and the study
+names which differs for that car.
