@@ -321,7 +321,8 @@ there is no switch for it.
 landing window 14 minutes before the word reached it. A file every runner reads binds at once.
 
 **The rule that goes with it:**
-- **Take the exclusive hold for** a timing session and a landing's quiet window.
+- **Take the exclusive hold for** a timing session and a landing's quiet window, and mark a timing session with `--timing` as well
+  (D678 N1, below).
 - **Run these through heavy-run too:** Blender bakes and any game run over 10 seconds (the ordinary lock, `--run` without
   `--exclusive`, or `hold({ cmd })` in a node wrapper). A run that never takes heavy-run is not stopped by the hold; A's Blender runs
   and the short `dz-world` runs did not, which is how unlocked load reached P's window.
@@ -332,10 +333,16 @@ landing window 14 minutes before the word reached it. A file every runner reads 
 **What.** `node consonance/tools/heavy-run.js --status` prints the holder of the exclusive hold and of each slot (seat, pid, command,
 since), judged by the same rules `--run` applies: a dead holder, a young lock's second witness, a reused pid, a hold past 90 minutes,
 the caller's own hold. It reads only: it takes no slot, moves or writes no file and posts nothing. **It exits 1 while an exclusive
-hold stands, or while a live slot of another run names a timing session,** and prints a `GATE: exit 1 — …` line saying which; 0
-otherwise (slots may still be held); 2 when it cannot read the data dir. A command names a timing session when the word "timing" (any
-case) is left after every "not a timing …" phrase is taken out: "TIMING SESSION", "TIMING MEASURE" and "PACING CHECK (TIMING)" count,
-"(not a timing session)" does not.
+hold stands, or while a live slot of another run is marked a timing session,** and prints a `GATE: exit 1 — …` line saying which; 0
+otherwise (slots may still be held); 2 when it cannot read the data dir.
+
+**A timing session says it is one (D678 N1, pane O, 2026-11-27).** `--run --timing`, or `hold({ cmd, timing: true })` from node,
+writes `"timing": true` into the run's slot lock, and `--status` shows it on that slot's line (`— a timing session (--timing)`). The
+`--cmd` label is **never read** for this, whatever it says. Until 11-27 the label was read: "timing" counted unless it followed "not a",
+and "(read, not timing)" closed this gate on every seat for six minutes (`exo_memory/handback/p-d678-ripple-read-E_2026-11-27.md` §9). A
+phrase rule's list of negations is always one behind, so the label is now prose only. A run whose label mentions timing without
+`--timing` is told so on stderr when it starts. A timing session also takes `--exclusive`; the two are separate flags. The rule and what
+broke under it: `exo_memory/handback/p-d678-heavyrun-stalls-O_2026-11-27.md`.
 
 **Run it before any run, light or heavy, and run nothing while it exits 1:**
 
@@ -359,7 +366,13 @@ quoted around. The script's own exit code is the run's.
 
     node consonance/tools/heavy-run.js --run --priority belownormal --cmd "<what>" -- <file.cmd> [args]
 
-Add `--exclusive` for a timing session or a landing's quiet window.
+Add `--exclusive` for a landing's quiet window, and `--exclusive --timing` for a timing session.
+
+**`cmd C:/` is refused (D678 N1).** Typed from Git Bash, `-- cmd /c <file>` reaches node as `cmd C:/ <file>`: cmd.exe with no `/c`, an
+interactive shell that waits on its input and holds the slot until someone stops it (three times,
+`exo_memory/loop/stall_trace_lockbn_cmd_c_mangled_2026-11-12.md`). `--run` refuses cmd or cmd.exe given a bare drive (`C:/`, `C:\`,
+`C:`) before its first `/c` or `/k`, with exit 2, before any slot is waited on, and says what to type instead: the script given to
+`--run` itself, `cmd //c …`, or `MSYS_NO_PATHCONV=1`. A drive after the switch is the command's own argument and passes.
 
 **What it cannot remove.** Git Bash rewrites an argument that begins with a slash into a path before node sees it, so a script's own
 switches go as words or with a dash, never `/x`. And a broken `start` or `cmd /c` line *inside* a script is not caught here; the guard

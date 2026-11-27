@@ -421,7 +421,7 @@ function acquire({
   cmd, dataDir, env = process.env, slots, tree, onClaim, beforeClaim, beforeTake,
   maxWaitMs = Number(process.env.CONSONANCE_HEAVY_WAIT_MS) || MAX_WAIT_MS, pollMs = POLL_MS,
   alive = pidAlive, confirmGone = pidGone, identify = processIdentity, log = (s) => process.stderr.write(s + '\n'), now = () => Date.now(), sleep = sleepSync,
-  writes, diskFree = freeBytes, diskTotal = janitorTotal, heavy, exclusive = false, holdMaxMs = HOLD_MAX_MS, holdOnly = false, pauseMs,
+  writes, diskFree = freeBytes, diskTotal = janitorTotal, heavy, exclusive = false, holdMaxMs = HOLD_MAX_MS, holdOnly = false, pauseMs, timing = false,
   idleSample = idleSampleTree, idleReport, idleWindowMs = IDLE_WINDOW_MS, idleCpuS = IDLE_CPU_S,
 } = {}) {
   let dir = dataDir === undefined ? manifestDataDir() : dataDir;
@@ -617,6 +617,7 @@ function acquire({
       const k = free[0], file = slotFile(dir, k);
       const rec = { pid: process.pid, seat: seatName(env), cmd, tree: myTree, started: new Date(now()).toISOString(), token, image: self.image, holder_start: self.holder_start };
       if (tookOver) rec.took_over = tookOver;
+      if (timing === true) rec.timing = true;   // D678 N1: a timing session SAYS it is one (--timing); --status gates on this mark, never on the label
       if (beforeClaim) beforeClaim({ slot: k, file });   // a seam for the tests: the instant between looking and claiming
       let fd;
       try { fd = fs.openSync(file, 'wx'); } catch (e) { if (e.code === 'EEXIST') continue; throw e; }
@@ -677,6 +678,9 @@ function acquire({
 /** Take the lock for this process (waiting as acquire does) and release it on exit, error and signal. On a timeout or a
  *  refusal the process EXITS here, loudly — the runner never starts. */
 function hold(opts = {}) {
+  // D678 N1 (pane O): a label is never read for a timing session, so a label that says "timing" without the mark is told so, at once, to the one
+  // who wrote it. The note gates nothing: a spurious one costs a line.
+  if (opts.timing !== true && /\btiming\b/i.test(String(opts.cmd || ''))) process.stderr.write('heavy-run: note: this label mentions timing, but a label is not read for that: only --timing (hold({ timing: true }) from node) marks a timing session, so this run does not gate another seat\'s --status. A timing session also takes --exclusive (GATES.md). If it is not one, nothing to do; "(not a timing session)" is no longer needed.\n');
   let h;
   try { h = acquire(opts); } catch (e) {
     process.stderr.write(e.message + '\n');
@@ -723,8 +727,9 @@ function status({ dataDir, env = process.env, slots, alive = pidAlive, confirmGo
     const file = slotFile(dir, k), h = readLock(file);
     if (h === null && k > n) continue;   // the slots above the count are shown only when a lock sits in one (a runner told to use fewer still honours it)
     const x = { k, holder: h, ...judge(file, h) };
-    // COMMITTEE.md: "while a lock's cmd names a timing session, run nothing". A live slot of another run that names one gates like a hold.
-    x.timing = x.state === 'held' && namesTimingSession(h.cmd) && !(h.token && h.token === env[TOKEN_ENV]);
+    // A live slot of another run MARKED a timing session (timing: true, written by --timing) gates like a hold. The label is never read for it
+    // (D678 N1, pane O): "(read, not timing)" closed this gate on every seat on 11-27, because a phrase rule's negation list is always one behind.
+    x.timing = x.state === 'held' && h.timing === true && !(h.token && h.token === env[TOKEN_ENV]);
     if (x.timing) out.timingSlots.push(k);
     out.slots.push(x);
   }
@@ -741,14 +746,8 @@ function status({ dataDir, env = process.env, slots, alive = pidAlive, confirmGo
   return out;
 }
 
-/** A command NAMES A TIMING SESSION when the word "timing" (any case) is left after every "not a timing …" phrase is taken out. Counted:
- *  "TIMING SESSION", "TIMING MEASURE", "PACING CHECK (TIMING)". Not counted: "(not a timing session)", a command without the word. */
-function namesTimingSession(cmd) {
-  return /\btiming\b/i.test(String(cmd || '').replace(/\bnot an? timing\b/gi, ''));
-}
-
 /** The --status report: one line for the hold, one per slot, and a GATE line saying why when the exit is 1. Returns { text, code }: code 1
- *  while an exclusive hold stands or a live slot of another run names a timing session, else 0. */
+ *  while an exclusive hold stands or a live slot of another run is marked a timing session (--timing), else 0. */
 function statusReport(s) {
   const who = (h) => (h && !h.unreadable ? describe(h) : `an unreadable file (${h && h.unreadable})`);
   const H = s.hold;
@@ -759,13 +758,13 @@ function statusReport(s) {
   else if (H.state === 'ignored') lines.push(`  EXCLUSIVE HOLD: IGNORED by runners — ${who(H.holder)} is ${mins(H.age_ms)} old, past the ${mins(H.limit_ms || HOLD_MAX_MS)} maximum`);
   else lines.push(`  EXCLUSIVE HOLD: stale (${H.stale}) — ${who(H.holder)}; the next runner takes it over`);
   for (const x of s.slots) {
-    if (x.state === 'held') lines.push(`  slot ${x.k}: held by ${who(x.holder)}${x.note ? ` (${x.note})` : ''}`);
+    if (x.state === 'held') lines.push(`  slot ${x.k}: held by ${who(x.holder)}${x.holder && x.holder.timing === true ? ' — a timing session (--timing)' : ''}${x.note ? ` (${x.note})` : ''}`);
     else if (x.state === 'writing') lines.push(`  slot ${x.k}: being claimed this instant (unreadable, young)`);
     else lines.push(`  slot ${x.k}: free${x.stale ? ` (a stale lock, ${x.stale}: ${who(x.holder)}; the next runner takes it over)` : ''}`);
   }
   const why = [];
   if (s.holdStands) why.push('an exclusive hold stands');
-  for (const k of s.timingSlots || []) why.push(`slot ${k} names a timing session`);
+  for (const k of s.timingSlots || []) why.push(`slot ${k} is marked a timing session (--timing)`);
   if (why.length) lines.push(`  GATE: exit 1 — ${why.join('; ')}. Run nothing, light or heavy.`);
   return { text: lines.join('\n') + '\n', code: why.length ? 1 : 0 };
 }
@@ -782,8 +781,21 @@ module.exports = { describeHolder: describe, status, statusReport, gamesIn, read
 // a child keeps only below normal and idle of its creator's class (CreateProcessW, dwCreationFlags), so those are the two accepted.
 const SCRIPT_RE = /\.(cmd|bat)$/i;
 const CMD_META = /[&|<>^%"]/;
+// D678 N1 (pane O): `cmd C:/`. Git Bash rewrites a lone `/c` into `C:/` (and /d, /s, /k into D:/, S:/, K:/) before node sees it, so a typed
+// `-- cmd /c <file>` arrives as `cmd C:/ <file>`: cmd.exe with no /c, an interactive shell that waits on its input with no CPU and holds the slot
+// until someone stops it (B 11-12 6 min, E 11-13 40 min, A 11-27 13 min: loop/stall_trace_lockbn_cmd_c_mangled_2026-11-12.md). A bare drive
+// before cmd's first /c or /k is that rewrite, and --run REFUSES it before any slot is waited on. A drive after the switch is the command's
+// own argument (cmd /c dir C:/) and passes. Returns the drives found, or null.
+const CMD_EXE_RE = /^cmd(\.exe)?$/i, DRIVE_ARG_RE = /^[A-Za-z]:[\\/]?$/, CMD_RUN_SWITCH_RE = /^\/[ck]$/i;
+function mangledCmd(prog) {
+  if (!prog.length || !CMD_EXE_RE.test(path.win32.basename(prog[0]))) return null;
+  const rest = prog.slice(1), sw = rest.findIndex((a) => CMD_RUN_SWITCH_RE.test(a));
+  const drives = (sw < 0 ? rest : rest.slice(0, sw)).filter((a) => DRIVE_ARG_RE.test(a));
+  return drives.length ? drives : null;
+}
 const PRIORITIES = { belownormal: 'PRIORITY_BELOW_NORMAL', idle: 'PRIORITY_LOW' };
-const RUN_USAGE = 'heavy-run: usage: node heavy-run.js --run [--exclusive] [--priority belownormal|idle] --cmd "<what>" -- <program|script.cmd> [args...]\n'
+const RUN_USAGE = 'heavy-run: usage: node heavy-run.js --run [--exclusive] [--timing] [--priority belownormal|idle] --cmd "<what>" -- <program|script.cmd> [args...]\n'
+  + '  --timing marks a timing session: another seat\'s --status exits 1 while it runs. The --cmd label is never read for that.\n'
   + '  A .cmd or .bat is started by heavy-run itself, from an argument list: never compose `start ... cmd /c ...` by hand.\n'
   + '  --priority is set before anything starts, so all the run starts inherits it.\n'
   + '  From Git Bash, an argument that begins with a slash is rewritten into a path before node sees it: pass a script\'s own switches as words or with a dash.\n';
@@ -793,6 +805,13 @@ function runCli(argv, { spawn = spawnSync, setPriority = (p) => require('os').se
   const ci = flags.indexOf('--cmd');
   const cmd = ci >= 0 ? flags[ci + 1] : undefined;
   if (!prog.length || !cmd) { process.stderr.write(RUN_USAGE); return 2; }
+  const drives = mangledCmd(prog);
+  if (drives) {
+    process.stderr.write('heavy-run: refused: `' + path.win32.basename(prog[0]) + ' ' + drives.join(' ') + '`. Git Bash rewrote cmd\'s switch (/c, /d, /s or /k) into a drive before node saw it, '
+      + 'and cmd.exe without /c is an interactive shell that waits on its input and holds the slot until someone stops it (three times: exo_memory/loop/stall_trace_lockbn_cmd_c_mangled_2026-11-12.md). '
+      + 'Type instead: give the script to --run itself, `-- <file.cmd> [args]` (heavy-run starts it with /c, from an argument list); or write `cmd //c ...`; or set MSYS_NO_PATHCONV=1 before the line. Not running.\n');
+    return 2;
+  }
   const pi = flags.indexOf('--priority');
   const prio = pi >= 0 ? flags[pi + 1] : undefined;
   if (pi >= 0 && !Object.prototype.hasOwnProperty.call(PRIORITIES, prio)) {
@@ -815,7 +834,7 @@ function runCli(argv, { spawn = spawnSync, setPriority = (p) => require('os').se
     try { setPriority(require('os').constants.priority[PRIORITIES[prio]]); }
     catch (e) { process.stderr.write(`heavy-run: --priority ${prio} could not be set (${e.message}). Not running.\n`); return 2; }
   }
-  hold({ cmd, exclusive: flags.includes('--exclusive') });
+  hold({ cmd, exclusive: flags.includes('--exclusive'), timing: flags.includes('--timing') });
   const r = spawn(program, args, opts);
   if (r.error) { process.stderr.write(`heavy-run: could not start ${prog[0]}: ${r.error.message}\n`); return 2; }
   return r.status === null ? 1 : r.status;

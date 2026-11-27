@@ -2,8 +2,8 @@
   "_": "Exemption list for portable-paths.js. Every entry is a site that EXISTS today. A site not listed here fails the guard. Removing a site from the code and re-running --update is always welcome; adding one requires a deliberate --update and shows up in the diff.",
   "generated_by": "node consonance/tools/portable-paths.js --update",
   "counts": {
-    "BENIGN-TEST": 426,
-    "BENIGN-FIXTURE": 12,
+    "BENIGN-TEST": 432,
+    "BENIGN-FIXTURE": 15,
     "REVIEW": 8,
     "DISGUISED": 15,
     "BENIGN-MESSAGE": 4,
@@ -2353,6 +2353,27 @@
       "key": "consonance/tools/head-watch.js\u0000os.homedir(), '.claude', 'projects', 'C--Consonance-instances-main', `${MAIN_SID}.jsonl`);\u0000#1"
     },
     {
+      "file": "consonance/tools/heavy-run.mutants.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-FIXTURE",
+      "text": "['run: `cmd C:/` runs (an idle shell holds the slot)', SRC, ' const drives = mangledCmd(prog);', ' const drives = null;'],",
+      "key": "consonance/tools/heavy-run.mutants.js\u0000['run: `cmd C:/` runs (an idle shell holds the slot)', SRC, ' const drives = mangledCmd(prog);', ' const drives = null;'],\u0000#1"
+    },
+    {
+      "file": "consonance/tools/heavy-run.mutants.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-FIXTURE",
+      "text": "['run: a drive AFTER /c is refused too (cmd /c dir C:/)', SRC, '(sw < 0 ? rest : rest.slice(0, sw))', 'rest'],",
+      "key": "consonance/tools/heavy-run.mutants.js\u0000['run: a drive AFTER /c is refused too (cmd /c dir C:/)', SRC, '(sw < 0 ? rest : rest.slice(0, sw))', 'rest'],\u0000#1"
+    },
+    {
+      "file": "consonance/tools/heavy-run.mutants.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-FIXTURE",
+      "text": "['run: only cmd.exe written with .exe is known (a bare `cmd C:/` runs)', SRC, 'CMD_EXE_RE = /^cmd(\\\\.exe)?$/i', 'CMD_EXE_RE = /^cmd\\\\.exe$/i'],",
+      "key": "consonance/tools/heavy-run.mutants.js\u0000['run: only cmd.exe written with .exe is known (a bare `cmd C:/` runs)', SRC, 'CMD_EXE_RE = /^cmd(\\\\.exe)?$/i', 'CMD_EXE_RE = /^cmd\\\\.exe$/i'],\u0000#1"
+    },
+    {
       "file": "consonance/tools/heavy-run.test.js",
       "detector": "DRIVE",
       "verdict": "BENIGN-TEST",
@@ -2377,6 +2398,20 @@
       "file": "consonance/tools/heavy-run.test.js",
       "detector": "DRIVE",
       "verdict": "BENIGN-TEST",
+      "text": "assert.match(r1.stdout, /ran C:\\//);",
+      "key": "consonance/tools/heavy-run.test.js\u0000assert.match(r1.stdout, /ran C:\\//);\u0000#1"
+    },
+    {
+      "file": "consonance/tools/heavy-run.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.match(r2.stdout, /ran D:\\//);",
+      "key": "consonance/tools/heavy-run.test.js\u0000assert.match(r2.stdout, /ran D:\\//);\u0000#1"
+    },
+    {
+      "file": "consonance/tools/heavy-run.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
       "text": "assert.strictEqual(logs.length, 1); assert.match(logs[0], /WARNING: C:\\\\ has 30\\.0 GB free, under 50 GB/);",
       "key": "consonance/tools/heavy-run.test.js\u0000assert.strictEqual(logs.length, 1); assert.match(logs[0], /WARNING: C:\\\\ has 30\\.0 GB free, under 50 GB/);\u0000#1"
     },
@@ -2391,8 +2426,36 @@
       "file": "consonance/tools/heavy-run.test.js",
       "detector": "DRIVE",
       "verdict": "BENIGN-TEST",
+      "text": "const r1 = runScript(['--cmd', 'cmd c', '--', 'cmd', '/c', s.file, 'C:/']);",
+      "key": "consonance/tools/heavy-run.test.js\u0000const r1 = runScript(['--cmd', 'cmd c', '--', 'cmd', '/c', s.file, 'C:/']);\u0000#1"
+    },
+    {
+      "file": "consonance/tools/heavy-run.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const r2 = runScript(['--cmd', 'cmd d c', '--', 'cmd.exe', '/D', '/C', s.file, 'D:/']); // the switch in capitals, a drive after it",
+      "key": "consonance/tools/heavy-run.test.js\u0000const r2 = runScript(['--cmd', 'cmd d c', '--', 'cmd.exe', '/D', '/C', s.file, 'D:/']); // the switch in capitals, a drive after it\u0000#1"
+    },
+    {
+      "file": "consonance/tools/heavy-run.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
       "text": "const w = H.writePaths({ CONSONANCE_SCRATCH: 'Q:\\\\scr', CARGO_TARGET_DIR: 'R:\\\\tgt' }, 'P:\\\\work');",
       "key": "consonance/tools/heavy-run.test.js\u0000const w = H.writePaths({ CONSONANCE_SCRATCH: 'Q:\\\\scr', CARGO_TARGET_DIR: 'R:\\\\tgt' }, 'P:\\\\work');\u0000#1"
+    },
+    {
+      "file": "consonance/tools/heavy-run.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "for (const prog of [['cmd', 'C:/', s.file, 'w'], ['cmd.exe', 'C:/', s.file], ['C:/Windows/System32/CMD.EXE', 'D:/', 'S:/', 'C:/', s.file], ['cmd', 'c:\\\\', s.file], ['cmd', 'C:', s.file]]) {",
+      "key": "consonance/tools/heavy-run.test.js\u0000for (const prog of [['cmd', 'C:/', s.file, 'w'], ['cmd.exe', 'C:/', s.file], ['C:/Windows/System32/CMD.EXE', 'D:/', 'S:/', 'C:/', s.file], ['cmd', 'c:\\\\', s.file], ['cmd', 'C:', s.file]]) {\u0000#1"
+    },
+    {
+      "file": "consonance/tools/heavy-run.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "test('RUN (RED FIRST) cmd given a DRIVE where its /c should be (Git Bash\\'s `cmd C:/`) is refused by name, exit 2, before any wait, saying what to type instead', () => {",
+      "key": "consonance/tools/heavy-run.test.js\u0000test('RUN (RED FIRST) cmd given a DRIVE where its /c should be (Git Bash\\'s `cmd C:/`) is refused by name, exit 2, before any wait, saying what to type instead', () => {\u0000#1"
     },
     {
       "file": "consonance/tools/install-only.test.js",

@@ -118,7 +118,8 @@ const MUTANTS = [
   ['hold: the waiting line is said at every poll, not once', SRC, 'if (!saidHold) {', 'if (true) {'],
   ['hold: a holder that gives up leaves its hold behind', SRC, '  } catch (e) { dropMyHold(); throw e; }', '  } catch (e) { throw e; }'],
   ['hold: the hold wait never gives up (no max wait)', SRC, 'if (waited >= maxWaitMs) { dropMyHold(); throw', 'if (false) { dropMyHold(); throw'],
-  ['CLI: --exclusive is not passed to hold()', SRC, "hold({ cmd, exclusive: flags.includes('--exclusive') });", 'hold({ cmd });'],
+  ['CLI: --exclusive is not passed to hold()', SRC, "exclusive: flags.includes('--exclusive')", 'exclusive: false'],   // re-anchored: the line carries --timing too (O, D678 N1)
+  ['CLI: --timing is not passed to hold() (the run is never marked)', SRC, "timing: flags.includes('--timing')", 'timing: false'],   // D678 N1 (O)
   ['CLI: the exit code is not the program\'s', SRC, 'return r.status === null ? 1 : r.status;', 'return 0;'],
   // L202, the idle-holder guard
   ['idle guard: an idle holder is never named', SRC, 'if (now() - base.t >= idleWindowMs && s.cpu - base.cpu < idleCpuS) {', 'if (false) {'],
@@ -131,8 +132,14 @@ const MUTANTS = [
   // D675, --status (P, 11-14): read only, the same holder rules as --run, non-zero while a hold stands
   ['status: the hold file is not read (a hold with no lock reads all clear)', SRC, 'const hf = path.join(dir, HOLD_NAME), hh = readLock(hf);', 'const hf = path.join(dir, HOLD_NAME), hh = null;'],
   ['status: exits 0 while a hold stands (the gate never closes)', SRC, "code: why.length ? 1 : 0 };", 'code: 0 };'],   // re-anchored for the timing-session gate (P, 11-14)
-  ['status: a live slot naming a timing session does not gate', SRC, '    if (x.timing) out.timingSlots.push(k);\n', ''],
-  ['status: "(not a timing session)" counts as one', SRC, ".replace(/\\bnot an? timing\\b/gi, '')", ''],
+  ['status: a live slot marked a timing session does not gate', SRC, '    if (x.timing) out.timingSlots.push(k);\n', ''],   // renamed from "naming" (O, D678 N1); same anchor
+  // D678 N1 (O): the label is never read for a timing session; the mark is. Replaces '"(not a timing session)" counts as one', whose regex is gone.
+  ['status: the label is read again ("(read, not timing)" gates every seat)', SRC, "x.state === 'held' && h.timing === true &&", "x.state === 'held' && /\\btiming\\b/i.test(String(h.cmd)) &&"],
+  ['status: any truthy mark gates (timing: "true" or 1)', SRC, "x.state === 'held' && h.timing === true &&", "x.state === 'held' && h.timing &&"],
+  ['status: the slot line does not show the mark', SRC, "${x.holder && x.holder.timing === true ? ' — a timing session (--timing)' : ''}", ''],
+  ['acquire: the slot lock does not carry the mark', SRC, '      if (timing === true) rec.timing = true;', ''],
+  ['hold: a label with "timing" and no --timing gets no note', SRC, "if (opts.timing !== true && /\\btiming\\b/i.test(String(opts.cmd || ''))) process.stderr.write", 'if (false) process.stderr.write'],
+  ['hold: the note fires with --timing too', SRC, "if (opts.timing !== true && /\\btiming\\b/i.test", 'if (/\\btiming\\b/i.test'],
   ['status: a dead old holder reads held', SRC, "if (age !== null && age >= YOUNG_MS) return { state: 'free', stale: 'dead' };", "if (age !== null && age >= YOUNG_MS) return { state: 'held' };"],
   ['status: a young dead holder is freed without the second witness', SRC, "return confirmGone(h.pid) === true ? { state: 'free', stale: 'dead' }", "return true ? { state: 'free', stale: 'dead' }"],
   ['status: a reused pid reads held', SRC, "    if (hasIdentity(h) && !sameHolder(h, identify(h.pid))) return { state: 'free', stale: 'pid_reused' };\n", ''],
@@ -148,6 +155,14 @@ const MUTANTS = [
   ['run: a metacharacter in an argument reaches the script', SRC, 'const bad = args.findIndex((a) => CMD_META.test(a));', 'const bad = -1;'],
   ['run: a metacharacter in the script path passes', SRC, '    if (CMD_META.test(file)) {', '    if (false) {'],
   ['run: the usage no longer names the Git Bash limit', SRC, 'an argument that begins with a slash is rewritten', 'an argument is rewritten'],
+  // D678 N1 (O): `cmd C:/`, Git Bash's rewrite of `cmd /c`, is refused by name before any wait
+  ['run: `cmd C:/` runs (an idle shell holds the slot)', SRC, '  const drives = mangledCmd(prog);', '  const drives = null;'],
+  ['run: a drive AFTER /c is refused too (cmd /c dir C:/)', SRC, '(sw < 0 ? rest : rest.slice(0, sw))', 'rest'],
+  ['run: only cmd.exe written with .exe is known (a bare `cmd C:/` runs)', SRC, 'CMD_EXE_RE = /^cmd(\\.exe)?$/i', 'CMD_EXE_RE = /^cmd\\.exe$/i'],
+  ['run: a drive without a slash passes (`cmd C:`)', SRC, 'DRIVE_ARG_RE = /^[A-Za-z]:[\\\\/]?$/', 'DRIVE_ARG_RE = /^[A-Za-z]:[\\\\/]$/'],
+  ['run: /C in capitals is not cmd\'s switch (cmd.exe /D /C <script> refused)', SRC, 'CMD_RUN_SWITCH_RE = /^\\/[ck]$/i', 'CMD_RUN_SWITCH_RE = /^\\/[ck]$/'],
+  ['run: the refusal does not say what to type instead', SRC, "or write `cmd //c ...`; or set MSYS_NO_PATHCONV=1 before the line", 'or fix the line'],
+  ['run: the refusal comes after the wait (it waits on another seat\'s hold first)', SRC, '  const drives = mangledCmd(prog);', "  const drives = (hold({ cmd, exclusive: flags.includes('--exclusive') }), mangledCmd(prog));"],
   // D675: the pause held as the exclusive hold
   ['pause: max_ms is ignored (a pause dies at the 90-minute rule)', SRC, 'return h && Number.isFinite(h.max_ms) && h.max_ms > 0 ? Math.min(h.max_ms, PAUSE_MAX_MS) : holdMaxMs;', 'return holdMaxMs;'],
   ['pause: no 12-hour cap on max_ms', SRC, 'Math.min(h.max_ms, PAUSE_MAX_MS)', 'h.max_ms'],
