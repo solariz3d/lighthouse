@@ -1,0 +1,2 @@
+core_width_hold_mutation.test.js: 6 mutants: applied 6 / caught 6 / NOT APPLIED 0; not caught 0; control not found
+all: 6 mutants: applied 6 / caught 6 / NOT APPLIED 0; not caught 0; not run 0

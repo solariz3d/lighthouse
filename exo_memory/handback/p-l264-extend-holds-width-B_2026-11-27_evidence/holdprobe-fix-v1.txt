@@ -1,0 +1,8 @@
+after the brush: head 20.463 slope -0.001005/m; the field shows 20.46
+Extend 1, left as shown: 100 m: joint value 20.463 -> 20.463, slope -0.001005 -> -0.001005 (numeric); end 20.463 slope 0; least 20.436875 at 42 m, most 20.463 at 0 m
+Extend 2, left as shown: 100 m: joint value 20.463 -> 20.463, slope 0 -> 0 (numeric); end 20.463 slope 0; least 20.463 at 8.5 m, most 20.463 at 4 m
+Extend 3, left as shown: 100 m: joint value 20.463 -> 20.463, slope 0 -> 0 (numeric); end 20.463 slope 0; least 20.463 at 8.5 m, most 20.463 at 4 m
+one Extend of 10 m: 10 m: joint value 20.463 -> 20.463, slope -0.001005 -> -0.000989 (numeric); end 20.4633 slope 0.00093; least 20.460741 at 4.7 m, most 20.4633 at 10 m
+one Extend of 400 m: 400 m: joint value 20.463 -> 20.463, slope -0.001005 -> -0.001005 (numeric); end 20.463 slope 0; least 20.35848 at 168 m, most 20.463 at 0 m
+width typed 22: 100 m: joint value 20.463 -> 20.463, slope -0.001005 -> -0.001 (numeric); end 22 slope 0; least 20.462454 at 1 m, most 22 at 100 m
+width typed 20.46 (as it shows): 100 m: joint value 20.463 -> 20.463, slope -0.001005 -> -0.001005 (numeric); end 20.46 slope 0; least 20.435714 at 43.5 m, most 20.463 at 0 m

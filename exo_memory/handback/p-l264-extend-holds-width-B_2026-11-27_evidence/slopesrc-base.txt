@@ -1,0 +1,10 @@
+panel, width 25, 75 m, whole piece: ends 25, slope 0 per m
+panel, width 25, 75 m, early ticked: ends 25, slope 0 per m
+core, width 25, 75 m, transition 30 (a number, as drag-ghost row 5): ends 25.1049, slope 0.083904 per m
+core, width 25, 75 m, transition { w: 30 }: ends 25, slope 0 per m
+panel, width 25, 300 m, whole piece: ends 25, slope 0 per m
+panel, width 25, 300 m, early ticked: ends 25, slope 0 per m
+core, width 25, 300 m, transition 30 (a number, as drag-ghost row 5): ends 25, slope -0.00003 per m
+core, width 25, 300 m, transition { w: 30 }: ends 25, slope 0 per m
+Turn by 45 deg over 300 m, width 25 typed: ends 25, slope 0 per m
+Turn by 45 deg over 300 m, transition 30 (a number), width 25 typed: ends 25, slope -0.00003 per m

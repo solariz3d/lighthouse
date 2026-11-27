@@ -1,0 +1,8 @@
+core_bank_flow_mutation.test.js: 45 mutants: applied 45 / caught 45 / NOT APPLIED 0; not caught 0; control ok
+core_cup_mutation.test.js: 48 mutants: applied 48 / caught 48 / NOT APPLIED 0; not caught 0; control ok
+core_landing_xsec_mutation.test.js: 18 mutants: applied 18 / caught 18 / NOT APPLIED 0; not caught 0; control none in source
+core_ramp_mutation.test.js: 106 mutants: applied 106 / caught 106 / NOT APPLIED 0; not caught 0; control ok
+core_right_width_mutation.test.js: 35 mutants: applied 35 / caught 35 / NOT APPLIED 0; not caught 0; control ok
+core_smooth_ramps_mutation.test.js: 18 mutants: applied 18 / caught 18 / NOT APPLIED 0; not caught 0; control none in source
+core_xsec_mutation.test.js: 67 mutants: applied 67 / caught 67 / NOT APPLIED 0; not caught 0; control ok
+all: 337 mutants: applied 337 / caught 337 / NOT APPLIED 0; not caught 0; not run 0

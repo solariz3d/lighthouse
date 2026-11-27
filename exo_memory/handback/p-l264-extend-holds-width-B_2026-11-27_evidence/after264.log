@@ -1,0 +1,7 @@
+dg-base: t180-b-l264-base, exit 1, 2 s, 2026-11-27T11:17:01.871Z
+dg-branch: t180-b-l264, exit 0, 3 s, 2026-11-27T11:17:04.180Z
+hold-harness: t180-b-l264, exit 0, 9 s, 2026-11-27T11:17:06.787Z
+d642-base1: t180-b-l264-base, exit 1, 6 s, 2026-11-27T11:17:15.578Z
+d642-branch1: t180-b-l264, exit 1, 6 s, 2026-11-27T11:17:21.676Z
+d642-base2: t180-b-l264-base, exit 1, 6 s, 2026-11-27T11:17:28.094Z
+d642-branch2: t180-b-l264, exit 1, 5 s, 2026-11-27T11:17:33.606Z

@@ -1,0 +1,14 @@
+10:37:27Z
+GAME: acs pid 34856 — waiting; nothing is closed.
+heavy-run --wait-game: no game of his running (waited 9m).
+10:46:07Z
+heavy-run status (C:\Consonance\data), read only:
+  EXCLUSIVE HOLD: none
+  slot 1: free
+  slot 2: free
+tier-rows: 194 files, exit 1, 1072 s, 2026-11-27T10:46:07.567Z to 2026-11-27T11:03:59.484Z
+tier-harnesses: 7 files, exit 0, 607 s, 2026-11-27T11:03:59.486Z to 2026-11-27T11:14:06.431Z
+heavy-run exit 0
+11:14:06Z
+
+[exited with code 0]

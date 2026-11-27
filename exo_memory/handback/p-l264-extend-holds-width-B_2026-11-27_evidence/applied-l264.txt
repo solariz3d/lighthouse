@@ -1,0 +1,1 @@
+test/core_width_hold_mutation.test.js: mutants 6, edits 6, applied once 6, not 0

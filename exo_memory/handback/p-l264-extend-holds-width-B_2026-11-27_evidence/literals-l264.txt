@@ -1,0 +1,1 @@
+harnesses 39; literals that occurred once in the base's src/core/extend.js: 96; not once now: 0

@@ -1,0 +1,16 @@
+tier-rows.tap (745,173 bytes, kept in the scratch folder, not committed): its summary lines and its failing rows (tapfails.js)
+# tests 2236
+# suites 0
+# pass 2204
+# fail 2
+# cancelled 0
+# skipped 28
+# todo 2
+# duration_ms 1071862.5489
+#126 D642: dragging the extra bank back toward level on his p2 (a moving first ramp), the first time, costs a move within 2 × the same drag with 
+   at app/test/core-extra-bank-drag-cost.test.js:94:1
+   error: "the rolling drag's p95 is 14.5 ms a move, the early drag's 6.6 ms: 2.18 ×, over 2 ×" | code: 'ERR_ASSERTION' | name: 'AssertionError' | expected: true | actual: false | operator: '==' | stack: |- | TestContext.<anonymous> (<Downloads>\t180-b-l264\app\test\core-extra-bank-drag-cost.test.js:101:10)
+#556 row 5: the documents are byte for byte what they were: pieces placed and corners solved, hashed (taken at c2d7cb5), and basisN is basis, cha
+   at app/test/drag-ghost.test.js:106:1
+   error: |- | the placed pieces and three solved corners, as c2d7cb5 made them (re-pinned at D459, 2026-10-25: the pieces carry a bank target, laid by the C2 quintic now, src/core/extend.js) | actual expected |  | 'f2cd1126fb8fe79334ac4029711ec' |  | code: 'ERR_ASSERTION' | name: 'AssertionError'
+failing rows: 2

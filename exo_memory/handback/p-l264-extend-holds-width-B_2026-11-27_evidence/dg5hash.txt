@@ -1,0 +1,8 @@
+== branch
+(a) the row's hash: f2cd1126fb8f94a0
+(b) the corners' width out too: eb3501a2c3eec581
+the head: {"v":25.1049,"m":0.08390399999999999}; the corners' width ends: {"v":25.1049,"m":0} {"v":25.1049,"m":0} {"v":25.1049,"m":0}
+== base c522ea6
+(a) the row's hash: e79334c4029711ec
+(b) the corners' width out too: eb3501a2c3eec581
+the head: {"v":25.1049,"m":0.08390399999999999}; the corners' width ends: {"v":150.9609,"m":0.08391000000000162} {"v":58.6665,"m":0.08390999999999948} {"v":209.6937,"m":0.08391000000000162}

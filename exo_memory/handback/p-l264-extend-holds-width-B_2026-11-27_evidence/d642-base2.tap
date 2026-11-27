@@ -1,0 +1,61 @@
+TAP version 13
+# Subtest: D642: dragging the extra bank back toward level on his p2 (a moving first ramp), the first time, costs a move within 2 × the same drag with the bank early (p95)
+not ok 1 - D642: dragging the extra bank back toward level on his p2 (a moving first ramp), the first time, costs a move within 2 × the same drag with the bank early (p95)
+  ---
+  duration_ms: 1914.0721
+  type: 'test'
+  location: '<Downloads>\\t180-b-l264-base\\app\\test\\core-extra-bank-drag-cost.test.js:94:1'
+  failureType: 'testCodeFailure'
+  error: "the rolling drag's p95 is 14.1 ms a move, the early drag's 5.3 ms: 2.64 ×, over 2 ×"
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (<Downloads>\t180-b-l264-base\app\test\core-extra-bank-drag-cost.test.js:101:10)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3)
+  ...
+# rolling (first drag) p95 14.1 ms a move, early p95 5.3 ms: 2.64 ×; both ended at -12.63°
+# Subtest: D642: dragging the extra bank on past what fits, into the hold, the first time, costs a move within 2 × the same drag with the bank early (p95)
+not ok 2 - D642: dragging the extra bank on past what fits, into the hold, the first time, costs a move within 2 × the same drag with the bank early (p95) # TODO the approach to the hold builds one probe road a move (the core's probe cost, pane B): 2.8-3.1 × measured, the panel already at one question a move
+  ---
+  duration_ms: 1585.3197
+  type: 'test'
+  location: '<Downloads>\\t180-b-l264-base\\app\\test\\core-extra-bank-drag-cost.test.js:111:1'
+  failureType: 'testCodeFailure'
+  error: 'the rolling drag went past −88.45 and is held short of where the pointer went (-360°)'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (<Downloads>\t180-b-l264-base\app\test\core-extra-bank-drag-cost.test.js:117:10)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# rolling (first drag, into the hold) p95 39.7 ms a move, early p95 5.7 ms: 6.98 ×; rolling held at -360°, early ended at -163.5°
+# Subtest: D642: his p2's extra bank still reaches −88.45° from 500 (the bank-back he asked for), laid by the core
+ok 3 - D642: his p2's extra bank still reaches −88.45° from 500 (the bank-back he asked for), laid by the core
+  ---
+  duration_ms: 68.728
+  type: 'test'
+  ...
+# Subtest: D642 3j: his p2's extra bank mark, dragged across 420-540 through the panel, lays at every from the panel keeps
+ok 4 - D642 3j: his p2's extra bank mark, dragged across 420-540 through the panel, lays at every from the panel keeps
+  ---
+  duration_ms: 1651.4394
+  type: 'test'
+  ...
+# kept 121 distinct froms; refused 0
+1..4
+# tests 4
+# suites 0
+# pass 2
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 1
+# duration_ms 5452.6999

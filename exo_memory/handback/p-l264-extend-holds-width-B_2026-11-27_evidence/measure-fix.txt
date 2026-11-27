@@ -1,0 +1,16 @@
+w on a plain road, brushed 1.37 at the head: head 20.463 slope -0.001005/m | Extend 1: 20.463 slope 0 | Extend 2: 20.463 slope 0 | Extend 3: 20.463 slope 0
+phi on a plain road, brushed 0.1 at the head: head 0.239118 slope -0.000073/m | Extend 1: 0.231794 slope -0.000073 | Extend 2: 0.224471 slope -0.000073 | Extend 3: 0.217147 slope -0.000073
+c on a cup road, brushed 10 at the head: head 29.949122 slope -0.007323/m | Extend 1: 29.216777 slope -0.007323 | Extend 2: 28.484432 slope -0.007323 | Extend 3: 27.752087 slope -0.007323
+e on a edge road, brushed 10 at the head: head 19.949122 slope -0.007323/m | Extend 1: 19.216777 slope -0.007323 | Extend 2: 18.484432 slope -0.007323 | Extend 3: 17.752087 slope -0.007323
+er on a edge road, brushed 10 at the head: head 19.949122 slope -0.007323/m | Extend 1: 19.216777 slope -0.007323 | Extend 2: 18.484432 slope -0.007323 | Extend 3: 17.752087 slope -0.007323
+wd on a split road, brushed 1 at the head: head 4.4949 slope -0.000735/m | Extend 1: 4.4214 slope -0.000735 | Extend 2: 4.3479 slope -0.000735 | Extend 3: 4.2744 slope -0.000735
+w on a plain road (Sculpt on), brushed 1.37 at the head: head 20.463 slope -0.001005/m | Extend 1: 20.463 slope 0 | Extend 2: 20.463 slope 0 | Extend 3: 20.463 slope 0
+phi on a plain road (Sculpt on), brushed 0.1 at the head: head 0.239118 slope -0.000073/m | Extend 1: 0.231794 slope -0.000073 | Extend 2: 0.224471 slope -0.000073 | Extend 3: 0.217147 slope -0.000073
+c on a cup road (Sculpt on), brushed 10 at the head: head 29.949122 slope -0.007323/m | Extend 1: 29.216777 slope -0.007323 | Extend 2: 28.484432 slope -0.007323 | Extend 3: 27.752087 slope -0.007323
+e on a edge road (Sculpt on), brushed 10 at the head: head 19.949122 slope -0.007323/m | Extend 1: 19.216777 slope -0.007323 | Extend 2: 18.484432 slope -0.007323 | Extend 3: 17.752087 slope -0.007323
+er on a edge road (Sculpt on), brushed 10 at the head: head 19.949122 slope -0.007323/m | Extend 1: 19.216777 slope -0.007323 | Extend 2: 18.484432 slope -0.007323 | Extend 3: 17.752087 slope -0.007323
+w on a plain road (Sculpt on), the whole last piece (the Sculpt piece brush), brushed 1.37 at the head: head 19.1 slope -0.000165/m | Extend 1: 19.1 slope 0 | Extend 2: 19.1 slope 0 | Extend 3: 19.1 slope 0
+phi on a plain road (Sculpt on), the whole last piece (the Sculpt piece brush), brushed 0.1 at the head: head 0.139626 slope -0.000012/m | Extend 1: 0.13839 slope -0.000012 | Extend 2: 0.137153 slope -0.000012 | Extend 3: 0.135916 slope -0.000012
+c on a cup road (Sculpt on), the whole last piece (the Sculpt piece brush), brushed 10 at the head: head 20 slope -0.001237/m | Extend 1: 19.876325 slope -0.001237 | Extend 2: 19.75265 slope -0.001237 | Extend 3: 19.628975 slope -0.001237
+e on a edge road (Sculpt on), the whole last piece (the Sculpt piece brush), brushed 10 at the head: head 10 slope -0.001237/m | Extend 1: 9.876325 slope -0.001237 | Extend 2: 9.75265 slope -0.001237 | Extend 3: 9.628975 slope -0.001237
+er on a edge road (Sculpt on), the whole last piece (the Sculpt piece brush), brushed 10 at the head: head 10 slope -0.001237/m | Extend 1: 9.876325 slope -0.001237 | Extend 2: 9.75265 slope -0.001237 | Extend 3: 9.628975 slope -0.001237
