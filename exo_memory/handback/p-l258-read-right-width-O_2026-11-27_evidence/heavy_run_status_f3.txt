@@ -1,0 +1,4 @@
+heavy-run status (C:\Consonance\data), read only:
+  EXCLUSIVE HOLD: none
+  slot 1: held by 6e6e002c pid 28204 (P L263: merge e7b9128 + de6c069 onto 537a0c9, the tier (touched set + 2 harnesses + 9 mutation harnesses), the build, since 2026-11-27T10:09:53.730Z)
+  slot 2: free

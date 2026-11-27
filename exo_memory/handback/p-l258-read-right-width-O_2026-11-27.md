@@ -312,3 +312,58 @@ NEXT: librarian takes NOT CLEAN to the chair with F2 for B (a right width typed 
 **Evidence added:** `o_f2.js` → `f2.json`, `rows_f2.txt`, `heavy_run_status_f2.txt`.
 
 NEXT: librarian takes NOT CLEAN (F3, the CHANGELOG's way back and B's third row's name) to the chair for B, when it has read this section; the code of F2 is clean.
+
+## Short read, 2026-11-27 10:2xZ: B's F3, de6c069..c66b503 — CLEAN, with one nit
+
+**Order:** the chair's of 10:15:11Z.
+- **Base:** builder `d677-right-width-b` **c66b503**, one commit on de6c069, no code file; local only, not in P's install. Read in my own detached worktree `C:\Consonance\t180-wt-o-l258h`, removed at hand-back.
+- **The objects:** B's section "F3: the CHANGELOG's way back, said as it is" (`handback/p-l258-right-width-B_2026-11-27.md:355`, room d3bb16e5), read whole, against my F3 above.
+- **The diff** (checked: `git diff de6c069 c66b503`): `CHANGELOG.md` and `app/test/core-right-width-panel.test.js`, +34/−6.
+
+### The sentence: true as written (checked)
+
+**It now reads:** *"An older builder refuses a core/7 file by name rather than open it wrong. To go back, Undo or delete every piece whose right side has its own width; the file is then core/4, /5 or /6 again. Setting the right width back to the width ends the step, and the pieces laid after that write no `wd`; but the piece that sets it back still writes `wd` (it ramps back), so the file stays core/7 while that piece or any stepped one is in it (the panel cannot change a placed piece's right width)."*
+
+Clause by clause:
+- **"the piece that sets it back still writes `wd`", "the pieces laid after that write no `wd`", "stays core/7":** each is my case C of the last section (`f2.json`, at 19.1 and at 19.1346). The pieces that write `wd` are the step, the hold and the piece that sets it back; the piece after writes none; the file is core/7.
+- **"Undo or delete … the file is then core/4 … again":** B's new row deletes the two stepped pieces from the middle of an open track through the shell, then undoes. The old schema comes back after the delete, core/7 after undoing it, and the old schema again after undoing the three pieces. Its run is below.
+- **"the panel cannot change a placed piece's right width":** checked in my last section. Selecting a piece only lends its values to the fields (`panel.js:1335-1345`).
+
+**The nit, varied where B's row does not go** (`o_f3.js` → `f3.json`):
+- **The case:** a closed lap (four R 150 corners, 14 m wide, a 3 m right step in one straight, set back in the next), closed by `close`: converged, core/7, three pieces carrying `wd`.
+- **Through the shell,** selecting those three pieces and pressing Delete is refused, and nothing changes: *"CLOSED: a closed track has no open end to delete from; Ctrl+Backspace removes the last piece and opens the loop (Ctrl+Z puts it back)"*.
+- **So on a closed lap the way back is Undo,** or opening the loop first. The builder says how, so the sentence is not false.
+- inferred: three words in the CHANGELOG would save him the refusal, *"(on a closed lap, open it first)"*. A nit, not a reason for NOT CLEAN.
+
+### The renamed row proves what its name says (checked)
+
+- **Its name:** *"a road that never had a right width keeps its schema: on such a width, a piece laid with the right width typed as the width is shown writes no wd, and the file is not core/7"*.
+- **Its body** builds `headOn(kind, { split: false })` on the typed (19.1346) and brushed heads. It asserts the new piece writes no `wd` and the schema is the one it had, not core/7.
+- **Name and body agree.** The old name, which claimed the way back, is kept in a comment, with its reason.
+
+### My stepped-road row: in, on three heads (checked)
+
+- **Where:** `L258 F3: the way back on a road with a step …`, on `round` (19.1, the field shows it whole), `typed` (19.1346) and `brushed` (19.1 brushed +1.37).
+- **For each, it runs:**
+  1. the step through the panel's own `extendOptions`;
+  2. the right width set back as shown;
+  3. a piece after;
+  4. Delete of the two stepped pieces through the shell's selection;
+  5. Undo of the delete;
+  6. Undo of the three pieces.
+- **It asserts:** which pieces write `wd` ([step, set-back] yes, the piece after no), core/7, the old schema after the delete, core/7 again after its Undo, and the old schema after the three Undos.
+- **Run:** `node --test test/core_right_width.test.js app/test/core-right-width-panel.test.js` at c66b503, at BelowNormal → **30 of 30** (`rows_f3.txt`). The harness's 35 / 35 is B's, not re-run.
+
+### Noted, not ruled (the chair's note)
+
+- My last section's `f2.json` touches B's other finding. After the brushed head (width 20.463), the right width set back and then an 80 m Extend with nothing typed, both fields read 20.28: the width kept moving after the brush.
+- That is the brush's slope carried on by Extend, as B found. It is older than the branch and with him; I make no ruling on it.
+
+### The machine
+
+- My worktree removed. No process of mine running. His saves not opened; synthetic roads only.
+- One probe and two row files, at BelowNormal, after `heavy-run.js --status`; no slot.
+
+**Evidence added:** `o_f3.js` → `f3.json`, `rows_f3.txt`, `heavy_run_status_f3.txt`.
+
+NEXT: librarian takes CLEAN, with the closed-lap nit for B or the landing, to the chair, when it has read this section.

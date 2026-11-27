@@ -1,0 +1,25 @@
+[
+ {
+  "case": "the closed lap",
+  "converged": true,
+  "closed": true,
+  "schema": "t180b.core/7",
+  "steppedPieces": [
+   2,
+   3,
+   4
+  ]
+ },
+ {
+  "case": "Delete of the stepped pieces on the closed lap, through the shell",
+  "deleteWords": "CLOSED: a closed track has no open end to delete from; Ctrl+Backspace removes the last piece and opens the loop (Ctrl+Z puts it back)",
+  "applyWords": "nothing to apply: press Delete on the selected pieces first",
+  "pieces": [
+   8,
+   8
+  ],
+  "closedAfter": true,
+  "schemaAfter": "t180b.core/7",
+  "anyWdLeft": true
+ }
+]
