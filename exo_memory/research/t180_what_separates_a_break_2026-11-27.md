@@ -4,7 +4,7 @@
 writer, one checker). I wrote none of the census, the rules or the scores; I read them whole and re-ran one script
 (`score.js`, see "How to re-run it").*
 
-*Working folder: `G:/consonance-scratch/fable-break/` (below: `S/`). Copies of the scripts and small results:
+*Working folder: `consonance-scratch/fable-break/` on D's scratch drive (below: `S/`). Copies of the scripts and small results:
 `research/t180_what_separates_a_break_2026-11-27_evidence/` (below: `E/`). Each claim is marked **checked** (with the file
 that holds it) or **inferred**.*
 
@@ -242,7 +242,7 @@ replay is +1.2 cm.
 
 ## How to re-run it
 
-All in `S/` (`G:/consonance-scratch/fable-break/`). `E/` holds copies of the scripts and the small results, but not
+All in `S/` (`consonance-scratch/fable-break/` on D's scratch drive). `E/` holds copies of the scripts and the small results, but not
 `replays.json`, `heads.json`, `run.log` or `out/`, which carry other authors' track names; `E/census.js` and `E/near.js`
 differ from `S/` in one line each for the same reason (the [T1] name test is by hash; the track folder is an argument).
 A census run prints real folder names to the console.
@@ -250,7 +250,7 @@ A census run prints real folder names to the console.
 | step | command (from `S/`) | writes |
 |---|---|---|
 | list the replays | `node list.js` | `replays.json` |
-| the census, per replay | `node C:/Users/nname/Desktop/lighthouse/consonance/tools/heavy-run.js --run --priority belownormal --cmd "fable break study: census (not a timing session)" -- node census.js <id,id,...>` (ids in `order.txt`) | `out/<id>.json` |
+| the census, per replay | `node <the room>/consonance/tools/heavy-run.js --run --priority belownormal --cmd "fable break study: census (not a timing session)" -- node census.js <id,id,...>` (ids in `order.txt`) | `out/<id>.json` |
 | one event's frames | the same with `--dump <t0> <t1>` after the ids | to the console |
 | merge | `node merge.js` | `passes.csv`, `summary.txt`, `heads.json`, `dropped_duplicates.txt` |
 | coverage and the [T1] table | `node cov.js` | `coverage.txt`, `t1_event_table.md` |
@@ -262,7 +262,7 @@ not re-run the census or open a replay; every figure here inherits the census's 
 
 ## The checker's section
 
-*2026-11-27, D, 14:26 to 14:45. I wrote none of the above. Everything of mine is in `S/chk/` (`G:/consonance-scratch/fable-break/chk/`): `score_rerun.txt`, `csv_checks.txt`, `names.txt`, `rederive2.js` (my own surface reader: the nearest road triangle along the car's up axis, by brute force, sharing no code with `census.js` beyond the two parsers) and its outputs `r_1ca5.txt`, `q_64ac.txt`, `q_168d.txt`, `q_typea.txt`, `q_grx.txt`, `q_krysha.txt`, `q_9093.txt`, `q_c74e.txt`. One fault of mine: my first two runs of the reader were not put through the room's lock, and one hung until its timeout.*
+*2026-11-27, D, 14:26 to 14:45. I wrote none of the above. Everything of mine is in `S/chk/`: `score_rerun.txt`, `csv_checks.txt`, `names.txt`, `rederive2.js` (my own surface reader: the nearest road triangle along the car's up axis, by brute force, sharing no code with `census.js` beyond the two parsers) and its outputs `r_1ca5.txt`, `q_64ac.txt`, `q_168d.txt`, `q_typea.txt`, `q_grx.txt`, `q_krysha.txt`, `q_9093.txt`, `q_c74e.txt`. One fault of mine: my first two runs of the reader were not put through the room's lock, and one hung until its timeout.*
 
 **Count: 31 claims checked. 22 hold, 5 hold in part, 4 do not hold.**
 
@@ -330,7 +330,7 @@ Also **hold**, rates only: grx 1.82 / 1.91, krysha 2.14 / 2.09, mach6 on [other-
 ## The librarian's check (2026-11-27, D, after the checker's section; nothing above is edited)
 
 - **`score.js` re-run by me** in `S/`: output identical to `S/score_out.txt` (`diff`). checked.
-- **The checker's item 6, run on every crossing pass, not seven.** A copy of the census (`G:/consonance-scratch/fable-break-back/`,
+- **The checker's item 6, run on every crossing pass, not seven.** A copy of the census (`consonance-scratch/fable-break-back/` on D's scratch drive,
   `census.js` with one added column, `sink_rate_back3` = the box's height three frames before the crossing minus its height at
   the crossing, over three frames: the rate that reproduces H563's figures) was run through the room's lock on the 21 replays
   that hold a crossing pass. 46 of the 47 crossers matched their rows, and on all 46 the census's own rate came out identical
@@ -347,3 +347,5 @@ Also **hold**, rates only: grx 1.82 / 1.91, krysha 2.14 / 2.09, mach6 on [other-
   formula (the checker inferred it from three rows; these are two more). checked, the same file.
 - Not done by me: P1 and the contact rule were not re-scored on the looking-back rate for landings and edge passes; the
   33.3 Hz rows were not separated out.
+
+*Path wording changed 18:0x (D) by the librarian in five places (lines 7, 245, 253, 265, 333 as they then were): drive-letter paths replaced by drive-free ones, because `research/` rides into every seat's shell and `consonance/tools/portable-paths.js` reads a drive path there as an instruction. No figure or finding is changed.*

@@ -72,7 +72,7 @@ Model origin = CoG + GRAPHICS_OFFSET, so CoG in model frame = -offset. Check: ba
 
 ## Reproduce
 
-Scripts (scratch, not committed): C:\Users\zackn\AppData\Local\Temp\claude\0d67fc0e125090b2\0c0c0c0b-0000-4000-8000-00000000115b\scratchpad\bodybox\ (kn5car.cjs: reader adapted from t180-track-builder c522ea6:tools/kn5.cjs, plus node class 3 and node records; tree.cjs; measure.cjs; results.jsonl).
+Scripts (scratch, not committed): the L session's scratchpad, folder `bodybox` (kn5car.cjs: reader adapted from t180-track-builder c522ea6:tools/kn5.cjs, plus node class 3 and node records; tree.cjs; measure.cjs; results.jsonl).
 ```
 C="/c/Program Files (x86)/Steam/steamapps/common/assettocorsa/content/cars"
 sha256sum "$C"/*t180*/collider.kn5 "$C"/*t180*/*.kn5

@@ -172,7 +172,7 @@ Not present: ABS and traction control (`electronics.ini:4`, `:11` `PRESENT=0`), 
   patch's "physics extensions ... to a high level".
 - README also requires "Extended Controls, an app available from the in-game app \"App Shelf\"" (`README.md:36`).
 - This machine has patch `SHADERS_PATCH=0.2.11`, `SHADERS_PATCH_BUILD=3465`
-  (`C:\Program Files (x86)\Steam\steamapps\common\assettocorsa\extension\config\data_manifest.ini`).
+  (`extension\config\data_manifest.ini` under the game's install folder).
 - Car scripts: `data/script.lua` and its modules (physics); `extension/graphics.lua` (loaded by
   `ext_config.ini:124-125`), `physics_object.lua`, `car_coordinates.lua`, `ext_car_controls.ini`. Head adds
   `afterburner_plume.lua`, `vapor_cone.lua`, `display.lua` (an empty scaffold) and
