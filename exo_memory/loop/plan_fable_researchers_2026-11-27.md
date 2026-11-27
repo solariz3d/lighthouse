@@ -75,3 +75,17 @@ question from different sides, and less on scattered ones.
 
 Still nothing started. Asked of him: whether the playdough picture was about the SHAPE of the curve as well as its width
 (it decides whether R1 covers his own turns), and which of these he wants.
+
+## Added 05:16, at his word: R0, the car itself, first
+
+> "do you even understand how a t-180s works from the opensource ohyeah github repo? Maybe we should get a refresher"
+
+**What the room holds, checked by a grep:** no. The record names the car's public repository 25 times
+(`github.com/ohyeah2389/Assetto-T-180`) and holds the TRACK side (`research/t180_track_mathematics_2026-09-28.md`,
+`research/t180_be_like_water_2026-09-28.md`). No file in the room or in the builder at c522ea6 says how the car works from
+its source. A physics note of 2026-09-29 survives only inside an evidence snapshot.
+
+**R0, started now, one researcher:** read the car's repository and the car as installed on L, and write
+`research/t180_car_how_it_works_2026-11-27.md`: how it drives, what it asks of a track, its numbers with file and line at
+a named commit, the patch features it leans on, its licence, and what our plans assume about it that the source does not
+carry. R3 (how long an easing has to be) waits on it. R1, R2, R4, R5 and R6 still wait on his yes.

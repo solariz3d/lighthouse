@@ -555,3 +555,4 @@ carry it, so this brief does.
 - 2026-11-27 05:11 (L): "we have tons of usage to use, do you think you wanna do a small gathering of fable researchers to help in some way? Lets plan on how they help first"
   - State: a plan for his yes, `loop/plan_fable_researchers_2026-11-27.md`. Nothing started.
 - 2026-11-27 05:14 (L): "wait lets plan again how to use the researchers right if we figured new shit out"
+- 2026-11-27 05:16 (L): "do you even understand how a t-180s works from the opensource ohyeah github repo? Maybe we should get a refresher"
