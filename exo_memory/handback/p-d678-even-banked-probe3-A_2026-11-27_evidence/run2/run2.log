@@ -1,0 +1,3 @@
+start 18:26:31Z (acs.exe absent, no exclusive hold)
+heavy-run: capped to 8 of 16 logical CPUs, spread (affinity 21845); every child inherits it
+exit 0 at 18:28:07Z

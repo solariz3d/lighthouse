@@ -316,3 +316,210 @@ C1b fails if any of:
 - **U7: "C1b draws a red on B− that the base lacks."** Then reading the built bank does not cure the level.
 - **U8: "K2 fails."** Then I cannot reproduce the built bank, and I stop.
 - **U9: "Row 1′ for C1b on B−0 is over 0.05 m."** Then the level adds shape of its own even on the built bank.
+
+---
+
+## Run 2, measured (18:26–18:28Z): the red at the registered stations is the level's
+
+**How it ran:**
+- checked: `run2/run2.log`.
+  - It started at 18:26:31Z. acs.exe was absent and there was no exclusive hold, both checked in the launch command.
+  - It ran under heavy-run (below normal, 8 of 16 CPUs) and exited 0 at 18:28:07Z.
+  - A watch over the run saw no acs.exe ("run 2 finished, no acs.exe seen (18:28:08Z)").
+- checked: `run2/even678c.json` (sha256 ac9a58b197e25814…). `errors` [].
+- The probe is `even678c.js` at 12ed5881, committed after the registration (33e7c780) and before the run.
+
+### K0 and K2: hold
+
+- checked: `K0`. It holds again: the same bytes as probe 2 on B−, B+ and Bhold, and the same leaves-surface reds read both ways on all six fixtures (the table in run 1).
+- checked: `K2`. The built bank (`AD.bankPlan(doc)[p].fn`, or the channel where it is null) equals the path's roll at all 171 stations of 150–490, on
+  all six fixtures: **0 rad** largest difference. The levelled road's built bank equals the base's: 0 rad (the level moves no bank or turn).
+
+### 2b: no red at the registered stations, on all four ramping fixtures
+
+checked: `ranges2b`. The base's built surface along C1's centre's line, read with the checker's centreline load at its speed. The checker's speed here
+is 970 km/h, its full speed on an open track. Red is fHold below 0 g.
+
+| fixture, s | 2b (g) | 2bn, flat normal (g) | C1's centre, the checker (g) | the built bank (°) |
+|---|---|---|---|---|
+| B− 256 | +5.8394 | +4.9511 | −1.7297 | −19.9372 |
+| B− 258 | +5.3868 | +4.9429 | −2.5526 | −19.99 |
+| B−0 256, 258 | +5.4814, +5.3795 | the same | −1.1992, −2.1265 | the same |
+| B+ 200 | +7.1287 | +7.0286 | −2.4838 | 0 |
+| B+ 202 | +4.9116 | +4.6545 | −3.1307 | 0.01 |
+| B+ 204 | +3.4656 | +2.8001 | −3.7493 | 0.0628 |
+| B+ 206 | +2.6412 | +1.4044 | −2.3629 | 0.1885 |
+| B+0 200–206 | +7.1202, +4.6646, +2.7357, +1.2709 | the same | −2.839, −3.4957, −4.1209, −2.7413 | the same |
+
+**By the registered reading** (`reading` in the json: "no 2b red at the C1 red stations: the red there is the level's"): **the red there is the level's.**
+
+**Its cause:** C1 reads the document's bank, where the road is built with the bank plan's.
+- checked (run 1 `diag`): the two banks are up to 2.4286° apart.
+- checked (`C1b[fx].c1CentreOffBuilt`): C1's centre is 0.0637 to 0.0714 m off its in-plane target on the built road, against 0.0125 to 0.0147 m on the
+  document's.
+- The document's bank turns its corners in 8 m at 0.0011 rad/m² (run 1), while the built bank's largest acceleration is 0.00055 rad/m², at s 212.
+  checked: `windowWide2b.Bplus.maxPhiDD`.
+- So C1's centre follows a corner the road does not have, and the checker reads the bump that leaves.
+
+### C1b, the alternative: it cures the registered stations, and fails its rule on B+ and B+0
+
+checked: `C1b`, `ranges2bC1b`, `windowWide2bC1b`.
+
+**C1b's own centre at the registered stations, read by the checker** (it was −1.2 to −4.1 g under C1):
+- B−: +5.5732, +4.3671
+- B−0: +5.7581, +4.4939
+- B+: +3.9992, +3.5767, +3.16, +1.8965
+- B+0: +3.9104, +3.4591, +3.0153, +1.6647
+
+| | B− | B+ | Bhold | B−0 | B+0 | Bhold0 |
+|---|---|---|---|---|---|---|
+| leaves-surface reds | none | 208–248, 268–312, 328–372, 388–432 | none | none | as B+ | none |
+| the base's | none | 222–252, 268–312, 328–372, 388–432 | none | none | as B+ | none |
+| centre off its target on the built bank (m) | 0.0156 | 0.0151 | 0 | 0.0151 | 0.0151 | 0 |
+| byte-identical to C1 | | | yes | | | yes |
+| anything outside the window changed | 0 | 0 | 0 | 0 | 0 | 0 |
+
+Read against its failing result, registered at 33e7c780:
+- **B−, B−0, Bhold, Bhold0: C1b holds.**
+  - No red at all on B− or B−0.
+  - Bhold and Bhold0 are byte-identical to C1, with no red.
+  - The centre is between its bars (0.0151–0.0156 m: over 0.01, under 0.05), said so.
+- **B+ and B+0: C1b fails**, by "any leaves-surface red in the run or window that the base lacks". Its first red range starts at 208, and the base's
+  at 222, so 208 to 221 is red the base lacks.
+  - **My probe's own flag reads `fails: false` there. That flag is wrong.** It counts a red range as the base's whenever it overlaps one, and
+    208–248 overlaps 222–252. The test was copied from Alt F's in run 1. The verdict above is the rule read by hand against the printed ranges.
+
+**What the B+ red at 208–221 is (reported station by station, as the reading registered).** checked: `row2b` and `row2bC1b`.
+
+- **B+0 (cup 0): the built road's own surface on the new centre's line reads red from 210.**
+  - 2b along the line, against the bar 0 g:
+
+    | s | 208 | 210 | 212 | 216 | 220 | 222 | 224 |
+    |---|---|---|---|---|---|---|---|
+    | 2b (g) | +0.1778 | −0.6624 | −1.389 | −2.9802 | −5.1983 | −6.5869 | −8.1125 |
+    | the base's centre (g) | +7.2746 | +6.9751 | +6.4166 | +4.2135 | +0.3858 | −2.0861 | −4.8303 |
+
+  - **That is what a car driving that line on the base feels**, at 970 km/h, 2.0 m to the left of the base's centre (uFoot −2.0).
+  - The checker's own lateral lines at u −3 and −1.5 read +6.98 at 210, +4.26 to +4.31 at 216 and +0.52 to +0.65 at 220. They do not see it:
+    they leave out the roll rate (the checker's header, lines 16–17).
+  - inferred: the size is the bank's twist. A line X m from the roll's axis takes X·φ″·v². At 2 m, 0.00055 rad/m² and 269 m/s, that is about 80 m/s²
+    (8 g).
+  - C1b's own centre reads red at 208 (−0.6272, where 2b reads +0.18) and departs from 2b by up to about 2.4 g between stations (210: −3.04 against
+    −0.65; 216: −0.98 against −2.94). inferred: that is its 0.015 m centre error.
+- **B+ (cupped): 2b, with the old dish's normal, reads no red until 224** (+2.28 at 208 to +1.03 at 222). **2bn, with the flat normal, reads red from
+  210** (−0.46 at 210 to −5.91 at 222). C1b's centre is red from 208 (−0.25, −2.54, −1.24, −0.32, −0.32, −1.24, −2.56, −4.23 at 208…222).
+  - inferred: the level re-centres the dish, so the new centre's normal is the flat one, and the tilt the old dish had there no longer holds the car
+    on. So on a cupped road this red comes with the level's move of the dish, not with the old surface.
+
+### Row 1′ and the row 1 diagnostic
+
+checked: `row1p` and `row1diag`.
+- **The full-width stretch:** 195–445 on the plan fixtures and 189–451 on the hold fixtures (251 and 263 stations). The along-T displacement there is at
+  most 0.15 m, against 0.99 m in run 1.
+
+| C1 / C1b against the base (m) | B−0 | B+0 | Bhold0 | B− | B+ | Bhold |
+|---|---|---|---|---|---|---|
+| C1 1a | 0.067 | 0.067 | 0.0001 | 0.5485 | 0.523 | 0.4872 |
+| C1 1b | 0.1335 | 0.1335 | 0 | 0.1472 | 0.1437 | 0.0027 |
+| C1b 1a | 0.0146 | 0.0146 | 0.0001 | 0.4965 | 0.4717 | 0.4872 |
+| C1b 1b | 0.029 | 0.029 | 0 | 0.0476 | 0.0455 | 0.0027 |
+
+- **On the cup-0 copies:**
+  - C1 is "not the same surface" (over 0.05 m);
+  - C1b is between (1a 0.0146, 1b 0.029). inferred: its 0.015 m centre error, seen as a ±0.015 m wobble at the far rim.
+  - Bhold0 holds both.
+- The cupped rows are reported, not read: the dish deepens by design.
+- **The row 1 diagnostic places run 1's Bhold 4.58 cm.** Bhold's distance at u 5.75:
+  - 0 at 150, 0.4033 at 180, 0.4491 from 194 to 446, 0.4033 at 460;
+  - so it is all in the width ramp's ends, 180–194 and 446–460. On the full-width stretch Bhold's 1b is 0.0027 m.
+- **Run 1's control, re-read on run 2's measure, holds:** Bhold 1b 0.0027, Bhold0 1a 0.0001, and 2b on Bhold has its lowest at +7.3728 g (196).
+  - Run 2 did not register a row 3 of its own; this is said, not used as a gate.
+
+### Predictions, scored
+
+| prediction (registered at 33e7c780) | result |
+|---|---|
+| K2 holds | yes (0 rad) |
+| 2b reads no red at B− 256–258 or B+ 200–206 | yes, on all four |
+| 2b reads red on B+ somewhere in 206–224, and nowhere on B− | yes: B+ from 224, B+0 from 210; none on B− or B−0 |
+| C1b draws no red the base lacks on B− or B−0 | yes |
+| C1b draws one on B+ and B+0 where 2b is red, so it fails there by its rule | it fails there. On B+0, 2b is red from 210 and C1b from 208. On B+, 2b is not red until 224: **wrong for the cupped road** |
+| C1b byte-identical to C1 on Bhold and Bhold0 | yes |
+| C1b's centre within 0.015 m | **no**: 0.0151–0.0156 (between) |
+| row 1′: C1b between on B−0 and B+0, ≤ 0.015 m | between, yes. 1a 0.0146, but **1b 0.029: over my 0.015** |
+| row 1′: C1 over 0.05 m (about 0.08) | yes: 1a 0.067, 1b 0.1335 |
+| row 1′: Bhold0 holds both | yes |
+| the row 1 diagnostic puts the 4.58 cm at the ends of 180–460 | yes: 180–194 and 446–460 |
+
+**Unwelcome outcomes:** U6, U7, U8 and U9: none came.
+
+---
+
+## The answers the packet asked for
+
+**1. The red at B− 256–258 and B+ 200–206: the level's.** C1 sets its centre's height from the document's bank. The builder builds the bank plan's,
+which re-rounds the document's 8 m corners (`adapter.js` `bankPlan`; "Only the BUILT roll moves; the document is not rewritten").
+- The built road's surface along C1's line reads +1.3 to +7.1 g there (2b). C1's centre reads −1.2 to −4.1 g.
+- The packet's other reading (the checker reading a line of the designed surface it never read) does not hold at those stations. It does hold
+  4–14 m on, on B+0 (answer 3).
+
+**2. Its cause, and the alternative.** The cause is the document's bank in C1's height. The alternative of my choosing was C1b, the same level reading
+the built bank; its failing result was registered first (33e7c780). C1b:
+- removes the registered reds on all four ramping fixtures;
+- adds no red on B− or B−0;
+- leaves the constant bank byte for byte as C1;
+- **fails its rule on B+ and B+0** (208–221 red, which the base lacks at its centre).
+
+**3. Whether C1 can be built as it is:**
+- **Constant bank: yes.**
+  - checked: Bhold and Bhold0 have no red, their centre is on target to 0, and C1b is byte-identical to C1 there.
+- **Flat: yes.**
+  - inferred: the bank plan leaves alone a bank that never accelerates past its bar ("A bank that never accelerates faster than the bar is built
+    exactly as before", `adapter.js` header to `bankPlan`). So on a flat road C1 and C1b are one level.
+  - L265's flat rows passed. Not re-measured here.
+- **Ramping bank: not as it is.** It needs the one change C1b makes: read the built bank, not the channel. With it:
+  - **Where the bank turns the road into the turn (B−, B−0): C1b draws nothing.**
+  - **Where the bank rolls the road away from the turn (B+0, cup 0):** the new centre's line is red on the built road itself from 210. It already
+    lifts at the checker's speed there (−0.66 g at 210 down to −8.1 g at 224, against the bar 0 g). The old centre does not lift (+6.98 g at 210),
+    because the roll's twist is nothing on its own axis. The level adds no bump there; it puts the centre on that line.
+  - **On a cupped road (B+):** the same red comes with the level's re-centring of the dish (2bn red from 210; 2b with the old dish's tilt not red
+    until 224). It is the level's, and the dish is why. inferred.
+  - C1b's own centre sits 0.015 m off its target, which moves its red by a station (208 on B+0) and its loads by up to about 2.4 g. Probe 2's
+    control-point error; Alt F's least-squares fit was the registered cure for it and was not run.
+
+**4. What the tool should tell him where a red of this kind is drawn.** My recommendation:
+- **The 256–258 and 200–206 kind:** nothing. The tool should not draw it; it is C1's error, and reading the built bank removes it.
+- **The B+0 kind, where the built road already lifts on the new centre's line:** a sentence at the red, in his words. For example: *"The bank rolls
+  here. The new middle runs 2.0 m from the old one, and that line rises and falls with the roll. At the checker's speed a car on it already leaves the
+  road here on the track as it stands; the old middle did not, because the roll turns about it. The level adds no bump; a longer bank change here, or
+  a level that ends before it, would."* The figures to carry are:
+  - the shift (2.0 m);
+  - the line's load on the old road at the worst station (2b, in g);
+  - the old centre's load there.
+- **On a cupped road:** the same sentence, with "the level moves the bottom of the dish onto that line" in place of "already leaves the road".
+
+---
+
+## Corrections, mine
+
+- **Probe 2 ran while he drove.** acs.exe was up from 16:35:39Z; probe 2 ran 16:39:29 to 17:03:36Z, and I made no acs check. It was found at 17:24Z
+  and written into probe 2's hand-back (a044d6c8) and my memory. Probe 3's runs each checked acs.exe in the launch command and watched for it during
+  the run.
+- **Run 1 measured the document's surface, not the built one.** I registered row 2 on the document's bank channel without reading what `toSegments`
+  builds. `adapter.js`'s header says it plainly at `bankPlan`. That cost run 1's question.
+- **Run 1's row 1 range ran into the level's width ramp** (180–194 and 446–460). The registered control failed on that, not on the surface.
+- **Run 1's row 1 projected across up to 0.99 m along the road.** It is exact only on a plane.
+- **Predictions that failed:**
+  - run 1: "1b passes on Bhold" (0.0458) and "row 2 within about −1 g of zero" (−6 to −9 g);
+  - run 2: C1b's centre within 0.015 m (0.0151–0.0156); row 1′ C1b ≤ 0.015 m (1b 0.029); C1b's B+ red "where 2b is red", wrong on the cupped road.
+- **My probe's `C1b.fails` flag is wrong on B+ and B+0** (an overlap counted as the base's). The rule is read by hand above.
+- **A carrier, not a correction:** probe 2's ramping-bank figures for C1 stand as C1's figures. The reds they include at 256–258 and 200–206 are C1's
+  own error, not the surface's.
+
+## What is left open
+
+- **Alt F (a least-squares centre) on the built bank.** Not run. It is the registered cure for C1b's 0.015 m.
+- **Whether the bank plan's 0.00055 rad/m², over its own bar of 0.0001, should be rounded further.** That is the bank plan's question, not the
+  level's. inferred: the window cannot cross a piece's joints.
+- **The checker's lateral lines leaving out the roll rate.** They read +6.98 g where the line itself reads −0.66 g (B+0, 210). This is a finding for
+  him, not a change made here.
