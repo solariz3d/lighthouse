@@ -560,3 +560,4 @@ carry it, so this brief does.
 - 2026-11-27 05:18 (L): "then once we learn more about the cars, thats when we can be closer to asking the right questions, surpirsing to me we got this far without it"
 - 2026-11-27 05:25 (L): "but one thing we could do that could be briliant, use the researchers to study each t-180 to see potential differences in clipping potential"
 - 2026-11-27 05:27 (L): "maybe use opus researchers for this one, save the fable ones for the big job after"
+- 2026-11-27 05:39 (L): "you would be wrong for the type a, it clips the worst from people have said."

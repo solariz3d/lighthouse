@@ -233,3 +233,18 @@ folders. Nothing committed.
 "dual" and 3.5; and one sha256 prefix 095f45686687 over all 14 installed `collider.kn5`. **Where the body and the checker
 disagree, read the checker.** Every "more / less / same" verdict in the table is inferred from source; no lap of any
 car but the Mach 6 has been measured.
+
+## AGAINST THE RECORD, 05:40: he says the Type A clips the worst
+
+His words, 2026-11-27 05:39 (L): "you would be wrong for the type a, it clips the worst from people have said."
+The table above gives the Type A "less". The two stand against each other; a report from drivers outranks a reading
+of source, so **treat the Type A row, and the method behind every row, as not holding until a measurement says otherwise.**
+
+What the source says of the Type A (checked by the librarian at the tag): its physics is the base's. Its `data/` holds no
+suspension file; `car.addon.ini` sets a name, the driver's eyes and `GRAPHICS_OFFSET=0, -0.5, 0` (base `car.ini:12`:
+`0, -0.4, 0`); `aero.addon.ini` adds one `[FIN_0]`; its turbine is the weakest. So nothing this study read can make it
+clip worst. **What the study did not read is the body itself:** the installed model files were never opened (the note's
+"Not found, and not read"), and the box that meets the road is one size for 14 different bodies. Installed sizes: the Type
+A's model is 2,487,191 B, the Mach 6's 108,998,456 B. [inferred] If "clips" is the drawn body passing through the road,
+it depends on how far each body reaches outside the shared 2.0 x 0.5 x 3.0 m box and on the offset it is drawn at, and
+the Type A is one of four drawn 0.10 m lower than the base. A measurement of each body against the box is started.
