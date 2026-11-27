@@ -1,0 +1,7 @@
+const fs=require('fs');const NL=String.fromCharCode(10);const heads=require('./heads.json');const n=x=>x==null?'-':(+x).toFixed(3);
+const pr=h=>h.left_out?2:0;
+const cov=heads.sort((a,b)=>pr(a)-pr(b)||((a.track_tag||'')<(b.track_tag||'')?-1:1)).map(h=>'| '+[h.id,h.track_tag||'',h.car||'',(h.mtime||'').slice(0,10),h.N||'',h.km?h.km.toFixed(1):'',h.fit?[(h.fit.share||0).toFixed(2),n(h.fit.w_p10),n(h.fit.w_p50),n(h.fit.w_p90)].join(' / '):'-',h.cfm||'',h.left_out?'LEFT OUT: '+h.left_out:('passes '+h.nPasses),h.driver_is_keeper?'':'not his driving'].join(' | ')+' |');
+fs.writeFileSync('coverage.txt','| replay_id | track | car | saved | frames | km | fit: share / wheel p10 / p50 / p90 (m) | cfm | result | note |'+NL+'|---|---|---|---|---|---|---|---|---|---|'+NL+cov.join(NL)+NL);
+const L=fs.readFileSync('t1_typea_event_frames.tsv','utf8').split(NL).filter(x=>/^6\d\./.test(x)).map(x=>x.split('\t'));
+const sel=L.filter(r=>(+r[0]>=64.40&&+r[0]<=64.76)||+r[0]>=64.86);
+fs.writeFileSync('t1_event_table.md','| t (s) | km/h | box over surface (cm) | wheels FL / FR / RL / RR centre over surface (m) | load (g) | car up . road normal | car up, world y | to the edge on its left (m) | to the edge on its right (m) | road roll (deg) |'+NL+'|---|---|---|---|---|---|---|---|---|---|'+NL+sel.map(r=>'| '+[r[0],r[1],r[2],r.slice(3,7).join(' / '),r[7],r[8],r[9],r[14],r[15],r[16]].join(' | ')+' |').join(NL)+NL);

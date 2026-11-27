@@ -1,0 +1,2 @@
+typea elysium: least box height cm -0.1 at t 86.415 kmh 703.8 g 30.1 frames 11400
+typea T1: least box height cm 1.2 at t 63.135 kmh 489.4 g 30.0 frames 3734

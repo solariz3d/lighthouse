@@ -1,0 +1,15 @@
+{"tp":4,"fp":0,"fn":5,"tn":52}
+263aaf1bf2aa 205.65 landing mach6 broke s11 3.72 g 15.1 kmh 739
+480905fbac85 85.83 landing mach6 broke s11 2.73 g 4.8 kmh 244.3
+480905fbac85 160.26 road mach6 broke s11 1.56 g 3.6 kmh 200.2
+4b3acff96fc6 1023.75 landing mach6 broke s11 28.75 g 44.3 kmh 111.8
+6eee6c19cb18 216.42 landing talon broke s11 8.98 g 15 kmh 564.5
+crossers at >=50 g:
+065789823b52 [33m59.94[39m road broke [33m2.14[39m [33m57.7[39m 62cm/tick
+065789823b52 [33m62.655[39m aftermath broke [33m64.26[39m [33m64.2[39m 41cm/tick
+0805d953319d [33m59.415[39m road broke [33m1.82[39m [33m64.2[39m 62cm/tick
+0fb64acd1c62 [33m42.6[39m road held [33m1.5[39m [33m84[39m 62cm/tick
+168d45c76583 [33m89.595[39m road held [33m0.16[39m [33m63.7[39m 63cm/tick
+1ca5e0b40e3c [33m868.335[39m road broke [33m2.3[39m [33m62.8[39m 63cm/tick
+64ac1f991be9 [33m42.255[39m road held [33m1.57[39m [33m90.5[39m 63cm/tick
+fast sinkers under 50 g: [33m14[39m broke [33m4[39m max held g [33m41.3[39m

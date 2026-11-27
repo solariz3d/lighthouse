@@ -1,0 +1,25 @@
+A_final broke&pred [33m6[39m broke&not [33m3[39m held&pred [33m1[39m held&not [33m51[39m
+  FN 065789823b52 62.655 aftermath
+  FN 480905fbac85 85.83 landing
+  FP 480905fbac85 95.58 road
+  FN 6eee6c19cb18 216.42 landing
+B_nospeed broke&pred [33m6[39m broke&not [33m3[39m held&pred [33m3[39m held&not [33m49[39m
+  FN 065789823b52 62.655 aftermath
+  FN 480905fbac85 85.83 landing
+  FP 480905fbac85 95.58 road
+  FP 4b3acff96fc6 2016.72 edge
+  FP 4b3acff96fc6 4215.72 road
+  FN 6eee6c19cb18 216.42 landing
+C_edgeonly broke&pred [33m4[39m broke&not [33m5[39m held&pred [33m0[39m held&not [33m52[39m
+  FN 065789823b52 62.655 aftermath
+  FN 480905fbac85 85.83 landing
+  FN 480905fbac85 160.26 road
+  FN 4b3acff96fc6 1023.75 landing
+  FN 6eee6c19cb18 216.42 landing
+D_rollload broke&pred [33m4[39m broke&not [33m5[39m held&pred [33m5[39m held&not [33m47[39m
+E_rollrate broke&pred [33m3[39m broke&not [33m6[39m held&pred [33m6[39m held&not [33m46[39m
+F_frac broke&pred [33m6[39m broke&not [33m3[39m held&pred [33m1[39m held&not [33m51[39m
+  FN 065789823b52 62.655 aftermath
+  FN 480905fbac85 85.83 landing
+  FP 480905fbac85 95.58 road
+  FN 6eee6c19cb18 216.42 landing

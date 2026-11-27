@@ -1,0 +1,36 @@
+rows 111 held 96 broke 15
+by split {"train":{"held":52,"broke":9},"test":{"held":44,"broke":6}}
+by kind {"road":{"held":65,"broke":6},"landing":{"held":24,"broke":6},"aftermath":{"held":0,"broke":2},"edge":{"held":7,"broke":1}}
+by car {"mach6":{"held":90,"broke":9},"krysha":{"held":0,"broke":2},"grx":{"held":0,"broke":1},"augury":{"held":1,"broke":0},"talon":{"held":2,"broke":1},"demo":{"held":1,"broke":0},"hangul":{"held":1,"broke":2},"gigerbon":{"held":1,"broke":0}}
+by track {"[other-3e953b]":{"held":23,"broke":0},"t180b_elysium":{"held":15,"broke":6},"[other-0e0103]":{"held":12,"broke":0},"t180b_crazy_test_test":{"held":1,"broke":0},"t180b_elysium_gates_stiff":{"held":0,"broke":1},"[other-e1f9f0]":{"held":5,"broke":0},"[other-7fa3a2]":{"held":4,"broke":2},"[other-83cd9b]":{"held":4,"broke":1},"[other-5a5c6e]":{"held":8,"broke":1},"[other-75db4f]":{"held":3,"broke":0},"[other-4e0aa3]":{"held":10,"broke":1},"[other-8bfad1]":{"held":3,"broke":3},"[other-e00d16]":{"held":8,"broke":0}}
+by own_track {"0":{"held":80,"broke":8},"1":{"held":16,"broke":7}}
+by cfm {"0.0002":{"held":86,"broke":13},"0.00005":{"held":0,"broke":1},"":{"held":10,"broke":1}}
+by own_driving {"0":{"held":5,"broke":0},"1":{"held":91,"broke":15}}
+crossers of 11 cm, all kinds {"train":{"held":16,"broke":9},"test":{"held":17,"broke":5}}
+road-kind {"train":{"held":32,"broke":4},"test":{"held":33,"broke":2}}
+road-kind by car {"mach6":{"held":61,"broke":3},"krysha":{"held":0,"broke":1},"grx":{"held":0,"broke":1},"augury":{"held":1,"broke":0},"demo":{"held":1,"broke":0},"hangul":{"held":1,"broke":1},"gigerbon":{"held":1,"broke":0}}
+road-kind by track {"[other-3e953b]":{"held":14,"broke":0},"t180b_elysium":{"held":14,"broke":4},"[other-0e0103]":{"held":12,"broke":0},"t180b_crazy_test_test":{"held":1,"broke":0},"[other-7fa3a2]":{"held":3,"broke":1},"[other-83cd9b]":{"held":1,"broke":0},"[other-5a5c6e]":{"held":4,"broke":0},"[other-4e0aa3]":{"held":8,"broke":0},"[other-8bfad1]":{"held":2,"broke":1},"[other-e00d16]":{"held":6,"broke":0}}
+road-kind crossers of 11 cm {"train":{"held":6,"broke":4},"test":{"held":9,"broke":1}}
+road-kind crossers: rate at 11 cm, outcome, replay, car, track, cfm, peak g, near edge
+  0.11  (1-frame 0.17)  held  c74e4fd35558  mach6  t180b_elysium  0.0002  65.3 g  edge 3.31  roll_load 3.68  test
+  0.16  (1-frame 0.29)  held  168d45c76583  mach6  t180b_crazy_test_test  0.0002  63.7 g  edge 11.69  roll_load 0.28  train
+  0.40  (1-frame 1.06)  held  e5c0fd082282  hangul  t180b_elysium  0.0002  63.3 g  edge 3.44  roll_load 3.61  test
+  0.41  (1-frame 1.17)  held  9093d9d244fa  mach6  [other-0e0103]  0.0002  77.3 g  edge 7.31  roll_load 4.89  test
+  0.60  (1-frame 0.81)  held  9767919a1c39  mach6  [other-0e0103]  0.0002  88.0 g  edge 7.44  roll_load 5.20  test
+  0.69  (1-frame 0.43)  held  ab976a67c2ae  mach6  [other-4e0aa3]    23.8 g  edge 7.75  roll_load 1.41  test
+  0.73  (1-frame 0.65)  held  cf60407c3a3e  mach6  [other-e00d16]  0.0002  41.3 g  edge 13.25  roll_load 0.19  test
+  1.20  (1-frame 1.06)  held  9093d9d244fa  mach6  [other-0e0103]  0.0002  86.7 g  edge 11.50  roll_load 0.72  test
+  1.21  (1-frame 1.37)  held  cf60407c3a3e  mach6  [other-e00d16]  0.0002  51.1 g  edge 9.75  roll_load 6.20  test
+  1.35  (1-frame 1.44)  held  480905fbac85  mach6  [other-7fa3a2]  0.0002  2.7 g  edge 2.81  roll_load 0.15  train
+  1.50  (1-frame 1.34)  held  0fb64acd1c62  mach6  [other-0e0103]  0.0002  84.0 g  edge 4.06  roll_load 7.02  train
+  1.56  (1-frame 1.33)  broke  480905fbac85  mach6  [other-7fa3a2]  0.0002  3.6 g  edge 8.13  roll_load 0.34  train
+  1.57  (1-frame 2.69)  held  64ac1f991be9  mach6  [other-0e0103]  0.0002  90.5 g  edge 6.44  roll_load 4.63  train
+  1.69  (1-frame 8.12)  held  480905fbac85  mach6  [other-7fa3a2]  0.0002  4.1 g  edge 5.19  roll_load 0.22  train
+  1.82  (1-frame 1.91)  broke  0805d953319d  grx  t180b_elysium  0.0002  64.2 g  edge 2.38  roll_load 6.46  train
+  2.14  (1-frame 2.09)  broke  065789823b52  krysha  t180b_elysium  0.0002  57.7 g  edge 3.13  roll_load 12.06  train
+  2.30  (1-frame 1.61)  broke  1ca5e0b40e3c  mach6  t180b_elysium  0.0002  62.8 g  edge 4.00  roll_load 3.35  train
+  10.28  (1-frame 20.99)  held  c98a874cbe3b  mach6  [other-8bfad1]  0.0002  33.2 g  edge 4.00  roll_load 2.97  test
+  10.78  (1-frame 14.13)  broke  c98a874cbe3b  mach6  [other-8bfad1]  0.0002  35.5 g  edge 4.00  roll_load 1.59  test
+  17.64  (1-frame 62.18)  held  480905fbac85  mach6  [other-7fa3a2]  0.0002  5.3 g  edge 6.63  roll_load 2.67  train
+replays covered 71 left out 24; km 2162; seconds on a road above 80 km/h 17224
+km, keeper driving a T-180, covered replays 1786

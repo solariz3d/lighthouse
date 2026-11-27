@@ -1,0 +1,1 @@
+const o=require('./out/'+process.argv[2]+'.json');for(const p of o.passes)console.log([p.t_start,p.t_end,p.speed_kmh,p.deepest_cm,p.sink_rate_at_11cm,p.sink_rate_1frame,p.max_sink_rate_5_to_16cm,p.peak_load_g,'u',p.u_m,p.half_width_m,'roll',p.road_roll_deg,p.roll_rate_deg_per_m,p.roll_acc_deg_per_m2,p.roll_load_g,'edge',p.near_edge_m,p.outcome,p.how_broke].join(' '))

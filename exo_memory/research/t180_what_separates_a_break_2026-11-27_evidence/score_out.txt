@@ -1,0 +1,416 @@
+rows 111; broke 15; test 50 (broke 6, held 44)
+test breaks:
+  ab976a67c2ae t 370.2 mach6 [other-4e0aa3] edge broke | speed 317.8 deepest -36.7 cross 1 rate3 13.64 rate1 13.64 load 12.3 u -12.56 roll -51.3 rollacc -0.0031 rollload 0.54 edge 0.19 | wheel_under(-43cm);left_road;reset@+0.66
+  c98a874cbe3b t 168.63 mach6 [other-8bfad1] road broke | speed 413.1 deepest -29.1 cross 1 rate3 10.78 rate1 14.13 load 35.5 u 17.09 roll 32.8 rollacc 0.004 rollload 1.59 edge 4 | wheel_under(-12cm);left_road;reset@+0.53
+  c98a874cbe3b t 205.17 mach6 [other-8bfad1] landing broke | speed 385.7 deepest -20.9 cross 1 rate3 33.38 rate1 33.07 load 3.1 u -12.09 roll -27.1 rollacc -0.0034 rollload 0.84 edge 12.81 | box_through(-273cm);wheel_under(-293cm);left_road;reset@+0.79
+  c98a874cbe3b t 354.135 mach6 [other-8bfad1] landing broke | speed 300.8 deepest -35.2 cross 1 rate3 24.64 rate1 20.58 load 74.4 u 8.69 roll 33.9 rollacc 0.0058 rollload 0.62 edge 12.38 | box_through(-175cm);wheel_under(-217cm);left_road;reset@+0.81
+  e5c0fd082282 t 66.39 hangul t180b_elysium road broke | speed 643.1 deepest -10.5 cross 0 rate3 NaN rate1 NaN load 47.7 u 14.25 roll 49.9 rollacc 0.0036 rollload 2.93 edge 3.25 | wheel_under(-106cm);left_road
+  e5c0fd082282 t 69.84 hangul t180b_elysium aftermath broke | speed 469.8 deepest -29.9 cross 1 rate3 50.51 rate1 54.61 load 82.1 u -14.31 roll -56.9 rollacc -0.004 rollload 1.74 edge 3.81 | box_through(-262cm);wheel_under(-17cm);left_road;speed_loss_69kmh;reset@+1.21
+
+== CONTACT rule, test (n 50) ==
+  broke & predicted broke 2; broke & predicted held 4; held & predicted broke 1; held & predicted held 43
+   caught:       c98a874cbe3b t 354.135 mach6 [other-8bfad1] landing broke
+   caught:       e5c0fd082282 t 69.84 hangul t180b_elysium aftermath broke
+   missed:       ab976a67c2ae t 370.2 mach6 [other-4e0aa3] edge broke
+   missed:       c98a874cbe3b t 168.63 mach6 [other-8bfad1] road broke
+   missed:       c98a874cbe3b t 205.17 mach6 [other-8bfad1] landing broke
+   missed:       e5c0fd082282 t 66.39 hangul t180b_elysium road broke
+   false alarm:  c98a874cbe3b t 233.985 mach6 [other-8bfad1] landing held
+  (a) flagged 3, of them held 1
+  (b) test class crosses_11cm=1 & peak_load_g>=50: 9 rows (broke 2, held 7); wrong side of 1.7: 1
+     9093d9d244fa t 41.67 mach6 [other-0e0103] road held rate3 0.41 rate1 1.17 load 77.3
+     9093d9d244fa t 42.165 mach6 [other-0e0103] road held rate3 1.2 rate1 1.06 load 86.7
+     9767919a1c39 t 63.3 mach6 [other-0e0103] road held rate3 0.6 rate1 0.81 load 88
+     c74e4fd35558 t 60.09 mach6 t180b_elysium road held rate3 0.11 rate1 0.17 load 65.3
+     c98a874cbe3b t 233.985 mach6 [other-8bfad1] landing held rate3 7.86 rate1 2.92 load 60
+     c98a874cbe3b t 354.135 mach6 [other-8bfad1] landing broke rate3 24.64 rate1 20.58 load 74.4
+     cf60407c3a3e t 41.79 mach6 [other-e00d16] road held rate3 1.21 rate1 1.37 load 51.1
+     e5c0fd082282 t 64.23 hangul t180b_elysium road held rate3 0.4 rate1 1.06 load 63.3
+     e5c0fd082282 t 69.84 hangul t180b_elysium aftermath broke rate3 50.51 rate1 54.61 load 82.1
+  narrowness: catches 2 of 6 test breaks
+  test crossers at any load: 22; test breaks with load>=50: 2
+
+== GEOMETRY rule (a or b), test (n 50) ==
+  broke & predicted broke 1; broke & predicted held 5; held & predicted broke 8; held & predicted held 36
+   caught:       e5c0fd082282 t 66.39 hangul t180b_elysium road broke
+   missed:       ab976a67c2ae t 370.2 mach6 [other-4e0aa3] edge broke
+   missed:       c98a874cbe3b t 168.63 mach6 [other-8bfad1] road broke
+   missed:       c98a874cbe3b t 205.17 mach6 [other-8bfad1] landing broke
+   missed:       c98a874cbe3b t 354.135 mach6 [other-8bfad1] landing broke
+   missed:       e5c0fd082282 t 69.84 hangul t180b_elysium aftermath broke
+   false alarm:  ab976a67c2ae t 309.81 mach6 [other-4e0aa3] road held
+   false alarm:  ab976a67c2ae t 404.34 mach6 [other-4e0aa3] edge held
+   false alarm:  c74e4fd35558 t 60.09 mach6 t180b_elysium road held
+   false alarm:  cf60407c3a3e t 37.68 mach6 [other-e00d16] landing held
+   false alarm:  d3a654d5889e t 20.73 mach6 [other-3e953b] road held
+   false alarm:  e5a192566716 t 61.92 demo t180b_elysium road held
+   false alarm:  e5c0fd082282 t 64.23 hangul t180b_elysium road held
+   false alarm:  f449f0bb1c96 t 63.435 gigerbon t180b_elysium road held
+
+== GEOMETRY clause (a) alone, test (n 50) ==
+  broke & predicted broke 1; broke & predicted held 5; held & predicted broke 5; held & predicted held 39
+   caught:       e5c0fd082282 t 66.39 hangul t180b_elysium road broke
+   missed:       ab976a67c2ae t 370.2 mach6 [other-4e0aa3] edge broke
+   missed:       c98a874cbe3b t 168.63 mach6 [other-8bfad1] road broke
+   missed:       c98a874cbe3b t 205.17 mach6 [other-8bfad1] landing broke
+   missed:       c98a874cbe3b t 354.135 mach6 [other-8bfad1] landing broke
+   missed:       e5c0fd082282 t 69.84 hangul t180b_elysium aftermath broke
+   false alarm:  c74e4fd35558 t 60.09 mach6 t180b_elysium road held
+   false alarm:  d3a654d5889e t 20.73 mach6 [other-3e953b] road held
+   false alarm:  e5a192566716 t 61.92 demo t180b_elysium road held
+   false alarm:  e5c0fd082282 t 64.23 hangul t180b_elysium road held
+   false alarm:  f449f0bb1c96 t 63.435 gigerbon t180b_elysium road held
+
+== GEOMETRY clause (b) alone, test (n 50) ==
+  broke & predicted broke 0; broke & predicted held 6; held & predicted broke 3; held & predicted held 41
+   missed:       ab976a67c2ae t 370.2 mach6 [other-4e0aa3] edge broke
+   missed:       c98a874cbe3b t 168.63 mach6 [other-8bfad1] road broke
+   missed:       c98a874cbe3b t 205.17 mach6 [other-8bfad1] landing broke
+   missed:       c98a874cbe3b t 354.135 mach6 [other-8bfad1] landing broke
+   missed:       e5c0fd082282 t 66.39 hangul t180b_elysium road broke
+   missed:       e5c0fd082282 t 69.84 hangul t180b_elysium aftermath broke
+   false alarm:  ab976a67c2ae t 309.81 mach6 [other-4e0aa3] road held
+   false alarm:  ab976a67c2ae t 404.34 mach6 [other-4e0aa3] edge held
+   false alarm:  cf60407c3a3e t 37.68 mach6 [other-e00d16] landing held
+
+== OPEN rule, test (n 50) ==
+  broke & predicted broke 3; broke & predicted held 3; held & predicted broke 6; held & predicted held 38
+   caught:       c98a874cbe3b t 168.63 mach6 [other-8bfad1] road broke
+   caught:       e5c0fd082282 t 66.39 hangul t180b_elysium road broke
+   caught:       e5c0fd082282 t 69.84 hangul t180b_elysium aftermath broke
+   missed:       ab976a67c2ae t 370.2 mach6 [other-4e0aa3] edge broke
+   missed:       c98a874cbe3b t 205.17 mach6 [other-8bfad1] landing broke
+   missed:       c98a874cbe3b t 354.135 mach6 [other-8bfad1] landing broke
+   false alarm:  c74e4fd35558 t 60.09 mach6 t180b_elysium road held
+   false alarm:  c98a874cbe3b t 233.985 mach6 [other-8bfad1] landing held
+   false alarm:  c98a874cbe3b t 511.47 mach6 [other-8bfad1] road held
+   false alarm:  e5a192566716 t 61.92 demo t180b_elysium road held
+   false alarm:  e5c0fd082282 t 64.23 hangul t180b_elysium road held
+   false alarm:  f449f0bb1c96 t 63.435 gigerbon t180b_elysium road held
+  test breaks not aftermath: 5; caught of those: 2
+  test rows with |u_m| > 13.44: 10
+     ae0ee1365bf3 t 158.85 mach6 [other-75db4f] edge held u -13.5 roll 19.5
+     c74e4fd35558 t 60.09 mach6 t180b_elysium road held u 14.16 roll 66.3
+     c98a874cbe3b t 168.63 mach6 [other-8bfad1] road broke u 17.09 roll 32.8
+     c98a874cbe3b t 233.985 mach6 [other-8bfad1] landing held u 14.72 roll 23.4
+     c98a874cbe3b t 511.47 mach6 [other-8bfad1] road held u -17.25 roll -26
+     e5a192566716 t 61.92 demo t180b_elysium road held u 13.75 roll 66.6
+     e5c0fd082282 t 64.23 hangul t180b_elysium road held u 14.03 roll 66.3
+     e5c0fd082282 t 66.39 hangul t180b_elysium road broke u 14.25 roll 49.9
+     e5c0fd082282 t 69.84 hangul t180b_elysium aftermath broke u -14.31 roll -56.9
+     f449f0bb1c96 t 63.435 gigerbon t180b_elysium road held u 13.78 roll 66.5
+  helix fact: test passes on t180b_elysium* with |roll| 60-70: 4
+     c74e4fd35558 t 60.09 mach6 t180b_elysium road held |u| 14.16 roll 66.3
+     e5a192566716 t 61.92 demo t180b_elysium road held |u| 13.75 roll 66.6
+     e5c0fd082282 t 64.23 hangul t180b_elysium road held |u| 14.03 roll 66.3
+     f449f0bb1c96 t 63.435 gigerbon t180b_elysium road held |u| 13.78 roll 66.5
+     held at |u|>13.44: 4; broke at |u|<13.22: 0
+
+== BASELINE always held, test (n 50) ==
+  broke & predicted broke 0; broke & predicted held 6; held & predicted broke 0; held & predicted held 44
+   missed:       ab976a67c2ae t 370.2 mach6 [other-4e0aa3] edge broke
+   missed:       c98a874cbe3b t 168.63 mach6 [other-8bfad1] road broke
+   missed:       c98a874cbe3b t 205.17 mach6 [other-8bfad1] landing broke
+   missed:       c98a874cbe3b t 354.135 mach6 [other-8bfad1] landing broke
+   missed:       e5c0fd082282 t 66.39 hangul t180b_elysium road broke
+   missed:       e5c0fd082282 t 69.84 hangul t180b_elysium aftermath broke
+
+== BASELINE deepest_cm beyond 16 (deepest_cm < -16), test (n 50) ==
+  broke & predicted broke 5; broke & predicted held 1; held & predicted broke 8; held & predicted held 36
+   caught:       ab976a67c2ae t 370.2 mach6 [other-4e0aa3] edge broke
+   caught:       c98a874cbe3b t 168.63 mach6 [other-8bfad1] road broke
+   caught:       c98a874cbe3b t 205.17 mach6 [other-8bfad1] landing broke
+   caught:       c98a874cbe3b t 354.135 mach6 [other-8bfad1] landing broke
+   caught:       e5c0fd082282 t 69.84 hangul t180b_elysium aftermath broke
+   missed:       e5c0fd082282 t 66.39 hangul t180b_elysium road broke
+   false alarm:  9093d9d244fa t 42.165 mach6 [other-0e0103] road held
+   false alarm:  9767919a1c39 t 63.3 mach6 [other-0e0103] road held
+   false alarm:  ab976a67c2ae t 404.34 mach6 [other-4e0aa3] edge held
+   false alarm:  ab976a67c2ae t 465.87 mach6 [other-4e0aa3] edge held
+   false alarm:  ae0ee1365bf3 t 158.85 mach6 [other-75db4f] edge held
+   false alarm:  c98a874cbe3b t 511.47 mach6 [other-8bfad1] road held
+   false alarm:  cf60407c3a3e t 41.79 mach6 [other-e00d16] road held
+   false alarm:  cf60407c3a3e t 50.79 mach6 [other-e00d16] landing held
+
+== BASELINE deepest_cm beyond 16, all rows (n 111) ==
+  broke & predicted broke 13; broke & predicted held 2; held & predicted broke 20; held & predicted held 76
+   caught:       065789823b52 t 59.94 krysha t180b_elysium road broke
+   caught:       0805d953319d t 59.415 grx t180b_elysium road broke
+   caught:       1ca5e0b40e3c t 868.335 mach6 t180b_elysium road broke
+   caught:       263aaf1bf2aa t 205.65 mach6 t180b_elysium_gates_stiff landing broke
+   caught:       480905fbac85 t 85.83 mach6 [other-7fa3a2] landing broke
+   caught:       480905fbac85 t 160.26 mach6 [other-7fa3a2] road broke
+   caught:       4b3acff96fc6 t 1023.75 mach6 [other-83cd9b] landing broke
+   caught:       6eee6c19cb18 t 216.42 talon [other-5a5c6e] landing broke
+   caught:       ab976a67c2ae t 370.2 mach6 [other-4e0aa3] edge broke
+   caught:       c98a874cbe3b t 168.63 mach6 [other-8bfad1] road broke
+   caught:       c98a874cbe3b t 205.17 mach6 [other-8bfad1] landing broke
+   caught:       c98a874cbe3b t 354.135 mach6 [other-8bfad1] landing broke
+   caught:       e5c0fd082282 t 69.84 hangul t180b_elysium aftermath broke
+   missed:       065789823b52 t 62.655 krysha t180b_elysium aftermath broke
+   missed:       e5c0fd082282 t 66.39 hangul t180b_elysium road broke
+   false alarm:  0fb64acd1c62 t 42.6 mach6 [other-0e0103] road held
+   false alarm:  168d45c76583 t 89.595 mach6 t180b_crazy_test_test road held
+   false alarm:  1ca5e0b40e3c t 81.69 mach6 t180b_elysium edge held
+   false alarm:  480905fbac85 t 48.39 mach6 [other-7fa3a2] landing held
+   false alarm:  480905fbac85 t 94.68 mach6 [other-7fa3a2] road held
+   false alarm:  480905fbac85 t 96.87 mach6 [other-7fa3a2] road held
+   false alarm:  4b3acff96fc6 t 2135.4 mach6 [other-83cd9b] edge held
+   false alarm:  53028b32f8ba t 37.5 mach6 [other-5a5c6e] landing held
+   false alarm:  53028b32f8ba t 167.04 mach6 [other-5a5c6e] landing held
+   false alarm:  64ac1f991be9 t 42.255 mach6 [other-0e0103] road held
+   false alarm:  6eee6c19cb18 t 215.22 talon [other-5a5c6e] landing held
+   false alarm:  6eee6c19cb18 t 215.88 talon [other-5a5c6e] landing held
+   false alarm:  9093d9d244fa t 42.165 mach6 [other-0e0103] road held
+   false alarm:  9767919a1c39 t 63.3 mach6 [other-0e0103] road held
+   false alarm:  ab976a67c2ae t 404.34 mach6 [other-4e0aa3] edge held
+   false alarm:  ab976a67c2ae t 465.87 mach6 [other-4e0aa3] edge held
+   false alarm:  ae0ee1365bf3 t 158.85 mach6 [other-75db4f] edge held
+   false alarm:  c98a874cbe3b t 511.47 mach6 [other-8bfad1] road held
+   false alarm:  cf60407c3a3e t 41.79 mach6 [other-e00d16] road held
+   false alarm:  cf60407c3a3e t 50.79 mach6 [other-e00d16] landing held
+
+== P1 ==
+H563 rows matched in the table: 5
+   065789823b52 t 59.94 krysha t180b_elysium road broke cross 1 rate3 2.14
+   0805d953319d t 59.415 grx t180b_elysium road broke cross 1 rate3 1.82
+   c74e4fd35558 t 60.09 mach6 t180b_elysium road held cross 1 rate3 0.11
+   e5c0fd082282 t 64.23 hangul t180b_elysium road held cross 1 rate3 0.4
+   f449f0bb1c96 t 63.435 gigerbon t180b_elysium road held cross 0 rate3 NaN
+new crossers of 11 cm (not H563): 43; with no rate: 0
+
+-- P1 on all new crossers, column sink_rate_at_11cm: n 43 (held 31, broke 12)
+   held: <=0.63 3, between 9, >=1.66 19
+   broke: <=0.63 0, between 1, >=1.66 11
+   wrong side 19 of 43 (limit: more than 8.6); between 10 of 43 (limit: more than 21.5)
+   -> FAILED [wrong side]
+     off the claim: 0fb64acd1c62 t 42.6 mach6 [other-0e0103] road held sink_rate_at_11cm 1.5 load 84 (between)
+     off the claim: 1ca5e0b40e3c t 81.69 mach6 t180b_elysium edge held sink_rate_at_11cm 5.06 load 11.6 (fast)
+     off the claim: 3fa528271eb5 t 959.145 mach6 [other-e1f9f0] landing held sink_rate_at_11cm 3.37 load 41.3 (fast)
+     off the claim: 3fa528271eb5 t 2626.215 mach6 [other-e1f9f0] landing held sink_rate_at_11cm 7.4 load 40.2 (fast)
+     off the claim: 480905fbac85 t 48.39 mach6 [other-7fa3a2] landing held sink_rate_at_11cm 1.61 load 2.3 (between)
+     off the claim: 480905fbac85 t 94.68 mach6 [other-7fa3a2] road held sink_rate_at_11cm 1.35 load 2.7 (between)
+     off the claim: 480905fbac85 t 95.58 mach6 [other-7fa3a2] road held sink_rate_at_11cm 17.64 load 5.3 (fast)
+     off the claim: 480905fbac85 t 96.87 mach6 [other-7fa3a2] road held sink_rate_at_11cm 1.69 load 4.1 (fast)
+     off the claim: 480905fbac85 t 160.26 mach6 [other-7fa3a2] road broke sink_rate_at_11cm 1.56 load 3.6 (between)
+     off the claim: 4b3acff96fc6 t 2016.72 mach6 [other-83cd9b] edge held sink_rate_at_11cm 4.01 load 40.3 (fast)
+     off the claim: 4b3acff96fc6 t 2135.4 mach6 [other-83cd9b] edge held sink_rate_at_11cm 3.26 load 12.1 (fast)
+     off the claim: 53028b32f8ba t 37.5 mach6 [other-5a5c6e] landing held sink_rate_at_11cm 5.77 load 23.1 (fast)
+     off the claim: 53028b32f8ba t 167.04 mach6 [other-5a5c6e] landing held sink_rate_at_11cm 15.37 load 26.3 (fast)
+     off the claim: 64ac1f991be9 t 42.255 mach6 [other-0e0103] road held sink_rate_at_11cm 1.57 load 90.5 (between)
+     off the claim: 6eee6c19cb18 t 215.22 talon [other-5a5c6e] landing held sink_rate_at_11cm 8.35 load 29.5 (fast)
+     off the claim: 6eee6c19cb18 t 215.88 talon [other-5a5c6e] landing held sink_rate_at_11cm 3.12 load 15.5 (fast)
+     off the claim: 8140953e0a5b t 137.97 mach6 [other-75db4f] landing held sink_rate_at_11cm 11.3 load 24.8 (fast)
+     off the claim: 8140953e0a5b t 249.63 mach6 [other-75db4f] landing held sink_rate_at_11cm 14.23 load 25.8 (fast)
+     off the claim: 9093d9d244fa t 42.165 mach6 [other-0e0103] road held sink_rate_at_11cm 1.2 load 86.7 (between)
+     off the claim: ab976a67c2ae t 404.34 mach6 [other-4e0aa3] edge held sink_rate_at_11cm 6.62 load 7.2 (fast)
+     off the claim: ab976a67c2ae t 405.75 mach6 [other-4e0aa3] road held sink_rate_at_11cm 0.69 load 23.8 (between)
+     off the claim: ab976a67c2ae t 465.87 mach6 [other-4e0aa3] edge held sink_rate_at_11cm 13.26 load 14.1 (fast)
+     off the claim: ae0ee1365bf3 t 158.85 mach6 [other-75db4f] edge held sink_rate_at_11cm 1.93 load 10 (fast)
+     off the claim: c98a874cbe3b t 233.985 mach6 [other-8bfad1] landing held sink_rate_at_11cm 7.86 load 60 (fast)
+     off the claim: c98a874cbe3b t 511.47 mach6 [other-8bfad1] road held sink_rate_at_11cm 10.28 load 33.2 (fast)
+     off the claim: cf60407c3a3e t 37.68 mach6 [other-e00d16] landing held sink_rate_at_11cm 0.91 load 45.4 (between)
+     off the claim: cf60407c3a3e t 41.79 mach6 [other-e00d16] road held sink_rate_at_11cm 1.21 load 51.1 (between)
+     off the claim: cf60407c3a3e t 50.79 mach6 [other-e00d16] landing held sink_rate_at_11cm 9.04 load 34.9 (fast)
+     off the claim: cf60407c3a3e t 114.93 mach6 [other-e00d16] road held sink_rate_at_11cm 0.73 load 41.3 (between)
+
+-- P1 on new crossers, kind road, column sink_rate_at_11cm: n 16 (held 13, broke 3)
+   held: <=0.63 3, between 7, >=1.66 3
+   broke: <=0.63 0, between 1, >=1.66 2
+   wrong side 3 of 16 (limit: more than 3.2); between 8 of 16 (limit: more than 8)
+   -> held
+     off the claim: 0fb64acd1c62 t 42.6 mach6 [other-0e0103] road held sink_rate_at_11cm 1.5 load 84 (between)
+     off the claim: 480905fbac85 t 94.68 mach6 [other-7fa3a2] road held sink_rate_at_11cm 1.35 load 2.7 (between)
+     off the claim: 480905fbac85 t 95.58 mach6 [other-7fa3a2] road held sink_rate_at_11cm 17.64 load 5.3 (fast)
+     off the claim: 480905fbac85 t 96.87 mach6 [other-7fa3a2] road held sink_rate_at_11cm 1.69 load 4.1 (fast)
+     off the claim: 480905fbac85 t 160.26 mach6 [other-7fa3a2] road broke sink_rate_at_11cm 1.56 load 3.6 (between)
+     off the claim: 64ac1f991be9 t 42.255 mach6 [other-0e0103] road held sink_rate_at_11cm 1.57 load 90.5 (between)
+     off the claim: 9093d9d244fa t 42.165 mach6 [other-0e0103] road held sink_rate_at_11cm 1.2 load 86.7 (between)
+     off the claim: ab976a67c2ae t 405.75 mach6 [other-4e0aa3] road held sink_rate_at_11cm 0.69 load 23.8 (between)
+     off the claim: c98a874cbe3b t 511.47 mach6 [other-8bfad1] road held sink_rate_at_11cm 10.28 load 33.2 (fast)
+     off the claim: cf60407c3a3e t 41.79 mach6 [other-e00d16] road held sink_rate_at_11cm 1.21 load 51.1 (between)
+     off the claim: cf60407c3a3e t 114.93 mach6 [other-e00d16] road held sink_rate_at_11cm 0.73 load 41.3 (between)
+
+-- P1 on new crossers, kind road, peak_load_g>=50, column sink_rate_at_11cm: n 8 (held 7, broke 1)
+   held: <=0.63 3, between 4, >=1.66 0
+   broke: <=0.63 0, between 0, >=1.66 1
+   wrong side 0 of 8 (limit: more than 1.6); between 4 of 8 (limit: more than 4)
+   -> held
+     off the claim: 0fb64acd1c62 t 42.6 mach6 [other-0e0103] road held sink_rate_at_11cm 1.5 load 84 (between)
+     off the claim: 64ac1f991be9 t 42.255 mach6 [other-0e0103] road held sink_rate_at_11cm 1.57 load 90.5 (between)
+     off the claim: 9093d9d244fa t 42.165 mach6 [other-0e0103] road held sink_rate_at_11cm 1.2 load 86.7 (between)
+     off the claim: cf60407c3a3e t 41.79 mach6 [other-e00d16] road held sink_rate_at_11cm 1.21 load 51.1 (between)
+
+-- P1 on new crossers, kind road, own track (t180b_), column sink_rate_at_11cm: n 2 (held 1, broke 1)
+   held: <=0.63 1, between 0, >=1.66 0
+   broke: <=0.63 0, between 0, >=1.66 1
+   wrong side 0 of 2 (limit: more than 0.4); between 0 of 2 (limit: more than 1)
+   -> held
+
+-- P1 on new crossers, kind landing, column sink_rate_at_11cm: n 18 (held 12, broke 6)
+   held: <=0.63 0, between 2, >=1.66 10
+   broke: <=0.63 0, between 0, >=1.66 6
+   wrong side 10 of 18 (limit: more than 3.6); between 2 of 18 (limit: more than 9)
+   -> FAILED [wrong side]
+     off the claim: 3fa528271eb5 t 959.145 mach6 [other-e1f9f0] landing held sink_rate_at_11cm 3.37 load 41.3 (fast)
+     off the claim: 3fa528271eb5 t 2626.215 mach6 [other-e1f9f0] landing held sink_rate_at_11cm 7.4 load 40.2 (fast)
+     off the claim: 480905fbac85 t 48.39 mach6 [other-7fa3a2] landing held sink_rate_at_11cm 1.61 load 2.3 (between)
+     off the claim: 53028b32f8ba t 37.5 mach6 [other-5a5c6e] landing held sink_rate_at_11cm 5.77 load 23.1 (fast)
+     off the claim: 53028b32f8ba t 167.04 mach6 [other-5a5c6e] landing held sink_rate_at_11cm 15.37 load 26.3 (fast)
+     off the claim: 6eee6c19cb18 t 215.22 talon [other-5a5c6e] landing held sink_rate_at_11cm 8.35 load 29.5 (fast)
+     off the claim: 6eee6c19cb18 t 215.88 talon [other-5a5c6e] landing held sink_rate_at_11cm 3.12 load 15.5 (fast)
+     off the claim: 8140953e0a5b t 137.97 mach6 [other-75db4f] landing held sink_rate_at_11cm 11.3 load 24.8 (fast)
+     off the claim: 8140953e0a5b t 249.63 mach6 [other-75db4f] landing held sink_rate_at_11cm 14.23 load 25.8 (fast)
+     off the claim: c98a874cbe3b t 233.985 mach6 [other-8bfad1] landing held sink_rate_at_11cm 7.86 load 60 (fast)
+     off the claim: cf60407c3a3e t 37.68 mach6 [other-e00d16] landing held sink_rate_at_11cm 0.91 load 45.4 (between)
+     off the claim: cf60407c3a3e t 50.79 mach6 [other-e00d16] landing held sink_rate_at_11cm 9.04 load 34.9 (fast)
+
+-- P1 on new crossers, test split only, column sink_rate_at_11cm: n 20 (held 15, broke 5)
+   held: <=0.63 2, between 5, >=1.66 8
+   broke: <=0.63 0, between 0, >=1.66 5
+   wrong side 8 of 20 (limit: more than 4); between 5 of 20 (limit: more than 10)
+   -> FAILED [wrong side]
+     off the claim: 8140953e0a5b t 137.97 mach6 [other-75db4f] landing held sink_rate_at_11cm 11.3 load 24.8 (fast)
+     off the claim: 8140953e0a5b t 249.63 mach6 [other-75db4f] landing held sink_rate_at_11cm 14.23 load 25.8 (fast)
+     off the claim: 9093d9d244fa t 42.165 mach6 [other-0e0103] road held sink_rate_at_11cm 1.2 load 86.7 (between)
+     off the claim: ab976a67c2ae t 404.34 mach6 [other-4e0aa3] edge held sink_rate_at_11cm 6.62 load 7.2 (fast)
+     off the claim: ab976a67c2ae t 405.75 mach6 [other-4e0aa3] road held sink_rate_at_11cm 0.69 load 23.8 (between)
+     off the claim: ab976a67c2ae t 465.87 mach6 [other-4e0aa3] edge held sink_rate_at_11cm 13.26 load 14.1 (fast)
+     off the claim: ae0ee1365bf3 t 158.85 mach6 [other-75db4f] edge held sink_rate_at_11cm 1.93 load 10 (fast)
+     off the claim: c98a874cbe3b t 233.985 mach6 [other-8bfad1] landing held sink_rate_at_11cm 7.86 load 60 (fast)
+     off the claim: c98a874cbe3b t 511.47 mach6 [other-8bfad1] road held sink_rate_at_11cm 10.28 load 33.2 (fast)
+     off the claim: cf60407c3a3e t 37.68 mach6 [other-e00d16] landing held sink_rate_at_11cm 0.91 load 45.4 (between)
+     off the claim: cf60407c3a3e t 41.79 mach6 [other-e00d16] road held sink_rate_at_11cm 1.21 load 51.1 (between)
+     off the claim: cf60407c3a3e t 50.79 mach6 [other-e00d16] landing held sink_rate_at_11cm 9.04 load 34.9 (fast)
+     off the claim: cf60407c3a3e t 114.93 mach6 [other-e00d16] road held sink_rate_at_11cm 0.73 load 41.3 (between)
+
+-- P1 on all new crossers, column sink_rate_1frame: n 43 (held 31, broke 12)
+   held: <=0.63 2, between 9, >=1.66 20
+   broke: <=0.63 0, between 2, >=1.66 10
+   wrong side 20 of 43 (limit: more than 8.6); between 11 of 43 (limit: more than 21.5)
+   -> FAILED [wrong side]
+     off the claim: 0fb64acd1c62 t 42.6 mach6 [other-0e0103] road held sink_rate_1frame 1.34 load 84 (between)
+     off the claim: 1ca5e0b40e3c t 81.69 mach6 t180b_elysium edge held sink_rate_1frame 3.66 load 11.6 (fast)
+     off the claim: 1ca5e0b40e3c t 868.335 mach6 t180b_elysium road broke sink_rate_1frame 1.61 load 62.8 (between)
+     off the claim: 3fa528271eb5 t 959.145 mach6 [other-e1f9f0] landing held sink_rate_1frame 1.13 load 41.3 (between)
+     off the claim: 3fa528271eb5 t 2626.215 mach6 [other-e1f9f0] landing held sink_rate_1frame 6.59 load 40.2 (fast)
+     off the claim: 480905fbac85 t 48.39 mach6 [other-7fa3a2] landing held sink_rate_1frame 2.19 load 2.3 (fast)
+     off the claim: 480905fbac85 t 94.68 mach6 [other-7fa3a2] road held sink_rate_1frame 1.44 load 2.7 (between)
+     off the claim: 480905fbac85 t 95.58 mach6 [other-7fa3a2] road held sink_rate_1frame 62.18 load 5.3 (fast)
+     off the claim: 480905fbac85 t 96.87 mach6 [other-7fa3a2] road held sink_rate_1frame 8.12 load 4.1 (fast)
+     off the claim: 480905fbac85 t 160.26 mach6 [other-7fa3a2] road broke sink_rate_1frame 1.33 load 3.6 (between)
+     off the claim: 4b3acff96fc6 t 2016.72 mach6 [other-83cd9b] edge held sink_rate_1frame 4.01 load 40.3 (fast)
+     off the claim: 4b3acff96fc6 t 2135.4 mach6 [other-83cd9b] edge held sink_rate_1frame 3.09 load 12.1 (fast)
+     off the claim: 53028b32f8ba t 37.5 mach6 [other-5a5c6e] landing held sink_rate_1frame 3.8 load 23.1 (fast)
+     off the claim: 53028b32f8ba t 167.04 mach6 [other-5a5c6e] landing held sink_rate_1frame 21.44 load 26.3 (fast)
+     off the claim: 64ac1f991be9 t 42.255 mach6 [other-0e0103] road held sink_rate_1frame 2.69 load 90.5 (fast)
+     off the claim: 6eee6c19cb18 t 215.22 talon [other-5a5c6e] landing held sink_rate_1frame 7.09 load 29.5 (fast)
+     off the claim: 6eee6c19cb18 t 215.88 talon [other-5a5c6e] landing held sink_rate_1frame 3.16 load 15.5 (fast)
+     off the claim: 8140953e0a5b t 137.97 mach6 [other-75db4f] landing held sink_rate_1frame 14.11 load 24.8 (fast)
+     off the claim: 8140953e0a5b t 249.63 mach6 [other-75db4f] landing held sink_rate_1frame 19.33 load 25.8 (fast)
+     off the claim: 9093d9d244fa t 41.67 mach6 [other-0e0103] road held sink_rate_1frame 1.17 load 77.3 (between)
+     off the claim: 9093d9d244fa t 42.165 mach6 [other-0e0103] road held sink_rate_1frame 1.06 load 86.7 (between)
+     off the claim: 9767919a1c39 t 63.3 mach6 [other-0e0103] road held sink_rate_1frame 0.81 load 88 (between)
+     off the claim: ab976a67c2ae t 404.34 mach6 [other-4e0aa3] edge held sink_rate_1frame 6.72 load 7.2 (fast)
+     off the claim: ab976a67c2ae t 465.87 mach6 [other-4e0aa3] edge held sink_rate_1frame 13.26 load 14.1 (fast)
+     off the claim: ae0ee1365bf3 t 158.85 mach6 [other-75db4f] edge held sink_rate_1frame 1.86 load 10 (fast)
+     off the claim: c98a874cbe3b t 233.985 mach6 [other-8bfad1] landing held sink_rate_1frame 2.92 load 60 (fast)
+     off the claim: c98a874cbe3b t 511.47 mach6 [other-8bfad1] road held sink_rate_1frame 20.99 load 33.2 (fast)
+     off the claim: cf60407c3a3e t 37.68 mach6 [other-e00d16] landing held sink_rate_1frame 1.53 load 45.4 (between)
+     off the claim: cf60407c3a3e t 41.79 mach6 [other-e00d16] road held sink_rate_1frame 1.37 load 51.1 (between)
+     off the claim: cf60407c3a3e t 50.79 mach6 [other-e00d16] landing held sink_rate_1frame 11.42 load 34.9 (fast)
+     off the claim: cf60407c3a3e t 114.93 mach6 [other-e00d16] road held sink_rate_1frame 0.65 load 41.3 (between)
+
+-- P1 on new crossers, kind road, column sink_rate_1frame: n 16 (held 13, broke 3)
+   held: <=0.63 2, between 7, >=1.66 4
+   broke: <=0.63 0, between 2, >=1.66 1
+   wrong side 4 of 16 (limit: more than 3.2); between 9 of 16 (limit: more than 8)
+   -> FAILED [wrong side] [most between]
+     off the claim: 0fb64acd1c62 t 42.6 mach6 [other-0e0103] road held sink_rate_1frame 1.34 load 84 (between)
+     off the claim: 1ca5e0b40e3c t 868.335 mach6 t180b_elysium road broke sink_rate_1frame 1.61 load 62.8 (between)
+     off the claim: 480905fbac85 t 94.68 mach6 [other-7fa3a2] road held sink_rate_1frame 1.44 load 2.7 (between)
+     off the claim: 480905fbac85 t 95.58 mach6 [other-7fa3a2] road held sink_rate_1frame 62.18 load 5.3 (fast)
+     off the claim: 480905fbac85 t 96.87 mach6 [other-7fa3a2] road held sink_rate_1frame 8.12 load 4.1 (fast)
+     off the claim: 480905fbac85 t 160.26 mach6 [other-7fa3a2] road broke sink_rate_1frame 1.33 load 3.6 (between)
+     off the claim: 64ac1f991be9 t 42.255 mach6 [other-0e0103] road held sink_rate_1frame 2.69 load 90.5 (fast)
+     off the claim: 9093d9d244fa t 41.67 mach6 [other-0e0103] road held sink_rate_1frame 1.17 load 77.3 (between)
+     off the claim: 9093d9d244fa t 42.165 mach6 [other-0e0103] road held sink_rate_1frame 1.06 load 86.7 (between)
+     off the claim: 9767919a1c39 t 63.3 mach6 [other-0e0103] road held sink_rate_1frame 0.81 load 88 (between)
+     off the claim: c98a874cbe3b t 511.47 mach6 [other-8bfad1] road held sink_rate_1frame 20.99 load 33.2 (fast)
+     off the claim: cf60407c3a3e t 41.79 mach6 [other-e00d16] road held sink_rate_1frame 1.37 load 51.1 (between)
+     off the claim: cf60407c3a3e t 114.93 mach6 [other-e00d16] road held sink_rate_1frame 0.65 load 41.3 (between)
+
+== P2 ==
+-- all rows: n 111 (no roll_load 0); top-quarter cut roll_load_g >= 3.38
+   top quarter: 4 broke of 28 (14.3%); rest: 11 broke of 83 (13.3%) -> commoner in the top quarter
+   chance of 4 or more of the 15 breaks landing in the top 28 by luck: 0.556
+     top-quarter break: 065789823b52 t 59.94 krysha t180b_elysium road broke roll_load 12.06 u 14.34 rollacc 0.0109
+     top-quarter break: 0805d953319d t 59.415 grx t180b_elysium road broke roll_load 6.46 u 15.09 rollacc 0.0056
+     top-quarter break: 263aaf1bf2aa t 205.65 mach6 t180b_elysium_gates_stiff landing broke roll_load 22.03 u 17.41 rollacc 0.0169
+     top-quarter break: 4b3acff96fc6 t 1023.75 mach6 [other-83cd9b] landing broke roll_load 13.55 u -17.97 rollacc 0.4394
+-- all rows but aftermath: n 109 (no roll_load 0); top-quarter cut roll_load_g >= 3.38
+   top quarter: 4 broke of 28 (14.3%); rest: 9 broke of 81 (11.1%) -> commoner in the top quarter
+   chance of 4 or more of the 13 breaks landing in the top 28 by luck: 0.440
+     top-quarter break: 065789823b52 t 59.94 krysha t180b_elysium road broke roll_load 12.06 u 14.34 rollacc 0.0109
+     top-quarter break: 0805d953319d t 59.415 grx t180b_elysium road broke roll_load 6.46 u 15.09 rollacc 0.0056
+     top-quarter break: 263aaf1bf2aa t 205.65 mach6 t180b_elysium_gates_stiff landing broke roll_load 22.03 u 17.41 rollacc 0.0169
+     top-quarter break: 4b3acff96fc6 t 1023.75 mach6 [other-83cd9b] landing broke roll_load 13.55 u -17.97 rollacc 0.4394
+-- kind road: n 71 (no roll_load 0); top-quarter cut roll_load_g >= 3.61
+   top quarter: 2 broke of 18 (11.1%); rest: 4 broke of 53 (7.5%) -> commoner in the top quarter
+   chance of 2 or more of the 6 breaks landing in the top 18 by luck: 0.479
+     top-quarter break: 065789823b52 t 59.94 krysha t180b_elysium road broke roll_load 12.06 u 14.34 rollacc 0.0109
+     top-quarter break: 0805d953319d t 59.415 grx t180b_elysium road broke roll_load 6.46 u 15.09 rollacc 0.0056
+-- kind road, own tracks: n 19 (no roll_load 0); top-quarter cut roll_load_g >= 3.68
+   top quarter: 2 broke of 5 (40.0%); rest: 2 broke of 14 (14.3%) -> commoner in the top quarter
+   chance of 2 or more of the 4 breaks landing in the top 5 by luck: 0.272
+     top-quarter break: 065789823b52 t 59.94 krysha t180b_elysium road broke roll_load 12.06 u 14.34 rollacc 0.0109
+     top-quarter break: 0805d953319d t 59.415 grx t180b_elysium road broke roll_load 6.46 u 15.09 rollacc 0.0056
+-- kind road, other tracks: n 52 (no roll_load 0); top-quarter cut roll_load_g >= 3.3
+   top quarter: 0 broke of 13 (0.0%); rest: 2 broke of 39 (5.1%) -> NOT commoner
+   chance of 0 or more of the 2 breaks landing in the top 13 by luck: 1.000
+-- t180b_elysium only, all kinds: n 21 (no roll_load 0); top-quarter cut roll_load_g >= 3.61
+   top quarter: 2 broke of 7 (28.6%); rest: 4 broke of 14 (28.6%) -> NOT commoner
+   chance of 2 or more of the 6 breaks landing in the top 7 by luck: 0.686
+     top-quarter break: 065789823b52 t 59.94 krysha t180b_elysium road broke roll_load 12.06 u 14.34 rollacc 0.0109
+     top-quarter break: 0805d953319d t 59.415 grx t180b_elysium road broke roll_load 6.46 u 15.09 rollacc 0.0056
+-- test split, all rows: n 50 (no roll_load 0); top-quarter cut roll_load_g >= 3.14
+   top quarter: 0 broke of 13 (0.0%); rest: 6 broke of 37 (16.2%) -> NOT commoner
+   chance of 0 or more of the 6 breaks landing in the top 13 by luck: 1.000
+
+== P3 ==
+rows by car: {"mach6":{"rows":99,"broke":9,"cross":39},"krysha":{"rows":2,"broke":2,"cross":2},"grx":{"rows":1,"broke":1,"cross":1},"augury":{"rows":1,"broke":0,"cross":0},"talon":{"rows":3,"broke":1,"cross":3},"demo":{"rows":1,"broke":0,"cross":0},"hangul":{"rows":3,"broke":2,"cross":2},"gigerbon":{"rows":1,"broke":0,"cross":0}}
+typea rows: 0
+-- t180b_elysium: cars krysha, grx, mach6, augury, demo, hangul, gigerbon
+   krysha: 2 passes, 2 broke; crossers 2
+      broke road rate3 2.14 rate1 2.09 load 57.7 |u| 14.34 edge 3.13 roll 66.9 (065789823b52 t 59.94)
+      broke aftermath rate3 64.26 rate1 63 load 64.2 |u| 4.09 edge 13.5 roll -1.6 (065789823b52 t 62.655)
+   grx: 1 passes, 1 broke; crossers 1
+      broke road rate3 1.82 rate1 1.91 load 64.2 |u| 15.09 edge 2.38 roll 66.2 (0805d953319d t 59.415)
+   mach6: 12 passes, 1 broke; crossers 3
+      held road rate3 0.11 rate1 0.17 load 65.3 |u| 14.16 edge 3.31 roll 66.3 (c74e4fd35558 t 60.09)
+      broke road rate3 2.3 rate1 1.61 load 62.8 |u| 13.47 edge 4 roll 65.8 (1ca5e0b40e3c t 868.335)
+      held edge rate3 5.06 rate1 3.66 load 11.6 |u| 17.34 edge 0.13 roll 20 (1ca5e0b40e3c t 81.69)
+   augury: 1 passes, 0 broke; crossers 0
+   demo: 1 passes, 0 broke; crossers 0
+   hangul: 3 passes, 2 broke; crossers 2
+      held road rate3 0.4 rate1 1.06 load 63.3 |u| 14.03 edge 3.44 roll 66.3 (e5c0fd082282 t 64.23)
+      broke road rate3 NaN rate1 NaN load 47.7 |u| 14.25 edge 3.25 roll 49.9 (e5c0fd082282 t 66.39)
+      broke aftermath rate3 50.51 rate1 54.61 load 82.1 |u| 14.31 edge 3.81 roll -56.9 (e5c0fd082282 t 69.84)
+   gigerbon: 1 passes, 0 broke; crossers 0
+   krysha: road breaks at a rate another car held at or above: 1 (road crossing breaks 1; other cars' held crossers 3)
+   grx: road breaks at a rate another car held at or above: 1 (road crossing breaks 1; other cars' held crossers 3)
+   mach6: road breaks at a rate another car held at or above: 0 (road crossing breaks 1; other cars' held crossers 1)
+   augury: road breaks at a rate another car held at or above: 0 (road crossing breaks 0; other cars' held crossers 3)
+   demo: road breaks at a rate another car held at or above: 0 (road crossing breaks 0; other cars' held crossers 3)
+   hangul: road breaks at a rate another car held at or above: 0 (road crossing breaks 0; other cars' held crossers 2)
+   gigerbon: road breaks at a rate another car held at or above: 0 (road crossing breaks 0; other cars' held crossers 3)
+-- [other-5a5c6e]: cars mach6, talon
+   mach6: 6 passes, 0 broke; crossers 2
+      held landing rate3 5.77 rate1 3.8 load 23.1 |u| 6.84 edge 19.13 roll 1 (53028b32f8ba t 37.5)
+      held landing rate3 15.37 rate1 21.44 load 26.3 |u| 4.03 edge 21.94 roll 1.2 (53028b32f8ba t 167.04)
+   talon: 3 passes, 1 broke; crossers 3
+      held landing rate3 3.12 rate1 3.16 load 15.5 |u| 1.97 edge 24.06 roll -20.5 (6eee6c19cb18 t 215.88)
+      held landing rate3 8.35 rate1 7.09 load 29.5 |u| 0.53 edge 25.44 roll -0.5 (6eee6c19cb18 t 215.22)
+      broke landing rate3 8.98 rate1 9.5 load 15 |u| 16 edge 10.81 roll -36 (6eee6c19cb18 t 216.42)
+   mach6: road breaks at a rate another car held at or above: 0 (road crossing breaks 0; other cars' held crossers 2)
+   talon: road breaks at a rate another car held at or above: 0 (road crossing breaks 0; other cars' held crossers 2)
