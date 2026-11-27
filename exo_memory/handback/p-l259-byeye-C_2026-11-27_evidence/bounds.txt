@@ -1,0 +1,10 @@
+study section 26185-26345:
+  near start: 26115 m crosses R 1500 tighter; 26182 m crosses R 500 tighter; 26201 m crosses R 180 tighter
+  near end:   26328 m crosses R 180 wider; 26351 m crosses R 500 wider; 26367 m crosses R 1500 wider; 26370 m crosses R 1500 tighter; 26374 m crosses R 1500 wider; 26378 m crosses R 1500 tighter; 26386 m crosses R 1500 wider; 26390 m crosses R 1500 tighter; 26394 m crosses R 1500 wider; 26398 m crosses R 1500 tighter; 26402 m crosses R 1500 wider; 26414 m crosses R 1500 tighter
+study section 14741-15163:
+  near start: 14685 m crosses R 500 tighter; 14740 m crosses R 180 tighter; 14814 m crosses R 180 wider
+  near end:   15167 m crosses R 180 wider; 15218 m crosses R 500 wider
+study section 22034-22553:
+  near start: 21989 m crosses R 180 wider; 22033 m crosses R 500 wider; 22041 m crosses R 500 tighter; 22045 m crosses R 500 wider; 22084 m crosses R 1500 wider; 22096 m crosses R 1500 tighter; 22100 m crosses R 1500 wider
+  near end:   22555 m crosses R 180 wider; 22610 m crosses R 500 wider
+lap: this grid 36292 m; the study 36330 m; ratio 1.00105

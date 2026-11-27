@@ -1,0 +1,2 @@
+read on L: 8590 stations, walked 34353 m, end closed
+raw centres: 36761 m; even grid (3.982 m, measure.js readRef): 9232 points; smoothed line 36292 m open, 36334 m closed; the study: 36,330 m, 9,181 grid points

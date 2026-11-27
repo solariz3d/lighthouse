@@ -1,0 +1,4 @@
+26185-26345: lead point (26122.4 m) lands at -0.04, -0.00, -0.04, facing heading 0.00 deg (app placeAt)
+14741-15163: lead point (14680.7 m) lands at -0.02, 0.04, -0.02, facing heading 0.00 deg (app placeAt)
+22034-22553: lead point (21973.2 m) lands at -0.05, 0.05, -0.04, facing heading 0.00 deg (app placeAt)
+29620-29822: lead point (29556.9 m) lands at 0.00, 0.01, -0.02, facing heading -0.00 deg (app placeAt)

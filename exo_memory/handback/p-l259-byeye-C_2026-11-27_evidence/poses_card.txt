@@ -1,0 +1,29 @@
+read: 9232 stations, walked 34353 m, smoothed arc 36292 m, end closed, start dummy AC_START_0
+
+section 26185-26345 m (160 m), lead-in from 26122 m:
+  nudge: x 131.6  z 141.2  up -30.3  turn 88.38  -> the lead point lands at -0.04, -0.00, -0.04, facing heading 0.00 deg
+  lead start    26122 m: on his screen x 0 z 0 up 0; heading 0.0 from his start, pitch 1.3, bank -0.2, up-angle 1.3, width 30.3 m
+  section start 26182 m: on his screen x -0.2 z 59.2 up 3.2; heading 0.4 from his start, pitch 5.6, bank 17.9, up-angle 17.4, width 30.6 m
+  section end   26343 m: on his screen x -59.5 z 52.8 up 14.3; heading 178.5 from his start, pitch 0.0, bank 38.6, up-angle 39.2, width 30.8 m
+  lead-in: max |pitch| 5.6, max |bank| 17.9, max up-angle 17.4; section: max |pitch| 9.3, max |bank| 41.3, max up-angle 42.3; heading over the section every 20 m (from its start): 0 -2 -18 -55 -97 -140 -168 -178 178
+
+section 14741-15163 m (422 m), lead-in from 14681 m:
+  nudge: x -136.3  z -371.1  up 8.3  turn -0.03  -> the lead point lands at -0.02, 0.04, -0.02, facing heading 0.00 deg
+  lead start    14681 m: on his screen x 0 z 0 up 0; heading 0.0 from his start, pitch -0.2, bank -20.4, up-angle 20.7, width 33.7 m
+  section start 14740 m: on his screen x 4 z 58.9 up 0.2; heading 10.1 from his start, pitch 0.6, bank -32.3, up-angle 33.2, width 30.3 m
+  section end   15163 m: on his screen x 92.8 z 370.2 up 8; heading -88.1 from his start, pitch 0.6, bank 42.8, up-angle 42.6, width 30.6 m
+  lead-in: max |pitch| 0.6, max |bank| 32.3, max up-angle 33.2; section: max |pitch| 9.0, max |bank| 45.3, max up-angle 45.5; heading over the section every 20 m (from its start): 0 9 17 24 31 37 43 52 57 53 36 13 -1 -6 -9 -11 -12 -20 -45 -71 -89 -97
+
+section 22034-22553 m (519 m), lead-in from 21973 m:
+  nudge: x 544.1  z 481.8  up 266.1  turn 106.99  -> the lead point lands at -0.05, 0.05, -0.04, facing heading 0.00 deg
+  lead start    21973 m: on his screen x 0 z 0 up 0; heading 0.0 from his start, pitch -0.1, bank -28.6, up-angle 28.6, width 31.1 m
+  section start 22033 m: on his screen x 8 z 58.8 up 0; heading 12.5 from his start, pitch 0.3, bank -28.7, up-angle 28.7, width 31.0 m
+  section end   22551 m: on his screen x 215.6 z 477.8 up 0; heading 117.3 from his start, pitch -0.2, bank -23.3, up-angle 23.8, width 31.0 m
+  lead-in: max |pitch| 0.6, max |bank| 28.7, max up-angle 28.7; section: max |pitch| 0.7, max |bank| 28.7, max up-angle 29.2; heading over the section every 20 m (from its start): 0 2 3 4 5 4 4 5 4 5 5 5 5 4 5 5 4 5 4 6 9 14 30 58 82 96
+
+section 29620-29822 m (202 m), lead-in from 29557 m:
+  nudge: x 11  z -290.2  up -779.2  turn -84.38  -> the lead point lands at 0.00, 0.01, -0.02, facing heading -0.00 deg
+  lead start    29557 m: on his screen x 0 z 0 up 0; heading 0.0 from his start, pitch 66.2, bank -0.7, up-angle 68.1, width 31.2 m
+  section start 29620 m: on his screen x -0.2 z 24.5 up 58.1; heading 4.6 from his start, pitch 66.3, bank -43.5, up-angle 73.3, width 37.7 m
+  section end   29820 m: on his screen x 61.1 z -5.1 up 2.5; heading -167.9 from his start, pitch -67.4, bank -10.3, up-angle 67.4, width 34.9 m
+  lead-in: max |pitch| 67.8, max |bank| 43.5, max up-angle 73.3; section: max |pitch| 68.5, max |bank| 95.5, max up-angle 95.9; heading over the section every 20 m (from its start): 0 21 49 74 100 130 157 179 -173 -171 -172

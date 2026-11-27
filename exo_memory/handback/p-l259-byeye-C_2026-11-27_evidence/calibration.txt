@@ -1,0 +1,25 @@
+# script_route.js on L at builder f3cd425 (worktree C:/Consonance/t180-wt-c-l259), from his start: node script_route.js t2.read.json start.json <from> <to> 60 <cut> <nudge x z up turn>
+script corners every 20 m, 26185-26345 m from 26125 m: 13 pieces laid; section NOT made (direction); pieces in the section 9; worst direction x3.89
+  rows: position 2.81 m, direction 11.66 deg, bank 0.71 deg (raw 2.18), width 0.42 m; curvature 0.03898 vs 0.03905; roll rate 0.286 vs 0.277; at {"position":26335,"direction":26270,"bank":26270,"bankRaw":26186,"width":26236}
+script corners every 10 m, 26185-26345 m from 26125 m: 25 pieces laid; section NOT made (direction); pieces in the section 17; worst direction x2.45
+  rows: position 1.36 m, direction 7.36 deg, bank 0.41 deg (raw 2.13), width 0.34 m; curvature 0.03885 vs 0.03905; roll rate 0.282 vs 0.277; at {"position":26244,"direction":26285,"bank":26225,"bankRaw":26186,"width":26209}
+script corners every 5 m, 26185-26345 m from 26125 m: 49 pieces laid; section NOT made (direction); pieces in the section 33; worst direction x1.08
+  rows: position 0.81 m, direction 3.24 deg, bank 0.41 deg (raw 2.25), width 0.09 m; curvature 0.04058 vs 0.03905; roll rate 0.288 vs 0.277; at {"position":26248,"direction":26225,"bank":26190,"bankRaw":26186,"width":26209}
+script corners every 4 m, 26185-26345 m from 26125 m: 61 pieces laid; section NOT made (direction); pieces in the section 40; worst direction x2.38
+  rows: position 1.53 m, direction 7.15 deg, bank 0.42 deg (raw 2.05), width 0.12 m; curvature 0.03673 vs 0.03905; roll rate 0.290 vs 0.277; at {"position":26251,"direction":26285,"bank":26217,"bankRaw":26267,"width":26233}
+script corners every 2.5 m, 26185-26345 m from 26125 m: 98 pieces laid; section MADE; pieces in the section 64; worst direction x0.50
+  rows: position 0.52 m, direction 1.49 deg, bank 0.35 deg (raw 2.33), width 0.12 m; curvature 0.03986 vs 0.03905; roll rate 0.289 vs 0.277; at {"position":26244,"direction":26221,"bank":26221,"bankRaw":26186,"width":26213}
+script corners every 10 m, 14741-15163 m from 14681 m: 51 pieces laid; section NOT made (direction); pieces in the section 43; worst direction x1.19
+  rows: position 1.73 m, direction 3.57 deg, bank 1.50 deg (raw 4.00), width 0.62 m; curvature 0.02137 vs 0.02122; roll rate 0.759 vs 0.763; at {"position":15159,"direction":14952,"bank":14928,"bankRaw":14920,"width":14826}
+refused at 15186 m: TURN_TOO_SHORT: a 1 m piece is too short to turn by -0.8° and climb by 0.0° and end straight: it needs at least 3 m
+script corners every 5 m, 14741-15163 m from 14681 m: 101 pieces laid (REFUSED, stopped); section NOT made (direction); pieces in the section 85; worst direction x1.67
+  rows: position 1.97 m, direction 5.02 deg, bank 2.00 deg (raw 4.31), width 0.46 m; curvature 0.02119 vs 0.02122; roll rate 0.778 vs 0.763; at {"position":15159,"direction":15116,"bank":14936,"bankRaw":14936,"width":15097}
+refused at 15186 m: TURN_TOO_SHORT: a 1 m piece is too short to turn by -0.8° and climb by 0.0° and end straight: it needs at least 3 m
+script corners every 2.5 m, 14741-15163 m from 14681 m: 202 pieces laid (REFUSED, stopped); section NOT made (direction); pieces in the section 169; worst direction x1.19
+  rows: position 1.78 m, direction 3.57 deg, bank 2.24 deg (raw 4.55), width 0.59 m; curvature 0.02166 vs 0.02122; roll rate 0.799 vs 0.763; at {"position":15159,"direction":15116,"bank":14936,"bankRaw":14936,"width":15019}
+script corners every 10 m, 22034-22553 m from 21974 m: 61 pieces laid; section NOT made (direction); pieces in the section 52; worst direction x1.57
+  rows: position 1.46 m, direction 4.71 deg, bank 0.18 deg (raw 0.97), width 0.65 m; curvature 0.02279 vs 0.02241; roll rate 0.175 vs 0.174; at {"position":22500,"direction":22484,"bank":22543,"bankRaw":22492,"width":22045}
+script corners every 5 m, 22034-22553 m from 21974 m: 121 pieces laid; section MADE; pieces in the section 104; worst direction x0.89
+  rows: position 1.36 m, direction 2.66 deg, bank 0.23 deg (raw 0.97), width 0.48 m; curvature 0.02254 vs 0.02241; roll rate 0.175 vs 0.174; at {"position":22500,"direction":22484,"bank":22543,"bankRaw":22492,"width":22045}
+script corners every 2.5 m, 22034-22553 m from 21974 m: 241 pieces laid; section MADE; pieces in the section 207; worst width x0.39
+  rows: position 1.16 m, direction 1.10 deg, bank 0.18 deg (raw 0.99), width 0.39 m; curvature 0.02307 vs 0.02241; roll rate 0.175 vs 0.174; at {"position":22504,"direction":22492,"bank":22547,"bankRaw":22492,"width":22037}
