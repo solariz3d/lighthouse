@@ -84,3 +84,23 @@ road that is not the same on both sides.
 4. Class 6: the −360 wrap (D259 against his 11-03 spiral ask).
 5. The release batch, when he has tried the builds: landing-1126 (+ E's File/Edit fix), the reader, the pit gap, build 1,
    build 2, O1.
+
+## Amendment, 2026-11-26 ~19:00 local: class 1's registered prediction FAILED (pane B's test)
+
+`handback/p-faster-rows-prediction-B_2026-11-26.md` (B wrote neither the plan nor the study; scratch only; a baseline added).
+On [T3]'s 53 sections, made in fewer pieces than O's count: baseline ceb21f5 **5**, O1 **5**, O1+O2+O3 **5**, O4 **5**, the
+same five sections in every build, all made by plain pieces with no rows. E's plan registered "O4 at least 40" and, in
+advance, its own degenerating condition ("O4 makes fewer than 27 ... the catalogue's 'faster turn row' class is wrong as
+named"). **It fired.**
+
+What this changes:
+- **Class 1 stands as a gap (the piece count is real) but its NAME was wrong.** Lifting the turn-row law, even down to a 20 m
+  floor, takes the instrument's rows from 0 sections made to 0. The rows lay in more sections (13 to 51) and come closer
+  (median worst 7.83 to 3.25 x tolerance), but none crosses.
+- **What holds the count past the turn law** (B, inferred from the misses): the AIM (heading, position, pitch and elevation
+  missed together by the instrument's solve), and the climb and width rows (width rows refused 377 times under O4).
+  The test cannot tell "a person aims better" from "climb and width rows need freeing too".
+- **O1 still stands as a correct fix** (it keeps his bar and removes a closed-form cap the bank already dropped), but its
+  measured gain on [T3] is 0. O4 no longer has a measured case; the morning question changes accordingly.
+- O's [T3] counts on sections 37, 43, 45, 61 and 104 are 1-2 pieces high (plain equal pieces beat them); O's study already
+  said "not proven minimal".
