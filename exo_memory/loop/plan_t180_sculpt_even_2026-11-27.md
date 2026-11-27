@@ -145,6 +145,22 @@ The second render showed this first (hand-back, "Second render").
 - **inferred, from E2's measured rows:** the width, sideways and height spreads over the run are 0 on both starts. Every control point from 180 to 460 m is set to the same three values, and E2's margin already gave 16.0000 at every metre of the run. The scuffs are replaced whole.
 - **inferred:** none of E3's ramp reds, because the centre's height does not change at the ends. E2 from the base (the same three values with l at −2) draws 0 reds and 1 amber.
 - **One more node probe measures E5:** the chair's call.
+- *[amended 11:52Z, E5 measured: `e5_265.js`, `e5_265.json`, run 11:48:06 to 11:50:29Z]* **On the flat turn, from T1 and from T2b:**
+  - **The spreads:** width 0, sideways 0, height 0 over the run.
+  - **The checker:** 0 reds on the run and 0 in the window; 0 ambers.
+  - **Outside the window:** unchanged.
+  - **The scuffs are replaced whole:** the levelled road reads the same from both starts as from the base.
+  - **The rims sit 0.435 m higher on the run** (1.1493 m above the line, against 0.714 m where the run is untouched), as designed for holding the centre's height.
+- *[amended 11:52Z]* **But E5 did not hold the inner edge where the turn had it. Row 3 fails in substance.**
+  - The probe read λ (the held rim's place where the run is untouched) at the window's outer start, s 150. There the first piece's built section is 14.97 m wide while its width channel reads 12: 21.5 m at s 100, 12.53 m at s 180, 12.00 m from s 200 on (`frame150.js`; the cause was not found).
+  - So λ was 7.3838 m, not the turn's 5.9418 m, and l came out −0.4987 m. The inner rim went 1.44 m inward: the road widened 2.44 m outward and 1.44 m inward.
+  - The probe's own row 3 check passed only because it measured against that λ.
+  - inferred, not measured: with λ read on the run's own section (5.9418 m, as at s 201 to 490), l is −1.9407 m. That is E2's measured geometry with l 0.059 m different and the height levelled; E2 from the base drew 0 reds.
+- *[amended 11:52Z]* **On the turn banked 20°, E5 does not even it.** It does not hold, and here is why. Nothing further is designed.
+  - **Width, height and outside pass:** width spread 0, height spread 0, outside unchanged.
+  - **The outer edge's place across spreads 0.951 m** (from T1) and 0.729 m (from T2b), and **the held rim is 0.0276 / 0.0114 m off λ.** The base's bank runs 0 to 20° along the run (each turn piece's own bank ramp), so the rims' places across and up change with the bank; the inner rim's height runs 1.149 to 3.776 m. There is no single cross-section on this run to level to while the bank is kept.
+  - **The reds:** 4 on the run, the banked base's own (220–248, 268–312, 328–372, 388–432 m: the checker's 970 km/h on that bank ramp, before any grab). Plus 2 new ones in the window that the base does not have (444 and 460 m), 1 from T2b (478–480 m).
+  - **The grab's bank turn stays.** E5 does not carry the bank. From T2b the run's bank now peaks at 17.80° where the base reaches 20.00°. From T1 the figures read exactly as E5 from the banked base with no grab, so these failures are not the grab's doing.
 - **The other choice is his** (item 8, call 10): hold a rim's height instead, which was the grab's intent. Then the centre drops with the deeper section (0.435 m at 16 m here) and has to ramp back at the ends. E3's 0.24 m over 30 m already drew reds at the checker's speed.
 
 ## 3. The ends, the joint, a closed lap and the open end
@@ -234,6 +250,10 @@ Searches were generic: "Unity terrain Set Height tool flatten manual", "Unreal E
 - It passes rows 1, 2, 4 and the reds on the run: width spread 0, outer edge 0.0022 / 0.003 m, outside unchanged, 0 reds on the run.
 - It fails row 3 (the rim 0.2 m up), row 6 (0.011 / 0.0148 m) and the window clause of row 7 (2 reds in its ramps).
 - E5 is designed to pass it (item 2 (b′)) and is not measured.
+- *[amended 11:52Z, `e5_265.json` `test`]* **E5, measured:**
+  - **Flat, from T1 and from T2b:** all seven rows pass as the probe checked them: spreads 0, 0 reds, outside unchanged. But **row 3 fails in substance.** The probe took the held edge's place at s 150, in the first piece's widened start, and put the inner rim 1.44 m inward of the turn's (item 2 (b′)). Row 3 must read the place on the run's own section.
+  - **Banked 20°, from T1 and from T2b: E5 fails.** It passes rows 1, 4 and 6 (width 0, outside unchanged, height 0). It fails row 2 (outer edge 0.951 / 0.729 m), row 3 (0.0276 / 0.0114 m), and row 7 (4 reds on the run, the base's own; 2 / 1 new in the window).
+  - **The banked row stays open.** It needs a banked base the checker passes, and a level that carries the bank (item 2 (b′)).
 
 A build that reaches the numbers on the flat example but not with the turn banked 20° has fixed width only, and must say so. The banked row is part of the test. *[amended 11:43Z]* **Measured on this road with the turn pieces banked 20°:**
 - **The banked base draws 4 reds on the run before any grab** (222–252, 268–312, 328–372, 388–432 m), at the checker's speed. Its bank runs 0 to 20° along the run.
@@ -267,6 +287,8 @@ A build that reaches the numbers on the flat example but not with the turn banke
 10. *[amended 11:43Z, new]* **The height's value in a level:**
     - **hold the centre's height** (E5: the centreline even and level with the road outside the run; the rims rise with the deeper section, 0.435 m at 16 m here);
     - **or hold a rim's height**, the grab's intent: the centre drops 0.435 m and must ramp back at the run's ends. A 0.24 m step over 30 m already drew reds at the checker's speed.
+    - *[amended 11:52Z, measured]* Holding the centre's height (E5) drew 0 reds from both flat starts, and the rims stood 0.435 m higher on the run.
+11. *[amended 11:52Z, new]* **On a banked turn whose bank changes along the run**, what "the same cross-section" means. Keep the bank as it is, and level width and height only: E5 leaves the outer edge moving 0.95 m with the bank, and the grabs' bank change. Or bring the bank to a value too. Measured only as far as E5 (item 2 (b′)); not designed further.
 
 **The build, estimated** (inferred):
 - **core:** `sculpt.js` `level(doc, set, { lo, hi, ramp, margin, hold })`, about 80 lines (it reuses `settle`). Rows (about 14): the registered test's ~~five~~ seven *[amended 11:43Z]* checks on both starts, flat and banked; ramps inside and outside; a closed lap's seam; the open end; each value channel; refusals by name.

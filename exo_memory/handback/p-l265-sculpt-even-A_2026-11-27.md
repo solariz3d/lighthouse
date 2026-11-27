@@ -183,3 +183,48 @@ The earlier sections of this hand-back keep their wording, as dated traces. Thei
 
 SOURCES: exo_memory/loop/plan_t180_sculpt_even_2026-11-27.md (amended 11:43Z); evidence amend265.js, amend265.json; builder c522ea6 app/core/zonegrab.js (follow, frameAt), app/validate-ui/checkjob.js; the chair's L265 amendment 11:29:58Z
 NEXT: chair allows or refuses one more node probe for E5 when it reads the amended plan; if allowed, A measures E5 from T1 and T2b and appends its spreads and reds
+
+## E5 measured on three starts, 2026-11-27 11:52Z (the chair's L265 order of 11:46:31Z; the librarian's leg widened it to the banked start)
+
+The probe is `e5_265.js` (amend265.js's code unchanged, plus E5 and a new main), with every figure in `e5_265.json`. The plan's items 2 (b′), 6 and 8 are amended in place, marked *[amended 11:52Z]*. Plan only; no build, no page.
+
+**E5:** the width to 16 m; the centre's height to its value where the run is untouched; the sideways shift so the held (inner) rim sits at λ, read from the section at 16 m.
+
+| start | width spread | sideways spread | height spread | held rim off λ | held rim moved from the start (across / up) | reds on the run | reds in the window, not in the base |
+|---|---|---|---|---|---|---|---|
+| T1 (flat) | 0 | 0 | 0 | 0 | 1.4868 / 0.4353 | 0 | 0 |
+| T2b (flat) | 0 | 0 | 0 | 0 | 1.4868 / 0.3425 | 0 | 0 |
+| banked 20°, T1 | 0 | 0.8688 | 0 | 0.0276 | 2.1356 / 1.0728 | 4 (the base's own) | 2 (444, 460 m) |
+| banked 20°, T2b | 0 | 0.7159 | 0 | 0.0114 | 2.1419 / 0.6372 | 4 (the base's own) | 1 (478–480 m) |
+
+**Flat. checked:**
+- **The spreads and the reds:** E5 evens both starts (width, sideways and height spreads 0; 0 reds, 0 ambers; outside unchanged). The levelled road reads the same from both starts as from the base.
+- **The rims stand 0.435 m higher on the run,** as designed for holding the centre's height.
+- **But row 3 fails in substance:** the held edge was not held where the turn had it.
+  - λ was read at the window's outer start, s 150. There the first piece's built section is 14.97 m wide while its width channel reads 12 (21.5 m at s 100, 12.00 m from s 200; `frame150.js` → `frame150.txt`; cause not found).
+  - So λ was 7.3838 m, not 5.9418 m, and the inner rim went 1.44 m inward.
+  - The probe's own row 3 check passed only because it measured against that λ.
+- **inferred, not measured:** with λ read on the run's own section, l is −1.9407 m. That is E2's measured geometry with the height levelled; E2 from the base drew 0 reds.
+
+**Banked 20°. checked, and not designed further** (the librarian's leg):
+- **E5 does not even it.** It passes width, height and outside. It fails the outer edge (0.951 / 0.729 m), the held rim (0.0276 / 0.0114 m off λ) and the reds.
+- **What does not hold, and why:**
+  - **The base's bank runs 0 to 20° along the run.** So with the bank kept there is no single cross-section to level to, and the rims' places move with it.
+  - **The 4 reds on the run are the banked base's own,** there before any grab, at the checker's 970 km/h.
+  - **E5 does not carry the bank, so the grab's bank turn stays.** From T2b the run's bank peaks at 17.80° where the base reaches 20.00°. From T1, every figure reads exactly as E5 from the banked base with no grab, so these failures are not the grab's doing. The grab turned the bank 5.0° there; E5 leaves that turn in place.
+
+**My error, named:**
+- I read "where the run is untouched" at the window's outer edge without checking that the section there was the run's own.
+- The plan's amended row 3 and E5's definition now say to read it on the run's own section.
+- The flat pass is therefore not shown to him as a working pick until λ is read there and measured.
+
+**The machine:**
+- **The one probe:** `node consonance/tools/heavy-run.js --status && node consonance/tools/heavy-run.js --run --priority belownormal --cmd "A L265 E5 probe: …" -- node e5_265.js <tree> <out>`, run 11:48:06 to 11:50:29Z, node only.
+  - Both slots were free. No cmd in the chain.
+  - checked at 11:48:09Z: its node child, pid 26084, was at BelowNormal with 3.97 s of CPU.
+- **`frame150.js`:** a sub-second node read of the base's frames, after the probe, to explain λ. Not through heavy-run.
+- **The worktree** `t180-wt-l265d-even` at c522ea6: checked clean, then removed.
+- **No pictures.**
+
+SOURCES: evidence e5_265.js, e5_265.json, frame150.js, frame150.txt; exo_memory/loop/plan_t180_sculpt_even_2026-11-27.md (amended 11:52Z); the chair's order 11:46:31Z and the librarian's ring 11:46Z
+NEXT: chair decides whether E5 is measured once more with λ read on the run's own section before it is shown to him; the banked row stays open for his call 11
