@@ -1,0 +1,3 @@
+kh: of 67 cases bfa6732 newly laid: refused 43, laid within 1.05 24, laid over 1.05 0
+kv: of 21 cases bfa6732 newly laid: refused 0, laid within 1.05 21, laid over 1.05 0
+whole sweep at the new tip: 184 cases, laid 93, over 1.05 0; ceb21f5 laid 48

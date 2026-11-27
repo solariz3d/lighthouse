@@ -2062,3 +2062,7 @@ Claim (could be wrong): his 08:19 crash was Export to Assetto Corsa: `v8-oom-sta
 ## 2026-11-26 — O1 re-read: at builder eee621f the probe lays a change from its mark to its end, so 0 of my 67 turn cases and 0 of the 184-case sweep read over 1.05 (the F rows red at bfa6732, N3/N8/N9 now caught); but the panel's default marks and drag range still ask the shortest without the end (coreshell.js:796), so blank marks ceb21f5 laid are refused, and a routePeak memo key without end (extend.js:510) survives every row and lays 4 cases at up to 1.086; NOT CLEAN
 - Evidence: `exo_memory/handback/p-o1-read-C_2026-11-26_evidence/reread/cmp67_eee621f.txt`, `panelmarks.txt`, `mutants4.txt`, `mutsweep.txt`, `bank_sweep.txt`.
 - Hand-back: `exo_memory/handback/p-o1-read-C_2026-11-26.md` (section "Re-read")
+
+## 2026-11-26 — O1 second re-read: at builder 0eb3448 the panel asks a change's shortest where it ends, so 144 of 144 blank-mark turn and climb cases lay (31+31 at eee621f), none over 1.05; the memo keys end and N12 is caught; but the fit check's end (panel.js:1439, coreshell.js:802) still has no row, and without it an amount drag holds −95 that extend refuses; NOT CLEAN by one row
+- Evidence: `exo_memory/handback/p-o1-read-C_2026-11-26_evidence/reread2/panelcmp.txt`, `rows_with_eee621f_panel_shell.txt`, `mutants5.txt`, `n15_n16_amount_drag.txt`, `dragcost.txt`.
+- Hand-back: `exo_memory/handback/p-o1-read-C_2026-11-26.md` (section "Second re-read")

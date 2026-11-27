@@ -1,0 +1,25 @@
+unmutated failing: 0
+N12-routePeak-memo-forgets-end applied
+  caught by: ✖ O1 F3 drag, near: a turn −80 → −95 from 20 m then −90, its second mark dragged from 154 
+  caught by: ✖ O1 F3 drag: a turn −80 → −95 from 80 m then −90, its second mark dragged from 274 toward
+  caught by: ✖ O1 F4: the same change and span asked at the piece's end and then at the next mark is answered f
+N11-routeMin-memo-forgets-end applied
+  caught by: ✖ O1 F3 drag, near: a turn −80 → −95 from 20 m then −90, its second mark dragged from 154 
+  caught by: ✖ O1 F3 drag: a turn −80 → −95 from 80 m then −90, its second mark dragged from 274 toward
+N15-panel-fit-check-forgets-end applied
+  SURVIVED
+N16-shell-spanHolds-forgets-end applied
+  SURVIVED
+N17-firstHold-walk-capped-at-10 applied
+  caught by: ✖ O1 F3 drag: a turn −80 → −95 from 80 m then −90, its second mark dragged from 274 toward
+N18-firstHold-walk-steps-20 applied
+  SURVIVED
+N19-chain-ignores-a-typed-next-mark applied
+  caught by: ✖ L139 S3: a dragged change keeps its share of the piece (lengthen: the marks spread apart); a typ
+  caught by: ✖ O1 F3 turn: −80 → −90 with its mark left blank, then −85 at a mark typed at 240 m, on a 
+N20-room-uses-piece-end-shortest applied
+  SURVIVED
+N21-drag-range-hi-at-piece-end applied
+  caught by: ✖ O1 F3 drag, first and far: a turn −80 → −100 from 20 m then −90 at 248.5, its FIRST mark
+N22-early-return-dropped applied
+  SURVIVED

@@ -1,0 +1,3 @@
+N18-firstHold-walk-steps-20: of 168 cases, marks moved 0 ; laid at the tip and not under the mutant 0 ; over 1.05 0
+N20-room-uses-piece-end-shortest: of 168 cases, marks moved 0 ; laid at the tip and not under the mutant 0 ; over 1.05 0
+N22-early-return-dropped: of 168 cases, marks moved 0 ; laid at the tip and not under the mutant 0 ; over 1.05 0
