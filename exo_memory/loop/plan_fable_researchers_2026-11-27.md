@@ -195,3 +195,38 @@ R1 to R6 above stay held; R5 (how other editors make things even) is being answe
 **Started 06:53** (workflow wf_7dea3e80): THREE builders, not two (the usage is there, and two of three agreeing reads better than two of two), each blind to outcomes and writing into `research/t180_soft_contact_simulation_2026-11-27_evidence/sim{A,B,C}/`; a scorer who reads the record and the bar above; a writer; a checker who re-runs the code. Six agents. Any run over five seconds goes through heavy-run at below-normal priority. Output `research/t180_soft_contact_simulation_2026-11-27.md`.
 
 **Result, 07:09: the bar was not met.** `research/t180_soft_contact_simulation_2026-11-27.md`: all three simulations fail part (b) (runs sinking at 2.56 to 10.08 m/s hold; the record breaks at 1.66), part (a) is shown by one builder only, part (c) holds but with the box under the road where the record has it clear. All three put the way through at a depth of 0.25 m; the record’s breaks began at 13 to 16 cm (the checker). So the public library’s contact does not carry the separator. No third reasoning run is proposed. Next is data: laps.
+
+---
+
+## A third run, proposed on D at 13:3x (not started; waits on a go said as a go)
+
+**His words, 13:33 (D):** "we have 12% left of our usage that resets in 2 hours, we have enough to do another fable research
+party on the right vector".
+
+**The vector: in his own replays on this desktop, what separates a pass where the car goes under the road from one that holds?**
+- Why this one: both of last night's runs were reading and simulation, and both failed bars registered first (the blind model
+  11 of 26; the simulations break only past 0.25 m). The L handoff's conclusion: "the next step on clipping is laps, not
+  reading, and the replays are on D" (`loop/handoff_t180_2026-11-27-L.md`). The one thing that has held is the sink-rate
+  separator, and it rests on 5 held passes and 2 broken (`handback/p-d563-wheel-under-O_2026-10-30.md:409-423`).
+- What D has, counted at 13:3x with `blackbox/ui/acreplay.js`: 98 replays that parse, 1,294,134 frames; 25 on 12 builder-made
+  tracks (576 MB), 8 on the car's own test track, 65 on 17 other tracks. 81 are the Mach 6; none is a Type A.
+
+**Registered before any run:**
+- **P1, the sink-rate separator (from H563):** of passes where the car's box reaches 11 cm under the surface, the ones that hold
+  cross that depth at 0.63 m/s or slower and the ones that break at 1.66 m/s or faster. *It fails* if more than one new pass in
+  five sits on the wrong side, or if most new passes cross between the two figures (then it separates nothing).
+- **P2, the roll (new, from `handback/p-d678-even-banked-probe3-A_2026-11-27.md`, inferred there and unmeasured):** breaks are
+  commoner where the car is far from the road's roll axis while the road rolls fast (distance x roll acceleration x speed
+  squared). *It fails* if breaks are no commoner in the top quarter of that load than in the rest.
+- **What "broke" means is fixed from H563's definition before any replay is opened**, and written at the head of the census.
+- **The degenerating outcome:** if all the replays hold fewer than about ten broken passes, nothing can be separated, and the
+  finding is how rare a break is in his own driving (N in so many km), said plainly.
+
+**The shape (seven agents):** one census builder (the event finder from H563's scripts and the replay parser; builder-made
+tracks first, where the surface is known exactly; it reports which replays it could not cover and why); three modellers, each
+blind to the others and given only half the passes; one scorer on the half they did not see, with P1 and P2 beside their rules;
+a writer; a checker that wrote none of it and re-runs one script. Runs on this machine go through heavy-run, labelled "not a
+timing session". Output: `research/t180_what_separates_a_break_2026-11-27.md` with its scripts beside it. Other authors' track
+names stay out; replays are read, never copied into the repo.
+
+**What it cannot settle:** the Type A (no replay), and online against offline (every replay here is his own session).
