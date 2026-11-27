@@ -94,3 +94,5 @@ degrees into the new 360 you know? 5. Not sure, what is smoothness limit?"
 - 04:49 (L), his words: "the same bug sometimes rarely happens on my desktop too with more ram 64gb, so idk if its that, ever since i started to race t-180s on assetto it has always been a rare transient problem with the replays, could be big to some how patch for the community but good luck finding that"
   - State: the librarian's memory cause is refuted (trace file, its CORRECTION section). The fault is in Custom Shaders Patch 0.2.11 at the replay switch. Not builder work; a census of D's crash reports is the next step if he wants it.
 - 04:51 (L), his words: "i have a feeling all of csp is a shitshow of human slop lmfao but it works"
+- 04:54 (L), his words: "do you think there could be a fix we make for it? Its like for the version we use, or rather, the version the newest t-180s work on, soon there will be an update to t-180s from the creator, but we will deal with that when the time comes"
+  - State: answered as a lean (trace file, "His question"); the census of D's crash reports goes into the L to D handoff. Not builder work, no lap ordered.

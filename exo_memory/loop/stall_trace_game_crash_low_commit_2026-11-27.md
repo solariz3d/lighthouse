@@ -84,3 +84,15 @@ each report is a zip holding the dump, the game's log and `race.ini`). Checked:
   builder did not make, with that track's own AI line (382,736 B, a `.bak` of the same size beside it). Not opened further.
 - **Tonight's is the only report of the replay fault on L.** One report is no pattern; his desktop is where a pattern could be read.
 - All 12 are with the same car, one car on track.
+
+## His question, 04:55, and where it stands
+
+> "do you think there could be a fix we make for it? Its like for the version we use, or rather, the version the newest
+> t-180s work on, soon there will be an update to t-180s from the creator, but we will deal with that when the time comes"
+
+Answered by the librarian as a lean, marked as weighed only against the one dump: no fix of Custom Shaders Patch's own
+code from here; a way round the trigger is plausible once the trigger is known; keeping the lap whatever happens is
+buildable now. **Next step, for D's handoff:** read every crash report on D with `_evidence/mdmp.js`; group by address;
+for the replay ones, note from each report's `csp.ini` and log what was live at the switch (camera script, gamepad
+script, extended replay streams). Tonight's `csp.ini` names a chase camera script and a gamepad script as custom
+implementations. Not ordered as a lap.
