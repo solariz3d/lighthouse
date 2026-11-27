@@ -1,0 +1,56 @@
+VARY E1a head -392, handle dragged to -42 {"head":-392,"shownBefore":"-32","written":"-42","sent":-402,"laid":{"start":-392,"end":-402,"min":-402,"max":-392,"steepest":0.072}}
+VARY E1b head -392, handle dragged to -432 {"head":-392,"shownBefore":"-32","written":"-72","sent":-432,"laid":{"start":-392,"end":-432,"min":-432,"max":-392,"steepest":0.287}}
+VARY E1c head -20, handle dragged to -42 {"head":-20,"shownBefore":"-20","written":"-42","sent":-42,"laid":{"start":-20,"end":-42,"min":-42,"max":-20,"steepest":0.158}}
+VARY E2a flow, head -392, field -60, unused offer dragged to -80 {"head":-392,"flowShape":"flow","offered":-60,"sent":{"first":-420,"through":[{"at":150,"target":-440}],"changes":null},"laid":{"start":-392,"end":-440,"min":-440,"max":-392,"steepest":0.533}}
+VARY E2b flow, head -20, field -60, offer dragged to -80 {"head":-20,"flowShape":"flow","offered":-60,"sent":{"first":-60,"through":[{"at":150,"target":-80}],"changes":null},"laid":{"start":-20,"end":-80,"min":-80,"max":-20,"steepest":0.744}}
+VARY E2c flow, head 392, field 60, offer dragged to 80 {"head":392,"flowShape":"flow","offered":60,"sent":{"first":420,"through":[{"at":150,"target":440}],"changes":null},"laid":{"start":392,"end":440,"min":392,"max":440,"steepest":0.533}}
+VARY E3 {"head":-392,"sent":{"first":-420,"changes":[{"from":100,"target":-460},{"from":200,"target":-760}]},"laid":" |  |  | No saved pieces yet: select pieces on the track and press Save as piece. | BAD_SECOND: the bank (phi) change 1 (its second bank), from -7.33038 to -8.02851, needs more than 100 m before change 2's mark on this road (the built road rounds a shorter one back over the hold; 199.3 m holds): from at most 0.7, got 100 | end heading 0.00°, on the 90° grid"}
+VARY E4a head -360, typed -32 {"head":-32,"shownBefore":"-360","sent":-32,"laid":{"start":-360,"end":-32,"min":-360,"max":-32,"steepest":1.134},"shownAfter":"-32"}
+VARY E4b head -360, typed 0 {"head":0,"shownBefore":"-360","sent":0,"laid":{"start":-360,"end":0,"min":-360,"max":0,"steepest":1.245},"shownAfter":"0"}
+VARY E4c head -360, typed 360 {"head":360,"shownBefore":"-360","sent":360,"laid":{"start":-360,"end":360,"min":-360,"max":360,"steepest":2.49},"shownAfter":"360"}
+VARY E5a head 359.996, typed 365 {"head":365,"shownBefore":"360","sent":365,"laid":{"start":359.996,"end":365,"min":359.996,"max":365,"steepest":0.017},"shownAfter":"5"}
+VARY E5b head 359.996, typed 10 {"head":10,"shownBefore":"360","sent":10,"laid":{"start":359.996,"end":10,"min":10,"max":359.996,"steepest":1.21},"shownAfter":"10"}
+VARY E6 head -720, typed -10 {"head":-370,"shownBefore":"-360","sent":-370,"laid":{"start":-720,"end":-370,"min":-720,"max":-370,"steepest":1.211},"shownAfter":"-10"}
+VARY E7a head 0, typed 400 {"head":400,"shownBefore":"0","sent":400,"laid":{"start":0,"end":400,"min":0,"max":400,"steepest":1.383},"shownAfter":"40"}
+VARY E7b head 392, typed -32 {"head":328,"shownBefore":"32","sent":328,"laid":{"start":392,"end":328,"min":328,"max":392,"steepest":0.221},"shownAfter":"328"}
+VARY E8 {"afterCommit":"-654.70","sent":-654.7}
+VARY E9 {"shownAtMinus360":"-360","sent":-32,"laidEnd":-32,"closed":true,"converged":true,"seam":0,"sha16":"e4c93c68c6b6cab3","afterCloseShown":"0","afterCloseTyped10Sent":-10}
+VARY E10a 0 -> typed -360 -> typed -32 [{"typed":-360,"headBefore":0,"sent":-360,"laidEnd":-360,"headAfterExact":-359.9999999897105,"shownAfter":"-360"},{"typed":-32,"headBefore":-359.9999999897105,"sent":-32,"laidEnd":-32,"headAfterExact":-32.00000002073045,"shownAfter":"-32"}]
+VARY E10b 0 -> typed -170 -> typed -360 -> typed -32 [{"typed":-170,"headBefore":0,"sent":-170,"laidEnd":-170,"headAfterExact":-169.99999997763402,"shownAfter":"-170"},{"typed":-360,"headBefore":-169.99999997763402,"sent":-360,"laidEnd":-360,"headAfterExact":-359.9999999897105,"shownAfter":"-360"},{"typed":-32,"headBefore":-359.9999999897105,"sent":-32,"laidEnd":-32,"headAfterExact":-32.00000002073045,"shownAfter":"-32"}]
+VARY E10c 0 -> typed 360 -> typed 32 [{"typed":360,"headBefore":0,"sent":360,"laidEnd":360,"headAfterExact":359.9999999897105,"shownAfter":"360"},{"typed":32,"headBefore":359.9999999897105,"sent":32,"laidEnd":32,"headAfterExact":32.00000002073045,"shownAfter":"32"}]
+VARY E10d 0 -> typed -340 -> typed -720 -> typed -10 [{"typed":-340,"headBefore":0,"sent":-340,"laidEnd":-340,"headAfterExact":-340.0000000125638,"shownAfter":"-340"},{"typed":-720,"headBefore":-340.0000000125638,"sent":-720,"laidEnd":-720,"headAfterExact":-719.999999979421,"shownAfter":"-360"},{"typed":-10,"headBefore":-719.999999979421,"sent":-370,"laidEnd":-370,"headAfterExact":-369.9999999782838,"shownAfter":"-10"}]
+VARY E10e 0 -> typed -170 -> -340 -> -360 -> -32 [{"typed":-170,"headBefore":0,"sent":-170,"laidEnd":-170,"headAfterExact":-169.99999997763402,"shownAfter":"-170"},{"typed":-340,"headBefore":-169.99999997763402,"sent":-340,"laidEnd":-340,"headAfterExact":-340.0000000125638,"shownAfter":"-340"},{"typed":-360,"headBefore":-340.0000000125638,"sent":-360,"laidEnd":-360,"headAfterExact":-359.9999999897105,"shownAfter":"-360"},{"typed":-32,"headBefore":-359.9999999897105,"sent":-32,"laidEnd":-32,"headAfterExact":-32.00000002073045,"shownAfter":"-32"}]
+VARY E3b {"sent":{"first":-420,"changes":[{"from":250,"target":-460}]},"laid":{"start":-392,"end":-460,"min":-460,"max":-392,"steepest":0.262}}
+VARY E9b {"sent":-392,"laid":{"start":-360,"end":-392,"min":-392,"max":-360,"steepest":0.169},"closed":true,"converged":true,"seam":-360,"sha16":"0816ec4397716f6b","roundTrip":false}
+✔ E1a head -392, handle dragged to -42 (145.4741ms)
+✔ E1b head -392, handle dragged to -432 (50.1176ms)
+✔ E1c head -20, handle dragged to -42 (27.3184ms)
+✔ E2a flow, head -392, field -60, unused offer dragged to -80 (78.3169ms)
+✔ E2b flow, head -20, field -60, offer dragged to -80 (60.5413ms)
+✔ E2c flow, head 392, field 60, offer dragged to 80 (64.5033ms)
+✔ E3 head -392, field -60, rows -100 at 100 and -400 at 200, 300 m (44.4157ms)
+✔ E4a head -360, typed -32 (30.0372ms)
+✔ E4b head -360, typed 0 (39.3872ms)
+✔ E4c head -360, typed 360 (44.9306ms)
+✔ E5a head 359.996, typed 365 (43.8097ms)
+✔ E5b head 359.996, typed 10 (34.9074ms)
+✔ E6 head -720, typed -10 (38.8079ms)
+✔ E7a head 0, typed 400 (15.9404ms)
+✔ E7b head 392, typed -32 (30.6202ms)
+✔ E8 head 0, -654.70 typed and committed (1.8491ms)
+✔ E9 the wound lap with its -392 piece typed in the panel, closed (8537.2101ms)
+✔ E10a 0 -> typed -360 -> typed -32 (57.018ms)
+✔ E10b 0 -> typed -170 -> typed -360 -> typed -32 (109.827ms)
+✔ E10c 0 -> typed 360 -> typed 32 (48.0422ms)
+✔ E10d 0 -> typed -340 -> typed -720 -> typed -10 (84.7539ms)
+✔ E10e 0 -> typed -170 -> -340 -> -360 -> -32 (144.1973ms)
+✔ E3b head -392, field -60, a row -100 at 250, 600 m (50.7919ms)
+✔ E9b the wound lap, -392 typed whole in the panel from -360, closed (6738.026ms)
+ℹ tests 24
+ℹ suites 0
+ℹ pass 24
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 16771.0569

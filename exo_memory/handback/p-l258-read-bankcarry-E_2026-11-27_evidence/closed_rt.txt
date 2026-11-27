@@ -1,0 +1,6 @@
+== t180-wt-e-l258b
+{"wound":true,"closed":true,"roundTrip":false,"stableAfterOne":true,"firstDiffAt":359,"around":["],\"phi\":[0,0,0,0,0,-0.02666662179008527,0,0],\"w\":[31,31,31,3","],\"phi\":[0,0,0,0,0,-0.026666622,0,0],\"w\":[31,31,31,31,31,31,"]}
+{"wound":false,"closed":true,"roundTrip":false,"stableAfterOne":true,"firstDiffAt":359,"around":["],\"phi\":[0,0,0,0,0,-0.02666662179008527,0,0],\"w\":[31,31,31,3","],\"phi\":[0,0,0,0,0,-0.026666622,0,0],\"w\":[31,31,31,31,31,31,"]}
+== t180-wt-e-l258
+{"wound":true,"closed":true,"roundTrip":false,"stableAfterOne":true,"firstDiffAt":359,"around":["],\"phi\":[0,0,0,0,0,-0.02666662179008527,0,0],\"w\":[31,31,31,3","],\"phi\":[0,0,0,0,0,-0.026666622,0,0],\"w\":[31,31,31,31,31,31,"]}
+{"wound":false,"closed":true,"roundTrip":false,"stableAfterOne":true,"firstDiffAt":359,"around":["],\"phi\":[0,0,0,0,0,-0.02666662179008527,0,0],\"w\":[31,31,31,3","],\"phi\":[0,0,0,0,0,-0.026666622,0,0],\"w\":[31,31,31,31,31,31,"]}

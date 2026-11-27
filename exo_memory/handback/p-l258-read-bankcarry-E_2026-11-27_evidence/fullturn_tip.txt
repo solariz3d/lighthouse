@@ -1,0 +1,11 @@
+{"route":"one piece, length 150, to -360","head":-359.9999999897105,"shown":-360,"turns":0}
+{"route":"one piece, length 300, to -360","head":-359.9999999897105,"shown":-360,"turns":0}
+{"route":"one piece, length 500, to -360","head":-359.9999999897105,"shown":-360,"turns":0}
+{"route":"one piece, length 777, to -360","head":-359.9999999897105,"shown":-360,"turns":0}
+{"route":"one piece, length 150, to +360","head":359.9999999897105,"shown":360,"turns":0}
+{"route":"one piece, length 300, to +360","head":359.9999999897105,"shown":360,"turns":0}
+{"route":"one piece, length 500, to +360","head":359.9999999897105,"shown":360,"turns":0}
+{"route":"two pieces -180 then -360","head":-359.9999999897105,"shown":-360,"turns":0}
+{"route":"three pieces -120 -240 -360","head":-359.9999999897105,"shown":-360,"turns":0}
+{"route":"a row","error":"BAD_SECOND: the bank (phi) change 1 (its second bank), from -3.14159 to -6.28319, needs more than 250 m before the piece"}
+{"route":"flow: -180 then through -360 at 300 of 400","head":-180.00000002350313,"shown":-180,"turns":0}

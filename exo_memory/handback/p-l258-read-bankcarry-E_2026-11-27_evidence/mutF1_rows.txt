@@ -1,0 +1,21 @@
+✔ W1 (banking right (−)): from a head at -340 a typed -392 lays the road -340 → -392 one way, its steepest roll within 10% of the core's own; the field then shows -32 (157.3775ms)
+✔ W1 (banking left (+)): from a head at 340 a typed 392 lays the road 340 → 392 one way, its steepest roll within 10% of the core's own; the field then shows 32 (56.5856ms)
+✔ W2: an extra bank row past −360 (−392 after −360) is laid, not refused, and the road ends at −392 (74.4751ms)
+✔ W3: from a head past one turn (−392, shown −32) a typed −60 lays −392 → −420: the head's whole turns are carried, never unwound (31.8233ms)
+✔ W4: from a head past one turn, the unused extra bank handle offers the field value −60, not −420, and a drag on it to −80 lays the change at −440 (19.417ms)
+✔ G6 (guard): Close on a wound lap gives the seam it gave before: the same closed document, its seam −360 ≡ 0 (5240.7283ms)
+✔ G7 (guard): a document wound to −4π (−720°), saved and opened, is the same bytes; every test track in test/fixtures round-trips byte-identical (68.3837ms)
+✔ row 1: the flow box with three marks gives the contract's call exactly; blank ats are spread evenly between the marks either side of them (126.9294ms)
+✔ row 2: unticked, every call lays today's document to the byte, over a matrix of length, bank, early, extra rows and a corner (pinned on 57e4b1c) (348.1908ms)
+✔ row 3: the flow box and its marks survive: Undo gives them back, and the piece saved, closed and reopened is the same bytes and passes through each mark (76.6638ms)
+✔ row 4: mirror negates the marks: the piece the panel laid, saved and inserted mirrored, banks the exact negative and passes through each mark's negative (54.4195ms)
+✔ row 5: a refusal of the flowing bank reaches the panel in the core's own words, naming the mark and the room it needs; Extend adds nothing (860.8328ms)
+✔ row 6: during a drag the panel asks only whether the flowing bank lays (roomSearch: false on every question); the release asks whole, and its refusal names the room (629.7721ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5800.2626
