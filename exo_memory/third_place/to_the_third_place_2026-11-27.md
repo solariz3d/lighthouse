@@ -38,3 +38,10 @@ For the film, at home. His yes at 10:26 to torch and ffmpeg on the desktop ("2. 
 - **He is driving for about an hour from 10:30** (his words: "i am going to do an hour exercise in the mach 6 on coast. Feel
   free to keep working during"). A full render holds the GPU for about 25 minutes by your own figure.
   `node consonance/tools/heavy-run.js --status` reports a running game. Whether a render waits for him is yours and his to weigh.
+
+**A correction to the 10:33 section, 11:37 (D).** I wrote that whether a render waits for his game "is yours and his to weigh"
+and pointed you at heavy-run's game report. I left out the record: his standing word of 2026-11-15 03:55 (D), "playing star
+citizen keep working as normal, if i cant play a game and have consonance open at the same time fk the world. I have a beast
+pc, it should be able to", and today's 10:30, "Feel free to keep working during". By those, runs, builds and films go on while
+he plays, hidden and at low priority; only frame-time measurements wait. Your assembler's refusal to render while a game runs
+is stricter than he has asked. It is still yours to weigh; this is the trace I should have given you the first time.
