@@ -1,0 +1,1589 @@
+{
+ "errors": [],
+ "rows": [
+  {
+   "look": "sigil",
+   "w": 900,
+   "door": "none",
+   "overflow": 0,
+   "drag": 24,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": null,
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "sigil",
+   "w": 900,
+   "door": "A",
+   "overflow": 71,
+   "drag": 24,
+   "winInside": false,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": {
+    "right": 645,
+    "width": 102,
+    "lines": 1
+   },
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "sigil",
+   "w": 900,
+   "door": "A2",
+   "overflow": 39,
+   "drag": 24,
+   "winInside": false,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": {
+    "right": 612,
+    "width": 69,
+    "lines": 1
+   },
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "sigil",
+   "w": 900,
+   "door": "B",
+   "overflow": 38,
+   "drag": 24,
+   "winInside": false,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": {
+    "right": 612,
+    "width": 70,
+    "lines": 1
+   },
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "sigil",
+   "w": 979,
+   "door": "none",
+   "overflow": 0,
+   "drag": 24,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": null,
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "sigil",
+   "w": 979,
+   "door": "A",
+   "overflow": 0,
+   "drag": 24,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": {
+    "right": 652,
+    "width": 102,
+    "lines": 1
+   },
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "sigil",
+   "w": 979,
+   "door": "A2",
+   "overflow": 0,
+   "drag": 24,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": {
+    "right": 652,
+    "width": 69,
+    "lines": 1
+   },
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "sigil",
+   "w": 979,
+   "door": "B",
+   "overflow": 0,
+   "drag": 24,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": {
+    "right": 652,
+    "width": 70,
+    "lines": 1
+   },
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "sigil",
+   "w": 980,
+   "door": "none",
+   "overflow": 0,
+   "drag": 25,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": null,
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "sigil",
+   "w": 980,
+   "door": "A",
+   "overflow": 0,
+   "drag": 24,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": {
+    "right": 653,
+    "width": 102,
+    "lines": 1
+   },
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "sigil",
+   "w": 980,
+   "door": "A2",
+   "overflow": 0,
+   "drag": 24,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": {
+    "right": 653,
+    "width": 69,
+    "lines": 1
+   },
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "sigil",
+   "w": 980,
+   "door": "B",
+   "overflow": 0,
+   "drag": 24,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": {
+    "right": 653,
+    "width": 70,
+    "lines": 1
+   },
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "sigil",
+   "w": 999,
+   "door": "none",
+   "overflow": 0,
+   "drag": 44,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": null,
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "sigil",
+   "w": 999,
+   "door": "A",
+   "overflow": 0,
+   "drag": 24,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": {
+    "right": 672,
+    "width": 102,
+    "lines": 1
+   },
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "sigil",
+   "w": 999,
+   "door": "A2",
+   "overflow": 0,
+   "drag": 24,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": {
+    "right": 672,
+    "width": 69,
+    "lines": 1
+   },
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "sigil",
+   "w": 999,
+   "door": "B",
+   "overflow": 0,
+   "drag": 24,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": {
+    "right": 672,
+    "width": 70,
+    "lines": 1
+   },
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "sigil",
+   "w": 1000,
+   "door": "none",
+   "overflow": 0,
+   "drag": 24,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": null,
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "sigil",
+   "w": 1000,
+   "door": "A",
+   "overflow": 31,
+   "drag": 24,
+   "winInside": false,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": {
+    "right": 704,
+    "width": 102,
+    "lines": 1
+   },
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "sigil",
+   "w": 1000,
+   "door": "A2",
+   "overflow": 0,
+   "drag": 24,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": {
+    "right": 673,
+    "width": 69,
+    "lines": 1
+   },
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "sigil",
+   "w": 1000,
+   "door": "B",
+   "overflow": 0,
+   "drag": 24,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": {
+    "right": 673,
+    "width": 70,
+    "lines": 1
+   },
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "sigil",
+   "w": 1099,
+   "door": "none",
+   "overflow": 0,
+   "drag": 101,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": null,
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "sigil",
+   "w": 1099,
+   "door": "A",
+   "overflow": 0,
+   "drag": 24,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": {
+    "right": 772,
+    "width": 102,
+    "lines": 1
+   },
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "sigil",
+   "w": 1099,
+   "door": "A2",
+   "overflow": 0,
+   "drag": 28,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": {
+    "right": 772,
+    "width": 69,
+    "lines": 1
+   },
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "sigil",
+   "w": 1099,
+   "door": "B",
+   "overflow": 0,
+   "drag": 28,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": {
+    "right": 772,
+    "width": 70,
+    "lines": 1
+   },
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "sigil",
+   "w": 1100,
+   "door": "none",
+   "overflow": 0,
+   "drag": 24,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": null,
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "sigil",
+   "w": 1100,
+   "door": "A",
+   "overflow": 33,
+   "drag": 24,
+   "winInside": false,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": {
+    "right": 798,
+    "width": 102,
+    "lines": 1
+   },
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "sigil",
+   "w": 1100,
+   "door": "A2",
+   "overflow": 0,
+   "drag": 24,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": {
+    "right": 766,
+    "width": 69,
+    "lines": 1
+   },
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "sigil",
+   "w": 1100,
+   "door": "B",
+   "overflow": 6,
+   "drag": 24,
+   "winInside": false,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": {
+    "right": 771,
+    "width": 76,
+    "lines": 1
+   },
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "sigil",
+   "w": 1279,
+   "door": "none",
+   "overflow": 0,
+   "drag": 183,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": null,
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "sigil",
+   "w": 1279,
+   "door": "A",
+   "overflow": 0,
+   "drag": 73,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": {
+    "right": 944,
+    "width": 102,
+    "lines": 1
+   },
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "sigil",
+   "w": 1279,
+   "door": "A2",
+   "overflow": 0,
+   "drag": 106,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": {
+    "right": 944,
+    "width": 69,
+    "lines": 1
+   },
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "sigil",
+   "w": 1279,
+   "door": "B",
+   "overflow": 0,
+   "drag": 100,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": {
+    "right": 944,
+    "width": 76,
+    "lines": 1
+   },
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "sigil",
+   "w": 1280,
+   "door": "none",
+   "overflow": 0,
+   "drag": 184,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": null,
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "sigil",
+   "w": 1280,
+   "door": "A",
+   "overflow": 0,
+   "drag": 74,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": {
+    "right": 945,
+    "width": 102,
+    "lines": 1
+   },
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "sigil",
+   "w": 1280,
+   "door": "A2",
+   "overflow": 0,
+   "drag": 107,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": {
+    "right": 945,
+    "width": 69,
+    "lines": 1
+   },
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "sigil",
+   "w": 1280,
+   "door": "B",
+   "overflow": 0,
+   "drag": 101,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": {
+    "right": 945,
+    "width": 76,
+    "lines": 1
+   },
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "sigil",
+   "w": 1319,
+   "door": "none",
+   "overflow": 0,
+   "drag": 223,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": null,
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "sigil",
+   "w": 1319,
+   "door": "A",
+   "overflow": 0,
+   "drag": 113,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": {
+    "right": 984,
+    "width": 102,
+    "lines": 1
+   },
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "sigil",
+   "w": 1319,
+   "door": "A2",
+   "overflow": 0,
+   "drag": 146,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": {
+    "right": 984,
+    "width": 69,
+    "lines": 1
+   },
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "sigil",
+   "w": 1319,
+   "door": "B",
+   "overflow": 0,
+   "drag": 140,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": {
+    "right": 984,
+    "width": 76,
+    "lines": 1
+   },
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "sigil",
+   "w": 1320,
+   "door": "none",
+   "overflow": 0,
+   "drag": 141,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": null,
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "sigil",
+   "w": 1320,
+   "door": "A",
+   "overflow": 0,
+   "drag": 31,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": {
+    "right": 985,
+    "width": 102,
+    "lines": 1
+   },
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "sigil",
+   "w": 1320,
+   "door": "A2",
+   "overflow": 0,
+   "drag": 64,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": {
+    "right": 985,
+    "width": 69,
+    "lines": 1
+   },
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "sigil",
+   "w": 1320,
+   "door": "B",
+   "overflow": 0,
+   "drag": 58,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": {
+    "right": 985,
+    "width": 76,
+    "lines": 1
+   },
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "sigil",
+   "w": 1400,
+   "door": "none",
+   "overflow": 0,
+   "drag": 221,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": null,
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "sigil",
+   "w": 1400,
+   "door": "A",
+   "overflow": 0,
+   "drag": 111,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": {
+    "right": 1065,
+    "width": 102,
+    "lines": 1
+   },
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "sigil",
+   "w": 1400,
+   "door": "A2",
+   "overflow": 0,
+   "drag": 144,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": {
+    "right": 1065,
+    "width": 69,
+    "lines": 1
+   },
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "sigil",
+   "w": 1400,
+   "door": "B",
+   "overflow": 0,
+   "drag": 138,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": {
+    "right": 1065,
+    "width": 76,
+    "lines": 1
+   },
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "skyline",
+   "w": 900,
+   "door": "none",
+   "overflow": 0,
+   "drag": 24,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": null,
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "skyline",
+   "w": 900,
+   "door": "A",
+   "overflow": 71,
+   "drag": 24,
+   "winInside": false,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": {
+    "right": 645,
+    "width": 102,
+    "lines": 1
+   },
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "skyline",
+   "w": 900,
+   "door": "A2",
+   "overflow": 39,
+   "drag": 24,
+   "winInside": false,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": {
+    "right": 612,
+    "width": 69,
+    "lines": 1
+   },
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "skyline",
+   "w": 900,
+   "door": "B",
+   "overflow": 38,
+   "drag": 24,
+   "winInside": false,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": {
+    "right": 612,
+    "width": 70,
+    "lines": 1
+   },
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "skyline",
+   "w": 979,
+   "door": "none",
+   "overflow": 0,
+   "drag": 24,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": null,
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "skyline",
+   "w": 979,
+   "door": "A",
+   "overflow": 0,
+   "drag": 24,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": {
+    "right": 652,
+    "width": 102,
+    "lines": 1
+   },
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "skyline",
+   "w": 979,
+   "door": "A2",
+   "overflow": 0,
+   "drag": 24,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": {
+    "right": 652,
+    "width": 69,
+    "lines": 1
+   },
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "skyline",
+   "w": 979,
+   "door": "B",
+   "overflow": 0,
+   "drag": 24,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": {
+    "right": 652,
+    "width": 70,
+    "lines": 1
+   },
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "skyline",
+   "w": 980,
+   "door": "none",
+   "overflow": 0,
+   "drag": 25,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": null,
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "skyline",
+   "w": 980,
+   "door": "A",
+   "overflow": 0,
+   "drag": 24,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": {
+    "right": 653,
+    "width": 102,
+    "lines": 1
+   },
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "skyline",
+   "w": 980,
+   "door": "A2",
+   "overflow": 0,
+   "drag": 24,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": {
+    "right": 653,
+    "width": 69,
+    "lines": 1
+   },
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "skyline",
+   "w": 980,
+   "door": "B",
+   "overflow": 0,
+   "drag": 24,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": {
+    "right": 653,
+    "width": 70,
+    "lines": 1
+   },
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "skyline",
+   "w": 999,
+   "door": "none",
+   "overflow": 0,
+   "drag": 44,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": null,
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "skyline",
+   "w": 999,
+   "door": "A",
+   "overflow": 0,
+   "drag": 24,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": {
+    "right": 672,
+    "width": 102,
+    "lines": 1
+   },
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "skyline",
+   "w": 999,
+   "door": "A2",
+   "overflow": 0,
+   "drag": 24,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": {
+    "right": 672,
+    "width": 69,
+    "lines": 1
+   },
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "skyline",
+   "w": 999,
+   "door": "B",
+   "overflow": 0,
+   "drag": 24,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": {
+    "right": 672,
+    "width": 70,
+    "lines": 1
+   },
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "skyline",
+   "w": 1000,
+   "door": "none",
+   "overflow": 0,
+   "drag": 24,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": null,
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "skyline",
+   "w": 1000,
+   "door": "A",
+   "overflow": 31,
+   "drag": 24,
+   "winInside": false,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": {
+    "right": 704,
+    "width": 102,
+    "lines": 1
+   },
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "skyline",
+   "w": 1000,
+   "door": "A2",
+   "overflow": 0,
+   "drag": 24,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": {
+    "right": 673,
+    "width": 69,
+    "lines": 1
+   },
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "skyline",
+   "w": 1000,
+   "door": "B",
+   "overflow": 0,
+   "drag": 24,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": {
+    "right": 673,
+    "width": 70,
+    "lines": 1
+   },
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "skyline",
+   "w": 1099,
+   "door": "none",
+   "overflow": 0,
+   "drag": 101,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": null,
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "skyline",
+   "w": 1099,
+   "door": "A",
+   "overflow": 0,
+   "drag": 24,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": {
+    "right": 772,
+    "width": 102,
+    "lines": 1
+   },
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "skyline",
+   "w": 1099,
+   "door": "A2",
+   "overflow": 0,
+   "drag": 28,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": {
+    "right": 772,
+    "width": 69,
+    "lines": 1
+   },
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "skyline",
+   "w": 1099,
+   "door": "B",
+   "overflow": 0,
+   "drag": 28,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": {
+    "right": 772,
+    "width": 70,
+    "lines": 1
+   },
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "skyline",
+   "w": 1100,
+   "door": "none",
+   "overflow": 0,
+   "drag": 24,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": null,
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "skyline",
+   "w": 1100,
+   "door": "A",
+   "overflow": 33,
+   "drag": 24,
+   "winInside": false,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": {
+    "right": 798,
+    "width": 102,
+    "lines": 1
+   },
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "skyline",
+   "w": 1100,
+   "door": "A2",
+   "overflow": 0,
+   "drag": 24,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": {
+    "right": 766,
+    "width": 69,
+    "lines": 1
+   },
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "skyline",
+   "w": 1100,
+   "door": "B",
+   "overflow": 6,
+   "drag": 24,
+   "winInside": false,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": {
+    "right": 771,
+    "width": 76,
+    "lines": 1
+   },
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "skyline",
+   "w": 1279,
+   "door": "none",
+   "overflow": 0,
+   "drag": 183,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": null,
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "skyline",
+   "w": 1279,
+   "door": "A",
+   "overflow": 0,
+   "drag": 73,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": {
+    "right": 944,
+    "width": 102,
+    "lines": 1
+   },
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "skyline",
+   "w": 1279,
+   "door": "A2",
+   "overflow": 0,
+   "drag": 106,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": {
+    "right": 944,
+    "width": 69,
+    "lines": 1
+   },
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "skyline",
+   "w": 1279,
+   "door": "B",
+   "overflow": 0,
+   "drag": 100,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": {
+    "right": 944,
+    "width": 76,
+    "lines": 1
+   },
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "skyline",
+   "w": 1280,
+   "door": "none",
+   "overflow": 0,
+   "drag": 184,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": null,
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "skyline",
+   "w": 1280,
+   "door": "A",
+   "overflow": 0,
+   "drag": 74,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": {
+    "right": 945,
+    "width": 102,
+    "lines": 1
+   },
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "skyline",
+   "w": 1280,
+   "door": "A2",
+   "overflow": 0,
+   "drag": 107,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": {
+    "right": 945,
+    "width": 69,
+    "lines": 1
+   },
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "skyline",
+   "w": 1280,
+   "door": "B",
+   "overflow": 0,
+   "drag": 101,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": {
+    "right": 945,
+    "width": 76,
+    "lines": 1
+   },
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "skyline",
+   "w": 1319,
+   "door": "none",
+   "overflow": 0,
+   "drag": 223,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": null,
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "skyline",
+   "w": 1319,
+   "door": "A",
+   "overflow": 0,
+   "drag": 113,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": {
+    "right": 984,
+    "width": 102,
+    "lines": 1
+   },
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "skyline",
+   "w": 1319,
+   "door": "A2",
+   "overflow": 0,
+   "drag": 146,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": {
+    "right": 984,
+    "width": 69,
+    "lines": 1
+   },
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "skyline",
+   "w": 1319,
+   "door": "B",
+   "overflow": 0,
+   "drag": 140,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": {
+    "right": 984,
+    "width": 76,
+    "lines": 1
+   },
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "skyline",
+   "w": 1320,
+   "door": "none",
+   "overflow": 0,
+   "drag": 141,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": null,
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "skyline",
+   "w": 1320,
+   "door": "A",
+   "overflow": 0,
+   "drag": 31,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": {
+    "right": 985,
+    "width": 102,
+    "lines": 1
+   },
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "skyline",
+   "w": 1320,
+   "door": "A2",
+   "overflow": 0,
+   "drag": 64,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": {
+    "right": 985,
+    "width": 69,
+    "lines": 1
+   },
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "skyline",
+   "w": 1320,
+   "door": "B",
+   "overflow": 0,
+   "drag": 58,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": {
+    "right": 985,
+    "width": 76,
+    "lines": 1
+   },
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "skyline",
+   "w": 1400,
+   "door": "none",
+   "overflow": 0,
+   "drag": 221,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": null,
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "skyline",
+   "w": 1400,
+   "door": "A",
+   "overflow": 0,
+   "drag": 111,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": {
+    "right": 1065,
+    "width": 102,
+    "lines": 1
+   },
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "skyline",
+   "w": 1400,
+   "door": "A2",
+   "overflow": 0,
+   "drag": 144,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": {
+    "right": 1065,
+    "width": 69,
+    "lines": 1
+   },
+   "title": "zz-headless-test"
+  },
+  {
+   "look": "skyline",
+   "w": 1400,
+   "door": "B",
+   "overflow": 0,
+   "drag": 138,
+   "winInside": true,
+   "partsOneLine": true,
+   "partsLeftOfWin": true,
+   "doorPart": {
+    "right": 1065,
+    "width": 76,
+    "lines": 1
+   },
+   "title": "zz-headless-test"
+  }
+ ],
+ "summary": {
+  "sigil none": {
+   "fitsAt": [
+    900,
+    979,
+    980,
+    999,
+    1000,
+    1099,
+    1100,
+    1279,
+    1280,
+    1319,
+    1320,
+    1400
+   ],
+   "failsAt": []
+  },
+  "sigil A": {
+   "fitsAt": [
+    979,
+    980,
+    999,
+    1099,
+    1279,
+    1280,
+    1319,
+    1320,
+    1400
+   ],
+   "failsAt": [
+    "900 (overflow 71, drag 24)",
+    "1000 (overflow 31, drag 24)",
+    "1100 (overflow 33, drag 24)"
+   ]
+  },
+  "sigil A2": {
+   "fitsAt": [
+    979,
+    980,
+    999,
+    1000,
+    1099,
+    1100,
+    1279,
+    1280,
+    1319,
+    1320,
+    1400
+   ],
+   "failsAt": [
+    "900 (overflow 39, drag 24)"
+   ]
+  },
+  "sigil B": {
+   "fitsAt": [
+    979,
+    980,
+    999,
+    1000,
+    1099,
+    1279,
+    1280,
+    1319,
+    1320,
+    1400
+   ],
+   "failsAt": [
+    "900 (overflow 38, drag 24)",
+    "1100 (overflow 6, drag 24)"
+   ]
+  },
+  "skyline none": {
+   "fitsAt": [
+    900,
+    979,
+    980,
+    999,
+    1000,
+    1099,
+    1100,
+    1279,
+    1280,
+    1319,
+    1320,
+    1400
+   ],
+   "failsAt": []
+  },
+  "skyline A": {
+   "fitsAt": [
+    979,
+    980,
+    999,
+    1099,
+    1279,
+    1280,
+    1319,
+    1320,
+    1400
+   ],
+   "failsAt": [
+    "900 (overflow 71, drag 24)",
+    "1000 (overflow 31, drag 24)",
+    "1100 (overflow 33, drag 24)"
+   ]
+  },
+  "skyline A2": {
+   "fitsAt": [
+    979,
+    980,
+    999,
+    1000,
+    1099,
+    1100,
+    1279,
+    1280,
+    1319,
+    1320,
+    1400
+   ],
+   "failsAt": [
+    "900 (overflow 39, drag 24)"
+   ]
+  },
+  "skyline B": {
+   "fitsAt": [
+    979,
+    980,
+    999,
+    1000,
+    1099,
+    1279,
+    1280,
+    1319,
+    1320,
+    1400
+   ],
+   "failsAt": [
+    "900 (overflow 38, drag 24)",
+    "1100 (overflow 6, drag 24)"
+   ]
+  }
+ }
+}

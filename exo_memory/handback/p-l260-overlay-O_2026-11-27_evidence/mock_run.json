@@ -1,0 +1,95 @@
+{
+ "errors": [],
+ "shots": [
+  "sigil_A_window.jpg",
+  "sigil_A_header.jpg",
+  "sigil_list.jpg",
+  "sigil_B_menu.jpg",
+  "sigil_B_header_900.jpg",
+  "sigil_A_header_900.jpg",
+  "skyline_A_window.jpg",
+  "skyline_A_header.jpg",
+  "skyline_list.jpg",
+  "skyline_B_menu.jpg",
+  "skyline_B_header_900.jpg",
+  "skyline_A_header_900.jpg"
+ ],
+ "fit": {
+  "sigil B 900x600": {
+   "headerOverflowPx": 38,
+   "doorInside": true,
+   "doorOneLine": true,
+   "exportInside": true,
+   "exportOneLine": true,
+   "winctlInside": "hidden (no native window)",
+   "nameW": 48
+  },
+  "sigil A 900x600": {
+   "headerOverflowPx": 71,
+   "doorInside": true,
+   "doorOneLine": true,
+   "exportInside": true,
+   "exportOneLine": true,
+   "winctlInside": "hidden (no native window)",
+   "nameW": 48
+  },
+  "sigil B 1400x860": {
+   "headerOverflowPx": 0,
+   "doorInside": true,
+   "doorOneLine": true,
+   "exportInside": true,
+   "exportOneLine": true,
+   "winctlInside": "hidden (no native window)",
+   "nameW": 112
+  },
+  "sigil A 1400x860": {
+   "headerOverflowPx": 0,
+   "doorInside": true,
+   "doorOneLine": true,
+   "exportInside": true,
+   "exportOneLine": true,
+   "winctlInside": "hidden (no native window)",
+   "nameW": 112
+  },
+  "skyline B 900x600": {
+   "headerOverflowPx": 38,
+   "doorInside": true,
+   "doorOneLine": true,
+   "exportInside": true,
+   "exportOneLine": true,
+   "winctlInside": "hidden (no native window)",
+   "nameW": 48
+  },
+  "skyline A 900x600": {
+   "headerOverflowPx": 71,
+   "doorInside": true,
+   "doorOneLine": true,
+   "exportInside": true,
+   "exportOneLine": true,
+   "winctlInside": "hidden (no native window)",
+   "nameW": 48
+  },
+  "skyline B 1400x860": {
+   "headerOverflowPx": 0,
+   "doorInside": true,
+   "doorOneLine": true,
+   "exportInside": true,
+   "exportOneLine": true,
+   "winctlInside": "hidden (no native window)",
+   "nameW": 112
+  },
+  "skyline A 1400x860": {
+   "headerOverflowPx": 0,
+   "doorInside": true,
+   "doorOneLine": true,
+   "exportInside": true,
+   "exportOneLine": true,
+   "winctlInside": "hidden (no native window)",
+   "nameW": 112
+  }
+ },
+ "titles": [
+  "zz-headless-test sigil",
+  "zz-headless-test skyline"
+ ]
+}

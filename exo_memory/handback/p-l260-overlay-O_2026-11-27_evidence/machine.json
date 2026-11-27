@@ -1,0 +1,66 @@
+{
+ "leftovers": [
+  {
+   "file": "leftovers_before.json",
+   "at": "2026-11-27T07:17:53.659Z",
+   "proxies": {
+    "state": "UNCALIBRATED",
+    "count": null,
+    "titles": {},
+    "how": "read 0, and the control made none (0 → 0 → 0)"
+   },
+   "orphanBrowsers": 0,
+   "processes": 0
+  },
+  {
+   "file": "leftovers_after.json",
+   "at": "2026-11-27T07:18:32.300Z",
+   "proxies": {
+    "state": "UNCALIBRATED",
+    "count": null,
+    "titles": {},
+    "how": "read 0, and the control made none (0 → 0 → 0)"
+   },
+   "orphanBrowsers": 0,
+   "processes": 0
+  },
+  {
+   "file": "leftovers_before_fit.json",
+   "at": "2026-11-27T07:19:45.618Z",
+   "proxies": {
+    "state": "UNCALIBRATED",
+    "count": null,
+    "titles": {},
+    "how": "read 0, and the control made none (0 → 0 → 0)"
+   },
+   "orphanBrowsers": 0,
+   "processes": 0
+  },
+  {
+   "file": "leftovers_after_fit.json",
+   "at": "2026-11-27T07:23:16.646Z",
+   "proxies": {
+    "state": "UNCALIBRATED",
+    "count": null,
+    "titles": {},
+    "how": "read 0, and the control made none (0 → 0 → 0)"
+   },
+   "orphanBrowsers": 0,
+   "processes": 0
+  }
+ ],
+ "heavyRunStatus": [
+  {
+   "file": "status_before_made.txt",
+   "text": "heavy-run status (C:\\Consonance\\data), read only:\n  EXCLUSIVE HOLD: none\n  slot 1: free\n  slot 2: free\n"
+  },
+  {
+   "file": "status_before_mock.txt",
+   "text": "heavy-run status (C:\\Consonance\\data), read only:\n  EXCLUSIVE HOLD: none\n  slot 1: free\n  slot 2: free\n"
+  },
+  {
+   "file": "status_before_fit.txt",
+   "text": "heavy-run status (C:\\Consonance\\data), read only:\n  EXCLUSIVE HOLD: none\n  slot 1: free\n  slot 2: free\n"
+  }
+ ]
+}

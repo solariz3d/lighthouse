@@ -1,0 +1,309 @@
+{
+ "listed": 14,
+ "notListedOldPieceBuilder": 2,
+ "parse": "14 of 14",
+ "refused": [],
+ "longestM": 13233,
+ "slowest": {
+  "made": 2,
+  "bytes": 56331,
+  "parseMs": 4.5,
+  "pieces": 39,
+  "closed": true,
+  "segMs": 128.1,
+  "pathMs": 56.2,
+  "lengthM": 13233,
+  "ribbonMs": 19.8,
+  "ribbonVerts": 13244,
+  "meshMs": 2348.4,
+  "meshKeys": [
+   "scene",
+   "cells",
+   "folds",
+   "stats",
+   "_state"
+  ]
+ },
+ "rows": [
+  {
+   "made": 1,
+   "bytes": 3685,
+   "parseMs": 1.3,
+   "pieces": 3,
+   "closed": false,
+   "segMs": 10.4,
+   "pathMs": 14.7,
+   "lengthM": 1660,
+   "ribbonMs": 1.1,
+   "ribbonVerts": 1662,
+   "meshMs": 228.4,
+   "meshKeys": [
+    "scene",
+    "cells",
+    "folds",
+    "stats",
+    "_state"
+   ]
+  },
+  {
+   "made": 2,
+   "bytes": 56331,
+   "parseMs": 4.5,
+   "pieces": 39,
+   "closed": true,
+   "segMs": 128.1,
+   "pathMs": 56.2,
+   "lengthM": 13233,
+   "ribbonMs": 19.8,
+   "ribbonVerts": 13244,
+   "meshMs": 2348.4,
+   "meshKeys": [
+    "scene",
+    "cells",
+    "folds",
+    "stats",
+    "_state"
+   ]
+  },
+  {
+   "made": 3,
+   "bytes": 2779,
+   "parseMs": 0.3,
+   "pieces": 3,
+   "closed": false,
+   "segMs": 4.9,
+   "pathMs": 1.7,
+   "lengthM": 750,
+   "ribbonMs": 0.3,
+   "ribbonVerts": 752,
+   "meshMs": 14.3,
+   "meshKeys": [
+    "scene",
+    "cells",
+    "folds",
+    "stats",
+    "_state"
+   ]
+  },
+  {
+   "made": 4,
+   "bytes": 3251,
+   "parseMs": 0.2,
+   "pieces": 3,
+   "closed": false,
+   "segMs": 4.2,
+   "pathMs": 1.8,
+   "lengthM": 900,
+   "ribbonMs": 0.4,
+   "ribbonVerts": 902,
+   "meshMs": 15.4,
+   "meshKeys": [
+    "scene",
+    "cells",
+    "folds",
+    "stats",
+    "_state"
+   ]
+  },
+  {
+   "made": 5,
+   "bytes": 2475,
+   "parseMs": 0.2,
+   "pieces": 3,
+   "closed": false,
+   "segMs": 3.3,
+   "pathMs": 1.3,
+   "lengthM": 650,
+   "ribbonMs": 1.2,
+   "ribbonVerts": 652,
+   "meshMs": 8.6,
+   "meshKeys": [
+    "scene",
+    "cells",
+    "folds",
+    "stats",
+    "_state"
+   ]
+  },
+  {
+   "made": 6,
+   "bytes": 4688,
+   "parseMs": 0.3,
+   "pieces": 2,
+   "closed": false,
+   "segMs": 5.9,
+   "pathMs": 5.4,
+   "lengthM": 2000,
+   "ribbonMs": 0.4,
+   "ribbonVerts": 2002,
+   "meshMs": 28.9,
+   "meshKeys": [
+    "scene",
+    "cells",
+    "folds",
+    "stats",
+    "_state"
+   ]
+  },
+  {
+   "made": 7,
+   "bytes": 18896,
+   "parseMs": 0.9,
+   "pieces": 13,
+   "closed": true,
+   "segMs": 31.7,
+   "pathMs": 15.5,
+   "lengthM": 3793,
+   "ribbonMs": 1.2,
+   "ribbonVerts": 3796,
+   "meshMs": 368.9,
+   "meshKeys": [
+    "scene",
+    "cells",
+    "folds",
+    "stats",
+    "_state"
+   ]
+  },
+  {
+   "made": 8,
+   "bytes": 4661,
+   "parseMs": 0.3,
+   "pieces": 2,
+   "closed": false,
+   "segMs": 7.4,
+   "pathMs": 11.1,
+   "lengthM": 2000,
+   "ribbonMs": 0.8,
+   "ribbonVerts": 2002,
+   "meshMs": 40.6,
+   "meshKeys": [
+    "scene",
+    "cells",
+    "folds",
+    "stats",
+    "_state"
+   ]
+  },
+  {
+   "made": 9,
+   "bytes": 4166,
+   "parseMs": 0.2,
+   "pieces": 2,
+   "closed": false,
+   "segMs": 5.7,
+   "pathMs": 6,
+   "lengthM": 2000,
+   "ribbonMs": 0.9,
+   "ribbonVerts": 2002,
+   "meshMs": 29.8,
+   "meshKeys": [
+    "scene",
+    "cells",
+    "folds",
+    "stats",
+    "_state"
+   ]
+  },
+  {
+   "made": 10,
+   "bytes": 1532,
+   "parseMs": 0.1,
+   "pieces": 1,
+   "closed": false,
+   "segMs": 1.8,
+   "pathMs": 4.1,
+   "lengthM": 1000,
+   "ribbonMs": 0.3,
+   "ribbonVerts": 1002,
+   "meshMs": 15.2,
+   "meshKeys": [
+    "scene",
+    "cells",
+    "folds",
+    "stats",
+    "_state"
+   ]
+  },
+  {
+   "made": 11,
+   "bytes": 8003,
+   "parseMs": 0.7,
+   "pieces": 2,
+   "closed": false,
+   "segMs": 11.7,
+   "pathMs": 7,
+   "lengthM": 3500,
+   "ribbonMs": 1.2,
+   "ribbonVerts": 3502,
+   "meshMs": 57.4,
+   "meshKeys": [
+    "scene",
+    "cells",
+    "folds",
+    "stats",
+    "_state"
+   ]
+  },
+  {
+   "made": 12,
+   "bytes": 1532,
+   "parseMs": 0.1,
+   "pieces": 1,
+   "closed": false,
+   "segMs": 1.8,
+   "pathMs": 1.5,
+   "lengthM": 1000,
+   "ribbonMs": 0.3,
+   "ribbonVerts": 1002,
+   "meshMs": 15.8,
+   "meshKeys": [
+    "scene",
+    "cells",
+    "folds",
+    "stats",
+    "_state"
+   ]
+  },
+  {
+   "made": 13,
+   "bytes": 1532,
+   "parseMs": 0.1,
+   "pieces": 1,
+   "closed": false,
+   "segMs": 1.8,
+   "pathMs": 1.4,
+   "lengthM": 1000,
+   "ribbonMs": 0.3,
+   "ribbonVerts": 1002,
+   "meshMs": 14,
+   "meshKeys": [
+    "scene",
+    "cells",
+    "folds",
+    "stats",
+    "_state"
+   ]
+  },
+  {
+   "made": 14,
+   "bytes": 5822,
+   "parseMs": 0.3,
+   "pieces": 3,
+   "closed": false,
+   "segMs": 5.9,
+   "pathMs": 3.8,
+   "lengthM": 2406,
+   "ribbonMs": 0.6,
+   "ribbonVerts": 2408,
+   "meshMs": 38.1,
+   "meshKeys": [
+    "scene",
+    "cells",
+    "folds",
+    "stats",
+    "_state"
+   ]
+  }
+ ]
+}
