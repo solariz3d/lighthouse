@@ -258,3 +258,45 @@ Outside heavy-run, and none of it builder code: `node --check`, small `node -e` 
 **Names (P5):** `keyscan678.js` over this hand-back and its evidence folder. The key is the control: 9 names and parts read from it, the key itself counts 19, and these 56 files count 0 (`keyscan.txt`).
 
 NEXT: librarian rule on C1, C2 and F1 when this hand-back is read
+
+## 10. The short read of the three sentences, 1074d5d..15e7d62 (2026-11-27, 19:4x Z)
+
+Order: the chair's message of 19:40:45Z, against the packet's "Amended 13:4x" (:74) and B's hand-back §4.
+Tier: just do it, a read of words. No new run of the builder's code: every figure below is read from this read's own evidence.
+
+**Verdict: CLEAN, all three sentences.**
+
+**The diff changes only those sentences** (checked; `cl_diff_15e7d62.txt`):
+- 15e7d62 is the branch's tip and the range's one commit. It touches CHANGELOG.md only, 10 lines in and 6 out, in two hunks inside the width-hold entry.
+- I squeezed the whole CHANGELOG at each side to single spaces and word-diffed it. Every changed word is in C1, C2 or F1; the other changed lines are re-wrapped only.
+
+**C2, CLEAN.** The sentence: "after that grab the width's second derivative reaches 5.0 to 9.0 per metre at the joint (8.95 with a ramp of 1)". Checked against `wpp_tip.txt`, after the +4 grab:
+- the spline's own peaks are 4.9819 (R150 ramp 4), 5.3582 (ramp 8) and 8.9549 (ramp 1), read at e = 1e-4;
+- all three peaks sit at x = 0, the joint.
+
+**C1, CLEAN.** The sentence: "its first two new pieces end about 1.4 and 1.0 mm from where a level head's do (the lap's own end within 0.1 mm)". Checked against `finends_tip.txt`, across all five moving heads (both brushes and three grabs):
+- first pieces 1.353 to 1.37 mm;
+- second pieces 0.9964 to 1.022 mm;
+- the lap's end 0.011 to 0.064 mm.
+
+**F1, CLEAN.** Checked against `atstart_tip.txt`, `var_tip.txt` and `prof678.txt` (one row per head, length and field):
+- **"bank, cup or edge … with its 'early' box ticked":** bank 8, cup 20 and edge 10 give the same width on every row. The panel labels the box "early" (`app/core/panel.js:373` at 15e7d62).
+- **"the way it was heading":** on every row the swing has the head's slope's sign.
+- **"a third of the head's change per metre times the early ramp's first step (0.94 m on a 30 m piece, 2.3 m on 100 m)":** the first knot is 0.9375 m and 2.3438 m. The swing equals slope × first knot / 3 to the 0.1 mm the instrument prints, on all 24 early rows.
+- **"stays there for about 10 m":** on the +4 grab's profile (0.5 m grid) the width holds from 1 to 9 m on 30 m and from 2.5 to 10 m on 100 m.
+  - For the wide brush and the +2 grab, the hold's length is inferred: their swings follow the same law, but only the +4 grab was profiled.
+  - My verdict above says "about 10.5 m" for 100 m. 10.5 m is the first grid point off the plateau; 10 m is its last point on it.
+- **"within 1 mm by about 16 m":** 15.68, 15.74 and 16.08 m on 100 m; 11.6, 11.64 and 11.92 m on 30 m.
+- **"on a 30 m piece 47 mm after the wide brush and 0.52 m after the +4 m grab, on a 100 m piece 0.12 m and 1.30 m":** 47.2, 521.4, 118.1 and 1303.6 mm. The entry defines the wide brush as +5 m centred 30 m before the end, radius 40, which is my E4.
+- **B left out "half as deep as at c2591bf", rightly** (checked, §6): it holds on 30 m (521.4 against 1042.9 mm) and not on 100 m (1303.6 against 1390.5 mm).
+
+**Beside the sentences, not findings:**
+- **Turn by:** Turn by 45 with the early bank lays the same width as Extend (W4: 118.1 and 1303.6 mm, 1 mm by 15.68 and 16.08 m; checked). The sentence names Extend; it says nothing that Turn by contradicts.
+- **The right edge:** its early box goes the same way by the code. `er` is in `C2_CHANNELS` (extend.js:110), which sets the eight subdivisions (:1058). Inferred; not run.
+- **The turn's and climb's early boxes:** not read. `kh` and `kv` are not in that set, and whether their ramps still put a first knot inside the hold's span is unmeasured.
+
+**A correction to §9:** `keyscan678.js` ran directly at normal priority, not through heavy-run, and §9's list of what ran outside it left it out. This section's scan went through heavy-run.
+
+**Names:** `keyscan678.js`, through heavy-run at BelowNormal, over this hand-back, its evidence folder (57 files, the new `cl_diff_15e7d62.txt` among them) and the map line: 0. The control, the key itself, counts 19.
+
+NEXT: librarian rule the width hold's three sentences read when this section is read
