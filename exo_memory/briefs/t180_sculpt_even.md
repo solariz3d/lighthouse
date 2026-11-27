@@ -1,0 +1,15 @@
+# T-180 track builder: Sculpt cannot make a stretch even (opened 2026-11-27, L, by the librarian)
+
+## His words (verbatim)
+
+- 2026-11-27 01:11 (L), the end of his answer 6 (whole in `briefs/t180_unmakeable_shapes.md`): "we might have to do a refactor on the sculpting feature"
+- 2026-11-27 04:59 (L): "how has the sculpt feature changed? It worked before, but was wonky and wouldnt make consistent pieces, it would be like freehanding something that should have some form of snap to a position to make the surfaces even, for an example on the old sculpt, you could grab the edge of a turn to make it wider, but then it would be impossible to smooth out the rest of the turn where you didnt drag, becoming a battle to get it all the same thickness by hand and eye, leaving a scuffed look to the track that isnt completely smooth and seemless, you get what I mean?"
+
+## State (05:00, checked by the librarian at builder landing-1127-l263 c522ea6, the build installed on L)
+
+- **Tonight changed nothing of this.** Tonight's Sculpt changes are the bank handle and the bank brush carrying past a full turn and past two.
+- **Why it is as he says** (read in the code): every Sculpt brush adds one bump, strongest at its centre and fading to nothing at the edge of its reach (`src/core/sculpt.js:1-2`, "Add Δ·f(|s − s₀|/r)", f a smootherstep falloff). A selected run of pieces only sets where the bump sits and how wide it is (`app/core/coreshell.js` `toolWindow`, :535); a comment there records "a two-piece run landed half the value asked" at a piece's middle (:532).
+- **Smooth** (tool 9) is a relax of one setting toward its neighbours (`sculpt.js:336`); it irons a wobble and does not bring a stretch to one value.
+- **No tool sets a stretch to one even value.** A grep of `sculpt.js`, `coreshell.js` and `panel.js` for a plateau, a level or a set-over-a-run finds none.
+- Evidence for a refactor, from tonight's bank work: `handback/p-l260-sculpt-carry-A_2026-11-27.md`, "For a refactor of Sculpt".
+- Next: a plan and a mock, `loop/packet_t180_sculpt_even_2026-11-27.md`. Nothing is built before he has seen it.
