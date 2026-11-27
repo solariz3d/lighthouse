@@ -44,3 +44,18 @@
 **His word, 2026-11-27 07:19 (L):**
 > "try to stop new work in motion, when all is done, push the relevant handoffs so we can pick up on desktop, then after, give me a solid run down of tonights work and where its headed"
 The second probe is not dispatched; it is queued for D in the handoff.
+
+## State, 2026-11-27 11:2x (D): the second banked probe is in; nothing built
+
+- `handback/p-d678-even-banked-probe2-A_2026-11-27.md` "Results" (3555f20f; registered first at ca7e726d). By the rule its
+  planner fixed before the run, none of the three candidates is built.
+- **The grab:** pulled along the road's own slope instead of horizontally, it leaves the bank untouched (0.0000 degrees, one grab
+  and eight) and is byte-identical to today's grab on a flat road. On a banked road it changes what a pull does: the same 4 m
+  pull widens 3.7956 m (today 3.8559), and the centre rises 0.4306 m on a bank into the turn (today it drops 0.2403). Today's
+  grab flattens the bank 5.0 degrees each time. Changing the grab is his word; asked 11:2x.
+- **The level:** exact on a flat road and on a bank constant over the stretch. Where the design's bank changes inside the
+  stretch it draws one red at the change's end, from the untouched road too. Whether that red is a new bump or the checker
+  reading a line of the designed surface it did not read before is the third probe:
+  `loop/packet_t180_sculpt_even_banked_probe3_2026-11-27.md`.
+- Bank given back by arithmetic after the fact (no change to the grab) is exact after one grab only; after eight it leaves
+  0.26 to 4.02 degrees.
