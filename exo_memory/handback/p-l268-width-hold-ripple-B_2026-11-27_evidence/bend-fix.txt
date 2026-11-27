@@ -1,0 +1,8 @@
+E1: the brushed piece's own largest |w''| 3.07e-3, the held piece's 4.01e-4: 0.13 x
+E2: the brushed piece's own largest |w''| 3.30e-3, the held piece's 2.74e-3: 0.83 x
+E3: the brushed piece's own largest |w''| 1.37e-2, the held piece's 3.64e-2: 2.67 x
+E4: the brushed piece's own largest |w''| 1.20e-2, the held piece's 5.95e-2: 4.94 x
+E5: the brushed piece's own largest |w''| 3.41e-2, the held piece's 2.17e-2: 0.64 x
+E6: the brushed piece's own largest |w''| 4.62e-2, the held piece's 7.62e-2: 1.65 x
+E7: the brushed piece's own largest |w''| 1.70e-2, the held piece's 4.74e-2: 2.80 x
+E8: the brushed piece's own largest |w''| 1.13e-1, the held piece's 3.30e-2: 0.29 x

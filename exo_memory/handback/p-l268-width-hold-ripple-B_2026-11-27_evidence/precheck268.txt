@@ -1,0 +1,13 @@
+H1 never held =>   ✖ L264: after a width brush at the head, three Extends with the width left as shown each end at the head's width, level (19.1 brushed +1.37: 20.463 m) (57.1285m
+H2 the blend over the whole piece => applied; tests 8, pass 8, fail 0
+H3 the end not pinned => applied; tests 8, pass 8, fail 0
+H4 the blend starts level => applied; tests 8, pass 8, fail 0
+H5 a typed width held =>   ✖ L264: a width TYPED after a brush still goes where it is typed (22, and 20.46 as the field shows it) (20.2986ms)
+H6 the end pin kinks => applied; tests 8, pass 8, fail 0
+N1 the hold fitted again =>   ✖ L268: after every head of E's table the held width is within 1 mm of the head's from the end of its ramp (the first knot span, 20 m) on (50.2319ms)
+N2 no knots for the hold's ramp =>   ✖ L268: after every head of E's table the held width is within 1 mm of the head's from the end of its ramp (the first knot span, 20 m) on (20.3403ms)
+N3 the bank piece's knots dropped (extend) =>   ✖ L268: a held width beside a typed bank, cup or edge on a short piece keeps the knots the bank piece has, so the ramp lays within a few tenths of its quintic (
+N4 the joint not held (rampControl held false) =>   ✖ failing tests:
+N5 the hold's ramp the whole piece =>   ✖ L268: after every head of E's table the held width is within 1 mm of the head's from the end of its ramp (the first knot span, 20 m) on (27.5051ms)
+N6 the bank piece's knots dropped (rampKnots) =>   ✖ L268: a held width beside a typed bank, cup or edge on a short piece keeps the knots the bank piece has, so the ramp lays within a few tenths of its quintic (
+LEVEL a level head held too => applied; tests 8, pass 8, fail 0

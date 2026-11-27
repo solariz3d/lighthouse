@@ -1,0 +1,15 @@
+L 20 phi -> 20 deg: head w slope 3.01e-2; knots 5 10 15; the phi ramp's largest distance from the ideal quintic 0.4174 deg
+L 20 c -> 25: head w slope 3.01e-2; knots 5 10 15; the c ramp's largest distance from the ideal quintic 0.1982
+L 20 e -> 15: head w slope 3.01e-2; knots 5 10 15; the e ramp's largest distance from the ideal quintic 0.3130
+L 30 phi -> 20 deg: head w slope 3.01e-2; knots 7.5 15 22.5; the phi ramp's largest distance from the ideal quintic 0.4174 deg
+L 30 c -> 25: head w slope 3.01e-2; knots 7.5 15 22.5; the c ramp's largest distance from the ideal quintic 0.1982
+L 30 e -> 15: head w slope 3.01e-2; knots 7.5 15 22.5; the e ramp's largest distance from the ideal quintic 0.3130
+L 40 phi -> 20 deg: head w slope 3.01e-2; knots 10 20 30; the phi ramp's largest distance from the ideal quintic 0.4174 deg
+L 40 c -> 25: head w slope 3.01e-2; knots 10 20 30; the c ramp's largest distance from the ideal quintic 0.1982
+L 40 e -> 15: head w slope 3.01e-2; knots 10 20 30; the e ramp's largest distance from the ideal quintic 0.3130
+L 60 phi -> 20 deg: head w slope 3.01e-2; knots 15 30 45; the phi ramp's largest distance from the ideal quintic 0.4174 deg
+L 60 c -> 25: head w slope 3.01e-2; knots 15 30 45; the c ramp's largest distance from the ideal quintic 0.1982
+L 60 e -> 15: head w slope 3.01e-2; knots 15 30 45; the e ramp's largest distance from the ideal quintic 0.3130
+L 100 phi -> 20 deg: head w slope 3.01e-2; knots 20 40 60 80; the phi ramp's largest distance from the ideal quintic 0.1720 deg
+L 100 c -> 25: head w slope 3.01e-2; knots 20 40 60 80; the c ramp's largest distance from the ideal quintic 0.0817
+L 100 e -> 15: head w slope 3.01e-2; knots 20 40 60 80; the e ramp's largest distance from the ideal quintic 0.1290

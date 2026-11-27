@@ -1,0 +1,49 @@
+THE BAR (registered): on every row of E's table, over 1 mm until <= R, and guards 1-3
+  E1 the brush, +1.37 at end-5, r 20: swing -3.7 -> -1.6 mm (at 8.4 -> 3.6 m); over 1 mm until 19.7 -> 6.9 m (R 20); max|w''| 0.0001603 -> 0.0004012; knots 4 -> 7; guards hold; MEETS
+  E2 the brush, +1.37 at end-10, r 20: swing -25.8 -> -10.6 mm (at 8.4 -> 3.6 m); over 1 mm until 35.8 -> 10.9 m (R 20); max|w''| 0.001109 -> 0.002738; knots 4 -> 7; guards hold; MEETS
+  E3 the brush, +5 at end-19, r 20: swing -343.5 -> -141.4 mm (at 8.4 -> 3.6 m); over 1 mm until 94.9 -> 13.3 m (R 20); max|w''| 0.01476 -> 0.03644; knots 4 -> 7; guards hold; MEETS
+  E4 the brush, +5 at end-30, r 40: swing -560.5 -> -230.8 mm (at 8.4 -> 3.6 m); over 1 mm until 96.1 -> 13.5 m (R 20); max|w''| 0.02409 -> 0.05947; knots 4 -> 7; guards hold; MEETS
+  E5 grab, w +1.37 at end-5, r 20: swing -204.7 -> -84.3 mm (at 8.4 -> 3.6 m); over 1 mm until 93.2 -> 12.9 m (R 20); max|w''| 0.008797 -> 0.02171; knots 4 -> 7; guards hold; MEETS
+  E6 grab, w +2 at end-10, r 20: swing -718.3 -> -295.7 mm (at 8.4 -> 3.6 m); over 1 mm until 96.6 -> 13.6 m (R 20); max|w''| 0.03087 -> 0.0762; knots 4 -> 7; guards hold; MEETS
+  E7 grab, w -2 at end-20, r 30: swing 446.9 -> 184.0 mm (at 8.4 -> 3.6 m); over 1 mm until 95.6 -> 13.4 m (R 20); max|w''| 0.0192 -> 0.04741; knots 4 -> 7; guards hold; MEETS
+  E8 a number transition (drag-ghost row 5 head): swing 311.1 -> 128.0 mm (at 8.4 -> 3.6 m); over 1 mm until 94.6 -> 13.2 m (R 20); max|w''| 0.01337 -> 0.03299; knots 4 -> 7; guards hold; MEETS
+  -> 8 of 8 rows meet the bar
+
+OTHER LENGTHS (reported, not the bar)
+  E1 the brush, +1.37 at end-5, r 20, 10 m: swing -1.5 -> -0.7 mm (at 3.33 -> 1.78 m); over 1 mm until 5.84 -> 0 m (R 10); max|w''| 0.0003901 -> 0.0007424; knots 0 -> 3; guards hold
+  E1 the brush, +1.37 at end-5, r 20, 400 m: swing -3.7 -> -1.6 mm (at 8.4 -> 3.6 m); over 1 mm until 19.6 -> 6.8 m (R 20); max|w''| 0.0001603 -> 0.0004012; knots 19 -> 22; guards hold
+  E2 the brush, +1.37 at end-10, r 20, 10 m: swing -10.3 -> -5.3 mm (at 3.33 -> 1.78 m); over 1 mm until 8.71 -> 4.97 m (R 10); max|w''| 0.002742 -> 0.005382; knots 0 -> 3; guards hold
+  E2 the brush, +1.37 at end-10, r 20, 400 m: swing -25.8 -> -10.6 mm (at 8.4 -> 3.6 m); over 1 mm until 35.6 -> 10.8 m (R 20); max|w''| 0.001108 -> 0.002738; knots 19 -> 22; guards hold
+  E3 the brush, +5 at end-19, r 20, 10 m: swing -137.3 -> -70.7 mm (at 3.33 -> 1.78 m); over 1 mm until 9.66 -> 6.43 m (R 10); max|w''| 0.03651 -> 0.07164; knots 0 -> 3; guards hold
+  E3 the brush, +5 at end-19, r 20, 400 m: swing -343.6 -> -141.4 mm (at 8.4 -> 3.6 m); over 1 mm until 108 -> 13.2 m (R 20); max|w''| 0.01476 -> 0.03644; knots 19 -> 22; guards hold
+  E4 the brush, +5 at end-30, r 40, 10 m: swing -224.0 -> -115.4 mm (at 3.33 -> 1.78 m); over 1 mm until 9.73 -> 6.59 m (R 10); max|w''| 0.05956 -> 0.1169; knots 0 -> 3; guards hold
+  E4 the brush, +5 at end-30, r 40, 400 m: swing -560.7 -> -230.8 mm (at 8.4 -> 3.6 m); over 1 mm until 126.8 -> 13.2 m (R 20); max|w''| 0.02408 -> 0.05947; knots 19 -> 22; guards hold
+  E5 grab, w +1.37 at end-5, r 20, 10 m: swing -81.8 -> -42.1 mm (at 3.33 -> 1.78 m); over 1 mm until 9.56 -> 6.23 m (R 10); max|w''| 0.02175 -> 0.04269; knots 0 -> 3; guards hold
+  E5 grab, w +1.37 at end-5, r 20, 400 m: swing -204.8 -> -84.3 mm (at 8.4 -> 3.6 m); over 1 mm until 89.2 -> 12.8 m (R 20); max|w''| 0.008793 -> 0.02171; knots 19 -> 22; guards hold
+  E6 grab, w +2 at end-10, r 20, 10 m: swing -287.1 -> -147.9 mm (at 3.33 -> 1.78 m); over 1 mm until 9.77 -> 6.66 m (R 10); max|w''| 0.07635 -> 0.1499; knots 0 -> 3; guards hold
+  E6 grab, w +2 at end-10, r 20, 400 m: swing -718.6 -> -295.7 mm (at 8.4 -> 3.6 m); over 1 mm until 129.2 -> 13.6 m (R 20); max|w''| 0.03086 -> 0.0762; knots 19 -> 22; guards hold
+  E7 grab, w -2 at end-20, r 30, 10 m: swing 178.6 -> 92.1 mm (at 3.33 -> 1.78 m); over 1 mm until 9.7 -> 6.52 m (R 10); max|w''| 0.04749 -> 0.09326; knots 0 -> 3; guards hold
+  E7 grab, w -2 at end-20, r 30, 400 m: swing 447.0 -> 184.0 mm (at 8.4 -> 3.6 m); over 1 mm until 110 -> 13.2 m (R 20); max|w''| 0.0192 -> 0.04741; knots 19 -> 22; guards hold
+  E8 a number transition (drag-ghost row 5 head), 10 m: swing 124.3 -> 64.0 mm (at 3.33 -> 1.78 m); over 1 mm until 9.64 -> 6.39 m (R 10); max|w''| 0.03306 -> 0.06487; knots 0 -> 3; guards hold
+  E8 a number transition (drag-ghost row 5 head), 400 m: swing 311.2 -> 128.0 mm (at 8.4 -> 3.6 m); over 1 mm until 106.8 -> 13.2 m (R 20); max|w''| 0.01336 -> 0.03299; knots 19 -> 22; guards hold
+
+E'S SWEEP: 80 held cases; over 1 mm until <= R after: 80; guards hold after: 80; the largest "over 1 mm until" before 96.1 m, after 13.5 m; swing / |head slope| before 3.70-3.71 m, after 1.50-1.55 m
+
+EXTRA
+  grab, w +2 at end-0, r 10: piece differs; without w differs; swing 77.1 -> 31.8 mm (at 8.4 -> 3.6 m); over 1 mm until 85.8 -> 12.2 m (R 20); max|w''| 0.003312 -> 0.008189; knots 4 -> 7; guards hold
+  a level head (no brush): piece BYTE FOR BYTE the same; without w the same; swing 0.0 -> 0.0 mm (at 0.1 -> 0.1 m); over 1 mm until 0 -> 0 m (R 20); max|w''| 8.527e-12 -> 8.527e-12; knots 4 -> 4; guards hold
+  E6's head, typed 22, whole piece: piece BYTE FOR BYTE the same; without w the same; swing -4390.5 -> -4390.5 mm (at 38.2 -> 38.2 m); over 1 mm until 100 -> 100 m (R 20); max|w''| 0.01225 -> 0.01225; knots 4 -> 4; guards FAIL
+  E6's head, typed 22, early: piece BYTE FOR BYTE the same; without w the same; swing 1831.8 -> 1831.8 mm (at 52.9 -> 52.9 m); over 1 mm until 100 -> 100 m (R 20); max|w''| 0.1583 -> 0.1583; knots 24 -> 24; guards FAIL
+  E6's head, typed 20.46: piece BYTE FOR BYTE the same; without w the same; swing -4928.5 -> -4928.5 mm (at 41.4 -> 41.4 m); over 1 mm until 100 -> 100 m (R 20); max|w''| 0.01133 -> 0.01133; knots 4 -> 4; guards FAIL
+  E6's head, a Turn by corner of 45 deg over 300 m (core): piece differs; without w differs; swing -718.6 -> -295.7 mm (at 8.4 -> 3.6 m); over 1 mm until 129.3 -> 13.5 m (R 20); max|w''| 0.03086 -> 0.0762; knots 14 -> 17; guards hold
+
+THE OTHER CHANNELS of the held pieces: bytes without w, and the largest difference of each channel's curve (sampled every metre)
+  110 pieces: bytes without w the same in 4; the largest curve difference per channel over all of them: kh 8.6e-6, kv 1.6e-19, phi 1.1e-16, r 1.3e-15, c 1.1e-14, s 2.2e-16
+  E1 the brush, +1.37 at end-5, r 20: kh 3.6e-10, phi 8.3e-17, r 1.3e-15, s 2.2e-16
+  E2 the brush, +1.37 at end-10, r 20: kh 3.6e-10, phi 8.3e-17, r 1.3e-15, s 2.2e-16
+  E3 the brush, +5 at end-19, r 20: kh 3.6e-10, phi 8.3e-17, r 1.3e-15, s 2.2e-16
+  E4 the brush, +5 at end-30, r 40: kh 3.6e-10, phi 8.3e-17, r 1.3e-15, s 2.2e-16
+  E5 grab, w +1.37 at end-5, r 20: kh 3.6e-10, phi 8.3e-17, r 1.3e-15, s 2.2e-16
+  E6 grab, w +2 at end-10, r 20: kh 3.6e-10, phi 8.3e-17, r 1.3e-15, s 2.2e-16
+  E7 grab, w -2 at end-20, r 30: kh 4.9e-10, phi 8.3e-17, r 1.3e-15, s 2.2e-16
+  E8 a number transition (drag-ghost row 5 head): kh 6.5e-19, kv 1.6e-19, phi 1.1e-16, r 1.3e-15, c 1.1e-14, s 2.2e-16

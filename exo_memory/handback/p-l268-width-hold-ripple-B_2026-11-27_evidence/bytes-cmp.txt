@@ -1,0 +1,15 @@
+tracks: saved the same on both 16 of 16; byte for byte their own file again on the branch 13 of 16; refused on both 2
+undo steps: the same on both 49 of 49
+open tracks 12, closed 2: an Extend of 100 m at the head lays the same piece on both 12 of 12
+  track #1: head width slope 0 per m; the new piece the same
+  track #4: head width slope 0 per m; the new piece the same
+  track #6: head width slope 0 per m; the new piece the same
+  track #8: head width slope 0 per m; the new piece the same
+  track #10: head width slope 0 per m; the new piece the same
+  track #14: head width slope 0 per m; the new piece the same
+  track #16: head width slope 0 per m; the new piece the same
+  track #18: head width slope 0 per m; the new piece the same
+  track #20: head width slope 0 per m; the new piece the same
+  track #22: head width slope 0 per m; the new piece the same
+  track #24: head width slope 0 per m; the new piece the same
+  track #26: head width slope 0 per m; the new piece the same

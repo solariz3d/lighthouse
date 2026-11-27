@@ -1,0 +1,10 @@
+plain 100 m: last two 25.0423, 25.0423 against 25.0423: exact
+bank 20 deg rounded: last two 25.0423, 25.0423 against 25.0423: exact
+bank 20 deg swell: last two 25.0423, 25.0423 against 25.0423: exact
+bank then a second bank at 60 m: BAD_SECOND BAD_SECOND: the bank (phi) change 1 (its second bank), from 0.349066 to 0.0872665, needs m
+bank with changes: BAD_SECOND BAD_SECOND: the bank (phi) change 1 (its second bank), from 0.349066 to 0.174533, needs mo
+bank flowing: last two 25.0423, 25.0423 against 25.0423: exact
+cup 25 on 30 m: last two 25.0423, 25.0423 against 25.0423: exact
+edge 15 at start: last two 25.0423, 25.0423 against 25.0423: exact
+a second bank (the widths own changes are not possible with no width typed): last two 25.0423 25.0423 against 25.0423 exact
+changes on the bank and the cup: last two 25.0423 25.0423 against 25.0423 exact

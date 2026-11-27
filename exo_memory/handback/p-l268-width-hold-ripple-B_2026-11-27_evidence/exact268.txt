@@ -1,0 +1,12 @@
+E1 100 m: head slope -0.00100; within 1e-9 m of the head's width from 14.92 m on (the last station, every 0.01 m, more than 1e-9 m off); swing -1.56 mm = 1.549 x the slope
+E1 400 m: head slope -0.00100; within 1e-9 m of the head's width from 14.92 m on (the last station, every 0.01 m, more than 1e-9 m off); swing -1.56 mm = 1.549 x the slope
+E1 10 m: head slope -0.00100; within 1e-9 m of the head's width from 7.45 m on (the last station, every 0.01 m, more than 1e-9 m off); swing -0.73 mm = 0.729 x the slope
+E4 100 m: head slope -0.15118; within 1e-9 m of the head's width from 14.98 m on (the last station, every 0.01 m, more than 1e-9 m off); swing -230.82 mm = 1.527 x the slope
+E4 400 m: head slope -0.15118; within 1e-9 m of the head's width from 14.98 m on (the last station, every 0.01 m, more than 1e-9 m off); swing -230.82 mm = 1.527 x the slope
+E4 10 m: head slope -0.15118; within 1e-9 m of the head's width from 7.49 m on (the last station, every 0.01 m, more than 1e-9 m off); swing -115.41 mm = 0.763 x the slope
+E6 100 m: head slope -0.19377; within 1e-9 m of the head's width from 14.98 m on (the last station, every 0.01 m, more than 1e-9 m off); swing -295.76 mm = 1.526 x the slope
+E6 400 m: head slope -0.19377; within 1e-9 m of the head's width from 14.98 m on (the last station, every 0.01 m, more than 1e-9 m off); swing -295.76 mm = 1.526 x the slope
+E6 10 m: head slope -0.19377; within 1e-9 m of the head's width from 7.49 m on (the last station, every 0.01 m, more than 1e-9 m off); swing -147.93 mm = 0.763 x the slope
+E7 100 m: head slope 0.12054; within 1e-9 m of the head's width from 14.98 m on (the last station, every 0.01 m, more than 1e-9 m off); swing 184.02 mm = 1.527 x the slope
+E7 400 m: head slope 0.12054; within 1e-9 m of the head's width from 14.98 m on (the last station, every 0.01 m, more than 1e-9 m off); swing 184.02 mm = 1.527 x the slope
+E7 10 m: head slope 0.12054; within 1e-9 m of the head's width from 7.49 m on (the last station, every 0.01 m, more than 1e-9 m off); swing 92.05 mm = 0.764 x the slope
