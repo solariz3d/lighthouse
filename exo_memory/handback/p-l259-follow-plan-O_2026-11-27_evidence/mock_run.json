@@ -1,0 +1,25 @@
+{
+ "errors": [],
+ "shots": [
+  "mock_0_window.jpg",
+  "mock_1_ready.jpg",
+  "mock_2_ghost.jpg",
+  "mock_3_marked.jpg",
+  "mock_4_stopped.jpg",
+  "mock_5_sketch.png"
+ ],
+ "title0": "zz-headless-test",
+ "hisM": 300,
+ "shadowM": 1090,
+ "pieces": {
+  "his": 3,
+  "shadow": 9
+ },
+ "panel": {
+  "picked": "reference S\u0000",
+  "kind": "line",
+  "error": null
+ },
+ "titleSketch": "zz-headless-test",
+ "calls": []
+}

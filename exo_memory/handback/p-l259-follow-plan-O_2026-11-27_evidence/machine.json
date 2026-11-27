@@ -1,0 +1,70 @@
+{
+ "leftovers": [
+  {
+   "file": "leftovers_before.json",
+   "at": "2026-11-27T06:54:51.021Z",
+   "proxies": {
+    "state": "UNCALIBRATED",
+    "count": null,
+    "titles": {},
+    "how": "read 0, and the control made none (0 → 0 → 0)"
+   },
+   "orphanBrowsers": 0,
+   "processes": 0
+  },
+  {
+   "file": "leftovers_after.json",
+   "at": "2026-11-27T06:58:24.940Z",
+   "proxies": {
+    "state": "UNCALIBRATED",
+    "count": null,
+    "titles": {},
+    "how": "read 0, and the control made none (0 → 0 → 0)"
+   },
+   "orphanBrowsers": 0,
+   "processes": 0
+  },
+  {
+   "file": "leftovers_before4.json",
+   "at": "2026-11-27T06:59:59.771Z",
+   "proxies": {
+    "state": "UNCALIBRATED",
+    "count": null,
+    "titles": {},
+    "how": "read 0, and the control made none (0 → 0 → 0)"
+   },
+   "orphanBrowsers": 0,
+   "processes": 0
+  },
+  {
+   "file": "leftovers_after4.json",
+   "at": "2026-11-27T07:00:23.818Z",
+   "proxies": {
+    "state": "UNCALIBRATED",
+    "count": null,
+    "titles": {},
+    "how": "read 0, and the control made none (0 → 0 → 0)"
+   },
+   "orphanBrowsers": 0,
+   "processes": 0
+  }
+ ],
+ "heavyRunStatus": [
+  {
+   "file": "status_before_survey.txt",
+   "text": "heavy-run status (C:\\Consonance\\data), read only:\n  EXCLUSIVE HOLD: none\n  slot 1: held by 12fb81f6 pid 28484 (B L258 whole suite on e41acb1, since 2026-11-27T06:28:55.229Z)\n  slot 2: held by 6fe15f0a pid 18788 (A L258: the 51 test files naming panel.js at l-bankcarry-a 2067c88, since 2026-11-27T06:29:54.939Z)\n"
+  },
+  {
+   "file": "status_before_sides.txt",
+   "text": "heavy-run status (C:\\Consonance\\data), read only:\n  EXCLUSIVE HOLD: none\n  slot 1: held by 12fb81f6 pid 28484 (B L258 whole suite on e41acb1, since 2026-11-27T06:28:55.229Z)\n  slot 2: held by 6fe15f0a pid 18788 (A L258: the 51 test files naming panel.js at l-bankcarry-a 2067c88, since 2026-11-27T06:29:54.939Z)\n"
+  },
+  {
+   "file": "status_before_laytime.txt",
+   "text": "heavy-run status (C:\\Consonance\\data), read only:\n  EXCLUSIVE HOLD: none\n  slot 1: held by 12fb81f6 pid 28484 (B L258 whole suite on e41acb1, since 2026-11-27T06:28:55.229Z)\n  slot 2: held by 6fe15f0a pid 18788 (A L258: the 51 test files naming panel.js at l-bankcarry-a 2067c88, since 2026-11-27T06:29:54.939Z)\n"
+  },
+  {
+   "file": "status_before_mock4.txt",
+   "text": "heavy-run status (C:\\Consonance\\data), read only:\n  EXCLUSIVE HOLD: none\n  slot 1: held by 12fb81f6 pid 28484 (B L258 whole suite on e41acb1, since 2026-11-27T06:28:55.229Z)\n  slot 2: held by 6e6e002c pid 21348 (P L259: the 8 touched test files at f3cd425 (110 rows), the build differed from D's, since 2026-11-27T06:58:07.051Z)\n"
+  }
+ ]
+}
