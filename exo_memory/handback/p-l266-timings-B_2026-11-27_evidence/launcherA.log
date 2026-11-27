@@ -1,0 +1,19 @@
+2026-11-27T12:09:44.526Z heavy-run --status (exit 0):
+heavy-run status (C:\Consonance\data), read only:
+  EXCLUSIVE HOLD: none
+  slot 1: free
+  slot 2: free
+
+2026-11-27T12:09:45.954Z machine before: {"t":"2026-11-27T12:09:44.942Z","hisApp":[],"game":[],"contentManager":false,"busyPct":13.4,"locks":{"heavy-run.lock":null,"heavy-run.2.lock":null,"heavy-run.3.lock":null,"heavy-run.hold":null}}
+2026-11-27T12:09:45.960Z started idleA (cwd l266): pid 31988
+2026-11-27T12:09:46.469Z the idle holder holds a slot
+2026-11-27T12:09:46.476Z started sculpt-frameA (cwd t180-b-l266-c66b503): pid 21932
+2026-11-27T12:41:34.510Z sculpt-frameA exited 0
+2026-11-27T12:41:35.906Z idleA exited 0
+2026-11-27T12:41:37.686Z machine after: {"t":"2026-11-27T12:41:36.679Z","hisApp":[],"game":[],"contentManager":false,"busyPct":12.7,"locks":{"heavy-run.lock":null,"heavy-run.2.lock":null,"heavy-run.3.lock":null,"heavy-run.hold":null}}
+2026-11-27T12:41:37.750Z heavy-run --status (exit 0):
+heavy-run status (C:\Consonance\data), read only:
+  EXCLUSIVE HOLD: none
+  slot 1: free
+  slot 2: free
+

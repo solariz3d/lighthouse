@@ -1,0 +1,12 @@
+2026-11-27T12:09:46.945Z start: f3cd425 / c66b503, 5 runs each, alternated; my token set; CONSONANCE_DATA C:\Consonance\data
+2026-11-27T12:13:12.916Z 1 f3cd425: row 1 ok, row 2 FAIL, row 3 FAIL, row 4a FAIL, row 4b ok, row 5 ok; 203.6 s; busy 14.7%
+2026-11-27T12:16:19.942Z 1 c66b503: row 1 ok, row 2 FAIL, row 3 FAIL, row 4a FAIL, row 4b ok, row 5 ok; 184.8 s; busy 6.6%
+2026-11-27T12:19:26.787Z 2 f3cd425: row 1 ok, row 2 FAIL, row 3 FAIL, row 4a FAIL, row 4b ok, row 5 ok; 184.5 s; busy 11%
+2026-11-27T12:22:35.042Z 2 c66b503: row 1 ok, row 2 FAIL, row 3 FAIL, row 4a FAIL, row 4b ok, row 5 ok; 186 s; busy 7.8%
+2026-11-27T12:26:05.367Z 3 f3cd425: row 1 ok, row 2 FAIL, row 3 FAIL, row 4a FAIL, row 4b ok, row 5 ok; 208.1 s; busy 9.2%
+2026-11-27T12:28:53.403Z 3 c66b503: row 1 ok, row 2 FAIL, row 3 ok, row 4a FAIL, row 4b ok, row 5 ok; 165.9 s; busy 12.6%
+2026-11-27T12:32:31.480Z 4 f3cd425: row 1 ok, row 2 FAIL, row 3 FAIL, row 4a FAIL, row 4b FAIL, row 5 ok; 216 s; busy 9%
+2026-11-27T12:35:15.064Z 4 c66b503: row 1 FAIL, row 2 FAIL, row 3 FAIL, row 4a FAIL, row 4b ok, row 5 ok; 161.2 s; busy 11%
+2026-11-27T12:38:50.042Z 5 f3cd425: row 1 FAIL, row 2 FAIL, row 3 FAIL, row 4a FAIL, row 4b FAIL, row 5 ok; 212.7 s; busy 8.4%
+2026-11-27T12:41:34.490Z 5 c66b503: row 1 FAIL, row 2 FAIL, row 3 FAIL, row 4a FAIL, row 4b ok, row 5 ok; 162 s; busy 18%
+2026-11-27T12:41:34.490Z done

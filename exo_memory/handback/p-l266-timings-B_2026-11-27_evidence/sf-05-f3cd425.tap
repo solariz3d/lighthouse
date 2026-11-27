@@ -1,0 +1,111 @@
+TAP version 13
+# Subtest: row 1: Twist on a 1-piece window of a 12-piece track, every look: the work frames' p95 is within one frame at 165 Hz (6.0 ms)
+not ok 1 - row 1: Twist on a 1-piece window of a 12-piece track, every look: the work frames' p95 is within one frame at 165 Hz (6.0 ms)
+  ---
+  duration_ms: 51674.5066
+  type: 'test'
+  location: '<Downloads>\\t180-b-l266-f3cd425\\app\\test\\sculpt-frame.test.js:200:1'
+  failureType: 'testCodeFailure'
+  error: 'aurora, Twist on one piece of 12: p95 9.5 (median 2.8, 262 work frames), release 17.9, longest 215, whole after 121 ms [sculpt mode] / p95 6.1 (median 2.4, 306 work frames), release 15.4, longest 26, whole after 109 ms [sculpt mode], over 6 ms'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (<Downloads>\t180-b-l266-f3cd425\app\test\sculpt-frame.test.js:205:12)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3)
+  ...
+# Subtest: row 2: Grab, r = 200 m across three pieces of a 10 km open lap: p95 within one frame at 165 Hz (6.0 ms)
+not ok 2 - row 2: Grab, r = 200 m across three pieces of a 10 km open lap: p95 within one frame at 165 Hz (6.0 ms)
+  ---
+  duration_ms: 25743.5068
+  type: 'test'
+  location: '<Downloads>\\t180-b-l266-f3cd425\\app\\test\\sculpt-frame.test.js:210:1'
+  failureType: 'testCodeFailure'
+  error: 'Grab on a 10 km open lap: p95 21.7 (median 14.0, 164 work frames), release 1.9, longest 344, whole after 458 ms [sculpt mode] / p95 20.7 (median 14.5, 160 work frames), release 2.5, longest 493, whole after 623 ms [sculpt mode], over 6 ms'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (<Downloads>\t180-b-l266-f3cd425\app\test\sculpt-frame.test.js:213:10)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# 10 km open, Grab r 200: p95 21.7 (median 14.0, 164 work frames), release 1.9, longest 344, whole after 458 ms [sculpt mode] / p95 20.7 (median 14.5, 160 work frames), release 2.5, longest 493, whole after 623 ms [sculpt mode]
+# Subtest: row 3: Bend on a 10 km CLOSED lap: p95 within 6.0 ms during the drag, the release's handler within 6.0 ms, and the re-closed exact road whole within 10 s
+not ok 3 - row 3: Bend on a 10 km CLOSED lap: p95 within 6.0 ms during the drag, the release's handler within 6.0 ms, and the re-closed exact road whole within 10 s
+  ---
+  duration_ms: 43490.8479
+  type: 'test'
+  location: '<Downloads>\\t180-b-l266-f3cd425\\app\\test\\sculpt-frame.test.js:216:1'
+  failureType: 'testCodeFailure'
+  error: 'Bend on a 10 km closed lap: p95 14.2 (median 5.4, 300 work frames), release 4.0, longest 106, whole after 2697 ms [sculpt mode] / p95 10.4 (median 5.2, 319 work frames), release 1.9, longest 100, whole after 2404 ms [sculpt mode] (bars: p95 6, release 6, closed and a station every 2 m within 10000 ms)'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (<Downloads>\t180-b-l266-f3cd425\app\test\sculpt-frame.test.js:219:10)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# 10 km closed, Bend r 200: p95 14.2 (median 5.4, 300 work frames), release 4.0, longest 106, whole after 2697 ms [sculpt mode] / p95 10.4 (median 5.2, 319 work frames), release 1.9, longest 100, whole after 2404 ms [sculpt mode]; the road at the end {"stations":5001,"gap":2,"closed":true,"pieces":50,"detail":null,"how":"full","whole":true}
+# Subtest: row 4a: Grab on the 360 deg tube oval (Twist is refused there: the user's call 3): p95 within 6.0 ms during the drag, no frame or task over 120 ms during it or for 10 s after, and the exact road whole within 10 s
+not ok 4 - row 4a: Grab on the 360 deg tube oval (Twist is refused there: the user's call 3): p95 within 6.0 ms during the drag, no frame or task over 120 ms during it or for 10 s after, and the exact road whole within 10 s
+  ---
+  duration_ms: 39345.9305
+  type: 'test'
+  location: '<Downloads>\\t180-b-l266-f3cd425\\app\\test\\sculpt-frame.test.js:223:3'
+  failureType: 'testCodeFailure'
+  error: "Grab on the 360 deg tube oval (Twist is refused there: the user's call 3): p95 25.7 (median 17.8, 134 work frames), release 1.1, longest 74, whole after 332 ms [sculpt mode] / p95 24.7 (median 17.0, 137 work frames), release 0.8, longest 79, whole after 328 ms [sculpt mode] (bars: p95 6, longest 120, closed and a station every 2 m within 10000 ms)"
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (<Downloads>\t180-b-l266-f3cd425\app\test\sculpt-frame.test.js:226:12)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# tube360, grab r 60: p95 25.7 (median 17.8, 134 work frames), release 1.1, longest 74, whole after 332 ms [sculpt mode] / p95 24.7 (median 17.0, 137 work frames), release 0.8, longest 79, whole after 328 ms [sculpt mode]
+# Subtest: row 4b: Twist on the same oval at a 280 deg sweep: p95 within 6.0 ms during the drag, no frame or task over 120 ms during it or for 10 s after, and the exact road whole within 10 s
+not ok 5 - row 4b: Twist on the same oval at a 280 deg sweep: p95 within 6.0 ms during the drag, no frame or task over 120 ms during it or for 10 s after, and the exact road whole within 10 s
+  ---
+  duration_ms: 38891.9869
+  type: 'test'
+  location: '<Downloads>\\t180-b-l266-f3cd425\\app\\test\\sculpt-frame.test.js:223:3'
+  failureType: 'testCodeFailure'
+  error: 'Twist on the same oval at a 280 deg sweep: p95 8.6 (median 3.9, 308 work frames), release 18.3, longest 55, whole after 220 ms [sculpt mode] / p95 7.7 (median 3.8, 316 work frames), release 16.7, longest 53, whole after 218 ms [sculpt mode] (bars: p95 6, longest 120, closed and a station every 2 m within 10000 ms)'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (<Downloads>\t180-b-l266-f3cd425\app\test\sculpt-frame.test.js:226:12)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# tube280, twist r 60: p95 8.6 (median 3.9, 308 work frames), release 18.3, longest 55, whole after 220 ms [sculpt mode] / p95 7.7 (median 3.8, 316 work frames), release 16.7, longest 53, whole after 218 ms [sculpt mode]
+# Subtest: row 5: the release is the exact road: a station every 2 m again, and the document is bit for bit the one the shell's sculptOnce gives for the same brush and delta
+ok 6 - row 5: the release is the exact road: a station every 2 m again, and the document is bit for bit the one the shell's sculptOnce gives for the same brush and delta
+  ---
+  duration_ms: 12683.4958
+  type: 'test'
+  ...
+# s0 5100.00 m, delta 42 px, the brushed text 25815 characters
+1..6
+# tests 6
+# suites 0
+# pass 1
+# fail 5
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 212599.7631

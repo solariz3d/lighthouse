@@ -1,0 +1,11 @@
+D642 row 1, every sample in run order (ratio, rolling/early p95 ms, the row's verdict): 17b 2.21 (12.1/5.5) fail; 1e7 2.13 (15.5/7.3) fail; 27b 2.21 (12.9/5.8) fail; 2e7 2.23 (13.1/5.9) fail; 37b 1.62 (10.6/6.5) pass; 3e7 1.9 (10/5.3) pass; 47b 3.66 (39.6/10.8) fail; 4e7 2.15 (12.3/5.7) fail; 57b 1.92 (10.1/5.3) pass; 5e7 1.71 (9.1/5.3) pass; 67b 1.7 (12/7.1) pass; 6e7 1.92 (11.2/5.8) pass; 77b 1.74 (9.3/5.3) pass; 7e7 2.01 (12.7/6.3) fail; 87b 2.27 (12.5/5.5) fail; 8e7 2.15 (12.8/5.9) fail; 97b 1.87 (11.3/6) pass; 9e7 2.46 (12.5/5.1) fail; 107b 2.15 (14.3/6.6) fail; 10e7 1.85 (11.5/6.2) pass; 117b 1.74 (11.6/6.7) pass; 11e7 2.12 (12.2/5.7) fail; 127b 2.34 (13.5/5.7) fail; 12e7 1.57 (12.1/7.7) pass; 137b 2.32 (16.7/7.2) fail; 13e7 1.65 (10.2/6.2) pass; 147b 2.36 (16.5/7) fail; 14e7 2.63 (13.1/5) fail; 157b 2.5 (14.5/5.8) fail; 15e7 2.22 (11/5) fail
+  the row's own verdicts: 7b3926e 9 fail of 15, e7b9128 9 fail of 15; a game waited for: never; busy before each run 2.3 to 18.1 %
+D642 row 1 (every run): 7b3926e n 15, median ratio 2.210, 9 of 15 over the 2x bar; e7b9128 n 15, median 2.120, 9 of 15 over
+  e7b9128 above 7b3926e: U 93.5 of 225, exact one-sided p 0.7850; below: p 0.2210; median difference -0.090 (rule: p < 0.05 AND more than 0.10)
+  verdict: not told from noise at this n; the row at its bar: 7b3926e's own runs both pass and fail at 2x, so the row's red is noise on L
+  secondary, the rolling p95 alone: 7b3926e median 12.5 ms, e7b9128 12.2 ms; e7b9128 above p 0.8550, below p 0.1498; the early p95: 7b3926e median 6, e7b9128 5.8
+D642 row 1 (quiet runs only): 7b3926e n 15, median ratio 2.210, 9 of 15 over the 2x bar; e7b9128 n 15, median 2.120, 9 of 15 over
+  e7b9128 above 7b3926e: U 93.5 of 225, exact one-sided p 0.7850; below: p 0.2210; median difference -0.090 (rule: p < 0.05 AND more than 0.10)
+  verdict: not told from noise at this n; the row at its bar: 7b3926e's own runs both pass and fail at 2x, so the row's red is noise on L
+  secondary, the rolling p95 alone: 7b3926e median 12.5 ms, e7b9128 12.2 ms; e7b9128 above p 0.8550, below p 0.1498; the early p95: 7b3926e median 6, e7b9128 5.8
+sculpt-frame: no runs

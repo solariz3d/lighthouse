@@ -1,0 +1,50 @@
+D642 row 1, every sample in run order (ratio, rolling/early p95 ms, the row's verdict): 17b 1.62 (7.8/4.8) pass; 1e7 1.97 (7.9/4) pass; 27b 1.93 (7.6/4) pass; 2e7 2.21 (9/4.1) fail; 37b 2.02 (8/3.9) fail; 3e7 1.9 (8.6/4.5) pass; 47b 2.13 (10.6/5) fail; 4e7 1.77 (7.4/4.2) pass; 57b 1.98 (8/4) pass; 5e7 1.83 (8.2/4.5) pass; 67b 1.83 (8.2/4.5) pass; 6e7 1.85 (7.7/4.2) pass; 77b 2.51 (10.1/4) fail; 7e7 1.79 (8.1/4.5) pass; 87b 2.2 (9.2/4.2) fail; 8e7 1.96 (8.1/4.1) pass; 97b 1.67 (7.5/4.5) pass; 9e7 1.82 (8.3/4.5) pass; 107b 2.14 (10/4.7) fail; 10e7 1.83 (8/4.4) pass; 117b 1.89 (8.3/4.4) pass; 11e7 1.99 (8.8/4.4) pass; 127b 2.05 (8.4/4.1) fail; 12e7 2.36 (10/4.3) fail; 137b 1.79 (7.8/4.4) pass; 13e7 2.25 (8.7/3.9) fail; 147b 2.06 (8.1/3.9) fail; 14e7 1.98 (9/4.5) pass; 157b 2 (8.2/4.1) pass; 15e7 1.84 (7.9/4.3) pass
+  the row's own verdicts: 7b3926e 7 fail of 15, e7b9128 3 fail of 15; a game waited for: never; busy before each run 5.5 to 13.1 %
+D642 row 1 (every run): 7b3926e n 15, median ratio 2.000, 7 of 15 over the 2x bar; e7b9128 n 15, median 1.900, 3 of 15 over
+  e7b9128 above 7b3926e: U 95 of 225, exact one-sided p 0.7665; below: p 0.2398; median difference -0.100 (rule: p < 0.05 AND more than 0.10)
+  verdict: not told from noise at this n; the row at its bar: 7b3926e's own runs both pass and fail at 2x, so the row's red is noise on L
+  secondary, the rolling p95 alone: 7b3926e median 8.2 ms, e7b9128 8.2 ms; e7b9128 above p 0.4959, below p 0.5122; the early p95: 7b3926e median 4.2, e7b9128 4.3
+D642 row 1 (quiet runs only): 7b3926e n 15, median ratio 2.000, 7 of 15 over the 2x bar; e7b9128 n 15, median 1.900, 3 of 15 over
+  e7b9128 above 7b3926e: U 95 of 225, exact one-sided p 0.7665; below: p 0.2398; median difference -0.100 (rule: p < 0.05 AND more than 0.10)
+  verdict: not told from noise at this n; the row at its bar: 7b3926e's own runs both pass and fail at 2x, so the row's red is noise on L
+  secondary, the rolling p95 alone: 7b3926e median 8.2 ms, e7b9128 8.2 ms; e7b9128 above p 0.4959, below p 0.5122; the early p95: 7b3926e median 4.2, e7b9128 4.3
+
+sculpt-frame: 10 runs (5 at f3cd425, 5 at c66b503); every sample, the first attempt's p95 in ms, run by run (a retry after it in brackets):
+  row 1 aqua    f3cd425: 4.7  4.8  4.7  4.5  -   |   c66b503: 4.6  4.8  4.6  6.9 [6.8]  6.2 [8.4]
+  row 1 skyline f3cd425: 4.7  4.5  4.5  4.9  -   |   c66b503: 4.5  4.7  4.6  -  -
+  row 1 glass   f3cd425: 4.4  4.6  4.2  5.2  -   |   c66b503: 4.5  4.4  4.4  -  -
+  row 1 aurora  f3cd425: 4.9  5  4.4  6.2 [4.5]  9.5 [6.1]   |   c66b503: 4.7  4.9  4.2  -  -
+  row 1 sigil   f3cd425: 4.4  4.3  4.4  4.5  -   |   c66b503: 4.1  4.5  4.4  -  -
+  row 2         f3cd425: 14.1 [13.4]  14.3 [14.8]  14.3 [26.6]  15 [15.1]  21.7 [20.7]   |   c66b503: 14.3 [15.3]  14.8 [20.8]  14.6 [13.9]  20.6 [20.8]  25.6 [32.8]
+  row 3         f3cd425: 6.5 [6.3]  6.5 [6.5]  7.1 [7.2]  6.4 [6.7]  14.2 [10.4]   |   c66b503: 6.4 [6.3]  8.4 [8.3]  5.8  8.4 [11.4]  16 [10.1]
+  row 4a        f3cd425: 18.4 [18.7]  20.9 [18.9]  25.7 [26.2]  23.4 [24.4]  25.7 [24.7]   |   c66b503: 17.6 [18.5]  17.7 [18]  17.6 [20.6]  25.1 [27]  27.4 [25.2]
+  row 4b        f3cd425: 4.9 [5.1]  5.8  6.1 [6]  9.2 [7]  8.6 [7.7]   |   c66b503: 4.4  4.2  4.6  5.8  5.8
+  row 3 other bars (first attempt): f3cd425: rel 2 long 43 whole 1653; rel 2.3 long 47 whole 1659; rel 2.8 long 60 whole 2204; rel 2.5 long 46 whole 1650; rel 4 long 106 whole 2697  |  c66b503: rel 2.2 long 46 whole 1623; rel 2.8 long 62 whole 2270; rel 2.2 long 43 whole 1589; rel 2.5 long 63 whole 2377; rel 3.5 long 73 whole 2382
+  row 4a other bars (first attempt): f3cd425: rel 0.8 long 76 whole 213; rel 0.9 long 47 whole 212; rel 0.7 long 66 whole 223; rel 0.9 long 60 whole 226; rel 1.1 long 74 whole 332  |  c66b503: rel 1 long 62 whole 211; rel 0.7 long 47 whole 221; rel 0.8 long 51 whole 215; rel 1.5 long 61 whole 244; rel 1.2 long 60 whole 239
+  row 4b other bars (first attempt): f3cd425: rel 14.3 long 345 whole 104; rel 18.4 long 65 whole 225; rel 16.9 long 59 whole 131; rel 18 long 46 whole 124; rel 18.3 long 55 whole 220  |  c66b503: rel 14.7 long 37 whole 103; rel 13.8 long 39 whole 106; rel 13.3 long 38 whole 104; rel 15.1 long 50 whole 119; rel 18.2 long 53 whole 115
+
+  verdicts (every run):
+    row 1 aqua    f3cd425 median 4.70 (n 4), c66b503 4.80 (n 5); diff +0.10; above p 0.2302, below p 0.8016 -> not told; over 6.0: 0/4 and 2/5
+    row 1 skyline f3cd425 median 4.60 (n 4), c66b503 4.60 (n 3); diff +0.00; above p 0.6286, below p 0.5429 -> not told; over 6.0: 0/4 and 0/3
+    row 1 glass   f3cd425 median 4.50 (n 4), c66b503 4.40 (n 3); diff -0.10; above p 0.7143, below p 0.4571 -> not told; over 6.0: 0/4 and 0/3
+    row 1 aurora  f3cd425 median 5.00 (n 5), c66b503 4.70 (n 3); diff -0.30; above p 0.9464, below p 0.0893 -> not told; over 6.0: 2/5 and 0/3
+    row 1 sigil   f3cd425 median 4.40 (n 4), c66b503 4.40 (n 3); diff +0.00; above p 0.6857, below p 0.4857 -> not told; over 6.0: 0/4 and 0/3
+    row 2         f3cd425 median 14.30 (n 5), c66b503 14.80 (n 5); diff +0.50; above p 0.2024, below p 0.8413 -> not told; over 6.0: 5/5 and 5/5
+    row 3         f3cd425 median 6.50 (n 5), c66b503 8.40 (n 5); diff +1.90; above p 0.4365, below p 0.5952 -> not told; over 6.0: 5/5 and 4/5
+    row 4a        f3cd425 median 23.40 (n 5), c66b503 17.70 (n 5); diff -5.70; above p 0.8333, below p 0.1944 -> not told; over 6.0: 5/5 and 5/5
+    row 4b        f3cd425 median 6.10 (n 5), c66b503 4.60 (n 5); diff -1.50; above p 0.9881, below p 0.0278 -> not told; over 6.0: 3/5 and 0/5
+    across the cases: c66b503's median higher in 3 of 9 (sign test, one-sided p 0.9102; registered: at least 8 of 9)
+
+  verdicts (without run 1 (the runs the librarian workflow overlapped, 11:57Z to 12:15Z: the amendment verdict set)):
+    row 1 aqua    f3cd425 median 4.70 (n 3), c66b503 5.50 (n 4); diff +0.80; above p 0.1429, below p 0.9143 -> not told; over 6.0: 0/3 and 2/4
+    row 1 skyline f3cd425 median 4.50 (n 3), c66b503 4.65 (n 2); diff +0.15; above p 0.3000, below p 0.8000 -> not told; over 6.0: 0/3 and 0/2
+    row 1 glass   f3cd425 median 4.60 (n 3), c66b503 4.40 (n 2); diff -0.20; above p 0.8000, below p 0.4000 -> not told; over 6.0: 0/3 and 0/2
+    row 1 aurora  f3cd425 median 5.60 (n 4), c66b503 4.55 (n 2); diff -1.05; above p 0.9333, below p 0.1333 -> not told; over 6.0: 2/4 and 0/2
+    row 1 sigil   f3cd425 median 4.40 (n 3), c66b503 4.45 (n 2); diff +0.05; above p 0.5000, below p 0.9000 -> not told; over 6.0: 0/3 and 0/2
+    row 2         f3cd425 median 14.65 (n 4), c66b503 17.70 (n 4); diff +3.05; above p 0.2143, below p 0.8143 -> not told; over 6.0: 4/4 and 4/4
+    row 3         f3cd425 median 6.80 (n 4), c66b503 8.40 (n 4); diff +1.60; above p 0.3143, below p 0.7429 -> not told; over 6.0: 4/4 and 3/4
+    row 4a        f3cd425 median 24.55 (n 4), c66b503 21.40 (n 4); diff -3.15; above p 0.7286, below p 0.3143 -> not told; over 6.0: 4/4 and 4/4
+    row 4b        f3cd425 median 7.35 (n 4), c66b503 5.20 (n 4); diff -2.15; above p 1.0000, below p 0.0429 -> not told; over 6.0: 3/4 and 0/4
+    across the cases: c66b503's median higher in 5 of 9 (sign test, one-sided p 0.5000; registered: at least 8 of 9)
+
+  machine per run: 1f3 busy 14.7% quiet; 1c6 busy 6.6% quiet; 2f3 busy 11% quiet; 2c6 busy 7.8% quiet; 3f3 busy 9.2% quiet; 3c6 busy 12.6% quiet; 4f3 busy 9% quiet; 4c6 busy 11% quiet; 5f3 busy 8.4% quiet; 5c6 busy 18% quiet

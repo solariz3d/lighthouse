@@ -1,0 +1,1 @@
+heavy-run: waiting on 12fb81f6 pid 15000 (B L266: timings 2 of 2, this slot held IDLE on purpose: sculpt-frame times only while BOTH slots are held (its bothSlots rule), since 2026-11-27T12:05:35.088Z) — it holds this tree
