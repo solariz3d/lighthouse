@@ -1,0 +1,1230 @@
+{
+ "started": "2026-11-27T11:08:39.600Z",
+ "tree": "C:\\Users\\zackn\\Downloads\\t180-wt-l265-even",
+ "setup": {
+  "pieces": [
+   {
+    "type": "road",
+    "length": 200,
+    "knots": 13
+   },
+   {
+    "type": "road",
+    "length": 60,
+    "knots": 7
+   },
+   {
+    "type": "road",
+    "length": 60,
+    "knots": 7
+   },
+   {
+    "type": "road",
+    "length": 60,
+    "knots": 7
+   },
+   {
+    "type": "road",
+    "length": 60,
+    "knots": 7
+   },
+   {
+    "type": "road",
+    "length": 150,
+    "knots": 11
+   }
+  ],
+  "turn": {
+   "from": 200,
+   "to": 440,
+   "mid": 320
+  },
+  "width": 12,
+  "grabRadius": 30,
+  "toolRadius": 60
+ },
+ "rows": [
+  {
+   "name": "T0 the base: the turn at 12 m",
+   "w": {
+    "min": 12,
+    "max": 12,
+    "spread": 0,
+    "mean": 12
+   },
+   "l": {
+    "min": 0,
+    "max": 0,
+    "spread": 0,
+    "mean": 0
+   },
+   "inner": {
+    "min": 6,
+    "max": 6,
+    "spread": 0,
+    "mean": 6
+   },
+   "outer": {
+    "min": -6,
+    "max": -6,
+    "spread": 0,
+    "mean": -6
+   },
+   "rmsFrom16": 4,
+   "outsideMaxChange": 0,
+   "profile": [
+    12,
+    12,
+    12,
+    12,
+    12,
+    12,
+    12,
+    12,
+    12,
+    12,
+    12,
+    12,
+    12,
+    12,
+    12,
+    12,
+    12,
+    12,
+    12,
+    12,
+    12,
+    12,
+    12,
+    12,
+    12
+   ]
+  },
+  {
+   "name": "T1 his gesture: the outer rim grabbed at the turn's middle and pulled out to 16 m (grab radius 30 m)",
+   "w": {
+    "min": 12,
+    "max": 16.0392,
+    "spread": 4.0392,
+    "mean": 12.4898
+   },
+   "l": {
+    "min": -2,
+    "max": 0,
+    "spread": 2,
+    "mean": -0.2425
+   },
+   "inner": {
+    "min": 6,
+    "max": 6.0196,
+    "spread": 0.0196,
+    "mean": 6.0024
+   },
+   "outer": {
+    "min": -10.0196,
+    "max": -6,
+    "spread": 4.0196,
+    "mean": -6.4874
+   },
+   "rmsFrom16": 3.6897,
+   "outsideMaxChange": 0,
+   "profile": [
+    12,
+    12,
+    12,
+    12,
+    12,
+    12,
+    12,
+    12,
+    12,
+    12,
+    12.7773,
+    15.1115,
+    16.0392,
+    15.1115,
+    12.7773,
+    12,
+    12,
+    12,
+    12,
+    12,
+    12,
+    12,
+    12,
+    12,
+    12
+   ],
+   "grabs": [
+    {
+     "s": 320,
+     "e": 4,
+     "follow": {
+      "h": -0.2403,
+      "l": -2,
+      "w": 4.0392,
+      "phi": 0
+     },
+     "message": null
+    }
+   ]
+  },
+  {
+   "name": "T2a by hand: 4 grabs, one at each piece's middle, each pulled until it reads 16 m (a perfect snap at each spot)",
+   "w": {
+    "min": 12,
+    "max": 16.0392,
+    "spread": 4.0392,
+    "mean": 14.0382
+   },
+   "l": {
+    "min": -2,
+    "max": 0,
+    "spread": 2,
+    "mean": -1.0092
+   },
+   "inner": {
+    "min": 6,
+    "max": 6.0196,
+    "spread": 0.0196,
+    "mean": 6.0099
+   },
+   "outer": {
+    "min": -10.0196,
+    "max": -6,
+    "spread": 4.0196,
+    "mean": -8.0283
+   },
+   "rmsFrom16": 2.4526,
+   "outsideMaxChange": 0,
+   "profile": [
+    12,
+    12.9609,
+    15.1497,
+    16.0392,
+    15.1497,
+    12.9609,
+    12,
+    12.9609,
+    15.1497,
+    16.0392,
+    15.1497,
+    12.9609,
+    12,
+    12.9609,
+    15.1497,
+    16.0392,
+    15.1497,
+    12.9609,
+    12,
+    12.9609,
+    15.1497,
+    16.0392,
+    15.1497,
+    12.9609,
+    12
+   ],
+   "grabs": [
+    {
+     "s": 230,
+     "e": 4,
+     "follow": {
+      "h": -0.2403,
+      "l": -2,
+      "w": 4.0392,
+      "phi": 0
+     },
+     "message": null
+    },
+    {
+     "s": 290,
+     "e": 4,
+     "follow": {
+      "h": -0.2403,
+      "l": -2,
+      "w": 4.0392,
+      "phi": 0
+     },
+     "message": null
+    },
+    {
+     "s": 350,
+     "e": 4,
+     "follow": {
+      "h": -0.2403,
+      "l": -2,
+      "w": 4.0392,
+      "phi": 0
+     },
+     "message": null
+    },
+    {
+     "s": 410,
+     "e": 4,
+     "follow": {
+      "h": -0.2403,
+      "l": -2,
+      "w": 4.0392,
+      "phi": 0
+     },
+     "message": null
+    }
+   ]
+  },
+  {
+   "name": "T2b by hand: 8 grabs every 30 m (one grab radius apart), each pulled until it reads 16 m",
+   "w": {
+    "min": 14.06,
+    "max": 16.12,
+    "spread": 2.06,
+    "mean": 15.9043
+   },
+   "l": {
+    "min": -2.04,
+    "max": -1.02,
+    "spread": 1.02,
+    "mean": -1.9332
+   },
+   "inner": {
+    "min": 6.01,
+    "max": 6.02,
+    "spread": 0.01,
+    "mean": 6.0189
+   },
+   "outer": {
+    "min": -10.1,
+    "max": -8.05,
+    "spread": 2.05,
+    "mean": -9.8853
+   },
+   "rmsFrom16": 0.3355,
+   "outsideMaxChange": 1.764,
+   "profile": [
+    14.06,
+    15.8748,
+    15.8929,
+    15.9778,
+    15.8929,
+    16.0189,
+    16.12,
+    16.0189,
+    15.8929,
+    15.9778,
+    15.8929,
+    16.0189,
+    16.12,
+    16.0189,
+    15.8929,
+    15.9778,
+    15.8929,
+    16.0189,
+    16.12,
+    16.0189,
+    15.8929,
+    15.9778,
+    15.8929,
+    15.8748,
+    14.06
+   ],
+   "grabs": [
+    {
+     "s": 215,
+     "e": 4,
+     "follow": {
+      "h": -0.2403,
+      "l": -2,
+      "w": 4.0392,
+      "phi": 0
+     },
+     "message": null
+    },
+    {
+     "s": 245,
+     "e": 4,
+     "follow": {
+      "h": -0.2404,
+      "l": -2,
+      "w": 4.0392,
+      "phi": 0
+     },
+     "message": null
+    },
+    {
+     "s": 275,
+     "e": 4,
+     "follow": {
+      "h": -0.2404,
+      "l": -2,
+      "w": 4.0392,
+      "phi": 0
+     },
+     "message": null
+    },
+    {
+     "s": 305,
+     "e": 4,
+     "follow": {
+      "h": -0.2404,
+      "l": -2,
+      "w": 4.0392,
+      "phi": 0
+     },
+     "message": null
+    },
+    {
+     "s": 335,
+     "e": 4,
+     "follow": {
+      "h": -0.2404,
+      "l": -2,
+      "w": 4.0392,
+      "phi": 0
+     },
+     "message": null
+    },
+    {
+     "s": 365,
+     "e": 4,
+     "follow": {
+      "h": -0.2404,
+      "l": -2,
+      "w": 4.0392,
+      "phi": 0
+     },
+     "message": null
+    },
+    {
+     "s": 395,
+     "e": 4,
+     "follow": {
+      "h": -0.2404,
+      "l": -2,
+      "w": 4.0392,
+      "phi": 0
+     },
+     "message": null
+    },
+    {
+     "s": 425,
+     "e": 4,
+     "follow": {
+      "h": -0.2404,
+      "l": -2,
+      "w": 4.0392,
+      "phi": 0
+     },
+     "message": null
+    }
+   ]
+  },
+  {
+   "name": "T3 a wider brush: one grab at the middle with radius 120 m (the whole turn), pulled to 16 m",
+   "w": {
+    "min": 12,
+    "max": 16.0392,
+    "spread": 4.0392,
+    "mean": 14.0112
+   },
+   "l": {
+    "min": -2,
+    "max": 0,
+    "spread": 2,
+    "mean": -0.9959
+   },
+   "inner": {
+    "min": 6,
+    "max": 6.0196,
+    "spread": 0.0197,
+    "mean": 6.0098
+   },
+   "outer": {
+    "min": -10.0196,
+    "max": -6,
+    "spread": 4.0196,
+    "mean": -8.0015
+   },
+   "rmsFrom16": 2.4934,
+   "outsideMaxChange": 0,
+   "profile": [
+    12,
+    12.0269,
+    12.175,
+    12.463,
+    12.874,
+    13.4042,
+    14.0196,
+    14.635,
+    15.1652,
+    15.5762,
+    15.8642,
+    16.0124,
+    16.0392,
+    16.0124,
+    15.8642,
+    15.5762,
+    15.1652,
+    14.635,
+    14.0196,
+    13.4042,
+    12.874,
+    12.463,
+    12.175,
+    12.0269,
+    12
+   ],
+   "grabs": [
+    {
+     "s": 320,
+     "e": 4,
+     "follow": {
+      "h": -0.2403,
+      "l": -2,
+      "w": 4.0392,
+      "phi": 0
+     },
+     "message": null
+    }
+   ]
+  },
+  {
+   "name": "T4 a selected run: the 4 turn pieces selected, their width handle dragged to 16 m (the run's centre reads 16)",
+   "w": {
+    "min": 12,
+    "max": 16,
+    "spread": 4,
+    "mean": 13.9917
+   },
+   "l": {
+    "min": 0,
+    "max": 0,
+    "spread": 0,
+    "mean": 0
+   },
+   "inner": {
+    "min": 6,
+    "max": 8,
+    "spread": 2,
+    "mean": 6.9959
+   },
+   "outer": {
+    "min": -8,
+    "max": -6,
+    "spread": 2,
+    "mean": -6.9959
+   },
+   "rmsFrom16": 2.5003,
+   "outsideMaxChange": 0,
+   "profile": [
+    12,
+    12.0266,
+    12.1733,
+    12.4585,
+    12.8656,
+    13.3906,
+    14,
+    14.6094,
+    15.1344,
+    15.5415,
+    15.8267,
+    15.9734,
+    16,
+    15.9734,
+    15.8267,
+    15.5415,
+    15.1344,
+    14.6094,
+    14,
+    13.3906,
+    12.8656,
+    12.4585,
+    12.1733,
+    12.0266,
+    12
+   ],
+   "message": null
+  },
+  {
+   "name": "T4b one piece at a time: each turn piece selected alone, its width handle dragged to 16 m",
+   "w": {
+    "min": 12.8824,
+    "max": 15.9999,
+    "spread": 3.1175,
+    "mean": 15.0048
+   },
+   "l": {
+    "min": 0,
+    "max": 0,
+    "spread": 0,
+    "mean": 0
+   },
+   "inner": {
+    "min": 6.4412,
+    "max": 8,
+    "spread": 1.5588,
+    "mean": 7.5024
+   },
+   "outer": {
+    "min": -8,
+    "max": -6.4412,
+    "spread": 1.5588,
+    "mean": -7.5024
+   },
+   "rmsFrom16": 1.3114,
+   "outsideMaxChange": 0.7405,
+   "profile": [
+    12.8824,
+    14.5109,
+    15.6745,
+    15.9999,
+    15.6745,
+    14.5644,
+    13.7648,
+    14.5644,
+    15.6745,
+    15.9999,
+    15.6745,
+    14.5644,
+    13.7648,
+    14.5644,
+    15.6745,
+    15.9999,
+    15.6745,
+    14.5644,
+    13.7648,
+    14.5644,
+    15.6745,
+    15.9999,
+    15.6745,
+    14.5109,
+    12.8824
+   ]
+  },
+  {
+   "name": "T5 the Width tool at the turn's middle, radius 60 m (the tools' default), +4 m",
+   "w": {
+    "min": 12,
+    "max": 16,
+    "spread": 4,
+    "mean": 12.9959
+   },
+   "l": {
+    "min": 0,
+    "max": 0,
+    "spread": 0,
+    "mean": 0
+   },
+   "inner": {
+    "min": 6,
+    "max": 8,
+    "spread": 2,
+    "mean": 6.4979
+   },
+   "outer": {
+    "min": -8,
+    "max": -6,
+    "spread": 2,
+    "mean": -6.4979
+   },
+   "rmsFrom16": 3.3316,
+   "outsideMaxChange": 0,
+   "profile": [
+    12,
+    12,
+    12,
+    12,
+    12,
+    12,
+    12,
+    12.1757,
+    12.9238,
+    14,
+    15.0762,
+    15.8243,
+    16,
+    15.8243,
+    15.0762,
+    14,
+    12.9238,
+    12.1757,
+    12,
+    12,
+    12,
+    12,
+    12,
+    12,
+    12
+   ],
+   "message": null
+  },
+  {
+   "name": "T6 Smooth after T2b: width, then the lateral offset, over the turn (radius 120 m), strength 4",
+   "w": {
+    "min": 14.06,
+    "max": 16.149,
+    "spread": 2.089,
+    "mean": 15.9134
+   },
+   "l": {
+    "min": -2.0544,
+    "max": -1.02,
+    "spread": 1.0344,
+    "mean": -1.9377
+   },
+   "inner": {
+    "min": 6.01,
+    "max": 6.0201,
+    "spread": 0.0101,
+    "mean": 6.019
+   },
+   "outer": {
+    "min": -10.1288,
+    "max": -8.05,
+    "spread": 2.0788,
+    "mean": -9.8944
+   },
+   "rmsFrom16": 0.3312,
+   "outsideMaxChange": 1.764,
+   "profile": [
+    14.06,
+    15.872,
+    15.916,
+    15.9363,
+    15.9287,
+    16.0354,
+    16.12,
+    16.0335,
+    15.962,
+    15.9727,
+    15.9671,
+    15.9938,
+    16.12,
+    16.0064,
+    15.9673,
+    15.9727,
+    15.962,
+    16.0306,
+    16.12,
+    16.0372,
+    15.9287,
+    15.9363,
+    15.916,
+    15.872,
+    14.06
+   ],
+   "message": null
+  },
+  {
+   "name": "T6 Smooth after T2b: width, then the lateral offset, over the turn (radius 120 m), strength 16",
+   "w": {
+    "min": 14.06,
+    "max": 16.1383,
+    "spread": 2.0783,
+    "mean": 15.9372
+   },
+   "l": {
+    "min": -2.0491,
+    "max": -1.02,
+    "spread": 1.0291,
+    "mean": -1.9495
+   },
+   "inner": {
+    "min": 6.01,
+    "max": 6.0201,
+    "spread": 0.0101,
+    "mean": 6.0191
+   },
+   "outer": {
+    "min": -10.1182,
+    "max": -8.05,
+    "spread": 2.0682,
+    "mean": -9.9181
+   },
+   "rmsFrom16": 0.331,
+   "outsideMaxChange": 1.764,
+   "profile": [
+    14.06,
+    15.8662,
+    15.953,
+    15.9122,
+    15.9589,
+    16.0186,
+    16.12,
+    16.0739,
+    16.0335,
+    16.0238,
+    16.0268,
+    16.0418,
+    16.12,
+    16.0826,
+    16.0433,
+    16.0277,
+    16.0261,
+    16.0473,
+    16.12,
+    16.0387,
+    15.963,
+    15.9126,
+    15.9531,
+    15.8662,
+    14.06
+   ],
+   "message": null
+  },
+  {
+   "name": "T6 Smooth after T2b: width, then the lateral offset, over the turn (radius 120 m), strength 64",
+   "w": {
+    "min": 14.06,
+    "max": 16.146,
+    "spread": 2.086,
+    "mean": 15.9777
+   },
+   "l": {
+    "min": -2.0529,
+    "max": -1.02,
+    "spread": 1.0329,
+    "mean": -1.9695
+   },
+   "inner": {
+    "min": 6.01,
+    "max": 6.0201,
+    "spread": 0.0101,
+    "mean": 6.0193
+   },
+   "outer": {
+    "min": -10.1259,
+    "max": -8.05,
+    "spread": 2.0759,
+    "mean": -9.9584
+   },
+   "rmsFrom16": 0.3367,
+   "outsideMaxChange": 1.764,
+   "profile": [
+    14.06,
+    15.8578,
+    15.9827,
+    15.9694,
+    15.9881,
+    16.0289,
+    16.12,
+    16.1348,
+    16.1236,
+    16.1174,
+    16.1143,
+    16.1141,
+    16.12,
+    16.1149,
+    16.1093,
+    16.1061,
+    16.105,
+    16.1072,
+    16.12,
+    16.0553,
+    16.0038,
+    15.9765,
+    15.9843,
+    15.8578,
+    14.06
+   ],
+   "message": null
+  },
+  {
+   "name": "E1 a flat-topped ADD (+4 m width, l -2) over the run, ramps 30 m outside it, on the base",
+   "w": {
+    "min": 16,
+    "max": 16,
+    "spread": 0,
+    "mean": 16
+   },
+   "l": {
+    "min": -2,
+    "max": -2,
+    "spread": 0,
+    "mean": -2
+   },
+   "inner": {
+    "min": 6,
+    "max": 6,
+    "spread": 0,
+    "mean": 6
+   },
+   "outer": {
+    "min": -10,
+    "max": -10,
+    "spread": 0,
+    "mean": -10
+   },
+   "rmsFrom16": 0,
+   "outsideMaxChange": 4,
+   "profile": [
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "prototype": true,
+   "piecesSameObject": 0,
+   "piecesChanged": 6
+  },
+  {
+   "name": "E1 a flat-topped ADD (+4 m width, l -2) over the run, ramps 30 m outside it, after T2b",
+   "w": {
+    "min": 18.06,
+    "max": 20.12,
+    "spread": 2.06,
+    "mean": 19.9043
+   },
+   "l": {
+    "min": -4.04,
+    "max": -3.02,
+    "spread": 1.02,
+    "mean": -3.9332
+   },
+   "inner": {
+    "min": 6.01,
+    "max": 6.02,
+    "spread": 0.01,
+    "mean": 6.0189
+   },
+   "outer": {
+    "min": -14.1,
+    "max": -12.05,
+    "spread": 2.05,
+    "mean": -13.8853
+   },
+   "rmsFrom16": 3.9175,
+   "outsideMaxChange": 5.764,
+   "profile": [
+    18.06,
+    19.8748,
+    19.8929,
+    19.9778,
+    19.8929,
+    20.0189,
+    20.12,
+    20.0189,
+    19.8929,
+    19.9778,
+    19.8929,
+    20.0189,
+    20.12,
+    20.0189,
+    19.8929,
+    19.9778,
+    19.8929,
+    20.0189,
+    20.12,
+    20.0189,
+    19.8929,
+    19.9778,
+    19.8929,
+    19.8748,
+    18.06
+   ],
+   "prototype": true,
+   "piecesSameObject": 0,
+   "piecesChanged": 6
+  },
+  {
+   "name": "E2 a LEVEL to 16 m (l to -2, the inner edge held), ramps 30 m outside the run, on the base",
+   "w": {
+    "min": 16,
+    "max": 16,
+    "spread": 0,
+    "mean": 16
+   },
+   "l": {
+    "min": -2,
+    "max": -2,
+    "spread": 0,
+    "mean": -2
+   },
+   "inner": {
+    "min": 6,
+    "max": 6,
+    "spread": 0,
+    "mean": 6
+   },
+   "outer": {
+    "min": -10,
+    "max": -10,
+    "spread": 0,
+    "mean": -10
+   },
+   "rmsFrom16": 0,
+   "outsideMaxChange": 4,
+   "profile": [
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "prototype": true,
+   "piecesSameObject": 0,
+   "piecesChanged": 6
+  },
+  {
+   "name": "E2 a LEVEL to 16 m (l to -2, the inner edge held), ramps 30 m outside the run, after T2b",
+   "w": {
+    "min": 16,
+    "max": 16,
+    "spread": 0,
+    "mean": 16
+   },
+   "l": {
+    "min": -2,
+    "max": -2,
+    "spread": 0,
+    "mean": -2
+   },
+   "inner": {
+    "min": 6,
+    "max": 6,
+    "spread": 0,
+    "mean": 6
+   },
+   "outer": {
+    "min": -10,
+    "max": -10,
+    "spread": 0,
+    "mean": -10
+   },
+   "rmsFrom16": 0,
+   "outsideMaxChange": 4,
+   "profile": [
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "prototype": true,
+   "piecesSameObject": 0,
+   "piecesChanged": 6
+  },
+  {
+   "name": "E2i a LEVEL to 16 m (l to -2), ramps 30 m INSIDE the run (the neighbours untouched), on the base",
+   "w": {
+    "min": 12,
+    "max": 16,
+    "spread": 4,
+    "mean": 15.4431
+   },
+   "l": {
+    "min": -2,
+    "max": 0,
+    "spread": 2,
+    "mean": -1.7215
+   },
+   "inner": {
+    "min": 6,
+    "max": 6,
+    "spread": 0,
+    "mean": 6
+   },
+   "outer": {
+    "min": -10,
+    "max": -6,
+    "spread": 4,
+    "mean": -9.4431
+   },
+   "rmsFrom16": 1.2775,
+   "outsideMaxChange": 0,
+   "profile": [
+    12,
+    12.9199,
+    14.8188,
+    15.7442,
+    15.9905,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    15.9905,
+    15.7442,
+    14.8188,
+    12.9199,
+    12
+   ],
+   "prototype": true,
+   "piecesSameObject": 2,
+   "piecesChanged": 4
+  },
+  {
+   "name": "E2i a LEVEL to 16 m (l to -2), ramps 30 m INSIDE the run (the neighbours untouched), after T2b",
+   "w": {
+    "min": 14.06,
+    "max": 16.0265,
+    "spread": 1.9665,
+    "mean": 15.9179
+   },
+   "l": {
+    "min": -2.0044,
+    "max": -1.02,
+    "spread": 0.9844,
+    "mean": -1.9568
+   },
+   "inner": {
+    "min": 6,
+    "max": 6.015,
+    "spread": 0.015,
+    "mean": 6.0021
+   },
+   "outer": {
+    "min": -10.0176,
+    "max": -8.05,
+    "spread": 1.9676,
+    "mean": -9.9157
+   },
+   "rmsFrom16": 0.3234,
+   "outsideMaxChange": 1.764,
+   "profile": [
+    14.06,
+    15.8736,
+    16.0051,
+    15.9947,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    15.9947,
+    16.0051,
+    15.8736,
+    14.06
+   ],
+   "prototype": true,
+   "piecesSameObject": 2,
+   "piecesChanged": 4
+  }
+ ],
+ "protos": [],
+ "errors": [],
+ "mock": {
+  "errors": [],
+  "shots": [
+   "even_before.jpg",
+   "even_before_near.jpg",
+   "even_after.jpg",
+   "even_after_near.jpg",
+   "even_before_after.jpg"
+  ],
+  "titles": [
+   "zz-headless-test",
+   "zz-headless-test",
+   "zz-headless-test",
+   "zz-headless-test",
+   "zz-headless-test"
+  ],
+  "state": [
+   {
+    "which": "before",
+    "standId": "1"
+   },
+   {
+    "which": "before",
+    "restore": "restored"
+   },
+   {
+    "which": "before",
+    "overhead": true
+   },
+   {
+    "which": "after",
+    "standId": "1"
+   },
+   {
+    "which": "after",
+    "restore": "restored"
+   },
+   {
+    "which": "after",
+    "overhead": true
+   }
+  ]
+ }
+}
