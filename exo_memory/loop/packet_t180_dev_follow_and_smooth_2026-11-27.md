@@ -68,3 +68,25 @@ as his requirement, not a doubt: **smooth the modelled geometry (facets, steps b
 own shape, its bumps and crests included.** The plan still has to say how the tool keeps a bump while removing a facet
 (what length scale or measure separates them, and what it does where it cannot tell), because that is what the requirement
 asks of the build.
+
+## Changed 02:31, by his word: not a dev version; the regular builder, for everyone
+
+> "make it just the regular version, i just realized it should be for everyone, its no different than putting someone elses
+> work in blender to see how they did it, its not like someone will take tracks, just learn how to make them from the references"
+
+(02:29 on L; verbatim in the brief, the 02:29 line.) **This reverses his 01:11 answers 1 and 2** ("We do not build it", "it must
+only act as a guide") for the tool that lays pieces from a reference. The later word stands; both stay on record.
+
+What that does to this packet:
+- **Item 1 (what "dev version" is) is dropped.** No separate build, no switch.
+- **`loop/plan_t180_follow_tool_2026-11-27.md` is reopened as the plan for the shipped builder.** Its section 7 prediction
+  (P1 to P3, D1 to D4) is live again and is scored by a seat that wrote neither the plan nor the build. D4 still reads from
+  his by-eye measurement (L259 track 4), which carries on.
+- **Items 2, 3, 5 and 6 stand** as an addendum to that plan: the whole lap; "smoother" and "same track, bumps kept" as
+  registered numbers before any run; cost and tier; names.
+- **Item 4 changes.** A road made this way is now an ordinary track of the user's, saved and exported like any other. Say
+  in the addendum what, if anything, the builder records about the reference it was laid from (nothing today), and put
+  "should an export name the reference's author" to him as a call; do not decide it.
+- Where the tool's control lives: the Track overlay window is being planned at the same time
+  (`loop/plan_t180_track_overlay_2026-11-27.md`); the addendum says how the two meet, in one sentence.
+- **Still plan first.** He has not seen the follow tool's mock; the librarian shows it to him. The build is his word after.
