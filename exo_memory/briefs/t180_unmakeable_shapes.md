@@ -55,3 +55,8 @@ degrees into the new 360 you know? 5. Not sure, what is smoothness limit?"
 - 4: the shown bank resets past a full turn, but the road keeps rolling into the next turn instead of unwinding (my reading,
   said back to him).
 - 5: explained to him; no lap yet.
+
+## 2026-11-27, on L
+
+- 00:23 (L), his words: "back, there should be the relevant handoffs and points to start the work back up from where desktop left off", then "for track builder too". Read as: pick up both stopped builds on L. Packet `loop/packet_t180_resume_on_L_2026-11-27.md`. Checked on L after a fetch: `l-bankcarry-a` 2067c88, `d677-right-width-b` e41acb1, base `landing-1126-batch` f3cd425. Not on L: every scratch script under D's `G:\consonance-scratch\`, the [T5] read (so falsifier (b) stays owed to D), and the f3cd425 build (L still runs 0ab6cc8).
+- Asked of him at 00:2x, unanswered: (a) typing on a head past a turn, the whole number or nearest-forward; (b) do Sculpt drags carry past a turn; (c) build and install f3cd425 on L.
