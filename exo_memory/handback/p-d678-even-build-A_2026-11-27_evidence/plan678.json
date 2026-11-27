@@ -1,0 +1,486 @@
+{
+ "tree": "G:\\consonance-scratch\\a-d678-r2\\wt",
+ "gaps": [
+  {
+   "id": "start 0..1, a grab at 30",
+   "fx": "flat",
+   "hold": "right",
+   "gap": 13.2436,
+   "at": 30
+  },
+  {
+   "id": "start 0..1, untouched",
+   "fx": "flat",
+   "hold": "left",
+   "gap": 9.3077,
+   "at": 0
+  },
+  {
+   "id": "start 0..1, untouched",
+   "fx": "flat",
+   "hold": "right",
+   "gap": 9.3077,
+   "at": 0
+  },
+  {
+   "id": "start 0..1, a grab at 30",
+   "fx": "flat",
+   "hold": "left",
+   "gap": 9.3077,
+   "at": 0
+  },
+  {
+   "id": "WC1",
+   "fx": "flat",
+   "hold": "left",
+   "gap": 7.5029,
+   "at": 258
+  },
+  {
+   "id": "WC1",
+   "fx": "flat",
+   "hold": "right",
+   "gap": 7.5029,
+   "at": 258
+  },
+  {
+   "id": "T2b",
+   "fx": "flat",
+   "hold": "right",
+   "gap": 4.0393,
+   "at": 260
+  },
+  {
+   "id": "T1",
+   "fx": "flat",
+   "hold": "right",
+   "gap": 3.9605,
+   "at": 321
+  },
+  {
+   "id": "one piece 2, a grab at 320",
+   "fx": "flat",
+   "hold": "right",
+   "gap": 3.9605,
+   "at": 321
+  },
+  {
+   "id": "T2b",
+   "fx": "B-",
+   "hold": "right",
+   "gap": 3.8774,
+   "at": 215
+  },
+  {
+   "id": "WC4",
+   "fx": "flat",
+   "hold": "left",
+   "gap": 3.8377,
+   "at": 190
+  },
+  {
+   "id": "WC4",
+   "fx": "flat",
+   "hold": "right",
+   "gap": 3.8377,
+   "at": 190
+  },
+  {
+   "id": "T1",
+   "fx": "B-",
+   "hold": "right",
+   "gap": 3.698,
+   "at": 321
+  },
+  {
+   "id": "row 175..475",
+   "fx": "flat",
+   "hold": "right",
+   "gap": 3.6698,
+   "at": 443
+  },
+  {
+   "id": "to the head 4..5, a grab at 560",
+   "fx": "flat",
+   "hold": "right",
+   "gap": 3.627,
+   "at": 561
+  },
+  {
+   "id": "a grab at 145",
+   "fx": "B-",
+   "hold": "right",
+   "gap": 3.3873,
+   "at": 191
+  },
+  {
+   "id": "WC3",
+   "fx": "flat",
+   "hold": "left",
+   "gap": 2.9168,
+   "at": 202
+  },
+  {
+   "id": "WC3",
+   "fx": "flat",
+   "hold": "right",
+   "gap": 2.9168,
+   "at": 202
+  },
+  {
+   "id": "W8",
+   "fx": "B-",
+   "hold": "left",
+   "gap": 2.7617,
+   "at": 384
+  },
+  {
+   "id": "W8",
+   "fx": "flat",
+   "hold": "left",
+   "gap": 2.7261,
+   "at": 384
+  },
+  {
+   "id": "W8",
+   "fx": "flat",
+   "hold": "right",
+   "gap": 2.7261,
+   "at": 384
+  },
+  {
+   "id": "W8",
+   "fx": "B-",
+   "hold": "right",
+   "gap": 2.3616,
+   "at": 384
+  },
+  {
+   "id": "row 145..505",
+   "fx": "flat",
+   "hold": "right",
+   "gap": 2.3415,
+   "at": 433
+  },
+  {
+   "id": "row 145..505",
+   "fx": "B-",
+   "hold": "right",
+   "gap": 2.1316,
+   "at": 443
+  },
+  {
+   "id": "W1",
+   "fx": "B-",
+   "hold": "left",
+   "gap": 1.9728,
+   "at": 321
+  },
+  {
+   "id": "W1",
+   "fx": "flat",
+   "hold": "left",
+   "gap": 1.941,
+   "at": 321
+  },
+  {
+   "id": "W1",
+   "fx": "flat",
+   "hold": "right",
+   "gap": 1.941,
+   "at": 321
+  },
+  {
+   "id": "a grab at 145",
+   "fx": "flat",
+   "hold": "right",
+   "gap": 1.8088,
+   "at": 199
+  },
+  {
+   "id": "W1",
+   "fx": "B-",
+   "hold": "right",
+   "gap": 1.6749,
+   "at": 321
+  },
+  {
+   "id": "row 175..475",
+   "fx": "flat",
+   "hold": "left",
+   "gap": 1.4456,
+   "at": 199
+  },
+  {
+   "id": "row 145..505",
+   "fx": "flat",
+   "hold": "left",
+   "gap": 1.4409,
+   "at": 199
+  },
+  {
+   "id": "T2b",
+   "fx": "flat",
+   "hold": "left",
+   "gap": 1.4347,
+   "at": 199
+  },
+  {
+   "id": "WC2",
+   "fx": "flat",
+   "hold": "left",
+   "gap": 1.4317,
+   "at": 201
+  },
+  {
+   "id": "WC2",
+   "fx": "flat",
+   "hold": "right",
+   "gap": 1.4317,
+   "at": 201
+  },
+  {
+   "id": "a width stroke at 470",
+   "fx": "flat",
+   "hold": "left",
+   "gap": 1.4252,
+   "at": 201
+  },
+  {
+   "id": "a width stroke at 470",
+   "fx": "flat",
+   "hold": "right",
+   "gap": 1.4252,
+   "at": 201
+  },
+  {
+   "id": "T1",
+   "fx": "flat",
+   "hold": "left",
+   "gap": 1.4083,
+   "at": 198
+  },
+  {
+   "id": "WC0",
+   "fx": "flat",
+   "hold": "left",
+   "gap": 1.4083,
+   "at": 198
+  },
+  {
+   "id": "WC0",
+   "fx": "flat",
+   "hold": "right",
+   "gap": 1.4083,
+   "at": 198
+  },
+  {
+   "id": "a grab at 145",
+   "fx": "flat",
+   "hold": "left",
+   "gap": 1.4018,
+   "at": 200
+  },
+  {
+   "id": "a width stroke at 470",
+   "fx": "B-",
+   "hold": "left",
+   "gap": 1.301,
+   "at": 448
+  },
+  {
+   "id": "a width stroke at 470",
+   "fx": "B-",
+   "hold": "right",
+   "gap": 1.1067,
+   "at": 448
+  },
+  {
+   "id": "row 145..505",
+   "fx": "B-",
+   "hold": "left",
+   "gap": 0.0934,
+   "at": 263
+  },
+  {
+   "id": "T1",
+   "fx": "B-",
+   "hold": "left",
+   "gap": 0.0857,
+   "at": 318
+  },
+  {
+   "id": "T2b",
+   "fx": "B-",
+   "hold": "left",
+   "gap": 0.0841,
+   "at": 393
+  },
+  {
+   "id": "to the head 4..5, a grab at 560",
+   "fx": "flat",
+   "hold": "left",
+   "gap": 0.0481,
+   "at": 556
+  },
+  {
+   "id": "one piece 2, a grab at 320",
+   "fx": "flat",
+   "hold": "left",
+   "gap": 0.0429,
+   "at": 317
+  },
+  {
+   "id": "a grab at 145",
+   "fx": "B-",
+   "hold": "left",
+   "gap": 0.034,
+   "at": 191
+  }
+ ],
+ "picks": [
+  {
+   "id": "start 0..1, a grab at 30",
+   "fx": "flat",
+   "hold": "right",
+   "gap": 13.2436,
+   "at": 30,
+   "zoom": [
+    0,
+    120
+   ],
+   "fig": {
+    "A0": {
+     "fromRoad": 9.3077,
+     "fromNow": 9.3077,
+     "width": [
+      16,
+      16
+     ]
+    },
+    "A": {
+     "fromRoad": 12.7622,
+     "fromNow": 1.1507,
+     "width": [
+      16,
+      16
+     ]
+    },
+    "B": {
+     "fromRoad": 12.7622,
+     "fromNow": 1.1507,
+     "width": [
+      16,
+      16
+     ]
+    },
+    "C": {
+     "fromRoad": 3.4774,
+     "fromNow": 14.3145,
+     "width": [
+      16,
+      16
+     ]
+    }
+   }
+  },
+  {
+   "id": "start 0..1, untouched",
+   "fx": "flat",
+   "hold": "left",
+   "gap": 9.3077,
+   "at": 0,
+   "zoom": [
+    0,
+    120
+   ],
+   "fig": {
+    "A0": {
+     "fromRoad": 9.3077,
+     "fromNow": 9.3077,
+     "width": [
+      16,
+      16
+     ]
+    },
+    "A": {
+     "fromRoad": 0.0517,
+     "fromNow": 0.0517,
+     "width": [
+      16,
+      16
+     ]
+    },
+    "B": {
+     "fromRoad": 0.0517,
+     "fromNow": 0.0517,
+     "width": [
+      16,
+      16
+     ]
+    },
+    "C": {
+     "fromRoad": 3.4772,
+     "fromNow": 3.4772,
+     "width": [
+      16,
+      16
+     ]
+    }
+   }
+  },
+  {
+   "id": "WC1",
+   "fx": "flat",
+   "hold": "left",
+   "gap": 7.5029,
+   "at": 258,
+   "zoom": [
+    198,
+    318
+   ],
+   "fig": {
+    "A0": {
+     "fromRoad": 0.0774,
+     "fromNow": 0.0774,
+     "width": [
+      16,
+      16
+     ]
+    },
+    "A": {
+     "fromRoad": 0.0774,
+     "fromNow": 0.0774,
+     "width": [
+      16,
+      16
+     ]
+    },
+    "B": {
+     "fromRoad": 0.0774,
+     "fromNow": 0.0774,
+     "width": [
+      16,
+      16
+     ]
+    },
+    "C": {
+     "fromRoad": 7.5308,
+     "fromNow": 7.5308,
+     "width": [
+      16,
+      16
+     ]
+    }
+   }
+  }
+ ],
+ "files": [
+  "plan678_1.svg",
+  "plan678_2.svg",
+  "plan678_3.svg",
+  "plan678_1.jpg",
+  "plan678_2.jpg",
+  "plan678_3.jpg"
+ ]
+}

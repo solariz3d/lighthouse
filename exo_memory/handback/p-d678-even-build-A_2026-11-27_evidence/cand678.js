@@ -1,5 +1,6 @@
 // cand678.js (pane A, D678, the librarian's 15:4x item 2 and its 15:5x rows): the kept edge's candidates on ONE table.
 //   node cand678.js <builder tree: d678-even-a after the repair round's item 1> > cand.out          (JSON lines, one per candidate x case x hold)
+//   node cand678.js <tree> <rows already written> > cand2.out   (resume: the rows in that file are not run again)
 // The candidates are Even itself (src/core/even.js of the tree) with ONE textual change each, loaded in place of the file (Module._compile at its own path, so
 // its requires are the tree's); the anchor of each change must occur exactly once or the run stops. Registered in the hand-back, section 4.1, before any run:
 //   A0  the rule as built (the tree's file, unchanged)
@@ -103,6 +104,15 @@ function outsideOwn(after, before, w0, w1) {
   return n;
 }
 const jointsOwn = (doc, w0, w1) => jointSteps(doc, { channels: ['w', 'l', 'h'] }).filter((j) => j.s >= w0 - 1e-9 && j.s <= w1 + 1e-9 && (Math.abs(j.dv) > 1e-4 || Math.abs(j.dm) > 1e-3)).length;
+// The start's reds, once per case (added 22:10Z, after the first 67 rows: they computed them once per ROW, 8 times a case, and the run had slowed to about a row a
+// minute). The same function and the same filter as F.redsLacked (test/even_fixtures.js), so a row's redsNew is unchanged.
+const startReds = new WeakMap();
+function redsLackedOnce(after, before, a, b) {
+  let B = startReds.get(before); if (!B) startReds.set(before, (B = F.reds(before)));
+  return F.reds(after).filter((x) => x.s1 >= a && x.s0 <= b).filter((x) => !B.some((y) => y.reason === x.reason && x.s0 >= y.s0 - 2 && x.s1 <= y.s1 + 2));
+}
+// RESUME (optional third argument): a file of rows already written; a row whose candidate, case, road and hold are in it is not run again.
+const DONE = new Set((process.argv[3] ? fs.readFileSync(process.argv[3], 'utf8').split(/\r?\n/) : []).filter((l) => l.startsWith('{"cand"')).map((l) => { const r = JSON.parse(l); return `${r.cand}|${r.case}|${r.fx}|${r.hold}`; }));
 
 (async () => {
   const EVS = Object.fromEntries(Object.entries(CANDS).map(([k, e]) => [k, patched(e)]));
@@ -112,6 +122,7 @@ const jointsOwn = (doc, w0, w1) => jointSteps(doc, { channels: ['w', 'l', 'h'] }
     const { start, base, run } = c, off = SC.pieceOffsets(start), lo = off[run.from], hi = off[run.to] + start.pieces[run.to].length;
     const { win } = EVS.A0.evenWindow(start, run), { w0, w1 } = win;
     for (const hold of c.holds) for (const [k, EV] of Object.entries(EVS)) {
+      if (DONE.has(`${k}|${c.id}|${c.fx}|${hold}`)) continue;
       const row = { cand: k, case: c.id, fx: c.fx, hold, run: [lo, hi], win: [R(w0), R(w1)] };
       let res = null; try { res = EV.even(start, { ...run, value: 16, hold }); } catch (e) { row.refused = e.code || e.message.slice(0, 60); console.log(JSON.stringify(row)); continue; }
       const after = res.doc, other = hold === 'left' ? 'right' : 'left';
@@ -131,7 +142,7 @@ const jointsOwn = (doc, w0, w1) => jointSteps(doc, { channels: ['w', 'l', 'h'] }
       const mv = ['left', 'right'].map((side) => ({ side, ...maxOff((s) => edge(after, side)(s) - edge(start, side)(s), w0, w1) }));
       row.moveMax = mv[0].m >= mv[1].m ? mv[0] : mv[1];
       row.outside = outsideOwn(after, start, w0, w1); row.joints = jointsOwn(after, w0, w1);
-      row.redsNew = F.redsLacked(after, start, w0, w1).length;
+      row.redsNew = redsLackedOnce(after, start, w0, w1).length;
       if (c.fx !== 'flat' && lo === 200 && hi === 440) row.k3 = R(F.centreOff(after, start).off);
       console.log(JSON.stringify(row));
     }
