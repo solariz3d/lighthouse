@@ -1,0 +1,27 @@
+{
+ "errors": [],
+ "shots": [
+  "sigil_road_window.jpg",
+  "sigil_road_list.jpg",
+  "skyline_road_window.jpg",
+  "skyline_road_list.jpg"
+ ],
+ "titles": [
+  "zz-headless-test sigil",
+  "zz-headless-test skyline"
+ ],
+ "state": [
+  {
+   "look": "sigil",
+   "mode": "Road (its road as built)",
+   "options": 10,
+   "disabled": 1
+  },
+  {
+   "look": "skyline",
+   "mode": "Road (its road as built)",
+   "options": 10,
+   "disabled": 1
+  }
+ ]
+}

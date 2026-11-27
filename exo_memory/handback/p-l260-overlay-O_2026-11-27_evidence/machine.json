@@ -47,6 +47,30 @@
    },
    "orphanBrowsers": 0,
    "processes": 0
+  },
+  {
+   "file": "leftovers_before_road.json",
+   "at": "2026-11-27T07:27:06.668Z",
+   "proxies": {
+    "state": "UNCALIBRATED",
+    "count": null,
+    "titles": {},
+    "how": "read 0, and the control made none (0 → 0 → 0)"
+   },
+   "orphanBrowsers": 0,
+   "processes": 0
+  },
+  {
+   "file": "leftovers_after_road.json",
+   "at": "2026-11-27T07:27:36.241Z",
+   "proxies": {
+    "state": "UNCALIBRATED",
+    "count": null,
+    "titles": {},
+    "how": "read 0, and the control made none (0 → 0 → 0)"
+   },
+   "orphanBrowsers": 0,
+   "processes": 0
   }
  ],
  "heavyRunStatus": [
@@ -61,6 +85,10 @@
   {
    "file": "status_before_fit.txt",
    "text": "heavy-run status (C:\\Consonance\\data), read only:\n  EXCLUSIVE HOLD: none\n  slot 1: free\n  slot 2: free\n"
+  },
+  {
+   "file": "status_before_road.txt",
+   "text": "heavy-run status (C:\\Consonance\\data), read only:\n  EXCLUSIVE HOLD: none\n  slot 1: held by 6fe15f0a pid 15080 (A L260: 55 test files that drive Sculpt/brush drags or the panel, at l-bankcarry-a + the Sculpt carry (uncommitted), since 2026-11-27T07:20:18.359Z)\n  slot 2: held by 12fb81f6 pid 7392 (B L258 rows and harnesses after the fixes, since 2026-11-27T07:21:45.249Z)\n"
   }
  ]
 }

@@ -25,9 +25,10 @@
    - A file the builder refuses is marked "(cannot be read)" with its words, and never drawn in part.
    - An unsaved track has no file to read; the open track's last save can be picked.
 4. **The two kinds are told apart** by two groups in the one list, **Your tracks (saved)** and **Assetto Corsa (installed)**. Each kind has its own key, its readout and its mode words.
-5. **What stays the same:** Line and Road, the nudge, Show, Clear, the placement (its start on your start), the colour and the depth rule.
+5. **It opens in Road** (§1a, the chair's 07:24:20Z requirement, from his first run at 01:19 to 01:23). Every listed track can then be shown, and Line is a choice.
+   **What stays the same:** Line and Road as modes, the nudge, Show, Clear, the placement (its start on your start), the colour and the depth rule.
 6. **Nothing of an overlay reaches a save, an undo step or an export.** R1 to R4 of `reference-panel.test.js` run for a made track too. The panel's native calls grow by exactly two reads, `list_tracks` and `open_track`.
-7. **Cost:** tier **check it**, about 22 rows.
+7. **Cost:** tier **check it**, about 20 new rows and 4 amended by name.
    - one new file, `src/reference/made.js`;
    - changes to `app/reference/panel.js`, `app/menubar/items.js` (or the header markup in `index.html`), `menubar-page.test.js` row 1 (amended by name), `reference-panel.test.js`, CHANGELOG and MAP;
    - no core, no stored data, no native command.
@@ -64,6 +65,54 @@
 - The literal "says track overlay" is then what he sees at his own width.
 
 **The View entry stays** as a second door, renamed "Track overlay…". Row 3's rule ("the moved controls work from their new place") and his habit both keep it.
+
+## 1a. What it opens in: Road, always (added at the chair's 07:24:20Z order)
+
+**His words,** from his first run of the installed f3cd425 on L (`briefs/t180_reference_overlay.md`, its last three lines; room 3c9827c3 and cd4efc43):
+- 01:19: *"the t-180 tracks have no ai line and load, also when i loaded in spa, it was just like a simplified 2d layout no depth of the real track i think"*;
+- 01:20: *"and dont load i mean"*;
+- 01:23: *"WAIT I AM STUPID THE ROAD MODE IS WHAT IT IS"*.
+
+**What the code does today** (checked at f3cd425):
+- The panel starts in Line (`app/reference/panel.js:95`, `mode = 'line'`).
+- In Line, a layout with no AI line is listed "(no AI line)" and disabled (`:128-130`).
+- Line draws the AI line's ribbon, not the kn5's road.
+- **"The t-180 tracks":** of the 34 track folders in his Assetto Corsa folder, 2 are his own exports (`t180b_`), and neither has a `fast_lane.ai`. checked: a count over the folder, names not printed. So both were greyed out in the window's default.
+
+**The choice:** *Road by default* or *Road chosen for him when the picked layout has no AI line*. **Road by default, for every kind.**
+- **His complaint about the track that HAS a line:**
+  - Spa has an AI line, and in Line it showed as *"a simplified 2d layout no depth"*.
+  - A switch made only for the layouts with no line would have left him in that same flat ribbon there.
+  - His 01:23 is about the mode, not about one track: *"THE ROAD MODE IS WHAT IT IS"*.
+- **A mode that changes itself under the pick is a second trap.**
+  - He would see the select move from Line to Road on one pick and stay there for the next.
+  - The panel's rule since L250's second repair is that a mode change is his (P9 to P11: a layout with no AI line is *held* in Line, never switched for him).
+  - Opening in Road keeps that rule and removes the trap at the door.
+- **Nothing is greyed out in Road.**
+  - Every layout can be shown, and the 15 of 61 with no AI line are placed by the start their kn5 names (L250 repair; read CLEAN, `handback/p-l250-read2-O_2026-11-26.md`).
+  - Road's idle readout already says it: *"61 of 61 layouts to show as road (15 with no AI line, placed by the start its kn5 names)."* (`panel.js:111-113`; the figures are L's, from `handback/p-l250-kn5-O_2026-11-26.md`).
+- **What it costs:**
+  - A Road read is heavier than a Line read: 52 to 179 ms warm for B's three references, up to 60 MB for the largest layout, and 378 ms for that layout through the real panel (E's re-read, `briefs/t180_reference_overlay.md:61`).
+  - Only the pick pays it, not the opening.
+  - For his own tracks, Road is the builder's mesh: at most 2.35 s, on his longest (§2).
+- **What stays true in Road, said in its note** (L handoff item 6): it draws every surface the layout counts as track, the pit lane, run-off and other layouts' roads too.
+- **Line stays one click away,** for the racing line. In Line, a layout with no line is still greyed and says why.
+
+**How:**
+- `createReferencePanel({ …, mode = 'road' })`: a new option, Road when not given. The page passes nothing.
+- The mode select lists Road first.
+- **His exports in the Assetto Corsa group** are marked "(your export)", so he can tell them from the authors' tracks. The rule: a `t180b_` folder, the prefix every builder export carries.
+
+**Rows:**
+- **P0 (new, red first):**
+  - a window made with no `mode` opens in Road;
+  - every installed layout is enabled, and one with no AI line reads "(no AI line: placed by its start)";
+  - a pick asks `read_reference_road`;
+  - a `t180b_` layout reads "(your export; …)".
+- **`setup()`** in `reference-panel.test.js` passes `mode: 'line'` (one line, **amended by name**, with a comment: the default moved to Road at his 01:23 word; these rows were written for Line). Every existing row then runs as written.
+- **R1 to R4** set their mode themselves (`everything()` calls `setMode`), so they are unchanged.
+
+**The mock in that state:** `sigil_road_list.jpg` and `skyline_road_list.jpg` show the list as it opens, in Road. His tracks come first. The Assetto Corsa layouts all show as pickable, one with no AI line placed by its start, and two of his exports marked. The mode reads "Road (its road as built)" for the picked made track. `*_road_window.jpg` show the whole window.
 
 ## 2. A made track, drawn from its saved file, read only
 
@@ -131,7 +180,7 @@
 
 ## 4. What stays as it is
 
-- **Line and Road:** the two modes, and switching while a pick reads (P6 to P11's rules).
+- **Line and Road:** the two modes, and switching while a pick reads (P6 to P11's rules). Only the mode it opens in changes, to Road (§1a).
 - **The nudge:** x, z, up, turn; no scale.
 - **Show and Clear:** Show off keeps the pick and the nudge; Clear drops both.
 - **A later pick wins** over one still reading (P5). Picks are one stream whatever their kind.
@@ -179,12 +228,12 @@
 **Tier: check it.**
 - behaviour a person sees (a door, a list, a drawing), with no stored data, no core and no native command;
 - read-only is invisible, so R1 to R5 are rows, not eyes.
-- **Red first** for the new rows that can be: the list, the refusals, R5.
+- **Red first** for the new rows that can be: P0 (it opens in Road), the list, the refusals, R5.
 
 | file | rows |
 |---|---|
 | `test/reference_made.test.js` (new, about 8) | a made track's Line from OUR OWN document text lies on its own path within 1 mm, at its own width; Road is the builder's own road surface; its start pose; refused in words: not JSON, a newer schema (a `t180b.core/7` text), a `checkDoc` failure; an empty track; nothing is written (a storage double that throws on any write) |
-| `app/test/reference-panel.test.js` (about 10 new, 2 amended) | M1 the list has both groups, his saved tracks first, the old piece-builder files left out; M2 a made pick draws it start on start, in both modes, with the mode words of its kind; M3 a refused made file is marked "(cannot be read)" with its words, and the one shown before is taken down; M4 a made track and an installed track of the same name are two entries; M5 a later pick wins across kinds; R1 to R4 for a made track (4 rows from the loop); R5 the open track's saved file; R1's call assertion **amended by name**; N1's label **amended by name** |
+| `app/test/reference-panel.test.js` (about 11 new, 3 amended) | **P0** it opens in Road: every layout enabled, one with no AI line "(no AI line: placed by its start)", a pick asks `read_reference_road`, a `t180b_` layout marked as his export; `setup()` passes `mode: 'line'` **amended by name** (§1a); M1 the list has both groups, his saved tracks first, the old piece-builder files left out; M2 a made pick draws it start on start, in both modes, with the mode words of its kind; M3 a refused made file is marked "(cannot be read)" with its words, and the one shown before is taken down; M4 a made track and an installed track of the same name are two entries; M5 a later pick wins across kinds; R1 to R4 for a made track (4 rows from the loop); R5 the open track's saved file; R1's call assertion **amended by name**; N1's label **amended by name** |
 | `app/test/menubar-page.test.js` (row 1 amended, 1 new) | row 1 reads the new door; a new row: the door opens and closes the window, pressed while open, and in B its menu's three items act. Rows 8 and 17 run, unamended |
 
 **Run:** these three files, plus `markwindow-page.test.js` (the panel over the handles) and `texture-page.test.js` rows 13 to 18 (the looks), as the touched files.
@@ -204,7 +253,7 @@
 
 ## 9. The mock
 
-In the hand-back's evidence, **untracked**: 12 pictures from `node o_mock_overlay.js <tree> <out>`.
+In the hand-back's evidence, **untracked**: 16 pictures. 12 come from `node o_mock_overlay.js <tree> <out>`, and 4 in the Road state from `node o_mock_road.js <tree> <out>` (§1a).
 - **The page:** the real page at f3cd425, headless, with a stand-in native side.
 - **Injected and marked "mock · not built":** the door, the window's title, and its grouped list with placeholder names.
 - **The drawn made track is our own shape.** It goes through today's Line path (its centre line as an AI line), which is how a made track's Line would look. The build draws it from the saved file instead.
@@ -216,6 +265,11 @@ In the hand-back's evidence, **untracked**: 12 pictures from `node o_mock_overla
 | `sigil_B_menu.jpg`, `skyline_B_menu.jpg` | door B, its menu open |
 | `sigil_list.jpg`, `skyline_list.jpg` | the list, open: Your tracks (saved), Assetto Corsa (installed), a refused file, the open track's saved file |
 | `*_A_header_900.jpg`, `*_B_header_900.jpg` | each door at 900 px, where the bar overflows (§1) |
+| `sigil_road_list.jpg`, `skyline_road_list.jpg` | **the list as the window opens, in Road** (§1a): only the unreadable file is disabled, and two of his exports are marked "(your export)" |
+| `sigil_road_window.jpg`, `skyline_road_window.jpg` | the whole window in that state, door A pressed |
+
+- The earlier `*_list.jpg` pictures show today's mode select ("Line (its AI line)"). The `*_road_*` pictures replace them for the opening state.
+- **The 300 px window cuts the longest entries short** ("placed by it…" in `sigil_road_list.jpg`). The build shortens the export's mark to "(your export; by its start)", or widens the list.
 
 ## 10. His calls
 
