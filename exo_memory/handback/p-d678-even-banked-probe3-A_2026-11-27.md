@@ -104,6 +104,26 @@ mind; default to refuted.
 - **U3: "K1 fails."** Then my measure does not reproduce the checker, and the question cannot be separated with it.
 - **U4: "row 2 reads a red on Bhold."** Then my measure reads reds the checker's own geometry does not hold, and the control fails.
 
+### Amendment before the run (17:37Z, committed with the probe, nothing run yet)
+
+Found while writing the probe, from the section's code (`src/geom/profile.js` `normalAt`):
+- **On the cupped roads, row 2 and C1's centre differ by the dish too.**
+  - The base's surface at the foot (about 2 m off its centre) slopes by the dish's own angle there, so its normal leans toward the road's middle.
+  - C1's centre sits at its own section's flat bottom, with the normal straight up the section.
+  - At the stations in question that lean multiplies the turn's sideways load, so on the cupped roads row 2 can differ from C1's centreline load by the
+    dish alone, in either direction, whatever the level adds.
+- So, added before the run (no bar on any of them; **the branch rule above is unchanged and reads the cupped B− and B+ rows**):
+  - **2n:** row 2 with the normal taken straight up the section (as C1's centre has it), on every fixture. Reported.
+  - **Row 2 on the cup-0 copies B−0 and B+0** as well, where the surface is the plane C1's centre is built in, so the dish cannot enter. Reported beside the
+    cupped rows.
+  - **U5, the unwelcome outcome this opens: "row 2 reads no red on the cupped B− or B+, and red on B−0 and B+0."** By the rule that is branch B or mixed and
+    Alt F runs. I will say then that the difference between the cupped and the cup-0 rows is the dish at the foot, and not claim it as the level's.
+- **How the probe finds the foot:**
+  - C1's centre, in the base's station plane, projected along the base's normal onto the base's section, by bisection.
+  - The bank is the document's channel at s (stated so that the diagnostics, the path's roll against the channel at the stations, can be read against it).
+- **Alt F is written into the probe and gated there by the branch rule above.** It runs only in branch B or mixed; in branch A it is not run, and the output
+  says so.
+
 ### What I will say about C1 and the tool, fixed now
 
 - **In branch A:**
