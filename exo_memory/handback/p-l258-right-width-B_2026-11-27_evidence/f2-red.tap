@@ -1,0 +1,140 @@
+TAP version 13
+# Subtest: a right width typed alone is sent as its difference from the head's width; with the width typed, from the typed one; blank sends none
+ok 1 - a right width typed alone is sent as its difference from the head's width; with the width typed, from the typed one; blank sends none
+  ---
+  duration_ms: 0.9762
+  type: 'test'
+  ...
+# Subtest: a right width with no width to measure it from is refused by name
+ok 2 - a right width with no width to measure it from is refused by name
+  ---
+  duration_ms: 0.2899
+  type: 'test'
+  ...
+# Subtest: a right width's change is sent against the width in force at its mark: the width's own change there, else its target
+ok 3 - a right width's change is sent against the width in force at its mark: the width's own change there, else its target
+  ---
+  duration_ms: 0.7427
+  type: 'test'
+  ...
+# Subtest: the right width at the start: its ramp is the width's own early ramp
+ok 4 - the right width at the start: its ramp is the width's own early ramp
+  ---
+  duration_ms: 0.1329
+  type: 'test'
+  ...
+# Subtest: the mounted panel: "right width m" shows the head's right width, and typed it lays a piece whose right side has its own width; the width typed alone keeps the step
+ok 5 - the mounted panel: "right width m" shows the head's right width, and typed it lays a piece whose right side has its own width; the width typed alone keeps the step
+  ---
+  duration_ms: 96.2826
+  type: 'test'
+  ...
+# Subtest: L258 F2: with the width left as shown, a right width typed as the width is SHOWN is sent as wd 0; any other number, and one beside a typed width, is measured as before
+not ok 6 - L258 F2: with the width left as shown, a right width typed as the width is SHOWN is sent as wd 0; any other number, and one beside a typed width, is measured as before
+  ---
+  duration_ms: 1.0427
+  type: 'test'
+  location: '<Downloads>\\t180-b-l258-f2\\app\\test\\core-right-width-panel.test.js:111:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    the width as its field shows it: back to the width
+    + actual - expected
+    
+    + -0.0045999999999999375
+    - 0
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: -0.0045999999999999375
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (<Downloads>\t180-b-l258-f2\app\test\core-right-width-panel.test.js:113:10)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: L258 F2: SPLIT_HEAD's advice, typed as it is written, lays the piece, on a head of width 19.1346 and on one left by the width brush
+not ok 7 - L258 F2: SPLIT_HEAD's advice, typed as it is written, lays the piece, on a head of width 19.1346 and on one left by the width brush
+  ---
+  duration_ms: 52.7276
+  type: 'test'
+  location: '<Downloads>\\t180-b-l258-f2\\app\\test\\core-right-width-panel.test.js:121:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    typed: the right width ends back at the width
+    + actual - expected
+    
+      {
+        m: 0,
+    +   v: -0.0046
+    -   v: 0
+      }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    v: 0
+    m: 0
+  actual:
+    v: -0.0046
+    m: 0
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (<Downloads>\t180-b-l258-f2\app\test\core-right-width-panel.test.js:130:12)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: L258 F2: the CHANGELOG's way back holds on such a width: a piece laid with the right width set to the width as shown writes no wd, and the file keeps its schema, not core/7
+not ok 8 - L258 F2: the CHANGELOG's way back holds on such a width: a piece laid with the right width set to the width as shown writes no wd, and the file keeps its schema, not core/7
+  ---
+  duration_ms: 30.8667
+  type: 'test'
+  location: '<Downloads>\\t180-b-l258-f2\\app\\test\\core-right-width-panel.test.js:136:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    typed: the new piece writes no wd
+    + actual - expected
+    
+    + [
+    +   0,
+    +   0,
+    +   -0.0004,
+    +   -0.0016,
+    +   -0.003,
+    +   -0.0042,
+    +   -0.0046,
+    +   -0.0046
+    + ]
+    - undefined
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  actual:
+    0: 0
+    1: 0
+    2: -0.0004
+    3: -0.0016
+    4: -0.003
+    5: -0.0042
+    6: -0.0046
+    7: -0.0046
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (<Downloads>\t180-b-l258-f2\app\test\core-right-width-panel.test.js:141:12)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 5
+# fail 3
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 448.6984
+exit 1 

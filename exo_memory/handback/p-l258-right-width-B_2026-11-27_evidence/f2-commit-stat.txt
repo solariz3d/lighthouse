@@ -1,0 +1,10 @@
+de6c06923302e251f60b60db1bf7e34d7a83b836
+D677 (b) L258 B, F2: a right width typed as the width is shown is back to the width
+
+ CHANGELOG.md                            |  4 ++-
+ MAP.md                                  |  2 +-
+ app/core/panel.js                       | 12 +++++--
+ app/test/core-right-width-panel.test.js | 60 +++++++++++++++++++++++++++++++++
+ src/core/piece.js                       |  5 ++-
+ test/core_right_width_mutation.test.js  |  5 +++
+ 6 files changed, 82 insertions(+), 6 deletions(-)

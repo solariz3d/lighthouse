@@ -1,0 +1,2 @@
+core_right_width_mutation.test.js: 35 mutants: applied 35 / caught 35 / NOT APPLIED 0; not caught 0; control ok
+all: 35 mutants: applied 35 / caught 35 / NOT APPLIED 0; not caught 0; not run 0

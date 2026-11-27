@@ -1,0 +1,875 @@
+TAP version 13
+# Subtest: row 1c: on a CLOSED lap a shift-click across the start line takes the SHORT way: the pieces either side of the line; Save keeps them, Delete says CLOSED
+ok 1 - row 1c: on a CLOSED lap a shift-click across the start line takes the SHORT way: the pieces either side of the line; Save keeps them, Delete says CLOSED
+  ---
+  duration_ms: 364.0865
+  type: 'test'
+  ...
+# Subtest: row 1d: where the run across the start line CANNOT be saved (a cup at one side of it, a plain piece at the other) and the inside run can, the inside run is selected and the line says why
+ok 2 - row 1d: where the run across the start line CANNOT be saved (a cup at one side of it, a plain piece at the other) and the inside run can, the inside run is selected and the line says why
+  ---
+  duration_ms: 252.3713
+  type: 'test'
+  ...
+# Subtest: row 1e: a tie stays inside the lap even when the lengths are decimals whose sums differ in the last bit (A's tiefloat case)
+ok 3 - row 1e: a tie stays inside the lap even when the lengths are decimals whose sums differ in the last bit (A's tiefloat case)
+  ---
+  duration_ms: 6.4181
+  type: 'test'
+  ...
+# Subtest: row 1: select a piece, shift-click a run (the first piece selected stays the anchor), an out-of-range piece is refused, and any change of the document drops the selection
+ok 4 - row 1: select a piece, shift-click a run (the first piece selected stays the anchor), an out-of-range piece is refused, and any change of the document drops the selection
+  ---
+  duration_ms: 251.1658
+  type: 'test'
+  ...
+# Subtest: row 2: Save as piece stores exactly the core's text; a name already used is refused and the stored piece untouched; a bad name and a mixed run are refused by name
+ok 5 - row 2: Save as piece stores exactly the core's text; a name already used is refused and the stored piece untouched; a bad name and a mixed run are refused by name
+  ---
+  duration_ms: 207.5931
+  type: 'test'
+  ...
+# Subtest: row 3: the library lists name, length, turn, climb and a thumbnail; an unreadable file and a whole track are LISTED with the reason
+ok 6 - row 3: the library lists name, length, turn, climb and a thumbnail; an unreadable file and a whole track are LISTED with the reason
+  ---
+  duration_ms: 87.2584
+  type: 'test'
+  ...
+# Subtest: row 4: Add at head is the core's insert as ONE undo step, mirrored on request; closed, missing and damaged are refused by name with nothing changed
+ok 7 - row 4: Add at head is the core's insert as ONE undo step, mirrored on request; closed, missing and damaged are refused by name with nothing changed
+  ---
+  duration_ms: 200.4711
+  type: 'test'
+  ...
+# Subtest: row 5 (REQUIRED, through the app): a track built by saving a run and adding it back through the shell is the SAME DOCUMENT and exports the SAME BYTES
+ok 8 - row 5 (REQUIRED, through the app): a track built by saving a run and adding it back through the shell is the SAME DOCUMENT and exports the SAME BYTES
+  ---
+  duration_ms: 4755.4121
+  type: 'test'
+  ...
+# Subtest: row 6: rename (the new name must be free; the file's own name changes) and delete of a saved piece
+ok 9 - row 6: rename (the new name must be free; the file's own name changes) and delete of a saved piece
+  ---
+  duration_ms: 52.4559
+  type: 'test'
+  ...
+# Subtest: row 6b: a CASE-ONLY rename (Run to run) works where names are case-blind (C, look F2), on a case-sensitive store too, and a failure on the way never loses the piece
+ok 10 - row 6b: a CASE-ONLY rename (Run to run) works where names are case-blind (C, look F2), on a case-sensitive store too, and a failure on the way never loses the piece
+  ---
+  duration_ms: 89.8504
+  type: 'test'
+  ...
+# Subtest: row 7: delete at the open end is simple (one undo step, ids kept); a closed track refuses by name
+ok 11 - row 7: delete at the open end is simple (one undo step, ids kept); a closed track refuses by name
+  ---
+  duration_ms: 205.3925
+  type: 'test'
+  ...
+# Subtest: row 8: delete in the MIDDLE is previewed (displacement, overlap check); Apply writes the backup FIRST and is one undo step; a failed copy refuses; Cancel, a stale preview, and DELETE_REJOIN
+ok 12 - row 8: delete in the MIDDLE is previewed (displacement, overlap check); Apply writes the backup FIRST and is one undo step; a failed copy refuses; Cancel, a stale preview, and DELETE_REJOIN
+  ---
+  duration_ms: 1719.3061
+  type: 'test'
+  ...
+# Subtest: row 8b: the delete preview's overlap check finds a road running into itself (a two-circle coil, as TEST 1 stacked) and reports where
+ok 13 - row 8b: the delete preview's overlap check finds a road running into itself (a two-circle coil, as TEST 1 stacked) and reports where
+  ---
+  duration_ms: 4803.9113
+  type: 'test'
+  ...
+# Subtest: row 9: the preview shows a delete's proposal as a ghost (dropped on Cancel and on Apply), and the selection highlight lands where the preview's own pick says the piece is
+ok 14 - row 9: the preview shows a delete's proposal as a ghost (dropped on Cancel and on Apply), and the selection highlight lands where the preview's own pick says the piece is
+  ---
+  duration_ms: 656.0804
+  type: 'test'
+  ...
+# Subtest: row 10: the panel: a click selects the piece under it and a shift-click the run; a drag, an armed brush and a click on nothing do not select; Save as piece, the list, Add at head with Mirror, Rename, Delete with its confirm
+ok 15 - row 10: the panel: a click selects the piece under it and a shift-click the run; a drag, an armed brush and a click on nothing do not select; Save as piece, the list, Add at head with Mirror, Rename, Delete with its confirm
+  ---
+  duration_ms: 224.0658
+  type: 'test'
+  ...
+# Subtest: row 10b: the panel: a middle delete shows the preview in words (what moves, the overlap check) with Apply and Cancel; a mixed run says why it cannot be saved
+ok 16 - row 10b: the panel: a middle delete shows the preview in words (what moves, the overlap check) with Apply and Cancel; a mixed run says why it cannot be saved
+  ---
+  duration_ms: 694.4583
+  type: 'test'
+  ...
+# Subtest: row 11d (D331 B, amended): as corners the ghost has the corner handles, turnDeg and climbDeg, labelled in degrees, even with the fields blank; "turn & climb as" rate gives the rate handles back
+ok 17 - row 11d (D331 B, amended): as corners the ghost has the corner handles, turnDeg and climbDeg, labelled in degrees, even with the fields blank; "turn & climb as" rate gives the rate handles back
+  ---
+  duration_ms: 152.517
+  type: 'test'
+  ...
+# Subtest: row 11e (D331): as a corner, a Shift drag of 37 px on the turn handle is 37 × 0.01° of corner, and the placed piece turns exactly that and ends at rate 0
+ok 18 - row 11e (D331): as a corner, a Shift drag of 37 px on the turn handle is 37 × 0.01° of corner, and the placed piece turns exactly that and ends at rate 0
+  ---
+  duration_ms: 257.2156
+  type: 'test'
+  ...
+# Subtest: row 11e (D331): as a corner, a Shift drag of 23 px on the climb handle is 23 × 0.01° of corner, and the placed piece climbs exactly that and ends at rate 0
+ok 19 - row 11e (D331): as a corner, a Shift drag of 23 px on the climb handle is 23 × 0.01° of corner, and the placed piece climbs exactly that and ends at rate 0
+  ---
+  duration_ms: 221.084
+  type: 'test'
+  ...
+# Subtest: row 11: Extend's handles: on the ghost and only while there is one; a drag types into the matching field and reaches no document until Extend; mirrored handles change the same field; Extend places what was dragged
+ok 20 - row 11: Extend's handles: on the ghost and only while there is one; a drag types into the matching field and reaches no document until Extend; mirrored handles change the same field; Extend places what was dragged
+  ---
+  duration_ms: 504.232
+  type: 'test'
+  ...
+# Subtest: row 11b: no ghost, no handles; a press ON a handle is the handle's and the camera keeps a press anywhere else (in Build no press is a brush); the cup's handles go with the cup field; the switch turns them off
+ok 21 - row 11b: no ghost, no handles; a press ON a handle is the handle's and the camera keeps a press anywhere else (in Build no press is a brush); the cup's handles go with the cup field; the switch turns them off
+  ---
+  duration_ms: 213.4401
+  type: 'test'
+  ...
+# Subtest: row 11c: the preview mounts AFTER the panel, so the first ask for the ghost can go to nobody: the handles ask again about every half second and appear once it listens (found in the real window)
+ok 22 - row 11c: the preview mounts AFTER the panel, so the first ask for the ghost can go to nobody: the handles ask again about every half second and appear once it listens (found in the real window)
+  ---
+  duration_ms: 583.3154
+  type: 'test'
+  ...
+# Subtest: row 12: Sculpt through the panel: the strip offers the tools; ONE selected piece gets its handles; a drag reshapes that piece, is ONE undo step and the centreline does not move; Undo gives it back
+ok 23 - row 12: Sculpt through the panel: the strip offers the tools; ONE selected piece gets its handles; a drag reshapes that piece, is ONE undo step and the centreline does not move; Undo gives it back
+  ---
+  duration_ms: 399.9319
+  type: 'test'
+  ...
+# Subtest: row 13: the preview's ghostInfo (what the handles read): none without a ghost, the path's samples and where the new piece starts with one, none for a delete preview's ghost, none after clearGhost
+ok 24 - row 13: the preview's ghostInfo (what the handles read): none without a ghost, the path's samples and where the new piece starts with one, none for a delete preview's ghost, none after clearGhost
+  ---
+  duration_ms: 362.958
+  type: 'test'
+  ...
+# Subtest: row 14: the Jump button (D258, the free jump): beside Extend; the old Add-jump fields are gone; hover shows a jump ghost with no Extend handles on it; a click is ONE undo step with the note; a refusal says why; Undo gives the fields back
+ok 25 - row 14: the Jump button (D258, the free jump): beside Extend; the old Add-jump fields are gone; hover shows a jump ghost with no Extend handles on it; a click is ONE undo step with the note; a refusal says why; Undo gives the fields back
+  ---
+  duration_ms: 1179.7772
+  type: 'test'
+  ...
+# Subtest: row 14b: the landing boxes appear while a landing is the head, show the pose in metres and degrees, a typed value is ONE undo step, a refusal says why in words, and an Extend fixes the landing
+ok 26 - row 14b: the landing boxes appear while a landing is the head, show the pose in metres and degrees, a typed value is ONE undo step, a refusal says why in words, and an Extend fixes the landing
+  ---
+  duration_ms: 393.6402
+  type: 'test'
+  ...
+# Subtest: row 14c: the landing's four handles (D278: BESIDE the Extend ghost's, where D258 had them replace it: row 14d); a drag moves the number of its box in ONE undo step; Shift is one step a pixel (D330), Ctrl snaps; two quick presses reset one; an Extend takes them away
+ok 27 - row 14c: the landing's four handles (D278: BESIDE the Extend ghost's, where D258 had them replace it: row 14d); a drag moves the number of its box in ONE undo step; Shift is one step a pixel (D330), Ctrl snaps; two quick presses reset one; an Extend takes them away
+  ---
+  duration_ms: 900.8625
+  type: 'test'
+  ...
+# Subtest: row 14d (D278, the user: "after placing jump piece, it doesnt go back to regular track manipulation with the base equation, it stays the heading, sideways, and height"): right after Jump the Extend ghost's handles are up BESIDE the landing's four; an Extend handle types into its field and edits no document; a landing handle still moves the landing in ONE undo step; Extend fixes the landing, and its handles go
+ok 28 - row 14d (D278, the user: "after placing jump piece, it doesnt go back to regular track manipulation with the base equation, it stays the heading, sideways, and height"): right after Jump the Extend ghost's handles are up BESIDE the landing's four; an Extend handle types into its field and edits no document; a landing handle still moves the landing in ONE undo step; Extend fixes the landing, and its handles go
+  ---
+  duration_ms: 4402.4726
+  type: 'test'
+  ...
+# Subtest: row 14e (D278): a hover on Jump shows the jump ghost with no Extend handles on it, while a landing's own handles stay; a hover on Extend with a landing as the head shows the Extend ghost's handles; Sculpt takes the landing's handles away as before
+ok 29 - row 14e (D278): a hover on Jump shows the jump ghost with no Extend handles on it, while a landing's own handles stay; a hover on Extend with a landing as the head shows the Extend ghost's handles; Sculpt takes the landing's handles away as before
+  ---
+  duration_ms: 2525.7059
+  type: 'test'
+  ...
+# Subtest: row 16: the Grip field in Extend (D261): it shows the head's grip, "grip like…" fills it from a known track, a changed value is the new piece's grip and the next piece keeps it, the words say untested outside 60 to 110 and that the checker does not model grip; 49, 151 and 100.5 are refused; Undo gives the head's back
+ok 30 - row 16: the Grip field in Extend (D261): it shows the head's grip, "grip like…" fills it from a known track, a changed value is the new piece's grip and the next piece keeps it, the words say untested outside 60 to 110 and that the checker does not model grip; 49, 151 and 100.5 are refused; Undo gives the head's back
+  ---
+  duration_ms: 239.2047
+  type: 'test'
+  ...
+# Subtest: row 16b: the selected pieces' grip (D261): the box shows the pieces' grip (blank where they differ), Set grip is ONE undo step on the road pieces and keeps the selection, "grip like…" fills the box, 49/151/100.5 are refused in words, 100 writes no grip, a flight alone is refused, Undo restores
+ok 31 - row 16b: the selected pieces' grip (D261): the box shows the pieces' grip (blank where they differ), Set grip is ONE undo step on the road pieces and keeps the selection, "grip like…" fills the box, 49/151/100.5 are refused in words, 100 writes no grip, a flight alone is refused, Undo restores
+  ---
+  duration_ms: 293.2056
+  type: 'test'
+  ...
+# Subtest: row 16c: the track coloured by grip (D261): blue below 100, white at 100, orange above; the layer draws each road piece in its colour only while "colour by grip" is ticked; the hover label says "grip 85%" for a piece off 100 (always while the view is on) and nothing for a plain piece
+ok 32 - row 16c: the track coloured by grip (D261): blue below 100, white at 100, orange above; the layer draws each road piece in its colour only while "colour by grip" is ticked; the hover label says "grip 85%" for a piece off 100 (always while the view is on) and nothing for a plain piece
+  ---
+  duration_ms: 178.6344
+  type: 'test'
+  ...
+# Subtest: row 17: the grip UI modules load in the webview loader with NO node built-in (D263: piecesui and griplayer required src/core/document.js, which pulls tools/piecewise.cjs and node's fs, and the panel failed to load), and their copy of the grip numbers is the core's
+ok 33 - row 17: the grip UI modules load in the webview loader with NO node built-in (D263: piecesui and griplayer required src/core/document.js, which pulls tools/piecewise.cjs and node's fs, and the panel failed to load), and their copy of the grip numbers is the core's
+  ---
+  duration_ms: 73.2886
+  type: 'test'
+  ...
+# Subtest: row 18: the CHEAP ghost while a handle is dragged (D266 item 2): every step of a drag asks the preview for a cheap ghost, the release asks for the full one, typing in a field and hovering Extend ask for the full one
+ok 34 - row 18: the CHEAP ghost while a handle is dragged (D266 item 2): every step of a drag asks the preview for a cheap ghost, the release asks for the full one, typing in a field and hovering Extend ask for the full one
+  ---
+  duration_ms: 190.0835
+  type: 'test'
+  ...
+# Subtest: row 19: no help paragraph stays in the left column (D267): the tube width, the grip, the turn-0 hint, the jump and the landing show only a few words or nothing, and the words are tooltips
+ok 35 - row 19: no help paragraph stays in the left column (D267): the tube width, the grip, the turn-0 hint, the jump and the landing show only a few words or nothing, and the words are tooltips
+  ---
+  duration_ms: 226.6777
+  type: 'test'
+  ...
+# Subtest: row 19b: the values of the piece being edited are drawn LARGE over the 3D view (D267): length, turn, climb, bank and width, updated as a handle is dragged or a field is typed, hidden on a closed loop
+ok 36 - row 19b: the values of the piece being edited are drawn LARGE over the 3D view (D267): length, turn, climb, bank and width, updated as a handle is dragged or a field is typed, hidden on a closed loop
+  ---
+  duration_ms: 585.6674
+  type: 'test'
+  ...
+# Subtest: row 19c: the share codes are in the File menu as "Copy track code" and "Paste track code…" (D267; D355 moved them from the ⋯ menu), not a section of the left column; the code itself is unchanged
+ok 37 - row 19c: the share codes are in the File menu as "Copy track code" and "Paste track code…" (D267; D355 moved them from the ⋯ menu), not a section of the left column; the code itself is unchanged
+  ---
+  duration_ms: 85.8513
+  type: 'test'
+  ...
+# Subtest: row 20: the saved pieces are a drop-down bin in the top bar, not a section of the left column (D269): a row per piece with its thumbnail, name and summary; Add at head, Add mirrored, Rename and Delete; a click on the row adds it; the empty words are in the menu; Save as piece stays with the selection
+ok 38 - row 20: the saved pieces are a drop-down bin in the top bar, not a section of the left column (D269): a row per piece with its thumbnail, name and summary; Add at head, Add mirrored, Rename and Delete; a click on the row adds it; the empty words are in the menu; Save as piece stays with the selection
+  ---
+  duration_ms: 199.5017
+  type: 'test'
+  ...
+# Subtest: row 20b: the Pieces menu opens and closes: it lists the pieces when opened, Esc closes it, a press outside closes it, a press inside does not; Esc with it closed does nothing; the top bar has the button beside Open… and Previous versions…
+ok 39 - row 20b: the Pieces menu opens and closes: it lists the pieces when opened, Esc closes it, a press outside closes it, a press inside does not; Esc with it closed does nothing; the top bar has the button beside Open… and Previous versions…
+  ---
+  duration_ms: 168.6396
+  type: 'test'
+  ...
+# Subtest: row 15: the preview's ghostInfo says whether the ghost is a jump's and carries its segments (what the handles and the flight overlay read)
+ok 40 - row 15: the preview's ghostInfo says whether the ghost is a jump's and carries its segments (what the handles and the flight overlay read)
+  ---
+  duration_ms: 115.5647
+  type: 'test'
+  ...
+# Subtest: D259: a typed 300 stays 300 (one full turn either way is allowed), and a typed 400 becomes 40; the field shows them so
+ok 41 - D259: a typed 300 stays 300 (one full turn either way is allowed), and a typed 400 becomes 40; the field shows them so
+  ---
+  duration_ms: 193.0542
+  type: 'test'
+  ...
+# Subtest: D259: dragging the bank handle from 350 by about +20 gives about 10 (not 370), and from -350 by about -20 gives about -10; Extend applies what the field shows
+ok 42 - D259: dragging the bank handle from 350 by about +20 gives about 10 (not 370), and from -350 by about -20 gives about -10; Extend applies what the field shows
+  ---
+  duration_ms: 390.3055
+  type: 'test'
+  ...
+# Subtest: row 18b: a length drag previews whole 2 m, and the release previews the exact length the field shows
+ok 43 - row 18b: a length drag previews whole 2 m, and the release previews the exact length the field shows
+  ---
+  duration_ms: 122.1517
+  type: 'test'
+  ...
+# Subtest: row 18c: a ghost whose sliced build needs more frames than the retry is still shown: the handles do not ask again while the preview is building one (D426)
+ok 44 - row 18c: a ghost whose sliced build needs more frames than the retry is still shown: the handles do not ask again while the preview is building one (D426)
+  ---
+  duration_ms: 221.5916
+  type: 'test'
+  ...
+# Subtest: row 22 (D430): an EMPTIED turn, climb, bank or cup is 0, not the head's value: the new piece eases to 0, and the box shows 0 once the change is committed
+ok 45 - row 22 (D430): an EMPTIED turn, climb, bank or cup is 0, not the head's value: the new piece eases to 0, and the box shows 0 once the change is committed
+  ---
+  duration_ms: 274.9569
+  type: 'test'
+  ...
+# Subtest: row 22b (D430): a field left as shown still continues the head; an emptied width keeps its old meaning (blank: the head's; 0 is no width)
+ok 46 - row 22b (D430): a field left as shown still continues the head; an emptied width keeps its old meaning (blank: the head's; 0 is no width)
+  ---
+  duration_ms: 258.545
+  type: 'test'
+  ...
+# Subtest: row 22c (D430): as a corner the turn and climb fields rest blank, so a blank there is untouched: the track keeps turning, it does not ease to straight
+ok 47 - row 22c (D430): as a corner the turn and climb fields rest blank, so a blank there is untouched: the track keeps turning, it does not ease to straight
+  ---
+  duration_ms: 219.5431
+  type: 'test'
+  ...
+# Subtest: a selected piece lends its values to the Extend fields: Extend places a piece like it; a run lends nothing; clearing shows the head
+ok 48 - a selected piece lends its values to the Extend fields: Extend places a piece like it; a run lends nothing; clearing shows the head
+  ---
+  duration_ms: 125.3972
+  type: 'test'
+  ...
+# Subtest: D331 B: with the turn read as a corner (the default), a selected piece lends the degrees it turns, and Extend places a piece that turns them and ends straight
+ok 49 - D331 B: with the turn read as a corner (the default), a selected piece lends the degrees it turns, and Extend places a piece that turns them and ends straight
+  ---
+  duration_ms: 135.9597
+  type: 'test'
+  ...
+# Subtest: row 16 (D335): a steady bank drag on a placed piece's sculpt mark, the pointer following the mark as the road rolls, rises all the way, lands on 180 and never goes back (the axis fixed at the grab stalled it near 165)
+ok 50 - row 16 (D335): a steady bank drag on a placed piece's sculpt mark, the pointer following the mark as the road rolls, rises all the way, lands on 180 and never goes back (the axis fixed at the grab stalled it near 165)
+  ---
+  duration_ms: 11700.3751
+  type: 'test'
+  ...
+# Subtest: row 16b (D335): a slow bank drag on a sculpt mark is 0.01 degree a pixel with no key, and the piece reads what the handle says
+ok 51 - row 16b (D335): a slow bank drag on a sculpt mark is 0.01 degree a pixel with no key, and the piece reads what the handle says
+  ---
+  duration_ms: 2894.2779
+  type: 'test'
+  ...
+# Subtest: row 21: in Sculpt, a Tube sweep drag on a closed tube is refused in plain words: "Sculpt can't change the sweep of a closed tube…", not the core's
+ok 52 - row 21: in Sculpt, a Tube sweep drag on a closed tube is refused in plain words: "Sculpt can't change the sweep of a closed tube…", not the core's
+  ---
+  duration_ms: 193.822
+  type: 'test'
+  ...
+# Subtest: row D464: Sculpt's how-to line and value line read as instructions, not errors: class hint, painted in the text colour
+ok 53 - row D464: Sculpt's how-to line and value line read as instructions, not errors: class hint, painted in the text colour
+  ---
+  duration_ms: 120.2339
+  type: 'test'
+  ...
+# Subtest: row 25 (D519, amended D520): Grab on the road: the pressed point follows the pointer and a rim keeps the far rim (built again and read), a dot opens at its own station, off the road is Grab as before
+ok 54 - row 25 (D519, amended D520): Grab on the road: the pressed point follows the pointer and a rim keeps the far rim (built again and read), a dot opens at its own station, off the road is Grab as before
+  ---
+  duration_ms: 299.7995
+  type: 'test'
+  ...
+# Subtest: row 25b (D519): with another key the press keeps that key's one channel wherever it lands; the shell says what the piece is and why a channel would be refused
+ok 55 - row 25b (D519): with another key the press keeps that key's one channel wherever it lands; the shell says what the piece is and why a channel would be refused
+  ---
+  duration_ms: 78.7422
+  type: 'test'
+  ...
+# Subtest: a right width typed alone is sent as its difference from the head's width; with the width typed, from the typed one; blank sends none
+ok 56 - a right width typed alone is sent as its difference from the head's width; with the width typed, from the typed one; blank sends none
+  ---
+  duration_ms: 1.6114
+  type: 'test'
+  ...
+# Subtest: a right width with no width to measure it from is refused by name
+ok 57 - a right width with no width to measure it from is refused by name
+  ---
+  duration_ms: 0.5751
+  type: 'test'
+  ...
+# Subtest: a right width's change is sent against the width in force at its mark: the width's own change there, else its target
+ok 58 - a right width's change is sent against the width in force at its mark: the width's own change there, else its target
+  ---
+  duration_ms: 1.1447
+  type: 'test'
+  ...
+# Subtest: the right width at the start: its ramp is the width's own early ramp
+ok 59 - the right width at the start: its ramp is the width's own early ramp
+  ---
+  duration_ms: 0.1869
+  type: 'test'
+  ...
+# Subtest: the mounted panel: "right width m" shows the head's right width, and typed it lays a piece whose right side has its own width; the width typed alone keeps the step
+ok 60 - the mounted panel: "right width m" shows the head's right width, and typed it lays a piece whose right side has its own width; the width typed alone keeps the step
+  ---
+  duration_ms: 124.4656
+  type: 'test'
+  ...
+# Subtest: L258 F2: with the width left as shown, a right width typed as the width is SHOWN is sent as wd 0; any other number, and one beside a typed width, is measured as before
+ok 61 - L258 F2: with the width left as shown, a right width typed as the width is SHOWN is sent as wd 0; any other number, and one beside a typed width, is measured as before
+  ---
+  duration_ms: 0.5726
+  type: 'test'
+  ...
+# Subtest: L258 F2: SPLIT_HEAD's advice, typed as it is written, lays the piece, on a head of width 19.1346 and on one left by the width brush
+ok 62 - L258 F2: SPLIT_HEAD's advice, typed as it is written, lays the piece, on a head of width 19.1346 and on one left by the width brush
+  ---
+  duration_ms: 170.6574
+  type: 'test'
+  ...
+# Subtest: L258 F2: the CHANGELOG's way back holds on such a width: a piece laid with the right width set to the width as shown writes no wd, and the file keeps its schema, not core/7
+ok 63 - L258 F2: the CHANGELOG's way back holds on such a width: a piece laid with the right width set to the width as shown writes no wd, and the file keeps its schema, not core/7
+  ---
+  duration_ms: 65.6577
+  type: 'test'
+  ...
+# Subtest: P1: Save as piece beside a recipe sidecar: the piece file is byte for byte what the core writes, and the sidecar holds the numbers
+ok 64 - P1: Save as piece beside a recipe sidecar: the piece file is byte for byte what the core writes, and the sidecar holds the numbers
+  ---
+  duration_ms: 72.6958
+  type: 'test'
+  ...
+# Subtest: P1b: a storage with no recipe commands saves the same piece file and says it saved
+ok 65 - P1b: a storage with no recipe commands saves the same piece file and says it saved
+  ---
+  duration_ms: 84.8328
+  type: 'test'
+  ...
+# Subtest: P2: a run laid by two Extends, and a piece changed after it was laid, keep no recipe
+ok 66 - P2: a run laid by two Extends, and a piece changed after it was laid, keep no recipe
+  ---
+  duration_ms: 51.8366
+  type: 'test'
+  ...
+# Subtest: P3: Rename carries the recipe, Delete takes it with the piece
+ok 67 - P3: Rename carries the recipe, Delete takes it with the piece
+  ---
+  duration_ms: 40.528
+  type: 'test'
+  ...
+# Subtest: P4: a click shows the piece as a ghost with its numbers and lays nothing
+ok 68 - P4: a click shows the piece as a ghost with its numbers and lays nothing
+  ---
+  duration_ms: 39.1908
+  type: 'test'
+  ...
+# Subtest: P5: Place lays it as one undo step, the same document Add at head makes, and the ghost is gone
+ok 69 - P5: Place lays it as one undo step, the same document Add at head makes, and the ghost is gone
+  ---
+  duration_ms: 75.4667
+  type: 'test'
+  ...
+# Subtest: P6: a piece saved before this build (no sidecar) shows its shape read off, fills no numbers, and Place is its own bytes
+ok 70 - P6: a piece saved before this build (no sidecar) shows its shape read off, fills no numbers, and Place is its own bytes
+  ---
+  duration_ms: 84.3999
+  type: 'test'
+  ...
+# Subtest: P7: a sidecar that belongs to another piece file is not used
+ok 71 - P7: a sidecar that belongs to another piece file is not used
+  ---
+  duration_ms: 25.9595
+  type: 'test'
+  ...
+# Subtest: P8: mirrored: the ghost is the mirror image, no numbers (they are the unmirrored ones), and Place equals Add mirrored
+ok 72 - P8: mirrored: the ghost is the mirror image, no numbers (they are the unmirrored ones), and Place equals Add mirrored
+  ---
+  duration_ms: 53.2246
+  type: 'test'
+  ...
+# Subtest: P9: Drop clears the ghost; any change of the document clears it
+ok 73 - P9: Drop clears the ghost; any change of the document clears it
+  ---
+  duration_ms: 31.5831
+  type: 'test'
+  ...
+# Subtest: P10: a refusal shows no ghost, says why, and changes nothing
+ok 74 - P10: a refusal shows no ghost, says why, and changes nothing
+  ---
+  duration_ms: 6.6139
+  type: 'test'
+  ...
+# Subtest: P11: the piece reader (piece.js, unchanged) still opens a piece file saved with a sidecar
+ok 75 - P11: the piece reader (piece.js, unchanged) still opens a piece file saved with a sidecar
+  ---
+  duration_ms: 16.7025
+  type: 'test'
+  ...
+# Subtest: Q1: a click shows the ghost, fills the boxes with the numbers that made the piece, and offers Place; nothing is laid
+ok 76 - Q1: a click shows the ghost, fills the boxes with the numbers that made the piece, and offers Place; nothing is laid
+  ---
+  duration_ms: 90.9083
+  type: 'test'
+  ...
+# Subtest: Q2: Place lays the piece the ghost showed, as one undo step
+ok 77 - Q2: Place lays the piece the ghost showed, as one undo step
+  ---
+  duration_ms: 85.5853
+  type: 'test'
+  ...
+# Subtest: Q3: tweak one box: the ghost becomes the panel own piece from the boxes, and Place lays what that ghost shows
+ok 78 - Q3: tweak one box: the ghost becomes the panel own piece from the boxes, and Place lays what that ghost shows
+  ---
+  duration_ms: 55.5446
+  type: 'test'
+  ...
+# Subtest: Q4: Esc drops the ghost and the boxes stay as they are
+ok 79 - Q4: Esc drops the ghost and the boxes stay as they are
+  ---
+  duration_ms: 43.4416
+  type: 'test'
+  ...
+# Subtest: R1: Rename rewrites the recipe for the renamed text: a click on the new name still shows the numbers
+ok 80 - R1: Rename rewrites the recipe for the renamed text: a click on the new name still shows the numbers
+  ---
+  duration_ms: 27.4262
+  type: 'test'
+  ...
+# Subtest: R2: a case-only Rename on a case-blind store keeps the recipe, rewritten, and the click still shows the numbers
+ok 81 - R2: a case-only Rename on a case-blind store keeps the recipe, rewritten, and the click still shows the numbers
+  ---
+  duration_ms: 23.9499
+  type: 'test'
+  ...
+# Subtest: R3: Rename does not carry a recipe that was not the piece's own
+ok 82 - R3: Rename does not carry a recipe that was not the piece's own
+  ---
+  duration_ms: 33.1934
+  type: 'test'
+  ...
+# Subtest: row 1: the relative form: a state is its change from the run's start (first point 0) plus the start, a rate is as the document holds it, and putting them back is EXACT, on real adjusted laps of all three kinds
+ok 83 - row 1: the relative form: a state is its change from the run's start (first point 0) plus the start, a rate is as the document holds it, and putting them back is EXACT, on real adjusted laps of all three kinds
+  ---
+  duration_ms: 661.6078
+  type: 'test'
+  ...
+# Subtest: row 1b: the text is canonical: a stable key order, one piece to a line, a final newline; parse(serialize(p)) is p and serialize of it is the same text; the piece is frozen
+ok 84 - row 1b: the text is canonical: a stable key order, one piece to a line, a final newline; parse(serialize(p)) is p and serialize of it is the same text; the piece is frozen
+  ---
+  duration_ms: 311.6897
+  type: 'test'
+  ...
+# Subtest: row 2 (REQUIRED, legacy): a track built from a saved and re-inserted run at the same start is the SAME DOCUMENT and exports the SAME BYTES: the rest of the lap after its first piece, the whole lap into an empty track, in pieces, through the text, and mirrored twice
+ok 85 - row 2 (REQUIRED, legacy): a track built from a saved and re-inserted run at the same start is the SAME DOCUMENT and exports the SAME BYTES: the rest of the lap after its first piece, the whole lap into an empty track, in pieces, through the text, and mirrored twice
+  ---
+  duration_ms: 12112.0276
+  type: 'test'
+  ...
+# Subtest: row 2 (REQUIRED, cup): a track built from a saved and re-inserted run at the same start is the SAME DOCUMENT and exports the SAME BYTES: the rest of the lap after its first piece, the whole lap into an empty track, in pieces, through the text, and mirrored twice
+ok 86 - row 2 (REQUIRED, cup): a track built from a saved and re-inserted run at the same start is the SAME DOCUMENT and exports the SAME BYTES: the rest of the lap after its first piece, the whole lap into an empty track, in pieces, through the text, and mirrored twice
+  ---
+  duration_ms: 18217.6485
+  type: 'test'
+  ...
+# Subtest: row 2 (REQUIRED, tube): a track built from a saved and re-inserted run at the same start is the SAME DOCUMENT and exports the SAME BYTES: the rest of the lap after its first piece, the whole lap into an empty track, in pieces, through the text, and mirrored twice
+ok 87 - row 2 (REQUIRED, tube): a track built from a saved and re-inserted run at the same start is the SAME DOCUMENT and exports the SAME BYTES: the rest of the lap after its first piece, the whole lap into an empty track, in pieces, through the text, and mirrored twice
+  ---
+  duration_ms: 51557.0177
+  type: 'test'
+  ...
+# Subtest: row 2b: put where the run does NOT already start (a different head) the export of the result is still the document's own: it exports, and builds the same as the same document made by hand would
+ok 88 - row 2b: put where the run does NOT already start (a different head) the export of the result is still the document's own: it exports, and builds the same as the same document made by hand would
+  ---
+  duration_ms: 95.5195
+  type: 'test'
+  ...
+# Subtest: row 3: at a DIFFERENT head the run continues from it: the document accepts it, the joint's values and slopes meet, the change across the run is the saved one, and the rates after the first span are the saved ones
+ok 89 - row 3: at a DIFFERENT head the run continues from it: the document accepts it, the joint's values and slopes meet, the change across the run is the saved one, and the rates after the first span are the saved ones
+  ---
+  duration_ms: 364.2159
+  type: 'test'
+  ...
+# Subtest: row 3b: it can be added again and again: a saved bend added three times in a row is a valid track and each copy continues the one before
+ok 90 - row 3b: it can be added again and again: a saved bend added three times in a row is a valid track and each copy continues the one before
+  ---
+  duration_ms: 96.5703
+  type: 'test'
+  ...
+# Subtest: row 3c: what a head does not carry is continued as Extend continues it: a tube after a cup starts at twice the cup's edge, a cup after a tube at t/2, and a hill or swerve that has not faded carries on into the run (the rest of the run is as saved)
+ok 91 - row 3c: what a head does not carry is continued as Extend continues it: a tube after a cup starts at twice the cup's edge, a cup after a tube at t/2, and a hill or swerve that has not faded carries on into the run (the rest of the run is as saved)
+  ---
+  duration_ms: 468.3396
+  type: 'test'
+  ...
+# Subtest: row 4: "keep its own start values" adds the pieces exactly as saved: refused by name (PIECE_START) where they do not meet the head, accepted where they do; on an empty track a run goes in as saved
+ok 92 - row 4: "keep its own start values" adds the pieces exactly as saved: refused by name (PIECE_START) where they do not meet the head, accepted where they do; on an empty track a run goes in as saved
+  ---
+  duration_ms: 92.8541
+  type: 'test'
+  ...
+# Subtest: row 4b: refused by name: a legacy run after a cup or a tube (PIECE_KIND), a closed track (CLOSED), a run that starts with a jump on an empty track, a jump after offsets that have not faded
+ok 93 - row 4b: refused by name: a legacy run after a cup or a tube (PIECE_KIND), a closed track (CLOSED), a run that starts with a jump on an empty track, a jump after offsets that have not faded
+  ---
+  duration_ms: 250.4977
+  type: 'test'
+  ...
+# Subtest: row 5: the mirror: a mirrored run's path is the mirror image of the original's (x flips; height, distance along and the bank's size do not), with a bank, a hill and a swerve in it; and at a head it is still a valid track
+ok 94 - row 5: the mirror: a mirrored run's path is the mirror image of the original's (x flips; height, distance along and the bank's size do not), with a bank, a hill and a swerve in it; and at a head it is still a valid track
+  ---
+  duration_ms: 143.6858
+  type: 'test'
+  ...
+# Subtest: row 6: jumps in a run: a run with a flight in the middle and one that starts with a flight are saved with their flights as they were, and go in at another head
+ok 95 - row 6: jumps in a run: a run with a flight in the middle and one that starts with a flight are saved with their flights as they were, and go in at another head
+  ---
+  duration_ms: 8.9821
+  type: 'test'
+  ...
+# Subtest: row 6c: a run that starts with a jump goes in exactly as saved after a curving, climbing, banked head (mirrored too); a landing that does not start level is refused by name (LANDING)
+ok 96 - row 6c: a run that starts with a jump goes in exactly as saved after a curving, climbing, banked head (mirrored too); a landing that does not start level is refused by name (LANDING)
+  ---
+  duration_ms: 10.5752
+  type: 'test'
+  ...
+# Subtest: row 7: NO PIECE MAKES A DOCUMENT THE DOCUMENT WOULD REFUSE: every kind of run against every kind of head either goes in as a valid track or is refused by a CoreError, never a crash and never a bad document
+ok 97 - row 7: NO PIECE MAKES A DOCUMENT THE DOCUMENT WOULD REFUSE: every kind of run against every kind of head either goes in as a valid track or is refused by a CoreError, never a crash and never a bad document
+  ---
+  duration_ms: 1234.2498
+  type: 'test'
+  ...
+# Subtest: row 8: a malformed file is refused BY NAME, case by case (the good one still reads)
+ok 98 - row 8: a malformed file is refused BY NAME, case by case (the good one still reads)
+  ---
+  duration_ms: 5705.117
+  type: 'test'
+  ...
+# Subtest: row 8b: a mixed run is refused at SAVE too (MIXED_RUN), and a run of one kind with an edge is a kind of its own
+ok 99 - row 8b: a mixed run is refused at SAVE too (MIXED_RUN), and a run of one kind with an edge is a kind of its own
+  ---
+  duration_ms: 5.5709
+  type: 'test'
+  ...
+# Subtest: row 9: ranges, names, limits and the summary a library list shows
+ok 100 - row 9: ranges, names, limits and the summary a library list shows
+  ---
+  duration_ms: 301.1652
+  type: 'test'
+  ...
+# Subtest: row 8c: numbers are quantised as they enter, like a document's: a value finer than its channel's step is snapped
+ok 101 - row 8c: numbers are quantised as they enter, like a document's: a value finer than its channel's step is snapped
+  ---
+  duration_ms: 189.5255
+  type: 'test'
+  ...
+# Subtest: row 1c: the start is the FIRST road's first values (states that change from piece to piece, a jump before the road), every stored state number is on its grid, and random pieces come back exactly
+ok 102 - row 1c: the start is the FIRST road's first values (states that change from piece to piece, a jump before the road), every stored state number is on its grid, and random pieces come back exactly
+  ---
+  duration_ms: 15.9414
+  type: 'test'
+  ...
+# Subtest: row 5b: a mirror flips the bank EXACTLY, the start bank included (a run that starts banked), the turn and the swerve; width and rise stay
+ok 103 - row 5b: a mirror flips the bank EXACTLY, the start bank included (a run that starts banked), the turn and the swerve; width and rise stay
+  ---
+  duration_ms: 1.1687
+  type: 'test'
+  ...
+# Subtest: row 6b: a run that starts with a jump, put at a head that is TURNING and CLIMBING, has its road after the jump start level (turn and climb 0) with its own saved width
+ok 104 - row 6b: a run that starts with a jump, put at a head that is TURNING and CLIMBING, has its road after the jump start level (turn and climb 0) with its own saved width
+  ---
+  duration_ms: 0.8139
+  type: 'test'
+  ...
+# Subtest: row 4c: a closed track says CLOSED whatever the run is: a legacy run into a closed CUP track is CLOSED, not PIECE_KIND (the kind is the second question)
+ok 105 - row 4c: a closed track says CLOSED whatever the run is: a legacy run into a closed CUP track is CLOSED, not PIECE_KIND (the kind is the second question)
+  ---
+  duration_ms: 199.9149
+  type: 'test'
+  ...
+# Subtest: row 10a: at the open end the pieces simply go: the same document with fewer pieces, the ids kept and not reused, and inserting a saved run then deleting it gets back the track
+ok 106 - row 10a: at the open end the pieces simply go: the same document with fewer pieces, the ids kept and not reused, and inserting a saved run then deleting it gets back the track
+  ---
+  duration_ms: 9.3768
+  type: 'test'
+  ...
+# Subtest: row 10b: in the middle, when the two sides already join (the deleted run began and ended in the same state) nothing is changed anywhere
+ok 107 - row 10b: in the middle, when the two sides already join (the deleted run began and ended in the same state) nothing is changed anywhere
+  ---
+  duration_ms: 1.0643
+  type: 'test'
+  ...
+# Subtest: row 10c (legacy): in the middle with the sides NOT joined, the far side's first piece is re-joined C1 by its first two control points (the D190 rule) and nothing else is moved
+ok 108 - row 10c (legacy): in the middle with the sides NOT joined, the far side's first piece is re-joined C1 by its first two control points (the D190 rule) and nothing else is moved
+  ---
+  duration_ms: 1.2894
+  type: 'test'
+  ...
+# Subtest: row 10c (cup): in the middle with the sides NOT joined, the far side's first piece is re-joined C1 by its first two control points (the D190 rule) and nothing else is moved
+ok 109 - row 10c (cup): in the middle with the sides NOT joined, the far side's first piece is re-joined C1 by its first two control points (the D190 rule) and nothing else is moved
+  ---
+  duration_ms: 1.1753
+  type: 'test'
+  ...
+# Subtest: row 10c (tube): in the middle with the sides NOT joined, the far side's first piece is re-joined C1 by its first two control points (the D190 rule) and nothing else is moved
+ok 110 - row 10c (tube): in the middle with the sides NOT joined, the far side's first piece is re-joined C1 by its first two control points (the D190 rule) and nothing else is moved
+  ---
+  duration_ms: 1.0049
+  type: 'test'
+  ...
+# Subtest: row 10h: a tube after a CUP head starts at twice the edge of the cup (tNext), so the rendered edge is continuous across the re-join
+ok 111 - row 10h: a tube after a CUP head starts at twice the edge of the cup (tNext), so the rendered edge is continuous across the re-join
+  ---
+  duration_ms: 2.4312
+  type: 'test'
+  ...
+# Subtest: row 10d: jumps: deleting the road before a jump, a jump itself, and the road after it each give a valid track with the jump kept (or its own refusal), the far side untouched
+ok 112 - row 10d: jumps: deleting the road before a jump, a jump itself, and the road after it each give a valid track with the jump kept (or its own refusal), the far side untouched
+  ---
+  duration_ms: 1.3138
+  type: 'test'
+  ...
+# Subtest: row 10i: deleting the road between two jumps is REFUSED BY NAME (DELETE_REJOIN, naming land on road first), and nothing is touched
+ok 113 - row 10i: deleting the road between two jumps is REFUSED BY NAME (DELETE_REJOIN, naming land on road first), and nothing is touched
+  ---
+  duration_ms: 1.6511
+  type: 'test'
+  ...
+# Subtest: row 10j: a run that starts with a jump, added at a head that IS a jump, is refused by name (JUMP_AFTER_JUMP); at a road head it goes in (control)
+ok 114 - row 10j: a run that starts with a jump, added at a head that IS a jump, is refused by name (JUMP_AFTER_JUMP); at a road head it goes in (control)
+  ---
+  duration_ms: 1.4021
+  type: 'test'
+  ...
+# Subtest: row 11a: across a closed lap's start line the run is the pieces either side of it, in lap order, and putting it back gives those very pieces (legacy, cup, tube)
+ok 115 - row 11a: across a closed lap's start line the run is the pieces either side of it, in lap order, and putting it back gives those very pieces (legacy, cup, tube)
+  ---
+  duration_ms: 326.1606
+  type: 'test'
+  ...
+# Subtest: row 11b: a lap whose bank turns WHOLE times round (TEST 1 ends at -4π): across the line the bank is carried on by those turns, so the run is kept, C1, leaning as the lap leans
+ok 116 - row 11b: a lap whose bank turns WHOLE times round (TEST 1 ends at -4π): across the line the bank is carried on by those turns, so the run is kept, C1, leaning as the lap leans
+  ---
+  duration_ms: 155.7738
+  type: 'test'
+  ...
+# Subtest: row 11c: a closed lap whose road is NOT smooth across its start line (a hand-edited width step there) is refused BY NAME across it (SEAM_RUN); either side alone is kept
+ok 117 - row 11c: a closed lap whose road is NOT smooth across its start line (a hand-edited width step there) is refused BY NAME across it (SEAM_RUN); either side alone is kept
+  ---
+  duration_ms: 90.2394
+  type: 'test'
+  ...
+# Subtest: row 11d: on an OPEN track from > to is still BAD_RANGE, and a closed lap's out-of-range ends are too
+ok 118 - row 11d: on an OPEN track from > to is still BAD_RANGE, and a closed lap's out-of-range ends are too
+  ---
+  duration_ms: 84.2718
+  type: 'test'
+  ...
+# Subtest: row 10k: a piece FILE that starts with two jumps is refused when it is READ (JUMP_AFTER_JUMP), so the library lists why; one leading jump reads (control)
+ok 119 - row 10k: a piece FILE that starts with two jumps is refused when it is READ (JUMP_AFTER_JUMP), so the library lists why; one leading jump reads (control)
+  ---
+  duration_ms: 1.693
+  type: 'test'
+  ...
+# Subtest: row 10e: REFUSED BY NAME (DELETE_REJOIN), nothing deleted and nothing reshaped: a jump left with no road before it, and a re-join a limit of the document refuses (a tube held in the slot band)
+ok 120 - row 10e: REFUSED BY NAME (DELETE_REJOIN), nothing deleted and nothing reshaped: a jump left with no road before it, and a re-join a limit of the document refuses (a tube held in the slot band)
+  ---
+  duration_ms: 1.5304
+  type: 'test'
+  ...
+# Subtest: row 10f: a closed track has no open end (CLOSED); a range that is not in the track is BAD_RANGE
+ok 121 - row 10f: a closed track has no open end (CLOSED); a range that is not in the track is BAD_RANGE
+  ---
+  duration_ms: 83.804
+  type: 'test'
+  ...
+# Subtest: row 10g: EVERY range of every kind of track either goes through as a valid document with only the joint touched, or is refused by name (DELETE_REJOIN): never another error, never an invalid document
+ok 122 - row 10g: EVERY range of every kind of track either goes through as a valid document with only the joint touched, or is refused by name (DELETE_REJOIN): never another error, never an invalid document
+  ---
+  duration_ms: 6.8889
+  type: 'test'
+  ...
+# Subtest: row 9b: a run at the limit (2,000 pieces) parses in well under 2 s, and a broken joint at its last piece is still refused BY NAME
+ok 123 - row 9b: a run at the limit (2,000 pieces) parses in well under 2 s, and a broken joint at its last piece is still refused BY NAME
+  ---
+  duration_ms: 85.2556
+  type: 'test'
+  ...
+# Subtest: a piece whose right side differs is written as core/7 with its wd, reads back the same text, and only that piece carries wd
+ok 124 - a piece whose right side differs is written as core/7 with its wd, reads back the same text, and only that piece carries wd
+  ---
+  duration_ms: 15.2402
+  type: 'test'
+  ...
+# Subtest: a track with no split writes today's schema and no wd, byte for byte as it was laid
+ok 125 - a track with no split writes today's schema and no wd, byte for byte as it was laid
+  ---
+  duration_ms: 3.7111
+  type: 'test'
+  ...
+# Subtest: a piece flagged split whose wd is 0 everywhere writes no wd and today's schema: the field is written only when it is used
+ok 126 - a piece flagged split whose wd is 0 everywhere writes no wd and today's schema: the field is written only when it is used
+  ---
+  duration_ms: 3.189
+  type: 'test'
+  ...
+# Subtest: at width 19.1 and right width 22.6 the left half is 9.55 m and the right 11.3 m, and the line is the same sample for sample as with the sides equal
+ok 127 - at width 19.1 and right width 22.6 the left half is 9.55 m and the right 11.3 m, and the line is the same sample for sample as with the sides equal
+  ---
+  duration_ms: 84.424
+  type: 'test'
+  ...
+# Subtest: a 3.5 m one-sided step over 5 m adds no red and no amber: the checker reads the same faults with and without it
+ok 128 - a 3.5 m one-sided step over 5 m adds no red and no amber: the checker reads the same faults with and without it
+  ---
+  duration_ms: 175.8174
+  type: 'test'
+  ...
+# Subtest: Extend: a typed right width splits the sides; the width typed alone moves both sides and keeps the step; on a track with no split, the width alone splits nothing
+ok 129 - Extend: a typed right width splits the sides; the width typed alone moves both sides and keeps the step; on a track with no split, the width alone splits nothing
+  ---
+  duration_ms: 2.1563
+  type: 'test'
+  ...
+# Subtest: Extend: the right side's change at a mark is held to the mark and made after it, and early reaches it within the start, where the width's own early ramp reaches its own
+ok 130 - Extend: the right side's change at a mark is held to the mark and made after it, and early reaches it within the start, where the width's own early ramp reaches its own
+  ---
+  duration_ms: 4.3541
+  type: 'test'
+  ...
+# Subtest: the document refuses a right side of 0 m or less by name (BAD_WIDTH), and a split tube (BAD_TUBE)
+ok 131 - the document refuses a right side of 0 m or less by name (BAD_WIDTH), and a split tube (BAD_TUBE)
+  ---
+  duration_ms: 1.7096
+  type: 'test'
+  ...
+# Subtest: the export: the road mesh's right side reaches 22.6/19.1 of the left's where the step is held, and both sides are equal where it is not
+ok 132 - the export: the road mesh's right side reaches 22.6/19.1 of the left's where the step is held, and both sides are equal where it is not
+  ---
+  duration_ms: 1717.8114
+  type: 'test'
+  ...
+# Subtest: close: a lap with a right width on one turn closes, and the right width is kept as it was laid
+ok 133 - close: a lap with a right width on one turn closes, and the right width is kept as it was laid
+  ---
+  duration_ms: 202.0629
+  type: 'test'
+  ...
+# Subtest: close: a lap that ends with a right width against a start whose sides are one width is refused by name (SPLIT_SEAM)
+ok 134 - close: a lap that ends with a right width against a start whose sides are one width is refused by name (SPLIT_SEAM)
+  ---
+  duration_ms: 1.672
+  type: 'test'
+  ...
+# Subtest: Sharp: after a right width the corner keeps it, and its tightest right-hand radius is held to the wider inner side (11.2 m, against 9.5 m with the sides equal); a left-hand one is unchanged
+ok 135 - Sharp: after a right width the corner keeps it, and its tightest right-hand radius is held to the wider inner side (11.2 m, against 9.5 m with the sides equal); a left-hand one is unchanged
+  ---
+  duration_ms: 3383.4009
+  type: 'test'
+  ...
+# Subtest: a saved piece: a run with a right width is refused by name (SPLIT_RUN), never saved with both sides at the width; a run with none saves as before
+ok 136 - a saved piece: a run with a right width is refused by name (SPLIT_RUN), never saved with both sides at the width; a run with none saves as before
+  ---
+  duration_ms: 3.2543
+  type: 'test'
+  ...
+# Subtest: a saved piece added at a head whose right side has its own width is refused in his words (SPLIT_HEAD), and is laid once the right width is back at the width
+ok 137 - a saved piece added at a head whose right side has its own width is refused in his words (SPLIT_HEAD), and is laid once the right width is back at the width
+  ---
+  duration_ms: 4.1598
+  type: 'test'
+  ...
+# Subtest: the water: a stream poured at u -10.5 on the stepped side runs to the right side's own rim, -11.3 m, where it spills
+ok 138 - the water: a stream poured at u -10.5 on the stepped side runs to the right side's own rim, -11.3 m, where it spills
+  ---
+  duration_ms: 42.5858
+  type: 'test'
+  ...
+# Subtest: Extend: a right width brought back to the width over a numeric transition ends exactly there, and the piece after it has its sides as one width again (no wd, no core/7)
+ok 139 - Extend: a right width brought back to the width over a numeric transition ends exactly there, and the piece after it has its sides as one width again (no wd, no core/7)
+  ---
+  duration_ms: 2.7049
+  type: 'test'
+  ...
+# Subtest: the document: a split piece made with its wd left out carries the right width on from the end before it, value and slope, as an offset does
+ok 140 - the document: a split piece made with its wd left out carries the right width on from the end before it, value and slope, as an offset does
+  ---
+  duration_ms: 1.7949
+  type: 'test'
+  ...
+# Subtest: Extend: a right width's change has the width's floor: its shortest is the width's for the same change, and one asked shorter is refused by name (BAD_SECOND)
+ok 141 - Extend: a right width's change has the width's floor: its shortest is the width's for the same change, and one asked shorter is refused by name (BAD_SECOND)
+  ---
+  duration_ms: 0.9857
+  type: 'test'
+  ...
+# Subtest: Extend: a right width with no start shape of its own follows the width's two-share ramp, and one given the same shares lays the same ramp
+ok 142 - Extend: a right width with no start shape of its own follows the width's two-share ramp, and one given the same shares lays the same ramp
+  ---
+  duration_ms: 3.3949
+  type: 'test'
+  ...
+# Subtest: Extend refuses a right width on a tube in its own words (BAD_TUBE), not the document's
+ok 143 - Extend refuses a right width on a tube in its own words (BAD_TUBE), not the document's
+  ---
+  duration_ms: 2.8573
+  type: 'test'
+  ...
+# Subtest: close: a lap whose first and last pieces both have a right width closes with the right width joined at the seam (the end meets the start)
+ok 144 - close: a lap whose first and last pieces both have a right width closes with the right width joined at the seam (the end meets the start)
+  ---
+  duration_ms: 187.2497
+  type: 'test'
+  ...
+1..144
+# tests 144
+# suites 0
+# pass 144
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 93242.3298
+exit 0 

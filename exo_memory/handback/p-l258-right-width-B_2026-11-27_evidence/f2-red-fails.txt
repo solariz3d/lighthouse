@@ -1,0 +1,10 @@
+#6 L258 F2: with the width left as shown, a right width typed as the width is SHOWN is sent as wd 0; any other number, and one beside a typed w
+   at app/test/core-right-width-panel.test.js:111:1
+   error: |- | the width as its field shows it: back to the width | + actual - expected |  | + -0.0045999999999999375 | - 0
+#7 L258 F2: SPLIT_HEAD's advice, typed as it is written, lays the piece, on a head of width 19.1346 and on one left by the width brush
+   at app/test/core-right-width-panel.test.js:121:1
+   error: |- | typed: the right width ends back at the width | + actual - expected |  |   { |     m: 0,
+#8 L258 F2: the CHANGELOG's way back holds on such a width: a piece laid with the right width set to the width as shown writes no wd, and the f
+   at app/test/core-right-width-panel.test.js:136:1
+   error: |- | typed: the new piece writes no wd | + actual - expected |  | + [ | +   0,
+failing rows: 3

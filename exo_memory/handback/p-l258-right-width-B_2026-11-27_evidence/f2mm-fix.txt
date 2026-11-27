@@ -1,0 +1,4 @@
+width 19.1 (shown 19.1); typed right width 19.103, width left as shown: wd sent 0.003; the piece ends width 19.1, right width 19.103 (3 mm off its width)
+width 19.1346 (shown 19.13); typed right width 19.133, width left as shown: wd sent -0.0016; the piece ends width 19.1346, right width 19.133 (-1.6 mm off its width)
+width 19.1346 (shown 19.13); typed right width 19.1376, width left as shown: wd sent 0.003; the piece ends width 19.1346, right width 19.1376 (3 mm off its width)
+width 19.1346 (shown 19.13); typed right width 19.133, width 19.13: wd sent 0.003; the piece ends width 19.13, right width 19.133 (3 mm off its width)

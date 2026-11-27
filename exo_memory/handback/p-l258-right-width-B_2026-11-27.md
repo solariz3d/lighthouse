@@ -241,3 +241,111 @@ NEXT: librarian call_chair with this hand-back's path when it has read it, for a
 
 SOURCES: handback/p-l258-read-right-width-O_2026-11-27.md:102 (ed2ef01e); librarian note 711dbdb4; git log/show --stat/rev-parse/ls-remote for d677-right-width-b; f1-red.tap, f1-green.tap, f1-touched.tap, f1-harness.tap through tapfails.js and harnesscount.js; f1probe.js and f1shell.js runs; applied.js; namecheck258.js; heavy-run.js --status
 NEXT: librarian call_chair with this hand-back's path when it has read the F1 section, for O's read of d677-right-width-b e4e7ecc..8b7cafc
+
+---
+
+## F2: a right width typed as the width is shown is back to the width (2026-11-27, 10:0xZ)
+
+**Order:** the chair's 09:48:06Z order. The object is O's "Delta read, 2026-11-27 09:5xZ" and its "F2" (`handback/p-l258-read-right-width-O_2026-11-27.md:154`, `:182`, room 1680c3fe), read whole. The librarian's leg is note f46ba2bd: "ONE rule … choose one and say why, and say what each does to a right width he really wants 3 mm off"; rows red first on a head of width 19.1346 and on one left by the width brush; "The CHANGELOG's way back must hold as written."
+
+**New tip: `d677-right-width-b` de6c069** (de6c06923302e251f60b60db1bf7e34d7a83b836), one commit on 8b7cafc. Checked: `git log -2`, `f2-commit-stat.txt`.
+- **Not pushed:** `git ls-remote` still reads e4e7ecc (checked). The local branch is "ahead 2".
+- **Not in tonight's build.**
+- **Worktree:** `<Downloads>\t180-b-l258-f2`, clean at the end and **removed** (checked).
+- No push, landing or build.
+
+**First line:** one rule, in the panel. With the width left as shown, a right width typed equal to the width as its field shows it is sent as wd 0. Extend ends that at exactly 0.
+- Followed as typed, SPLIT_HEAD's advice lays the piece on both of O's heads, and the CHANGELOG's way back keeps core/4. Both were red at 8b7cafc and are green on de6c069.
+- Touched rows: 144 of 144.
+- Harness: 35 of 35 applied and caught, control ok.
+
+### The rule, and why this one (the code checked; the alternative inferred, not built)
+
+- **Built, `app/core/panel.js` `extendOptions`:** `backToWidth(typed, ref) = targets.w === undefined && typed === near2(ref)`.
+  - `near2` is the module's own two-decimal rounding, the same arithmetic as the fields' `show`.
+  - When it holds, wd is 0, both for the head's target and for each right width change (`wdAt`). Otherwise wd is `typed − width in force`, as before.
+  - The line `targets.wd = wR - ref;` is kept as it was (mutant P1 still edits it) and is followed by `if (backToWidth(wR, ref)) targets.wd = 0;`.
+- **SPLIT_HEAD's numbers** now use that same arithmetic (`piece.js` `shown2`, which was `toFixed(2)`). So the number the words give is the one his field shows (asserted on both heads, below).
+- **Why the panel and not Extend:** the error is the display's rounding, and the display is the panel's. Taking any wd target within 0.005 m as 0 in Extend would make every right width within 5 mm of the width unlayable from every caller. The core stays exact this way.
+- **What each does to a right width he really wants 3 mm off:**
+  - **Built (checked, `f2mm.js` → `f2mm-fix.txt`, through `extendOptions` and Extend):**
+    - On a width that shows all its decimals (19.1), typing 19.103 lays exactly 3 mm off.
+    - On 19.1346 (shown 19.13), typing 19.1376 lays exactly 3 mm off.
+    - Typing width 19.13 and right width 19.133 lays 3 mm off the typed width, which then becomes the width.
+    - Only the one number, the width as shown (19.13), now means "back to the width".
+    - Unchanged from before: on 19.1346, typing 19.133 (3 mm over what he sees) lays −1.6 mm off the real width.
+  - **Not built (inferred):** with Extend taking a wd within 0.005 m as 0, none of those 3 mm right widths could be laid, by any number, from any caller.
+
+### The rows, red first (checked)
+
+The rows are three, in `app/test/core-right-width-panel.test.js`, one of the harness's two files.
+
+**Red at 8b7cafc plus the rows:** 8 tests, 5 pass, 3 fail. The 3 fails are the new rows (`f2-red.tap`, `f2-red-fails.txt`):
+- **The rule on `extendOptions`:** typing '19.13' beside a head of 19.1346 sends −0.0046, against the asserted 0.
+- **SPLIT_HEAD's advice typed as written:** "typed: the right width ends back at the width" fails. It got past "refused by name first", so the first add was refused at 8b7cafc.
+- **The CHANGELOG's way back:** "typed: the new piece writes no wd" fails.
+
+The SPLIT_HEAD row stops at its first head. So both heads were read one by one at 8b7cafc (`f2probe.js` → `f2probe-8b7cafc.txt`). O's numbers again:
+
+| head | words give | wd sent | ends wd | second add | way back |
+|---|---|---|---|---|---|
+| typed 19.1346 | 19.13 | −0.0046 | −0.0046 | refused | core/4 → core/7 |
+| brushed 20.463 | 20.46 | −0.003 | −0.003 | refused | core/4 → core/7 |
+
+**Green on the fix:** 8 of 8 (`f2-green.tap`). Each head again (`f2probe-fix.txt`):
+- the words give 19.13 and 20.46;
+- wd sent 0, ends at 0 with slope 0;
+- the second add is laid: "added the piece …";
+- the way back writes no wd, and core/4 stays core/4.
+
+**The rows assert:**
+1. **The rule:** '19.13' → 0; '19.133' → −0.0016; width '19.1346' with '19.13' → −0.0046; a later change typed '19.13' → 0; and on a width of 19.1, '19.1' → 0.
+2. **SPLIT_HEAD's advice,** on both heads, through the shell with memory storage:
+   - the head's width really has more than two decimals;
+   - refused by name first;
+   - the words' number equals his field's;
+   - the right width ends at {v 0, m 0};
+   - the piece is then laid.
+3. **The CHANGELOG's way back,** on both heads, unsplit: the new piece writes no `wd`, and the schema is the one it had, not core/7.
+
+**On "the track goes back to today's schema"** (checked, `f2probe-fix.txt`): after the advice on a split head, the file stays core/7. The 3.5 m step and the piece that brings it back keep a real right width, which is right.
+- Today's schema holds where no piece keeps one: the CHANGELOG's way back on an unsplit head, row 3 (core/4 → core/4).
+- So the CHANGELOG sentence holds as written: "set the right width back to the width (the piece then writes no `wd`, and the file is core/4, /5 or /6 again)".
+- Added beside it: "Typed as the width is shown (two decimals), the right width is the width exactly, also where the width carries more decimals than it shows (typed so, or left by the width brush); any other number is measured from the width in force, to the millimetre."
+- `MAP.md`'s panel line names `backToWidth`.
+
+### The tier (checked)
+
+- **Touched rows**, at BelowNormal, no slot (light): **144 of 144**, 0 fail, 0 skipped (`rows-touched.cmd`, `f2-touched.tap`, 09:54:27Z–09:56:00Z). These are the same five files as for F1, plus the 3 new rows.
+  - Every other row that calls `extendOptions` is outside the tier. The new code runs only with a right width typed (`if (wR !== null)`, `f === 'widthR'`).
+- **The right-width harness**, under heavy-run at BelowNormal (`harness-f2.cmd`, `f2-harness.tap`, `f2-harness-heavyrun.txt`). It asked at 09:56:14Z, got slot 2 at once (P held slot 1), ran 186 s and ended at 09:59:21Z.
+  - **37 of 37:** the CONTROL, the crash stand-in and 35 mutants.
+  - `harnesscount.js`: **applied 35 / caught 35 / NOT APPLIED 0**, control ok (`f2-harness-count.txt`).
+  - New:
+    - **R28:** the words give the width with all its decimals.
+    - **P6:** the head's rule removed.
+    - **P7:** the changes' rule removed.
+    - **P8:** the rule also beside a typed width.
+- **The piece harness is not run.** Its 64 strings still occur once each (static, `applied.js` → `applied-f2.txt`).
+- **No test edits the text I changed.** Checked: `git grep -lF` over `test` and `app/test` for each removed fragment: none.
+- **Not run:** the whole suite and every other harness.
+
+### Corrections, mine
+
+- **`f2probe.js` misprinted one field.** Its "first add laid" was first printed from an expression read after the second add. It printed "?" on the fix, and on 8b7cafc a 0 that was right by coincidence (the Extend added one piece and the second add was refused). Corrected in the script, a comment says so, and it was run again on the fix (`f2probe-fix.txt`). The 8b7cafc file keeps the old print.
+  - The first refusal at 8b7cafc is shown by the words being given, and by the red row passing its "refused by name first" assert.
+- **The F1 section's limit** ("a head at the width but with wd still changing would read equal widths") is not touched here. The "equal widths" O saw are the F2 trap, now closed.
+
+### Names and the machine
+
+- **Privacy grep** over the builder diff's added lines: 0 (checked).
+- **Names:** `namecheck258.js` → 65 terms, 1 hit, #31, "road". The roads are synthetic; no save of his was opened.
+- **`<temp>\t180-wd-mut-*`** after the harness: 0 (checked).
+- **The sculpt-frame timing:** still owed, not started.
+
+**Evidence:** 15 files added (74 → 89, none overwritten): `f2probe.js`, `f2probe-8b7cafc.txt`, `f2probe-fix.txt`, `f2mm.js`, `f2mm-fix.txt`, `applied-f2.txt`, `harness-f2.cmd`, `f2-red.tap`, `f2-red-fails.txt`, `f2-green.tap`, `f2-touched.tap`, `f2-harness.tap`, `f2-harness-heavyrun.txt`, `f2-harness-count.txt`, `f2-commit-stat.txt`.
+
+**Who acts next:** O reads the delta 8b7cafc..de6c069. Landing it is a named landing pane's, after that read.
+
+SOURCES: handback/p-l258-read-right-width-O_2026-11-27.md:154,:182 (1680c3fe); librarian note f46ba2bd; git log/show --stat/rev-parse/ls-remote for d677-right-width-b; f2-red.tap, f2-green.tap, f2-touched.tap, f2-harness.tap through tapfails.js and harnesscount.js; f2probe.js and f2mm.js runs; applied.js; namecheck258.js; heavy-run.js --status
+NEXT: librarian call_chair with this hand-back's path when it has read the F2 section, for O's read of d677-right-width-b 8b7cafc..de6c069
