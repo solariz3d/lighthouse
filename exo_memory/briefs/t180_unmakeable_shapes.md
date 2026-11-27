@@ -123,3 +123,4 @@ degrees into the new 360 you know? 5. Not sure, what is smoothness limit?"
 - [inferred] If lengths and speeds both scale by k, the load on a curve (speed squared over radius) scales by k too, so a rescaled track with a proportionally slower car asks less of the car.
 - Not ordered. His 04:54 word on the update stands: "we will deal with that when the time comes".
 - 2026-11-27 05:44 (L), to "the smaller, slower cars are not in the public repository yet": "yes bc the update itsnt out yet"
+- 2026-11-27 05:45 (L): "we will refactor the builder when the update goes live, i wager we wont have to change much"
