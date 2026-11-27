@@ -239,7 +239,14 @@ I did not re-run the whole suite after the baseline change, because the baseline
 credential scan (below), rebased onto the latest `origin/main`, and pushed fast-forward. The 11 commits I rebased over
 touch only `exo_memory/`, none of this lap's files.
 
-PUSH_RESULT
+- Rebased onto `origin/main` `cbf90b07`: clean, and `consonance/` is identical before and after.
+  checked: `git diff 7c0fe18d 1b365275 -- consonance` → empty.
+- Credential scan on the rebased branch.
+  checked: `push-gate.js decide("… git push origin o-d678-heavyrun:main")` → `allow`; `landing-train.js privacyScan(<worktree>, "origin", "main")` → `{"ok":true,"found":[]}`.
+- `portable-paths` after the rebase.
+  checked: → `RED — 8`, 0 of them in a heavy-run file.
+- Pushed fast-forward, `o-d678-heavyrun` → `origin/main`. The pushed head is the commit that adds this section.
+  checked by: `git log -1 --format=%h -- exo_memory/handback/p-d678-heavyrun-stalls-O_2026-11-27.md` on main; the ring gives the sha.
 
 ## 10. Corrections
 
