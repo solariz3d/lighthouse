@@ -1,0 +1,15 @@
+two-decimal: shown at the step 19.1, at the set-back 19.1; schema t180b.core/4; after step, set back, one more: pieces 2->5, writes [wd wd -], schema t180b.core/7, head wd {"v":0,"m":0}
+  pieces: w 19.1->19.1 wd 0->3.5 | w 19.1->19.1 wd 3.5->0 | w 19.1->19.1 wd 0->0
+  delete the two stepped pieces (middle): preview "delete preview: 2 pieces go; 1 of the 1 piece after the gap move. Apply or cancel"; applied "deleted 2 pieces from the middle of the track (Ctrl+Z puts them back)"; pieces 3, schema t180b.core/4
+  undo the delete: pieces 5, schema t180b.core/7
+  undo the three Extends: pieces 2, schema t180b.core/4 (was t180b.core/4)
+typed: shown at the step 19.13, at the set-back 19.13; schema t180b.core/4; after step, set back, one more: pieces 2->5, writes [wd wd -], schema t180b.core/7, head wd {"v":0,"m":0}
+  pieces: w 19.1346->19.1346 wd 0->3.4954 | w 19.1346->19.1346 wd 3.4954->0 | w 19.1346->19.1346 wd 0->0
+  delete the two stepped pieces (middle): preview "delete preview: 2 pieces go; 1 of the 1 piece after the gap move. Apply or cancel"; applied "deleted 2 pieces from the middle of the track (Ctrl+Z puts them back)"; pieces 3, schema t180b.core/4
+  undo the delete: pieces 5, schema t180b.core/7
+  undo the three Extends: pieces 2, schema t180b.core/4 (was t180b.core/4)
+brushed: shown at the step 20.46, at the set-back 20.36; schema t180b.core/4; after step, set back, one more: pieces 2->5, writes [wd wd -], schema t180b.core/7, head wd {"v":0,"m":0}
+  pieces: w 20.463->20.3625 wd 0->3.497 | w 20.3625->20.262 wd 3.497->0 | w 20.262->20.1615 wd 0->0
+  delete the two stepped pieces (middle): preview "delete preview: 2 pieces go; 1 of the 1 piece after the gap move. Apply or cancel"; applied "deleted 2 pieces from the middle of the track (Ctrl+Z puts them back)"; pieces 3, schema t180b.core/4
+  undo the delete: pieces 5, schema t180b.core/7
+  undo the three Extends: pieces 2, schema t180b.core/4 (was t180b.core/4)

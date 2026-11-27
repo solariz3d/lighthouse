@@ -1,0 +1,6 @@
+c66b503d26597f37ebfba90557a625ee3c11e571
+D677 (b) L258 B, F3: the CHANGELOG's way back said what is true; rows renamed and added
+
+ CHANGELOG.md                            |  6 ++++--
+ app/test/core-right-width-panel.test.js | 34 +++++++++++++++++++++++++++++----
+ 2 files changed, 34 insertions(+), 6 deletions(-)

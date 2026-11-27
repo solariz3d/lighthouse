@@ -1,0 +1,6 @@
+== f3cd425 (base)
+after the brush: head w 20.463, slope -0.001005 per m
+three Extends, nothing typed: w 20.463 -> 20.3625 (end slope -0.001005) | w 20.3625 -> 20.262 (end slope -0.001005) | w 20.262 -> 20.1615 (end slope -0.001005); message: null
+== de6c069 + F3 (branch)
+after the brush: head w 20.463, slope -0.001005 per m
+three Extends, nothing typed: w 20.463 -> 20.3625 (end slope -0.001005) | w 20.3625 -> 20.262 (end slope -0.001005) | w 20.262 -> 20.1615 (end slope -0.001005); message: null

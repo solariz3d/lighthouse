@@ -1,0 +1,191 @@
+TAP version 13
+# Subtest: a right width typed alone is sent as its difference from the head's width; with the width typed, from the typed one; blank sends none
+ok 1 - a right width typed alone is sent as its difference from the head's width; with the width typed, from the typed one; blank sends none
+  ---
+  duration_ms: 0.9972
+  type: 'test'
+  ...
+# Subtest: a right width with no width to measure it from is refused by name
+ok 2 - a right width with no width to measure it from is refused by name
+  ---
+  duration_ms: 0.267
+  type: 'test'
+  ...
+# Subtest: a right width's change is sent against the width in force at its mark: the width's own change there, else its target
+ok 3 - a right width's change is sent against the width in force at its mark: the width's own change there, else its target
+  ---
+  duration_ms: 0.6653
+  type: 'test'
+  ...
+# Subtest: the right width at the start: its ramp is the width's own early ramp
+ok 4 - the right width at the start: its ramp is the width's own early ramp
+  ---
+  duration_ms: 0.1436
+  type: 'test'
+  ...
+# Subtest: the mounted panel: "right width m" shows the head's right width, and typed it lays a piece whose right side has its own width; the width typed alone keeps the step
+ok 5 - the mounted panel: "right width m" shows the head's right width, and typed it lays a piece whose right side has its own width; the width typed alone keeps the step
+  ---
+  duration_ms: 81.4601
+  type: 'test'
+  ...
+# Subtest: L258 F2: with the width left as shown, a right width typed as the width is SHOWN is sent as wd 0; any other number, and one beside a typed width, is measured as before
+ok 6 - L258 F2: with the width left as shown, a right width typed as the width is SHOWN is sent as wd 0; any other number, and one beside a typed width, is measured as before
+  ---
+  duration_ms: 0.2575
+  type: 'test'
+  ...
+# Subtest: L258 F2: SPLIT_HEAD's advice, typed as it is written, lays the piece, on a head of width 19.1346 and on one left by the width brush
+ok 7 - L258 F2: SPLIT_HEAD's advice, typed as it is written, lays the piece, on a head of width 19.1346 and on one left by the width brush
+  ---
+  duration_ms: 114.1361
+  type: 'test'
+  ...
+# Subtest: L258 F2: a road that never had a right width keeps its schema: on such a width, a piece laid with the right width typed as the width is shown writes no wd, and the file is not core/7
+ok 8 - L258 F2: a road that never had a right width keeps its schema: on such a width, a piece laid with the right width typed as the width is shown writes no wd, and the file is not core/7
+  ---
+  duration_ms: 44.8533
+  type: 'test'
+  ...
+# Subtest: L258 F3: the way back on a road with a step: still core/7 after the right width is set back to the width, at any width; the old schema again once the stepped pieces are deleted, or undone
+ok 9 - L258 F3: the way back on a road with a step: still core/7 after the right width is set back to the width, at any width; the old schema again once the stepped pieces are deleted, or undone
+  ---
+  duration_ms: 844.1966
+  type: 'test'
+  ...
+# Subtest: a piece whose right side differs is written as core/7 with its wd, reads back the same text, and only that piece carries wd
+ok 10 - a piece whose right side differs is written as core/7 with its wd, reads back the same text, and only that piece carries wd
+  ---
+  duration_ms: 10.1628
+  type: 'test'
+  ...
+# Subtest: a track with no split writes today's schema and no wd, byte for byte as it was laid
+ok 11 - a track with no split writes today's schema and no wd, byte for byte as it was laid
+  ---
+  duration_ms: 1.8858
+  type: 'test'
+  ...
+# Subtest: a piece flagged split whose wd is 0 everywhere writes no wd and today's schema: the field is written only when it is used
+ok 12 - a piece flagged split whose wd is 0 everywhere writes no wd and today's schema: the field is written only when it is used
+  ---
+  duration_ms: 1.5279
+  type: 'test'
+  ...
+# Subtest: at width 19.1 and right width 22.6 the left half is 9.55 m and the right 11.3 m, and the line is the same sample for sample as with the sides equal
+ok 13 - at width 19.1 and right width 22.6 the left half is 9.55 m and the right 11.3 m, and the line is the same sample for sample as with the sides equal
+  ---
+  duration_ms: 52.9673
+  type: 'test'
+  ...
+# Subtest: a 3.5 m one-sided step over 5 m adds no red and no amber: the checker reads the same faults with and without it
+ok 14 - a 3.5 m one-sided step over 5 m adds no red and no amber: the checker reads the same faults with and without it
+  ---
+  duration_ms: 113.4429
+  type: 'test'
+  ...
+# Subtest: Extend: a typed right width splits the sides; the width typed alone moves both sides and keeps the step; on a track with no split, the width alone splits nothing
+ok 15 - Extend: a typed right width splits the sides; the width typed alone moves both sides and keeps the step; on a track with no split, the width alone splits nothing
+  ---
+  duration_ms: 2.1876
+  type: 'test'
+  ...
+# Subtest: Extend: the right side's change at a mark is held to the mark and made after it, and early reaches it within the start, where the width's own early ramp reaches its own
+ok 16 - Extend: the right side's change at a mark is held to the mark and made after it, and early reaches it within the start, where the width's own early ramp reaches its own
+  ---
+  duration_ms: 4.545
+  type: 'test'
+  ...
+# Subtest: the document refuses a right side of 0 m or less by name (BAD_WIDTH), and a split tube (BAD_TUBE)
+ok 17 - the document refuses a right side of 0 m or less by name (BAD_WIDTH), and a split tube (BAD_TUBE)
+  ---
+  duration_ms: 1.9207
+  type: 'test'
+  ...
+# Subtest: the export: the road mesh's right side reaches 22.6/19.1 of the left's where the step is held, and both sides are equal where it is not
+ok 18 - the export: the road mesh's right side reaches 22.6/19.1 of the left's where the step is held, and both sides are equal where it is not
+  ---
+  duration_ms: 1166.5438
+  type: 'test'
+  ...
+# Subtest: close: a lap with a right width on one turn closes, and the right width is kept as it was laid
+ok 19 - close: a lap with a right width on one turn closes, and the right width is kept as it was laid
+  ---
+  duration_ms: 104.0692
+  type: 'test'
+  ...
+# Subtest: close: a lap that ends with a right width against a start whose sides are one width is refused by name (SPLIT_SEAM)
+ok 20 - close: a lap that ends with a right width against a start whose sides are one width is refused by name (SPLIT_SEAM)
+  ---
+  duration_ms: 1.1163
+  type: 'test'
+  ...
+# Subtest: Sharp: after a right width the corner keeps it, and its tightest right-hand radius is held to the wider inner side (11.2 m, against 9.5 m with the sides equal); a left-hand one is unchanged
+ok 21 - Sharp: after a right width the corner keeps it, and its tightest right-hand radius is held to the wider inner side (11.2 m, against 9.5 m with the sides equal); a left-hand one is unchanged
+  ---
+  duration_ms: 2393.595
+  type: 'test'
+  ...
+# Subtest: a saved piece: a run with a right width is refused by name (SPLIT_RUN), never saved with both sides at the width; a run with none saves as before
+ok 22 - a saved piece: a run with a right width is refused by name (SPLIT_RUN), never saved with both sides at the width; a run with none saves as before
+  ---
+  duration_ms: 2.5142
+  type: 'test'
+  ...
+# Subtest: a saved piece added at a head whose right side has its own width is refused in his words (SPLIT_HEAD), and is laid once the right width is back at the width
+ok 23 - a saved piece added at a head whose right side has its own width is refused in his words (SPLIT_HEAD), and is laid once the right width is back at the width
+  ---
+  duration_ms: 4.1938
+  type: 'test'
+  ...
+# Subtest: the water: a stream poured at u -10.5 on the stepped side runs to the right side's own rim, -11.3 m, where it spills
+ok 24 - the water: a stream poured at u -10.5 on the stepped side runs to the right side's own rim, -11.3 m, where it spills
+  ---
+  duration_ms: 23.7716
+  type: 'test'
+  ...
+# Subtest: Extend: a right width brought back to the width over a numeric transition ends exactly there, and the piece after it has its sides as one width again (no wd, no core/7)
+ok 25 - Extend: a right width brought back to the width over a numeric transition ends exactly there, and the piece after it has its sides as one width again (no wd, no core/7)
+  ---
+  duration_ms: 1.4582
+  type: 'test'
+  ...
+# Subtest: the document: a split piece made with its wd left out carries the right width on from the end before it, value and slope, as an offset does
+ok 26 - the document: a split piece made with its wd left out carries the right width on from the end before it, value and slope, as an offset does
+  ---
+  duration_ms: 1.1079
+  type: 'test'
+  ...
+# Subtest: Extend: a right width's change has the width's floor: its shortest is the width's for the same change, and one asked shorter is refused by name (BAD_SECOND)
+ok 27 - Extend: a right width's change has the width's floor: its shortest is the width's for the same change, and one asked shorter is refused by name (BAD_SECOND)
+  ---
+  duration_ms: 0.8482
+  type: 'test'
+  ...
+# Subtest: Extend: a right width with no start shape of its own follows the width's two-share ramp, and one given the same shares lays the same ramp
+ok 28 - Extend: a right width with no start shape of its own follows the width's two-share ramp, and one given the same shares lays the same ramp
+  ---
+  duration_ms: 3.1511
+  type: 'test'
+  ...
+# Subtest: Extend refuses a right width on a tube in its own words (BAD_TUBE), not the document's
+ok 29 - Extend refuses a right width on a tube in its own words (BAD_TUBE), not the document's
+  ---
+  duration_ms: 0.4408
+  type: 'test'
+  ...
+# Subtest: close: a lap whose first and last pieces both have a right width closes with the right width joined at the seam (the end meets the start)
+ok 30 - close: a lap whose first and last pieces both have a right width closes with the right width joined at the seam (the end meets the start)
+  ---
+  duration_ms: 107.6397
+  type: 'test'
+  ...
+1..30
+# tests 30
+# suites 0
+# pass 30
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 4210.659
+exit 0 

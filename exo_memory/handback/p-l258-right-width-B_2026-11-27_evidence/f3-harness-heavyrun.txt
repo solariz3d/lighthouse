@@ -1,0 +1,9 @@
+10:09:31Z
+heavy-run status (C:\Consonance\data), read only:
+  EXCLUSIVE HOLD: none
+  slot 1: held by 6e6e002c pid 20288 (P L262: the whole t180 suite once on landing-1127-l262 537a0c9 (after-install report; gates main and release, not this install), since 2026-11-27T09:26:43.266Z)
+  slot 2: free
+heavy-run exit 0
+10:12:16Z
+
+[exited with code 0]

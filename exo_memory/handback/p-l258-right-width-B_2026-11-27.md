@@ -349,3 +349,80 @@ The SPLIT_HEAD row stops at its first head. So both heads were read one by one a
 
 SOURCES: handback/p-l258-read-right-width-O_2026-11-27.md:154,:182 (1680c3fe); librarian note f46ba2bd; git log/show --stat/rev-parse/ls-remote for d677-right-width-b; f2-red.tap, f2-green.tap, f2-touched.tap, f2-harness.tap through tapfails.js and harnesscount.js; f2probe.js and f2mm.js runs; applied.js; namecheck258.js; heavy-run.js --status
 NEXT: librarian call_chair with this hand-back's path when it has read the F2 section, for O's read of d677-right-width-b 8b7cafc..de6c069
+
+---
+
+## F3: the CHANGELOG's way back, said as it is (2026-11-27, 10:1xZ)
+
+**Order:** the chair's 10:06:21Z order: words and tests only. The object is O's "Delta read, 2026-11-27 10:1xZ" and "F3" (`handback/p-l258-read-right-width-O_2026-11-27.md:234`, `:281`, room 3e744704), read whole. The librarian's leg is note c0ed578b: correct the sentence, rename my third F2 row to what it proves, and add O's row. No code change.
+
+**New tip: `d677-right-width-b` c66b503** (c66b503d26597f37ebfba90557a625ee3c11e571), one commit on de6c069. Checked: `git log -2`, `f3-commit-stat.txt`, 2 files, +34/−6, `CHANGELOG.md` and `app/test/core-right-width-panel.test.js`.
+- **No code change:** no file under `src/` or `app/core/` changed.
+- **Not pushed:** `git ls-remote` still reads e4e7ecc (checked). The local branch is "ahead 3".
+- Not in P's install of de6c069; P's worktree was not opened.
+- **Worktree:** `<Downloads>\t180-b-l258-f3`, clean at the end, **removed** (checked).
+
+### The sentence (checked against the new row)
+
+- **Was** (since e4e7ecc): "to go back, set the right width back to the width (the piece then writes no `wd`, and the file is core/4, /5 or /6 again)".
+- **Now:** "To go back, Undo or delete every piece whose right side has its own width; the file is then core/4, /5 or /6 again. Setting the right width back to the width ends the step, and the pieces laid after that write no `wd`; but the piece that sets it back still writes `wd` (it ramps back), so the file stays core/7 while that piece or any stepped one is in it (the panel cannot change a placed piece's right width)."
+- It follows O's wording, with one thing named that O's left implicit: **the piece that sets the width back writes `wd` too.** It is a ramp 3.5 → 0, checked by the row as `[wd, wd, none]`. So "every piece whose right side has its own width" includes it.
+- The way-back sentence appears nowhere else (checked: `grep -rn` over the repo's `.md` files).
+
+### The rows (checked)
+
+- **Renamed:** my third F2 row is now "L258 F2: a road that never had a right width keeps its schema: on such a width, a piece laid with the right width typed as the width is shown writes no wd, and the file is not core/7". A comment above it says what its first name claimed. Its body is unchanged.
+- **New, O's row:** "L258 F3: the way back on a road with a step: still core/7 after the right width is set back to the width, at any width; the old schema again once the stepped pieces are deleted, or undone".
+- **What the new row does,** on three heads: `round` 19.1 (added to `headOn` for this), typed 19.1346, and brushed 20.463. On each, through the shell and the panel's `extendOptions`:
+  1. lays a step (the width as shown + 3.5);
+  2. sets the right width back, typed as the width shows **at that press**;
+  3. lays one more piece.
+- **The row asserts:**
+  - pieces writing wd `[true, true, false]`;
+  - core/7;
+  - the two stepped pieces deleted (a middle delete, previewed then applied, `deleteSelection` + `applyDelete`): the old schema;
+  - that delete undone: core/7;
+  - three more undos: the old schema, with the piece count back where it began.
+- **A guard, green at de6c069 with no code change:** that is what F3 asks; the behaviour was right and the words were not. Not seen red: no mutant was written for it, since there is no new line.
+- **Rows:** `test/core_right_width.test.js` and `app/test/core-right-width-panel.test.js` at BelowNormal → **30 of 30** (`rows-f3.cmd`, `f3-rows.tap`, 10:09:10Z–10:09:15Z).
+- **Harness,** under heavy-run, BelowNormal (`harness-f3.cmd`, `f3-harness.tap`, `f3-harness-heavyrun.txt`): asked at 10:09:31Z, got slot 2 at once, ended 10:12:16Z (164 s).
+  - **37 of 37**; `harnesscount.js` **35 / 35 / NOT APPLIED 0**, control ok (`f3-harness-count.txt`).
+  - Its CONTROL now runs the F3 row too.
+- **The probe behind the row** (`f3probe.js` → `f3probe-de6c069.txt`) reads all three heads:
+  - pieces 2 → 5, writes `[wd wd -]`, core/7;
+  - the middle delete: core/4;
+  - undo it: core/7;
+  - undo the three Extends: core/4.
+  - In the brushed head: w 20.463 → 20.3625 (step), → 20.262 (set back, wd 3.497 → 0), → 20.1615.
+
+### Correction, mine
+
+- **`f3probe.js`'s first run typed the wrong number for the set-back on the brushed head.** It typed the width as it showed *before* the step (20.46), but by then the head's width was 20.3625 (shown 20.36).
+  - So the set-back sent wd 0.0975, the piece after it wrote wd too (`[wd wd wd]`), and the middle delete left core/7.
+- The panel shows the width at the head when he types, so I corrected the probe to type that. Its comment says so, and it was run again: the figures above.
+- The first run's output was overwritten by the second (`tee`); its numbers are the ones in this paragraph.
+- The row types the width as shown at each press (`shownNow()`) from the start.
+
+### Found, not changed (checked; outside this order)
+
+- **After Sculpt's width brush, Extend with nothing typed does not keep the width; it carries the brush's slope on.** The tooltip says "Shows the width at the head; left as shown, it keeps it" (`app/core/panel.js:375`).
+  - On 19.1 brushed +1.37 at the head (O's brush): head w 20.463, slope −0.001005 /m.
+  - Three Extends of 100 m with no target: 20.463 → 20.3625 → 20.262 → 20.1615, each ending at the same slope.
+- **The same at the base f3cd425 and on the branch,** to the digit (`slopeprobe.js` → `slope.txt`; f3cd425 read in a detached worktree, `<Downloads>\t180-b-l258-f3base`, clean and removed). So it predates the right width and is none of this branch's.
+- It is why O's brushed head read 20.36 after one Extend. Named for the chair; not mine to change here.
+
+### Names and the machine
+
+- **Privacy grep** over the builder diff's added lines: 0 (checked).
+- **Names:** `namecheck258.js` over the builder diff → 1 hit, #31, "road". Synthetic roads only; no save of his was opened.
+  - Over this section and its evidence, the first check also hit term #6. That is a plain word I had used for the width's slope, in a probe's file names and a scratch document name, and it is also a layout name in his install.
+  - I renamed them after the run (`slopeprobe.js`, `slope.txt`, document "slope"; a comment in the script says so). The name reaches no number.
+- **`<temp>\t180-wd-mut-*`:** 0 (checked).
+- **The sculpt-frame timing:** still owed, not started.
+
+**Evidence:** 11 files added (89 → 100, none overwritten): `f3probe.js`, `f3probe-de6c069.txt`, `slopeprobe.js`, `slope.txt`, `rows-f3.cmd`, `f3-rows.tap`, `harness-f3.cmd`, `f3-harness.tap`, `f3-harness-heavyrun.txt`, `f3-harness-count.txt`, `f3-commit-stat.txt`.
+
+**Who acts next:** O reads the delta de6c069..c66b503. The chair decides on the width that does not hold after a brush.
+
+SOURCES: handback/p-l258-read-right-width-O_2026-11-27.md:234,:281 (3e744704); librarian note c0ed578b; git log/show --stat/rev-parse/ls-remote for d677-right-width-b; f3-rows.tap and f3-harness.tap through tapfails.js and harnesscount.js; f3probe.js and slopeprobe.js runs; namecheck258.js; heavy-run.js --status
+NEXT: librarian call_chair with this hand-back's path when it has read the F3 section, for O's read of d677-right-width-b de6c069..c66b503
