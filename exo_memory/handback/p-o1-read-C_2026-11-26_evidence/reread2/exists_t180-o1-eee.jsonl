@@ -1,0 +1,117 @@
+{"ch":"kh","first":-80,"L":200,"ts":[-65,-70],"oracle":[39.7,117],"panel":[53.9,174.2],"panelRes":"laid"}
+{"ch":"kh","first":-80,"L":200,"ts":[-55,-65],"oracle":null,"panel":[0,128.7],"panelRes":"the turn (kh) change 1 (its second turn) starts inside the piece and before the piece's end (200 m): from in (0, 200), g"}
+{"ch":"kh","first":-80,"L":200,"ts":[-50,-40],"oracle":null,"panel":[0,154.5],"panelRes":"the turn (kh) change 1 (its second turn) starts inside the piece and before the piece's end (200 m): from in (0, 200), g"}
+{"ch":"kh","first":-80,"L":200,"ts":[-105,-90],"oracle":null,"panel":[0,200.7],"panelRes":"the turn (kh) change 1 (its second turn) starts inside the piece and before the piece's end (200 m): from in (0, 200), g"}
+{"ch":"kh","first":-80,"L":200,"ts":[-100,-120],"oracle":null,"panel":[0,200],"panelRes":"the turn (kh) change 1 (its second turn) starts inside the piece and before the piece's end (200 m): from in (0, 200), g"}
+{"ch":"kh","first":-80,"L":200,"ts":[-65,-70,-65],"oracle":null,"panel":[28.1,148.4,174.2],"panelRes":"the turn (kh) change 2 (its third turn), from -0.0113446 to -0.0122173, needs at least 51.5 m before change 3's mark (th"}
+{"ch":"kh","first":-80,"L":200,"ts":[-60,-70,-80],"oracle":null,"panel":[0,120,222.94],"panelRes":"the turn (kh) change 1 (its second turn) starts inside the piece and before the piece's end (200 m): from in (0, 200), g"}
+{"ch":"kh","first":-80,"L":250,"ts":[-65,-70],"oracle":[0.7,78],"panel":[146.9,224.2],"panelRes":"laid"}
+{"ch":"kh","first":-80,"L":250,"ts":[-55,-65],"oracle":[0.3,129],"panel":[69.8,198.5],"panelRes":"laid"}
+{"ch":"kh","first":-80,"L":250,"ts":[-50,-40],"oracle":[0.5,155],"panel":[44,198.5],"panelRes":"laid"}
+{"ch":"kh","first":-80,"L":250,"ts":[-105,-90],"oracle":null,"panel":[0,250.7],"panelRes":"the turn (kh) change 1 (its second turn) starts inside the piece and before the piece's end (250 m): from in (0, 250), g"}
+{"ch":"kh","first":-80,"L":250,"ts":[-100,-120],"oracle":null,"panel":[0,205.88],"panelRes":"the turn (kh) change 1 (its second turn) starts inside the piece and before the piece's end (250 m): from in (0, 250), g"}
+{"ch":"kh","first":-80,"L":250,"ts":[-65,-70,-65],"oracle":[2.7,80,135],"panel":[121.1,198.4,224.2],"panelRes":"the turn (kh) change 2 (its third turn), from -0.0113446 to -0.0122173, needs at least 37.8 m before change 3's mark (th"}
+{"ch":"kh","first":-80,"L":250,"ts":[-60,-70,-80],"oracle":null,"panel":[44,147,198.5],"panelRes":"the turn (kh) change 2 (its third turn), from -0.010472 to -0.0122173, needs at least 102.9 m before change 3's mark (th"}
+{"ch":"kh","first":-80,"L":300,"ts":[-65,-70],"oracle":[0.7,78],"panel":[196.9,274.2],"panelRes":"laid"}
+{"ch":"kh","first":-80,"L":300,"ts":[-55,-65],"oracle":[0.3,129],"panel":[119.8,248.5],"panelRes":"laid"}
+{"ch":"kh","first":-80,"L":300,"ts":[-50,-40],"oracle":[0.5,155],"panel":[94,248.5],"panelRes":"laid"}
+{"ch":"kh","first":-80,"L":300,"ts":[-105,-90],"oracle":null,"panel":[0,246.7],"panelRes":"the turn (kh) change 1 (its second turn) starts inside the piece and before the piece's end (300 m): from in (0, 300), g"}
+{"ch":"kh","first":-80,"L":300,"ts":[-100,-120],"oracle":[1,124],"panel":[58,179],"panelRes":"the turn (kh) change 1 (its second turn), from -0.0139626 to -0.0174533, needs at least 168.0 m before change 2's mark ("}
+{"ch":"kh","first":-80,"L":300,"ts":[-65,-70,-65],"oracle":[2.7,80,125],"panel":[171.1,248.4,274.2],"panelRes":"the turn (kh) change 2 (its third turn), from -0.0113446 to -0.0122173, needs at least 34.8 m before change 3's mark (th"}
+{"ch":"kh","first":-80,"L":300,"ts":[-60,-70,-80],"oracle":[2,105,210],"panel":[94,197,248.5],"panelRes":"the turn (kh) change 2 (its third turn), from -0.010472 to -0.0122173, needs at least 78.5 m before change 3's mark (the"}
+{"ch":"kh","first":-60,"L":200,"ts":[-45,-50],"oracle":[0.7,78],"panel":[96.9,174.2],"panelRes":"laid"}
+{"ch":"kh","first":-60,"L":200,"ts":[-35,-45],"oracle":[0.3,129],"panel":[19.8,148.5],"panelRes":"laid"}
+{"ch":"kh","first":-60,"L":200,"ts":[-30,-20],"oracle":null,"panel":[0,154.5],"panelRes":"the turn (kh) change 1 (its second turn) starts inside the piece and before the piece's end (200 m): from in (0, 200), g"}
+{"ch":"kh","first":-60,"L":200,"ts":[-85,-70],"oracle":null,"panel":[0,200.7],"panelRes":"the turn (kh) change 1 (its second turn) starts inside the piece and before the piece's end (200 m): from in (0, 200), g"}
+{"ch":"kh","first":-60,"L":200,"ts":[-80,-100],"oracle":null,"panel":[0,200],"panelRes":"the turn (kh) change 1 (its second turn) starts inside the piece and before the piece's end (200 m): from in (0, 200), g"}
+{"ch":"kh","first":-60,"L":200,"ts":[-45,-50,-45],"oracle":[2.7,80,135],"panel":[71.1,148.4,174.2],"panelRes":"the turn (kh) change 2 (its third turn), from -0.00785398 to -0.00872665, needs at least 39.8 m before change 3's mark ("}
+{"ch":"kh","first":-60,"L":200,"ts":[-40,-50,-60],"oracle":null,"panel":[0,103,154.5],"panelRes":"the turn (kh) change 1 (its second turn) starts inside the piece and before the piece's end (200 m): from in (0, 200), g"}
+{"ch":"kh","first":-60,"L":250,"ts":[-45,-50],"oracle":[0.7,78],"panel":[146.9,224.2],"panelRes":"laid"}
+{"ch":"kh","first":-60,"L":250,"ts":[-35,-45],"oracle":[0.3,129],"panel":[69.8,198.5],"panelRes":"laid"}
+{"ch":"kh","first":-60,"L":250,"ts":[-30,-20],"oracle":[0.5,155],"panel":[44,198.5],"panelRes":"laid"}
+{"ch":"kh","first":-60,"L":250,"ts":[-85,-70],"oracle":null,"panel":[0,202.7],"panelRes":"the turn (kh) change 1 (its second turn) starts inside the piece and before the piece's end (250 m): from in (0, 250), g"}
+{"ch":"kh","first":-60,"L":250,"ts":[-80,-100],"oracle":null,"panel":[0,125],"panelRes":"the turn (kh) change 1 (its second turn) starts inside the piece and before the piece's end (250 m): from in (0, 250), g"}
+{"ch":"kh","first":-60,"L":250,"ts":[-45,-50,-45],"oracle":[7.7,85,130],"panel":[121.1,198.4,224.2],"panelRes":"the turn (kh) change 2 (its third turn), from -0.00785398 to -0.00872665, needs at least 32.8 m before change 3's mark ("}
+{"ch":"kh","first":-60,"L":250,"ts":[-40,-50,-60],"oracle":[2,105,190],"panel":[44,147,198.5],"panelRes":"the turn (kh) change 2 (its third turn), from -0.00698132 to -0.00872665, needs at least 76.5 m before change 3's mark ("}
+{"ch":"kh","first":-60,"L":300,"ts":[-45,-50],"oracle":[0.7,78],"panel":[196.9,274.2],"panelRes":"laid"}
+{"ch":"kh","first":-60,"L":300,"ts":[-35,-45],"oracle":[0.3,129],"panel":[119.8,248.5],"panelRes":"laid"}
+{"ch":"kh","first":-60,"L":300,"ts":[-30,-20],"oracle":[0.5,155],"panel":[94,248.5],"panelRes":"laid"}
+{"ch":"kh","first":-60,"L":300,"ts":[-85,-70],"oracle":[1.3,130],"panel":[94,222.7],"panelRes":"the turn (kh) change 1 (its second turn), from -0.010472 to -0.0148353, needs at least 165.7 m before change 2's mark (t"}
+{"ch":"kh","first":-60,"L":300,"ts":[-80,-100],"oracle":[1,104],"panel":[94,197],"panelRes":"the turn (kh) change 1 (its second turn), from -0.010472 to -0.0139626, needs at least 137.0 m before change 2's mark (t"}
+{"ch":"kh","first":-60,"L":300,"ts":[-45,-50,-45],"oracle":[2.7,80,115],"panel":[171.1,248.4,274.2],"panelRes":"the turn (kh) change 2 (its third turn), from -0.00785398 to -0.00872665, needs at least 34.8 m before change 3's mark ("}
+{"ch":"kh","first":-60,"L":300,"ts":[-40,-50,-60],"oracle":[2,105,175],"panel":[94,197,248.5],"panelRes":"the turn (kh) change 2 (its third turn), from -0.00698132 to -0.00872665, needs at least 54.5 m before change 3's mark ("}
+{"ch":"kh","first":50,"L":200,"ts":[35,40],"oracle":[0.7,78],"panel":[96.9,174.2],"panelRes":"laid"}
+{"ch":"kh","first":50,"L":200,"ts":[25,35],"oracle":[0.3,129],"panel":[19.8,148.5],"panelRes":"laid"}
+{"ch":"kh","first":50,"L":200,"ts":[20,10],"oracle":null,"panel":[0,154.5],"panelRes":"the turn (kh) change 1 (its second turn) starts inside the piece and before the piece's end (200 m): from in (0, 200), g"}
+{"ch":"kh","first":50,"L":200,"ts":[75,60],"oracle":null,"panel":[0,200.7],"panelRes":"the turn (kh) change 1 (its second turn) starts inside the piece and before the piece's end (200 m): from in (0, 200), g"}
+{"ch":"kh","first":50,"L":200,"ts":[70,90],"oracle":null,"panel":[0,180],"panelRes":"the turn (kh) change 1 (its second turn) starts inside the piece and before the piece's end (200 m): from in (0, 200), g"}
+{"ch":"kh","first":50,"L":200,"ts":[35,40,35],"oracle":[2.7,80,125],"panel":[71.1,148.4,174.2],"panelRes":"the turn (kh) change 2 (its third turn), from 0.00610865 to 0.00698132, needs at least 34.8 m before change 3's mark (th"}
+{"ch":"kh","first":50,"L":200,"ts":[30,40,50],"oracle":null,"panel":[0,103,154.5],"panelRes":"the turn (kh) change 1 (its second turn) starts inside the piece and before the piece's end (200 m): from in (0, 200), g"}
+{"ch":"kh","first":50,"L":250,"ts":[35,40],"oracle":[0.7,78],"panel":[146.9,224.2],"panelRes":"laid"}
+{"ch":"kh","first":50,"L":250,"ts":[25,35],"oracle":[0.3,129],"panel":[69.8,198.5],"panelRes":"laid"}
+{"ch":"kh","first":50,"L":250,"ts":[20,10],"oracle":[0.5,155],"panel":[44,198.5],"panelRes":"laid"}
+{"ch":"kh","first":50,"L":250,"ts":[75,60],"oracle":[1.3,145],"panel":[32,172.7],"panelRes":"the turn (kh) change 1 (its second turn), from 0.00872665 to 0.01309, needs at least 157.7 m before change 2's mark (the"}
+{"ch":"kh","first":50,"L":250,"ts":[70,90],"oracle":[1,104],"panel":[44,147],"panelRes":"the turn (kh) change 1 (its second turn), from 0.00872665 to 0.0122173, needs at least 128.0 m before change 2's mark (t"}
+{"ch":"kh","first":50,"L":250,"ts":[35,40,35],"oracle":[12.7,90,120],"panel":[121.1,198.4,224.2],"panelRes":"the turn (kh) change 2 (its third turn), from 0.00610865 to 0.00698132, needs at least 32.8 m before change 3's mark (th"}
+{"ch":"kh","first":50,"L":250,"ts":[30,40,50],"oracle":[2,105,175],"panel":[44,147,198.5],"panelRes":"the turn (kh) change 2 (its third turn), from 0.00523599 to 0.00698132, needs at least 64.5 m before change 3's mark (th"}
+{"ch":"kh","first":50,"L":300,"ts":[35,40],"oracle":[0.7,78],"panel":[196.9,274.2],"panelRes":"laid"}
+{"ch":"kh","first":50,"L":300,"ts":[25,35],"oracle":[0.3,129],"panel":[119.8,248.5],"panelRes":"laid"}
+{"ch":"kh","first":50,"L":300,"ts":[20,10],"oracle":[0.5,155],"panel":[94,248.5],"panelRes":"laid"}
+{"ch":"kh","first":50,"L":300,"ts":[75,60],"oracle":[0.3,129],"panel":[94,222.7],"panelRes":"the turn (kh) change 1 (its second turn), from 0.00872665 to 0.01309, needs at least 142.7 m before change 2's mark (the"}
+{"ch":"kh","first":50,"L":300,"ts":[70,90],"oracle":[1,104],"panel":[94,197],"panelRes":"the turn (kh) change 1 (its second turn), from 0.00872665 to 0.0122173, needs at least 117.0 m before change 2's mark (t"}
+{"ch":"kh","first":50,"L":300,"ts":[35,40,35],"oracle":[2.7,80,110],"panel":[171.1,248.4,274.2],"panelRes":"laid"}
+{"ch":"kh","first":50,"L":300,"ts":[30,40,50],"oracle":[2,105,170],"panel":[94,197,248.5],"panelRes":"the turn (kh) change 2 (its third turn), from 0.00523599 to 0.00698132, needs at least 54.5 m before change 3's mark (th"}
+{"ch":"kv","first":-80,"L":200,"ts":[-65,-70],"oracle":[39.7,117],"panel":[53.9,174.2],"panelRes":"laid"}
+{"ch":"kv","first":-80,"L":200,"ts":[-55,-65],"oracle":null,"panel":[0,128.7],"panelRes":"the climb (kv) change 1 (its second climb) starts inside the piece and before the piece's end (200 m): from in (0, 200),"}
+{"ch":"kv","first":-80,"L":200,"ts":[-65,-70,-65],"oracle":null,"panel":[28.1,148.4,174.2],"panelRes":"the climb (kv) change 2 (its third climb), from -0.0113446 to -0.0122173, needs at least 51.5 m before change 3's mark ("}
+{"ch":"kv","first":-80,"L":250,"ts":[-65,-70],"oracle":[0.7,78],"panel":[146.9,224.2],"panelRes":"laid"}
+{"ch":"kv","first":-80,"L":250,"ts":[-55,-65],"oracle":[0.3,129],"panel":[69.8,198.5],"panelRes":"laid"}
+{"ch":"kv","first":-80,"L":250,"ts":[-65,-70,-65],"oracle":[2.7,80,135],"panel":[121.1,198.4,224.2],"panelRes":"the climb (kv) change 2 (its third climb), from -0.0113446 to -0.0122173, needs at least 37.8 m before change 3's mark ("}
+{"ch":"kv","first":-80,"L":300,"ts":[-65,-70],"oracle":[0.7,78],"panel":[196.9,274.2],"panelRes":"laid"}
+{"ch":"kv","first":-80,"L":300,"ts":[-55,-65],"oracle":[0.3,129],"panel":[119.8,248.5],"panelRes":"laid"}
+{"ch":"kv","first":-80,"L":300,"ts":[-65,-70,-65],"oracle":[2.7,80,125],"panel":[171.1,248.4,274.2],"panelRes":"the climb (kv) change 2 (its third climb), from -0.0113446 to -0.0122173, needs at least 34.8 m before change 3's mark ("}
+{"ch":"kv","first":-60,"L":200,"ts":[-45,-50],"oracle":[0.7,78],"panel":[96.9,174.2],"panelRes":"laid"}
+{"ch":"kv","first":-60,"L":200,"ts":[-35,-45],"oracle":[0.3,129],"panel":[19.8,148.5],"panelRes":"laid"}
+{"ch":"kv","first":-60,"L":200,"ts":[-45,-50,-45],"oracle":[2.7,80,135],"panel":[71.1,148.4,174.2],"panelRes":"the climb (kv) change 2 (its third climb), from -0.00785398 to -0.00872665, needs at least 39.8 m before change 3's mark"}
+{"ch":"kv","first":-60,"L":250,"ts":[-45,-50],"oracle":[0.7,78],"panel":[146.9,224.2],"panelRes":"laid"}
+{"ch":"kv","first":-60,"L":250,"ts":[-35,-45],"oracle":[0.3,129],"panel":[69.8,198.5],"panelRes":"laid"}
+{"ch":"kv","first":-60,"L":250,"ts":[-45,-50,-45],"oracle":[7.7,85,130],"panel":[121.1,198.4,224.2],"panelRes":"the climb (kv) change 2 (its third climb), from -0.00785398 to -0.00872665, needs at least 32.8 m before change 3's mark"}
+{"ch":"kv","first":-60,"L":300,"ts":[-45,-50],"oracle":[0.7,78],"panel":[196.9,274.2],"panelRes":"laid"}
+{"ch":"kv","first":-60,"L":300,"ts":[-35,-45],"oracle":[0.3,129],"panel":[119.8,248.5],"panelRes":"laid"}
+{"ch":"kv","first":-60,"L":300,"ts":[-45,-50,-45],"oracle":[2.7,80,115],"panel":[171.1,248.4,274.2],"panelRes":"the climb (kv) change 2 (its third climb), from -0.00785398 to -0.00872665, needs at least 34.8 m before change 3's mark"}
+{"ch":"kv","first":50,"L":200,"ts":[35,40],"oracle":[0.7,78],"panel":[96.9,174.2],"panelRes":"laid"}
+{"ch":"kv","first":50,"L":200,"ts":[25,35],"oracle":[0.3,129],"panel":[19.8,148.5],"panelRes":"laid"}
+{"ch":"kv","first":50,"L":200,"ts":[35,40,35],"oracle":[2.7,80,125],"panel":[71.1,148.4,174.2],"panelRes":"the climb (kv) change 2 (its third climb), from 0.00610865 to 0.00698132, needs at least 34.8 m before change 3's mark ("}
+{"ch":"kv","first":50,"L":250,"ts":[35,40],"oracle":[0.7,78],"panel":[146.9,224.2],"panelRes":"laid"}
+{"ch":"kv","first":50,"L":250,"ts":[25,35],"oracle":[0.3,129],"panel":[69.8,198.5],"panelRes":"laid"}
+{"ch":"kv","first":50,"L":250,"ts":[35,40,35],"oracle":[12.7,90,120],"panel":[121.1,198.4,224.2],"panelRes":"the climb (kv) change 2 (its third climb), from 0.00610865 to 0.00698132, needs at least 32.8 m before change 3's mark ("}
+{"ch":"kv","first":50,"L":300,"ts":[35,40],"oracle":[0.7,78],"panel":[196.9,274.2],"panelRes":"laid"}
+{"ch":"kv","first":50,"L":300,"ts":[25,35],"oracle":[0.3,129],"panel":[119.8,248.5],"panelRes":"laid"}
+{"ch":"kv","first":50,"L":300,"ts":[35,40,35],"oracle":[2.7,80,110],"panel":[171.1,248.4,274.2],"panelRes":"laid"}
+SUMMARY {"n":90,"exists":68,"panelLaid":42,"missed":26,"panelLaidNoOracle":0,"oracleNotConfirmed":0}
+MISSED {"ch":"kh","first":-80,"L":250,"ts":[-65,-70,-65],"oracle":[2.7,80,135],"panel":[121.1,198.4,224.2],"why":"the turn (kh) change 2 (its third turn), from -0.0113446 to -0.0122173, needs at least 37.8 m before change 3's mark (th"}
+MISSED {"ch":"kh","first":-80,"L":300,"ts":[-100,-120],"oracle":[1,124],"panel":[58,179],"why":"the turn (kh) change 1 (its second turn), from -0.0139626 to -0.0174533, needs at least 168.0 m before change 2's mark ("}
+MISSED {"ch":"kh","first":-80,"L":300,"ts":[-65,-70,-65],"oracle":[2.7,80,125],"panel":[171.1,248.4,274.2],"why":"the turn (kh) change 2 (its third turn), from -0.0113446 to -0.0122173, needs at least 34.8 m before change 3's mark (th"}
+MISSED {"ch":"kh","first":-80,"L":300,"ts":[-60,-70,-80],"oracle":[2,105,210],"panel":[94,197,248.5],"why":"the turn (kh) change 2 (its third turn), from -0.010472 to -0.0122173, needs at least 78.5 m before change 3's mark (the"}
+MISSED {"ch":"kh","first":-60,"L":200,"ts":[-45,-50,-45],"oracle":[2.7,80,135],"panel":[71.1,148.4,174.2],"why":"the turn (kh) change 2 (its third turn), from -0.00785398 to -0.00872665, needs at least 39.8 m before change 3's mark ("}
+MISSED {"ch":"kh","first":-60,"L":250,"ts":[-45,-50,-45],"oracle":[7.7,85,130],"panel":[121.1,198.4,224.2],"why":"the turn (kh) change 2 (its third turn), from -0.00785398 to -0.00872665, needs at least 32.8 m before change 3's mark ("}
+MISSED {"ch":"kh","first":-60,"L":250,"ts":[-40,-50,-60],"oracle":[2,105,190],"panel":[44,147,198.5],"why":"the turn (kh) change 2 (its third turn), from -0.00698132 to -0.00872665, needs at least 76.5 m before change 3's mark ("}
+MISSED {"ch":"kh","first":-60,"L":300,"ts":[-85,-70],"oracle":[1.3,130],"panel":[94,222.7],"why":"the turn (kh) change 1 (its second turn), from -0.010472 to -0.0148353, needs at least 165.7 m before change 2's mark (t"}
+MISSED {"ch":"kh","first":-60,"L":300,"ts":[-80,-100],"oracle":[1,104],"panel":[94,197],"why":"the turn (kh) change 1 (its second turn), from -0.010472 to -0.0139626, needs at least 137.0 m before change 2's mark (t"}
+MISSED {"ch":"kh","first":-60,"L":300,"ts":[-45,-50,-45],"oracle":[2.7,80,115],"panel":[171.1,248.4,274.2],"why":"the turn (kh) change 2 (its third turn), from -0.00785398 to -0.00872665, needs at least 34.8 m before change 3's mark ("}
+MISSED {"ch":"kh","first":-60,"L":300,"ts":[-40,-50,-60],"oracle":[2,105,175],"panel":[94,197,248.5],"why":"the turn (kh) change 2 (its third turn), from -0.00698132 to -0.00872665, needs at least 54.5 m before change 3's mark ("}
+MISSED {"ch":"kh","first":50,"L":200,"ts":[35,40,35],"oracle":[2.7,80,125],"panel":[71.1,148.4,174.2],"why":"the turn (kh) change 2 (its third turn), from 0.00610865 to 0.00698132, needs at least 34.8 m before change 3's mark (th"}
+MISSED {"ch":"kh","first":50,"L":250,"ts":[75,60],"oracle":[1.3,145],"panel":[32,172.7],"why":"the turn (kh) change 1 (its second turn), from 0.00872665 to 0.01309, needs at least 157.7 m before change 2's mark (the"}
+MISSED {"ch":"kh","first":50,"L":250,"ts":[70,90],"oracle":[1,104],"panel":[44,147],"why":"the turn (kh) change 1 (its second turn), from 0.00872665 to 0.0122173, needs at least 128.0 m before change 2's mark (t"}
+MISSED {"ch":"kh","first":50,"L":250,"ts":[35,40,35],"oracle":[12.7,90,120],"panel":[121.1,198.4,224.2],"why":"the turn (kh) change 2 (its third turn), from 0.00610865 to 0.00698132, needs at least 32.8 m before change 3's mark (th"}
+MISSED {"ch":"kh","first":50,"L":250,"ts":[30,40,50],"oracle":[2,105,175],"panel":[44,147,198.5],"why":"the turn (kh) change 2 (its third turn), from 0.00523599 to 0.00698132, needs at least 64.5 m before change 3's mark (th"}
+MISSED {"ch":"kh","first":50,"L":300,"ts":[75,60],"oracle":[0.3,129],"panel":[94,222.7],"why":"the turn (kh) change 1 (its second turn), from 0.00872665 to 0.01309, needs at least 142.7 m before change 2's mark (the"}
+MISSED {"ch":"kh","first":50,"L":300,"ts":[70,90],"oracle":[1,104],"panel":[94,197],"why":"the turn (kh) change 1 (its second turn), from 0.00872665 to 0.0122173, needs at least 117.0 m before change 2's mark (t"}
+MISSED {"ch":"kh","first":50,"L":300,"ts":[30,40,50],"oracle":[2,105,170],"panel":[94,197,248.5],"why":"the turn (kh) change 2 (its third turn), from 0.00523599 to 0.00698132, needs at least 54.5 m before change 3's mark (th"}
+MISSED {"ch":"kv","first":-80,"L":250,"ts":[-65,-70,-65],"oracle":[2.7,80,135],"panel":[121.1,198.4,224.2],"why":"the climb (kv) change 2 (its third climb), from -0.0113446 to -0.0122173, needs at least 37.8 m before change 3's mark ("}
+MISSED {"ch":"kv","first":-80,"L":300,"ts":[-65,-70,-65],"oracle":[2.7,80,125],"panel":[171.1,248.4,274.2],"why":"the climb (kv) change 2 (its third climb), from -0.0113446 to -0.0122173, needs at least 34.8 m before change 3's mark ("}
+MISSED {"ch":"kv","first":-60,"L":200,"ts":[-45,-50,-45],"oracle":[2.7,80,135],"panel":[71.1,148.4,174.2],"why":"the climb (kv) change 2 (its third climb), from -0.00785398 to -0.00872665, needs at least 39.8 m before change 3's mark"}
+MISSED {"ch":"kv","first":-60,"L":250,"ts":[-45,-50,-45],"oracle":[7.7,85,130],"panel":[121.1,198.4,224.2],"why":"the climb (kv) change 2 (its third climb), from -0.00785398 to -0.00872665, needs at least 32.8 m before change 3's mark"}
+MISSED {"ch":"kv","first":-60,"L":300,"ts":[-45,-50,-45],"oracle":[2.7,80,115],"panel":[171.1,248.4,274.2],"why":"the climb (kv) change 2 (its third climb), from -0.00785398 to -0.00872665, needs at least 34.8 m before change 3's mark"}
+MISSED {"ch":"kv","first":50,"L":200,"ts":[35,40,35],"oracle":[2.7,80,125],"panel":[71.1,148.4,174.2],"why":"the climb (kv) change 2 (its third climb), from 0.00610865 to 0.00698132, needs at least 34.8 m before change 3's mark ("}
+MISSED {"ch":"kv","first":50,"L":250,"ts":[35,40,35],"oracle":[12.7,90,120],"panel":[121.1,198.4,224.2],"why":"the climb (kv) change 2 (its third climb), from 0.00610865 to 0.00698132, needs at least 32.8 m before change 3's mark ("}

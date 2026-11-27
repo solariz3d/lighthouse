@@ -2066,3 +2066,7 @@ Claim (could be wrong): his 08:19 crash was Export to Assetto Corsa: `v8-oom-sta
 ## 2026-11-26 — O1 second re-read: at builder 0eb3448 the panel asks a change's shortest where it ends, so 144 of 144 blank-mark turn and climb cases lay (31+31 at eee621f), none over 1.05; the memo keys end and N12 is caught; but the fit check's end (panel.js:1439, coreshell.js:802) still has no row, and without it an amount drag holds −95 that extend refuses; NOT CLEAN by one row
 - Evidence: `exo_memory/handback/p-o1-read-C_2026-11-26_evidence/reread2/panelcmp.txt`, `rows_with_eee621f_panel_shell.txt`, `mutants5.txt`, `n15_n16_amount_drag.txt`, `dragcost.txt`.
 - Hand-back: `exo_memory/handback/p-o1-read-C_2026-11-26.md` (section "Second re-read")
+
+## 2026-11-26 — O1 second re-read, part two: E's blank-mark search at 0eb3448 is not complete; under O1's core a change holds at its shortest but not at some longer spans (kh 70 → 90 after 50 fails at 111-115 m), and changeFroms (app/core/panel.js:135-142) never checks the marks it returns, so 6 cases with a laying placement are offered marks extend refuses; strictly better than eee621f (992 of 1,092 lay against 736, 0 lost)
+- Evidence: `exo_memory/handback/p-o1-read-C_2026-11-26_evidence/reread2/exists.jsonl`, `spanmono_0eb3448.txt`, `widecmp.txt`, `oracle4_0eb3448.txt`.
+- Hand-back: `exo_memory/handback/p-o1-read-C_2026-11-26.md` (section "Second re-read, part two")

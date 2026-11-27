@@ -1,0 +1,12 @@
+
+kh 50 → 70 → 90 on 250 m; panel 19,135, oracle 1,104
+  last change's shortest ending at 250: 103.0 m, so its mark must be at most 147.0
+  change 1's shortest by where it ends  60:103.0 70:103.0 80:103.0 90:103.0 100:103.0 110:104.0 120:109.0 130:114.0 140:121.0 150:123.0 160:127.0 170:132.0 180:132.0 190:133.0 200:132.0 210:134.0 220:125.0 230:117.0 240:107.0 250:103.0
+  change 1 from 19 (panel) first holds ending at 135
+  change 1 from 1 (oracle) first holds ending at 104
+
+kh 50 → 30 → 40 → 50 on 250 m; panel 31,134,194.5, oracle 2,105,175
+  last change's shortest ending at 250: 51.5 m, so its mark must be at most 198.5
+  change 2's shortest by where it ends  60:51.5 70:51.5 80:51.5 90:55.5 100:56.5 110:59.5 120:62.5 130:63.5 140:64.5 150:66.5 160:65.5 170:66.5 180:65.5 190:62.5 200:65.5 210:56.5 220:52.5 230:51.5 240:51.5 250:51.5
+  change 2 from 134 (panel) first holds ending at 195
+  change 2 from 105 (oracle) first holds ending at 171

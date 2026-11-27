@@ -1,0 +1,4 @@
+kh -80 → -90 → -100 → -110 on 250 m: oracle 1/55/160 LAYS
+kh 80 → 90 → 100 → 110 on 250 m: oracle 1/55/160 LAYS
+kv -80 → -90 → -100 → -110 on 250 m: oracle 1/55/160 LAYS
+kv 80 → 90 → 100 → 110 on 250 m: oracle 1/55/160 LAYS

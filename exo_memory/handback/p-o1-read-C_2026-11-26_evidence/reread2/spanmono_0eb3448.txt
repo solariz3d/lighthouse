@@ -1,0 +1,4 @@
+kh first 50, last change 70 → 90, piece 250: shortest 103.0; spans from it to 245 that do NOT hold: 10 (111-115, 130-134)
+kh first 50, last change 40 → 50, piece 250: shortest 51.5; spans from it to 245 that do NOT hold: 4 (54-57)
+kh first -80, last change -95 → -90, piece 300: shortest 25.8; spans from it to 295 that do NOT hold: 0
+kh first -80, last change -100 → -90, piece 300: shortest 51.5; spans from it to 295 that do NOT hold: 0
