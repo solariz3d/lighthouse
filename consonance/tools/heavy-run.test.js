@@ -1337,25 +1337,63 @@ test('STATUS a hold past the maximum is reported as ignored, as --run ignores it
 });
 
 // The chair's condition (04:41Z): COMMITTEE.md's rule is "while a lock's cmd names a timing session, run nothing", and B's slip of 04:10Z was a
-// hand-read that stopped on that word. A live slot whose command names one gates exactly as a hold does, and the output says why.
-test('STATUS (RED FIRST) a live slot whose command NAMES A TIMING SESSION exits 1 and says why; "(not a timing session)" does not', () => {
-  const run = (cmd, extra = {}) => {
+// hand-read that stopped on that word. A live slot of a timing session gates exactly as a hold does, and the output says why.
+// AMENDED 2026-11-27 (pane O, D678 N1): the rule changed, so this row changed with it. It read the LABEL: "timing" left after "not a timing"
+// was taken out. A label is prose, and a phrase rule needs a negation list that is always one behind: "(read, not timing)" closed this gate on
+// every seat for six minutes on 11-27, and "(measure, not timing)" would have (handback/p-d678-ripple-read-E_2026-11-27.md §9). A timing
+// session now SAYS it is one: --timing writes timing: true into its slot lock, and the label is never read for it, whatever it says. The
+// labels the old row counted are kept below, now as labels that do not gate on their own.
+test('STATUS (RED FIRST) a live slot MARKED a timing session (timing: true) exits 1 and says why; a label is never read for it, whatever it says', () => {
+  const run = (cmd, mark, extra = {}) => {
     const d = tmp();
-    writeJson(lockOf(d), { pid: process.pid, seat: '0845a868', cmd, started: new Date().toISOString(), token: 't-slot' });
+    writeJson(lockOf(d), { pid: process.pid, seat: '0845a868', cmd, ...(mark === undefined ? {} : { timing: mark }), started: new Date().toISOString(), token: 't-slot' });
     return status(d, extra);
   };
-  for (const cmd of ['P D675 TIMING SESSION: the timer control', 'P D675 TIMING MEASURE: Sleep(1) overshoot', 'C D675 PACING CHECK (TIMING), three builds', 'a timing session, lower case']) {
-    const r = run(cmd);
-    assert.strictEqual(r.status, 1, `"${cmd}": exit ${r.status}\n${r.stdout}`);
-    assert.match(r.stdout, /GATE: exit 1 .*slot 1 .*names a timing session/, `"${cmd}": the output says why`);
+  for (const cmd of ['B D678 even read: node only', 'P D675 TIMING SESSION: the timer control']) {
+    const r = run(cmd, true);
+    assert.strictEqual(r.status, 1, `"${cmd}", marked: exit ${r.status}\n${r.stdout}`);
+    assert.match(r.stdout, /GATE: exit 1 .*slot 1 is marked a timing session/, `"${cmd}": the output says why`);
+    assert.match(r.stdout, /slot 1: held by 0845a868 .* a timing session \(--timing\)/, `"${cmd}": the slot's own line shows the mark`);
   }
-  for (const cmd of ['E LANDING d675-filter-c: build.bat test (not a timing session)', 'js-suite']) {
+  for (const cmd of ['E D678 probe (read, not timing)', 'A D678 probe2 (measure, not timing)', 'P D675 TIMING SESSION: the timer control',
+    'P D675 TIMING MEASURE: Sleep(1) overshoot', 'C D675 PACING CHECK (TIMING), three builds', 'a timing session, lower case',
+    'E LANDING d675-filter-c: build.bat test (not a timing session)', 'js-suite']) {
     const r = run(cmd);
-    assert.strictEqual(r.status, 0, `"${cmd}": exit ${r.status}\n${r.stdout}`);
+    assert.strictEqual(r.status, 0, `"${cmd}", unmarked: exit ${r.status}\n${r.stdout}`);
     assert.doesNotMatch(r.stdout, /GATE: exit 1/);
   }
-  const mine = run('P D675 TIMING SESSION: my own', { [H.TOKEN_ENV]: 't-slot' });
+  for (const mark of [false, 'true', 1]) assert.strictEqual(run('a run', mark).status, 0, `timing: ${JSON.stringify(mark)} is not the mark; only true is`);
+  const mine = run('P D675: my own', true, { [H.TOKEN_ENV]: 't-slot' });
   assert.strictEqual(mine.status, 0, 'inside the session\'s own run (its token) the slot does not gate its own children');
+});
+
+// D678 N1 (pane O): --timing is how a run says it is a timing session. Read from INSIDE the run: its slot lock carries the mark, and another
+// seat's --status (no token) exits 1 naming it. The same run without the flag, labelled "TIMING SESSION", does neither.
+test('RUN --timing (RED FIRST): the run\'s slot lock carries timing: true, and another seat\'s --status exits 1 while it runs; without the flag neither, whatever the label', () => {
+  const probe = path.join(tmp(), 'probe.js');
+  fs.writeFileSync(probe, [
+    "const { spawnSync } = require('child_process'), fs = require('fs'), path = require('path');",
+    "const [helper, tokenEnv] = process.argv.slice(2), D = process.env.CONSONANCE_DATA, env = { ...process.env }; delete env[tokenEnv];",
+    "const locks = fs.readdirSync(D).filter((n) => /^heavy-run(\\.\\d+)?\\.lock$/.test(n));",
+    "const lock = JSON.parse(fs.readFileSync(path.join(D, locks[0]), 'utf8'));",
+    "const s = spawnSync(process.execPath, [helper, '--status'], { env, encoding: 'utf8', windowsHide: true });",
+    "console.log('PROBE ' + JSON.stringify({ locks: locks.length, timing: lock.timing, status: s.status, gate: (s.stdout.match(/GATE: .*/) || [''])[0] }));",
+  ].join('\n'));
+  const go = (flags, label) => {
+    const d = tmp();
+    const r = spawnSync(process.execPath, [HELPER, '--run', ...flags, '--cmd', label, '--', process.execPath, probe, HELPER, H.TOKEN_ENV], { cwd: d, env: cleanEnv({ CONSONANCE_DATA: d }), encoding: 'utf8', windowsHide: true, timeout: 60000 });
+    const m = r.stdout.match(/^PROBE (.*)$/m);
+    assert.ok(m, `the probe ran under the lock\n${r.stdout}${r.stderr}`);
+    return JSON.parse(m[1]);
+  };
+  const on = go(['--timing'], 'O D678 a marked run');
+  assert.strictEqual(on.locks, 1, 'one slot is held, the run\'s own');
+  assert.strictEqual(on.timing, true, 'the run\'s slot lock carries the mark');
+  assert.strictEqual(on.status, 1, `another seat's --status exits 1 while it runs (${on.gate})`);
+  assert.match(on.gate, /slot \d is marked a timing session/);
+  const off = go([], 'O D678 TIMING SESSION, unmarked');
+  assert.strictEqual(off.timing, undefined, 'no mark without the flag');
+  assert.strictEqual(off.status, 0, `a label alone does not gate (${off.gate})`);
 });
 
 test('STATUS inside the holder\'s own run (its token in the environment) the hold is its own and does not fail the gate', () => {
@@ -1452,6 +1490,51 @@ test('RUN A SCRIPT: under --exclusive the hold is written for the run and gone a
   const r = spawnSync(process.execPath, [HELPER, '--run', '--exclusive', '--cmd', 'excl script', '--', s.file, 'x'], { cwd: d, env: cleanEnv({ CONSONANCE_DATA: d }), encoding: 'utf8', windowsHide: true, timeout: 60000 });
   assert.strictEqual(r.status, 7, r.stdout + r.stderr);
   assert.ok(!fs.existsSync(holdOf(d)), 'no hold left behind');
+});
+
+test('RUN a label with the word "timing" and no --timing: it runs, and stderr says a label is not read for that and names --timing; with --timing, or without the word, no note', () => {
+  const s = script();
+  const noted = /a label is not read for that.*--timing/;
+  const r1 = runScript(['--cmd', 'E D678 probe (read, not timing)', '--', s.file, 'w']);
+  assert.strictEqual(r1.status, 7, r1.stdout + r1.stderr);
+  assert.match(r1.stderr, noted);
+  const r2 = runScript(['--timing', '--cmd', 'O D678 timing session', '--', s.file, 'w']);
+  assert.strictEqual(r2.status, 7, r2.stdout + r2.stderr);
+  assert.doesNotMatch(r2.stderr, noted);
+  const r3 = runScript(['--cmd', 'js-suite', '--', s.file, 'w']);
+  assert.doesNotMatch(r3.stderr, noted);
+});
+
+// D678 N1 (pane O): `cmd C:/`. Git Bash rewrites `cmd /c` into `cmd C:/` before node sees it, and cmd.exe given no /c is an interactive shell
+// that waits on its input and holds the slot: B 11-12 (6 min), E 11-13 (40 min), A 11-27 on L (13 min), loop/stall_trace_lockbn_cmd_c_mangled_2026-11-12.md.
+// Each case runs beside another seat's live exclusive hold: refused BEFORE any slot or hold is waited on, it exits 2 at once; refused after,
+// it would wait and give up with exit 3.
+test('RUN (RED FIRST) cmd given a DRIVE where its /c should be (Git Bash\'s `cmd C:/`) is refused by name, exit 2, before any wait, saying what to type instead', () => {
+  const s = script();
+  for (const prog of [['cmd', 'C:/', s.file, 'w'], ['cmd.exe', 'C:/', s.file], ['C:/Windows/System32/CMD.EXE', 'D:/', 'S:/', 'C:/', s.file], ['cmd', 'c:\\', s.file], ['cmd', 'C:', s.file]]) {
+    const d = tmp();
+    writeJson(holdOf(d), { pid: process.pid, seat: 'other', cmd: 'another seat\'s quiet window', exclusive: true, started: new Date().toISOString(), token: 't-other' });
+    const r = spawnSync(process.execPath, [HELPER, '--run', '--cmd', 'mangled', '--', ...prog], { cwd: d, env: cleanEnv({ CONSONANCE_DATA: d, CONSONANCE_HEAVY_WAIT_MS: '4000' }), encoding: 'utf8', windowsHide: true, timeout: 60000, input: '' });
+    const said = `${prog.join(' ')}: exit ${r.status}\n${r.stderr}`;
+    assert.strictEqual(r.status, 2, said);
+    assert.match(r.stderr, /refused: `cmd(\.exe)? [A-Za-z]:/i, `it names the form: ${said}`);
+    assert.match(r.stderr, /Git Bash/, said);
+    assert.match(r.stderr, /-- <file\.cmd> \[args\]/, `what to type: the script given to --run itself: ${said}`);
+    assert.match(r.stderr, /cmd \/\/c/, `what to type: cmd //c: ${said}`);
+    assert.match(r.stderr, /MSYS_NO_PATHCONV=1/, `what to type: the setting: ${said}`);
+    assert.doesNotMatch(r.stderr, /waiting on/, `it never waited: ${said}`);
+  }
+  assert.ok(!fs.existsSync(s.marker), 'the script never started');
+});
+
+test('RUN cmd with its /c intact runs, a drive AFTER the switch included: only the rewritten switch is refused', () => {
+  const s = script();
+  const r1 = runScript(['--cmd', 'cmd c', '--', 'cmd', '/c', s.file, 'C:/']);
+  assert.strictEqual(r1.status, 7, r1.stdout + r1.stderr);
+  assert.match(r1.stdout, /ran C:\//);
+  const r2 = runScript(['--cmd', 'cmd d c', '--', 'cmd.exe', '/D', '/C', s.file, 'D:/']);   // the switch in capitals, a drive after it
+  assert.strictEqual(r2.status, 7, r2.stdout + r2.stderr);
+  assert.match(r2.stdout, /ran D:\//);
 });
 
 test('RUN A SCRIPT: the usage line names the Git Bash limit it cannot remove', () => {
