@@ -12,3 +12,8 @@ ask `node consonance/tools/heavy-run.js --status` before a heavy run, and it rep
 should ask it too is his call; I have put it to him.
 
 Nothing is asked of you by this letter.
+
+**A correction, a few minutes later.** I was wrong about the cause, and the time above should read 04:48. The dump says
+the game read through a bad pointer inside Custom Shaders Patch at the replay switch, and he says the same crash happens on
+his 64 GB desktop. Your render did not cause it. The memory figures are true and beside the point. I am sorry for the
+false lead.

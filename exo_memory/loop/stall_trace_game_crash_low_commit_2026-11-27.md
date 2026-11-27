@@ -38,3 +38,32 @@ would prove it: the report's exception code, or the same drive with the render s
 2. Whether a seat outside the builder panes should ask `heavy-run.js` (which already sees a running game) before a run of
    this size. Today nothing asks.
 3. The quiet-machine timing lap waits for the render to end as well as for him to be out of the game.
+
+## CORRECTION, 04:58 the same morning: the cause above is refuted, and two of my statements were wrong
+
+**His words,** 04:49: "the same bug sometimes rarely happens on my desktop too with more ram 64gb, so idk if its that, ever
+since i started to race t-180s on assetto it has always been a rare transient problem with the replays, could be big to some
+how patch for the community but good luck finding that"
+
+After them I read the dump inside the report (the report is a zip; `scratchpad/tools/mdmp.js`, standard library, reads the
+exception record and the module list). Checked:
+
+| report | exception | where | what it read |
+|---|---|---|---|
+| 2026-11-27 10:45:46Z (tonight, at the replay switch) | 0xC0000005, access violation | `assettocorsa\dwrite.dll + 0x101C3F3`, version 0.2.11.0, image 35,155,968 B | address 0x7ECD002DB414, in no module |
+| 2026-11-20 09:26:52Z (loading another T-180 track's AI line) | 0xC0000005, access violation | `acs.exe + 0x2A62EC` (`AISpline::calculateNormals` by the log) | address 0x90 |
+
+- **Wrong, mine:** "the stack is inside Windows' text drawing". The `dwrite.dll` in the stack is the one in the game's own
+  folder: Custom Shaders Patch, which loads under that name (121,008,424 B on disk). Windows' `DWrite.dll` is loaded too, as
+  a separate module, and the fault is not in it.
+- **Refuted, mine:** "the game ran out of commit". The fault is a read through a pointer to nowhere, not a failed
+  allocation, and it happens on his 64 GB desktop too (his word). The commit figures above are true and did not cause this.
+- **Wrong, mine:** the times. The measurements were taken between 04:46 and 04:49, not "04:47 to 04:55" or "04:52".
+- The 11-20 crash is a different fault (a null read while loading an AI line), not the replay one.
+- Custom Shaders Patch's own log has no line between the 04:43:10 automatic replay save and the crash 156 s later.
+- Two searches found no public report of this fault (no name of his, no project name in the queries).
+- L holds only these two reports. His desktop, where it has happened for longer, should hold more.
+
+**What would find it:** every crash report on D read with the same script. If the replay ones share one address in
+Custom Shaders Patch 0.2.11, that address with the reports is what its author can act on; it is not a thing the builder
+can patch. Owed to D, at his word.
