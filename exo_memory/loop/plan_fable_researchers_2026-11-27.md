@@ -136,3 +136,5 @@ re-read the same base 14 times). Every car gets a row in every table.
 a track he has already measured is what would score it.
 
 Six agents in all. Waits on his go, and on one choice: the cars as installed (v0.12.0), the head, or both.
+
+**His word, 05:28:** "maybe use opus researchers for this one, save the fable ones for the big job after". Read as go, on Opus. He did not choose installed, head or both: the librarian's stated default is run, the cars as installed (tag v0.12.0) with a column for what the head changes. Started as one workflow: four readers, a writer, a checker.
