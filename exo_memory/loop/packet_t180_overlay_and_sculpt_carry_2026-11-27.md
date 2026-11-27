@@ -77,3 +77,22 @@ unchanged. That was D's sentence, carried here unchecked. E measured both trees:
    was applied 1 / caught 0 over 13 rows.
 4. **Do not change the whole-turn edge.** At exactly one full turn the core stores −359.9999999897 and the field shows −360,
    so a typed −32 unwinds 328° on both trees (E10a, E10b, E10e). Whether a full turn should show 0 and carry is with him.
+
+## Amendment, 02:38, after E's read of 2067c88..7b3926e (`handback/p-l260-read-sculpt-carry-E_2026-11-27.md`, NOT CLEAN on one hold)
+
+**Track 7 is not finished: Sculpt's bank HANDLE stops carrying at ±720.** E measured it through the panel's handle host
+(`h_tip.txt`): a piece whose middle is 710 rises to 720 and stops; a piece whose middle is 730 jumps −10 on the first step
+(the wrong way for an outward drag) and then holds at 720; the mirror the same. Cause: the handle clamps its value to the
+bank kind's range (`handles.js:54`, applied in `targetFor`, `handles.js:325`) while the panel subtracts the unwrapped middle.
+The brush has no such hold. His answer 6 is "keep rolling", so this completes the same order; it is not a new one.
+
+**For the builder of track 7, on `l-bankcarry-a` on top of 7b3926e:**
+1. Sculpt's bank handle carries past ±720 as it does past ±360. E names two ways (no range on Sculpt's bank handle, as the
+   brush has none; or drive it by its travel, not by `value − base`). Choose one and say why; if neither is right, say that.
+2. **Do not change the ghost's bank handle,** which shares the kind and its range; whether it carries is with him.
+3. Red first, through the handle host: E's 710 case, the 730 case outward and inward, and the mirror (`e260_rows.part.js`
+   has them). A row must fail if the first step moves the road against the drag.
+4. The CHANGELOG names what still holds after this, and nothing it does not hold.
+5. Add the clamp to the hand-back's refactor list (its point 2), as E asks.
+6. Tier: the touched rows and the bank-carry harness; a mutant for the new line. The reader of 7b3926e reads the delta.
+No push, landing, build or install.
