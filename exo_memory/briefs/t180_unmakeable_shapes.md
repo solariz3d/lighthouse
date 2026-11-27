@@ -85,3 +85,5 @@ degrees into the new 360 you know? 5. Not sure, what is smoothness limit?"
   - Read as, and told to him: install now what is ready; the reads follow. Packet `loop/packet_t180_test_install_on_L_2026-11-27.md`, the section "Changed 02:55".
 - 04:04 (L), his words: "lemme know when it is ready for me to test"
   - Read as, and told to him: yes to a second test install on L (the ±720 fix, the SPLIT_HEAD words, the way back on a non-round width) once the last read is in; tell him when it is on the laptop. Packet `loop/packet_t180_test_install_2_on_L_2026-11-27.md`.
+- 04:19 (L), his words: "what is the width brush taper"; 04:21: "1 i think right?"
+  - In answer to the librarian's two options (1: Extend holds the width as the tooltip promises; 2: the narrowing carries on and the tooltip is reworded). Read as option 1, for the width. "Taper" was the librarian's word, explained to him. Packet `loop/packet_t180_extend_holds_width_after_brush_2026-11-27.md`. Asked of him, open: the same for the bank after a bank brush.
