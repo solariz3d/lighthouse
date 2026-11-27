@@ -556,3 +556,5 @@ carry it, so this brief does.
   - State: a plan for his yes, `loop/plan_fable_researchers_2026-11-27.md`. Nothing started.
 - 2026-11-27 05:14 (L): "wait lets plan again how to use the researchers right if we figured new shit out"
 - 2026-11-27 05:16 (L): "do you even understand how a t-180s works from the opensource ohyeah github repo? Maybe we should get a refresher"
+- 2026-11-27 05:17 (L): "you know where to look right? There is a creator named Ohyeah, and has the full project on github for the assetto corsa t-180 mod"
+- 2026-11-27 05:18 (L): "then once we learn more about the cars, thats when we can be closer to asking the right questions, surpirsing to me we got this far without it"

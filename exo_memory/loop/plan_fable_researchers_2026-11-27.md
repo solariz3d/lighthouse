@@ -89,3 +89,5 @@ its source. A physics note of 2026-09-29 survives only inside an evidence snapsh
 `research/t180_car_how_it_works_2026-11-27.md`: how it drives, what it asks of a track, its numbers with file and line at
 a named commit, the patch features it leans on, its licence, and what our plans assume about it that the source does not
 carry. R3 (how long an easing has to be) waits on it. R1, R2, R4, R5 and R6 still wait on his yes.
+
+**His word, 05:18:** "then once we learn more about the cars, thats when we can be closer to asking the right questions, surpirsing to me we got this far without it". So R1 to R6 are HELD, not just unanswered: the questions are redrafted with him after R0's note is in, from what the car's source says.
