@@ -1,4 +1,4 @@
-# L262, pane P (L): the test install on L of tonight's two builder branches. Merged, tier green, built and pushed; the install is HELD on my own registered condition, for the librarian's word
+# L262, pane P (L): the test install on L of tonight's two builder branches. Merged, tier green, built, pushed, and INSTALLED on the librarian's word (not launched)
 
 Seat: pane P (L, mount 6e6e002c). This answers the chair's L262 (sent 2026-11-27T08:47:06Z) and packet `exo_memory/loop/packet_t180_test_install_on_L_2026-11-27.md` (room d6ea30ce).
 Scratch: this seat's session scratchpad, folder `l262` (`joinmap.js`, `tset.js`, `tset.json`).
@@ -9,7 +9,9 @@ This file has two halves. §A, the run after go, is directly below. The preparat
 - **The ±720 completion is NOT in this build.** It was not committed on `l-bankcarry-a` when the merge started (09:01:41Z), so the install goes without it. Per the packet, the handle then stops at two full turns (E's read). That is not a regression.
 - **The tips at the merge's start:** `l-bankcarry-a` **7b3926e**, `d677-right-width-b` **e4e7ecc**. These are the commits the librarian named at 02:54.
 - **Merged** as `landing-1127-l262` **537a0c9** on f3cd425. **Tier green**, all 24 files. **Built.** **Pushed** (three branches, no main), and read back.
-- **Not installed: HELD.** My §4 condition fired by its own words; see §5.6. The installed exe is still f3cd425's, 2820e5f8…7576. The build is ready, and the install takes about a minute after the word.
+- **INSTALLED at 09:29:39Z, not launched.** The installed exe is now **69462996bfa3602f20e1a358aec017af727adef1da24238bc60d2d1445de2cd7**, 16,089,600 B; the stamped compare against the build (b9eef9b9…) is equal.
+- **Backup:** `.before-l262-f3cd425`, sha256 **2820e5f82160b8d48b3cb0399671f0783ef6bb7563d1e9e4056cda63c7d75576**, the f3cd425 install, made and `cmp`-checked first.
+- I held the install on my own §4 condition from my commit ea32ea59 (09:28:33Z, its commit time: `git log -1 --format=%cI ea32ea59`) to the word at 09:29:21Z, which was INSTALL (§5.6).
 - **The whole suite** is running in the background on 537a0c9. It is reported when it ends.
 
 
@@ -168,22 +170,34 @@ Code files changed (checked: `git diff --name-only f3cd425 <tip>`):
   - One of his core tracks, copied and extended on the merged tree with the right side 3.5 m wider for 100 m (B's row-1 shape), writes `t180b.core/7` and reads back byte for byte.
   - f3cd425 refuses that text by name: "BAD_DOC: schema must be t180b.core/4 (or an older t180b.core/1, t180b.core/2, t180b.core/3), got t180b.core/7 (a newer file needs a newer builder)".
 
-### 5.6 The install: HELD, for the librarian's word
+### 5.6 The install: held, then INSTALLED on the librarian's word
 
 - §4 registered: "I stop and say so, installing nothing, if: … any of his tracks fails to open, or re-saves different."
 - **By its own words it fired.** 2 of 14 core tracks re-save different from their own text, and 2 files do not open as core documents.
 - Every one of them does exactly the same on f3cd425, which is the build installed now. So this install changes how **0** of his files open or save.
 - I worded the condition loosely; it should have said "different from f3cd425". But I hold the stake in installing, so I am not the one to reread my own stop rule after it fired.
 - **The librarian decides:** install this build as it stands, or not.
-- Ready for the word:
-  - checked: the installed exe is still **2820e5f82160b8d48b3cb0399671f0783ef6bb7563d1e9e4056cda63c7d75576** (16,086,016 B, f3cd425), and no `.before-l262*` name is taken.
-  - The install would be: `cp -n` to `.before-l262-f3cd425` and `cmp`; then `install-local.ps1 -Tag l262i-537a0c9` with the two `.p-l262-537a0c9` files; then re-hash; no launch.
+- **The word** (the chair's 09:29:21Z, quoting the librarian's ring of 09:29Z, note 93d4f3a7): INSTALL 537a0c9's build as it stands. The librarian's reading: "So this install changes how 0 of his files open or save. The loose wording began in my packet's step 5 ("re-save byte for byte" was D's figure for D's files); P was right to hold and not reread its own rule." His words for the install stand: 02:45 "yes", 02:52 "go".
+- **Before:** checked: `tasklist` showed no builder, heavy-run `gamesIn` gave `[]`, and no `.before-l262*` name existed. The installed exe was 2820e5f8…7576 (f3cd425). Both build copies re-hashed to b9eef9b9… and f0e00444….
+- **Backup, first:** `cp -n` to `%LOCALAPPDATA%\T-180 Track Builder\t180-track-builder.exe.before-l262-f3cd425`. checked: `cmp` identical; sha256 2820e5f8…7576; 16,086,016 B.
+- **Install:** `install-local.ps1 -Tag l262i-537a0c9 -Installer <setup .p-l262-537a0c9> -Built <exe .p-l262-537a0c9> -WaitSec 5`, exit 0 (`run/install.txt`):
+  - builder processes 0 before and 0 after;
+  - the script's own backup is `.before-l262i-537a0c9`, 2820E5F8…7576;
+  - installed **69462996…2CD7**, ProductVersion 0.4.40, 16,089,600 B;
+  - **stamped compare: equal** ("the built exe with UNK -> NSS at byte 13613466 is the installed exe").
+- **Re-hashed after, by my own `sha256sum`:** installed 69462996…2cd7; both backups 2820e5f8…7576, and `cmp` says they are identical. The install lock file is gone. `uninstall.exe` was written 03:29:39 local (09:29:39Z).
+- checked: `tasklist` shows no builder running; **nothing was launched**. `find -newermt 08:47Z` on his two app-data folders returns 0 files, so his saves were not written.
+- **To undo**, with the builder closed:
+
+      copy /Y "%LOCALAPPDATA%\T-180 Track Builder\t180-track-builder.exe.before-l262-f3cd425" "%LOCALAPPDATA%\T-180 Track Builder\t180-track-builder.exe"
+
+  Then check its sha256 is 2820e5f8…7576 (f3cd425). The backup is kept twice; the earlier `.before-l259-0ab6cc8` is untouched.
 
 ### 5.7 The whole suite
 
 Once, on 537a0c9: running in the background under heavy-run at BelowNormal (`--test-concurrency=4`, TAP, leftovers.js before and after). It gates a merge to main or a release, not this install. Reported when it ends.
 
-### 5.8 For him to try, once it is installed (one line each)
+### 5.8 For him to try, now that it is installed on the laptop (one line each)
 
 - Type a bank past a full turn (more than 360°) in the bank field or a bank row: the road rolls on past the turn instead of unwinding.
 - In Sculpt, drag a bank mark, or brush the bank, past a full turn: it carries on.
@@ -194,10 +208,12 @@ Once, on 537a0c9: running in the background under heavy-run at BelowNormal (`--t
 
 ## Corrections
 
+- The BASE line of ea32ea59 said 373b8e25 (the packet's commit) where the room's HEAD under my commit was 711dbdb4: my edit's escaping missed it. The ring carried 711dbdb4; this file now does.
 - My pipeline stopped before the build on "NOT TESTED" found 38 times in the harness TAP. All 38 were in the names of passing rows that test the harnesses' crash handling. The rule should have matched a row's verdict, not any text. Nothing was lost: I read the TAP, then built in a second call (§5.2).
 - §4's file condition ("re-saves different") was worded without saying "different from what". It fired as written, and I hold the install on it rather than reword it after the fact (§5.6).
 - My first draft gave B 12 rows, 10 IN. B changed 11 test files, and 9 are IN: `tset.json` gives A 7 rows, 7 IN, and B 11 rows, 9 IN. Corrected in §0 and §3 before commit.
 
-BASE: C:\Consonance\lighthouse 373b8e25
-SOURCES: exo_memory/loop/packet_t180_test_install_on_L_2026-11-27.md:50; exo_memory/handback/p-l259-install-P_2026-11-27.md; exo_memory/handback/p-d677-right-width-B_2026-11-27.md:15-47; heavy-run --status ×4; tasklist ×5; scratch l262/pipeline.log, run/pipeline.json, run/tier-plain.tap, run/tier-harness.tap, run/tset-final.json, run/build262.json, build262.log, run/bytes.json, copies.taken, src.sha; git rev-list / log -p / diff-tree --cc for the push scan; git push ×3; git ls-remote origin; push-gate.jsonl last 3 rows; sha256sum of the installed exe
-NEXT: librarian gives P the word on the held install (install 537a0c9's build as it stands, or not) when it has read §5.6; P installs within the minute of a yes, and reports the whole suite when it ends
+BASE: C:\Consonance\t180-wt-p-l262 f3cd425
+BASE: C:\Consonance\lighthouse 93d4f3a7
+SOURCES: exo_memory/loop/packet_t180_test_install_on_L_2026-11-27.md:50; exo_memory/handback/p-l259-install-P_2026-11-27.md; exo_memory/handback/p-d677-right-width-B_2026-11-27.md:15-47; heavy-run --status ×4; tasklist ×5; scratch l262/pipeline.log, run/pipeline.json, run/tier-plain.tap, run/tier-harness.tap, run/tset-final.json, run/build262.json, build262.log, run/bytes.json, copies.taken, src.sha; git rev-list / log -p / diff-tree --cc for the push scan; git push ×3; git ls-remote origin; push-gate.jsonl last 3 rows; sha256sum of the installed exe; the chair's word of 09:29:21Z (librarian note 93d4f3a7); tasklist and gamesIn before the install; install-local.ps1 output run/install.txt; sha256sum and cmp of the installed exe and both backups; find -newermt on his app-data folders
+NEXT: librarian tells him the test build is on the laptop, with 5.8, when it has read 5.6; P reports the whole suite on 537a0c9 when it ends
