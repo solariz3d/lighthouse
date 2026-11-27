@@ -59,3 +59,22 @@ The second probe is not dispatched; it is queued for D in the handoff.
   `loop/packet_t180_sculpt_even_banked_probe3_2026-11-27.md`.
 - Bank given back by arithmetic after the fact (no change to the grab) is exact after one grab only; after eight it leaves
   0.26 to 4.02 degrees.
+
+## State, 2026-11-27 12:4x (D): the third probe is in; the build is ordered
+
+- `handback/p-d678-even-banked-probe3-A_2026-11-27.md` (7a023d12; run 2 registered at 33e7c780). The red at the ends of a bank
+  ramp was the level's own: it read the bank from the track file, and the builder builds a rounder roll there (up to 2.4286
+  degrees apart; `adapter.js` `bankPlan`). Reading the built roll removes it: no red on a turn banked into its centre, and the
+  same bytes as before on a constant bank and a flat road.
+- On a road banked AWAY from its turn the new middle runs 2 m to the side, and that line already reads red on the road as it
+  stands (down to -8.1 g at the checker's speed) where the old middle read +7 g. The level adds no bump there; the tool will
+  say so in words.
+- Build ordered: `loop/packet_t180_sculpt_even_build_on_D_2026-11-27.md`. Pictures before any install. The grab is not changed;
+  that waits on his word.
+- **Two findings for him, changed by nobody:**
+  1. The built roll on the ramping test road still accelerates at 0.00055 rad/m2, over the bank's own bar of 0.0001 (the
+     planner infers the rounding window cannot cross a piece's joint). The same kind of case as C's 104 of 1,050
+     (`loop/handoff_t180_2026-11-26-D.md`, "the smoothness limit").
+  2. The checker's side lines leave out the roll rate: they read +6.98 g where a line 2 m off the roll's axis reads -0.66 g.
+     A lead for his 05:41 words that clipping is worse on corkscrews (`briefs/t180_unmakeable_shapes.md`): a car off the axis
+     of a fast roll takes a load the checker does not count. Inferred, not measured against a replay.
