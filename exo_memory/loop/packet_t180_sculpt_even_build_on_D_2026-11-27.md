@@ -83,3 +83,48 @@ would see it in the app. Read the release's words as he would. The reader's find
 told to the builder through the librarian, not fixed twice.
 
 NEXT: chair dispatch Track 1 to the builder of Even and Track 2 to a reader who wrote none of it, now; each pane call_librarian with its hand-back
+
+---
+
+## Amended 15:4x (D), after the read `handback/p-d678-even-read-B_2026-11-27.md` (section 2 read whole; 2.4 not yet in): NOT CLEAN
+
+The width, the outside and the joints hold in all 86 of the reader's rows. **The kept edge does not:** in three kinds of road
+it ends 2.9 to 3.9 m from where the CHANGELOG says, and three of the tool's four sentences say the edge "stays where it is"
+while the code puts it where the road was before any grab. Rulings, the librarian's under his 06:01 word:
+
+### For the builder of Even (Track 1 changes; the release fix, U6, goes on as ordered)
+
+1. **Stop the sideways least-squares fit (the 14:5x item 2).** The reader's 2.3 shows the fault is upstream of any fit: the
+   reference itself is wrong (WC3: the far end's 18 m taken as the road's width for the whole window, 2.92 m). A fit to a
+   wrong reference is a better fit to the wrong line.
+2. **The kept edge goes back to a design pass, measured, before more code.** The rule as built guesses "the road before any
+   grab" from the window's two ends (the rest rule and the agree rule), and the guess fails when an end sits on a grab, when a
+   grab straddles the 10 m test, and when the road's own width changes inside the run. Write down the candidates and measure
+   each on ONE table that holds the builder's cases and the reader's (flat and B-: T1, T2b, W1, W8; WC0 to WC4; a row of grabs
+   through both ends; a grab centred 5 m before the start end; either edge kept), with each candidate's failing result
+   registered first. At least these two:
+   - (a) the rule as built, mended;
+   - (b) **no guess about the past:** the kept edge is kept where it IS; Even changes the width and moves the other edge. Where
+     the kept edge is itself uneven, say what the result looks like and what the tool would tell him.
+   For each: where the kept edge ends against where it is now AND against the road before any grab, the largest move of
+   either edge on release, the reds. **No candidate is chosen by the builder or by me:** the table and before/after pictures of
+   the two or three cases where the candidates differ most go to him. What the tool means when he keeps an edge he has pulled
+   is his eye's call.
+3. **The words are made true to whichever behaviour ships** (the hint, the keeps title, the done sentence, the CHANGELOG; and
+   "50 m either side" against 20 m at the value then a 30 m ease). Until item 2 is settled, no sentence may say "stays where
+   it is" over code that moves it.
+4. **Two measured misses to mend or explain, rows registered first:** the kept edge moves 0.165 m in the margins with nothing
+   grabbed (the reader's 2.2, `even.js:240` by its reading); the centre sits 0.04 to 0.07 m off its in-plane place near the far
+   window end when a grab's taper reaches it (bar 0.01).
+
+### N5, new, for whoever the chair picks (builder repo; tier CHECK IT, it is seen by looking; not Even's code)
+
+The lavender wash is named (the reader's 2.1): the next piece's ghost is drawn without the road's sideways offset, so after a
+grab or an Even on a banked road it lies up to 2 m beside the placed road as soon as Sculpt is switched off. It is on c522ea6
+too. The reader's probable mend, not tried: the shell's `candidate` hands on `lift` as `resolvedOf` does
+(`app/core/coreshell.js`; `trackmodel.js` `ghostSteps`). A row for it where a test can see it, the existing ghost tests run,
+before and after pictures of the banked turn with Sculpt off. Its own branch on c522ea6; no build, no install.
+
+**N2 (the grab along the slope) and N4 (the test build) of the night's packet now wait on item 2 and on his look.**
+
+NEXT: chair pass items 1 to 4 to the builder of Even now and dispatch N5 to a free pane; each pane call_librarian with its hand-back
