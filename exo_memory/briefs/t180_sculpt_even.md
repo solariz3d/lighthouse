@@ -78,3 +78,16 @@ The second probe is not dispatched; it is queued for D in the handoff.
   2. The checker's side lines leave out the roll rate: they read +6.98 g where a line 2 m off the roll's axis reads -0.66 g.
      A lead for his 05:41 words that clipping is worse on corkscrews (`briefs/t180_unmakeable_shapes.md`): a car off the axis
      of a fast roll takes a load the checker does not count. Inferred, not measured against a replay.
+
+## State, 2026-11-27 15:0x (D): Even is built; pictures put to him; a repair round and a read are running
+
+- Builder branch `d678-even-a` 437590e (on c522ea6), on origin, in no build. `handback/p-d678-even-build-A_2026-11-27.md`.
+- Flat turn after eight grabs: width 14.06 to 16.12 m becomes 16.00 to 16.00 m, the inner edge back to the road's own place,
+  the checker from 2 red and 6 amber to 0 and 0. Banked into the turn after a Width brush: the inner edge within 6 mm, no new
+  red. After today's grab on a banked turn Even keeps the grab's 5 degrees of flattening (the inner edge 0.10 m off, one red
+  left that is the grab's).
+- Not finished, by the builder's own registration: the release's check takes 35 s on his largest closed lap; 0.077 m where
+  the road's own width changes across the stretch; mutants. Repair and read ordered:
+  `loop/packet_t180_sculpt_even_build_on_D_2026-11-27.md`, "Amended 14:5x".
+- **Pictures put to him:** https://claude.ai/artifact/UYhbuWYjLgM74gWyAY6XcK (four of the nine; the rest untracked in the
+  hand-back's evidence folder). His call, still open: the grab along the road's slope.
