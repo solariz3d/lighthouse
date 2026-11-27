@@ -1,0 +1,9 @@
+E1 | pieces 2 (level 2) | first piece changed 1 | end state off the level head, in steps: {"w":{"v":13630,"m":10.05}}
+E4 | pieces 2 (level 2) | first piece changed 1 | end state off the level head, in steps: {"w":{"v":25000,"m":1511.85}}
+E6 | pieces 2 (level 2) | first piece changed 1 | end state off the level head, in steps: {"kh":{"v":0,"m":0},"w":{"v":10682,"m":1937.69}}
+grab +4 end-3 r5 | pieces 2 (level 2) | first piece changed 1 | end state off the level head, in steps: {"kh":{"v":0,"m":1.35},"w":{"v":14469,"m":16685.666}}
+lap brush +1.37 end-5 r20 | pieces 6 (level 6) | first piece changed 5 | end state off the level head, in steps: {"w":{"v":13630,"m":10.05}}
+lap brush +5 end-30 r40 | pieces 6 (level 6) | first piece changed 5 | end state off the level head, in steps: {"w":{"v":25000,"m":1511.85}}
+lap grab +2 end-10 r20 | pieces 6 (level 6) | first piece changed 5 | end state off the level head, in steps: {"kh":{"v":0,"m":0.243},"w":{"v":10682,"m":1937.69}}
+lap grab +2 end-0 r10 | pieces 6 (level 6) | first piece changed 5 | end state off the level head, in steps: {"kh":{"v":0,"m":0.486},"w":{"v":20000,"m":207.902}}
+lap grab -2 end-2 r5 | pieces 6 (level 6) | first piece changed 5 | end state off the level head, in steps: {"kh":{"v":0,"m":0.072},"w":{"v":14468,"m":6436.671}}

@@ -1,0 +1,8 @@
+E1 the brush, +1.37 at end-5, r 20: head 20.4630 (-1.00e-3), R 20, swing -1.6 mm at 3.6, >1 mm until 6.9, end 20.463 (0), joint ok, max|w''| 0.0004012
+E2 the brush, +1.37 at end-10, r 20: head 20.4214 (-6.96e-3), R 20, swing -10.6 mm at 3.6, >1 mm until 10.9, end 20.4214 (0), joint ok, max|w''| 0.002738
+E3 the brush, +5 at end-19, r 20: head 23.1709 (-9.27e-2), R 20, swing -141.4 mm at 3.6, >1 mm until 13.3, end 23.1709 (0), joint ok, max|w''| 0.03644
+E4 the brush, +5 at end-30, r 40: head 21.6000 (-1.51e-1), R 20, swing -230.8 mm at 3.6, >1 mm until 13.5, end 21.6 (0), joint ok, max|w''| 0.05947
+E5 grab, w +1.37 at end-5, r 20: head 20.4409 (-5.52e-2), R 20, swing -84.3 mm at 3.6, >1 mm until 12.9, end 20.4409 (0), joint ok, max|w''| 0.02171
+E6 grab, w +2 at end-10, r 20: head 20.1682 (-1.94e-1), R 20, swing -295.7 mm at 3.6, >1 mm until 13.6, end 20.1682 (0), joint ok, max|w''| 0.0762
+E7 grab, w -2 at end-20, r 30: head 18.6487 (1.21e-1), R 20, swing 184.0 mm at 3.6, >1 mm until 13.4, end 18.6487 (0), joint ok, max|w''| 0.04741
+E8 a number transition (drag-ghost row 5 head): head 25.1049 (8.39e-2), R 20, swing 128.0 mm at 3.6, >1 mm until 13.2, end 25.1049 (0), joint ok, max|w''| 0.03299

@@ -1,0 +1,3 @@
+test/core_width_hold_mutation.test.js: applied 13 / caught 13 / NOT APPLIED 0
+test/core_ramp_mutation.test.js: applied 106 / caught 106 / NOT APPLIED 0
+ALL: applied 119 / caught 119 / NOT APPLIED 0 / NOT CAUGHT 0; unattributed 0; other tests (controls, stand-ins, guards) 4, failed 0

@@ -1,0 +1,10 @@
+test/core_bank_flow_mutation.test.js: applied 45 / caught 45 / NOT APPLIED 0
+test/core_cup_mutation.test.js: applied 48 / caught 48 / NOT APPLIED 0
+test/core_landing_xsec_mutation.test.js: applied 18 / caught 18 / NOT APPLIED 0
+test/core_ramp_mutation.test.js: applied 105 / caught 105 / NOT APPLIED 1
+test/core_right_width_mutation.test.js: applied 35 / caught 35 / NOT APPLIED 0
+test/core_smooth_ramps_mutation.test.js: applied 18 / caught 18 / NOT APPLIED 0
+test/core_turnby_mutation.test.js: applied 22 / caught 22 / NOT APPLIED 0
+test/core_width_hold_mutation.test.js: applied 13 / caught 12 / NOT APPLIED 0 / NOT CAUGHT 1
+test/core_xsec_mutation.test.js: applied 67 / caught 67 / NOT APPLIED 0
+ALL: applied 371 / caught 370 / NOT APPLIED 1 / NOT CAUGHT 1; unattributed 0; other tests (controls, stand-ins, guards) 15, failed 0

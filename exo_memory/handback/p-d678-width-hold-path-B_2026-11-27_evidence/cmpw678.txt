@@ -1,0 +1,133 @@
+== row 2: ripple268w, c2591bf | repair (width hash = knots + w)
+table 0: 3f8bbfcab59c | 3f8bbfcab59c same; printed line same
+table 1: ec978852db9a | ec978852db9a same; printed line same
+table 2: 4d58e8bd9187 | 4d58e8bd9187 same; printed line same
+table 3: dd97d02a3bc0 | dd97d02a3bc0 same; printed line same
+table 4: 7d6a2e07fb9c | 7d6a2e07fb9c same; printed line same
+table 5: d3e021583ddc | d3e021583ddc same; printed line same
+table 6: ea937008044f | ea937008044f same; printed line same
+table 7: 4a3ee39e8aea | 4a3ee39e8aea same; printed line same
+lengths 0: d83b20bf4e40 | d83b20bf4e40 same; printed line same
+lengths 1: 50dbf5fd5dd8 | 50dbf5fd5dd8 same; printed line same
+lengths 2: 8e756e928403 | 8e756e928403 same; printed line same
+lengths 3: 8df5e9302072 | 8df5e9302072 same; printed line same
+lengths 4: e749ae4c26fd | e749ae4c26fd same; printed line same
+lengths 5: 36e7c3b39bb7 | 36e7c3b39bb7 same; printed line same
+lengths 6: 97fea38bbcb3 | 97fea38bbcb3 same; printed line same
+lengths 7: 561057fa000d | 561057fa000d same; printed line same
+lengths 8: eb1b94cb1e14 | eb1b94cb1e14 same; printed line same
+lengths 9: 34a4c58113bd | 34a4c58113bd same; printed line same
+lengths 10: 826d166fa16f | 826d166fa16f same; printed line same
+lengths 11: 73f51838b5e9 | 73f51838b5e9 same; printed line same
+lengths 12: 43e0f7cca4f8 | 43e0f7cca4f8 same; printed line same
+lengths 13: 14bd86aaa45d | 14bd86aaa45d same; printed line same
+lengths 14: 792eb0c36a74 | 792eb0c36a74 same; printed line same
+lengths 15: 3060190d0582 | 3060190d0582 same; printed line same
+sweep 0: caf5e97240dd | caf5e97240dd same; printed line same
+sweep 1: 6670508a6f09 | 6670508a6f09 same; printed line same
+sweep 2: ad5966dc99ef | ad5966dc99ef same; printed line same
+sweep 3: 7f6d6c7f9e71 | 7f6d6c7f9e71 same; printed line same
+sweep 4: 484bb781935d | 484bb781935d same; printed line same
+sweep 5: 101e79e6a8f2 | 101e79e6a8f2 same; printed line same
+sweep 6: ce310b106f49 | ce310b106f49 same; printed line same
+sweep 7: 7b8b79e45c2e | 7b8b79e45c2e same; printed line same
+sweep 8: 3f8bbfcab59c | 3f8bbfcab59c same; printed line same
+sweep 9: ab9c34498e85 | ab9c34498e85 same; printed line same
+sweep 10: a78ec94f7d89 | a78ec94f7d89 same; printed line same
+sweep 11: 5d8e16d1e5cf | 5d8e16d1e5cf same; printed line same
+sweep 12: caf5e97240dd | caf5e97240dd same; printed line same
+sweep 13: 6670508a6f09 | 6670508a6f09 same; printed line same
+sweep 14: ad5966dc99ef | ad5966dc99ef same; printed line same
+sweep 15: 7f6d6c7f9e71 | 7f6d6c7f9e71 same; printed line same
+sweep 16: 484bb781935d | 484bb781935d same; printed line same
+sweep 17: 101e79e6a8f2 | 101e79e6a8f2 same; printed line same
+sweep 18: ce310b106f49 | ce310b106f49 same; printed line same
+sweep 19: 7b8b79e45c2e | 7b8b79e45c2e same; printed line same
+sweep 20: 3f8bbfcab59c | 3f8bbfcab59c same; printed line same
+sweep 21: ab9c34498e85 | ab9c34498e85 same; printed line same
+sweep 22: a78ec94f7d89 | a78ec94f7d89 same; printed line same
+sweep 23: 5d8e16d1e5cf | 5d8e16d1e5cf same; printed line same
+sweep 24: ec978852db9a | ec978852db9a same; printed line same
+sweep 25: e70d9a8323f0 | e70d9a8323f0 same; printed line same
+sweep 26: 99d07e82c48a | 99d07e82c48a same; printed line same
+sweep 27: ccb394d5f18a | ccb394d5f18a same; printed line same
+sweep 28: caf5e97240dd | caf5e97240dd same; printed line same
+sweep 29: 6670508a6f09 | 6670508a6f09 same; printed line same
+sweep 30: ad5966dc99ef | ad5966dc99ef same; printed line same
+sweep 31: 7f6d6c7f9e71 | 7f6d6c7f9e71 same; printed line same
+sweep 32: 484bb781935d | 484bb781935d same; printed line same
+sweep 33: 101e79e6a8f2 | 101e79e6a8f2 same; printed line same
+sweep 34: ce310b106f49 | ce310b106f49 same; printed line same
+sweep 35: 7b8b79e45c2e | 7b8b79e45c2e same; printed line same
+sweep 36: 3f8bbfcab59c | 3f8bbfcab59c same; printed line same
+sweep 37: ab9c34498e85 | ab9c34498e85 same; printed line same
+sweep 38: a78ec94f7d89 | a78ec94f7d89 same; printed line same
+sweep 39: 5d8e16d1e5cf | 5d8e16d1e5cf same; printed line same
+sweep 40: ec978852db9a | ec978852db9a same; printed line same
+sweep 41: e70d9a8323f0 | e70d9a8323f0 same; printed line same
+sweep 42: 99d07e82c48a | 99d07e82c48a same; printed line same
+sweep 43: ccb394d5f18a | ccb394d5f18a same; printed line same
+sweep 44: 17d9a155022a | 17d9a155022a same; printed line same
+sweep 45: 34fbbc43a496 | 34fbbc43a496 same; printed line same
+sweep 46: f5bdb4be7cbd | f5bdb4be7cbd same; printed line same
+sweep 47: 9f592b192910 | 9f592b192910 same; printed line same
+sweep 48: 2b664d06f540 | 2b664d06f540 same; printed line same
+sweep 49: 4d58e8bd9187 | 4d58e8bd9187 same; printed line same
+sweep 50: 8f21b4c252d0 | 8f21b4c252d0 same; printed line same
+sweep 51: 9c4a1f72015a | 9c4a1f72015a same; printed line same
+sweep 52: caf5e97240dd | caf5e97240dd same; printed line same
+sweep 53: 6670508a6f09 | 6670508a6f09 same; printed line same
+sweep 54: ad5966dc99ef | ad5966dc99ef same; printed line same
+sweep 55: 7f6d6c7f9e71 | 7f6d6c7f9e71 same; printed line same
+sweep 56: 484bb781935d | 484bb781935d same; printed line same
+sweep 57: 101e79e6a8f2 | 101e79e6a8f2 same; printed line same
+sweep 58: ce310b106f49 | ce310b106f49 same; printed line same
+sweep 59: 7b8b79e45c2e | 7b8b79e45c2e same; printed line same
+sweep 60: 3f8bbfcab59c | 3f8bbfcab59c same; printed line same
+sweep 61: ab9c34498e85 | ab9c34498e85 same; printed line same
+sweep 62: a78ec94f7d89 | a78ec94f7d89 same; printed line same
+sweep 63: 5d8e16d1e5cf | 5d8e16d1e5cf same; printed line same
+sweep 64: ec978852db9a | ec978852db9a same; printed line same
+sweep 65: e70d9a8323f0 | e70d9a8323f0 same; printed line same
+sweep 66: 99d07e82c48a | 99d07e82c48a same; printed line same
+sweep 67: ccb394d5f18a | ccb394d5f18a same; printed line same
+sweep 68: 17d9a155022a | 17d9a155022a same; printed line same
+sweep 69: 34fbbc43a496 | 34fbbc43a496 same; printed line same
+sweep 70: f5bdb4be7cbd | f5bdb4be7cbd same; printed line same
+sweep 71: 9f592b192910 | 9f592b192910 same; printed line same
+sweep 72: 2b664d06f540 | 2b664d06f540 same; printed line same
+sweep 73: 4d58e8bd9187 | 4d58e8bd9187 same; printed line same
+sweep 74: 8f21b4c252d0 | 8f21b4c252d0 same; printed line same
+sweep 75: 9c4a1f72015a | 9c4a1f72015a same; printed line same
+sweep 76: 223a40a5fa49 | 223a40a5fa49 same; printed line same
+sweep 77: dd97d02a3bc0 | dd97d02a3bc0 same; printed line same
+sweep 78: f84a6b4009d6 | f84a6b4009d6 same; printed line same
+sweep 79: 5c121d30d188 | 5c121d30d188 same; printed line same
+extra 0: 7a5e0ba254e9 | 7a5e0ba254e9 same; printed line same
+extra 1: 386968ba0d7f | 386968ba0d7f same; printed line same
+extra 2: 10724f7de301 | 10724f7de301 same; printed line same
+extra 3: 227fa748ab0d | 227fa748ab0d same; printed line same
+extra 4: e587107a1f9f | e587107a1f9f same; printed line same
+extra 5: f99ee4b592ba | f99ee4b592ba same; printed line same
+ROW 2: width the same 110 of 110; printed line the same 110 of 110; the bar (table): 8 of 8
+
+== Track 2 ahead: d678 width columns, c2591bf | repair, held rows by caller
+extend: the same 60, differ 0
+turnBy 45: the same 60, differ 0
+turnBy -90 over 200: the same 60, differ 0
+corner 30 + extra 20 from 50: the same 60, differ 0
+sharp -60 R40 ramp8: the same 0, differ 60
+sharp 90 R150 ramp4: the same 0, differ 60
+sharp -60 R40 ramp1: the same 60, differ 0
+jump (take-off): the same 60, differ 0
+level: the same 60, differ 0
+sharp -60 R40 ramp8: swing moved at most 1.054 mm (at most 1.39% of a row's swing); largest |w''| 4.707 -> 4.6927; over 1 mm until 0-1.7 -> 0-1.71; lengths 40.2238 -> 40.3629; rows not ending at the head, level, joint null: 0
+sharp 90 R150 ramp4: swing moved at most 0.121 mm (at most 0.22% of a row's swing); largest |w''| 4.4353 -> 4.4337; over 1 mm until 0-1.38 -> 0-1.38; lengths 234.2583 -> 234.3479; rows not ending at the head, level, joint null: 0
+
+== Finish: the first new piece's hold figures (all but its hashes and knots), c2591bf | repair
+lap level: hold figures same; pieces 942/364/943 -> 942/364/943
+lap brush +1.37 end-5 r20: hold figures same; pieces 942/363/942 -> 942/364/943
+lap brush +5 end-30 r40: hold figures same; pieces 942/363/942 -> 942/364/943
+lap grab +2 end-10 r20: hold figures same; pieces 942/363/942 -> 942/364/943
+lap grab +2 end-0 r10: hold figures same; pieces 942/363/942 -> 942/364/943
+lap grab -2 end-2 r5: hold figures same; pieces 942/363/942 -> 942/364/943

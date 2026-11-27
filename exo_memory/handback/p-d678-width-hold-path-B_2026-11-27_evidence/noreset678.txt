@@ -1,0 +1,12 @@
+rows 610, differ 64
+extend: 5 of 61 differ
+turnBy 45: 5 of 61 differ
+turnBy -90 over 200: 5 of 61 differ
+corner 30 + extra 20 from 50: 5 of 61 differ
+sharp 90 R22 ramp4: 0 of 61 differ
+sharp -60 R40 ramp8: 7 of 61 differ
+sharp 90 R150 ramp4: 11 of 61 differ
+sharp -60 R40 ramp1: 16 of 61 differ
+jump (take-off): 5 of 61 differ
+level: 5 of 61 differ
+finish: 1 of 6 differ

@@ -1,0 +1,71 @@
+✖ D678: after a width brush, Turn by -90 over 200 lays the same path as from a level head (the hold does not move the turn) (117.171ms)
+✖ D678: after a width brush, a corner of 30 with an extra 20 from 50 lays the same path as from a level head (60.048ms)
+✖ D678: after a width brush, Sharp -60 R40 ramp 8 lays the same path as from a level head (305.6278ms)
+✔ D678: after a width brush, Turn by and the corner list still hold the width: within 1 mm of the head's from 20 m on, ending there level, the joint smooth (40.942ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 1
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 708.3844
+
+✖ failing tests:
+
+test at app\test\core-width-hold.test.js:177:1
+✖ D678: after a width brush, Turn by -90 over 200 lays the same path as from a level head (the hold does not move the turn) (117.171ms)
+  AssertionError [ERR_ASSERTION]: Turn by -90 over 200, piece 1: kh is 1.89e-4 from the level head's, over one step
+      at G:\consonance-scratch\b-hold\app\test\core-width-hold.test.js:170:190
+      at Array.forEach (<anonymous>)
+      at samePath (G:\consonance-scratch\b-hold\app\test\core-width-hold.test.js:167:15)
+      at TestContext.<anonymous> (G:\consonance-scratch\b-hold\app\test\core-width-hold.test.js:178:3)
+      at async Test.run (node:internal/test_runner/test:1125:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at app\test\core-width-hold.test.js:181:1
+✖ D678: after a width brush, a corner of 30 with an extra 20 from 50 lays the same path as from a level head (60.048ms)
+  AssertionError [ERR_ASSERTION]: the corner list, piece 1: kh is 3.95e-5 from the level head's, over one step
+      at G:\consonance-scratch\b-hold\app\test\core-width-hold.test.js:170:190
+      at Array.forEach (<anonymous>)
+      at samePath (G:\consonance-scratch\b-hold\app\test\core-width-hold.test.js:167:15)
+      at TestContext.<anonymous> (G:\consonance-scratch\b-hold\app\test\core-width-hold.test.js:182:3)
+      at async Test.run (node:internal/test_runner/test:1125:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:787:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at app\test\core-width-hold.test.js:185:1
+✖ D678: after a width brush, Sharp -60 R40 ramp 8 lays the same path as from a level head (305.6278ms)
+  AssertionError [ERR_ASSERTION]: Sharp -60 R40 ramp 8, piece 1: the same length
+  + actual - expected
+  
+  + 40.2238
+  - 40.3629
+       ^
+  
+      at G:\consonance-scratch\b-hold\app\test\core-width-hold.test.js:169:12
+      at Array.forEach (<anonymous>)
+      at samePath (G:\consonance-scratch\b-hold\app\test\core-width-hold.test.js:167:15)
+      at TestContext.<anonymous> (G:\consonance-scratch\b-hold\app\test\core-width-hold.test.js:186:3)
+      at async Test.run (node:internal/test_runner/test:1125:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:787:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 40.2238,
+    expected: 40.3629,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

@@ -1,0 +1,10 @@
+extra from  2 m: | real: kh 0.752 steps from the level head's, end 1.59e-7 m, knots 15 | D9: kh 379761.424 steps from the level head's, end 1.48e-1 m, knots 15 | | width real vs D9: knots same, 1512.00 steps
+extra from  5 m: | real: kh 0.321 steps from the level head's, end 7.78e-8 m, knots 14 | D9: kh 350435.530 steps from the level head's, end 1.10e-1 m, knots 14 | | width real vs D9: knots same, 0.00 steps
+extra from  8 m: | real: kh 0.250 steps from the level head's, end 1.27e-7 m, knots 15 | D9: kh 322980.595 steps from the level head's, end 1.03e-1 m, knots 15 | | width real vs D9: knots same, 423.00 steps
+extra from 10 m: | real: kh 0.160 steps from the level head's, end 7.44e-8 m, knots 14 | D9: kh 262874.364 steps from the level head's, end 6.73e-2 m, knots 14 | | width real vs D9: knots same, 0.00 steps
+extra from 12 m: | real: kh 0.496 steps from the level head's, end 3.36e-7 m, knots 15 | D9: kh 248256.576 steps from the level head's, end 6.54e-2 m, knots 15 | | width real vs D9: knots same, 123.00 steps
+extra from 15 m: | real: kh 0.336 steps from the level head's, end 1.57e-7 m, knots 14 | D9: kh 1.000 steps from the level head's, end 1.51e-6 m, knots 14 | | width real vs D9: knots same, 0.00 steps
+extra from 18 m: | real: kh 0.432 steps from the level head's, end 4.67e-7 m, knots 15 | D9: kh 1.000 steps from the level head's, end 1.34e-6 m, knots 15 | | width real vs D9: knots same, 0.00 steps
+extra from 20 m: | real: kh 0.362 steps from the level head's, end 3.84e-7 m, knots 11 | D9: kh 0.362 steps from the level head's, end 3.84e-7 m, knots 11 | | width real vs D9: knots same, 0.00 steps
+extra from 30 m: | real: kh 0.295 steps from the level head's, end 5.43e-8 m, knots 15 | D9: kh 0.463 steps from the level head's, end 4.81e-7 m, knots 15 | | width real vs D9: knots same, 0.00 steps
+extra from 50 m: | real: kh 0.366 steps from the level head's, end 4.46e-7 m, knots 15 | D9: kh 0.366 steps from the level head's, end 4.46e-7 m, knots 15 | | width real vs D9: knots same, 0.00 steps

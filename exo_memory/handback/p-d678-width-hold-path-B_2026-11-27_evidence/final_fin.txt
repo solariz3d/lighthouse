@@ -1,0 +1,6 @@
+report keys window,plan
+window [6,7,8] | [6,7,8]
+new piece 0: length 942 / 942, knots 47 level / 50 held, bank largest 63.657 deg, bank apart 0.9651 deg at 72.53, turn apart 180.0 steps at 7.90
+new piece 1: length 364 / 364, knots 18 level / 18 held, bank largest 0.865 deg, bank apart 0.0001 deg at 277.79, turn apart 3.0 steps at 364.00
+new piece 2: length 943 / 943, knots 47 level / 47 held, bank largest 63.634 deg, bank apart 0.0001 deg at 823.35, turn apart 8.0 steps at 787.28
+exports finishToStart,bankLap,bankLapWith,budgetNote,flipsOf,isNear,NEAR_M,roadHold,routes,oneTurnRoutes,ONE_TURN_MIN_R,endPose,RADII_M

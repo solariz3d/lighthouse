@@ -1,0 +1,72 @@
+# tier rows (194 files, rows-files.txt), 2026-11-27T17:50:47Z to 18:09:02Z, under heavy-run at BelowNormal; the full TAP stays local: G:\consonance-scratch\b-hold-work\tier\tier-rows.tap
+# tests 2244
+# suites 0
+# pass 2220
+# fail 1
+# cancelled 0
+# skipped 21
+# todo 2
+# duration_ms 1094166.0238
+
+# the not-ok blocks
+not ok 127 - D642: dragging the extra bank on past what fits, into the hold, the first time, costs a move within 2 × the same drag with the bank early (p95) # TODO the approach to the hold builds one probe road a move (the core's probe cost, pane B): 2.8-3.1 × measured, the panel already at one question a move
+  ---
+  duration_ms: 1872.909
+  type: 'test'
+  location: 'G:\\consonance-scratch\\b-hold\\app\\test\\core-extra-bank-drag-cost.test.js:111:1'
+  failureType: 'testCodeFailure'
+  error: 'the rolling drag went past −88.45 and is held short of where the pointer went (-360°)'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (G:\consonance-scratch\b-hold\app\test\core-extra-bank-drag-cost.test.js:117:10)
+    async Test.run (node:internal/test_runner/test:1125:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# rolling (first drag, into the hold) p95 45.1 ms a move, early p95 6.4 ms: 7.01 ×; rolling held at -360°, early ended at -163.5°
+not ok 564 - row 5: the documents are byte for byte what they were: pieces placed and corners solved, hashed (taken at c2d7cb5; since L264 the corners' width holds the head's), and basisN is basis, channelValue is channelAt(...).v, and extendCorner answers the same fields with the same object
+  ---
+  duration_ms: 176.7108
+  type: 'test'
+  location: 'G:\\consonance-scratch\\b-hold\\app\\test\\drag-ghost.test.js:106:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    the placed pieces and three solved corners but the corners' width, as L268 lays them
+    actual expected
+    
+    '015881f5e3ac02dbc51023e4f078'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: '5e302d1023e4f078'
+  actual: '015881f53acdbc5f'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (G:\consonance-scratch\b-hold\app\test\drag-ghost.test.js:125:10)
+    async Test.run (node:internal/test_runner/test:1125:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+not ok 1071 - built 1, straight road: the built bank on the run-in and the ease-out is within 0.1° of the document # TODO the adapter re-rounds a straight road's bank (3.82° and 9.58°, measured); the fix is owed in the solve, next lap
+  ---
+  duration_ms: 62.1305
+  type: 'test'
+  location: 'G:\\consonance-scratch\\b-hold\\test\\core_bank_flow.test.js:197:1'
+  failureType: 'testCodeFailure'
+  error: 'run-in 3.819° at 360; ease-out 9.583° at 673'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (G:\consonance-scratch\b-hold\test\core_bank_flow.test.js:199:10)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...

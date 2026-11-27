@@ -1,0 +1,20 @@
+head width 25.1049 m, slope 0.08390399999999999 per m
+G:\consonance-scratch\b-hold: placed (wd out) 24bcdf657190c0cd; placed + corners (w, wd out) 015881f53acdbc5f; corner knots 77/22/112
+G:\consonance-scratch\b-hold-c522ea6: placed (wd out) 24bcdf657190c0cd; placed + corners (w, wd out) eb3501a2c3eec581; corner knots 74/19/109
+G:\consonance-scratch\b-hold-e112a14: placed (wd out) 24bcdf657190c0cd; placed + corners (w, wd out) eb3501a2c3eec581; corner knots 74/19/109
+G:\consonance-scratch\b-hold-c2591bf: placed (wd out) 24bcdf657190c0cd; placed + corners (w, wd out) 5e302d1023e4f078; corner knots 77/22/112
+
+G:\consonance-scratch\b-hold against G:\consonance-scratch\b-hold-c522ea6:
+  1500 m, 33 deg: knots 77 / 74; steps apart: kh 0.355 at 9.30, kv 0 at 0.35, phi 0.685 at 24.90, r 0 at 0.35, h 0, l 0, c 0 at 0.10, e 0, s 0 at 0.10, t 0, er 0; end apart 3.05e-6 m; width ends {"v":25.1049,"m":0}
+  400 m, -75 deg, climb 4: knots 22 / 19; steps apart: kh 0.622 at 21.35, kv 0.487 at 25.80, phi 0 at 2.85, r 0 at 0.35, h 0, l 0, c 0 at 0.10, e 0, s 0 at 0.10, t 0, er 0; end apart 6.34e-6 m; width ends {"v":25.1049,"m":0}
+  2200 m, straight: knots 112 / 109; steps apart: kh 0 at 0.65, kv 0 at 0.35, phi 0 at 2.85, r 0 at 0.35, h 0, l 0, c 0 at 0.10, e 0, s 0 at 0.10, t 0, er 0; end apart 0.00e+0 m; width ends {"v":25.1049,"m":0}
+
+G:\consonance-scratch\b-hold against G:\consonance-scratch\b-hold-e112a14:
+  1500 m, 33 deg: knots 77 / 74; steps apart: kh 0.355 at 9.30, kv 0 at 0.35, phi 0.685 at 24.90, r 0 at 0.35, h 0, l 0, c 0 at 0.10, e 0, s 0 at 0.10, t 0, er 0; end apart 3.05e-6 m; width ends {"v":25.1049,"m":0}
+  400 m, -75 deg, climb 4: knots 22 / 19; steps apart: kh 0.622 at 21.35, kv 0.487 at 25.80, phi 0 at 2.85, r 0 at 0.35, h 0, l 0, c 0 at 0.10, e 0, s 0 at 0.10, t 0, er 0; end apart 6.34e-6 m; width ends {"v":25.1049,"m":0}
+  2200 m, straight: knots 112 / 109; steps apart: kh 0 at 0.65, kv 0 at 0.35, phi 0 at 2.85, r 0 at 0.35, h 0, l 0, c 0 at 0.10, e 0, s 0 at 0.10, t 0, er 0; end apart 0.00e+0 m; width ends {"v":25.1049,"m":0}
+
+G:\consonance-scratch\b-hold against G:\consonance-scratch\b-hold-c2591bf:
+  1500 m, 33 deg: knots 77 / 77; steps apart: kh 455.587 at 19.85, kv 0, phi 18.534 at 21.90, r 0, h 0, l 0, c 0, e 0, s 0, t 0, er 0; end apart 7.19e-3 m; width ends {"v":25.1049,"m":0}
+  400 m, -75 deg, climb 4: knots 22 / 22; steps apart: kh 32207.227 at 19.30, kv 929.543 at 19.30, phi 0, r 0, h 0, l 0, c 0, e 0, s 0, t 0, er 0; end apart 1.25e-1 m; width ends {"v":25.1049,"m":0}
+  2200 m, straight: knots 112 / 112; steps apart: kh 0, kv 0, phi 0, r 0, h 0, l 0, c 0, e 0, s 0, t 0, er 0; end apart 0.00e+0 m; width ends {"v":25.1049,"m":0}

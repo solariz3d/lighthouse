@@ -1,0 +1,6 @@
+E1 brush +1.37 end-5 r20 | extend: knots same true | width apart 0 steps at point -1 of 11 | head slope -1.0050e-3; leaving slope with the reset -1.0200e-3, without -1.0200e-3 (first knot 5)
+E1 brush +1.37 end-5 r20 | sharp -60 R40 ramp1: knots same true | width apart 1 steps at point 1 of 49 | head slope -1.0050e-3; leaving slope with the reset -8.1037e-4, without -1.2156e-3 (first knot 0.7404)
+grab -2 end-0 r10 | extend: knots same true | width apart 1 steps at point 1 of 11 | head slope -2.0790e-2; leaving slope with the reset -2.0820e-2, without -2.0760e-2 (first knot 5)
+grab -2 end-0 r10 | sharp -60 R40 ramp1: knots same true | width apart 0 steps at point -1 of 49 | head slope -2.0790e-2; leaving slope with the reset -2.0665e-2, without -2.0665e-2 (first knot 0.7404)
+grab +4 end-0 r5 | extend: knots same true | width apart 0 steps at point -1 of 11 | head slope 8.2978e-2; leaving slope with the reset 8.2980e-2, without 8.2980e-2 (first knot 5)
+grab +4 end-0 r5 | sharp -60 R40 ramp1: knots same true | width apart 1 steps at point 1 of 49 | head slope 8.2978e-2; leaving slope with the reset 8.3063e-2, without 8.2658e-2 (first knot 0.7404)
