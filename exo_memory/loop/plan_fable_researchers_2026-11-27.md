@@ -231,7 +231,7 @@ names stay out; replays are read, never copied into the repo.
 
 **What it cannot settle:** the Type A (no replay), and online against offline (every replay here is his own session).
 
-**His words, 13:35 (D):** "could be good, i swear on one of our tracks or a track cant remember, maybe thunderhead, i recorded
+**His words, 13:35 (D):** "could be good, i swear on one of our tracks or a track cant remember, maybe [T1], i recorded
 like half of the t-180s in a lap time replay with telemetry already". Not a go.
 
 **Checked at 13:3x (the same parser, every replay on D):** they are here. On the night of 2026-10-30 to 10-31, on one of his
@@ -246,7 +246,7 @@ sink speed, no car breaks more often than another. *It fails* if one car breaks 
 least three passes; then something that differs between cars (thrust, wheel placement, the fin) is doing it, and the study
 names which differs for that car.
 
-**13:50 (D), his words:** "i got a recording of elysium type a, and even a thunderhead type a where it shows a perfect clip on
+**13:50 (D), his words:** "i got a recording of elysium type a, and even a [T1] type a where it shows a perfect clip on
 the corkscrew that sends me to the shadow realm". Not a go.
 
 **Checked at 13:5x (the same parser; names bracketed here):** three new replays, all the Type A.
@@ -263,3 +263,6 @@ the corkscrew that sends me to the shadow realm". Not a go.
 
 **So the run now has a Type A break on a fast roll, the case P2 is about, and P3 has its missing car.** The Type A line under
 "what it cannot settle" above is struck by this entry; online against offline still stands.
+
+
+*Corrected 15:1x (D) by the librarian: in his two quoted lines above (13:35 and 13:50) another author's track name is replaced by its stand-in [T1], as in `briefs/t180_unmakeable_shapes.md`; nothing else in his sentences is changed. The two earlier commits of this file (3a9804fb, 2a214f81) carry the name and are not pushed.*
