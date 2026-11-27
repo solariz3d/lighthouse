@@ -1,0 +1,59 @@
+F {"heading":120,"at320":{"phiDeg":0,"inZ":0.714,"outZ":0.714,"leftSideUp":false,"R":[0.5,0,-0.866]},"widthAt":{"150":12,"490":12},"followT1":{"h":-0.2403,"l":-2,"w":4.0392,"phi":0},"bank":[[120,0],[150,0],[180,0],[210,0],[240,0],[270,0],[300,0],[330,0],[360,0],[390,0],[420,0],[450,0],[480,0],[490,0],[510,0],[540,0],[570,0]]}
+Bplus {"heading":120,"at320":{"phiDeg":20,"inZ":2.7032,"outZ":-1.3612,"leftSideUp":true,"R":[0.5,0,-0.866]},"widthAt":{"150":12,"490":12},"followT1":{"h":-0.2403,"l":-2,"w":3.8559,"phi":-0.0872},"bank":[[120,0],[150,0],[180,0],[210,1.992],[240,13.9986],[270,20],[300,20],[330,20],[360,20],[390,20],[420,20],[450,19.2888],[480,15.0003],[490,13.5716],[510,10.7142],[540,6.4284],[570,2.1427]]}
+Bminus {"heading":120,"at320":{"phiDeg":-20,"inZ":-1.3612,"outZ":2.7032,"leftSideUp":false,"R":[0.5,0,-0.866]},"widthAt":{"150":12,"490":12},"followT1":{"h":-0.2403,"l":-2,"w":3.8559,"phi":0.0872},"bank":[[120,0],[150,0],[180,0],[210,-1.992],[240,-13.9986],[270,-20],[300,-20],[330,-20],[360,-20],[390,-20],[420,-20],[450,-19.2888],[480,-15.0003],[490,-13.5716],[510,-10.7142],[540,-6.4284],[570,-2.1427]]}
+Bhold {"heading":120,"at320":{"phiDeg":-20,"inZ":-1.3612,"outZ":2.7032,"leftSideUp":false,"R":[0.5,0,-0.866]},"widthAt":{"150":12,"490":12},"followT1":{"h":-0.2403,"l":-2,"w":3.8559,"phi":0.0872},"bank":[[120,-13.9986],[150,-20],[180,-20],[210,-20],[240,-20],[270,-20],[300,-20],[330,-20],[360,-20],[390,-20],[420,-20],[450,-20],[480,-20],[490,-20],[510,-18.7557],[540,-11.2508],[570,-3.7504]]}
+F start base           w 0 h 0 phi 0..0 | vsBase in 0 phi 0 inZ 0..0 | vsLvBase - | hT - | out 0 | red 0 run 0 win 0 new - amber 0
+F start T1             w 4.0392 h 0.2403 phi 0..0 | vsBase in 0.0448 phi 0 inZ 0..0.1985 | vsLvBase - | hT - | out 0 | red 2 run 2 win 2 new 2 amber 0
+F start T2b            w 2.06 h 0.1226 phi 0..0 | vsBase in 0.0448 phi 0 inZ 0.0928..0.201 | vsLvBase - | hT - | out 0 | red 2 run 0 win 2 new 2 amber 6
+F E6 from base         w 0 h 0 phi 0..0 | vsBase in 0 phi 0 inZ 0.4353..0.4353 | vsLvBase - | hT 0 | out 0 | red 0 run 0 win 0 new 0 amber 0 reads {"w":[12,12],"phiDeg":[0,0],"h":[0,0],"l":[0,0]}
+F E6 from T1           w 0 h 0 phi 0..0 | vsBase in 0 phi 0 inZ 0.4353..0.4353 | vsLvBase [0,0,0,0] | hT 0 | out 0 | red 0 run 0 win 0 new 0 amber 0 reads {"w":[12,12],"phiDeg":[0,0],"h":[0,0],"l":[0,0]}
+F E6 from T2b          w 0 h 0 phi 0..0 | vsBase in 0 phi 0 inZ 0.4353..0.4353 | vsLvBase [0,0,0,0] | hT 0 | out 0 | red 0 run 0 win 0 new 0 amber 0 reads {"w":[12,12],"phiDeg":[0,0],"h":[0,0],"l":[0,0]}
+Bplus start base       w 0 h 0 phi 0..20 | vsBase in 0 phi 0 inZ 0..0 | vsLvBase - | hT - | out 0 | red 4 run 4 win 4 new - amber 0
+Bplus start T1         w 3.8559 h 0.2403 phi 0..20 | vsBase in 0.1302 phi 4.9984 inZ -0.2634..0.1762 | vsLvBase - | hT - | out 0 | red 3 run 3 win 3 new 0 amber 0
+Bplus start T2b        w 2.0711 h 0.1226 phi -0.3149..17.487 | vsBase in 0.1032 phi 5.0209 inZ 0.0597..0.2276 | vsLvBase - | hT - | out 0 | red 5 run 4 win 5 new 1 amber 2
+Bplus E6 from base     w 0 h 0 phi 0.342..13.2296 | vsBase in 0.5646 phi 17.4425 inZ -1.2178..0.4875 | vsLvBase - | hT 0 | out 0 | red 4 run 3 win 4 new 1 amber 0 reads {"w":[12,12],"phiDeg":[0,13.5716],"h":[0,0],"l":[0,0]}
+Bplus E6 from T1       w 0 h 0 phi 0.342..13.2296 | vsBase in 0.5646 phi 17.4425 inZ -1.2178..0.4875 | vsLvBase [0.0061,0.0005,0.0008,0.0006] | hT 0 | out 0 | red 4 run 3 win 4 new 1 amber 0 reads {"w":[12,12],"phiDeg":[0,13.5716],"h":[0,0],"l":[0,0]}
+Bplus E6 from T2b      w 0 h 0 phi 0.342..13.2296 | vsBase in 0.5646 phi 17.4425 inZ -1.2178..0.4875 | vsLvBase [0.0132,0.0005,0.0018,0.0006] | hT 0 | out 0 | red 4 run 3 win 4 new 1 amber 1 reads {"w":[12,12],"phiDeg":[0,13.5716],"h":[0,0],"l":[0,0]}
+Bplus E5k from base    w 0 h 0 phi 0..20 | vsBase in 0.0073 phi 0 inZ 0.4353..1.0728 | vsLvBase - | hT 0 | out 0 | red 5 run 4 win 5 new 1 amber 0 reads {"w":[12,12],"phiDeg":[0,13.5716],"h":[0,0],"l":[0,0]}
+Bplus E5k from T1      w 0 h 0 phi 0..20 | vsBase in 0.2153 phi 4.9984 inZ 0.4353..1.0728 | vsLvBase [4.9984,0.1983,0.6859,0.2152] | hT 0 | out 0 | red 5 run 4 win 5 new 1 amber 0 reads {"w":[12,12],"phiDeg":[0,13.5716],"h":[0,0],"l":[0,0]}
+Bplus E5k from T2b     w 0 h 0 phi -0.3149..17.487 | vsBase in 0.2163 phi 5.0209 inZ 0.3783..0.7616 | vsLvBase [5.0209,0.1988,0.6889,0.2162] | hT 0 | out 0 | red 5 run 4 win 5 new 1 amber 1 reads {"w":[12,12],"phiDeg":[0,13.5716],"h":[0,0],"l":[0,0]}
+Bminus start base      w 0 h 0 phi -20..0 | vsBase in 0 phi 0 inZ 0..0 | vsLvBase - | hT - | out 0 | red 0 run 0 win 0 new - amber 4
+Bminus start T1        w 3.8559 h 0.2403 phi -20..0 | vsBase in 0.0695 phi 4.9984 inZ 0..0.304 | vsLvBase - | hT - | out 0 | red 2 run 2 win 2 new 2 amber 6
+Bminus start T2b       w 2.0711 h 0.1226 phi -17.487..0.3149 | vsBase in 0.0508 phi 5.0209 inZ 0.0421..0.255 | vsLvBase - | hT - | out 0 | red 2 run 0 win 2 new 2 amber 13
+Bminus E6 from base    w 0 h 0 phi -13.2296..-0.342 | vsBase in 0.1569 phi 17.4425 inZ 0.383..2.171 | vsLvBase - | hT 0 | out 0 | red 1 run 0 win 1 new 1 amber 3 reads {"w":[12,12],"phiDeg":[0,-13.5716],"h":[0,0],"l":[0,0]}
+Bminus E6 from T1      w 0 h 0 phi -13.2296..-0.342 | vsBase in 0.1569 phi 17.4425 inZ 0.383..2.171 | vsLvBase [0.0061,0.0002,0.0008,0.0001] | hT 0 | out 0 | red 1 run 0 win 1 new 1 amber 3 reads {"w":[12,12],"phiDeg":[0,-13.5716],"h":[0,0],"l":[0,0]}
+Bminus E6 from T2b     w 0 h 0 phi -13.2296..-0.342 | vsBase in 0.1569 phi 17.4425 inZ 0.383..2.171 | vsLvBase [0.0132,0.0006,0.0018,0.0001] | hT 0 | out 0 | red 1 run 0 win 1 new 1 amber 3 reads {"w":[12,12],"phiDeg":[0,-13.5716],"h":[0,0],"l":[0,0]}
+Bminus E5k from base   w 0 h 0 phi -20..0 | vsBase in 0.0058 phi 0 inZ -0.2547..0.4353 | vsLvBase - | hT 0 | out 0 | red 1 run 0 win 1 new 1 amber 5 reads {"w":[12,12],"phiDeg":[0,-13.5716],"h":[0,0],"l":[0,0]}
+Bminus E5k from T1     w 0 h 0 phi -20..0 | vsBase in 0.0964 phi 4.9984 inZ -0.2548..0.4353 | vsLvBase [4.9984,0.3171,0.6256,0.0965] | hT 0 | out 0 | red 1 run 0 win 1 new 1 amber 5 reads {"w":[12,12],"phiDeg":[0,-13.5716],"h":[0,0],"l":[0,0]}
+Bminus E5k from T2b    w 0 h 0 phi -17.487..0.3149 | vsBase in 0.0968 phi 5.0209 inZ 0.0888..0.4925 | vsLvBase [5.0209,0.3183,0.6284,0.0968] | hT 0 | out 0 | red 1 run 0 win 1 new 1 amber 5 reads {"w":[12,12],"phiDeg":[0,-13.5716],"h":[0,0],"l":[0,0]}
+Bhold start base       w 0 h 0 phi -20..-20 | vsBase in 0 phi 0 inZ 0..0 | vsLvBase - | hT - | out 0 | red 0 run 0 win 0 new - amber 4
+Bhold start T1         w 3.8559 h 0.2403 phi -20..-15.0016 | vsBase in 0.0695 phi 4.9984 inZ 0..0.304 | vsLvBase - | hT - | out 0 | red 2 run 2 win 2 new 2 amber 6
+Bhold start T2b        w 1.9757 h 0.1226 phi -17.5646..-14.9791 | vsBase in 0.0196 phi 5.0209 inZ 0.0326..0.197 | vsLvBase - | hT - | out 0 | red 2 run 1 win 2 new 2 amber 12
+Bhold E6 from base     w 0 h 0 phi -20..-20 | vsBase in 0 phi 0 inZ -0.2547..-0.2547 | vsLvBase - | hT 0 | out 0 | red 2 run 0 win 2 new 2 amber 4 reads {"w":[12,12],"phiDeg":[-20,-20],"h":[0,0],"l":[0,0]}
+Bhold E6 from T1       w 0 h 0 phi -20..-20 | vsBase in 0 phi 0 inZ -0.2547..-0.2547 | vsLvBase [0,0,0,0] | hT 0 | out 0 | red 2 run 0 win 2 new 2 amber 4 reads {"w":[12,12],"phiDeg":[-20,-20],"h":[0,0],"l":[0,0]}
+Bhold E6 from T2b      w 0 h 0 phi -20..-20 | vsBase in 0 phi 0 inZ -0.2547..-0.2547 | vsLvBase [0,0,0,0] | hT 0 | out 0 | red 2 run 0 win 2 new 2 amber 4 reads {"w":[12,12],"phiDeg":[-20,-20],"h":[0,0],"l":[0,0]}
+Bhold E5k from base    w 0 h 0 phi -20..-20 | vsBase in 0 phi 0 inZ -0.2547..-0.2547 | vsLvBase - | hT 0 | out 0 | red 2 run 0 win 2 new 2 amber 4 reads {"w":[12,12],"phiDeg":[-20,-20],"h":[0,0],"l":[0,0]}
+Bhold E5k from T1      w 0 h 0 phi -20..-15.0016 | vsBase in 0.0964 phi 4.9984 inZ -0.2547..0.4312 | vsLvBase [4.9984,0.3171,0.6256,0.0965] | hT 0 | out 0 | red 2 run 0 win 2 new 2 amber 4 reads {"w":[12,12],"phiDeg":[-20,-20],"h":[0,0],"l":[0,0]}
+Bhold E5k from T2b     w 0 h 0 phi -17.5646..-14.9791 | vsBase in 0.0968 phi 5.0209 inZ 0.0782..0.4341 | vsLvBase [5.0209,0.3183,0.6284,0.0968] | hT 0 | out 0 | red 2 run 0 win 2 new 2 amber 4 reads {"w":[12,12],"phiDeg":[-20,-20],"h":[0,0],"l":[0,0]}
+test F E6 base true []
+test F E6 T1 true []
+test F E6 T2b true []
+test Bplus E6 base false ["heldRimAcrossOver005","redTheBaseLacks","bankOffDesignOver05deg"]
+test Bplus E6 T1 false ["heldRimAcrossOver005","redTheBaseLacks","bankOffDesignOver05deg"]
+test Bplus E6 T2b false ["heldRimAcrossOver005","redTheBaseLacks","bankOffDesignOver05deg"]
+test Bplus E5k base false ["redTheBaseLacks"]
+test Bplus E5k T1 false ["heldRimAcrossOver005","redTheBaseLacks","bankOffDesignOver05deg","bankResidueOver01deg","outerRimResidueOver005"]
+test Bplus E5k T2b false ["heldRimAcrossOver005","redTheBaseLacks","bankOffDesignOver05deg","bankResidueOver01deg","outerRimResidueOver005"]
+test Bminus E6 base false ["heldRimAcrossOver005","redTheBaseLacks","bankOffDesignOver05deg"]
+test Bminus E6 T1 false ["heldRimAcrossOver005","redTheBaseLacks","bankOffDesignOver05deg"]
+test Bminus E6 T2b false ["heldRimAcrossOver005","redTheBaseLacks","bankOffDesignOver05deg"]
+test Bminus E5k base false ["redTheBaseLacks"]
+test Bminus E5k T1 false ["heldRimAcrossOver005","redTheBaseLacks","bankOffDesignOver05deg","bankResidueOver01deg","outerRimResidueOver005"]
+test Bminus E5k T2b false ["heldRimAcrossOver005","redTheBaseLacks","bankOffDesignOver05deg","bankResidueOver01deg","outerRimResidueOver005"]
+test Bhold E6 base false ["redTheBaseLacks"]
+test Bhold E6 T1 false ["redTheBaseLacks"]
+test Bhold E6 T2b false ["redTheBaseLacks"]
+test Bhold E5k base false ["redTheBaseLacks"]
+test Bhold E5k T1 false ["heldRimAcrossOver005","redTheBaseLacks","bankOffDesignOver05deg","bankResidueOver01deg","outerRimResidueOver005"]
+test Bhold E5k T2b false ["heldRimAcrossOver005","redTheBaseLacks","bankOffDesignOver05deg","bankResidueOver01deg","outerRimResidueOver005"]
+verdict {"F":{"E6fromStarts":[["T1",true,[]],["T2b",true,[]]]},"Bplus":{"E6fromStarts":[["T1",false,["heldRimAcrossOver005","redTheBaseLacks","bankOffDesignOver05deg"]],["T2b",false,["heldRimAcrossOver005","redTheBaseLacks","bankOffDesignOver05deg"]]]},"Bminus":{"E6fromStarts":[["T1",false,["heldRimAcrossOver005","redTheBaseLacks","bankOffDesignOver05deg"]],["T2b",false,["heldRimAcrossOver005","redTheBaseLacks","bankOffDesignOver05deg"]]]},"Bhold":{"E6fromStarts":[["T1",false,["redTheBaseLacks"]],["T2b",false,["redTheBaseLacks"]]]},"directionFails":true}

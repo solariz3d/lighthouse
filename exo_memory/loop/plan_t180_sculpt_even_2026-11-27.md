@@ -8,6 +8,8 @@
 - `even265.json` holds every figure below; each row's `profile` is the width every 10 m.
 - The pictures are untracked (never added).
 
+**Amended 2026-11-27 13:16Z** (L267 stage 1, `bank267.json`): the banked fixture's bank profile (item 2 (b′)) and its sign (item 6), each marked in place. The direction for the bank is measured in `handback/p-l267-sculpt-even-build-A_2026-11-27.md`.
+
 **Amended 2026-11-27 11:43Z** (the chair's L265 amendment of 11:29:58Z; the probe `amend265.js`, figures in `amend265.json`, run 11:36:09 to 11:39:01Z). Every change below carries the marker *[amended 11:43Z]*, and replaced text is struck, not deleted:
 - why a width grab moves the height (item 1, new part);
 - the level must carry the height, and the measured E3 (item 2 (b′));
@@ -168,7 +170,7 @@ The second render showed this first (hand-back, "Second render").
   - **Where the build reads the held rim's place** (inferred): on the run's own untouched metres, or picked. A window's end can lie in a neighbour's own width change, as the near end did here.
 - *[amended 11:52Z]* **On the turn banked 20°, E5 does not even it.** It does not hold, and here is why. Nothing further is designed.
   - **Width, height and outside pass:** width spread 0, height spread 0, outside unchanged.
-  - **The outer edge's place across spreads 0.951 m** (from T1) and 0.729 m (from T2b), and **the held rim is 0.0276 / 0.0114 m off λ.** The base's bank runs 0 to 20° along the run (each turn piece's own bank ramp), so the rims' places across and up change with the bank; the inner rim's height runs 1.149 to 3.776 m. There is no single cross-section on this run to level to while the bank is kept.
+  - **The outer edge's place across spreads 0.951 m** (from T1) and 0.729 m (from T2b), and **the held rim is 0.0276 / 0.0114 m off λ.** The base's bank runs 0 to 20° along the run ~~(each turn piece's own bank ramp)~~ *[amended 13:16Z, L267 stage 1, `handback/p-l267-sculpt-even-build-A_2026-11-27_evidence/bank267.json`]* (it rolls in over the first turn piece only: 1.99° at s 210, 14.00° at 240, 20° from 270; it holds 20° to s 440; the exit rolls it out, 13.57° at s 490), so the rims' places across and up change with the bank; the inner rim's height runs 1.149 to 3.776 m. There is no single cross-section on this run to level to while the bank is kept.
   - **The reds:** 4 on the run, the banked base's own (220–248, 268–312, 328–372, 388–432 m: the checker's 970 km/h on that bank ramp, before any grab). Plus 2 new ones in the window that the base does not have (444 and 460 m), 1 from T2b (478–480 m).
   - **The grab's bank turn stays.** E5 does not carry the bank. From T2b the run's bank now peaks at 17.80° where the base reaches 20.00°. From T1 the figures read exactly as E5 from the banked base with no grab, so these failures are not the grab's doing.
 - **The other choice is his** (item 8, call 10): hold a rim's height instead, which was the grab's intent. Then the centre drops with the deeper section (0.435 m at 16 m here) and has to ramp back at the ends. E3's 0.24 m over 30 m already drew reds at the checker's speed.
@@ -272,7 +274,7 @@ Searches were generic: "Unity terrain Set Height tool flatten manual", "Unreal E
   - **The banked row stays open.** It needs a banked base the checker passes, and a level that carries the bank (item 2 (b′)).
 
 A build that reaches the numbers on the flat example but not with the turn banked 20° has fixed width only, and must say so. The banked row is part of the test. *[amended 11:43Z]* **Measured on this road with the turn pieces banked 20°:**
-- **The banked base draws 4 reds on the run before any grab** (222–252, 268–312, 328–372, 388–432 m), at the checker's speed. Its bank runs 0 to 20° along the run.
+- **The banked base draws 4 reds on the run before any grab** (222–252, 268–312, 328–372, 388–432 m), at the checker's speed. *[amended 13:16Z, L267 stage 1, `handback/p-l267-sculpt-even-build-A_2026-11-27_evidence/bank267.json`]* **Their cause is my fixture's sign:** bank +20° is the left side up (`panel.js` `extendOptions`), and this turn bends left, so the fixture banks it away from its centre (at s 320 the inner rim 2.7032 m up, the outer 1.3612 m down). Banked into the turn (−20°), the same road draws 0 reds and 4 ambers before any grab. Its bank runs 0 to 20° along the run.
 - **A grab there also turns the bank:** −5.0° at s 320.
 - **Neither variant evens it.** E3 (the bank kept) leaves a height spread of 0.31 to 0.66 m. E4 (the bank brought to 20° along the run) leaves 1.99 to 2.08 m, with more reds (8 or 9 against 6 or 7).
 - **So the banked row needs two things first:** a banked base the checker passes, and a level that carries the bank the grab moved. Both are open; the plan does not solve them here.

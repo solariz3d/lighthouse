@@ -73,3 +73,95 @@ I build it as **E6**, in the probe `bank267.js`:
 - **The unwanted outcome:** P1 is wrong and the direction passes on B+ and B−. That would mean my reading of the ease is wrong, and stage 2 starts.
 
 **The one probe:** `bank267.js <tree at c522ea6> <out>`, through `heavy-run.js` at BelowNormal. Its figures go to `bank267.json`.
+
+---
+
+## Stage 1, measured (2026-11-27 13:16Z)
+
+**The run:** `bank267.js`, committed in 57382b3f before it ran. It ran 13:03:24 to 13:12:26Z with 0 errors:
+```
+node consonance/tools/heavy-run.js --status && node consonance/tools/heavy-run.js --run --priority belownormal --cmd "L267 A bank267 probe" -- node <evidence>/bank267.js <worktree> <out>
+```
+- checked: the child was node pid 32524, at BelowNormal, with 4.39 s of CPU at 13:03:28Z.
+- Every figure below is in `bank267.json` (evidence), in `test[].numbers` and `rows[]`.
+
+**Verdict (checked): the registered falsifier fired.**
+- On the plan's banked turn, banked either way (B+ and B−), the direction fails from T1 and from T2b.
+- **Stage 2 is not started.** Nothing was built, and the worktree was removed clean.
+
+**E6, the direction.** Every figure is the largest over the run (200–440 m, every 1 m).
+- "Before" means the banked turn before any grab.
+- "Lv. base" means the base with no grab, levelled the same way.
+
+| road | from | bank off before (°) | held rim across, off before (m) | held rim up, against before (m) | bank off lv. base (°) | outer rim off lv. base, across / up (m) | width spread | centre off its ease | reds: run / window / that the base lacks | ambers |
+|---|---|---|---|---|---|---|---|---|---|---|
+| F (flat) | T1 | 0 | 0 | +0.4353 | 0 | 0 / 0 | 0 | 0 | 0 / 0 / 0 | 0 |
+| F (flat) | T2b | 0 | 0 | +0.4353 | 0 | 0 / 0 | 0 | 0 | 0 / 0 / 0 | 0 |
+| B+ (plan's) | base | **17.4425** | **0.5646** | −1.2178 to +0.4875 | — | — | 0 | 0 | 3 / 4 / **1** | 0 |
+| B+ | T1 | **17.4425** | **0.5646** | −1.2178 to +0.4875 | 0.0061 | 0.0005 / 0.0008 | 0 | 0 | 3 / 4 / **1** | 0 |
+| B+ | T2b | **17.4425** | **0.5646** | −1.2178 to +0.4875 | 0.0132 | 0.0005 / 0.0018 | 0 | 0 | 3 / 4 / **1** | 1 |
+| B− (into the turn) | T1 | **17.4425** | **0.1569** | +0.383 to +2.171 | 0.0061 | 0.0002 / 0.0008 | 0 | 0 | 0 / 1 / **1** | 3 |
+| B− | T2b | **17.4425** | **0.1569** | +0.383 to +2.171 | 0.0132 | 0.0006 / 0.0018 | 0 | 0 | 0 / 1 / **1** | 3 |
+| Bhold | T1 | 0 | 0 | −0.2547 | 0 | 0 / 0 | 0 | 0 | 0 / 2 / **2** | 4 |
+| Bhold | T2b | 0 | 0 | −0.2547 | 0 | 0 / 0 | 0 | 0 | 0 / 2 / **2** | 4 |
+
+On every row, nothing outside the window changed (0).
+
+**E5k, the bank kept (call 11's lean),** from T1 / T2b. Figures are the same on all three banked roads unless shown.
+
+| measure | T1 | T2b |
+|---|---|---|
+| bank off before (°) | 4.9984 | 5.0209 |
+| bank off the levelled base (°) | 4.9984 | 5.0209 |
+| outer rim off the levelled base, across / up (m) | 0.198–0.317 / 0.626–0.686 | 0.199–0.318 / 0.628–0.689 |
+| held rim across, off before (m) | 0.2153 on B+, 0.0964 on B− and Bhold | 0.2163 on B+, 0.0968 on B− and Bhold |
+
+- From the base, E5k leaves the bank exactly as designed (0.0000°).
+- Its reds the base lacks: 1 on B+, 1 on B−, 2 on Bhold. They are the same places as E6's.
+
+**The predictions, scored:**
+- **P1 confirmed.** On B+ and B−, the bank lands 17.4425° off the design (predicted: over 5°). The held rim lands 0.5646 m (B+) and 0.1569 m (B−) across (predicted: over 0.05 m).
+- **P2 failed.** On Bhold, E6 passes B1–B4, B6, B8 and B9 at 0. But it **fails B7: 2 reds in its own ramps** (152–162 and 478–488 m) that the base lacks. They are the same when levelled from the ungrabbed base, so they come from the level, not the grabs.
+- **P3 confirmed.** On the flat road, E6 reproduces E5b: every row passes, the held rim is 0.0000 m across, and the rims rise 0.4353 m.
+- **P4 confirmed as far as it went.** From the base, B8 is 0.0000°. B9 fails by 4.9984° (T1) and 5.0209° (T2b). P4 did not predict E5k's ramp reds.
+
+**What does not hold, and why:**
+1. **The ease overwrites a bank change designed inside the window.** checked.
+   - Along B+, every 20 m from s 200:
+     - the base: 0, 6.00, 14.00, then 20° to the end;
+     - E6: 0.34, 0.86, 1.64, 2.65, 3.91, 5.31, 6.79, 8.26, 9.66, 10.92, 11.93, 12.71, 13.23°.
+   - The window's end values are 0° at s 150 and 13.5716° at s 490, part of the way through the exit's roll-out.
+   - inferred: the tool reads only the start. On T2b the grabs reach the whole run, so the designed bank is nowhere inside the window to read. No rule that reads only the start can tell the designed roll-in from a grab's bank change there.
+2. **The ease does remove the grabs' bank change.** checked.
+   - From T1, the levelled bank is within 0.0061° of the levelled base. From T2b it is within 0.0132°: over B9's 0.01° bar, and under the 0.1° fail bar. On Bhold it is within 0.0000°.
+   - inferred: the ramps keep a share of the start's own values, and the first grab's change at s 215 reaches into them.
+3. **The level's own ramps draw reds on a banked road, and none on the flat one.**
+   - checked, the places: the reds lie only in ramps on banked road. B+ and B− draw one in the far ramp only (444–454 and 458–470 m); their near ramp, 150–180 m, is unbanked. Bhold draws one in each ramp.
+   - inferred, the mechanism:
+     - The level moves the centre about 1.97 m sideways over each 30 m ramp while holding its height (call 10).
+     - On a road banked 20°, a sideways move at a held height is a move of Δl·sin 20° ≈ 0.67 m along the road's own normal. That is a dip or a crest under the car, the same class as E3's 0.24 m height ramp that drew reds on the flat.
+     - **So call 10's lean holds on a flat road and not on a banked one.** Its banked form would move the centre within the road's own plane (Δh = Δl·tan φ). The held rim would then rise by the cup's growth alone, 0.4353 / cos φ, which is 0.46 m at 20°. Not measured.
+4. **Row 3 on a bank (reading b) is measurable,** and E6 meets it exactly where the evened bank equals the design.
+   - On Bhold the rim is 0.0000 m across. It sits 0.2547 m lower, which is the section's growth turned by −20°: 1.9407·sin(−20°) + 0.4353·cos 20° = −0.2547. checked against the arithmetic.
+   - Where the evened bank leaves the design, the rim leaves with it: 0.5646 m on B+.
+5. **Call 11's lean (E5k) keeps the design and keeps the grabs' bank change, 5.0°.** The outer rim then sits up to 0.32 m across and 0.69 m up off the evened road. So keeping the bank does not make a grabbed banked turn even. checked.
+
+**Found while measuring, not asked (checked):**
+6. **The plan's banked fixture banks the turn away from its centre.**
+   - At s 320 on B+, the inner (left) rim stands 2.7032 m up and the outer 1.3612 m down; the turn bends 120° toward the inner side.
+   - Its 4 reds before any grab (222–252, 268–312, 328–372 and 388–432 m) belong to that outward bank at 970 km/h.
+   - Banked into the turn (B−), the same road draws 0 reds and 4 ambers before any grab.
+   - The plan is amended in place (13:16Z).
+7. **The plan's "its bank runs 0 to 20° along the run" was my ambiguous line.**
+   - Measured: the bank rolls in over the first turn piece (1.99° at s 210, 14.00° at 240, 20° from 270), holds 20° to s 440, and rolls out over the exit (19.29° at 450, 13.57° at 490, 2.14° at 570).
+   - The direction was read off that line, as P1 said. The plan is amended in place.
+8. **The fixtures' lead is 100 m + 100 m** (12 m wide from s 100). The plan's T1 and T2b on the turn are otherwise unchanged. On the flat road the starts read as the plan's: T1 has 2 reds on the run; T2b has 2 in the window (192–196 and 444–448 m).
+
+**What might hold** (inferred, none of it measured; for the chair and the librarian):
+- **(i) Even the bank only where the design holds it constant.** Bhold shows that the ease then keeps the design and removes the grabs' change exactly.
+  - But with the ramps outside the run (call 2), a run that ends where the roll-in ends puts its ramps over the roll-in. The window's ends have to lie on the hold.
+- **(ii) Remove the cause rather than even it out.** The grab turned the bank by 5.0° because its pull is horizontal and the banked section's chord is not (plan item 1).
+  - A grab that pulled along the section would leave no bank change to even. Then E5, with the bank kept and the centre moved within the road's plane, would be the level.
+  - This is the grab (call 9), not this packet's tool.
+- **(iii) The centre within the road's own plane** (point 3). Any of these needs it on a banked road.
+- One more probe could measure (iii) with the bank kept, on Bhold and B−, from T1 and T2b. That is the chair's call.
