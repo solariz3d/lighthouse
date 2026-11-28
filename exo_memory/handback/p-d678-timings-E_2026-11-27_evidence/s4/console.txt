@@ -1,0 +1,19 @@
+2026-11-28T02:04:00.571Z QUEUED at once (the chair's ruling): no game; heavy-run --status (exit 0):
+heavy-run status (C:\Consonance\data), read only:
+  EXCLUSIVE HOLD: none
+  slot 1: free
+  slot 2: free
+
+2026-11-28T02:04:01.790Z machine before: {"t":"2026-11-28T02:04:00.777Z","game":[],"gameReadable":true,"hisApp":false,"contentManager":false,"busyPct":10.5,"locks":{"heavy-run.lock":null,"heavy-run.2.lock":null,"heavy-run.3.lock":null,"heavy-run.hold":null}}
+2026-11-28T02:04:01.795Z started d642-session (cwd G:/consonance-scratch/e-d678t/wt-7b3926e): pid 28688
+2026-11-28T02:04:02.793Z hold seen: {"pid":28688,"seat":"a2122153","cmd":"E D678 N3: S4 D642, 7b3926e against e7b9128, 15 runs a commit","timing":false,"alive":true,"mine":false}
+2026-11-28T02:04:02.797Z heavy-run.lock taken by mine: {"pid":28688,"seat":"a2122153","cmd":"E D678 N3: S4 D642, 7b3926e against e7b9128, 15 runs a commit","timing":true,"alive":true,"mine":false}
+2026-11-28T02:06:23.803Z d642-session exited 0 after 142 s
+2026-11-28T02:06:23.835Z after: heavy-run --status (exit 0):
+heavy-run status (C:\Consonance\data), read only:
+  EXCLUSIVE HOLD: none
+  slot 1: free
+  slot 2: free
+
+2026-11-28T02:06:25.038Z machine after: {"t":"2026-11-28T02:06:24.036Z","game":[],"gameReadable":true,"hisApp":false,"contentManager":false,"busyPct":10.8,"locks":{"heavy-run.lock":{"pid":20040,"seat":"6fe15f0a","cmd":"A D678 item 2 the even step split by function","timing":true,"alive":true,"mine":false},"heavy-run.2.lock":null,"heavy-run.3.lock":null,"heavy-run.hold":{"pid":20040,"seat":"6fe15f0a","cmd":"A D678 item 2 the even step split by function","timing":false,"alive":true,"mine":false}}}
+2026-11-28T02:06:25.038Z session over; launched 2026-11-28T02:04:00.317Z (waited 145 s in all)

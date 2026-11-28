@@ -1,0 +1,85 @@
+TAP version 13
+# Subtest: row 1: a 1,000 m turn dragged in every look: the work frames' p95 is within one frame at 165 Hz (6.0 ms)
+ok 1 - row 1: a 1,000 m turn dragged in every look: the work frames' p95 is within one frame at 165 Hz (6.0 ms)
+  ---
+  duration_ms: 36306.5676
+  type: 'test'
+  ...
+# p95 ms by look: {"aqua":[2.9],"skyline":[2.7],"glass":[3.2],"aurora":[2.4],"sigil":[2.8]}
+# Subtest: row 2: a 2,000 m turn dragged in every look: p95 within one frame at 165 Hz (6.0 ms)
+ok 2 - row 2: a 2,000 m turn dragged in every look: p95 within one frame at 165 Hz (6.0 ms)
+  ---
+  duration_ms: 37349.6618
+  type: 'test'
+  ...
+# p95 ms by look: {"aqua":[3.2],"skyline":[3.1],"glass":[3.1],"aurora":[2.8],"sigil":[2.9]}
+# Subtest: row 3: a 1,000 m and a 2,000 m piece stretched by its length handle: p95 within one frame at 165 Hz (6.0 ms)
+ok 3 - row 3: a 1,000 m and a 2,000 m piece stretched by its length handle: p95 within one frame at 165 Hz (6.0 ms)
+  ---
+  duration_ms: 14565.5326
+  type: 'test'
+  ...
+# p95 ms by length: {"1000":[2.4],"2000":[3.4]}
+# Subtest: row 4: past the ordinary range the drag adapts and does not stall: a 20,000 m turn's p95 stays under 40 ms, at 20 or more rebuilds a second
+ok 4 - row 4: past the ordinary range the drag adapts and does not stall: a 20,000 m turn's p95 stays under 40 ms, at 20 or more rebuilds a second
+  ---
+  duration_ms: 11004.1368
+  type: 'test'
+  ...
+# 20,000 m: p95 8 ms, 34.0 rebuilds a second
+# Subtest: row 5: the release is the exact road: a few hundred stations while the handle is held, a station every 2 m the moment it is let go
+ok 5 - row 5: the release is the exact road: a few hundred stations while the handle is held, a station every 2 m the moment it is let go
+  ---
+  duration_ms: 7419.7965
+  type: 'test'
+  ...
+# ghost stations during the drag 97, after the release 1001
+# Subtest: row 6: a 1,000 m piece with bank, cup and edge typed, stretched by its length handle: p95 within 0.4.19's cost with margin (13.4 ms)
+ok 6 - row 6: a 1,000 m piece with bank, cup and edge typed, stretched by its length handle: p95 within 0.4.19's cost with margin (13.4 ms)
+  ---
+  duration_ms: 7433.9547
+  type: 'test'
+  ...
+# p95 7.1 ms, 55.0 rebuilds a second
+# Subtest: row 7: a 1,000 m piece with a left edge typed, turned after a placed piece: p95 within one frame at 144 Hz (6.9 ms)
+ok 7 - row 7: a 1,000 m piece with a left edge typed, turned after a placed piece: p95 within one frame at 144 Hz (6.9 ms)
+  ---
+  duration_ms: 10136.8839
+  type: 'test'
+  ...
+# p95 3.6 ms (median 2.5), 64.7 work frames a second
+# Subtest: row 8: a 1,000 m piece with a left edge typed, stretched on an empty track: the page works only on a move (at most 120 work frames a second), p95 within one frame at 144 Hz (6.9 ms)
+ok 8 - row 8: a 1,000 m piece with a left edge typed, stretched on an empty track: the page works only on a move (at most 120 work frames a second), p95 within one frame at 144 Hz (6.9 ms)
+  ---
+  duration_ms: 7294.4104
+  type: 'test'
+  ...
+# p95 5.5 ms (median 3.6), 51.3 work frames a second
+# Subtest: row 9: after 21 km whose last piece still rolls at its end (his 88.45°), the next piece stretched by its length handle: p95 at most 2 x the same drag with that piece flat (a proposed bar)
+not ok 9 - row 9: after 21 km whose last piece still rolls at its end (his 88.45°), the next piece stretched by its length handle: p95 at most 2 x the same drag with that piece flat (a proposed bar)
+  ---
+  duration_ms: 70113.5057
+  type: 'test'
+  location: 'G:\\consonance-scratch\\e-d678t\\wt-c522ea6\\app\\test\\drag-frame.test.js:209:1'
+  failureType: 'testCodeFailure'
+  error: 'p95 rolling 27.0 / 29.7 ms, flat 12.9 / 19.8 ms (2.09 x): over 2 x'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (G:\consonance-scratch\e-d678t\wt-c522ea6\app\test\drag-frame.test.js:218:10)
+    async Test.run (node:internal/test_runner/test:1125:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# p95 rolling 27.0 / 29.7 ms, flat 12.9 / 19.8 ms (2.09 x)
+1..9
+# tests 9
+# suites 0
+# pass 8
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 202098.0326

@@ -1,0 +1,26 @@
+2026-11-28T02:35:02.362Z QUEUED at once (the chair's ruling): no game; heavy-run --status (exit 0):
+heavy-run status (C:\Consonance\data), read only:
+  EXCLUSIVE HOLD: none
+  slot 1: held by 6fe15f0a pid 20952 (A D678 items 1 and 2 the suite and the harnesses naming the touched files, since 2026-11-28T02:34:38.469Z)
+  slot 2: held by 0845a868 pid 15892 (C D678 N6: mutate-gen-consumer.js mutants 0-3, since 2026-11-28T02:34:45.301Z)
+
+2026-11-28T02:35:03.722Z machine before: {"t":"2026-11-28T02:35:02.717Z","game":[],"gameReadable":true,"hisApp":false,"contentManager":false,"busyPct":70,"locks":{"heavy-run.lock":{"pid":20952,"seat":"6fe15f0a","cmd":"A D678 items 1 and 2 the suite and the harnesses naming the touched files","timing":false,"alive":true,"mine":false},"heavy-run.2.lock":{"pid":15892,"seat":"0845a868","cmd":"C D678 N6: mutate-gen-consumer.js mutants 0-3","timing":false,"alive":true,"mine":false},"heavy-run.3.lock":null,"heavy-run.hold":null}}
+2026-11-28T02:35:03.723Z taking the exclusive hold (no slot) through heavy-run acquire(); it waits for any other hold to go
+2026-11-28T02:35:03.761Z HOLD TAKEN after 0 s: {"pid":6944,"seat":"a2122153","cmd":"E D678 N3: S6 sculpt-frame, c522ea6 against 15e7d62, 5 runs a commit (the hold: sculpt-frame times only with BOTH slots held, so its two runs take the slots under this hold)","exclusive":true,"tree":"(not in a git tree)","started":"2026-11-28T02:35:03.761Z","token":"set","image":"node","holder_start":"2026-11-28T02:34:58.287Z"}
+2026-11-28T02:35:03.769Z started idle (cwd G:\consonance-scratch\e-d678t\ev): pid 29020
+2026-11-28T02:54:10.409Z the idle holder holds a slot
+2026-11-28T02:54:10.414Z started sf-session (cwd G:/consonance-scratch/e-d678t/wt-15e7d62): pid 17976
+2026-11-28T02:54:10.416Z hold seen: {"pid":6944,"seat":"a2122153","cmd":"E D678 N3: S6 sculpt-frame, c522ea6 against 15e7d62, 5 runs a commit (the hold: sculpt-frame times only with BOTH slots held, so its two runs take the slots under this hold)","timing":false,"alive":true,"mine":false}
+2026-11-28T02:54:10.416Z heavy-run.2.lock taken by mine: {"pid":29020,"seat":"a2122153","cmd":"E D678 N3: S6 sculpt-frame, c522ea6 against 15e7d62, 5 runs a commit: this slot held IDLE on purpose (sculpt-frame times only while BOTH slots are held, its bothSlots rule)","timing":true,"alive":true,"mine":false}
+2026-11-28T03:27:05.344Z heavy-run.lock taken by mine: {"pid":17976,"seat":"a2122153","cmd":"E D678 N3: S6 sculpt-frame, c522ea6 against 15e7d62, 5 runs a commit","timing":true,"alive":true,"mine":false}
+2026-11-28T03:54:28.697Z sf-session exited 0 after 3618 s
+2026-11-28T03:54:29.041Z idle exited 0 after 4765 s
+2026-11-28T03:54:29.042Z the hold released
+2026-11-28T03:54:29.078Z after: heavy-run --status (exit 0):
+heavy-run status (C:\Consonance\data), read only:
+  EXCLUSIVE HOLD: none
+  slot 1: free
+  slot 2: free
+
+2026-11-28T03:54:30.301Z machine after: {"t":"2026-11-28T03:54:29.297Z","game":[],"gameReadable":true,"hisApp":false,"contentManager":false,"busyPct":12.8,"locks":{"heavy-run.lock":{"pid":9440,"seat":"c88002b1","cmd":"O D678 N4a stage 1: git merge previews, read only","timing":false,"alive":true,"mine":false},"heavy-run.2.lock":null,"heavy-run.3.lock":null,"heavy-run.hold":{"pid":6812,"seat":"6fe15f0a","cmd":"A D678 items 1 and 2 the two wall-time rows alone","timing":false,"alive":true,"mine":false}}}
+2026-11-28T03:54:30.301Z session over; launched 2026-11-28T02:34:58.316Z (waited 4772 s in all)

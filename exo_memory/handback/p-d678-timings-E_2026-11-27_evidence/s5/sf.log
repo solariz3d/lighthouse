@@ -1,0 +1,12 @@
+2026-11-28T02:07:13.479Z start sf: f3cd425 = f3cd425 (0 changes) / c66b503 = c66b503 (0 changes), 5 runs each, alternated; my token set
+2026-11-28T02:09:58.693Z 1 f3cd425 (f3cd425): row 1 ok, row 2 FAIL, row 3 ok, row 4a FAIL, row 4b ok, row 5 ok; 163 s; busy before 8.2%
+2026-11-28T02:12:42.762Z 1 c66b503 (c66b503): row 1 ok, row 2 FAIL, row 3 ok, row 4a FAIL, row 4b ok, row 5 ok; 162.7 s; busy before 12.7%
+2026-11-28T02:15:26.986Z 2 f3cd425 (f3cd425): row 1 ok, row 2 FAIL, row 3 ok, row 4a FAIL, row 4b ok, row 5 ok; 162.8 s; busy before 2%
+2026-11-28T02:18:11.383Z 2 c66b503 (c66b503): row 1 ok, row 2 FAIL, row 3 ok, row 4a FAIL, row 4b ok, row 5 ok; 163 s; busy before 2.4%
+2026-11-28T02:20:55.531Z 3 f3cd425 (f3cd425): row 1 ok, row 2 FAIL, row 3 ok, row 4a FAIL, row 4b ok, row 5 ok; 162.7 s; busy before 3.7%
+2026-11-28T02:23:40.499Z 3 c66b503 (c66b503): row 1 ok, row 2 FAIL, row 3 ok, row 4a FAIL, row 4b ok, row 5 ok; 162.8 s; busy before 2.2%
+2026-11-28T02:26:24.642Z 4 f3cd425 (f3cd425): row 1 ok, row 2 FAIL, row 3 ok, row 4a FAIL, row 4b ok, row 5 ok; 162.7 s; busy before 3.7%
+2026-11-28T02:29:08.784Z 4 c66b503 (c66b503): row 1 ok, row 2 FAIL, row 3 ok, row 4a FAIL, row 4b ok, row 5 ok; 162.7 s; busy before 1.1%
+2026-11-28T02:31:53.009Z 5 f3cd425 (f3cd425): row 1 ok, row 2 FAIL, row 3 ok, row 4a FAIL, row 4b ok, row 5 ok; 162.8 s; busy before 2.2%
+2026-11-28T02:34:37.059Z 5 c66b503 (c66b503): row 1 ok, row 2 FAIL, row 3 ok, row 4a FAIL, row 4b ok, row 5 ok; 162.6 s; busy before 3.1%
+2026-11-28T02:34:37.059Z done

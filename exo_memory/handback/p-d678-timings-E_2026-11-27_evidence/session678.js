@@ -12,24 +12,35 @@ const fs = require('fs'), os = require('os'), path = require('path'), { spawn, s
 const Q = require('./quiet678.js');
 try { os.setPriority(0, os.constants.priority.PRIORITY_BELOW_NORMAL); } catch (e) { /* */ }
 const H = 'C:/Users/nname/Desktop/lighthouse/consonance/tools/heavy-run.js', NODE = process.execPath;
-const [mode, kind, out, N, p1, p2, label] = process.argv.slice(2);
+// QUEUE (8th arg "queue"; the chair's ruling, 2026-11-28T02:00:07Z, replacing the start condition): no polling for an empty machine. His game is checked once
+// before (a game: nothing starts); then x queues on heavy-run's own --run --timing --exclusive (it writes the hold, drains the slots, parks new runs); sf takes the
+// same exclusive hold through heavy-run's own acquire() with no slot (holdOnly), and its two runs, carrying the hold's token, each queue for a real slot with
+// --run --timing (under --exclusive a child re-enters the holder's ONE slot, and sculpt-frame times only with BOTH slots held). heavy-run's 30 min wait limit is
+// raised to 240 min for these runs (CONSONANCE_HEAVY_WAIT_MS), so a queued session does not give up behind another seat's hold.
+const [mode, kind, out, N, p1, p2, label, queueArg] = process.argv.slice(2), QUEUE = queueArg === 'queue';
 if (!['x', 'sf'].includes(mode) || !label) { console.error('usage: node session678.js <x|sf> <d642|sf|df> <out dir> <N> <l1>=<t1> <l2>=<t2> <cmd label>'); process.exit(2); }
 fs.mkdirSync(out, { recursive: true });
 const log = (s) => { const l = `${new Date().toISOString()} ${s}`; console.log(l); fs.appendFileSync(path.join(out, 'session.log'), l + '\n'); };
 const env = { ...process.env }; delete env.CONSONANCE_HEAVY_RUN_TOKEN;
 const status = () => { const r = spawnSync(NODE, [H, '--status'], { encoding: 'utf8', env }); return { code: r.status, text: (r.stdout || '') + (r.stderr || '') }; };
 const free = (s) => /EXCLUSIVE HOLD: none/.test(s.text) && /slot 1: free/.test(s.text) && /slot 2: free/.test(s.text) && !/timing session/.test(s.text);
-const run = (name, cwd, args) => { const fd = fs.openSync(path.join(out, `${name}.out`), 'w'); const c = spawn(NODE, args, { cwd, stdio: ['ignore', fd, fd], env, windowsHide: true }); const t = Date.now(); log(`started ${name} (cwd ${cwd}): pid ${c.pid}`); return new Promise((res) => c.on('exit', (code) => { fs.closeSync(fd); log(`${name} exited ${code} after ${Math.round((Date.now() - t) / 1000)} s`); res({ code, started: t, ended: Date.now() }); })); };
+if (QUEUE) env.CONSONANCE_HEAVY_WAIT_MS = String(240 * 60000);
+const run = (name, cwd, args, envFor = env) => { const fd = fs.openSync(path.join(out, `${name}.out`), 'w'); const c = spawn(NODE, args, { cwd, stdio: ['ignore', fd, fd], env: envFor, windowsHide: true }); const t = Date.now(); log(`started ${name} (cwd ${cwd}): pid ${c.pid}`); return new Promise((res) => c.on('exit', (code) => { fs.closeSync(fd); log(`${name} exited ${code} after ${Math.round((Date.now() - t) / 1000)} s`); res({ code, started: t, ended: Date.now() }); })); };
 (async () => {
   const t0 = Date.now(); let said = false, s;
-  for (;;) {
+  if (QUEUE) {
+    const g = Q.games(); s = status();
+    if (!g.ok) { log(`NOT STARTED: ${g.unreadable ? 'the process list could not be read' : `his game runs (${g.games.join(', ')}); nothing closed`}`); fs.writeFileSync(path.join(out, 'done'), 'never started\n'); return; }
+    log(`QUEUED at once (the chair's ruling): no game; heavy-run --status (exit ${s.code}):\n${s.text}`);
+  }
+  for (; !QUEUE;) {
     s = status(); const g = Q.games();
     if (free(s) && g.ok) break;
     if (!said) { said = true; log(`waiting to start: ${!g.ok ? (g.unreadable ? 'process list unreadable' : `his game runs (${g.games.join(', ')})`) : 'the lock is not free'}:\n${s.text}`); }
     if (Date.now() - t0 > 240 * 60000) { log('gave up waiting after 240 min; nothing started'); fs.writeFileSync(path.join(out, 'done'), 'never started\n'); return; }
     Q.sleepSync(10000);
   }
-  log(`free after ${Math.round((Date.now() - t0) / 1000)} s of waiting; heavy-run --status (exit ${s.code}):\n${s.text}`);
+  if (!QUEUE) log(`free after ${Math.round((Date.now() - t0) / 1000)} s of waiting; heavy-run --status (exit ${s.code}):\n${s.text}`);
   log(`machine before: ${JSON.stringify(Q.snapshot())}`);
   try { fs.unlinkSync(path.join(out, 'done')); } catch (e) { /* none */ }
   const R = path.join(__dirname, 'runner678.js'), t1 = p1.slice(p1.indexOf('=') + 1), t2 = p2.slice(p2.indexOf('=') + 1);
@@ -39,12 +50,22 @@ const run = (name, cwd, args) => { const fd = fs.openSync(path.join(out, `${name
   if (mode === 'x') {
     await run(`${kind}-session`, t1, [H, '--run', '--timing', '--exclusive', '--priority', 'belownormal', '--cmd', label, '--', NODE, R, kind, out, N, p1, p2]);
   } else {
-    const idle = run('idle', __dirname, [H, '--run', '--timing', '--priority', 'idle', '--cmd', `${label}: this slot held IDLE on purpose (sculpt-frame times only while BOTH slots are held, its bothSlots rule)`, '--', NODE, path.join(__dirname, 'idle.js'), path.join(out, 'done'), '120']);
+    let hh = null, envKids = env;
+    if (QUEUE) {
+      const HR = require(H), w0 = Date.now();
+      log('taking the exclusive hold (no slot) through heavy-run acquire(); it waits for any other hold to go');
+      hh = HR.acquire({ cmd: `${label} (the hold: sculpt-frame times only with BOTH slots held, so its two runs take the slots under this hold)`, exclusive: true, holdOnly: true, maxWaitMs: 240 * 60000, log: (m) => log(`heavy-run: ${m}`) });
+      log(`HOLD TAKEN after ${Math.round((Date.now() - w0) / 1000)} s: ${JSON.stringify({ ...hh.holder, token: 'set' })}`);
+      envKids = { ...env, CONSONANCE_HEAVY_RUN_TOKEN: hh.holder.token };
+    }
+    try {
+    const idle = run('idle', __dirname, [H, '--run', '--timing', '--priority', 'idle', '--cmd', `${label}: this slot held IDLE on purpose (sculpt-frame times only while BOTH slots are held, its bothSlots rule)`, '--', NODE, path.join(__dirname, 'idle.js'), path.join(out, 'done'), '300'], envKids);
     const w = Date.now();
-    while (Date.now() - w < 120000) { const L = Q.locks(); if ([L['heavy-run.lock'], L['heavy-run.2.lock']].some((x) => x && x.alive && /held IDLE on purpose/.test(x.cmd || ''))) break; Q.sleepSync(500); }
+    while (Date.now() - w < (QUEUE ? 240 * 60000 : 120000)) { const L = Q.locks(); if ([L['heavy-run.lock'], L['heavy-run.2.lock']].some((x) => x && x.alive && /held IDLE on purpose/.test(x.cmd || ''))) break; Q.sleepSync(500); }
     log(`the idle holder ${[Q.locks()['heavy-run.lock'], Q.locks()['heavy-run.2.lock']].some((x) => x && /held IDLE on purpose/.test(x.cmd || '')) ? 'holds a slot' : 'holds NO slot yet (the runner waits for it)'}`);
-    const sf = run('sf-session', t2, [H, '--run', '--timing', '--priority', 'belownormal', '--cmd', label, '--', NODE, R, kind, out, N, p1, p2]);
+    const sf = run('sf-session', t2, [H, '--run', '--timing', '--priority', 'belownormal', '--cmd', label, '--', NODE, R, kind, out, N, p1, p2], envKids);
     await Promise.all([idle, sf]);
+    } finally { if (hh) { hh.release(); log('the hold released'); } }
   }
   clearInterval(watch);
   const s2 = status(); log(`after: heavy-run --status (exit ${s2.code}):\n${s2.text}`); log(`machine after: ${JSON.stringify(Q.snapshot())}`);

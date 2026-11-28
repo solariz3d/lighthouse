@@ -20,7 +20,7 @@ const dirty = (d) => spawnSync('git', ['-C', d, 'status', '--short'], { encoding
 function otherIsMyIdle() {
   const L = Q.locks(), slots = [L['heavy-run.lock'], L['heavy-run.2.lock']];
   const mine = slots.filter((s) => s && s.mine && s.alive).length, idle = slots.filter((s) => s && !s.mine && s.alive && /held IDLE on purpose/.test(s.cmd || '') && /^E D678 N3/.test(s.cmd || '')).length;
-  return { ok: mine === 1 && idle === 1 && !L['heavy-run.3.lock'] && !L['heavy-run.hold'], L };
+  return { ok: mine === 1 && idle === 1 && !L['heavy-run.3.lock'] && (!L['heavy-run.hold'] || /^E D678 N3/.test(L['heavy-run.hold'].cmd || '')), L };   // the chair's ruling (02:00:07Z): a sculpt-frame session now stands under MY exclusive hold
 }
 /** one run: the test file in `dir`, TAP to `tap`; polls his game every 30 s and ends MY child if one starts */
 function runOnce(dir, tap) {

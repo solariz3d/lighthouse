@@ -1,0 +1,2 @@
+heavy-run: capped to 8 of 16 logical CPUs, spread (affinity 21845); every child inherits it
+idle.js: let go after 1645 s (done file)

@@ -1,0 +1,20 @@
+2026-11-28T03:54:45.589Z QUEUED at once (the chair's ruling): no game; heavy-run --status (exit 1):
+heavy-run status (C:\Consonance\data), read only:
+  EXCLUSIVE HOLD: STANDS — 6fe15f0a pid 6812 (A D678 items 1 and 2 the two wall-time rows alone, since 2026-11-28T03:54:30.049Z). Run nothing, light or heavy, until it is gone.
+  slot 1: held by 6fe15f0a pid 6812 (A D678 items 1 and 2 the two wall-time rows alone, since 2026-11-28T03:54:32.593Z) — a timing session (--timing)
+  slot 2: free
+  GATE: exit 1 — an exclusive hold stands; slot 1 is marked a timing session (--timing). Run nothing, light or heavy.
+
+2026-11-28T03:54:47.639Z machine before: {"t":"2026-11-28T03:54:46.627Z","game":[],"gameReadable":true,"hisApp":false,"contentManager":false,"busyPct":30.9,"locks":{"heavy-run.lock":{"pid":6812,"seat":"6fe15f0a","cmd":"A D678 items 1 and 2 the two wall-time rows alone","timing":true,"alive":true,"mine":false},"heavy-run.2.lock":null,"heavy-run.3.lock":null,"heavy-run.hold":{"pid":6812,"seat":"6fe15f0a","cmd":"A D678 items 1 and 2 the two wall-time rows alone","timing":false,"alive":true,"mine":false}}}
+2026-11-28T03:54:47.646Z started df-session (cwd G:/consonance-scratch/e-d678t/wt-c522ea6): pid 30892
+2026-11-28T03:54:48.641Z hold seen: {"pid":6812,"seat":"6fe15f0a","cmd":"A D678 items 1 and 2 the two wall-time rows alone","timing":false,"alive":true,"mine":false}
+2026-11-28T03:57:25.050Z heavy-run.lock taken by mine: {"pid":30892,"seat":"a2122153","cmd":"E D678 N3: S7 drag-frame, c522ea6 against 15e7d62, 5 runs a commit","timing":true,"alive":true,"mine":false}
+2026-11-28T04:26:07.951Z df-session exited 0 after 1880 s
+2026-11-28T04:26:07.986Z after: heavy-run --status (exit 0):
+heavy-run status (C:\Consonance\data), read only:
+  EXCLUSIVE HOLD: none
+  slot 1: free
+  slot 2: free
+
+2026-11-28T04:26:09.213Z machine after: {"t":"2026-11-28T04:26:08.202Z","game":[],"gameReadable":true,"hisApp":false,"contentManager":false,"busyPct":9.2,"locks":{"heavy-run.lock":null,"heavy-run.2.lock":null,"heavy-run.3.lock":null,"heavy-run.hold":null}}
+2026-11-28T04:26:09.213Z session over; launched 2026-11-28T03:54:44.861Z (waited 1884 s in all)

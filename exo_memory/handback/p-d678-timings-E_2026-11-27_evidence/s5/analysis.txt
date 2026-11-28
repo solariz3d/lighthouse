@@ -1,0 +1,30 @@
+sf: f3cd425 (f3cd425) against c66b503 (c66b503); 10 runs kept (5 / 5; 0 ended by a game); quiet by the record: 10 of 10; busy before each run 1.1-12.7 %
+
+EVERY SAMPLE (the first attempt; a retry after it in brackets; - none):
+  row 1 aqua                     f3cd425: 4.1  4.2  4.1  3.7  3.9   |   c66b503: 3.7  3.8  3.8  3.9  3.9
+  row 1 skyline                  f3cd425: 3.8  3.9  3.6  3.8  3.8   |   c66b503: 3.8  3.6  3.7  3.7  3.7
+  row 1 glass                    f3cd425: 4.1  3.7  3.7  4  3.8   |   c66b503: 3.9  3.6  3.6  3.8  3.9
+  row 1 aurora                   f3cd425: 4.3  3.8  4  3.8  3.9   |   c66b503: 3.7  3.9  3.8  4  3.9
+  row 1 sigil                    f3cd425: 3.7  3.6  3.8  3.8  3.9   |   c66b503: 3.7  3.8  3.7  3.7  3.7
+  row 2                          f3cd425: 9.4 [8.6]  8.9 [8.5]  8.7 [9.6]  8.6 [8.7]  9.3 [8.6]   |   c66b503: 10.7 [8.8]  8.9 [8.7]  8.7 [8.7]  9.3 [8.7]  9.1 [9]
+  row 3                          f3cd425: 4.6  4.6  4.3  4.4  4.2   |   c66b503: 4.5  5.3  4.5  4.4  4.2
+  row 4a                         f3cd425: 13.6 [13.4]  11.7 [13.1]  12.1 [13.2]  12.9 [13.1]  12 [11.7]   |   c66b503: 11.5 [13.8]  12.5 [13]  12.7 [13.2]  12 [12.6]  12.4 [12.1]
+  row 4b                         f3cd425: 3.5  3.5  3.4  3.3  3.4   |   c66b503: 3.4  3.4  3.4  3.5  3.6
+  (* a run not quiet by the record)
+  row 3 other bars, first attempt (release ms / longest ms / whole after ms): f3cd425: 1.8/36/1339; 1.8/34/1315; 1.7/34/1429; 1.9/36/1408; 1.9/36/1318  |  c66b503: 2/36/1325; 1.8/42/1424; 1.9/42/1346; 2.1/35/1315; 1.7/38/1396
+  row 4a other bars, first attempt (release ms / longest ms / whole after ms): f3cd425: 0.8/67/211; 0.6/43/214; 0.6/41/216; 0.6/44/216; 0.6/41/215  |  c66b503: 0.6/40/213; 0.7/45/215; 0.7/53/217; 0.5/43/215; 0.5/40/217
+  row 4b other bars, first attempt (release ms / longest ms / whole after ms): f3cd425: 17.2/63/111; 11.3/33/108; 10.8/33/106; 10.7/34/106; 11.5/34/109  |  c66b503: 11.3/33/107; 11.4/34/106; 10.7/33/106; 11.6/34/106; 11.9/35/106
+
+VERDICTS (every run; c66b503 against f3cd425; rule: one-sided p < 0.01 AND the median more than the margin):
+  row 1 aqua       f3cd425 median 4.100 (n 5), c66b503 3.800 (n 5); diff -0.300 (margin 0.3); above p 0.9524, below p 0.0714 -> not told; over the bar 6: 0/5 and 0/5
+  row 1 skyline    f3cd425 median 3.800 (n 5), c66b503 3.700 (n 5); diff -0.100 (margin 0.3); above p 0.9484, below p 0.0952 -> not told; over the bar 6: 0/5 and 0/5
+  row 1 glass      f3cd425 median 3.800 (n 5), c66b503 3.800 (n 5); diff +0.000 (margin 0.3); above p 0.8135, below p 0.2341 -> not told; over the bar 6: 0/5 and 0/5
+  row 1 aurora     f3cd425 median 3.900 (n 5), c66b503 3.900 (n 5); diff +0.000 (margin 0.3); above p 0.7619, below p 0.3095 -> not told; over the bar 6: 0/5 and 0/5
+  row 1 sigil      f3cd425 median 3.800 (n 5), c66b503 3.700 (n 5); diff -0.100 (margin 0.3); above p 0.8175, below p 0.2421 -> not told; over the bar 6: 0/5 and 0/5
+  row 2            f3cd425 median 8.900 (n 5), c66b503 9.100 (n 5); diff +0.200 (margin 0.3); above p 0.2976, below p 0.7579 -> not told; over the bar 6: 5/5 and 5/5 — f3cd425 is over its bar in every run
+  row 3            f3cd425 median 4.400 (n 5), c66b503 4.500 (n 5); diff +0.100 (margin 0.3); above p 0.4206, below p 0.6310 -> not told; over the bar 6: 0/5 and 0/5
+  row 4a           f3cd425 median 12.100 (n 5), c66b503 12.400 (n 5); diff +0.300 (margin 0.3); above p 0.6786, below p 0.3690 -> not told; over the bar 6: 5/5 and 5/5 — f3cd425 is over its bar in every run
+  row 4b           f3cd425 median 3.400 (n 5), c66b503 3.400 (n 5); diff +0.000 (margin 0.3); above p 0.3611, below p 0.7579 -> not told; over the bar 6: 0/5 and 0/5
+  across the cases: c66b503's median higher in 3, lower in 3, of 9 (one-sided sign p 0.9102; told at 8 of 9) -> not told
+
+quiet runs only: every run was quiet by the record, so this reading is the one above

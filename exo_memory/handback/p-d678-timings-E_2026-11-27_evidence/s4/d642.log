@@ -1,0 +1,32 @@
+2026-11-28T02:04:02.435Z start d642: 7b3926e = 7b3926e (0 changes) / e7b9128 = e7b9128 (0 changes), 15 runs each, alternated; my token set
+2026-11-28T02:04:07.317Z 1 7b3926e (7b3926e): ratio 3.28 (rolling 10.8, early 3.3) fail; 3.4 s; busy before 5.4%
+2026-11-28T02:04:12.082Z 1 e7b9128 (e7b9128): ratio 2.24 (rolling 7.9, early 3.5) fail; 3.3 s; busy before 11.6%
+2026-11-28T02:04:16.767Z 2 7b3926e (7b3926e): ratio 1.9 (rolling 6.6, early 3.5) pass; 3.3 s; busy before 3.3%
+2026-11-28T02:04:21.484Z 2 e7b9128 (e7b9128): ratio 1.94 (rolling 6.7, early 3.4) pass; 3.3 s; busy before 5.7%
+2026-11-28T02:04:26.119Z 3 7b3926e (7b3926e): ratio 1.71 (rolling 6.6, early 3.8) pass; 3.2 s; busy before 3.6%
+2026-11-28T02:04:30.788Z 3 e7b9128 (e7b9128): ratio 2.04 (rolling 6.7, early 3.3) fail; 3.2 s; busy before 8.5%
+2026-11-28T02:04:36.263Z 4 7b3926e (7b3926e): ratio 2.16 (rolling 7.1, early 3.3) fail; 3.3 s; busy before 11.7%
+2026-11-28T02:04:40.899Z 4 e7b9128 (e7b9128): ratio 1.74 (rolling 6.3, early 3.7) pass; 3.2 s; busy before 3.6%
+2026-11-28T02:04:45.584Z 5 7b3926e (7b3926e): ratio 1.91 (rolling 7.1, early 3.7) pass; 3.3 s; busy before 5.7%
+2026-11-28T02:04:50.258Z 5 e7b9128 (e7b9128): ratio 1.92 (rolling 6.4, early 3.4) pass; 3.3 s; busy before 3%
+2026-11-28T02:04:54.925Z 6 7b3926e (7b3926e): ratio 1.81 (rolling 6.7, early 3.7) pass; 3.2 s; busy before 3.2%
+2026-11-28T02:04:59.582Z 6 e7b9128 (e7b9128): ratio 2.07 (rolling 7.2, early 3.5) fail; 3.2 s; busy before 3%
+2026-11-28T02:05:04.258Z 7 7b3926e (7b3926e): ratio 1.8 (rolling 6.2, early 3.5) pass; 3.3 s; busy before 8.8%
+2026-11-28T02:05:08.939Z 7 e7b9128 (e7b9128): ratio 2 (rolling 6.8, early 3.4) pass; 3.3 s; busy before 2.6%
+2026-11-28T02:05:13.732Z 8 7b3926e (7b3926e): ratio 1.99 (rolling 6.8, early 3.4) pass; 3.4 s; busy before 4.7%
+2026-11-28T02:05:18.403Z 8 e7b9128 (e7b9128): ratio 1.85 (rolling 6.8, early 3.7) pass; 3.2 s; busy before 19.8%
+2026-11-28T02:05:23.070Z 9 7b3926e (7b3926e): ratio 1.94 (rolling 6.6, early 3.4) pass; 3.2 s; busy before 3.9%
+2026-11-28T02:05:27.734Z 9 e7b9128 (e7b9128): ratio 1.8 (rolling 6.4, early 3.5) pass; 3.2 s; busy before 4%
+2026-11-28T02:05:32.508Z 10 7b3926e (7b3926e): ratio 2.5 (rolling 8.5, early 3.4) fail; 3.4 s; busy before 3.7%
+2026-11-28T02:05:37.226Z 10 e7b9128 (e7b9128): ratio 1.6 (rolling 6.4, early 4) pass; 3.3 s; busy before 10.8%
+2026-11-28T02:05:41.921Z 11 7b3926e (7b3926e): ratio 2 (rolling 6.7, early 3.3) fail; 3.3 s; busy before 7.4%
+2026-11-28T02:05:46.597Z 11 e7b9128 (e7b9128): ratio 2.66 (rolling 8.6, early 3.2) fail; 3.2 s; busy before 6.5%
+2026-11-28T02:05:51.247Z 12 7b3926e (7b3926e): ratio 1.8 (rolling 6.4, early 3.6) pass; 3.2 s; busy before 5.4%
+2026-11-28T02:05:55.889Z 12 e7b9128 (e7b9128): ratio 1.83 (rolling 6.3, early 3.4) pass; 3.2 s; busy before 1.8%
+2026-11-28T02:06:00.544Z 13 7b3926e (7b3926e): ratio 1.9 (rolling 6.5, early 3.4) pass; 3.2 s; busy before 8.2%
+2026-11-28T02:06:05.183Z 13 e7b9128 (e7b9128): ratio 1.82 (rolling 6.5, early 3.6) pass; 3.2 s; busy before 3.7%
+2026-11-28T02:06:09.859Z 14 7b3926e (7b3926e): ratio 2.04 (rolling 7.6, early 3.7) fail; 3.3 s; busy before 2.3%
+2026-11-28T02:06:14.498Z 14 e7b9128 (e7b9128): ratio 1.95 (rolling 6.5, early 3.3) pass; 3.2 s; busy before 2.9%
+2026-11-28T02:06:19.158Z 15 7b3926e (7b3926e): ratio 1.81 (rolling 6.5, early 3.6) pass; 3.3 s; busy before 2.6%
+2026-11-28T02:06:23.792Z 15 e7b9128 (e7b9128): ratio 1.9 (rolling 6.4, early 3.4) pass; 3.2 s; busy before 2.4%
+2026-11-28T02:06:23.792Z done

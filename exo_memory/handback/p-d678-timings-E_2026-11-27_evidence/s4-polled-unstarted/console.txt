@@ -1,0 +1,7 @@
+2026-11-28T01:10:28.066Z waiting to start: the lock is not free:
+heavy-run status (C:\Consonance\data), read only:
+  EXCLUSIVE HOLD: STANDS — 6fe15f0a pid 8420 (A D678 item 2 T3 T4 after the freeze, since 2026-11-28T01:10:24.479Z). Run nothing, light or heavy, until it is gone.
+  slot 1: free
+  slot 2: held by 0845a868 pid 1540 (C D678 N6: mutants_n6 (gen-consumer.test.js, 8 runs), since 2026-11-28T01:09:28.107Z)
+  GATE: exit 1 — an exclusive hold stands. Run nothing, light or heavy.
+

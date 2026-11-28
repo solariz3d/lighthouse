@@ -1,0 +1,28 @@
+2026-11-28T02:06:42.421Z QUEUED at once (the chair's ruling): no game; heavy-run --status (exit 1):
+heavy-run status (C:\Consonance\data), read only:
+  EXCLUSIVE HOLD: STANDS — 6fe15f0a pid 20040 (A D678 item 2 the even step split by function, since 2026-11-28T02:06:23.839Z). Run nothing, light or heavy, until it is gone.
+  slot 1: held by 6fe15f0a pid 20040 (A D678 item 2 the even step split by function, since 2026-11-28T02:06:23.840Z) — a timing session (--timing)
+  slot 2: free
+  GATE: exit 1 — an exclusive hold stands; slot 1 is marked a timing session (--timing). Run nothing, light or heavy.
+
+2026-11-28T02:06:43.642Z machine before: {"t":"2026-11-28T02:06:42.638Z","game":[],"gameReadable":true,"hisApp":false,"contentManager":false,"busyPct":7.9,"locks":{"heavy-run.lock":{"pid":20040,"seat":"6fe15f0a","cmd":"A D678 item 2 the even step split by function","timing":true,"alive":true,"mine":false},"heavy-run.2.lock":null,"heavy-run.3.lock":null,"heavy-run.hold":{"pid":20040,"seat":"6fe15f0a","cmd":"A D678 item 2 the even step split by function","timing":false,"alive":true,"mine":false}}}
+2026-11-28T02:06:43.643Z taking the exclusive hold (no slot) through heavy-run acquire(); it waits for any other hold to go
+2026-11-28T02:06:43.824Z heavy-run: heavy-run: waiting on an exclusive hold by 6fe15f0a pid 20040 (A D678 item 2 the even step split by function, since 2026-11-28T02:06:23.839Z)
+2026-11-28T02:07:11.933Z HOLD TAKEN after 28 s: {"pid":28868,"seat":"a2122153","cmd":"E D678 N3: S5 sculpt-frame, f3cd425 against c66b503, 5 runs a commit (the hold: sculpt-frame times only with BOTH slots held, so its two runs take the slots under this hold)","exclusive":true,"tree":"(not in a git tree)","started":"2026-11-28T02:07:11.933Z","token":"set","image":"node","holder_start":"2026-11-28T02:06:41.819Z"}
+2026-11-28T02:07:11.938Z started idle (cwd G:\consonance-scratch\e-d678t\ev): pid 13356
+2026-11-28T02:07:12.449Z the idle holder holds a slot
+2026-11-28T02:07:12.453Z started sf-session (cwd G:/consonance-scratch/e-d678t/wt-c66b503): pid 22040
+2026-11-28T02:07:12.454Z hold seen: {"pid":28868,"seat":"a2122153","cmd":"E D678 N3: S5 sculpt-frame, f3cd425 against c66b503, 5 runs a commit (the hold: sculpt-frame times only with BOTH slots held, so its two runs take the slots under this hold)","timing":false,"alive":true,"mine":false}
+2026-11-28T02:07:12.454Z heavy-run.lock taken by mine: {"pid":13356,"seat":"a2122153","cmd":"E D678 N3: S5 sculpt-frame, f3cd425 against c66b503, 5 runs a commit: this slot held IDLE on purpose (sculpt-frame times only while BOTH slots are held, its bothSlots rule)","timing":true,"alive":true,"mine":false}
+2026-11-28T02:07:13.467Z heavy-run.2.lock taken by mine: {"pid":22040,"seat":"a2122153","cmd":"E D678 N3: S5 sculpt-frame, f3cd425 against c66b503, 5 runs a commit","timing":true,"alive":true,"mine":false}
+2026-11-28T02:34:37.067Z sf-session exited 0 after 1645 s
+2026-11-28T02:34:37.322Z idle exited 0 after 1645 s
+2026-11-28T02:34:37.323Z the hold released
+2026-11-28T02:34:37.356Z after: heavy-run --status (exit 0):
+heavy-run status (C:\Consonance\data), read only:
+  EXCLUSIVE HOLD: none
+  slot 1: free
+  slot 2: free
+
+2026-11-28T02:34:38.577Z machine after: {"t":"2026-11-28T02:34:37.560Z","game":[],"gameReadable":true,"hisApp":false,"contentManager":false,"busyPct":5.5,"locks":{"heavy-run.lock":{"pid":20952,"seat":"6fe15f0a","cmd":"A D678 items 1 and 2 the suite and the harnesses naming the touched files","timing":false,"alive":true,"mine":false},"heavy-run.2.lock":null,"heavy-run.3.lock":null,"heavy-run.hold":null}}
+2026-11-28T02:34:38.577Z session over; launched 2026-11-28T02:06:41.839Z (waited 1677 s in all)

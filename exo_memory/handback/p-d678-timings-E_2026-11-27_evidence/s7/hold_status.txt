@@ -1,0 +1,5 @@
+2026-11-28T03:57:33Z
+heavy-run status (C:\Consonance\data), read only:
+  EXCLUSIVE HOLD: STANDS — a2122153 pid 30892 (E D678 N3: S7 drag-frame, c522ea6 against 15e7d62, 5 runs a commit, since 2026-11-28T03:57:24.941Z). Run nothing, light or heavy, until it is gone.
+  slot 1: held by a2122153 pid 30892 (E D678 N3: S7 drag-frame, c522ea6 against 15e7d62, 5 runs a commit, since 2026-11-28T03:57:24.942Z) — a timing session (--timing)
+  slot 2: free

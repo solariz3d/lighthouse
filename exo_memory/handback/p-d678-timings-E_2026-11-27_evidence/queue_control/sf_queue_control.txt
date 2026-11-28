@@ -1,0 +1,7 @@
+hold: heavy-run.hold slot [33m0[39m
+B (token) exit [33m0[39m 
+heavy-run.lock {"cmd":"TEST A (token)","timing":true}
+heavy-run.2.lock {"cmd":"TEST B (token)","timing":true}
+heavy-run.hold {"cmd":"TEST hold, no slot","exclusive":true} 
+C (no token) exit [33m3[39m after [33m4228[39m ms; stdout: "" stderr: heavy-run: waiting on an exclusive hold by a2122153 pid 20012 (TEST hold, no slot, since 2026-11-28T02:03:41.102Z) | heavy-run: gave up waiting on an exclusive hold after 0m — a2122153 pid 20012 (TEST hold, no slot, since 2026-11-28T02:03:41.102Z) still hol
+after release: no lock, no hold
