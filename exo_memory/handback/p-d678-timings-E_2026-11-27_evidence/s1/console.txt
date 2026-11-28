@@ -1,0 +1,17 @@
+2026-11-28T00:08:40.523Z free after 0 s of waiting; heavy-run --status (exit 0):
+heavy-run status (C:\Consonance\data), read only:
+  EXCLUSIVE HOLD: none
+  slot 1: free
+  slot 2: free
+
+2026-11-28T00:08:41.740Z machine before: {"t":"2026-11-28T00:08:40.738Z","game":[],"gameReadable":true,"hisApp":false,"contentManager":false,"busyPct":14.6,"locks":{"heavy-run.lock":null,"heavy-run.2.lock":null,"heavy-run.3.lock":null,"heavy-run.hold":null}}
+2026-11-28T00:08:41.745Z started d642-session (cwd G:/consonance-scratch/e-d678t/wt-7b3926e): pid 15700
+2026-11-28T00:11:08.954Z d642-session exited 0 after 147 s
+2026-11-28T00:11:08.987Z after: heavy-run --status (exit 0):
+heavy-run status (C:\Consonance\data), read only:
+  EXCLUSIVE HOLD: none
+  slot 1: free
+  slot 2: free
+
+2026-11-28T00:11:10.203Z machine after: {"t":"2026-11-28T00:11:09.190Z","game":[],"gameReadable":true,"hisApp":false,"contentManager":false,"busyPct":12.1,"locks":{"heavy-run.lock":null,"heavy-run.2.lock":null,"heavy-run.3.lock":null,"heavy-run.hold":null}}
+2026-11-28T00:11:10.204Z session over; launched 2026-11-28T00:08:40.260Z (waited 150 s in all)

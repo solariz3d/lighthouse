@@ -1,0 +1,67 @@
+df: c522ea6 (c522ea6) against c522ea6-b (c522ea6) — ONE COMMIT, run twice: the A/A; 10 runs kept (5 / 5; 0 ended by a game); quiet by the record: 10 of 10; busy before each run 1.6-30.9 %
+
+EVERY SAMPLE (the first attempt; a retry after it in brackets; - none):
+  row 1 aqua                     c522ea6: 3.3  3.2  3  2.7  2.9   |   c522ea6-b: 4.4  3.4  2.7  2.6  2.6
+  row 1 skyline                  c522ea6: 3.1  3  3  2.4  2.5   |   c522ea6-b: 2.9  2.7  2.3  2.4  2.8
+  row 1 glass                    c522ea6: 3  3  2.6  2.5  2.8   |   c522ea6-b: 2.9  2.6  2.4  2.9  2.4
+  row 1 aurora                   c522ea6: 2.9  2.6  2.5  2.4  2.6   |   c522ea6-b: 3  2.5  2.5  2.5  2.7
+  row 1 sigil                    c522ea6: 3  3.2  3  2.7  2.6   |   c522ea6-b: 3  2.6  2.9  2.4  2.5
+  row 2 aqua                     c522ea6: 3.3  3.3  2.9  2.8  2.9   |   c522ea6-b: 3.6  3.2  2.8  2.7  3.1
+  row 2 skyline                  c522ea6: 3.7  3.5  2.7  2.8  3.5   |   c522ea6-b: 3.4  2.8  2.8  3  3.2
+  row 2 glass                    c522ea6: 3.6  3.3  3  2.9  2.8   |   c522ea6-b: 3.6  3  2.8  2.8  2.9
+  row 2 aurora                   c522ea6: 3.2  3  2.8  2.5  2.9   |   c522ea6-b: 3.2  2.8  2.6  2.7  2.7
+  row 2 sigil                    c522ea6: 4  3.8  3.5  3  2.8   |   c522ea6-b: 3.3  2.9  3.2  3.2  3.3
+  row 3 1000                     c522ea6: 3  2.9  2.5  2.5  2.8   |   c522ea6-b: 3  2.9  2.8  2.6  2.9
+  row 3 2000                     c522ea6: 3.8  3.9  3.5  3.2  3.3   |   c522ea6-b: 3.9  3.1  3.4  3.3  3.4
+  row 4                          c522ea6: 11  8  6  8  8   |   c522ea6-b: 9  8  8  8  7
+  row 6                          c522ea6: 8.8  9.3  7.1  7.9  7.6   |   c522ea6-b: 8.5  7.5  7.3  6.6  7.3
+  row 7                          c522ea6: 4  4.3  3.6  3.6  3.6   |   c522ea6-b: 4.5  3.9  3.7  3.9  3.8
+  row 8                          c522ea6: 6.4  6.6  5.7  5.6  5.7   |   c522ea6-b: 6.6  5.6  6.1  5.6  5.3
+  row 9 ratio                    c522ea6: 1.738  1.645  1.662  1.675  1.53   |   c522ea6-b: 2.119 [1.769]  1.807  1.841  1.738  1.764
+  row 9 rolling p95 (secondary)  c522ea6: 39.8  25  25.6  27.8  25.4   |   c522ea6-b: 33.7 [30.6]  29.1  27.8  28.5  25.4
+  row 9 flat p95 (secondary)     c522ea6: 22.9  15.2  15.4  16.6  16.6   |   c522ea6-b: 15.9 [17.3]  16.1  15.1  16.4  14.4
+  (* a run not quiet by the record)
+
+VERDICTS (every run; c522ea6-b against c522ea6; rule: one-sided p < 0.01 AND the median more than the margin):
+  row 1 aqua       c522ea6 median 3.000 (n 5), c522ea6-b 2.700 (n 5); diff -0.300 (margin 0.3); above p 0.6706, below p 0.3532 -> not told; over the bar 6: 0/5 and 0/5
+  row 1 skyline    c522ea6 median 3.000 (n 5), c522ea6-b 2.700 (n 5); diff -0.300 (margin 0.3); above p 0.8968, below p 0.1190 -> not told; over the bar 6: 0/5 and 0/5
+  row 1 glass      c522ea6 median 2.800 (n 5), c522ea6-b 2.600 (n 5); diff -0.200 (margin 0.3); above p 0.8770, below p 0.1627 -> not told; over the bar 6: 0/5 and 0/5
+  row 1 aurora     c522ea6 median 2.600 (n 5), c522ea6-b 2.500 (n 5); diff -0.100 (margin 0.3); above p 0.4286, below p 0.5873 -> not told; over the bar 6: 0/5 and 0/5
+  row 1 sigil      c522ea6 median 3.000 (n 5), c522ea6-b 2.600 (n 5); diff -0.400 (margin 0.3); above p 0.9365, below p 0.0873 -> not told; over the bar 6: 0/5 and 0/5
+  row 2 aqua       c522ea6 median 2.900 (n 5), c522ea6-b 3.100 (n 5); diff +0.200 (margin 0.3); above p 0.6190, below p 0.4524 -> not told; over the bar 6: 0/5 and 0/5
+  row 2 skyline    c522ea6 median 3.500 (n 5), c522ea6-b 3.000 (n 5); diff -0.500 (margin 0.3); above p 0.7817, below p 0.2579 -> not told; over the bar 6: 0/5 and 0/5
+  row 2 glass      c522ea6 median 3.000 (n 5), c522ea6-b 2.900 (n 5); diff -0.100 (margin 0.3); above p 0.7778, below p 0.3175 -> not told; over the bar 6: 0/5 and 0/5
+  row 2 aurora     c522ea6 median 2.900 (n 5), c522ea6-b 2.700 (n 5); diff -0.200 (margin 0.3); above p 0.7738, below p 0.2619 -> not told; over the bar 6: 0/5 and 0/5
+  row 2 sigil      c522ea6 median 3.500 (n 5), c522ea6-b 3.200 (n 5); diff -0.300 (margin 0.3); above p 0.7937, below p 0.2698 -> not told; over the bar 6: 0/5 and 0/5
+  row 3 1000       c522ea6 median 2.800 (n 5), c522ea6-b 2.900 (n 5); diff +0.100 (margin 0.3); above p 0.2619, below p 0.7897 -> not told; over the bar 6: 0/5 and 0/5
+  row 3 2000       c522ea6 median 3.500 (n 5), c522ea6-b 3.400 (n 5); diff -0.100 (margin 0.3); above p 0.7222, below p 0.3294 -> not told; over the bar 6: 0/5 and 0/5
+  row 4            c522ea6 median 8.000 (n 5), c522ea6-b 8.000 (n 5); diff +0.000 (margin 2); above p 0.6032, below p 0.6032 -> not told; over the bar 40: 0/5 and 0/5
+  row 6            c522ea6 median 7.900 (n 5), c522ea6-b 7.300 (n 5); diff -0.600 (margin 0.67); above p 0.9167, below p 0.0992 -> not told; over the bar 13.4: 0/5 and 0/5
+  row 7            c522ea6 median 3.600 (n 5), c522ea6-b 3.900 (n 5); diff +0.300 (margin 0.345); above p 0.1825, below p 0.8333 -> not told; over the bar 6.9: 0/5 and 0/5
+  row 8            c522ea6 median 5.700 (n 5), c522ea6-b 5.600 (n 5); diff -0.100 (margin 0.345); above p 0.8135, below p 0.2103 -> not told; over the bar 6.9: 0/5 and 0/5
+  row 9 ratio      c522ea6 median 1.662 (n 5), c522ea6-b 1.807 (n 5); diff +0.145 (margin 0.1); above p 0.0079, below p 1.0000 -> SLOWER; over the bar 2: 0/5 and 1/5
+  across the cases: c522ea6-b's median higher in 4, lower in 12, of 17 (one-sided sign p 0.9936; told at 14 of 17) -> not told
+  secondary, row 9 rolling p95 (secondary): c522ea6 median 25.6, c522ea6-b 28.5; above p 0.1984, below p 0.8333
+  secondary, row 9 flat p95 (secondary): c522ea6 median 16.6, c522ea6-b 15.9; above p 0.9167, below p 0.0992
+
+  THE A/A (every run): the NULL control is BROKEN: a case is told on one commit against itself; WHAT D RESOLVES, the smallest uniform shift the rule tells (each way, the larger):
+    row 1 aqua       1.51 (c522ea6-b up 0.71, c522ea6 up 1.51); spread at this commit 2.6 to 4.4 (n 10), the margin 0.3
+    row 1 skyline    0.71 (c522ea6-b up 0.71, c522ea6 up 0.41); spread at this commit 2.3 to 3.1 (n 10), the margin 0.3
+    row 1 glass      0.61 (c522ea6-b up 0.61, c522ea6 up 0.41); spread at this commit 2.4 to 3 (n 10), the margin 0.3
+    row 1 aurora     0.51 (c522ea6-b up 0.41, c522ea6 up 0.51); spread at this commit 2.4 to 3 (n 10), the margin 0.3
+    row 1 sigil      0.71 (c522ea6-b up 0.71, c522ea6 up 0.31); spread at this commit 2.4 to 3.2 (n 10), the margin 0.3
+    row 2 aqua       0.71 (c522ea6-b up 0.6, c522ea6 up 0.71); spread at this commit 2.7 to 3.6 (n 10), the margin 0.3
+    row 2 skyline    0.91 (c522ea6-b up 0.91, c522ea6 up 0.61); spread at this commit 2.7 to 3.7 (n 10), the margin 0.3
+    row 2 glass      0.81 (c522ea6-b up 0.81, c522ea6 up 0.71); spread at this commit 2.8 to 3.6 (n 10), the margin 0.3
+    row 2 aurora     0.51 (c522ea6-b up 0.51, c522ea6 up 0.41); spread at this commit 2.5 to 3.2 (n 10), the margin 0.3
+    row 2 sigil      0.91 (c522ea6-b up 0.91, c522ea6 up 0.51); spread at this commit 2.8 to 4 (n 10), the margin 0.3
+    row 3 1000       0.51 (c522ea6-b up 0.31, c522ea6 up 0.51); spread at this commit 2.5 to 3 (n 10), the margin 0.3
+    row 3 2000       0.71 (c522ea6-b up 0.71, c522ea6 up 0.61); spread at this commit 3.1 to 3.9 (n 10), the margin 0.3
+    row 4            3.01 (c522ea6-b up 3.01, c522ea6 up 2.01); spread at this commit 6 to 11 (n 10), the margin 2
+    row 6            2.21 (c522ea6-b up 2.21, c522ea6 up 0.91); spread at this commit 6.6 to 9.3 (n 10), the margin 0.67
+    row 7            0.91 (c522ea6-b up 0.51, c522ea6 up 0.91); spread at this commit 3.6 to 4.5 (n 10), the margin 0.345
+    row 8            1.11 (c522ea6-b up 1.11, c522ea6 up 0.9); spread at this commit 5.3 to 6.6 (n 10), the margin 0.345
+    row 9 ratio      0.48 (c522ea6-b up 0, c522ea6 up 0.48); spread at this commit 1.53 to 2.119 (n 10), the margin 0.1
+    across the board: a uniform cost on every case of 0.31 or more is told by the sign test (14 of 17) here (c522ea6-b up 0.31, c522ea6 up 0.11)
+
+quiet runs only: every run was quiet by the record, so this reading is the one above

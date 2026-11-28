@@ -1,0 +1,4 @@
+lock reader, positive control during S1 (fixed DATA), 2026-11-28T00:10:08Z:
+C:/Consonance/data
+{"heavy-run.lock":{"pid":15700,"seat":"a2122153","cmd":"E D678 N3: S1 D642 A/A at 7b3926e, 15 runs a tree","timing":true,"alive":true,"mine":false},"heavy-run.2.lock":null,"heavy-run.3.lock":null,"heavy-run.hold":{"pid":15700,"seat":"a2122153","cmd":"E D678 N3: S1 D642 A/A at 7b3926e, 15 runs a tree","timing":false,"alive":true,"mine":false}}
+the registered copy (68d48cb) read DATA as: C:Consonancedata

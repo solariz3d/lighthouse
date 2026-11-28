@@ -1,0 +1,19 @@
+2026-11-28T00:11:26.430Z free after 0 s of waiting; heavy-run --status (exit 0):
+heavy-run status (C:\Consonance\data), read only:
+  EXCLUSIVE HOLD: none
+  slot 1: free
+  slot 2: free
+
+2026-11-28T00:11:27.656Z machine before: {"t":"2026-11-28T00:11:26.644Z","game":[],"gameReadable":true,"hisApp":false,"contentManager":false,"busyPct":8.7,"locks":{"heavy-run.lock":null,"heavy-run.2.lock":null,"heavy-run.3.lock":null,"heavy-run.hold":null}}
+2026-11-28T00:11:27.662Z started df-session (cwd G:/consonance-scratch/e-d678t/wt-c522ea6): pid 10788
+2026-11-28T00:11:28.669Z hold seen: {"pid":10788,"seat":"a2122153","cmd":"E D678 N3: S2 drag-frame A/A at c522ea6, 5 runs a tree","timing":false,"alive":true,"mine":false}
+2026-11-28T00:11:28.670Z heavy-run.lock taken by mine: {"pid":10788,"seat":"a2122153","cmd":"E D678 N3: S2 drag-frame A/A at c522ea6, 5 runs a tree","timing":true,"alive":true,"mine":false}
+2026-11-28T00:40:11.041Z df-session exited 0 after 1723 s
+2026-11-28T00:40:11.075Z after: heavy-run --status (exit 0):
+heavy-run status (C:\Consonance\data), read only:
+  EXCLUSIVE HOLD: none
+  slot 1: free
+  slot 2: free
+
+2026-11-28T00:40:12.305Z machine after: {"t":"2026-11-28T00:40:11.290Z","game":[],"gameReadable":true,"hisApp":false,"contentManager":false,"busyPct":5.3,"locks":{"heavy-run.lock":{"pid":26304,"seat":"6fe15f0a","cmd":"A D678 item 2 T3 T4 after the bounding","timing":true,"alive":true,"mine":false},"heavy-run.2.lock":null,"heavy-run.3.lock":null,"heavy-run.hold":{"pid":26304,"seat":"6fe15f0a","cmd":"A D678 item 2 T3 T4 after the bounding","timing":false,"alive":true,"mine":false}}}
+2026-11-28T00:40:12.305Z session over; launched 2026-11-28T00:11:26.172Z (waited 1726 s in all)

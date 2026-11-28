@@ -1,0 +1,18 @@
+d642: 7b3926e (7b3926e) against 7b3926e-b (7b3926e) — ONE COMMIT, run twice: the A/A; 30 runs kept (15 / 15; 0 ended by a game); quiet by the record: 30 of 30; busy before each run 5.2-17.8 %
+
+EVERY SAMPLE (the first attempt; a retry after it in brackets; - none):
+  ratio                          7b3926e: 2.28  1.67  1.78  2.8  1.94  1.78  1.79  1.87  1.8  2.15  2.12  2.01  2.22  1.76  1.95   |   7b3926e-b: 1.67  2.09  1.81  1.8  2.5  1.89  2.74  1.87  2.4  2.55  2.02  1.93  2.59  1.99  1.88
+  rolling p95 (secondary)        7b3926e: 7.7  6.7  6.4  9.5  6.4  6.9  6.6  6.8  6.4  7.8  7.6  6.7  7.5  6.6  6.7   |   7b3926e-b: 6.6  7.2  6.5  6.7  8.5  6.6  9.2  7.9  9.5  8.8  6.7  7.4  9.5  7.1  6.4
+  early p95                      7b3926e: 3.4  4  3.6  3.4  3.3  3.8  3.7  3.6  3.5  3.6  3.6  3.3  3.4  3.8  3.4   |   7b3926e-b: 4  3.4  3.6  3.7  3.4  3.5  3.4  4.2  4  3.4  3.3  3.8  3.7  3.6  3.4
+  (* a run not quiet by the record)
+  the row's own verdicts at 2x: 7b3926e 6 fail of 15, 7b3926e-b 7 fail of 15
+
+VERDICTS (every run; 7b3926e-b against 7b3926e; rule: one-sided p < 0.05 AND the median more than the margin):
+  ratio            7b3926e median 1.940 (n 15), 7b3926e-b 1.990 (n 15); diff +0.050 (margin 0.1); above p 0.1450, below p 0.8597 -> not told; over the bar 2: 6/15 and 7/15 — 7b3926e SITS AT ITS BAR (its own runs both pass and fail)
+  secondary, rolling p95 (secondary): 7b3926e median 6.7, 7b3926e-b 7.2; above p 0.1258, below p 0.8786
+  secondary, early p95: 7b3926e median 3.6, 7b3926e-b 3.6; above p 0.2980, below p 0.7102
+
+  THE A/A (every run): the NULL control is MET: no case told either way; WHAT D RESOLVES, the smallest uniform shift the rule tells (each way, the larger):
+    ratio            0.28 (7b3926e-b up 0.08, 7b3926e up 0.28); spread at this commit 1.67 to 2.8 (n 30), the margin 0.1
+
+quiet runs only: every run was quiet by the record, so this reading is the one above

@@ -5,7 +5,7 @@
 'use strict';
 const fs = require('fs'), os = require('os'), path = require('path');
 const HR = require('C:/Users/nname/Desktop/lighthouse/consonance/tools/heavy-run.js');
-const DATA = 'C:\Consonance\data';
+const DATA = 'C:/Consonance/data';   // D678 N3 fix, during S1: the registered copy had single backslashes here, which JS reads as "C:Consonancedata", so every lock read as absent
 const sleepSync = (ms) => Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, ms);
 function busyPct(ms = 1000) {
   const t = () => os.cpus().reduce((a, c) => { const s = Object.values(c.times).reduce((x, y) => x + y, 0); return { idle: a.idle + c.times.idle, all: a.all + s }; }, { idle: 0, all: 0 });

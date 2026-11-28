@@ -1,0 +1,29 @@
+2026-11-28T00:40:40.868Z waiting to start: the lock is not free:
+heavy-run status (C:\Consonance\data), read only:
+  EXCLUSIVE HOLD: STANDS — 6fe15f0a pid 26304 (A D678 item 2 T3 T4 after the bounding, since 2026-11-28T00:40:12.194Z). Run nothing, light or heavy, until it is gone.
+  slot 1: held by 6fe15f0a pid 26304 (A D678 item 2 T3 T4 after the bounding, since 2026-11-28T00:40:12.195Z) — a timing session (--timing)
+  slot 2: free
+  GATE: exit 1 — an exclusive hold stands; slot 1 is marked a timing session (--timing). Run nothing, light or heavy.
+
+2026-11-28T00:41:24.486Z free after 44 s of waiting; heavy-run --status (exit 0):
+heavy-run status (C:\Consonance\data), read only:
+  EXCLUSIVE HOLD: none
+  slot 1: free
+  slot 2: free
+
+2026-11-28T00:41:25.695Z machine before: {"t":"2026-11-28T00:41:24.689Z","game":[],"gameReadable":true,"hisApp":false,"contentManager":false,"busyPct":1.4,"locks":{"heavy-run.lock":null,"heavy-run.2.lock":null,"heavy-run.3.lock":null,"heavy-run.hold":null}}
+2026-11-28T00:41:25.703Z started idle (cwd G:\consonance-scratch\e-d678t\ev): pid 2552
+2026-11-28T00:41:26.212Z the idle holder holds a slot
+2026-11-28T00:41:26.216Z started sf-session (cwd G:/consonance-scratch/e-d678t/wt-c522ea6-b): pid 14340
+2026-11-28T00:41:26.714Z heavy-run.lock taken by mine: {"pid":2552,"seat":"a2122153","cmd":"E D678 N3: S3 sculpt-frame A/A at c522ea6, 5 runs a tree: this slot held IDLE on purpose (sculpt-frame times only while BOTH slots are held, its bothSlots rule)","timing":true,"alive":true,"mine":false}
+2026-11-28T00:41:26.714Z heavy-run.2.lock taken by mine: {"pid":14340,"seat":"a2122153","cmd":"E D678 N3: S3 sculpt-frame A/A at c522ea6, 5 runs a tree","timing":true,"alive":true,"mine":false}
+2026-11-28T01:08:50.459Z sf-session exited 0 after 1644 s
+2026-11-28T01:08:50.978Z idle exited 0 after 1645 s
+2026-11-28T01:08:51.010Z after: heavy-run --status (exit 0):
+heavy-run status (C:\Consonance\data), read only:
+  EXCLUSIVE HOLD: none
+  slot 1: free
+  slot 2: free
+
+2026-11-28T01:08:52.216Z machine after: {"t":"2026-11-28T01:08:51.215Z","game":[],"gameReadable":true,"hisApp":false,"contentManager":false,"busyPct":9.5,"locks":{"heavy-run.lock":{"pid":28208,"seat":"6fe15f0a","cmd":"A D678 item 2 B4 red before the freeze","timing":false,"alive":true,"mine":false},"heavy-run.2.lock":null,"heavy-run.3.lock":null,"heavy-run.hold":null}}
+2026-11-28T01:08:52.217Z session over; launched 2026-11-28T00:40:40.286Z (waited 1692 s in all)

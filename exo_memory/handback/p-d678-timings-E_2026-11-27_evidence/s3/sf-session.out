@@ -1,0 +1,13 @@
+heavy-run: capped to 8 of 16 logical CPUs, spread (affinity 21845); every child inherits it
+2026-11-28T00:41:26.931Z start sf: c522ea6 = c522ea6 (0 changes) / c522ea6-b = c522ea6 (0 changes), 5 runs each, alternated; my token set
+2026-11-28T00:44:11.498Z 1 c522ea6 (c522ea6): row 1 ok, row 2 FAIL, row 3 ok, row 4a FAIL, row 4b ok, row 5 ok; 163.1 s; busy before 8.1%
+2026-11-28T00:46:55.779Z 1 c522ea6-b (c522ea6): row 1 ok, row 2 FAIL, row 3 ok, row 4a FAIL, row 4b ok, row 5 ok; 162.9 s; busy before 8%
+2026-11-28T00:49:39.958Z 2 c522ea6 (c522ea6): row 1 ok, row 2 FAIL, row 3 ok, row 4a FAIL, row 4b ok, row 5 ok; 162.8 s; busy before 3.6%
+2026-11-28T00:52:24.879Z 2 c522ea6-b (c522ea6): row 1 ok, row 2 FAIL, row 3 ok, row 4a FAIL, row 4b ok, row 5 ok; 163.5 s; busy before 1.5%
+2026-11-28T00:55:09.225Z 3 c522ea6 (c522ea6): row 1 ok, row 2 FAIL, row 3 ok, row 4a FAIL, row 4b ok, row 5 ok; 162.9 s; busy before 3.6%
+2026-11-28T00:57:53.457Z 3 c522ea6-b (c522ea6): row 1 ok, row 2 FAIL, row 3 ok, row 4a FAIL, row 4b ok, row 5 ok; 162.8 s; busy before 2.5%
+2026-11-28T01:00:37.775Z 4 c522ea6 (c522ea6): row 1 ok, row 2 FAIL, row 3 ok, row 4a FAIL, row 4b ok, row 5 ok; 162.9 s; busy before 3.1%
+2026-11-28T01:03:22.024Z 4 c522ea6-b (c522ea6): row 1 ok, row 2 FAIL, row 3 ok, row 4a FAIL, row 4b ok, row 5 ok; 162.8 s; busy before 2.9%
+2026-11-28T01:06:06.302Z 5 c522ea6 (c522ea6): row 1 ok, row 2 FAIL, row 3 ok, row 4a FAIL, row 4b ok, row 5 ok; 162.9 s; busy before 2.3%
+2026-11-28T01:08:50.450Z 5 c522ea6-b (c522ea6): row 1 ok, row 2 FAIL, row 3 ok, row 4a FAIL, row 4b ok, row 5 ok; 162.7 s; busy before 2.7%
+2026-11-28T01:08:50.450Z done

@@ -1,0 +1,12 @@
+2026-11-28T00:11:28.383Z start df: c522ea6 = c522ea6 (0 changes) / c522ea6-b = c522ea6 (0 changes), 5 runs each, alternated; my token set
+2026-11-28T00:14:17.975Z 1 c522ea6 (c522ea6): row 1 ok, row 2 ok, row 3 ok, row 4 ok, row 5 ok, row 6 ok, row 7 ok, row 8 ok, row 9 ok; 168.1 s; busy before 10.4%
+2026-11-28T00:17:42.955Z 1 c522ea6-b (c522ea6): row 1 ok, row 2 ok, row 3 ok, row 4 ok, row 5 ok, row 6 ok, row 7 ok, row 8 ok, row 9 ok; 203.5 s; busy before 30.9%
+2026-11-28T00:20:31.828Z 2 c522ea6 (c522ea6): row 1 ok, row 2 ok, row 3 ok, row 4 ok, row 5 ok, row 6 ok, row 7 ok, row 8 ok, row 9 ok; 167.4 s; busy before 15.4%
+2026-11-28T00:23:20.352Z 2 c522ea6-b (c522ea6): row 1 ok, row 2 ok, row 3 ok, row 4 ok, row 5 ok, row 6 ok, row 7 ok, row 8 ok, row 9 ok; 167.1 s; busy before 2%
+2026-11-28T00:26:08.715Z 3 c522ea6 (c522ea6): row 1 ok, row 2 ok, row 3 ok, row 4 ok, row 5 ok, row 6 ok, row 7 ok, row 8 ok, row 9 ok; 166.9 s; busy before 3.1%
+2026-11-28T00:28:57.237Z 3 c522ea6-b (c522ea6): row 1 ok, row 2 ok, row 3 ok, row 4 ok, row 5 ok, row 6 ok, row 7 ok, row 8 ok, row 9 ok; 167.1 s; busy before 2.4%
+2026-11-28T00:31:45.901Z 4 c522ea6 (c522ea6): row 1 ok, row 2 ok, row 3 ok, row 4 ok, row 5 ok, row 6 ok, row 7 ok, row 8 ok, row 9 ok; 167.2 s; busy before 4.7%
+2026-11-28T00:34:34.231Z 4 c522ea6-b (c522ea6): row 1 ok, row 2 ok, row 3 ok, row 4 ok, row 5 ok, row 6 ok, row 7 ok, row 8 ok, row 9 ok; 166.9 s; busy before 3.9%
+2026-11-28T00:37:22.741Z 5 c522ea6 (c522ea6): row 1 ok, row 2 ok, row 3 ok, row 4 ok, row 5 ok, row 6 ok, row 7 ok, row 8 ok, row 9 ok; 167.1 s; busy before 5%
+2026-11-28T00:40:11.032Z 5 c522ea6-b (c522ea6): row 1 ok, row 2 ok, row 3 ok, row 4 ok, row 5 ok, row 6 ok, row 7 ok, row 8 ok, row 9 ok; 166.9 s; busy before 1.6%
+2026-11-28T00:40:11.032Z done
