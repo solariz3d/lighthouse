@@ -244,3 +244,30 @@ class House:
     def clock(self, hours, minutes):
         self._hands[0].rotation_euler = (0, (hours % 12 + minutes / 60.0) / 12.0 * 2 * math.pi, 0)
         self._hands[1].rotation_euler = (0, minutes / 60.0 * 2 * math.pi, 0)
+
+
+def bulb(k, name="bulb", at=(0.0, 0.0, 0.0), watts=1.6):
+    """A mind from another company: a mint bulb in a wire cage on a brass foot. Neither a candle nor a lamp.
+    Returns (root, light): move the root; set light.data.energy."""
+    brass = k.mat("brass", (0.78, 0.55, 0.24), rough=0.32, metal=1.0)
+    steel = k.mat("steel", (0.55, 0.56, 0.60), rough=0.35, metal=1.0)
+    root = empty(name, at)
+    parent(kit.lathe(name + "_base", [(0.0, 0.0), (0.035, 0.0), (0.035, 0.012), (0.014, 0.022), (0.012, 0.05), (0.0, 0.05)], seg=24), root).data.materials.append(brass)
+    bpy.ops.mesh.primitive_uv_sphere_add(segments=20, ring_count=10, radius=0.034, location=(0, 0, 0.082))
+    g = bpy.context.object
+    g.name = name + "_glass"
+    g.data.materials.append(k.mat("mint", (0.1, 0.2, 0.16), emit=kit.MINT, emit_strength=3.0))
+    g.visible_shadow = False
+    parent(g, root)
+    for i in range(4):
+        rot = (math.pi / 2, 0, i * math.pi / 3) if i < 3 else (0, 0, 0)
+        bpy.ops.mesh.primitive_torus_add(major_radius=0.044, minor_radius=0.0022, location=(0, 0, 0.082), rotation=rot, major_segments=28, minor_segments=6)
+        ring = bpy.context.object
+        ring.name = f"{name}_cage{i}"
+        ring.data.materials.append(steel)
+        ring.visible_shadow = False
+        parent(ring, root)
+    light = parent(k.glow_light((0, 0, 0), kit.MINT, watts, 0.03, name + "_light"), root)
+    light.location = (0, 0, 0.082)
+    return root, light
+
