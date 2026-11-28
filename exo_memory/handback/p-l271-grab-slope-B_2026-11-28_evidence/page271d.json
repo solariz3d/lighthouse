@@ -1,0 +1,280 @@
+{
+ "started": "2026-11-28T09:28:52.023Z",
+ "base": "c522ea6",
+ "gesture": "a level mouse move, 45 px outward from the press",
+ "view": "the page focus at s 330 (preview.js focus: 35 m up along the road normal, 45 m back)",
+ "runs": [
+  {
+   "road": "Tube200",
+   "grab": "today",
+   "restored": true,
+   "guideClosed": 1,
+   "radius": "30",
+   "pose": {
+    "eye": [
+     0,
+     35,
+     285
+    ],
+    "target": [
+     0,
+     34.38605938648508,
+     285.78935221737635
+    ],
+    "up": [
+     0,
+     1,
+     0
+    ],
+    "fov": 1.0471975511965976
+   },
+   "box": [
+    0,
+    124.578125,
+    1400,
+    735.421875
+   ],
+   "press": [
+    670,
+    481
+   ],
+   "pointer": [
+    625,
+    481
+   ],
+   "pick": {
+    "s": 330,
+    "u": 0.5
+   },
+   "shotBefore": "<scratch>\\shotsd\\Tube200_today_0_before.png",
+   "valueLine": [
+    "Grab: press the road and drag: that side follows the mouse and the far edge stays put, all within the radius; the road outside the radius stays. Click a piece to put the handles on it (Shift-click for a run).",
+    "this side; the far edge stays, within 30 m · height −1.33 m · sideways +2.86 m · width +6.76 m · bank +9.32 ° at the point · piece p3"
+   ],
+   "shotDuring": "<scratch>\\shotsd\\Tube200_today_1_during.png",
+   "after": {
+    "rimPx": [
+     625.2,
+     481.3
+    ],
+    "pointerToRimPx": 0.4,
+    "pointUpM": 0,
+    "pointSidewaysM": 3.9771,
+    "centreSidewaysM": 2.8586,
+    "rimToTargetM": 3.9771,
+    "rimUpM": 0,
+    "centreUpM": -1.3329,
+    "bankBeforeDeg": 0,
+    "bankAfterDeg": 9.3162
+   },
+   "checker": null,
+   "shotAfter": "<scratch>\\shotsd\\Tube200_today_2_after.png"
+  },
+  {
+   "road": "Tube200",
+   "grab": "slope",
+   "restored": true,
+   "guideClosed": 1,
+   "radius": "30",
+   "pose": {
+    "eye": [
+     0,
+     35,
+     285
+    ],
+    "target": [
+     0,
+     34.38605938648508,
+     285.78935221737635
+    ],
+    "up": [
+     0,
+     1,
+     0
+    ],
+    "fov": 1.0471975511965976
+   },
+   "box": [
+    0,
+    124.578125,
+    1400,
+    735.421875
+   ],
+   "press": [
+    670,
+    481
+   ],
+   "pointer": [
+    625,
+    481
+   ],
+   "pick": {
+    "s": 330,
+    "u": 0.5
+   },
+   "shotBefore": "<scratch>\\shotsd\\Tube200_slope_0_before.png",
+   "valueLine": [
+    "Grab: press the road and drag: that side follows the mouse and the far edge stays put, all within the radius; the road outside the radius stays. Click a piece to put the handles on it (Shift-click for a run).",
+    "this side; the far edge stays, within 30 m · height −2.19 m · sideways +1.84 m · width +6.51 m at the point · piece p3"
+   ],
+   "shotDuring": "<scratch>\\shotsd\\Tube200_slope_1_during.png",
+   "after": {
+    "rimPx": [
+     634.3,
+     494.9
+    ],
+    "pointerToRimPx": 16.7,
+    "pointUpM": -1.5233,
+    "pointSidewaysM": 3.2667,
+    "centreSidewaysM": 1.8374,
+    "rimToTargetM": 3.6044,
+    "rimUpM": -1.5233,
+    "centreUpM": -2.1898,
+    "bankBeforeDeg": 0,
+    "bankAfterDeg": 0
+   },
+   "checker": null,
+   "shotAfter": "<scratch>\\shotsd\\Tube200_slope_2_after.png"
+  },
+  {
+   "road": "Tube300",
+   "grab": "today",
+   "restored": true,
+   "guideClosed": 1,
+   "radius": "30",
+   "pose": {
+    "eye": [
+     0,
+     35,
+     285
+    ],
+    "target": [
+     0,
+     34.38605938648508,
+     285.78935221737635
+    ],
+    "up": [
+     0,
+     1,
+     0
+    ],
+    "fov": 1.0471975511965976
+   },
+   "box": [
+    0,
+    124.578125,
+    1400,
+    735.421875
+   ],
+   "press": [
+    675,
+    477
+   ],
+   "pointer": [
+    630,
+    477
+   ],
+   "pick": {
+    "s": 330,
+    "u": 0.5
+   },
+   "shotBefore": "<scratch>\\shotsd\\Tube300_today_0_before.png",
+   "valueLine": [
+    "Grab: press the road and drag: that side follows the mouse and the far edge stays put, all within the radius; the road outside the radius stays. Click a piece to put the handles on it (Shift-click for a run).",
+    "this side; the far edge stays, within 30 m · height −2.52 m · sideways +3.28 m · width +9.98 m · bank +18.09 ° at the point · piece p3"
+   ],
+   "shotDuring": "<scratch>\\shotsd\\Tube300_today_1_during.png",
+   "after": {
+    "rimPx": [
+     629.8,
+     477
+    ],
+    "pointerToRimPx": 0.2,
+    "pointUpM": 0,
+    "pointSidewaysM": 3.9566,
+    "centreSidewaysM": 3.2818,
+    "rimToTargetM": 3.9566,
+    "rimUpM": 0,
+    "centreUpM": -2.5183,
+    "bankBeforeDeg": 0,
+    "bankAfterDeg": 18.0895
+   },
+   "checker": null,
+   "shotAfter": "<scratch>\\shotsd\\Tube300_today_2_after.png"
+  },
+  {
+   "road": "Tube300",
+   "grab": "slope",
+   "restored": true,
+   "guideClosed": 1,
+   "radius": "30",
+   "pose": {
+    "eye": [
+     0,
+     35,
+     285
+    ],
+    "target": [
+     0,
+     34.38605938648508,
+     285.78935221737635
+    ],
+    "up": [
+     0,
+     1,
+     0
+    ],
+    "fov": 1.0471975511965976
+   },
+   "box": [
+    0,
+    124.578125,
+    1400,
+    735.421875
+   ],
+   "press": [
+    675,
+    477
+   ],
+   "pointer": [
+    630,
+    477
+   ],
+   "pick": {
+    "s": 330,
+    "u": 0.5
+   },
+   "shotBefore": "<scratch>\\shotsd\\Tube300_slope_0_before.png",
+   "valueLine": [
+    "Grab: press the road and drag: that side follows the mouse and the far edge stays put, all within the radius; the road outside the radius stays. Click a piece to put the handles on it (Shift-click for a run).",
+    "this side; the far edge stays, within 30 m · height −3.17 m · sideways +0.85 m · width +8.89 m at the point · piece p3"
+   ],
+   "shotDuring": "<scratch>\\shotsd\\Tube300_slope_1_during.png",
+   "after": {
+    "rimPx": [
+     647.6,
+     494.2
+    ],
+    "pointerToRimPx": 24.6,
+    "pointUpM": -1.9109,
+    "pointSidewaysM": 2.4903,
+    "centreSidewaysM": 0.8494,
+    "rimToTargetM": 3.139,
+    "rimUpM": -1.9109,
+    "centreUpM": -3.17,
+    "bankBeforeDeg": 0,
+    "bankAfterDeg": 0
+   },
+   "checker": null,
+   "shotAfter": "<scratch>\\shotsd\\Tube300_slope_2_after.png"
+  }
+ ],
+ "errors": [],
+ "titles": [
+  "zz-headless-test",
+  "zz-headless-test",
+  "zz-headless-test",
+  "zz-headless-test"
+ ],
+ "ended": "2026-11-28T09:29:44.421Z"
+}

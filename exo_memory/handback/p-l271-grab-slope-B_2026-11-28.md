@@ -298,3 +298,103 @@ at its rim now follows its slope; (b) pulled down the bank the point ends about 
 re-read from `probe271.json` / `item3.json` before quoting).
 
 **The picture:** a tube's side wall (t 300, pressed partway round) pulled sideways, today against the branch, before and after; headless as before.
+
+## A2. Results (checked unless marked)
+
+**Builder:** `16a93d1eb163506c965efa2b4ba1e2bed00a25aa` on cc4fa71, 2 files (+23 −8): `app/test/core-pieces-ui.test.js` (row 25) and `CHANGELOG.md`.
+`zonegrab.js` and `zonegrab.test.js` are not touched (`git diff --stat cc4fa71 HEAD`).
+
+### Row 25 (checked: `r25.js` → `r25.txt`, `r25.log`; through heavy-run at BelowNormal)
+
+The row as registered: after its other presses it lays 200 m banking to 20° and 150 m held at the head, re-aims its view at 75 m before the end,
+and presses the rim at u −1 with a level 40 px pull outward. Its own control: the whole-across place more than 0.05 m from the slope place.
+
+| follow's line | row 25 | first failing assertion |
+|---|---|---|
+| the branch | **pass 1 / fail 0** | |
+| **M2 the pull whole across (rise kept)** | **fail** | the banked press: the rim point **0.7208 m** from the slope place (1.98 m from the pointer) |
+| c522ea6's line | **fail** | the cupped press: 0.0308 m from the slope place |
+| M1 no rise along the slope | fail | the cupped press: 0.0308 m |
+| M5 the share not squared | fail | the cupped press: 8.86 m |
+| M7 down the slope | fail | the cupped press: 0.0617 m |
+| D's literal form | fail | the cupped press: 2.84 m |
+
+The file was restored after each mutant, byte for byte (`restored: true`).
+
+**Predictions, scored as registered:**
+- P1 (red under M2, 0.1 to 0.6 m): **red, held. The size was missed**: 0.72 m, over the range. inferred: my e was low; the 40 px pull at this view is about
+  2 m off-plane, and the cup adds to the bank's slope.
+- P2 (red under c522ea6's line, over 0.3 m at the banked press): **red, held.** The size is **not scored**: the row fails first at the cupped press (0.0308 m),
+  so the banked press never runs under the base line.
+- P3 (green, control over 0.05 m): **green, held.** The control's own figure is not printed on a pass. inferred: about 0.72 m, where M2 put the point.
+- P4 (M1, M5, M7 and the literal form red; zonegrab's mutants unchanged): **red, held.** zonegrab's mutants were not re-run, because neither zonegrab file changed.
+- P5 (touched set 140 / 0 / 5): **held.** `tier3-branch.tap`: tests 145, pass 140, fail 0, cancelled 0, skipped 5 (sculpt-frame rows 1 to 4, which time only
+  with both slots held).
+- Stop: did not fire.
+- Not measured: the bank at the banked press. The control shows the chord slopes enough there to tell M2 apart; that it is the full 20° is inferred.
+
+### The CHANGELOG (checked: the diff in 16a93d1)
+
+- "After a 4 m pull **up** a 20° bank it ends about 0.57 m short of the pointer and 1.45 m above it; **pulled down the bank, about 0.44 m short and
+  1.09 m below it**." The figures are re-read from my own `item3.json`, B+ at s 330: missAcross −0.4387, missUp −1.093.
+- "On a flat road nothing changes … **except on an edge piece whose two rims sit at different heights**: … a pull at its rim follows that slope too."
+  The figures here are C's (bank 0 where today it tips up to 0.41°; the middle drops 0.39 m at the low rim, against 0.28 m today), credited to "a non-author
+  read". I did not re-measure them.
+- The tests sentence now names row 25's banked press.
+
+### The tube's wall, on the real page (checked: `page271d.js` → `page271d.json`, 09:28:52Z to 09:29:44Z; the pictures)
+
+**How:** the same harness as section 3:
+- the road restored as an autosave; Sculpt, Grab, radius 30; the page's focus at s 330;
+- a straight flat road, 12 m wide, as a tube of 200° and of 300°;
+- a real press partway round the wall at u 0.5 (the page's own pick read s 330, u 0.5 in all four runs);
+- a level 45 px mouse move sideways, away from the middle.
+
+| level 45 px pull, u 0.5 | tube 200°, today | tube 200°, slope grab | tube 300°, today | tube 300°, slope grab |
+|---|---|---|---|---|
+| bank at s 330 after | 0 → **9.32°** | 0 → **0** | 0 → **18.09°** | 0 → **0** |
+| value line during | height −1.33 · sideways +2.86 · width +6.76 · bank +9.32° | height −2.19 · sideways +1.84 · width +6.51 | height −2.52 · sideways +3.28 · width +9.98 · bank +18.09° | height −3.17 · sideways +0.85 · width +8.89 |
+| the pressed point after, from the pointer | 0.4 px | **16.7 px**, 1.52 m lower | 0.2 px | **24.6 px**, 1.91 m lower |
+
+- **So, for him:**
+  - Today a sideways pull on a tube's wall **rolls the tube**: 18° on a 300° tube, and the point stays under the cursor.
+  - The slope grab keeps the roll at 0. The tube instead **sinks and slides less**: on 300°, the middle 3.17 m down and only 0.85 m sideways. The
+    grabbed point ends below the cursor.
+  - This is C's 4.2 seen on the page.
+  - C's figures are for a 3 m pull in node, mine for a 45 px pull on the page, so the two are not compared number for number.
+- **Weak:** from the focus view (35 m up, 45 m back) the tube is small in the frame, and the change reads mostly in the value line and the crosses.
+  There is no side view: run 2's flight was weak and is not repeated.
+- The checker's selector read nothing, as before. Not read off these pictures.
+- **Pictures** (untracked, `pictures/`):
+  - `pair_Tube300_1_during.png` (**look at this one first**: today's value line ends "bank +18.09°", and the slope grab's has none);
+  - `pair_Tube300_0_before.png`, `pair_Tube300_2_after.png` (the cyan cross is where the point ended, the yellow where the hand let go);
+  - and the same three for `Tube200`.
+- **The machine:**
+  - The titles read zz-headless-test 4 of 4.
+  - Page errors: 0.
+  - Tab proxies: UNCALIBRATED, 0 before and 0 after.
+  - Orphan browsers: 0 before and 0 after (`leftovers-before-d.txt`, `leftovers-after-d.txt`).
+
+### The push
+
+- `git push origin l271-grab-slope`, one command, from the worktree: `cc4fa71..16a93d1`.
+- **push-gate: `allow`** at 2026-11-28T09:31:13.343Z, scanned `origin` `l271-grab-slope`.
+- **ls-remote:** `16a93d1eb163506c965efa2b4ba1e2bed00a25aa refs/heads/l271-grab-slope`.
+- Nothing else was pushed. No build, no install.
+
+### The machine
+
+- Every node run went through heavy-run at BelowNormal with `--wait-game`: row 25 twice, then the pictures and the tier together.
+- One sub-second read ran outside heavy-run: the tube road's cross-section, at about 09:05Z, after `--status` read no exclusive hold.
+- The worktree `t180-b-l271` is removed; the builder's worktree list has no tree of mine.
+
+### Corrections, mine
+
+- **Row 25's first mutant run was void:** all seven runs read red, the branch included. The Bash tool had collapsed the escapes in my edit script's
+  heredoc, so the title's `\'` became `'` and the file did not parse. I caught it because the branch read red. The title now says "the road slope", with no
+  apostrophe. The second run is the one scored.
+- **The same cause** left the user path in `page271d.json` after my first redaction. It was redone by a script written with the file tool, and the
+  privacy grep over the evidence folder exits 1.
+- **A1's heading says "written 09:0xZ".** It was committed at 08:57:40Z (f7df4128).
+
+NEXT: librarian call_chair with this hand-back's path when it has read section A2, for C's short read of l271-grab-slope cc4fa71..16a93d1 and the tube pictures to him

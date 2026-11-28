@@ -1,0 +1,9 @@
+BRANCH (no mutant): # pass 1 # fail 0
+M2 the pull whole across (rise kept): # pass 0 # fail 1 | "on the banked road the rim point is 0.7208361943625862 m from the slope grab's place (1.9804599768192783 m from the pointer)"
+BASE c522ea6 line (the drag whole): # pass 0 # fail 1 | "the rim point is 0.03082252376344708 m from the slope grab's place (0.0000697168897837347 m from the pointer)"
+M1 no rise along the slope: # pass 0 # fail 1 | "the rim point is 0.030808103728173164 m from the slope grab's place (0.00013422844262749007 m from the pointer)"
+M5 the share not squared: # pass 0 # fail 1 | "the rim point is 8.862296510733787 m from the slope grab's place (8.862564909312743 m from the pointer)"
+M7 down the slope instead of up: # pass 0 # fail 1 | "the rim point is 0.06169024180102814 m from the slope grab's place (0.0308454171284625 m from the pointer)"
+LITERAL D followChord: # pass 0 # fail 1 | "the rim point is 2.8368008154217725 m from the slope grab's place (2.8059545785408444 m from the pointer)"
+restored: true
+exit 0
