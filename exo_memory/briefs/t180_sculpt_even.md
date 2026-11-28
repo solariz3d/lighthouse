@@ -105,3 +105,4 @@ tentative yes. Both go forward on branches with pictures for his eye before anyt
   Read as his ask to start it alongside; dispatched at once.
 - 2026-11-28 03:41 (L). Asked: "For those cases, which do you want? B: Even still evens out the width, but leaves your pulled
   edge where it is. R: Even does nothing and shows a message ..." His word: "B". So the fallback is A1B.
+- 2026-11-28 07:32 (L), after the checklist and "Install it on the laptop now?": "yes instal now, and make all relevant handoffs on the repos for desktop to see, leaving soon so good point to end trackbuilder work for the night"

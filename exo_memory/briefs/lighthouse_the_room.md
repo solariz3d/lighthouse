@@ -583,3 +583,4 @@ carry it, so this brief does.
 
 - 2026-11-28 03:03 (L), typed into the chair's tab and meant for the librarian ("meant to say that to the li / lib"): "soon we should let me test something, i think we have been building for a long time without me testing shit, but thats okay if we are working good"
 - 2026-11-28 03:04 (L), to the librarian's decision 3 (install the width hold + ghost build when green?): "i can wait to test once all in motion is built, then you can give me a checklist of things to test"
+- 2026-11-28 07:32 (L): "yes instal now, and make all relevant handoffs on the repos for desktop to see, leaving soon so good point to end trackbuilder work for the night"
