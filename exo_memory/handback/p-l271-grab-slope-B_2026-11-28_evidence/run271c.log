@@ -1,0 +1,104 @@
+tier2 exit 0
+row 25 under the base line: # pass 0 # fail 1 
+restored [33mtrue[39m
+[
+ {
+  "road": "Bminus",
+  "grab": "today",
+  "pick": {
+   "s": 330,
+   "u": -1
+  },
+  "valueLine": [
+   "Grab: press the road and drag: that side follows the mouse and the far edge stays put, all within the radius; the road outside the radius stays. Click a piece to put the handles on it (Shift-click for a run).",
+   "this side; the far edge stays, within 30 m · height −0.23 m · sideways −1.93 m · width +3.72 m · bank +4.87 ° at the point · pieces p4–p5"
+  ],
+  "after": {
+   "rimPx": [
+    798,
+    451.1
+   ],
+   "pointerToRimPx": 9.4,
+   "rimToTargetM": 0.2791,
+   "rimUpM": 0.1709,
+   "centreUpM": -0.2322,
+   "bankBeforeDeg": -20,
+   "bankAfterDeg": -15.1303
+  }
+ },
+ {
+  "road": "Bminus",
+  "grab": "slope",
+  "pick": {
+   "s": 330,
+   "u": -1
+  },
+  "valueLine": [
+   "Grab: press the road and drag: that side follows the mouse and the far edge stays put, all within the radius; the road outside the radius stays. Click a piece to put the handles on it (Shift-click for a run).",
+   "this side; the far edge stays, within 30 m · height +0.42 m · sideways −1.78 m · width +3.67 m at the point · pieces p4–p5"
+  ],
+  "after": {
+   "rimPx": [
+    794.3,
+    439.9
+   ],
+   "pointerToRimPx": 21,
+   "rimToTargetM": 1.5605,
+   "rimUpM": 1.4022,
+   "centreUpM": 0.416,
+   "bankBeforeDeg": -20,
+   "bankAfterDeg": -20
+  }
+ },
+ {
+  "road": "F",
+  "grab": "today",
+  "pick": {
+   "s": 330,
+   "u": -1
+  },
+  "valueLine": [
+   "Grab: press the road and drag: that side follows the mouse and the far edge stays put, all within the radius; the road outside the radius stays. Click a piece to put the handles on it (Shift-click for a run).",
+   "this side; the far edge stays, within 30 m · height −0.24 m · sideways −2.00 m · width +4.04 m at the point · pieces p4–p5"
+  ],
+  "after": {
+   "rimPx": [
+    811.7,
+    484
+   ],
+   "pointerToRimPx": 2,
+   "rimToTargetM": 0.2033,
+   "rimUpM": 0.1985,
+   "centreUpM": -0.2403,
+   "bankBeforeDeg": 0,
+   "bankAfterDeg": 0
+  }
+ },
+ {
+  "road": "F",
+  "grab": "slope",
+  "pick": {
+   "s": 330,
+   "u": -1
+  },
+  "valueLine": [
+   "Grab: press the road and drag: that side follows the mouse and the far edge stays put, all within the radius; the road outside the radius stays. Click a piece to put the handles on it (Shift-click for a run).",
+   "this side; the far edge stays, within 30 m · height −0.24 m · sideways −2.00 m · width +4.04 m at the point · pieces p4–p5"
+  ],
+  "after": {
+   "rimPx": [
+    811.7,
+    484
+   ],
+   "pointerToRimPx": 2,
+   "rimToTargetM": 0.2033,
+   "rimUpM": 0.1985,
+   "centreUpM": -0.2403,
+   "bankBeforeDeg": 0,
+   "bankAfterDeg": 0
+  }
+ }
+]
+errors [33m0[39m []
+page exit 0
+exit 0

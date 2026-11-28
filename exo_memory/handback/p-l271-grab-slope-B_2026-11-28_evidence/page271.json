@@ -1,0 +1,331 @@
+{
+ "started": "2026-11-28T08:22:23.845Z",
+ "base": "c522ea6",
+ "view": "the page focus at s 330 (preview.js focus: 35 m up along the road normal, 45 m back)",
+ "runs": [
+  {
+   "road": "Bminus",
+   "grab": "today",
+   "restored": true,
+   "radius": "30",
+   "pose": {
+    "eye": [
+     31.911238351542544,
+     32.8892417322815,
+     271.1889312254514
+    ],
+    "target": [
+     32.50094531063356,
+     32.312326268077,
+     271.7540986781248
+    ],
+    "up": [
+     0,
+     1,
+     0
+    ],
+    "fov": 1.0471975511965976
+   },
+   "box": [
+    0,
+    124.578125,
+    1400,
+    735.421875
+   ],
+   "press": [
+    758,
+    459
+   ],
+   "pointer": [
+    800,
+    452
+   ],
+   "pick": {
+    "s": 330,
+    "u": -1
+   },
+   "valueLine": [
+    "Grab: press the road and drag: that side follows the mouse and the far edge stays put, all within the radius; the road outside the radius stays. Click a piece to put the handles on it (Shift-click for a run).",
+    "this side; the far edge stays, within 30 m · height +0.03 m · sideways −1.88 m · width +3.71 m · bank +2.90 ° at the point · pieces p4–p5"
+   ],
+   "shotDuring": "<scratch>\\l271\\shots\\Bminus_today_1_during.png",
+   "after": {
+    "rimPx": [
+     796.7,
+     446.5
+    ],
+    "pointerToRimPx": 6.4,
+    "rimToTargetM": 0.7802,
+    "rimUpM": 0.6751,
+    "centreUpM": 0.0318,
+    "bankBeforeDeg": -20,
+    "bankAfterDeg": -17.0967
+   },
+   "shotAfter": "<scratch>\\l271\\shots\\Bminus_today_2_after.png",
+   "sidePose": {
+    "eye": [
+     405.30987323134053,
+     11.97490232394002,
+     -75.62788988624192
+    ],
+    "target": [
+     404.8863917475415,
+     11.397986859735521,
+     -76.32633958381582
+    ],
+    "up": [
+     0,
+     1,
+     0
+    ],
+    "fov": 1.0471975511965976
+   },
+   "shotSide": "<scratch>\\l271\\shots\\Bminus_today_3_side.png"
+  },
+  {
+   "road": "Bminus",
+   "grab": "slope",
+   "restored": true,
+   "radius": "30",
+   "pose": {
+    "eye": [
+     31.911238351542544,
+     32.8892417322815,
+     271.1889312254514
+    ],
+    "target": [
+     32.50094531063356,
+     32.312326268077,
+     271.7540986781248
+    ],
+    "up": [
+     0,
+     1,
+     0
+    ],
+    "fov": 1.0471975511965976
+   },
+   "box": [
+    0,
+    124.578125,
+    1400,
+    735.421875
+   ],
+   "press": [
+    758,
+    459
+   ],
+   "pointer": [
+    800,
+    452
+   ],
+   "pick": {
+    "s": 330,
+    "u": -1
+   },
+   "valueLine": [
+    "Grab: press the road and drag: that side follows the mouse and the far edge stays put, all within the radius; the road outside the radius stays. Click a piece to put the handles on it (Shift-click for a run).",
+    "this side; the far edge stays, within 30 m · height +0.65 m · sideways −1.74 m · width +3.69 m · bank −1.76 ° at the point · pieces p4–p5"
+   ],
+   "shotDuring": "<scratch>\\l271\\shots\\Bminus_slope_1_during.png",
+   "after": {
+    "rimPx": [
+     793.1,
+     435.7
+    ],
+    "pointerToRimPx": 17.7,
+    "rimToTargetM": 2.0354,
+    "rimUpM": 1.8555,
+    "centreUpM": 0.6523,
+    "bankBeforeDeg": -20,
+    "bankAfterDeg": -21.7607
+   },
+   "shotAfter": "<scratch>\\l271\\shots\\Bminus_slope_2_after.png",
+   "sidePose": {
+    "eye": [
+     405.6346137420371,
+     11.827788880567855,
+     -75.66570834063046
+    ],
+    "target": [
+     405.13572263536344,
+     11.250873416363357,
+     -76.31245111085954
+    ],
+    "up": [
+     0,
+     1,
+     0
+    ],
+    "fov": 1.0471975511965976
+   },
+   "shotSide": "<scratch>\\l271\\shots\\Bminus_slope_3_side.png"
+  },
+  {
+   "road": "F",
+   "grab": "today",
+   "restored": true,
+   "radius": "30",
+   "pose": {
+    "eye": [
+     26.12854322262043,
+     35,
+     281.670258208305
+    ],
+    "target": [
+     26.819685364432026,
+     34.38605938648508,
+     282.05157102331253
+    ],
+    "up": [
+     0,
+     1,
+     0
+    ],
+    "fov": 1.0471975511965976
+   },
+   "box": [
+    0,
+    124.578125,
+    1400,
+    735.421875
+   ],
+   "press": [
+    767,
+    486
+   ],
+   "pointer": [
+    812,
+    486
+   ],
+   "pick": {
+    "s": 330,
+    "u": -1
+   },
+   "valueLine": [
+    "Grab: press the road and drag: that side follows the mouse and the far edge stays put, all within the radius; the road outside the radius stays. Click a piece to put the handles on it (Shift-click for a run).",
+    "this side; the far edge stays, within 30 m · height −0.24 m · sideways −2.00 m · width +4.04 m at the point · pieces p4–p5"
+   ],
+   "shotDuring": "<scratch>\\l271\\shots\\F_today_1_during.png",
+   "after": {
+    "rimPx": [
+     811.7,
+     484
+    ],
+    "pointerToRimPx": 2,
+    "rimToTargetM": 0.2033,
+    "rimUpM": 0.1985,
+    "centreUpM": -0.2403,
+    "bankBeforeDeg": 0,
+    "bankAfterDeg": 0
+   },
+   "shotAfter": "<scratch>\\l271\\shots\\F_today_2_after.png",
+   "sidePose": {
+    "eye": [
+     292.7735097718893,
+     23.79619774396626,
+     -171.8131698571105
+    ],
+    "target": [
+     293.0772258461864,
+     23.18225713045134,
+     -172.54175305022605
+    ],
+    "up": [
+     0,
+     1,
+     0
+    ],
+    "fov": 1.0471975511965976
+   },
+   "shotSide": "<scratch>\\l271\\shots\\F_today_3_side.png"
+  },
+  {
+   "road": "F",
+   "grab": "slope",
+   "restored": true,
+   "radius": "30",
+   "pose": {
+    "eye": [
+     26.12854322262043,
+     35,
+     281.670258208305
+    ],
+    "target": [
+     26.819685364432026,
+     34.38605938648508,
+     282.05157102331253
+    ],
+    "up": [
+     0,
+     1,
+     0
+    ],
+    "fov": 1.0471975511965976
+   },
+   "box": [
+    0,
+    124.578125,
+    1400,
+    735.421875
+   ],
+   "press": [
+    767,
+    486
+   ],
+   "pointer": [
+    812,
+    486
+   ],
+   "pick": {
+    "s": 330,
+    "u": -1
+   },
+   "valueLine": [
+    "Grab: press the road and drag: that side follows the mouse and the far edge stays put, all within the radius; the road outside the radius stays. Click a piece to put the handles on it (Shift-click for a run).",
+    "this side; the far edge stays, within 30 m · height −0.24 m · sideways −2.00 m · width +4.04 m at the point · pieces p4–p5"
+   ],
+   "shotDuring": "<scratch>\\l271\\shots\\F_slope_1_during.png",
+   "after": {
+    "rimPx": [
+     811.7,
+     484
+    ],
+    "pointerToRimPx": 2,
+    "rimToTargetM": 0.2033,
+    "rimUpM": 0.1985,
+    "centreUpM": -0.2403,
+    "bankBeforeDeg": 0,
+    "bankAfterDeg": 0
+   },
+   "shotAfter": "<scratch>\\l271\\shots\\F_slope_2_after.png",
+   "sidePose": {
+    "eye": [
+     293.5135639300819,
+     23.720683048503936,
+     -172.95355679744767
+    ],
+    "target": [
+     293.6385073436568,
+     23.106742434989016,
+     -173.73295789218722
+    ],
+    "up": [
+     0,
+     1,
+     0
+    ],
+    "fov": 1.0471975511965976
+   },
+   "shotSide": "<scratch>\\l271\\shots\\F_slope_3_side.png"
+  }
+ ],
+ "errors": [],
+ "titles": [
+  "zz-headless-test",
+  "zz-headless-test",
+  "zz-headless-test",
+  "zz-headless-test"
+ ],
+ "ended": "2026-11-28T08:24:52.263Z"
+}

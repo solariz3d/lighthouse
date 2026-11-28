@@ -1,0 +1,7 @@
+BASE c522ea6 (the drag whole, as today): CAUGHT by row 14l, row 14h, row 14j, row 14o
+LITERAL D followChord (the whole drag projected onto the chord): CAUGHT by row 14d, row 14l, row 14f, row 14h, row 14j, row 14p, row 14n
+M1 no rise along the slope: CAUGHT by row 14l, row 14h, row 14j, row 14o
+M2 the pull whole across: CAUGHT by row 14l, row 14h, row 14j, row 14o
+M3 the lift dropped: CAUGHT by row 14d, row 14l, row 14m, row 14f, row 14h, row 14j, row 14p, row 14n
+M5 the share not squared: CAUGHT by row 14l, row 14e, row 14h, row 14j, row 14o
+restored: true

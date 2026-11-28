@@ -1,0 +1,8 @@
+heavy-run: note: this label mentions timing, but a label is not read for that: only --timing (hold({ timing: true }) from node) marks a timing session, so this run does not gate another seat's --status. A timing session also takes --exclusive (GATES.md). If it is not one, nothing to do; "(not a timing session)" is no longer needed.
+K [33mtrue[39m {"Bminus slope":true,"Bhold slope":true,"Bplus slope":true,"Bminus today":true,"Bplus today":true,"F today":true,"F0 today":true}
+F0 same [33m37[39m of [33m37[39m ; literal same [33m16[39m
+F same [33m22[39m of [33m37[39m ; literal same [33m6[39m
+R3 [["Bminus","T1","today",4.9984],["Bminus","T1","slope",0],["Bminus","T1","literal",0],["Bminus","T2b","today",5.0209],["Bminus","T2b","slope",0],["Bminus","T2b","literal",0],["Bhold","T1","today",4.9984],["Bhold","T1","slope",0],["Bhold","T1","literal",0],["Bhold","T2b","today",5.0209],["Bhold","T2b","slope",0],["Bhold","T2b","literal",0],["Bplus","T1","today",4.9984],["Bplus","T1","slope",0],["Bplus","T1","literal",0],["Bplus","T2b","today",5.0209],["Bplus","T2b","slope",0],["Bplus","T2b","literal",0]]
+R5 slope worst [33m0[39m literal worst [33m1.6666666666666665[39m
+item3 [["F","today",-2.0401,0.4388,0],["F","slope",-2.0401,0.4388,0],["F0","today",-2,0,0],["F0","slope",-2,0,0],["Bminus","today",-2.0874,0.4165,0],["Bminus","slope",-2.4126,1.0213,0],["Bplus","today",-1.9876,0.4366,0],["Bplus","slope",-2.1275,-0.238,0],["Bhold","today",-2.0874,0.4165,0],["Bhold","slope",-2.4126,1.0213,0]]
+exit 0

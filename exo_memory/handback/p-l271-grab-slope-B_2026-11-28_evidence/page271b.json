@@ -1,0 +1,404 @@
+{
+ "started": "2026-11-28T08:37:21.309Z",
+ "base": "c522ea6",
+ "gesture": "a level mouse move, 45 px outward from the press",
+ "view": "the page focus at s 330 (preview.js focus: 35 m up along the road normal, 45 m back)",
+ "runs": [
+  {
+   "road": "Bminus",
+   "grab": "today",
+   "restored": true,
+   "guideClosed": 1,
+   "radius": "30",
+   "pose": {
+    "eye": [
+     31.911238351542544,
+     32.8892417322815,
+     271.1889312254514
+    ],
+    "target": [
+     32.50094531063356,
+     32.312326268077,
+     271.7540986781248
+    ],
+    "up": [
+     0,
+     1,
+     0
+    ],
+    "fov": 1.0471975511965976
+   },
+   "box": [
+    0,
+    124.578125,
+    1400,
+    735.421875
+   ],
+   "press": [
+    758,
+    459
+   ],
+   "pointer": [
+    803,
+    459
+   ],
+   "pick": {
+    "s": 330,
+    "u": -1
+   },
+   "valueLine": [
+    "Grab: press the road and drag: that side follows the mouse and the far edge stays put, all within the radius; the road outside the radius stays. Click a piece to put the handles on it (Shift-click for a run).",
+    "this side; the far edge stays, within 30 m · height −0.23 m · sideways −1.93 m · width +3.72 m · bank +4.87 ° at the point · pieces p4–p5"
+   ],
+   "shotDuring": "<scratch>\\l271\\shotsb\\Bminus_today_1_during.png",
+   "after": {
+    "rimPx": [
+     798,
+     451.1
+    ],
+    "pointerToRimPx": 9.4,
+    "rimToTargetM": 0.2791,
+    "rimUpM": 0.1709,
+    "centreUpM": -0.2322,
+    "bankBeforeDeg": -20,
+    "bankAfterDeg": -15.1303
+   },
+   "shotAfter": "<scratch>\\l271\\shotsb\\Bminus_today_2_after.png",
+   "keyVel": {
+    "d": [
+     -0.021193679295986458,
+     0,
+     0.022113906436870535
+    ],
+    "w": [
+     0.018062724156957942,
+     -0.017670920668583782,
+     0.017311079075387852
+    ],
+    "e": [
+     0,
+     0.03250500000000006,
+     0
+    ]
+   },
+   "sidePose": {
+    "eye": [
+     49.21666884498246,
+     6.009403750238679,
+     331.93264368491003
+    ],
+    "target": [
+     49.71257709232641,
+     5.890736754929976,
+     331.0724151371155
+    ],
+    "up": [
+     0,
+     1,
+     0
+    ],
+    "fov": 1.0471975511965976
+   },
+   "shotSide": "<scratch>\\l271\\shotsb\\Bminus_today_3_side.png"
+  },
+  {
+   "road": "Bminus",
+   "grab": "slope",
+   "restored": true,
+   "guideClosed": 1,
+   "radius": "30",
+   "pose": {
+    "eye": [
+     31.911238351542544,
+     32.8892417322815,
+     271.1889312254514
+    ],
+    "target": [
+     32.50094531063356,
+     32.312326268077,
+     271.7540986781248
+    ],
+    "up": [
+     0,
+     1,
+     0
+    ],
+    "fov": 1.0471975511965976
+   },
+   "box": [
+    0,
+    124.578125,
+    1400,
+    735.421875
+   ],
+   "press": [
+    758,
+    459
+   ],
+   "pointer": [
+    803,
+    459
+   ],
+   "pick": {
+    "s": 330,
+    "u": -1
+   },
+   "valueLine": [
+    "Grab: press the road and drag: that side follows the mouse and the far edge stays put, all within the radius; the road outside the radius stays. Click a piece to put the handles on it (Shift-click for a run).",
+    "this side; the far edge stays, within 30 m · height +0.42 m · sideways −1.78 m · width +3.67 m at the point · pieces p4–p5"
+   ],
+   "shotDuring": "<scratch>\\l271\\shotsb\\Bminus_slope_1_during.png",
+   "after": {
+    "rimPx": [
+     794.3,
+     439.9
+    ],
+    "pointerToRimPx": 21,
+    "rimToTargetM": 1.5605,
+    "rimUpM": 1.4022,
+    "centreUpM": 0.416,
+    "bankBeforeDeg": -20,
+    "bankAfterDeg": -20
+   },
+   "shotAfter": "<scratch>\\l271\\shotsb\\Bminus_slope_2_after.png",
+   "keyVel": {
+    "d": [
+     -0.021183300412883774,
+     0,
+     0.022103076903846955
+    ],
+    "w": [
+     0.01916842470525344,
+     -0.018752637163967075,
+     0.018370768049150287
+    ],
+    "e": [
+     0,
+     0.02999999999999998,
+     0
+    ]
+   },
+   "sidePose": {
+    "eye": [
+     49.11398841117549,
+     6.314366133712012,
+     332.1708157071613
+    ],
+    "target": [
+     49.609149770056966,
+     6.18379275898298,
+     331.311882751406
+    ],
+    "up": [
+     0,
+     1,
+     0
+    ],
+    "fov": 1.0471975511965976
+   },
+   "shotSide": "<scratch>\\l271\\shotsb\\Bminus_slope_3_side.png"
+  },
+  {
+   "road": "F",
+   "grab": "today",
+   "restored": true,
+   "guideClosed": 1,
+   "radius": "30",
+   "pose": {
+    "eye": [
+     26.12854322262043,
+     35,
+     281.670258208305
+    ],
+    "target": [
+     26.819685364432026,
+     34.38605938648508,
+     282.05157102331253
+    ],
+    "up": [
+     0,
+     1,
+     0
+    ],
+    "fov": 1.0471975511965976
+   },
+   "box": [
+    0,
+    124.578125,
+    1400,
+    735.421875
+   ],
+   "press": [
+    767,
+    486
+   ],
+   "pointer": [
+    812,
+    486
+   ],
+   "pick": {
+    "s": 330,
+    "u": -1
+   },
+   "valueLine": [
+    "Grab: press the road and drag: that side follows the mouse and the far edge stays put, all within the radius; the road outside the radius stays. Click a piece to put the handles on it (Shift-click for a run).",
+    "this side; the far edge stays, within 30 m · height −0.24 m · sideways −2.00 m · width +4.04 m at the point · pieces p4–p5"
+   ],
+   "shotDuring": "<scratch>\\l271\\shotsb\\F_today_1_during.png",
+   "after": {
+    "rimPx": [
+     811.7,
+     484
+    ],
+    "pointerToRimPx": 2,
+    "rimToTargetM": 0.2033,
+    "rimUpM": 0.1985,
+    "centreUpM": -0.2403,
+    "bankBeforeDeg": 0,
+    "bankAfterDeg": 0
+   },
+   "shotAfter": "<scratch>\\l271\\shotsb\\F_today_2_after.png",
+   "keyVel": {
+    "d": [
+     -0.014796451148896406,
+     0,
+     0.026819059144541482
+    ],
+    "w": [
+     0.020734264254347858,
+     -0.01841821840544762,
+     0.011439384450227977
+    ],
+    "e": [
+     0,
+     0.03188999999999981,
+     0
+    ]
+   },
+   "sidePose": {
+    "eye": [
+     49.160596341905986,
+     3.63238502964948,
+     333.06365837980286
+    ],
+    "target": [
+     49.63995577914941,
+     3.527534929817317,
+     332.19232550053636
+    ],
+    "up": [
+     0,
+     1,
+     0
+    ],
+    "fov": 1.0471975511965976
+   },
+   "shotSide": "<scratch>\\l271\\shotsb\\F_today_3_side.png"
+  },
+  {
+   "road": "F",
+   "grab": "slope",
+   "restored": true,
+   "guideClosed": 1,
+   "radius": "30",
+   "pose": {
+    "eye": [
+     26.12854322262043,
+     35,
+     281.670258208305
+    ],
+    "target": [
+     26.819685364432026,
+     34.38605938648508,
+     282.05157102331253
+    ],
+    "up": [
+     0,
+     1,
+     0
+    ],
+    "fov": 1.0471975511965976
+   },
+   "box": [
+    0,
+    124.578125,
+    1400,
+    735.421875
+   ],
+   "press": [
+    767,
+    486
+   ],
+   "pointer": [
+    812,
+    486
+   ],
+   "pick": {
+    "s": 330,
+    "u": -1
+   },
+   "valueLine": [
+    "Grab: press the road and drag: that side follows the mouse and the far edge stays put, all within the radius; the road outside the radius stays. Click a piece to put the handles on it (Shift-click for a run).",
+    "this side; the far edge stays, within 30 m · height −0.24 m · sideways −2.00 m · width +4.04 m at the point · pieces p4–p5"
+   ],
+   "shotDuring": "<scratch>\\l271\\shotsb\\F_slope_1_during.png",
+   "after": {
+    "rimPx": [
+     811.7,
+     484
+    ],
+    "pointerToRimPx": 2,
+    "rimToTargetM": 0.2033,
+    "rimUpM": 0.1985,
+    "centreUpM": -0.2403,
+    "bankBeforeDeg": 0,
+    "bankAfterDeg": 0
+   },
+   "shotAfter": "<scratch>\\l271\\shotsb\\F_slope_2_after.png",
+   "keyVel": {
+    "d": [
+     -0.015397873991873236,
+     0,
+     0.027909158022600876
+    ],
+    "w": [
+     0.022465575319586043,
+     -0.01995613964230266,
+     0.012394573051823272
+    ],
+    "e": [
+     0,
+     0.03250499999999963,
+     0
+    ]
+   },
+   "sidePose": {
+    "eye": [
+     49.20183825233586,
+     3.482039282405913,
+     333.38107346387187
+    ],
+    "target": [
+     49.67809467315947,
+     3.3851483571956775,
+     332.50712153714124
+    ],
+    "up": [
+     0,
+     1,
+     0
+    ],
+    "fov": 1.0471975511965976
+   },
+   "shotSide": "<scratch>\\l271\\shotsb\\F_slope_3_side.png"
+  }
+ ],
+ "errors": [],
+ "titles": [
+  "zz-headless-test",
+  "zz-headless-test",
+  "zz-headless-test",
+  "zz-headless-test"
+ ],
+ "ended": "2026-11-28T08:38:34.654Z"
+}

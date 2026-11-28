@@ -1,0 +1,12 @@
+heavy-run: waiting on an exclusive hold by 6e6e002c pid 20292 (L270 pane P: the suite's 4 machine-bound reds read once more (3 files, one at a time), 9de0b18, no figure taken, since 2026-11-28T08:16:44.845Z)
+heavy-run: waiting on 12fb81f6 pid 35972 (B L271: the slope grab's pictures, headless page, since 2026-11-28T08:22:23.676Z) — it holds this tree
+heavy-run: waiting on 12fb81f6 pid 35972 (B L271: the slope grab's pictures, headless page, since 2026-11-28T08:22:23.676Z) — it holds this tree
+heavy-run: waiting on 12fb81f6 pid 35972 (B L271: the slope grab's pictures, headless page, since 2026-11-28T08:22:23.676Z) — it holds this tree
+heavy-run: waiting on 12fb81f6 pid 5996 (B L271: the slope grab's pictures, second run (level pull, side view), since 2026-11-28T08:37:21.174Z) — it holds this tree
+tier exit 1
+base tree c522ea6
+tracks 16, undo files 13, undo steps 49; refused tracks 2
+tracks 16, undo files 13, undo steps 49; refused tracks 2
+R4 SAME
+base tree removed
+exit 0
