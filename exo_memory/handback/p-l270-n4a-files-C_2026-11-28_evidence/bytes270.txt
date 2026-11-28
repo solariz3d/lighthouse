@@ -1,0 +1,21 @@
+{
+ "tracks": 16,
+ "tracksEqual": 16,
+ "tracksRefusedBoth": [
+  {
+   "n": 1,
+   "code": "BAD_DOC"
+  },
+  {
+   "n": 16,
+   "code": "BAD_DOC"
+  }
+ ],
+ "tracksOwnText": 13,
+ "tracksDiffer": [],
+ "undoFiles": 13,
+ "undoSteps": 49,
+ "undoEqual": 49,
+ "undoRefusedBoth": 0,
+ "undoDiffer": []
+}

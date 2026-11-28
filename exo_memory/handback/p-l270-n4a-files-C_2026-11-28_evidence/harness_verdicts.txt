@@ -1,0 +1,16 @@
+13 rows, not ok 0 | mutants applied 12 / caught 12 / NOT APPLIED 0 | other rows 1 | ids X1..X12 | control: the unmutated temp copy passes every export-isolated row
+114 rows, not ok 0 | mutants applied 110 / caught 110 / NOT APPLIED 0 | other rows 4 | ids A1..D9 | control: the unmutated temp copy passes every test the mutants are run against
+20 rows, not ok 0 | mutants applied 18 / caught 18 / NOT APPLIED 0 | other rows 2 | ids X1..P4 | control: the unmutated copy passes every row of both files
+108 rows, not ok 0 | mutants applied 106 / caught 106 / NOT APPLIED 0 | other rows 2 | ids undefined..undefined | CONTROL: the whole of core_ramp.test.js and core_joint_c2.test.js passes on an unmutated c
+37 rows, not ok 0 | mutants applied 35 / caught 35 / NOT APPLIED 0 | other rows 2 | ids undefined..undefined | CONTROL: both right-width row files pass on an unmutated copy of src/, tools/ and app/
+23 rows, not ok 0 | mutants applied 22 / caught 22 / NOT APPLIED 0 | other rows 1 | ids undefined..undefined | CONTROL: the turn and corner test files pass whole on an unmutated copy of src/ and tools/
+15 rows, not ok 0 | mutants applied 13 / caught 13 / NOT APPLIED 0 | other rows 2 | ids undefined..undefined | CONTROL: the hold's row file passes on an unmutated copy of src/, tools/ and app/
+69 rows, not ok 0 | mutants applied 67 / caught 67 / NOT APPLIED 0 | other rows 2 | ids undefined..undefined | CONTROL: core_xsec, core_xsec_math and validate_xsec pass whole on an unmutated copy of sr
+TOTAL rows 399 not ok 0 applied/caught 383 NOT APPLIED 0
+# tests 399
+# pass 399
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 912120.6529

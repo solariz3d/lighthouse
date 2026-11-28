@@ -1,0 +1,1038 @@
+{
+ "tracks": [
+  {
+   "n": 1,
+   "same": true,
+   "a": {
+    "opened": "not a core track (no eq- prefix): the shell does not list it",
+    "saves": 0
+   },
+   "b": {
+    "opened": "not a core track (no eq- prefix): the shell does not list it",
+    "saves": 0
+   },
+   "firstDiffer": null,
+   "aSteps": [],
+   "bSteps": "the same"
+  },
+  {
+   "n": 2,
+   "same": true,
+   "a": {
+    "opened": "opened",
+    "note": null,
+    "past": 0,
+    "future": 0,
+    "saves": 1
+   },
+   "b": {
+    "opened": "opened",
+    "note": null,
+    "past": 0,
+    "future": 0,
+    "saves": 1
+   },
+   "firstDiffer": null,
+   "aSteps": [
+    {
+     "what": "as opened",
+     "msg": null,
+     "writes": [
+      "doc:cea8a3707e0a05d1833e3e66666e851bd454d111aa0f37d2a952ff7afa659287",
+      "undo:a1bf7c561670e578533c70dad3f25b141e4900b282ac3cd0d22725c7ba3c3a07"
+     ]
+    }
+   ],
+   "bSteps": "the same"
+  },
+  {
+   "n": 3,
+   "same": true,
+   "a": {
+    "opened": "opened",
+    "note": null,
+    "past": 0,
+    "future": 0,
+    "saves": 1
+   },
+   "b": {
+    "opened": "opened",
+    "note": null,
+    "past": 0,
+    "future": 0,
+    "saves": 1
+   },
+   "firstDiffer": null,
+   "aSteps": [
+    {
+     "what": "as opened",
+     "msg": null,
+     "writes": [
+      "doc:80cc88b95e024d285edb6bcad9c54fdb0e377a8c55320aa925327567882e7b90",
+      "undo:70435ceb45a61aa65ec435a21c528b25c54f0df806d2ca8789a3be7be53237d6"
+     ]
+    }
+   ],
+   "bSteps": "the same"
+  },
+  {
+   "n": 4,
+   "same": true,
+   "a": {
+    "opened": "opened",
+    "note": null,
+    "past": 2,
+    "future": 0,
+    "saves": 5
+   },
+   "b": {
+    "opened": "opened",
+    "note": null,
+    "past": 2,
+    "future": 0,
+    "saves": 5
+   },
+   "firstDiffer": null,
+   "aSteps": [
+    {
+     "what": "as opened",
+     "msg": null,
+     "writes": [
+      "doc:459105d483b9e019047e44d96d7aa080e23aab5d1b89a7e960e9469f3970bd96",
+      "undo:c173fceb20dbfa9fbcf86eb3e0d25b954d2d93d7a1f971f0b2f8aec542aa88e3"
+     ]
+    },
+    {
+     "what": "undo 1",
+     "msg": null,
+     "writes": [
+      "doc:929574cf2111f0fc0686fec9b1e7b5573d9833ed63cf3a400765bf0df959d9e6",
+      "undo:d27f244e2e46d5309140b5d63f3430efeccf5bfcc971cc01219d6afdd48975ca"
+     ]
+    },
+    {
+     "what": "undo 2",
+     "msg": null,
+     "writes": [
+      "doc:b06f2a0cf147b02114ce6e877ac2cfa93c127a2a909daf81960236adbb7605c3",
+      "undo:390820cd335f132ba5becef2ed5ab621d72e8b317baf5b7a30fa498173d831b6"
+     ]
+    },
+    {
+     "what": "redo 1",
+     "msg": null,
+     "writes": [
+      "doc:929574cf2111f0fc0686fec9b1e7b5573d9833ed63cf3a400765bf0df959d9e6",
+      "undo:d27f244e2e46d5309140b5d63f3430efeccf5bfcc971cc01219d6afdd48975ca"
+     ]
+    },
+    {
+     "what": "redo 2",
+     "msg": null,
+     "writes": [
+      "doc:459105d483b9e019047e44d96d7aa080e23aab5d1b89a7e960e9469f3970bd96",
+      "undo:c173fceb20dbfa9fbcf86eb3e0d25b954d2d93d7a1f971f0b2f8aec542aa88e3"
+     ]
+    }
+   ],
+   "bSteps": "the same"
+  },
+  {
+   "n": 5,
+   "same": true,
+   "a": {
+    "opened": "opened",
+    "note": null,
+    "past": 2,
+    "future": 0,
+    "saves": 5
+   },
+   "b": {
+    "opened": "opened",
+    "note": null,
+    "past": 2,
+    "future": 0,
+    "saves": 5
+   },
+   "firstDiffer": null,
+   "aSteps": [
+    {
+     "what": "as opened",
+     "msg": null,
+     "writes": [
+      "doc:bcbf14aef08b0903bb321229ae5117be33111db237e4cbe0badd804dba453a00",
+      "undo:40773117819d94806d50fe88bb3ea8fbca826ce55ed64709c50b1c891b78180a"
+     ]
+    },
+    {
+     "what": "undo 1",
+     "msg": null,
+     "writes": [
+      "doc:0e971fa5492c41bd28dccab0123b4bd4f2ca059053797f7e674f107427cc705f",
+      "undo:6cdd066ff39eff5b6f1f0d565df4705feb99b754bd19c8fb3a96345db0e3ddf3"
+     ]
+    },
+    {
+     "what": "undo 2",
+     "msg": null,
+     "writes": [
+      "doc:b06f2a0cf147b02114ce6e877ac2cfa93c127a2a909daf81960236adbb7605c3",
+      "undo:119db5739f048effaa5093a32ae10b591547894e41f131ba9dc8c20c733c81ef"
+     ]
+    },
+    {
+     "what": "redo 1",
+     "msg": null,
+     "writes": [
+      "doc:0e971fa5492c41bd28dccab0123b4bd4f2ca059053797f7e674f107427cc705f",
+      "undo:6cdd066ff39eff5b6f1f0d565df4705feb99b754bd19c8fb3a96345db0e3ddf3"
+     ]
+    },
+    {
+     "what": "redo 2",
+     "msg": null,
+     "writes": [
+      "doc:bcbf14aef08b0903bb321229ae5117be33111db237e4cbe0badd804dba453a00",
+      "undo:40773117819d94806d50fe88bb3ea8fbca826ce55ed64709c50b1c891b78180a"
+     ]
+    }
+   ],
+   "bSteps": "the same"
+  },
+  {
+   "n": 6,
+   "same": true,
+   "a": {
+    "opened": "opened",
+    "note": null,
+    "past": 2,
+    "future": 0,
+    "saves": 5
+   },
+   "b": {
+    "opened": "opened",
+    "note": null,
+    "past": 2,
+    "future": 0,
+    "saves": 5
+   },
+   "firstDiffer": null,
+   "aSteps": [
+    {
+     "what": "as opened",
+     "msg": null,
+     "writes": [
+      "doc:8abe61160c4f44afa602240ee380df2e5136c1110f681df0e7b917c7b7c4fbf9",
+      "undo:534a23756dab180aa9fe4f83749972127bbf7915f1918c0830df751a75d6caad"
+     ]
+    },
+    {
+     "what": "undo 1",
+     "msg": null,
+     "writes": [
+      "doc:252f3db2ebd53023935230a1eda04a572cd74da1e2eec0c2ea7afba8d1396d9a",
+      "undo:37aa47eba58b519acfdef104b95d6f87523accd8c40dee0c4eeff38b0bb2a81b"
+     ]
+    },
+    {
+     "what": "undo 2",
+     "msg": null,
+     "writes": [
+      "doc:b06f2a0cf147b02114ce6e877ac2cfa93c127a2a909daf81960236adbb7605c3",
+      "undo:fe4e07a5ae93f7fb44e2a47f90c7eeefb2f31bd3c24cde57db190456fe21b426"
+     ]
+    },
+    {
+     "what": "redo 1",
+     "msg": null,
+     "writes": [
+      "doc:252f3db2ebd53023935230a1eda04a572cd74da1e2eec0c2ea7afba8d1396d9a",
+      "undo:37aa47eba58b519acfdef104b95d6f87523accd8c40dee0c4eeff38b0bb2a81b"
+     ]
+    },
+    {
+     "what": "redo 2",
+     "msg": null,
+     "writes": [
+      "doc:8abe61160c4f44afa602240ee380df2e5136c1110f681df0e7b917c7b7c4fbf9",
+      "undo:534a23756dab180aa9fe4f83749972127bbf7915f1918c0830df751a75d6caad"
+     ]
+    }
+   ],
+   "bSteps": "the same"
+  },
+  {
+   "n": 7,
+   "same": true,
+   "a": {
+    "opened": "opened",
+    "note": null,
+    "past": 2,
+    "future": 0,
+    "saves": 5
+   },
+   "b": {
+    "opened": "opened",
+    "note": null,
+    "past": 2,
+    "future": 0,
+    "saves": 5
+   },
+   "firstDiffer": null,
+   "aSteps": [
+    {
+     "what": "as opened",
+     "msg": null,
+     "writes": [
+      "doc:addcc7f8a2de52a4f3c5460945b206cf0bde030c7dfea9d34ec88b422706957a",
+      "undo:60d23f9382b2f78e53c4e86298007fdac748cbd16b3baf725ed1d77904aeb7fd"
+     ]
+    },
+    {
+     "what": "undo 1",
+     "msg": null,
+     "writes": [
+      "doc:f84e4d735309f1b613d0a99b9991d625e9d65d684b9872fb1d0e32990a9e74ec",
+      "undo:2279812571925556a866244ebcf035d308d70609ad633eb5ce8c69c3fa264c27"
+     ]
+    },
+    {
+     "what": "undo 2",
+     "msg": null,
+     "writes": [
+      "doc:f18218d382a1971fe67c338e85f44fc369f66c505fea9d8c82763b4c5e79dbbe",
+      "undo:926da9d81e3f58def202290e30c540de4092f65f2e35babc3f0fe59b971cc9fa"
+     ]
+    },
+    {
+     "what": "redo 1",
+     "msg": null,
+     "writes": [
+      "doc:f84e4d735309f1b613d0a99b9991d625e9d65d684b9872fb1d0e32990a9e74ec",
+      "undo:2279812571925556a866244ebcf035d308d70609ad633eb5ce8c69c3fa264c27"
+     ]
+    },
+    {
+     "what": "redo 2",
+     "msg": null,
+     "writes": [
+      "doc:addcc7f8a2de52a4f3c5460945b206cf0bde030c7dfea9d34ec88b422706957a",
+      "undo:60d23f9382b2f78e53c4e86298007fdac748cbd16b3baf725ed1d77904aeb7fd"
+     ]
+    }
+   ],
+   "bSteps": "the same"
+  },
+  {
+   "n": 8,
+   "same": true,
+   "a": {
+    "opened": "opened",
+    "note": null,
+    "past": 16,
+    "future": 0,
+    "saves": 33
+   },
+   "b": {
+    "opened": "opened",
+    "note": null,
+    "past": 16,
+    "future": 0,
+    "saves": 33
+   },
+   "firstDiffer": null,
+   "aSteps": [
+    {
+     "what": "as opened",
+     "msg": null,
+     "writes": [
+      "doc:82bbac1cb6b1a84776bdec4eec24faf595af213c69edc6262b3b73a950c5ae7e",
+      "undo:b042638b4bc6699c0f8a06f1a94e9a2d89b2e221ec518f0256c14b94a100d70c"
+     ]
+    },
+    {
+     "what": "undo 1",
+     "msg": null,
+     "writes": [
+      "doc:078d704b2bcdd2322464ca094183a11400646b0c1189d5b4da1e7c6eb7efc94b",
+      "undo:6785dc78d11d37c75a6152bae7692dba3466ca3ab024f9c62dbd4e87c613c254"
+     ]
+    },
+    {
+     "what": "undo 2",
+     "msg": null,
+     "writes": [
+      "doc:487709eb600e3c9f550fbaabfa235c31dc0b45c849813dbd09d60ec8f0402a13",
+      "undo:72b75b48c529eb473ea2cc877fb50dff87aa33fbef67382b8ed3245768f51655"
+     ]
+    },
+    {
+     "what": "undo 3",
+     "msg": null,
+     "writes": [
+      "doc:ed09f16269e1cad45535d7506a53713f7fa3df9d25df31a8c1501f69c820cff0",
+      "undo:8667a7bf57aac081630a8c73e9b29e02fef133ffe1a62f2d876c0aa5a631752c"
+     ]
+    },
+    {
+     "what": "undo 4",
+     "msg": null,
+     "writes": [
+      "doc:07855955dda8ee317db42ad7eb07e4e4b86a892e1d0f624b102dab3104f6fc32",
+      "undo:40a777323ff9fa56c38383f158aa5bb80a723ccf6731e4060fc9d00d52e17838"
+     ]
+    },
+    {
+     "what": "undo 5",
+     "msg": null,
+     "writes": [
+      "doc:5fdf35f8fb895939f0ae3420b47f700421f265f18dce396d1a19bc758d8e79c0",
+      "undo:6051ebb7767b0b30afdc0964245a3a1e061df8be91c607dfd3015b1f014b43fd"
+     ]
+    },
+    {
+     "what": "undo 6",
+     "msg": null,
+     "writes": [
+      "doc:1485a30af7f7d84f450df2a25fc7e34cc802cbb5192d615b88489bd131c953e7",
+      "undo:0eb5cdc014c5e6a713a98742a91ea23d57228a259cdcc5ac3e906b574afaaa3b"
+     ]
+    },
+    {
+     "what": "undo 7",
+     "msg": null,
+     "writes": [
+      "doc:8dd5c7241b29892f94ece6330d209ce623e47f2bd683263f97d63906185161e5",
+      "undo:36359dcfb1c01e91324f62303b730629d01c127be35c7423083f7e5a3f3861c1"
+     ]
+    },
+    {
+     "what": "undo 8",
+     "msg": null,
+     "writes": [
+      "doc:431ae539785f9c502c0a8c27ba1f308fa42eb6908441c5308745691f2a830df2",
+      "undo:788afd0b749a802215b4db66644b399689cd18d792aafab00071966d076055e7"
+     ]
+    },
+    {
+     "what": "undo 9",
+     "msg": null,
+     "writes": [
+      "doc:34d2ea6635ecb3596f404be99359aaeb7d3f47ca15670f91f5cd64903ff36ae5",
+      "undo:3645c65c0997eab45eb70a650e9da77e3abbd37c2bb20184eac5d519703fe401"
+     ]
+    },
+    {
+     "what": "undo 10",
+     "msg": null,
+     "writes": [
+      "doc:fe866ad9042f2c0707461cda1fda778e33e41078e0e6674562f74961ea121f24",
+      "undo:b32b8b72cdea0f1d9e31f8115952e9e58eacf9f703b42fa81925e21eda241386"
+     ]
+    },
+    {
+     "what": "undo 11",
+     "msg": null,
+     "writes": [
+      "doc:f98a139dd1e08ba2f849a221771bf02e3ce22a09aa3941e67cc295f1427fb2bc",
+      "undo:85ea0285bac12a41099bfb115d2ca146e36161a55fa4a2c13654082a8d262dfb"
+     ]
+    },
+    {
+     "what": "undo 12",
+     "msg": null,
+     "writes": [
+      "doc:bb337b0e37646713d6ffd222b9dc81a67ea8475653e38bdbe7c37bb533741e00",
+      "undo:3af58d287b2b92136cae250a01630ef51d9ef11ef87815c9ae20b39633256937"
+     ]
+    },
+    {
+     "what": "undo 13",
+     "msg": null,
+     "writes": [
+      "doc:af3dced8663fe89c8b596f425e8211ca08f72abfcc382bd405fa4882499821f1",
+      "undo:5bb4b903f5175cc576160a5a5893d469691a121b519fd56c39ca836b705e7599"
+     ]
+    },
+    {
+     "what": "undo 14",
+     "msg": null,
+     "writes": [
+      "doc:0bf5eee342e2100c01665623f673b084048313d78dbd0794302d497bc60188d0",
+      "undo:92e8f4d2cf2cd07f7f1ff48be281fb4e9fc0bb84751ee785c4cebcdb1759c118"
+     ]
+    },
+    {
+     "what": "undo 15",
+     "msg": null,
+     "writes": [
+      "doc:49e5ccf588eb44d79a767e8f8ea38c3f89877e89f64b79c8fd858d0e69ad0aa4",
+      "undo:8f5bdf9efc68266238e0efdb1328264e532ad8f885029486a4d1fca3f395b8b5"
+     ]
+    },
+    {
+     "what": "undo 16",
+     "msg": null,
+     "writes": [
+      "doc:f18218d382a1971fe67c338e85f44fc369f66c505fea9d8c82763b4c5e79dbbe",
+      "undo:add435cda72ea61d5a98b354254a4a600d4bf5bec659a8aa6e5c6705f9a90d85"
+     ]
+    },
+    {
+     "what": "redo 1",
+     "msg": null,
+     "writes": [
+      "doc:49e5ccf588eb44d79a767e8f8ea38c3f89877e89f64b79c8fd858d0e69ad0aa4",
+      "undo:8f5bdf9efc68266238e0efdb1328264e532ad8f885029486a4d1fca3f395b8b5"
+     ]
+    },
+    {
+     "what": "redo 2",
+     "msg": null,
+     "writes": [
+      "doc:0bf5eee342e2100c01665623f673b084048313d78dbd0794302d497bc60188d0",
+      "undo:92e8f4d2cf2cd07f7f1ff48be281fb4e9fc0bb84751ee785c4cebcdb1759c118"
+     ]
+    },
+    {
+     "what": "redo 3",
+     "msg": null,
+     "writes": [
+      "doc:af3dced8663fe89c8b596f425e8211ca08f72abfcc382bd405fa4882499821f1",
+      "undo:5bb4b903f5175cc576160a5a5893d469691a121b519fd56c39ca836b705e7599"
+     ]
+    },
+    {
+     "what": "redo 4",
+     "msg": null,
+     "writes": [
+      "doc:bb337b0e37646713d6ffd222b9dc81a67ea8475653e38bdbe7c37bb533741e00",
+      "undo:3af58d287b2b92136cae250a01630ef51d9ef11ef87815c9ae20b39633256937"
+     ]
+    },
+    {
+     "what": "redo 5",
+     "msg": null,
+     "writes": [
+      "doc:f98a139dd1e08ba2f849a221771bf02e3ce22a09aa3941e67cc295f1427fb2bc",
+      "undo:85ea0285bac12a41099bfb115d2ca146e36161a55fa4a2c13654082a8d262dfb"
+     ]
+    },
+    {
+     "what": "redo 6",
+     "msg": null,
+     "writes": [
+      "doc:fe866ad9042f2c0707461cda1fda778e33e41078e0e6674562f74961ea121f24",
+      "undo:b32b8b72cdea0f1d9e31f8115952e9e58eacf9f703b42fa81925e21eda241386"
+     ]
+    },
+    {
+     "what": "redo 7",
+     "msg": null,
+     "writes": [
+      "doc:34d2ea6635ecb3596f404be99359aaeb7d3f47ca15670f91f5cd64903ff36ae5",
+      "undo:3645c65c0997eab45eb70a650e9da77e3abbd37c2bb20184eac5d519703fe401"
+     ]
+    },
+    {
+     "what": "redo 8",
+     "msg": null,
+     "writes": [
+      "doc:431ae539785f9c502c0a8c27ba1f308fa42eb6908441c5308745691f2a830df2",
+      "undo:788afd0b749a802215b4db66644b399689cd18d792aafab00071966d076055e7"
+     ]
+    },
+    {
+     "what": "redo 9",
+     "msg": null,
+     "writes": [
+      "doc:8dd5c7241b29892f94ece6330d209ce623e47f2bd683263f97d63906185161e5",
+      "undo:36359dcfb1c01e91324f62303b730629d01c127be35c7423083f7e5a3f3861c1"
+     ]
+    },
+    {
+     "what": "redo 10",
+     "msg": null,
+     "writes": [
+      "doc:1485a30af7f7d84f450df2a25fc7e34cc802cbb5192d615b88489bd131c953e7",
+      "undo:0eb5cdc014c5e6a713a98742a91ea23d57228a259cdcc5ac3e906b574afaaa3b"
+     ]
+    },
+    {
+     "what": "redo 11",
+     "msg": null,
+     "writes": [
+      "doc:5fdf35f8fb895939f0ae3420b47f700421f265f18dce396d1a19bc758d8e79c0",
+      "undo:6051ebb7767b0b30afdc0964245a3a1e061df8be91c607dfd3015b1f014b43fd"
+     ]
+    },
+    {
+     "what": "redo 12",
+     "msg": null,
+     "writes": [
+      "doc:07855955dda8ee317db42ad7eb07e4e4b86a892e1d0f624b102dab3104f6fc32",
+      "undo:40a777323ff9fa56c38383f158aa5bb80a723ccf6731e4060fc9d00d52e17838"
+     ]
+    },
+    {
+     "what": "redo 13",
+     "msg": null,
+     "writes": [
+      "doc:ed09f16269e1cad45535d7506a53713f7fa3df9d25df31a8c1501f69c820cff0",
+      "undo:8667a7bf57aac081630a8c73e9b29e02fef133ffe1a62f2d876c0aa5a631752c"
+     ]
+    },
+    {
+     "what": "redo 14",
+     "msg": null,
+     "writes": [
+      "doc:487709eb600e3c9f550fbaabfa235c31dc0b45c849813dbd09d60ec8f0402a13",
+      "undo:72b75b48c529eb473ea2cc877fb50dff87aa33fbef67382b8ed3245768f51655"
+     ]
+    },
+    {
+     "what": "redo 15",
+     "msg": null,
+     "writes": [
+      "doc:078d704b2bcdd2322464ca094183a11400646b0c1189d5b4da1e7c6eb7efc94b",
+      "undo:6785dc78d11d37c75a6152bae7692dba3466ca3ab024f9c62dbd4e87c613c254"
+     ]
+    },
+    {
+     "what": "redo 16",
+     "msg": null,
+     "writes": [
+      "doc:82bbac1cb6b1a84776bdec4eec24faf595af213c69edc6262b3b73a950c5ae7e",
+      "undo:b042638b4bc6699c0f8a06f1a94e9a2d89b2e221ec518f0256c14b94a100d70c"
+     ]
+    }
+   ],
+   "bSteps": "the same"
+  },
+  {
+   "n": 9,
+   "same": true,
+   "a": {
+    "opened": "opened",
+    "note": null,
+    "past": 2,
+    "future": 0,
+    "saves": 5
+   },
+   "b": {
+    "opened": "opened",
+    "note": null,
+    "past": 2,
+    "future": 0,
+    "saves": 5
+   },
+   "firstDiffer": null,
+   "aSteps": [
+    {
+     "what": "as opened",
+     "msg": null,
+     "writes": [
+      "doc:e06a15a4574ed9f5e1d3aee2912578dafce855f6ca305dae88a4adad4202f390",
+      "undo:77a293037f5b8062b7adba0ba07ba511b8b8fad1bac3b0dd790884e5351a7d64"
+     ]
+    },
+    {
+     "what": "undo 1",
+     "msg": null,
+     "writes": [
+      "doc:f84e4d735309f1b613d0a99b9991d625e9d65d684b9872fb1d0e32990a9e74ec",
+      "undo:112d62e755fe3c8ca8ac168256bc8c088646445b7271e8724db7ebaf91a4a900"
+     ]
+    },
+    {
+     "what": "undo 2",
+     "msg": null,
+     "writes": [
+      "doc:f18218d382a1971fe67c338e85f44fc369f66c505fea9d8c82763b4c5e79dbbe",
+      "undo:eaab32eff2dda128e6bd7999057146a5727e50b950904149296e808329d018a3"
+     ]
+    },
+    {
+     "what": "redo 1",
+     "msg": null,
+     "writes": [
+      "doc:f84e4d735309f1b613d0a99b9991d625e9d65d684b9872fb1d0e32990a9e74ec",
+      "undo:112d62e755fe3c8ca8ac168256bc8c088646445b7271e8724db7ebaf91a4a900"
+     ]
+    },
+    {
+     "what": "redo 2",
+     "msg": null,
+     "writes": [
+      "doc:e06a15a4574ed9f5e1d3aee2912578dafce855f6ca305dae88a4adad4202f390",
+      "undo:77a293037f5b8062b7adba0ba07ba511b8b8fad1bac3b0dd790884e5351a7d64"
+     ]
+    }
+   ],
+   "bSteps": "the same"
+  },
+  {
+   "n": 10,
+   "same": true,
+   "a": {
+    "opened": "opened",
+    "note": null,
+    "past": 2,
+    "future": 0,
+    "saves": 5
+   },
+   "b": {
+    "opened": "opened",
+    "note": null,
+    "past": 2,
+    "future": 0,
+    "saves": 5
+   },
+   "firstDiffer": null,
+   "aSteps": [
+    {
+     "what": "as opened",
+     "msg": null,
+     "writes": [
+      "doc:eff48ade8d3ed9345aa2a558cafdb1b611a265655a5431ad8990ca550bfe2b24",
+      "undo:16f705cab8b20e08b5db4f027ad8d5589dcca0f256c7210dbdbf24b70db7ad71"
+     ]
+    },
+    {
+     "what": "undo 1",
+     "msg": null,
+     "writes": [
+      "doc:f84e4d735309f1b613d0a99b9991d625e9d65d684b9872fb1d0e32990a9e74ec",
+      "undo:f7538c5baa6bacb6026e5cca1304701cdff87a7cfb18d30641a75d2f0fedd55b"
+     ]
+    },
+    {
+     "what": "undo 2",
+     "msg": null,
+     "writes": [
+      "doc:f18218d382a1971fe67c338e85f44fc369f66c505fea9d8c82763b4c5e79dbbe",
+      "undo:30ae556411572b3bb35e52a4821e91568512c6d24201bd76d1d0d00ae436d892"
+     ]
+    },
+    {
+     "what": "redo 1",
+     "msg": null,
+     "writes": [
+      "doc:f84e4d735309f1b613d0a99b9991d625e9d65d684b9872fb1d0e32990a9e74ec",
+      "undo:f7538c5baa6bacb6026e5cca1304701cdff87a7cfb18d30641a75d2f0fedd55b"
+     ]
+    },
+    {
+     "what": "redo 2",
+     "msg": null,
+     "writes": [
+      "doc:eff48ade8d3ed9345aa2a558cafdb1b611a265655a5431ad8990ca550bfe2b24",
+      "undo:16f705cab8b20e08b5db4f027ad8d5589dcca0f256c7210dbdbf24b70db7ad71"
+     ]
+    }
+   ],
+   "bSteps": "the same"
+  },
+  {
+   "n": 11,
+   "same": true,
+   "a": {
+    "opened": "opened",
+    "note": null,
+    "past": 1,
+    "future": 0,
+    "saves": 3
+   },
+   "b": {
+    "opened": "opened",
+    "note": null,
+    "past": 1,
+    "future": 0,
+    "saves": 3
+   },
+   "firstDiffer": null,
+   "aSteps": [
+    {
+     "what": "as opened",
+     "msg": null,
+     "writes": [
+      "doc:f84e4d735309f1b613d0a99b9991d625e9d65d684b9872fb1d0e32990a9e74ec",
+      "undo:8c76b0f4cff3b414d38cfd3aeb07b159572072d53cba3c1c60fad232d5ed05c4"
+     ]
+    },
+    {
+     "what": "undo 1",
+     "msg": null,
+     "writes": [
+      "doc:f18218d382a1971fe67c338e85f44fc369f66c505fea9d8c82763b4c5e79dbbe",
+      "undo:3ced4a922be65c5ec0d35dd4c6a62698b6f8c5d536308934eeb997c0171355f4"
+     ]
+    },
+    {
+     "what": "redo 1",
+     "msg": null,
+     "writes": [
+      "doc:f84e4d735309f1b613d0a99b9991d625e9d65d684b9872fb1d0e32990a9e74ec",
+      "undo:8c76b0f4cff3b414d38cfd3aeb07b159572072d53cba3c1c60fad232d5ed05c4"
+     ]
+    }
+   ],
+   "bSteps": "the same"
+  },
+  {
+   "n": 12,
+   "same": true,
+   "a": {
+    "opened": "opened",
+    "note": null,
+    "past": 2,
+    "future": 0,
+    "saves": 5
+   },
+   "b": {
+    "opened": "opened",
+    "note": null,
+    "past": 2,
+    "future": 0,
+    "saves": 5
+   },
+   "firstDiffer": null,
+   "aSteps": [
+    {
+     "what": "as opened",
+     "msg": null,
+     "writes": [
+      "doc:d0ed90bfdc460d26b34fa2e551ef4171c1e40166eb7c08c365677661fb19f696",
+      "undo:600da74db699ae8ca3f74218a5862ad570d923816611b6abb2eed17cf080e1da"
+     ]
+    },
+    {
+     "what": "undo 1",
+     "msg": null,
+     "writes": [
+      "doc:f84e4d735309f1b613d0a99b9991d625e9d65d684b9872fb1d0e32990a9e74ec",
+      "undo:8f49708a8a01f152baaf3480b971f9d440cfd9bee8c4c2e263a3403d6bc3c706"
+     ]
+    },
+    {
+     "what": "undo 2",
+     "msg": null,
+     "writes": [
+      "doc:f18218d382a1971fe67c338e85f44fc369f66c505fea9d8c82763b4c5e79dbbe",
+      "undo:d608200ae8a6ce64b506d548ba1ebf912515177b07f0fdefcf451567fa845a27"
+     ]
+    },
+    {
+     "what": "redo 1",
+     "msg": null,
+     "writes": [
+      "doc:f84e4d735309f1b613d0a99b9991d625e9d65d684b9872fb1d0e32990a9e74ec",
+      "undo:8f49708a8a01f152baaf3480b971f9d440cfd9bee8c4c2e263a3403d6bc3c706"
+     ]
+    },
+    {
+     "what": "redo 2",
+     "msg": null,
+     "writes": [
+      "doc:d0ed90bfdc460d26b34fa2e551ef4171c1e40166eb7c08c365677661fb19f696",
+      "undo:600da74db699ae8ca3f74218a5862ad570d923816611b6abb2eed17cf080e1da"
+     ]
+    }
+   ],
+   "bSteps": "the same"
+  },
+  {
+   "n": 13,
+   "same": true,
+   "a": {
+    "opened": "opened",
+    "note": null,
+    "past": 1,
+    "future": 0,
+    "saves": 3
+   },
+   "b": {
+    "opened": "opened",
+    "note": null,
+    "past": 1,
+    "future": 0,
+    "saves": 3
+   },
+   "firstDiffer": null,
+   "aSteps": [
+    {
+     "what": "as opened",
+     "msg": null,
+     "writes": [
+      "doc:f84e4d735309f1b613d0a99b9991d625e9d65d684b9872fb1d0e32990a9e74ec",
+      "undo:8c76b0f4cff3b414d38cfd3aeb07b159572072d53cba3c1c60fad232d5ed05c4"
+     ]
+    },
+    {
+     "what": "undo 1",
+     "msg": null,
+     "writes": [
+      "doc:f18218d382a1971fe67c338e85f44fc369f66c505fea9d8c82763b4c5e79dbbe",
+      "undo:3ced4a922be65c5ec0d35dd4c6a62698b6f8c5d536308934eeb997c0171355f4"
+     ]
+    },
+    {
+     "what": "redo 1",
+     "msg": null,
+     "writes": [
+      "doc:f84e4d735309f1b613d0a99b9991d625e9d65d684b9872fb1d0e32990a9e74ec",
+      "undo:8c76b0f4cff3b414d38cfd3aeb07b159572072d53cba3c1c60fad232d5ed05c4"
+     ]
+    }
+   ],
+   "bSteps": "the same"
+  },
+  {
+   "n": 14,
+   "same": true,
+   "a": {
+    "opened": "opened",
+    "note": null,
+    "past": 1,
+    "future": 0,
+    "saves": 3
+   },
+   "b": {
+    "opened": "opened",
+    "note": null,
+    "past": 1,
+    "future": 0,
+    "saves": 3
+   },
+   "firstDiffer": null,
+   "aSteps": [
+    {
+     "what": "as opened",
+     "msg": null,
+     "writes": [
+      "doc:f84e4d735309f1b613d0a99b9991d625e9d65d684b9872fb1d0e32990a9e74ec",
+      "undo:8c76b0f4cff3b414d38cfd3aeb07b159572072d53cba3c1c60fad232d5ed05c4"
+     ]
+    },
+    {
+     "what": "undo 1",
+     "msg": null,
+     "writes": [
+      "doc:f18218d382a1971fe67c338e85f44fc369f66c505fea9d8c82763b4c5e79dbbe",
+      "undo:3ced4a922be65c5ec0d35dd4c6a62698b6f8c5d536308934eeb997c0171355f4"
+     ]
+    },
+    {
+     "what": "redo 1",
+     "msg": null,
+     "writes": [
+      "doc:f84e4d735309f1b613d0a99b9991d625e9d65d684b9872fb1d0e32990a9e74ec",
+      "undo:8c76b0f4cff3b414d38cfd3aeb07b159572072d53cba3c1c60fad232d5ed05c4"
+     ]
+    }
+   ],
+   "bSteps": "the same"
+  },
+  {
+   "n": 15,
+   "same": true,
+   "a": {
+    "opened": "opened",
+    "note": null,
+    "past": 3,
+    "future": 0,
+    "saves": 7
+   },
+   "b": {
+    "opened": "opened",
+    "note": null,
+    "past": 3,
+    "future": 0,
+    "saves": 7
+   },
+   "firstDiffer": null,
+   "aSteps": [
+    {
+     "what": "as opened",
+     "msg": null,
+     "writes": [
+      "doc:6de276dcd2bd27b2ca884244dc269df94bc50463198328bce164c6f2f9309e36",
+      "undo:b064da8e703ab27c90f994703f6198e58dca76556b1ed286eeafa18904627e63"
+     ]
+    },
+    {
+     "what": "undo 1",
+     "msg": null,
+     "writes": [
+      "doc:61f20ad8724920e9165009c4a2754e426c16027987d0c51a0a96f1056923accd",
+      "undo:b14973bbe67ced4856a9b2e017751e06e0f3514c44bd512f8e93dde9bc675c04"
+     ]
+    },
+    {
+     "what": "undo 2",
+     "msg": null,
+     "writes": [
+      "doc:f84e4d735309f1b613d0a99b9991d625e9d65d684b9872fb1d0e32990a9e74ec",
+      "undo:b48aebece5c89b4dd85da133ab3b98849db9fe2ecc024571226bbb940dd0d6f1"
+     ]
+    },
+    {
+     "what": "undo 3",
+     "msg": null,
+     "writes": [
+      "doc:f18218d382a1971fe67c338e85f44fc369f66c505fea9d8c82763b4c5e79dbbe",
+      "undo:0f84c4cdf5e560beb08058317a9f0c25672d0ef8637d90b720c2b59a10437b87"
+     ]
+    },
+    {
+     "what": "redo 1",
+     "msg": null,
+     "writes": [
+      "doc:f84e4d735309f1b613d0a99b9991d625e9d65d684b9872fb1d0e32990a9e74ec",
+      "undo:b48aebece5c89b4dd85da133ab3b98849db9fe2ecc024571226bbb940dd0d6f1"
+     ]
+    },
+    {
+     "what": "redo 2",
+     "msg": null,
+     "writes": [
+      "doc:61f20ad8724920e9165009c4a2754e426c16027987d0c51a0a96f1056923accd",
+      "undo:b14973bbe67ced4856a9b2e017751e06e0f3514c44bd512f8e93dde9bc675c04"
+     ]
+    },
+    {
+     "what": "redo 3",
+     "msg": null,
+     "writes": [
+      "doc:6de276dcd2bd27b2ca884244dc269df94bc50463198328bce164c6f2f9309e36",
+      "undo:b064da8e703ab27c90f994703f6198e58dca76556b1ed286eeafa18904627e63"
+     ]
+    }
+   ],
+   "bSteps": "the same"
+  },
+  {
+   "n": 16,
+   "same": true,
+   "a": {
+    "opened": "not a core track (no eq- prefix): the shell does not list it",
+    "saves": 0
+   },
+   "b": {
+    "opened": "not a core track (no eq- prefix): the shell does not list it",
+    "saves": 0
+   },
+   "firstDiffer": null,
+   "aSteps": [],
+   "bSteps": "the same"
+  }
+ ],
+ "totals": {
+  "tracks": 16,
+  "tracksSame": 16,
+  "saves": 86,
+  "savesSame": 86,
+  "opened": 14,
+  "restoredPast": 36
+ }
+}

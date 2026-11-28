@@ -1,0 +1,77 @@
+{
+ "started": "2026-11-28T06:53:30.511Z",
+ "tree": "15e7d62",
+ "rows": [
+  {
+   "text": {
+    "noPreview": [
+     "no preview •"
+    ],
+    "cupLines": [
+     "cup °",
+     "cup13.27"
+    ],
+    "widthInputs": [
+     "width at the start=on",
+     "widthR at the start=on"
+    ]
+   },
+   "focus600": {
+    "ghost": "shown",
+    "handles": true,
+    "samples": 346,
+    "s0": 590,
+    "shared": 296,
+    "offPlacedHorizM": 2.019622696776856,
+    "at": 576,
+    "offPlacedVertM": 0.24270174048405768,
+    "head": {
+     "s": 590,
+     "d3": 1.060174047031902,
+     "dh": 1.0526000000000009,
+     "dv": 0.1265
+    },
+    "lavenderPx": 30910
+   },
+   "higher": {
+    "ghost": "shown",
+    "handles": true,
+    "samples": 346,
+    "s0": 590,
+    "shared": 296,
+    "offPlacedHorizM": 2.019622696776856,
+    "at": 576,
+    "offPlacedVertM": 0.24270174048405768,
+    "head": {
+     "s": 590,
+     "d3": 1.060174047031902,
+     "dh": 1.0526000000000009,
+     "dv": 0.1265
+    },
+    "lavenderPx": 66
+   }
+  }
+ ],
+ "errors": [],
+ "titles": [
+  "zz-headless-test"
+ ],
+ "state": [
+  {
+   "restore": "restored"
+  },
+  {
+   "hud": "Build view · plain road (L)"
+  },
+  {
+   "grid": "ground"
+  }
+ ],
+ "docHead": {
+  "w": 14.1259,
+  "l": -1.0526
+ },
+ "browserPid": 29532,
+ "profileRemoved": true,
+ "ended": "2026-11-28T06:53:43.129Z"
+}
