@@ -64,3 +64,12 @@ Written by the librarian on L at 07:3x, at his word of 07:32 (verbatim in `brief
 
 - Room main is pushed by the librarian after the scan, at his word of 07:32. Said to him.
 - The builder branches were pushed by the panes through push-gate and read back.
+
+## Held on L, not on origin (added 07:4x; this section is local until the hold lifts)
+
+- Room main on origin is 2c7aa061. L holds 3 commits past it: db6702fe (the Third Place's film handoff, with the 27 MB
+  `out/narration.flac`) and two librarian notes behind it. Count with `git rev-list --count 2c7aa061..HEAD`.
+- **D may push to room main freely.** But once it does, L's next launch refuses its pull ff-only, as in
+  `loop/stall_trace_launch_pull_ff_refused_2026-11-28.md`. Fix (b) is not built.
+- **So L's next wake starts with:** his ruling on the flac. Then rebase the held commits onto origin (or drop or rewrite
+  the flac commit), push, and pull. The chair named this (13:37Z).
