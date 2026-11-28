@@ -50,3 +50,31 @@ can give me a checklist of things to test". So this is one build. Installing it 
 - or "his tracks save differently on the merge" (Even changed `document.js`).
 
 Ring the librarian with `call_librarian` and the hand-back's path. Through heavy-run at BelowNormal. No worktree left behind.
+
+## Amended 06:5x, after P's stop (`handback/p-l272-combined-P_2026-11-28.md` section 0, git-blob 6766b66a; read)
+
+**In:**
+- The merge 0ba1da9 is clean (CHANGELOG both entries whole).
+- The suite has 0 functional reds.
+- His files save the same both ways.
+- **D642 fired the registered timing rule.** Under one hold, the merge read 2.02 and 2.07 against c522ea6's 1.85 and
+  1.91. The base itself read 2.06 at L270. The row sits at its bar on L.
+
+**Ruled: the rule fired, so it is not waved away as "the machine". A reading settles it, with the decision registered
+here before it runs:**
+1. **D642's file alone, under ONE `--run --exclusive --timing` hold**, on four trees:
+   - c522ea6;
+   - 4ff069e;
+   - 4ff069e + Even alone (P's b84952b);
+   - 0ba1da9.
+   
+   **5 rounds**, each round running the four trees in a rotated order. 20 readings of the row's ratio.
+2. **A tree is slower than c522ea6** only by L266's D642 rule (`handback/p-l266-timings-B_2026-11-27.md`): an exact
+   one-sided Mann–Whitney U at p < 0.05, AND its median ratio over c522ea6's median by more than 0.10.
+3. **Then:**
+   - **No tree slower:** the machine. P builds, pushes and takes the pictures as the packet says, and names the readings.
+   - **A tree slower by under 0.30 in median:** a small real cost. It does **not** stop a test build he asked for to judge
+     by hand. P builds; the cost and the piece that carries it (Even if b84952b is slower, the slope grab if only 0ba1da9
+     is) go on his checklist and to D for the quiet timing before any landing to `main`.
+   - **A tree slower by 0.30 or more:** a stop. Nothing is built, and it comes back to the librarian.
+4. Nothing else is re-run. No other timing row is read here.
