@@ -23,6 +23,7 @@ import bpy
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 FPS = 24
+_NEVER = object()
 with open(os.path.join(ROOT, "..", "timeline.json"), encoding="utf-8") as _f:
     _TL = json.load(_f)
 LINES, TOTAL = _TL["lines"], _TL["total"]
@@ -202,6 +203,8 @@ class Kit:
         self.final = quality == "final"
         self.mats = {}
         self.fonts = {}
+        self.meshes = {}
+        self._last = {}
         bpy.ops.wm.read_factory_settings(use_empty=True)
         sc = self.scene = bpy.context.scene
         sc.render.resolution_x, sc.render.resolution_y, sc.render.resolution_percentage = width, height, 100
@@ -542,14 +545,31 @@ class Kit:
         return Line(self, points, name, color, radius, glow, cyclic)
 
     def spark(self, at, color=WARM, r=0.006, strength=30.0, name="spark"):
-        """A far-off light with no reach of its own (a small glowing bead): for crowds of distant flames."""
+        """A far-off light with no reach of its own (a small glowing bead): for crowds of distant flames. Hundreds are
+        cheap to make. Keep `strength` near 1.5 to 3 if the colour is to read; above about 5 it goes white."""
         key = "spark_%02x%02x%02x" % tuple(int(c * 255) for c in color)
-        bpy.ops.mesh.primitive_ico_sphere_add(subdivisions=1, radius=r, location=at)
-        ob = bpy.context.object
+        mkey = (key, round(r, 5))
+        if mkey not in self.meshes:                               # one mesh for each size and colour, shared by all of them
+            bpy.ops.mesh.primitive_ico_sphere_add(subdivisions=1, radius=r, location=(0, 0, 0))
+            first = bpy.context.object
+            first.data.materials.append(self.mat(key, (0, 0, 0), emit=color, emit_strength=strength))
+            self.meshes[mkey] = first.data
+            ob = first
+        else:
+            ob = _link(bpy.data.objects.new(name, self.meshes[mkey]))
         ob.name = name
-        ob.data.materials.append(self.mat(key, (0, 0, 0), emit=color, emit_strength=strength))
+        ob.location = at
         ob.visible_shadow = False
         return ob
+
+    def changed(self, key, value):
+        """True if `value` differs from what was last passed for `key`. Wrap any pose() work that sets hundreds of
+        objects in `if k.changed(("field", i), value):` so a thing that has not changed is not touched: touching
+        every object on every frame is what makes a part render slowly."""
+        if self._last.get(key, _NEVER) == value:
+            return False
+        self._last[key] = value
+        return True
 
     def page(self, at, size=(0.21, 0.30), rot=0.0, name="page", lines=9):
         """A sheet of paper lying flat, with lines of writing. Returns its root (move or rotate that)."""

@@ -33,7 +33,7 @@ def sheet(a):
     d = os.path.join(HERE, "out", f"p{a.part:02d}", a.quality + ("_" + a.tag if a.tag else ""))
     names = frames_in(d)
     rows = -(-len(names) // a.cols)
-    out = os.path.join(HERE, "out", f"p{a.part:02d}_sheet.png")
+    out = os.path.join(HERE, "out", f"p{a.part:02d}_{a.tag}.png")                  # p02_sheet.png, p02_fast.png, ...
     stamp = "drawtext=fontfile='C\\:/Windows/Fonts/segoeui.ttf':text='%{eif\\:t\\:d}':x=6:y=4:fontsize=15:fontcolor=white@0.8"
     # the stamp shows the frame's place in the list; the true film times are printed below
     subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "concat", "-safe", "0", "-i", listfile(d, names, 1), "-vf",
