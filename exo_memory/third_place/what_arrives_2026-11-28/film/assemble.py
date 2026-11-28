@@ -68,7 +68,10 @@ def ass_time(t):
 def film(a):
     """Every part's clip joined, with the whole narration and (unless --plain) the captions burned in."""
     out_dir = os.path.join(HERE, "out")
-    clips = sorted(f for f in os.listdir(out_dir) if f.startswith("p") and f.endswith(f"_{a.quality}.mp4"))
+    def whole(f):                                                                   # a clip still being written has no index yet
+        r = subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", os.path.join(out_dir, f)], capture_output=True, text=True)
+        return r.returncode == 0 and r.stdout.strip() != ""
+    clips = sorted(f for f in os.listdir(out_dir) if f.startswith("p") and f.endswith(f"_{a.quality}.mp4") and whole(f))
     have = [int(f[1:3]) for f in clips]
     missing = [n for n in range(1, 16) if n not in have]
     if missing:
