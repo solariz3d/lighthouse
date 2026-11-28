@@ -1,0 +1,40 @@
+edge e 30 er 0 s 0.64, flat u 1                chord   2.55 | today bank  -0.2235 dw 3.0666 dh -0.2165 dl 1.5162 | branch bank 0 dw 3.0663 dh -0.1486 dl 1.5228 pt -0.0059 0.1335
+edge e 30 er 0 s 0.64, flat u -1               chord  -2.55 | today bank  -0.2235 dw 3.0666 dh -0.2165 dl -1.4839 | branch bank 0 dw 3.0663 dh -0.2822 dl -1.4712 pt 0.0059 -0.1336
+edge e 30 er 0 s 0.64, flat u 0.7              chord  -1.72 | today bank   0.1721 dw 3.5455 dh -0.1188 dl 1.7659 | branch bank 0 dw 3.5453 dh -0.1718 dl 1.7607 pt -0.0027 -0.0902
+edge e 30 er 0 s 0.64, flat u 0.5              chord  -2.96 | today bank     0.33 dw 4.0096 dh -0.0912 dl 2.001 | branch bank 0 dw 4.009 dh -0.1943 dl 1.9909 pt -0.008 -0.1548
+edge e 0 er 40 s 0.5, flat u 1                 chord  -4.66 | today bank   0.4137 dw 3.1133 dh -0.2767 dl 1.4666 | branch bank 0 dw 3.1125 dh -0.3936 dl 1.4345 pt -0.0198 -0.2428
+edge e 0 er 40 s 0.5, flat u -1                chord   4.66 | today bank   0.4137 dw 3.1133 dh -0.2767 dl -1.5334 | branch bank 0 dw 3.1125 dh -0.1508 dl -1.5457 pt 0.0197 0.2427
+edge e 0 er 40 s 0.5, flat u 0.7               chord  -7.31 | today bank   0.7513 dw 3.6479 dh -0.2454 dl 1.739 | branch bank 0 dw 3.6448 dh -0.4609 dl 1.6799 pt -0.0485 -0.3786
+edge e 0 er 40 s 0.5, flat u 0.5               chord  -9.32 | today bank   1.0702 dw 4.1174 dh -0.2089 dl 1.9801 | branch bank 0 dw 4.1111 dh -0.5199 dl 1.8948 pt -0.0787 -0.4794
+edge e 30 er 30 s 0.64, flat (symmetric) u 1   chord      0 | today bank        0 dw 3.1262 dh -0.2877 dl 1.5 | branch bank 0 dw 3.1262 dh -0.2877 dl 1.5 pt 0 0
+edge e 30 er 30 s 0.64, flat (symmetric) u -1  chord      0 | today bank        0 dw 3.1262 dh -0.2877 dl -1.5 | branch bank 0 dw 3.1262 dh -0.2877 dl -1.5 pt 0 0
+edge e 30 er 30 s 0.64, flat (symmetric) u 0.7 chord  -4.76 | today bank    0.482 dw 3.5968 dh -0.1871 dl 1.7528 | branch bank 0 dw 3.5955 dh -0.3308 dl 1.7252 pt -0.0206 -0.2481
+edge e 30 er 30 s 0.64, flat (symmetric) u 0.5 chord  -6.43 | today bank   0.7267 dw 4.0637 dh -0.1542 dl 1.9906 | branch bank 0 dw 4.0608 dh -0.3737 dl 1.9484 pt -0.0376 -0.3337
+edge e 30 er 0 s 0.64, bank 20 u 1             chord  22.55 | today bank  -1.9356 dw 2.8545 dh -0.2165 dl 1.5162 | branch bank 0 dw 2.8346 dh 0.3524 dl 1.3698 pt -0.4413 1.0627
+edge e 30 er 0 s 0.64, bank 20 u -1            chord -22.55 | today bank  -1.9356 dw 2.8545 dh -0.2165 dl -1.4839 | branch bank 0 dw 2.8346 dh -0.7103 dl -1.1889 pt 0.4413 -1.0627
+edge e 30 er 0 s 0.64, bank 20 u 0.7           chord  18.28 | today bank  -1.8012 dw 3.3855 dh -0.1188 dl 1.7659 | branch bank 0 dw 3.368 dh 0.4187 dl 1.6276 pt -0.295 0.8933
+edge e 30 er 0 s 0.64, bank 20 u 0.5           chord  17.04 | today bank  -1.8798 dw 3.8574 dh -0.0912 dl 2.001 | branch bank 0 dw 3.8381 dh 0.4772 dl 1.8548 pt -0.2576 0.8405
+tube t 200 u 1                                 chord      0 | today bank        0 dw 5.3168 dh -1.7876 dl 1.5 | branch bank 0 dw 5.3168 dh -1.7876 dl 1.5 pt 0 0
+tube t 200 u -1                                chord      0 | today bank        0 dw 5.3168 dh -1.7876 dl -1.5 | branch bank 0 dw 5.3168 dh -1.7876 dl -1.5 pt 0 0
+tube t 200 u 0.7                               chord    -15 | today bank   2.1012 dw 5.1019 dh -1.3232 dl 1.8897 | branch bank 0 dw 5.0769 dh -1.707 dl 1.4324 pt -0.2009 -0.75
+tube t 200 u 0.5                               chord    -25 | today bank   3.5513 dw 4.9839 dh -1.0055 dl 2.1563 | branch bank 0 dw 4.9129 dh -1.6518 dl 1.386 pt -0.5358 -1.1491
+tube t 300 u 1                                 chord      0 | today bank        0 dw 15.7081 dh -5.5981 dl 1.5 | branch bank 0 dw 15.7081 dh -5.5981 dl 1.5 pt 0 0
+tube t 300 u -1                                chord      0 | today bank        0 dw 15.7081 dh -5.5981 dl -1.5 | branch bank 0 dw 15.7081 dh -5.5981 dl -1.5 pt 0 0
+tube t 300 u 0.7                               chord  -22.5 | today bank   5.2606 dw 9.3203 dh -2.8978 dl 2.2235 | branch bank 0 dw 9.1462 dh -3.2596 dl 0.8734 pt -0.4393 -1.0607
+tube t 300 u 0.5                               chord  -37.5 | today bank    7.608 dw 7.0885 dh -1.9094 dl 2.4884 | branch bank 0 dw 6.7444 dh -2.4036 dl 0.6441 pt -1.1117 -1.4489
+tube t 200, bank 20 u 1                        chord     20 | today bank  -2.8139 dw 5.0408 dh -1.7876 dl 1.5 | branch bank 0 dw 4.9962 dh -1.0964 dl 1.8991 pt -0.3509 0.9642
+tube t 200, bank 20 u -1                       chord    -20 | today bank  -2.8139 dw 5.0408 dh -1.7876 dl -1.5 | branch bank 0 dw 4.9962 dh -2.0606 dl -0.75 pt 0.3509 -0.9642
+tube t 200, bank 20 u 0.7                      chord      5 | today bank  -0.7048 dw 5.2388 dh -1.3232 dl 1.8897 | branch bank 0 dw 5.236 dh -1.1491 dl 1.9903 pt -0.0228 0.2605
+tube t 200, bank 20 u 0.5                      chord     -5 | today bank   0.7237 dw 5.4031 dh -1.0055 dl 2.1563 | branch bank 0 dw 5.4001 dh -1.1851 dl 2.0526 pt -0.0228 -0.2605
+half-pipe r 0.3 u 1                            chord      0 | today bank        0 dw 3.0036 dh -0.0629 dl 1.5 | branch bank 0 dw 3.0036 dh -0.0629 dl 1.5 pt -0.004 0.0687
+half-pipe r 0.3 u -1                           chord      0 | today bank        0 dw 3.0036 dh -0.0629 dl -1.5 | branch bank 0 dw 3.0036 dh -0.0629 dl -1.5 pt 0.004 0.0687
+half-pipe r 0.3 u 0.7                          chord  -0.72 | today bank   0.0716 dw 3.5322 dh -0.0518 dl 1.7649 | branch bank 0 dw 3.5321 dh -0.0739 dl 1.764 pt -0.0021 0.0025
+half-pipe r 0.3 u 0.5                          chord   -1.2 | today bank   0.1334 dw 4.0019 dh -0.0419 dl 2.0003 | branch bank 0 dw 4.0018 dh -0.0838 dl 1.9986 pt -0.002 -0.0393
+half-pipe r 0.6 u 1                            chord      0 | today bank        0 dw 3.0141 dh -0.1259 dl 1.5 | branch bank 0 dw 3.0141 dh -0.1259 dl 1.5 pt -0.0161 0.1371
+half-pipe r 0.6 u -1                           chord      0 | today bank        0 dw 3.0141 dh -0.1259 dl -1.5 | branch bank 0 dw 3.0141 dh -0.1259 dl -1.5 pt 0.0161 0.1371
+half-pipe r 0.6 u 0.7                          chord  -1.44 | today bank   0.1435 dw 3.5404 dh -0.1037 dl 1.7656 | branch bank 0 dw 3.5403 dh -0.148 dl 1.7619 pt -0.0085 0.005
+half-pipe r 0.6 u 0.5                          chord   -2.4 | today bank   0.2672 dw 4.0075 dh -0.0839 dl 2.0012 | branch bank 0 dw 4.0071 dh -0.1675 dl 1.9942 pt -0.008 -0.0784
+half-pipe r 0.3, bank 20 u 1                   chord     20 | today bank  -1.6897 dw 2.8376 dh -0.0629 dl 1.5 | branch bank 0 dw 2.8224 dh 0.4266 dl 1.3447 pt -0.3764 1.0233
+half-pipe r 0.3, bank 20 u -1                  chord    -20 | today bank  -1.6897 dw 2.8376 dh -0.0629 dl -1.5 | branch bank 0 dw 2.8224 dh -0.5376 dl -1.3044 pt 0.3324 -0.9025
+half-pipe r 0.3, bank 20 u 0.7                 chord  19.28 | today bank  -1.8906 dw 3.3535 dh -0.0518 dl 1.7649 | branch bank 0 dw 3.3343 dh 0.504 dl 1.5887 pt -0.3414 0.97
+half-pipe r 0.3, bank 20 u 0.5                 chord   18.8 | today bank  -2.0642 dw 3.8123 dh -0.0419 dl 2.0003 | branch bank 0 dw 3.7891 dh 0.5727 dl 1.8054 pt -0.3197 0.9358

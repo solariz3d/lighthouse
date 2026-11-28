@@ -1,0 +1,30 @@
+{"name":"edge e 30 er 0 s 0.64, flat","u":1,"diagToday":1.5642,"diagBranch":1.7174,"liftOnly1m":1.8268,"pullOnly2mOnThisTree":-0.1535}
+{"name":"edge e 30 er 0 s 0.64, flat","u":0.95,"diagToday":1.6513,"diagBranch":1.7525,"liftOnly1m":1.8667,"pullOnly2mOnThisTree":-0.1015}
+{"name":"edge e 0 er 40 s 0.5, flat","u":-1,"diagToday":-1.4563,"diagBranch":-1.7396,"liftOnly1m":-1.852,"pullOnly2mOnThisTree":0.2842}
+{"name":"edge e 0 er 40 s 0.5, flat","u":-0.95,"diagToday":-1.5511,"diagBranch":-1.7731,"liftOnly1m":-1.8901,"pullOnly2mOnThisTree":0.2226}
+{"name":"edge e 30 er 0 s 0.64, bank 20","u":1,"diagToday":0.2674,"diagBranch":1.5787,"liftOnly1m":1.6708,"pullOnly2mOnThisTree":-1.3267}
+{"name":"edge e 30 er 0 s 0.64, bank 20","u":0.95,"diagToday":0.3336,"diagBranch":1.6197,"liftOnly1m":1.7167,"pullOnly2mOnThisTree":-1.3009}
+{"name":"edge e 30 er 0 s 0.64, bank 20","u":0.7,"diagToday":0.6309,"diagBranch":1.8576,"liftOnly1m":1.9863,"pullOnly2mOnThisTree":-1.2404}
+{"name":"edge e 30 er 0 s 0.64, bank 20","u":0.5,"diagToday":0.8117,"diagBranch":2.0964,"liftOnly1m":2.2618,"pullOnly2mOnThisTree":-1.2999}
+{"name":"tube t 200, bank 20","u":1,"diagToday":0.7223,"diagBranch":2.6533,"liftOnly1m":2.9239,"pullOnly2mOnThisTree":-1.9652}
+{"name":"tube t 200, bank 20","u":0.95,"diagToday":0.9901,"diagBranch":2.6785,"liftOnly1m":2.9545,"pullOnly2mOnThisTree":-1.7151}
+{"name":"tube t 200, bank 20","u":0.7,"diagToday":2.3134,"diagBranch":2.8033,"liftOnly1m":3.1071,"pullOnly2mOnThisTree":-0.493}
+{"name":"half-pipe r 0.3, bank 20","u":1,"diagToday":0.4285,"diagBranch":1.5746,"liftOnly1m":1.6662,"pullOnly2mOnThisTree":-1.1579}
+{"name":"half-pipe r 0.3, bank 20","u":0.95,"diagToday":0.4467,"diagBranch":1.6135,"liftOnly1m":1.7097,"pullOnly2mOnThisTree":-1.179}
+{"name":"half-pipe r 0.3, bank 20","u":0.7,"diagToday":0.5527,"diagBranch":1.8392,"liftOnly1m":1.9653,"pullOnly2mOnThisTree":-1.3016}
+{"name":"half-pipe r 0.3, bank 20","u":0.5,"diagToday":0.6607,"diagBranch":2.0693,"liftOnly1m":2.2303,"pullOnly2mOnThisTree":-1.4268}
+{"name":"edge e 30 er 0 s 0.64, flat","u":1,"diagToday":1.5642,"diagBranch":1.7174,"liftOnly1m":1.8268,"pullOnly2mOnThisTree":0}
+{"name":"edge e 30 er 0 s 0.64, flat","u":0.95,"diagToday":1.6513,"diagBranch":1.7525,"liftOnly1m":1.8667,"pullOnly2mOnThisTree":0}
+{"name":"edge e 0 er 40 s 0.5, flat","u":-1,"diagToday":-1.4563,"diagBranch":-1.7396,"liftOnly1m":-1.852,"pullOnly2mOnThisTree":0}
+{"name":"edge e 0 er 40 s 0.5, flat","u":-0.95,"diagToday":-1.5511,"diagBranch":-1.7731,"liftOnly1m":-1.8901,"pullOnly2mOnThisTree":0}
+{"name":"edge e 30 er 0 s 0.64, bank 20","u":1,"diagToday":0.2674,"diagBranch":1.5787,"liftOnly1m":1.6708,"pullOnly2mOnThisTree":0}
+{"name":"edge e 30 er 0 s 0.64, bank 20","u":0.95,"diagToday":0.3336,"diagBranch":1.6197,"liftOnly1m":1.7167,"pullOnly2mOnThisTree":0}
+{"name":"edge e 30 er 0 s 0.64, bank 20","u":0.7,"diagToday":0.6309,"diagBranch":1.8576,"liftOnly1m":1.9863,"pullOnly2mOnThisTree":0}
+{"name":"edge e 30 er 0 s 0.64, bank 20","u":0.5,"diagToday":0.8117,"diagBranch":2.0964,"liftOnly1m":2.2618,"pullOnly2mOnThisTree":0}
+{"name":"tube t 200, bank 20","u":1,"diagToday":0.7223,"diagBranch":2.6533,"liftOnly1m":2.9239,"pullOnly2mOnThisTree":0}
+{"name":"tube t 200, bank 20","u":0.95,"diagToday":0.9901,"diagBranch":2.6785,"liftOnly1m":2.9545,"pullOnly2mOnThisTree":0}
+{"name":"tube t 200, bank 20","u":0.7,"diagToday":2.3134,"diagBranch":2.8033,"liftOnly1m":3.1071,"pullOnly2mOnThisTree":0}
+{"name":"half-pipe r 0.3, bank 20","u":1,"diagToday":0.4285,"diagBranch":1.5746,"liftOnly1m":1.6662,"pullOnly2mOnThisTree":0}
+{"name":"half-pipe r 0.3, bank 20","u":0.95,"diagToday":0.4467,"diagBranch":1.6135,"liftOnly1m":1.7097,"pullOnly2mOnThisTree":0}
+{"name":"half-pipe r 0.3, bank 20","u":0.7,"diagToday":0.5527,"diagBranch":1.8392,"liftOnly1m":1.9653,"pullOnly2mOnThisTree":0}
+{"name":"half-pipe r 0.3, bank 20","u":0.5,"diagToday":0.6607,"diagBranch":2.0693,"liftOnly1m":2.2303,"pullOnly2mOnThisTree":0}

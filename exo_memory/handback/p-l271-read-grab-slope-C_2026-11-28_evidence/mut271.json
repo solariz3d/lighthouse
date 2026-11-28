@@ -1,0 +1,175 @@
+{
+ "mutants": [
+  {
+   "id": "BASE c522ea6 (the drag whole, as today)",
+   "applied": true,
+   "row25": {
+    "pass": 1,
+    "fail": 1,
+    "msgs": []
+   },
+   "zonegrab": {
+    "tests": 31,
+    "fail": 4,
+    "fails": [
+     "row 14l (D522, the plan's far-rim rows): a press at u 0.25, 0.5 and 0.75, either side, on ",
+     "row 14h (D520, O's catch, D519 §6): on a road banked 60° and 85°, either way, a rim dragge",
+     "row 14j (D520): on a road pitched up to 23°, where a lift along world up also slides the s",
+     "row 14o (L271): on a road banked 20° and 60°, either way, a straight pull out or in at a r"
+    ]
+   }
+  },
+  {
+   "id": "M1 no rise along the slope",
+   "applied": true,
+   "row25": {
+    "pass": 1,
+    "fail": 1,
+    "msgs": []
+   },
+   "zonegrab": {
+    "tests": 31,
+    "fail": 4,
+    "fails": [
+     "row 14l (D522, the plan's far-rim rows): a press at u 0.25, 0.5 and 0.75, either side, on ",
+     "row 14h (D520, O's catch, D519 §6): on a road banked 60° and 85°, either way, a rim dragge",
+     "row 14j (D520): on a road pitched up to 23°, where a lift along world up also slides the s",
+     "row 14o (L271): on a road banked 20° and 60°, either way, a straight pull out or in at a r"
+    ]
+   }
+  },
+  {
+   "id": "M2 the pull whole across",
+   "applied": true,
+   "row25": {
+    "pass": 2,
+    "fail": 0,
+    "msgs": []
+   },
+   "zonegrab": {
+    "tests": 31,
+    "fail": 4,
+    "fails": [
+     "row 14l (D522, the plan's far-rim rows): a press at u 0.25, 0.5 and 0.75, either side, on ",
+     "row 14h (D520, O's catch, D519 §6): on a road banked 60° and 85°, either way, a rim dragge",
+     "row 14j (D520): on a road pitched up to 23°, where a lift along world up also slides the s",
+     "row 14o (L271): on a road banked 20° and 60°, either way, a straight pull out or in at a r"
+    ]
+   }
+  },
+  {
+   "id": "M5 the share not squared",
+   "applied": true,
+   "row25": {
+    "pass": 1,
+    "fail": 1,
+    "msgs": []
+   },
+   "zonegrab": {
+    "tests": 31,
+    "fail": 5,
+    "fails": [
+     "row 14l (D522, the plan's far-rim rows): a press at u 0.25, 0.5 and 0.75, either side, on ",
+     "row 14e (D520, plan item 2, \"a rim, sideways\"): on a flat road the touched edge moves and ",
+     "row 14h (D520, O's catch, D519 §6): on a road banked 60° and 85°, either way, a rim dragge",
+     "row 14j (D520): on a road pitched up to 23°, where a lift along world up also slides the s",
+     "row 14o (L271): on a road banked 20° and 60°, either way, a straight pull out or in at a r"
+    ]
+   }
+  },
+  {
+   "id": "M6 half the slope move",
+   "applied": true,
+   "row25": {
+    "pass": 1,
+    "fail": 1,
+    "msgs": []
+   },
+   "zonegrab": {
+    "tests": 31,
+    "fail": 5,
+    "fails": [
+     "row 14b (D520, amended D522): a sideways drag in the centre band slides the road under the",
+     "row 14l (D522, the plan's far-rim rows): a press at u 0.25, 0.5 and 0.75, either side, on ",
+     "row 14e (D520, plan item 2, \"a rim, sideways\"): on a flat road the touched edge moves and ",
+     "row 14h (D520, O's catch, D519 §6): on a road banked 60° and 85°, either way, a rim dragge",
+     "row 14j (D520): on a road pitched up to 23°, where a lift along world up also slides the s"
+    ]
+   }
+  },
+  {
+   "id": "M7 down the slope instead of up",
+   "applied": true,
+   "row25": {
+    "pass": 1,
+    "fail": 1,
+    "msgs": []
+   },
+   "zonegrab": {
+    "tests": 31,
+    "fail": 4,
+    "fails": [
+     "row 14l (D522, the plan's far-rim rows): a press at u 0.25, 0.5 and 0.75, either side, on ",
+     "row 14h (D520, O's catch, D519 §6): on a road banked 60° and 85°, either way, a rim dragge",
+     "row 14j (D520): on a road pitched up to 23°, where a lift along world up also slides the s",
+     "row 14o (L271): on a road banked 20° and 60°, either way, a straight pull out or in at a r"
+    ]
+   }
+  },
+  {
+   "id": "M8 the slope move 10% long",
+   "applied": true,
+   "row25": {
+    "pass": 1,
+    "fail": 1,
+    "msgs": []
+   },
+   "zonegrab": {
+    "tests": 31,
+    "fail": 5,
+    "fails": [
+     "row 14b (D520, amended D522): a sideways drag in the centre band slides the road under the",
+     "row 14l (D522, the plan's far-rim rows): a press at u 0.25, 0.5 and 0.75, either side, on ",
+     "row 14e (D520, plan item 2, \"a rim, sideways\"): on a flat road the touched edge moves and ",
+     "row 14h (D520, O's catch, D519 §6): on a road banked 60° and 85°, either way, a rim dragge",
+     "row 14j (D520): on a road pitched up to 23°, where a lift along world up also slides the s"
+    ]
+   }
+  },
+  {
+   "id": "LIT D's literal (the whole drag onto the chord)",
+   "applied": true,
+   "row25": {
+    "pass": 1,
+    "fail": 1,
+    "msgs": []
+   },
+   "zonegrab": {
+    "tests": 31,
+    "fail": 7,
+    "fails": [
+     "row 14d (D520, amended D522): partway out on a cup piece or a plain road an upward drag hi",
+     "row 14l (D522, the plan's far-rim rows): a press at u 0.25, 0.5 and 0.75, either side, on ",
+     "row 14f (D520, plan item 2, \"a rim, up\"): on a flat road the touched side rises, the far r",
+     "row 14h (D520, O's catch, D519 §6): on a road banked 60° and 85°, either way, a rim dragge",
+     "row 14j (D520): on a road pitched up to 23°, where a lift along world up also slides the s",
+     "row 14p (L271): on a road banked 20° and 60°, either way, a straight lift at a rim or part",
+     "row 14n (0.4.29): a grab at a dot keeps the run selected: the handles read it at every ste"
+    ]
+   }
+  }
+ ],
+ "touched": {
+  "tests": 139,
+  "pass": 139,
+  "fail": 0,
+  "cancelled": 0,
+  "skipped": 0,
+  "fails": []
+ },
+ "restored": true,
+ "row25Clean": {
+  "pass": 2,
+  "fail": 0
+ }
+}

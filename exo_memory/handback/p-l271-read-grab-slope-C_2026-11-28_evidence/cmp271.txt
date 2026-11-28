@@ -1,0 +1,61 @@
+
+== C2 flat no cup: 120 cases; saved text the same 120; errors today 0, branch 0; non-finite 0
+   out   24 cases, same text 24, follow differs by up to 0; bank moves up to: today 0°, branch 0°; branch turns MORE than today in 0; far rim moves up to 0.0001 / 0.0001 m; point from the pointer up to 0.0001 / 0.0001 m
+   in    24 cases, same text 24, follow differs by up to 0; bank moves up to: today 0°, branch 0°; branch turns MORE than today in 0; far rim moves up to 0 / 0 m; point from the pointer up to 0 / 0 m
+   lift  24 cases, same text 24, follow differs by up to 0; bank moves up to: today 11.3099°, branch 11.3099°; branch turns MORE than today in 0; far rim moves up to 0 / 0 m; point from the pointer up to 0 / 0 m
+   sink  24 cases, same text 24, follow differs by up to 0; bank moves up to: today 7.5946°, branch 7.5946°; branch turns MORE than today in 0; far rim moves up to 0 / 0 m; point from the pointer up to 0 / 0 m
+   diag  24 cases, same text 24, follow differs by up to 0; bank moves up to: today 6.009°, branch 6.009°; branch turns MORE than today in 0; far rim moves up to 0 / 0 m; point from the pointer up to 0 / 0 m
+
+== C2 control cup 30: 15 cases; saved text the same 6; errors today 0, branch 0; non-finite 0
+   out   3 cases, same text 0, follow differs by up to 0.29924; bank moves up to: today 1.0106°, branch 0°; branch turns MORE than today in 0; far rim moves up to 0 / 0.0001 m; point from the pointer up to 0 / 0.4622 m
+   in    3 cases, same text 0, follow differs by up to 0.199493; bank moves up to: today 0.8303°, branch 0°; branch turns MORE than today in 0; far rim moves up to 0 / 0.0001 m; point from the pointer up to 0 / 0.3082 m
+   lift  3 cases, same text 3, follow differs by up to 0; bank moves up to: today 3.686°, branch 3.686°; branch turns MORE than today in 0; far rim moves up to 0 / 0 m; point from the pointer up to 0 / 0 m
+   sink  3 cases, same text 3, follow differs by up to 0; bank moves up to: today 2.4188°, branch 2.4188°; branch turns MORE than today in 0; far rim moves up to 0 / 0 m; point from the pointer up to 0 / 0 m
+   diag  3 cases, same text 0, follow differs by up to 0.199493; bank moves up to: today 2.961°, branch 2.258°; branch turns MORE than today in 0; far rim moves up to 0.0001 / 0 m; point from the pointer up to 0.0001 / 0.3081 m
+
+== C3 banked: 64 cases; saved text the same 0; errors today 0, branch 0; non-finite 0
+   out   32 cases, same text 0, follow differs by up to 1.333333; bank moves up to: today 6.0183°, branch 0°; branch turns MORE than today in 0; far rim moves up to 0 / 0 m; point from the pointer up to 0.0001 / 2.8284 m
+   in    32 cases, same text 0, follow differs by up to 0.666667; bank moves up to: today 3.5829°, branch 0°; branch turns MORE than today in 0; far rim moves up to 0 / 0.0001 m; point from the pointer up to 0 / 1.4142 m
+
+== C3 fixture: 2 cases; saved text the same 0; errors today 0, branch 0; non-finite 0
+   T1:   2 cases, same text 0, follow differs by up to 0.670903; bank moves up to: today 4.9984°, branch 0°; branch turns MORE than today in 0; far rim moves up to 0.1972 / 0.1953 m; point from the pointer up to 0.1972 / 1.5596 m
+
+== C3 fixture F (cup default): 3 cases; saved text the same 1; errors today 0, branch 0; non-finite 0
+   out   3 cases, same text 1, follow differs by up to 0.16295; bank moves up to: today 1.0865°, branch 0°; branch turns MORE than today in 0; far rim moves up to 0.248 / 0.2479 m; point from the pointer up to 0.2031 / 0.2196 m
+
+== C5 edge: 160 cases; saved text the same 70; errors today 0, branch 0; non-finite 0
+   out   32 cases, same text 2, follow differs by up to 0.762761; bank moves up to: today 2.9196°, branch 0°; branch turns MORE than today in 0; far rim moves up to 0.0001 / 0.0001 m; point from the pointer up to 0.0001 / 1.3351 m
+   in    32 cases, same text 2, follow differs by up to 0.508507; bank moves up to: today 2.3487°, branch 0°; branch turns MORE than today in 0; far rim moves up to 0.0001 / 0.0001 m; point from the pointer up to 0.0001 / 0.8901 m
+   lift  32 cases, same text 32, follow differs by up to 0; bank moves up to: today 3.7144°, branch 3.7144°; branch turns MORE than today in 0; far rim moves up to 0.0001 / 0.0001 m; point from the pointer up to 0.0001 / 0.0001 m
+   sink  32 cases, same text 32, follow differs by up to 0; bank moves up to: today 2.435°, branch 2.435°; branch turns MORE than today in 0; far rim moves up to 0.0001 / 0.0001 m; point from the pointer up to 0 / 0 m
+   diag  32 cases, same text 2, follow differs by up to 0.508507; bank moves up to: today 4.1119°, branch 2.2736°; branch turns MORE than today in 8; far rim moves up to 0.0001 / 0.0001 m; point from the pointer up to 0.0001 / 0.8901 m
+      MORE: edge e 30 er 0 s 0.64, flat u 1 diag 2,1: today 1.5642°, branch 1.7174° (chord slope 2.55°)
+      MORE: edge e 30 er 0 s 0.64, flat u 0.95 diag 2,1: today 1.6513°, branch 1.7525° (chord slope 1.66°)
+      MORE: edge e 0 er 40 s 0.5, flat u -1 diag 2,1: today 1.4563°, branch 1.7396° (chord slope 4.66°)
+      MORE: edge e 0 er 40 s 0.5, flat u -0.95 diag 2,1: today 1.5511°, branch 1.7731° (chord slope 3.58°)
+
+== C5 tube: 120 cases; saved text the same 60; errors today 0, branch 0; non-finite 0
+   out   24 cases, same text 4, follow differs by up to 1.844338; bank moves up to: today 7.608°, branch 0°; branch turns MORE than today in 0; far rim moves up to 0.0001 / 0.0001 m; point from the pointer up to 0.0001 / 2.1213 m
+   in    24 cases, same text 4, follow differs by up to 1.229559; bank moves up to: today 7.1499°, branch 0°; branch turns MORE than today in 0; far rim moves up to 0.0001 / 0.0001 m; point from the pointer up to 0.0001 / 1.4142 m
+   lift  24 cases, same text 24, follow differs by up to 0; bank moves up to: today 13.7899°, branch 13.7899°; branch turns MORE than today in 0; far rim moves up to 0.0001 / 0.0001 m; point from the pointer up to 0.0001 / 0.0001 m
+   sink  24 cases, same text 24, follow differs by up to 0; bank moves up to: today 9.2927°, branch 9.2927°; branch turns MORE than today in 0; far rim moves up to 0 / 0 m; point from the pointer up to 0.0001 / 0.0001 m
+   diag  24 cases, same text 4, follow differs by up to 1.229559; bank moves up to: today 9.3068°, branch 7.028°; branch turns MORE than today in 3; far rim moves up to 0.0001 / 0 m; point from the pointer up to 0.0001 / 1.4142 m
+      MORE: tube t 200, bank 20 u 1 diag 2,1: today 0.7223°, branch 2.6533° (chord slope 20°)
+      MORE: tube t 200, bank 20 u 0.95 diag 2,1: today 0.9901°, branch 2.6785° (chord slope 17.5°)
+      MORE: tube t 200, bank 20 u 0.7 diag 2,1: today 2.3134°, branch 2.8033° (chord slope 5°)
+
+== C5 half-pipe wall: 120 cases; saved text the same 60; errors today 0, branch 0; non-finite 0
+   out   24 cases, same text 4, follow differs by up to 0.668922; bank moves up to: today 2.3197°, branch 0°; branch turns MORE than today in 0; far rim moves up to 0.1887 / 0.1887 m; point from the pointer up to 0.1381 / 1.0903 m
+   in    24 cases, same text 4, follow differs by up to 0.445948; bank moves up to: today 1.8727°, branch 0°; branch turns MORE than today in 0; far rim moves up to 0.1025 / 0.1025 m; point from the pointer up to 0.0788 / 0.7211 m
+   lift  24 cases, same text 24, follow differs by up to 0; bank moves up to: today 3.592°, branch 3.592°; branch turns MORE than today in 0; far rim moves up to 0.015 / 0.015 m; point from the pointer up to 0.0116 / 0.0116 m
+   sink  24 cases, same text 24, follow differs by up to 0; bank moves up to: today 2.386°, branch 2.386°; branch turns MORE than today in 0; far rim moves up to 0.0108 / 0.0108 m; point from the pointer up to 0.0075 / 0.0075 m
+   diag  24 cases, same text 4, follow differs by up to 0.445948; bank moves up to: today 3.7165°, branch 2.2097°; branch turns MORE than today in 4; far rim moves up to 0.1199 / 0.1197 m; point from the pointer up to 0.0901 / 0.734 m
+      MORE: half-pipe r 0.3, bank 20 u 1 diag 2,1: today 0.4285°, branch 1.5746° (chord slope 20°)
+      MORE: half-pipe r 0.3, bank 20 u 0.95 diag 2,1: today 0.4467°, branch 1.6135° (chord slope 19.88°)
+      MORE: half-pipe r 0.3, bank 20 u 0.7 diag 2,1: today 0.5527°, branch 1.8392° (chord slope 19.28°)
+      MORE: half-pipe r 0.3, bank 20 u 0.5 diag 2,1: today 0.6607°, branch 2.0693° (chord slope 18.8°)
+
+== C4 lift: 27 cases; saved text the same 27; errors today 0, branch 0; non-finite 0
+   lift  27 cases, same text 27, follow differs by up to 0; bank moves up to: today 6.1694°, branch 6.1694°; branch turns MORE than today in 0; far rim moves up to 0 / 0 m; point from the pointer up to 0 / 0 m
+
+detail.json written

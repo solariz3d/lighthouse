@@ -1,0 +1,4810 @@
+{
+ "fixtures": [
+  {
+   "name": "B- (plan -20)",
+   "u": -1,
+   "g": "T1: out 4 at the right rim",
+   "chordSlope": 20,
+   "today": {
+    "bank": 4.9984,
+    "dw": 3.8559,
+    "dh": -0.2403,
+    "dl": -2,
+    "ptAcross": 0.0874,
+    "ptUp": 0.1762,
+    "bankWin": 4.9984
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 3.7956,
+    "dh": 0.4306,
+    "dl": -1.8433,
+    "ptAcross": 0.5693,
+    "ptUp": 1.4519,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "B+ (plan 20)",
+   "u": -1,
+   "g": "T1: out 4 at the right rim",
+   "chordSlope": -20,
+   "today": {
+    "bank": -4.9984,
+    "dw": 3.8559,
+    "dh": -0.2403,
+    "dl": -2,
+    "ptAcross": -0.0124,
+    "ptUp": 0.1963,
+    "bankWin": 4.9984
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 3.7956,
+    "dh": -0.855,
+    "dl": -1.6888,
+    "ptAcross": 0.4387,
+    "ptUp": -1.093,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "F (plan 0, default cup)",
+   "u": -0.95,
+   "g": "out 4",
+   "chordSlope": -0.3,
+   "today": {
+    "bank": -0.077,
+    "dw": 4.1415,
+    "dh": -0.2357,
+    "dl": -2.0519,
+    "ptAcross": 0.0364,
+    "ptUp": 0.1814,
+    "bankWin": 0.077
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 4.1415,
+    "dh": -0.2464,
+    "dl": -2.0506,
+    "ptAcross": 0.0363,
+    "ptUp": 0.1605,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "F (plan 0, default cup)",
+   "u": -0.5,
+   "g": "out 4",
+   "chordSlope": -3.52,
+   "today": {
+    "bank": -1.0865,
+    "dw": 5.3549,
+    "dh": -0.1555,
+    "dl": -2.6695,
+    "ptAcross": 0.0034,
+    "ptUp": 0.0265,
+    "bankWin": 1.0865
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 5.3518,
+    "dh": -0.3185,
+    "dl": -2.6499,
+    "ptAcross": 0.0179,
+    "ptUp": -0.2186,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "F (plan 0, default cup)",
+   "u": -1,
+   "g": "out 4",
+   "chordSlope": 0,
+   "today": {
+    "bank": 0,
+    "dw": 4.0392,
+    "dh": -0.2403,
+    "dl": -2,
+    "ptAcross": 0.0401,
+    "ptUp": 0.1985,
+    "bankWin": 0
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 4.0392,
+    "dh": -0.2403,
+    "dl": -2,
+    "ptAcross": 0.0401,
+    "ptUp": 0.1985,
+    "bankWin": 0
+   }
+  }
+ ],
+ "c5": [
+  {
+   "name": "edge e 30 er 0 s 0.64, flat",
+   "u": 1,
+   "g": "out 3",
+   "chordSlope": 2.55,
+   "today": {
+    "bank": -0.2235,
+    "dw": 3.0666,
+    "dh": -0.2165,
+    "dl": 1.5162,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 0.2235
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 3.0663,
+    "dh": -0.1486,
+    "dl": 1.5228,
+    "ptAcross": -0.0059,
+    "ptUp": 0.1335,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "edge e 30 er 0 s 0.64, flat",
+   "u": 1,
+   "g": "lift 1.5",
+   "chordSlope": 2.55,
+   "today": {
+    "bank": 2.7371,
+    "dw": 0.105,
+    "dh": 0.7581,
+    "dl": 0.1083,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 2.7371
+   },
+   "branch": {
+    "bank": 2.7371,
+    "dw": 0.105,
+    "dh": 0.7581,
+    "dl": 0.1083,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 2.7371
+   }
+  },
+  {
+   "name": "edge e 30 er 0 s 0.64, flat",
+   "u": -1,
+   "g": "out 3",
+   "chordSlope": -2.55,
+   "today": {
+    "bank": -0.2235,
+    "dw": 3.0666,
+    "dh": -0.2165,
+    "dl": -1.4839,
+    "ptAcross": -0.0001,
+    "ptUp": 0,
+    "bankWin": 0.2235
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 3.0663,
+    "dh": -0.2822,
+    "dl": -1.4712,
+    "ptAcross": 0.0059,
+    "ptUp": -0.1336,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "edge e 30 er 0 s 0.64, flat",
+   "u": -1,
+   "g": "lift 1.5",
+   "chordSlope": -2.55,
+   "today": {
+    "bank": -2.7489,
+    "dw": -0.0316,
+    "dh": 0.7419,
+    "dl": -0.1083,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 2.7489
+   },
+   "branch": {
+    "bank": -2.7489,
+    "dw": -0.0316,
+    "dh": 0.7419,
+    "dl": -0.1083,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 2.7489
+   }
+  },
+  {
+   "name": "edge e 30 er 0 s 0.64, flat",
+   "u": 0.95,
+   "g": "out 3",
+   "chordSlope": 1.66,
+   "today": {
+    "bank": -0.1477,
+    "dw": 3.1319,
+    "dh": -0.1967,
+    "dl": 1.5509,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 0.1477
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 3.1317,
+    "dh": -0.1518,
+    "dl": 1.5553,
+    "ptAcross": -0.0025,
+    "ptUp": 0.0866,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "edge e 30 er 0 s 0.64, flat",
+   "u": 0.95,
+   "g": "lift 1.5",
+   "chordSlope": 1.66,
+   "today": {
+    "bank": 2.7975,
+    "dw": 0.0835,
+    "dh": 0.7755,
+    "dl": 0.0984,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 2.7975
+   },
+   "branch": {
+    "bank": 2.7975,
+    "dw": 0.0835,
+    "dh": 0.7755,
+    "dl": 0.0984,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 2.7975
+   }
+  },
+  {
+   "name": "edge e 30 er 0 s 0.64, flat",
+   "u": -0.95,
+   "g": "out 3",
+   "chordSlope": -2.88,
+   "today": {
+    "bank": -0.2579,
+    "dw": 3.1443,
+    "dh": -0.2134,
+    "dl": -1.523,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 0.2579
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 3.1439,
+    "dh": -0.2893,
+    "dl": -1.5085,
+    "ptAcross": 0.0075,
+    "ptUp": -0.1506,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "edge e 30 er 0 s 0.64, flat",
+   "u": -0.95,
+   "g": "lift 1.5",
+   "chordSlope": -2.88,
+   "today": {
+    "bank": -2.8193,
+    "dw": -0.0404,
+    "dh": 0.7615,
+    "dl": -0.1067,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 2.8193
+   },
+   "branch": {
+    "bank": -2.8193,
+    "dw": -0.0404,
+    "dh": 0.7615,
+    "dl": -0.1067,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 2.8193
+   }
+  },
+  {
+   "name": "edge e 30 er 0 s 0.64, flat",
+   "u": 0.7,
+   "g": "out 3",
+   "chordSlope": -1.72,
+   "today": {
+    "bank": 0.1721,
+    "dw": 3.5455,
+    "dh": -0.1188,
+    "dl": 1.7659,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 0.1721
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 3.5453,
+    "dh": -0.1718,
+    "dl": 1.7607,
+    "ptAcross": -0.0027,
+    "ptUp": -0.0902,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "edge e 30 er 0 s 0.64, flat",
+   "u": 0.7,
+   "g": "lift 1.5",
+   "chordSlope": -1.72,
+   "today": {
+    "bank": 3.1759,
+    "dw": -0.0043,
+    "dh": 0.8829,
+    "dl": 0.0594,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 3.1759
+   },
+   "branch": {
+    "bank": 3.1759,
+    "dw": -0.0043,
+    "dh": 0.8829,
+    "dl": 0.0594,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 3.1759
+   }
+  },
+  {
+   "name": "edge e 30 er 0 s 0.64, flat",
+   "u": -0.7,
+   "g": "out 3",
+   "chordSlope": -4.79,
+   "today": {
+    "bank": -0.4847,
+    "dw": 3.5963,
+    "dh": -0.1863,
+    "dl": -1.7527,
+    "ptAcross": -0.0001,
+    "ptUp": 0,
+    "bankWin": 0.4847
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 3.595,
+    "dh": -0.3308,
+    "dl": -1.7249,
+    "ptAcross": 0.0209,
+    "ptUp": -0.2496,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "edge e 30 er 0 s 0.64, flat",
+   "u": -0.7,
+   "g": "lift 1.5",
+   "chordSlope": -4.79,
+   "today": {
+    "bank": -3.2302,
+    "dw": -0.0999,
+    "dh": 0.8763,
+    "dl": -0.0932,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 3.2302
+   },
+   "branch": {
+    "bank": -3.2302,
+    "dw": -0.0999,
+    "dh": 0.8763,
+    "dl": -0.0932,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 3.2302
+   }
+  },
+  {
+   "name": "edge e 30 er 0 s 0.64, flat",
+   "u": 0.5,
+   "g": "out 3",
+   "chordSlope": -2.96,
+   "today": {
+    "bank": 0.33,
+    "dw": 4.0096,
+    "dh": -0.0912,
+    "dl": 2.001,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 0.33
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 4.009,
+    "dh": -0.1943,
+    "dl": 1.9909,
+    "ptAcross": -0.008,
+    "ptUp": -0.1548,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "edge e 30 er 0 s 0.64, flat",
+   "u": 0.5,
+   "g": "lift 1.5",
+   "chordSlope": -2.96,
+   "today": {
+    "bank": 3.5959,
+    "dw": -0.0407,
+    "dh": 1.0005,
+    "dl": 0.0457,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 3.5959
+   },
+   "branch": {
+    "bank": 3.5959,
+    "dw": -0.0407,
+    "dh": 1.0005,
+    "dl": 0.0457,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 3.5959
+   }
+  },
+  {
+   "name": "edge e 30 er 0 s 0.64, flat",
+   "u": -0.5,
+   "g": "out 3",
+   "chordSlope": -6.43,
+   "today": {
+    "bank": -0.7267,
+    "dw": 4.0637,
+    "dh": -0.1542,
+    "dl": -1.9906,
+    "ptAcross": -0.0001,
+    "ptUp": 0,
+    "bankWin": 0.7267
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 4.0608,
+    "dh": -0.3737,
+    "dl": -1.9484,
+    "ptAcross": 0.0376,
+    "ptUp": -0.3337,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "edge e 30 er 0 s 0.64, flat",
+   "u": -0.5,
+   "g": "lift 1.5",
+   "chordSlope": -6.43,
+   "today": {
+    "bank": -3.6566,
+    "dw": -0.1639,
+    "dh": 0.9952,
+    "dl": -0.0771,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 3.6566
+   },
+   "branch": {
+    "bank": -3.6566,
+    "dw": -0.1639,
+    "dh": 0.9952,
+    "dl": -0.0771,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 3.6566
+   }
+  },
+  {
+   "name": "edge e 0 er 40 s 0.5, flat",
+   "u": 1,
+   "g": "out 3",
+   "chordSlope": -4.66,
+   "today": {
+    "bank": 0.4137,
+    "dw": 3.1133,
+    "dh": -0.2767,
+    "dl": 1.4666,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 0.4137
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 3.1125,
+    "dh": -0.3936,
+    "dl": 1.4345,
+    "ptAcross": -0.0198,
+    "ptUp": -0.2428,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "edge e 0 er 40 s 0.5, flat",
+   "u": 1,
+   "g": "lift 1.5",
+   "chordSlope": -4.66,
+   "today": {
+    "bank": 2.7952,
+    "dw": -0.0888,
+    "dh": 0.7333,
+    "dl": 0.1384,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 2.7952
+   },
+   "branch": {
+    "bank": 2.7952,
+    "dw": -0.0888,
+    "dh": 0.7333,
+    "dl": 0.1384,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 2.7952
+   }
+  },
+  {
+   "name": "edge e 0 er 40 s 0.5, flat",
+   "u": -1,
+   "g": "out 3",
+   "chordSlope": 4.66,
+   "today": {
+    "bank": 0.4137,
+    "dw": 3.1133,
+    "dh": -0.2767,
+    "dl": -1.5334,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 0.4137
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 3.1125,
+    "dh": -0.1508,
+    "dl": -1.5457,
+    "ptAcross": 0.0197,
+    "ptUp": 0.2427,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "edge e 0 er 40 s 0.5, flat",
+   "u": -1,
+   "g": "lift 1.5",
+   "chordSlope": 4.66,
+   "today": {
+    "bank": -2.7732,
+    "dw": 0.1644,
+    "dh": 0.7667,
+    "dl": -0.1384,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 2.7732
+   },
+   "branch": {
+    "bank": -2.7732,
+    "dw": 0.1644,
+    "dh": 0.7667,
+    "dl": -0.1384,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 2.7732
+   }
+  },
+  {
+   "name": "edge e 0 er 40 s 0.5, flat",
+   "u": 0.95,
+   "g": "out 3",
+   "chordSlope": -5.04,
+   "today": {
+    "bank": 0.4585,
+    "dw": 3.1921,
+    "dh": -0.2737,
+    "dl": 1.5063,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 0.4585
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 3.1909,
+    "dh": -0.4035,
+    "dl": 1.4707,
+    "ptAcross": -0.0232,
+    "ptUp": -0.2628,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "edge e 0 er 40 s 0.5, flat",
+   "u": 0.95,
+   "g": "lift 1.5",
+   "chordSlope": -5.04,
+   "today": {
+    "bank": 2.8669,
+    "dw": -0.1009,
+    "dh": 0.7532,
+    "dl": 0.1368,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 2.8669
+   },
+   "branch": {
+    "bank": 2.8669,
+    "dw": -0.1009,
+    "dh": 0.7532,
+    "dl": 0.1368,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 2.8669
+   }
+  },
+  {
+   "name": "edge e 0 er 40 s 0.5, flat",
+   "u": -0.95,
+   "g": "out 3",
+   "chordSlope": 3.58,
+   "today": {
+    "bank": 0.3238,
+    "dw": 3.1751,
+    "dh": -0.2526,
+    "dl": -1.5669,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 0.3238
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 3.1745,
+    "dh": -0.1538,
+    "dl": -1.5766,
+    "ptAcross": 0.0117,
+    "ptUp": 0.1871,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "edge e 0 er 40 s 0.5, flat",
+   "u": -0.95,
+   "g": "lift 1.5",
+   "chordSlope": 3.58,
+   "today": {
+    "bank": -2.8309,
+    "dw": 0.1387,
+    "dh": 0.7835,
+    "dl": -0.1263,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 2.8309
+   },
+   "branch": {
+    "bank": -2.8309,
+    "dw": 0.1387,
+    "dh": 0.7835,
+    "dl": -0.1263,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 2.8309
+   }
+  },
+  {
+   "name": "edge e 0 er 40 s 0.5, flat",
+   "u": 0.7,
+   "g": "out 3",
+   "chordSlope": -7.31,
+   "today": {
+    "bank": 0.7513,
+    "dw": 3.6479,
+    "dh": -0.2454,
+    "dl": 1.739,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 0.7513
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 3.6448,
+    "dh": -0.4609,
+    "dl": 1.6799,
+    "ptAcross": -0.0485,
+    "ptUp": -0.3786,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "edge e 0 er 40 s 0.5, flat",
+   "u": 0.7,
+   "g": "lift 1.5",
+   "chordSlope": -7.31,
+   "today": {
+    "bank": 3.2834,
+    "dw": -0.1815,
+    "dh": 0.8695,
+    "dl": 0.1228,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 3.2834
+   },
+   "branch": {
+    "bank": 3.2834,
+    "dw": -0.1815,
+    "dh": 0.8695,
+    "dl": 0.1228,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 3.2834
+   }
+  },
+  {
+   "name": "edge e 0 er 40 s 0.5, flat",
+   "u": -0.7,
+   "g": "out 3",
+   "chordSlope": -1.16,
+   "today": {
+    "bank": -0.1164,
+    "dw": 3.555,
+    "dh": -0.1364,
+    "dl": -1.7689,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 0.1164
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 3.5549,
+    "dh": -0.1722,
+    "dl": -1.7655,
+    "ptAcross": 0.0012,
+    "ptUp": -0.0609,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "edge e 0 er 40 s 0.5, flat",
+   "u": -0.7,
+   "g": "lift 1.5",
+   "chordSlope": -1.16,
+   "today": {
+    "bank": -3.1828,
+    "dw": 0.0133,
+    "dh": 0.8845,
+    "dl": -0.0682,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 3.1828
+   },
+   "branch": {
+    "bank": -3.1828,
+    "dw": 0.0133,
+    "dh": 0.8845,
+    "dl": -0.0682,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 3.1828
+   }
+  },
+  {
+   "name": "edge e 0 er 40 s 0.5, flat",
+   "u": 0.5,
+   "g": "out 3",
+   "chordSlope": -9.32,
+   "today": {
+    "bank": 1.0702,
+    "dw": 4.1174,
+    "dh": -0.2089,
+    "dl": 1.9801,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 1.0702
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 4.1111,
+    "dh": -0.5199,
+    "dl": 1.8948,
+    "ptAcross": -0.0787,
+    "ptUp": -0.4794,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "edge e 0 er 40 s 0.5, flat",
+   "u": 0.5,
+   "g": "lift 1.5",
+   "chordSlope": -9.32,
+   "today": {
+    "bank": 3.7144,
+    "dw": -0.2706,
+    "dh": 0.99,
+    "dl": 0.1044,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 3.7144
+   },
+   "branch": {
+    "bank": 3.7144,
+    "dw": -0.2706,
+    "dh": 0.99,
+    "dl": 0.1044,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 3.7144
+   }
+  },
+  {
+   "name": "edge e 0 er 40 s 0.5, flat",
+   "u": -0.5,
+   "g": "out 3",
+   "chordSlope": -2.96,
+   "today": {
+    "bank": -0.33,
+    "dw": 4.0096,
+    "dh": -0.0912,
+    "dl": -2.001,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 0.33
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 4.009,
+    "dh": -0.1943,
+    "dl": -1.9909,
+    "ptAcross": 0.008,
+    "ptUp": -0.1548,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "edge e 0 er 40 s 0.5, flat",
+   "u": -0.5,
+   "g": "lift 1.5",
+   "chordSlope": -2.96,
+   "today": {
+    "bank": -3.5959,
+    "dw": -0.0407,
+    "dh": 1.0005,
+    "dl": -0.0457,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 3.5959
+   },
+   "branch": {
+    "bank": -3.5959,
+    "dw": -0.0407,
+    "dh": 1.0005,
+    "dl": -0.0457,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 3.5959
+   }
+  },
+  {
+   "name": "edge e 30 er 30 s 0.64, flat (symmetric)",
+   "u": 1,
+   "g": "out 3",
+   "chordSlope": 0,
+   "today": {
+    "bank": 0,
+    "dw": 3.1262,
+    "dh": -0.2877,
+    "dl": 1.5,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 0
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 3.1262,
+    "dh": -0.2877,
+    "dl": 1.5,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "edge e 30 er 30 s 0.64, flat (symmetric)",
+   "u": 1,
+   "g": "lift 1.5",
+   "chordSlope": 0,
+   "today": {
+    "bank": 2.7965,
+    "dw": 0.0381,
+    "dh": 0.75,
+    "dl": 0.1438,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 2.7965
+   },
+   "branch": {
+    "bank": 2.7965,
+    "dw": 0.0381,
+    "dh": 0.75,
+    "dl": 0.1438,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 2.7965
+   }
+  },
+  {
+   "name": "edge e 30 er 30 s 0.64, flat (symmetric)",
+   "u": -1,
+   "g": "out 3",
+   "chordSlope": 0,
+   "today": {
+    "bank": 0,
+    "dw": 3.1262,
+    "dh": -0.2877,
+    "dl": -1.5,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 0
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 3.1262,
+    "dh": -0.2877,
+    "dl": -1.5,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "edge e 30 er 30 s 0.64, flat (symmetric)",
+   "u": -1,
+   "g": "lift 1.5",
+   "chordSlope": 0,
+   "today": {
+    "bank": -2.7965,
+    "dw": 0.0381,
+    "dh": 0.75,
+    "dl": -0.1438,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 2.7965
+   },
+   "branch": {
+    "bank": -2.7965,
+    "dw": 0.0381,
+    "dh": 0.75,
+    "dl": -0.1438,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 2.7965
+   }
+  },
+  {
+   "name": "edge e 30 er 30 s 0.64, flat (symmetric)",
+   "u": 0.95,
+   "g": "out 3",
+   "chordSlope": -0.97,
+   "today": {
+    "bank": 0.0877,
+    "dw": 3.1896,
+    "dh": -0.2677,
+    "dl": 1.5353,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 0.0877
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 3.1895,
+    "dh": -0.2935,
+    "dl": 1.5304,
+    "ptAcross": -0.0008,
+    "ptUp": -0.0507,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "edge e 30 er 30 s 0.64, flat (symmetric)",
+   "u": 0.95,
+   "g": "lift 1.5",
+   "chordSlope": -0.97,
+   "today": {
+    "bank": 2.8554,
+    "dw": 0.0128,
+    "dh": 0.7677,
+    "dl": 0.1338,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 2.8554
+   },
+   "branch": {
+    "bank": 2.8554,
+    "dw": 0.0128,
+    "dh": 0.7677,
+    "dl": 0.1338,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 2.8554
+   }
+  },
+  {
+   "name": "edge e 30 er 30 s 0.64, flat (symmetric)",
+   "u": -0.95,
+   "g": "out 3",
+   "chordSlope": -0.97,
+   "today": {
+    "bank": -0.0877,
+    "dw": 3.1896,
+    "dh": -0.2677,
+    "dl": -1.5353,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 0.0877
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 3.1895,
+    "dh": -0.2935,
+    "dl": -1.5304,
+    "ptAcross": 0.0008,
+    "ptUp": -0.0507,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "edge e 30 er 30 s 0.64, flat (symmetric)",
+   "u": -0.95,
+   "g": "lift 1.5",
+   "chordSlope": -0.97,
+   "today": {
+    "bank": -2.8554,
+    "dw": 0.0128,
+    "dh": 0.7677,
+    "dl": -0.1338,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 2.8554
+   },
+   "branch": {
+    "bank": -2.8554,
+    "dw": 0.0128,
+    "dh": 0.7677,
+    "dl": -0.1338,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 2.8554
+   }
+  },
+  {
+   "name": "edge e 30 er 30 s 0.64, flat (symmetric)",
+   "u": 0.7,
+   "g": "out 3",
+   "chordSlope": -4.76,
+   "today": {
+    "bank": 0.482,
+    "dw": 3.5968,
+    "dh": -0.1871,
+    "dl": 1.7528,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 0.482
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 3.5955,
+    "dh": -0.3308,
+    "dl": 1.7252,
+    "ptAcross": -0.0206,
+    "ptUp": -0.2481,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "edge e 30 er 30 s 0.64, flat (symmetric)",
+   "u": 0.7,
+   "g": "lift 1.5",
+   "chordSlope": -4.76,
+   "today": {
+    "bank": 3.2306,
+    "dw": -0.099,
+    "dh": 0.8764,
+    "dl": 0.0936,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 3.2306
+   },
+   "branch": {
+    "bank": 3.2306,
+    "dw": -0.099,
+    "dh": 0.8764,
+    "dl": 0.0936,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 3.2306
+   }
+  },
+  {
+   "name": "edge e 30 er 30 s 0.64, flat (symmetric)",
+   "u": -0.7,
+   "g": "out 3",
+   "chordSlope": -4.76,
+   "today": {
+    "bank": -0.482,
+    "dw": 3.5968,
+    "dh": -0.1871,
+    "dl": -1.7528,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 0.482
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 3.5955,
+    "dh": -0.3308,
+    "dl": -1.7252,
+    "ptAcross": 0.0206,
+    "ptUp": -0.2481,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "edge e 30 er 30 s 0.64, flat (symmetric)",
+   "u": -0.7,
+   "g": "lift 1.5",
+   "chordSlope": -4.76,
+   "today": {
+    "bank": -3.2306,
+    "dw": -0.099,
+    "dh": 0.8764,
+    "dl": -0.0936,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 3.2306
+   },
+   "branch": {
+    "bank": -3.2306,
+    "dw": -0.099,
+    "dh": 0.8764,
+    "dl": -0.0936,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 3.2306
+   }
+  },
+  {
+   "name": "edge e 30 er 30 s 0.64, flat (symmetric)",
+   "u": 0.5,
+   "g": "out 3",
+   "chordSlope": -6.43,
+   "today": {
+    "bank": 0.7267,
+    "dw": 4.0637,
+    "dh": -0.1542,
+    "dl": 1.9906,
+    "ptAcross": 0.0001,
+    "ptUp": 0,
+    "bankWin": 0.7267
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 4.0608,
+    "dh": -0.3737,
+    "dl": 1.9484,
+    "ptAcross": -0.0376,
+    "ptUp": -0.3337,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "edge e 30 er 30 s 0.64, flat (symmetric)",
+   "u": 0.5,
+   "g": "lift 1.5",
+   "chordSlope": -6.43,
+   "today": {
+    "bank": 3.6566,
+    "dw": -0.1639,
+    "dh": 0.9952,
+    "dl": 0.0771,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 3.6566
+   },
+   "branch": {
+    "bank": 3.6566,
+    "dw": -0.1639,
+    "dh": 0.9952,
+    "dl": 0.0771,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 3.6566
+   }
+  },
+  {
+   "name": "edge e 30 er 30 s 0.64, flat (symmetric)",
+   "u": -0.5,
+   "g": "out 3",
+   "chordSlope": -6.43,
+   "today": {
+    "bank": -0.7267,
+    "dw": 4.0637,
+    "dh": -0.1542,
+    "dl": -1.9906,
+    "ptAcross": -0.0001,
+    "ptUp": 0,
+    "bankWin": 0.7267
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 4.0608,
+    "dh": -0.3737,
+    "dl": -1.9484,
+    "ptAcross": 0.0376,
+    "ptUp": -0.3337,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "edge e 30 er 30 s 0.64, flat (symmetric)",
+   "u": -0.5,
+   "g": "lift 1.5",
+   "chordSlope": -6.43,
+   "today": {
+    "bank": -3.6566,
+    "dw": -0.1639,
+    "dh": 0.9952,
+    "dl": -0.0771,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 3.6566
+   },
+   "branch": {
+    "bank": -3.6566,
+    "dw": -0.1639,
+    "dh": 0.9952,
+    "dl": -0.0771,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 3.6566
+   }
+  },
+  {
+   "name": "edge e 30 er 0 s 0.64, bank 20",
+   "u": 1,
+   "g": "out 3",
+   "chordSlope": 22.55,
+   "today": {
+    "bank": -1.9356,
+    "dw": 2.8545,
+    "dh": -0.2165,
+    "dl": 1.5162,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 1.9356
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 2.8346,
+    "dh": 0.3524,
+    "dl": 1.3698,
+    "ptAcross": -0.4413,
+    "ptUp": 1.0627,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "edge e 30 er 0 s 0.64, bank 20",
+   "u": 1,
+   "g": "lift 1.5",
+   "chordSlope": 22.55,
+   "today": {
+    "bank": 2.4902,
+    "dw": 0.6194,
+    "dh": 0.7581,
+    "dl": 0.1083,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 2.4902
+   },
+   "branch": {
+    "bank": 2.4902,
+    "dw": 0.6194,
+    "dh": 0.7581,
+    "dl": 0.1083,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 2.4902
+   }
+  },
+  {
+   "name": "edge e 30 er 0 s 0.64, bank 20",
+   "u": -1,
+   "g": "out 3",
+   "chordSlope": -22.55,
+   "today": {
+    "bank": -1.9356,
+    "dw": 2.8545,
+    "dh": -0.2165,
+    "dl": -1.4839,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 1.9356
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 2.8346,
+    "dh": -0.7103,
+    "dl": -1.1889,
+    "ptAcross": 0.4413,
+    "ptUp": -1.0627,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "edge e 30 er 0 s 0.64, bank 20",
+   "u": -1,
+   "g": "lift 1.5",
+   "chordSlope": -22.55,
+   "today": {
+    "bank": -2.5835,
+    "dw": -0.5567,
+    "dh": 0.7419,
+    "dl": -0.1083,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 2.5835
+   },
+   "branch": {
+    "bank": -2.5835,
+    "dw": -0.5567,
+    "dh": 0.7419,
+    "dl": -0.1083,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 2.5835
+   }
+  },
+  {
+   "name": "edge e 30 er 0 s 0.64, bank 20",
+   "u": 0.95,
+   "g": "out 3",
+   "chordSlope": 21.66,
+   "today": {
+    "bank": -1.8968,
+    "dw": 2.931,
+    "dh": -0.1967,
+    "dl": 1.5509,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 1.8968
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 2.9119,
+    "dh": 0.362,
+    "dl": 1.4072,
+    "ptAcross": -0.4085,
+    "ptUp": 1.0289,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "edge e 30 er 0 s 0.64, bank 20",
+   "u": 0.95,
+   "g": "lift 1.5",
+   "chordSlope": 21.66,
+   "today": {
+    "bank": 2.5589,
+    "dw": 0.6107,
+    "dh": 0.7755,
+    "dl": 0.0984,
+    "ptAcross": 0.0001,
+    "ptUp": 0,
+    "bankWin": 2.5589
+   },
+   "branch": {
+    "bank": 2.5589,
+    "dw": 0.6107,
+    "dh": 0.7755,
+    "dl": 0.0984,
+    "ptAcross": 0.0001,
+    "ptUp": 0,
+    "bankWin": 2.5589
+   }
+  },
+  {
+   "name": "edge e 30 er 0 s 0.64, bank 20",
+   "u": -0.95,
+   "g": "out 3",
+   "chordSlope": -22.88,
+   "today": {
+    "bank": -2.0085,
+    "dw": 2.9216,
+    "dh": -0.2134,
+    "dl": -1.523,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 2.0085
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 2.9002,
+    "dh": -0.7267,
+    "dl": -1.2164,
+    "ptAcross": 0.4535,
+    "ptUp": -1.0747,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "edge e 30 er 0 s 0.64, bank 20",
+   "u": -0.95,
+   "g": "lift 1.5",
+   "chordSlope": -22.88,
+   "today": {
+    "bank": -2.6451,
+    "dw": -0.5785,
+    "dh": 0.7615,
+    "dl": -0.1067,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 2.6451
+   },
+   "branch": {
+    "bank": -2.6451,
+    "dw": -0.5785,
+    "dh": 0.7615,
+    "dl": -0.1067,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 2.6451
+   }
+  },
+  {
+   "name": "edge e 30 er 0 s 0.64, bank 20",
+   "u": 0.7,
+   "g": "out 3",
+   "chordSlope": 18.28,
+   "today": {
+    "bank": -1.8012,
+    "dw": 3.3855,
+    "dh": -0.1188,
+    "dl": 1.7659,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 1.8012
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 3.368,
+    "dh": 0.4187,
+    "dl": 1.6276,
+    "ptAcross": -0.295,
+    "ptUp": 0.8933,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "edge e 30 er 0 s 0.64, bank 20",
+   "u": 0.7,
+   "g": "lift 1.5",
+   "chordSlope": 18.28,
+   "today": {
+    "bank": 2.961,
+    "dw": 0.5996,
+    "dh": 0.8829,
+    "dl": 0.0594,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 2.961
+   },
+   "branch": {
+    "bank": 2.961,
+    "dw": 0.5996,
+    "dh": 0.8829,
+    "dl": 0.0594,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 2.961
+   }
+  },
+  {
+   "name": "edge e 30 er 0 s 0.64, bank 20",
+   "u": -0.7,
+   "g": "out 3",
+   "chordSlope": -24.79,
+   "today": {
+    "bank": -2.4552,
+    "dw": 3.3076,
+    "dh": -0.1863,
+    "dl": -1.7527,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 2.4552
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 3.2752,
+    "dh": -0.8207,
+    "dl": -1.3737,
+    "ptAcross": 0.5273,
+    "ptUp": -1.1419,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "edge e 30 er 0 s 0.64, bank 20",
+   "u": -0.7,
+   "g": "lift 1.5",
+   "chordSlope": -24.79,
+   "today": {
+    "bank": -3.0003,
+    "dw": -0.7134,
+    "dh": 0.8763,
+    "dl": -0.0932,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 3.0003
+   },
+   "branch": {
+    "bank": -3.0003,
+    "dw": -0.7134,
+    "dh": 0.8763,
+    "dl": -0.0932,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 3.0003
+   }
+  },
+  {
+   "name": "edge e 30 er 0 s 0.64, bank 20",
+   "u": 0.5,
+   "g": "out 3",
+   "chordSlope": 17.04,
+   "today": {
+    "bank": -1.8798,
+    "dw": 3.8574,
+    "dh": -0.0912,
+    "dl": 2.001,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 1.8798
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 3.8381,
+    "dh": 0.4772,
+    "dl": 1.8548,
+    "ptAcross": -0.2576,
+    "ptUp": 0.8405,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "edge e 30 er 0 s 0.64, bank 20",
+   "u": 0.5,
+   "g": "lift 1.5",
+   "chordSlope": 17.04,
+   "today": {
+    "bank": 3.3701,
+    "dw": 0.6446,
+    "dh": 1.0005,
+    "dl": 0.0457,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 3.3701
+   },
+   "branch": {
+    "bank": 3.3701,
+    "dw": 0.6446,
+    "dh": 1.0005,
+    "dl": 0.0457,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 3.3701
+   }
+  },
+  {
+   "name": "edge e 30 er 0 s 0.64, bank 20",
+   "u": -0.5,
+   "g": "out 3",
+   "chordSlope": -26.43,
+   "today": {
+    "bank": -2.9196,
+    "dw": 3.7058,
+    "dh": -0.1542,
+    "dl": -1.9906,
+    "ptAcross": -0.0001,
+    "ptUp": 0,
+    "bankWin": 2.9196
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 3.6595,
+    "dh": -0.9169,
+    "dl": -1.5348,
+    "ptAcross": 0.5942,
+    "ptUp": -1.1956,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "edge e 30 er 0 s 0.64, bank 20",
+   "u": -0.5,
+   "g": "lift 1.5",
+   "chordSlope": -26.43,
+   "today": {
+    "bank": -3.3681,
+    "dw": -0.8555,
+    "dh": 0.9952,
+    "dl": -0.0771,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 3.3681
+   },
+   "branch": {
+    "bank": -3.3681,
+    "dw": -0.8555,
+    "dh": 0.9952,
+    "dl": -0.0771,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 3.3681
+   }
+  },
+  {
+   "name": "tube t 200",
+   "u": 1,
+   "g": "out 3",
+   "chordSlope": 0,
+   "today": {
+    "bank": 0,
+    "dw": 5.3168,
+    "dh": -1.7876,
+    "dl": 1.5,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 0
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 5.3168,
+    "dh": -1.7876,
+    "dl": 1.5,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "tube t 200",
+   "u": 1,
+   "g": "lift 1.5",
+   "chordSlope": 0,
+   "today": {
+    "bank": 4.7489,
+    "dw": 0.1102,
+    "dh": 0.75,
+    "dl": 0.8939,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 4.7489
+   },
+   "branch": {
+    "bank": 4.7489,
+    "dw": 0.1102,
+    "dh": 0.75,
+    "dl": 0.8939,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 4.7489
+   }
+  },
+  {
+   "name": "tube t 200",
+   "u": -1,
+   "g": "out 3",
+   "chordSlope": 0,
+   "today": {
+    "bank": 0,
+    "dw": 5.3168,
+    "dh": -1.7876,
+    "dl": -1.5,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 0
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 5.3168,
+    "dh": -1.7876,
+    "dl": -1.5,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "tube t 200",
+   "u": -1,
+   "g": "lift 1.5",
+   "chordSlope": 0,
+   "today": {
+    "bank": -4.7489,
+    "dw": 0.1102,
+    "dh": 0.75,
+    "dl": -0.8939,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 4.7489
+   },
+   "branch": {
+    "bank": -4.7489,
+    "dw": 0.1102,
+    "dh": 0.75,
+    "dl": -0.8939,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 4.7489
+   }
+  },
+  {
+   "name": "tube t 200",
+   "u": 0.95,
+   "g": "out 3",
+   "chordSlope": -2.5,
+   "today": {
+    "bank": 0.3541,
+    "dw": 5.2769,
+    "dh": -1.709,
+    "dl": 1.566,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 0.3541
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 5.2762,
+    "dh": -1.774,
+    "dl": 1.4885,
+    "ptAcross": -0.0057,
+    "ptUp": -0.1307,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "tube t 200",
+   "u": 0.95,
+   "g": "lift 1.5",
+   "chordSlope": -2.5,
+   "today": {
+    "bank": 4.7297,
+    "dw": -0.0062,
+    "dh": 0.783,
+    "dl": 0.8545,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 4.7297
+   },
+   "branch": {
+    "bank": 4.7297,
+    "dw": -0.0062,
+    "dh": 0.783,
+    "dl": 0.8545,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 4.7297
+   }
+  },
+  {
+   "name": "tube t 200",
+   "u": -0.95,
+   "g": "out 3",
+   "chordSlope": -2.5,
+   "today": {
+    "bank": -0.3541,
+    "dw": 5.2769,
+    "dh": -1.709,
+    "dl": -1.566,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 0.3541
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 5.2762,
+    "dh": -1.774,
+    "dl": -1.4885,
+    "ptAcross": 0.0057,
+    "ptUp": -0.1307,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "tube t 200",
+   "u": -0.95,
+   "g": "lift 1.5",
+   "chordSlope": -2.5,
+   "today": {
+    "bank": -4.7297,
+    "dw": -0.0062,
+    "dh": 0.783,
+    "dl": -0.8545,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 4.7297
+   },
+   "branch": {
+    "bank": -4.7297,
+    "dw": -0.0062,
+    "dh": 0.783,
+    "dl": -0.8545,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 4.7297
+   }
+  },
+  {
+   "name": "tube t 200",
+   "u": 0.7,
+   "g": "out 3",
+   "chordSlope": -15,
+   "today": {
+    "bank": 2.1012,
+    "dw": 5.1019,
+    "dh": -1.3232,
+    "dl": 1.8897,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 2.1012
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 5.0769,
+    "dh": -1.707,
+    "dl": 1.4324,
+    "ptAcross": -0.2009,
+    "ptUp": -0.75,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "tube t 200",
+   "u": 0.7,
+   "g": "lift 1.5",
+   "chordSlope": -15,
+   "today": {
+    "bank": 4.6336,
+    "dw": -0.5775,
+    "dh": 0.9448,
+    "dl": 0.6616,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 4.6336
+   },
+   "branch": {
+    "bank": 4.6336,
+    "dw": -0.5775,
+    "dh": 0.9448,
+    "dl": 0.6616,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 4.6336
+   }
+  },
+  {
+   "name": "tube t 200",
+   "u": -0.7,
+   "g": "out 3",
+   "chordSlope": -15,
+   "today": {
+    "bank": -2.1012,
+    "dw": 5.1019,
+    "dh": -1.3232,
+    "dl": -1.8897,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 2.1012
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 5.0769,
+    "dh": -1.707,
+    "dl": -1.4324,
+    "ptAcross": 0.2009,
+    "ptUp": -0.75,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "tube t 200",
+   "u": -0.7,
+   "g": "lift 1.5",
+   "chordSlope": -15,
+   "today": {
+    "bank": -4.6336,
+    "dw": -0.5775,
+    "dh": 0.9448,
+    "dl": -0.6616,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 4.6336
+   },
+   "branch": {
+    "bank": -4.6336,
+    "dw": -0.5775,
+    "dh": 0.9448,
+    "dl": -0.6616,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 4.6336
+   }
+  },
+  {
+   "name": "tube t 200",
+   "u": 0.5,
+   "g": "out 3",
+   "chordSlope": -25,
+   "today": {
+    "bank": 3.5513,
+    "dw": 4.9839,
+    "dh": -1.0055,
+    "dl": 2.1563,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 3.5513
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 4.9129,
+    "dh": -1.6518,
+    "dl": 1.386,
+    "ptAcross": -0.5358,
+    "ptUp": -1.1491,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "tube t 200",
+   "u": 0.5,
+   "g": "lift 1.5",
+   "chordSlope": -25,
+   "today": {
+    "bank": 4.5519,
+    "dw": -1.0478,
+    "dh": 1.0782,
+    "dl": 0.5028,
+    "ptAcross": 0,
+    "ptUp": 0.0001,
+    "bankWin": 4.5519
+   },
+   "branch": {
+    "bank": 4.5519,
+    "dw": -1.0478,
+    "dh": 1.0782,
+    "dl": 0.5028,
+    "ptAcross": 0,
+    "ptUp": 0.0001,
+    "bankWin": 4.5519
+   }
+  },
+  {
+   "name": "tube t 200",
+   "u": -0.5,
+   "g": "out 3",
+   "chordSlope": -25,
+   "today": {
+    "bank": -3.5513,
+    "dw": 4.9839,
+    "dh": -1.0055,
+    "dl": -2.1563,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 3.5513
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 4.9129,
+    "dh": -1.6518,
+    "dl": -1.386,
+    "ptAcross": 0.5358,
+    "ptUp": -1.1491,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "tube t 200",
+   "u": -0.5,
+   "g": "lift 1.5",
+   "chordSlope": -25,
+   "today": {
+    "bank": -4.5519,
+    "dw": -1.0478,
+    "dh": 1.0782,
+    "dl": -0.5028,
+    "ptAcross": 0,
+    "ptUp": 0.0001,
+    "bankWin": 4.5519
+   },
+   "branch": {
+    "bank": -4.5519,
+    "dw": -1.0478,
+    "dh": 1.0782,
+    "dl": -0.5028,
+    "ptAcross": 0,
+    "ptUp": 0.0001,
+    "bankWin": 4.5519
+   }
+  },
+  {
+   "name": "tube t 300",
+   "u": 1,
+   "g": "out 3",
+   "chordSlope": 0,
+   "today": {
+    "bank": 0,
+    "dw": 15.7081,
+    "dh": -5.5981,
+    "dl": 1.5,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 0
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 15.7081,
+    "dh": -5.5981,
+    "dl": 1.5,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "tube t 300",
+   "u": 1,
+   "g": "lift 1.5",
+   "chordSlope": 0,
+   "today": {
+    "bank": 13.7899,
+    "dw": 0.9498,
+    "dh": 0.75,
+    "dl": 2.7991,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 13.7899
+   },
+   "branch": {
+    "bank": 13.7899,
+    "dw": 0.9498,
+    "dh": 0.75,
+    "dl": 2.7991,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 13.7899
+   }
+  },
+  {
+   "name": "tube t 300",
+   "u": -1,
+   "g": "out 3",
+   "chordSlope": 0,
+   "today": {
+    "bank": 0,
+    "dw": 15.7081,
+    "dh": -5.5981,
+    "dl": -1.5,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 0
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 15.7081,
+    "dh": -5.5981,
+    "dl": -1.5,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "tube t 300",
+   "u": -1,
+   "g": "lift 1.5",
+   "chordSlope": 0,
+   "today": {
+    "bank": -13.7899,
+    "dw": 0.9498,
+    "dh": 0.75,
+    "dl": -2.7991,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 13.7899
+   },
+   "branch": {
+    "bank": -13.7899,
+    "dw": 0.9498,
+    "dh": 0.75,
+    "dl": -2.7991,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 13.7899
+   }
+  },
+  {
+   "name": "tube t 300",
+   "u": 0.95,
+   "g": "out 3",
+   "chordSlope": -3.75,
+   "today": {
+    "bank": 1.1488,
+    "dw": 14.1159,
+    "dh": -4.9391,
+    "dl": 1.6766,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 1.1488
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 14.1067,
+    "dh": -5.0274,
+    "dl": 1.3471,
+    "ptAcross": -0.0128,
+    "ptUp": -0.1958,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "tube t 300",
+   "u": 0.95,
+   "g": "lift 1.5",
+   "chordSlope": -3.75,
+   "today": {
+    "bank": 12.6065,
+    "dw": 0.3168,
+    "dh": 0.8383,
+    "dl": 2.4695,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 12.6065
+   },
+   "branch": {
+    "bank": 12.6065,
+    "dw": 0.3168,
+    "dh": 0.8383,
+    "dl": 2.4695,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 12.6065
+   }
+  },
+  {
+   "name": "tube t 300",
+   "u": -0.95,
+   "g": "out 3",
+   "chordSlope": -3.75,
+   "today": {
+    "bank": -1.1488,
+    "dw": 14.1159,
+    "dh": -4.9391,
+    "dl": -1.6766,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 1.1488
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 14.1067,
+    "dh": -5.0274,
+    "dl": -1.3471,
+    "ptAcross": 0.0128,
+    "ptUp": -0.1958,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "tube t 300",
+   "u": -0.95,
+   "g": "lift 1.5",
+   "chordSlope": -3.75,
+   "today": {
+    "bank": -12.6065,
+    "dw": 0.3168,
+    "dh": 0.8383,
+    "dl": -2.4695,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 12.6065
+   },
+   "branch": {
+    "bank": -12.6065,
+    "dw": 0.3168,
+    "dh": 0.8383,
+    "dl": -2.4695,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 12.6065
+   }
+  },
+  {
+   "name": "tube t 300",
+   "u": 0.7,
+   "g": "out 3",
+   "chordSlope": -22.5,
+   "today": {
+    "bank": 5.2606,
+    "dw": 9.3203,
+    "dh": -2.8978,
+    "dl": 2.2235,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 5.2606
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 9.1462,
+    "dh": -3.2596,
+    "dl": 0.8734,
+    "ptAcross": -0.4393,
+    "ptUp": -1.0607,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "tube t 300",
+   "u": 0.7,
+   "g": "lift 1.5",
+   "chordSlope": -22.5,
+   "today": {
+    "bank": 8.6372,
+    "dw": -1.5489,
+    "dh": 1.1118,
+    "dl": 1.4489,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 8.6372
+   },
+   "branch": {
+    "bank": 8.6372,
+    "dw": -1.5489,
+    "dh": 1.1118,
+    "dl": 1.4489,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 8.6372
+   }
+  },
+  {
+   "name": "tube t 300",
+   "u": -0.7,
+   "g": "out 3",
+   "chordSlope": -22.5,
+   "today": {
+    "bank": -5.2606,
+    "dw": 9.3203,
+    "dh": -2.8978,
+    "dl": -2.2235,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 5.2606
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 9.1462,
+    "dh": -3.2596,
+    "dl": -0.8734,
+    "ptAcross": 0.4393,
+    "ptUp": -1.0607,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "tube t 300",
+   "u": -0.7,
+   "g": "lift 1.5",
+   "chordSlope": -22.5,
+   "today": {
+    "bank": -8.6372,
+    "dw": -1.5489,
+    "dh": 1.1118,
+    "dl": -1.4489,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 8.6372
+   },
+   "branch": {
+    "bank": -8.6372,
+    "dw": -1.5489,
+    "dh": 1.1118,
+    "dl": -1.4489,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 8.6372
+   }
+  },
+  {
+   "name": "tube t 300",
+   "u": 0.5,
+   "g": "out 3",
+   "chordSlope": -37.5,
+   "today": {
+    "bank": 7.608,
+    "dw": 7.0885,
+    "dh": -1.9094,
+    "dl": 2.4884,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 7.608
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 6.7444,
+    "dh": -2.4036,
+    "dl": 0.6441,
+    "ptAcross": -1.1117,
+    "ptUp": -1.4489,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "tube t 300",
+   "u": 0.5,
+   "g": "lift 1.5",
+   "chordSlope": -37.5,
+   "today": {
+    "bank": 6.5405,
+    "dw": -2.3949,
+    "dh": 1.2442,
+    "dl": 0.9547,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 6.5405
+   },
+   "branch": {
+    "bank": 6.5405,
+    "dw": -2.3949,
+    "dh": 1.2442,
+    "dl": 0.9547,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 6.5405
+   }
+  },
+  {
+   "name": "tube t 300",
+   "u": -0.5,
+   "g": "out 3",
+   "chordSlope": -37.5,
+   "today": {
+    "bank": -7.608,
+    "dw": 7.0885,
+    "dh": -1.9094,
+    "dl": -2.4884,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 7.608
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 6.7444,
+    "dh": -2.4036,
+    "dl": -0.6441,
+    "ptAcross": 1.1117,
+    "ptUp": -1.4489,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "tube t 300",
+   "u": -0.5,
+   "g": "lift 1.5",
+   "chordSlope": -37.5,
+   "today": {
+    "bank": -6.5405,
+    "dw": -2.3949,
+    "dh": 1.2442,
+    "dl": -0.9547,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 6.5405
+   },
+   "branch": {
+    "bank": -6.5405,
+    "dw": -2.3949,
+    "dh": 1.2442,
+    "dl": -0.9547,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 6.5405
+   }
+  },
+  {
+   "name": "tube t 200, bank 20",
+   "u": 1,
+   "g": "out 3",
+   "chordSlope": 20,
+   "today": {
+    "bank": -2.8139,
+    "dw": 5.0408,
+    "dh": -1.7876,
+    "dl": 1.5,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 2.8139
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 4.9962,
+    "dh": -1.0964,
+    "dl": 1.8991,
+    "ptAcross": -0.3509,
+    "ptUp": 0.9642,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "tube t 200, bank 20",
+   "u": 1,
+   "g": "lift 1.5",
+   "chordSlope": 20,
+   "today": {
+    "bank": 4.3409,
+    "dw": 1.0039,
+    "dh": 0.75,
+    "dl": 0.8939,
+    "ptAcross": 0.0001,
+    "ptUp": 0,
+    "bankWin": 4.3409
+   },
+   "branch": {
+    "bank": 4.3409,
+    "dw": 1.0039,
+    "dh": 0.75,
+    "dl": 0.8939,
+    "ptAcross": 0.0001,
+    "ptUp": 0,
+    "bankWin": 4.3409
+   }
+  },
+  {
+   "name": "tube t 200, bank 20",
+   "u": -1,
+   "g": "out 3",
+   "chordSlope": -20,
+   "today": {
+    "bank": -2.8139,
+    "dw": 5.0408,
+    "dh": -1.7876,
+    "dl": -1.5,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 2.8139
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 4.9962,
+    "dh": -2.0606,
+    "dl": -0.75,
+    "ptAcross": 0.3509,
+    "ptUp": -0.9642,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "tube t 200, bank 20",
+   "u": -1,
+   "g": "lift 1.5",
+   "chordSlope": -20,
+   "today": {
+    "bank": -4.5937,
+    "dw": -0.809,
+    "dh": 0.75,
+    "dl": -0.8939,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 4.5937
+   },
+   "branch": {
+    "bank": -4.5937,
+    "dw": -0.809,
+    "dh": 0.75,
+    "dl": -0.8939,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 4.5937
+   }
+  },
+  {
+   "name": "tube t 200, bank 20",
+   "u": 0.95,
+   "g": "out 3",
+   "chordSlope": 17.5,
+   "today": {
+    "bank": -2.4553,
+    "dw": 5.0708,
+    "dh": -1.709,
+    "dl": 1.566,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 2.4553
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 5.0368,
+    "dh": -1.1054,
+    "dl": 1.9145,
+    "ptAcross": -0.2713,
+    "ptUp": 0.8604,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "tube t 200, bank 20",
+   "u": 0.95,
+   "g": "lift 1.5",
+   "chordSlope": 17.5,
+   "today": {
+    "bank": 4.3913,
+    "dw": 0.8906,
+    "dh": 0.783,
+    "dl": 0.8545,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 4.3913
+   },
+   "branch": {
+    "bank": 4.3913,
+    "dw": 0.8906,
+    "dh": 0.783,
+    "dl": 0.8545,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 4.3913
+   }
+  },
+  {
+   "name": "tube t 200, bank 20",
+   "u": -0.95,
+   "g": "out 3",
+   "chordSlope": -22.5,
+   "today": {
+    "bank": -3.1367,
+    "dw": 4.9345,
+    "dh": -1.709,
+    "dl": -1.566,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 3.1367
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 4.8792,
+    "dh": -2.0124,
+    "dl": -0.7324,
+    "ptAcross": 0.4393,
+    "ptUp": -1.0607,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "tube t 200, bank 20",
+   "u": -0.95,
+   "g": "lift 1.5",
+   "chordSlope": -22.5,
+   "today": {
+    "bank": -4.5012,
+    "dw": -0.9146,
+    "dh": 0.783,
+    "dl": -0.8545,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 4.5012
+   },
+   "branch": {
+    "bank": -4.5012,
+    "dw": -0.9146,
+    "dh": 0.783,
+    "dl": -0.8545,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 4.5012
+   }
+  },
+  {
+   "name": "tube t 200, bank 20",
+   "u": 0.7,
+   "g": "out 3",
+   "chordSlope": 5,
+   "today": {
+    "bank": -0.7048,
+    "dw": 5.2388,
+    "dh": -1.3232,
+    "dl": 1.8897,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 0.7048
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 5.236,
+    "dh": -1.1491,
+    "dl": 1.9903,
+    "ptAcross": -0.0228,
+    "ptUp": 0.2605,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "tube t 200, bank 20",
+   "u": 0.7,
+   "g": "lift 1.5",
+   "chordSlope": 5,
+   "today": {
+    "bank": 4.644,
+    "dw": 0.3352,
+    "dh": 0.9448,
+    "dl": 0.6616,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 4.644
+   },
+   "branch": {
+    "bank": 4.644,
+    "dw": 0.3352,
+    "dh": 0.9448,
+    "dl": 0.6616,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 4.644
+   }
+  },
+  {
+   "name": "tube t 200, bank 20",
+   "u": -0.7,
+   "g": "out 3",
+   "chordSlope": -35,
+   "today": {
+    "bank": -4.7468,
+    "dw": 4.4304,
+    "dh": -1.3232,
+    "dl": -1.8897,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 4.7468
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 4.3055,
+    "dh": -1.7757,
+    "dl": -0.6463,
+    "ptAcross": 0.987,
+    "ptUp": -1.4095,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "tube t 200, bank 20",
+   "u": -0.7,
+   "g": "lift 1.5",
+   "chordSlope": -35,
+   "today": {
+    "bank": -4.0383,
+    "dw": -1.4314,
+    "dh": 0.9448,
+    "dl": -0.6616,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 4.0383
+   },
+   "branch": {
+    "bank": -4.0383,
+    "dw": -1.4314,
+    "dh": 0.9448,
+    "dl": -0.6616,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 4.0383
+   }
+  },
+  {
+   "name": "tube t 200, bank 20",
+   "u": 0.5,
+   "g": "out 3",
+   "chordSlope": -5,
+   "today": {
+    "bank": 0.7237,
+    "dw": 5.4031,
+    "dh": -1.0055,
+    "dl": 2.1563,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 0.7237
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 5.4001,
+    "dh": -1.1851,
+    "dl": 2.0526,
+    "ptAcross": -0.0228,
+    "ptUp": -0.2605,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "tube t 200, bank 20",
+   "u": 0.5,
+   "g": "lift 1.5",
+   "chordSlope": -5,
+   "today": {
+    "bank": 4.8587,
+    "dw": -0.1217,
+    "dh": 1.0782,
+    "dl": 0.5028,
+    "ptAcross": 0,
+    "ptUp": 0.0001,
+    "bankWin": 4.8587
+   },
+   "branch": {
+    "bank": 4.8587,
+    "dw": -0.1217,
+    "dh": 1.0782,
+    "dl": 0.5028,
+    "ptAcross": 0,
+    "ptUp": 0.0001,
+    "bankWin": 4.8587
+   }
+  },
+  {
+   "name": "tube t 200, bank 20",
+   "u": -0.5,
+   "g": "out 3",
+   "chordSlope": -45,
+   "today": {
+    "bank": -6.1056,
+    "dw": 4.0375,
+    "dh": -1.0055,
+    "dl": -2.1563,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 6.1056
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 3.8331,
+    "dh": -1.5809,
+    "dl": -0.5754,
+    "ptAcross": 1.5,
+    "ptUp": -1.5,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "tube t 200, bank 20",
+   "u": -0.5,
+   "g": "lift 1.5",
+   "chordSlope": -45,
+   "today": {
+    "bank": -3.6452,
+    "dw": -1.8555,
+    "dh": 1.0782,
+    "dl": -0.5028,
+    "ptAcross": 0,
+    "ptUp": 0.0001,
+    "bankWin": 3.6452
+   },
+   "branch": {
+    "bank": -3.6452,
+    "dw": -1.8555,
+    "dh": 1.0782,
+    "dl": -0.5028,
+    "ptAcross": 0,
+    "ptUp": 0.0001,
+    "bankWin": 3.6452
+   }
+  },
+  {
+   "name": "half-pipe r 0.3",
+   "u": 1,
+   "g": "out 3",
+   "chordSlope": 0,
+   "today": {
+    "bank": 0,
+    "dw": 3.0036,
+    "dh": -0.0629,
+    "dl": 1.5,
+    "ptAcross": -0.004,
+    "ptUp": 0.0687,
+    "bankWin": 0
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 3.0036,
+    "dh": -0.0629,
+    "dl": 1.5,
+    "ptAcross": -0.004,
+    "ptUp": 0.0687,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "half-pipe r 0.3",
+   "u": 1,
+   "g": "lift 1.5",
+   "chordSlope": 0,
+   "today": {
+    "bank": 2.6869,
+    "dw": 0.0352,
+    "dh": 0.75,
+    "dl": 0.0314,
+    "ptAcross": -0.0001,
+    "ptUp": 0.0007,
+    "bankWin": 2.6869
+   },
+   "branch": {
+    "bank": 2.6869,
+    "dw": 0.0352,
+    "dh": 0.75,
+    "dl": 0.0314,
+    "ptAcross": -0.0001,
+    "ptUp": 0.0007,
+    "bankWin": 2.6869
+   }
+  },
+  {
+   "name": "half-pipe r 0.3",
+   "u": -1,
+   "g": "out 3",
+   "chordSlope": 0,
+   "today": {
+    "bank": 0,
+    "dw": 3.0036,
+    "dh": -0.0629,
+    "dl": -1.5,
+    "ptAcross": 0.004,
+    "ptUp": 0.0687,
+    "bankWin": 0
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 3.0036,
+    "dh": -0.0629,
+    "dl": -1.5,
+    "ptAcross": 0.004,
+    "ptUp": 0.0687,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "half-pipe r 0.3",
+   "u": -1,
+   "g": "lift 1.5",
+   "chordSlope": 0,
+   "today": {
+    "bank": -2.6869,
+    "dw": 0.0352,
+    "dh": 0.75,
+    "dl": -0.0314,
+    "ptAcross": 0.0001,
+    "ptUp": 0.0007,
+    "bankWin": 2.6869
+   },
+   "branch": {
+    "bank": -2.6869,
+    "dw": 0.0352,
+    "dh": 0.75,
+    "dl": -0.0314,
+    "ptAcross": 0.0001,
+    "ptUp": 0.0007,
+    "bankWin": 2.6869
+   }
+  },
+  {
+   "name": "half-pipe r 0.3",
+   "u": 0.95,
+   "g": "out 3",
+   "chordSlope": -0.12,
+   "today": {
+    "bank": 0.0105,
+    "dw": 3.0804,
+    "dh": -0.0613,
+    "dl": 1.5385,
+    "ptAcross": -0.0036,
+    "ptUp": 0.0637,
+    "bankWin": 0.0105
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 3.0804,
+    "dh": -0.0645,
+    "dl": 1.5384,
+    "ptAcross": -0.0036,
+    "ptUp": 0.0574,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "half-pipe r 0.3",
+   "u": 0.95,
+   "g": "lift 1.5",
+   "chordSlope": -0.12,
+   "today": {
+    "bank": 2.7558,
+    "dw": 0.0338,
+    "dh": 0.7692,
+    "dl": 0.0306,
+    "ptAcross": -0.0001,
+    "ptUp": 0.0006,
+    "bankWin": 2.7558
+   },
+   "branch": {
+    "bank": 2.7558,
+    "dw": 0.0338,
+    "dh": 0.7692,
+    "dl": 0.0306,
+    "ptAcross": -0.0001,
+    "ptUp": 0.0006,
+    "bankWin": 2.7558
+   }
+  },
+  {
+   "name": "half-pipe r 0.3",
+   "u": -0.95,
+   "g": "out 3",
+   "chordSlope": -0.12,
+   "today": {
+    "bank": -0.0105,
+    "dw": 3.0804,
+    "dh": -0.0613,
+    "dl": -1.5385,
+    "ptAcross": 0.0036,
+    "ptUp": 0.0637,
+    "bankWin": 0.0105
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 3.0804,
+    "dh": -0.0645,
+    "dl": -1.5384,
+    "ptAcross": 0.0036,
+    "ptUp": 0.0574,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "half-pipe r 0.3",
+   "u": -0.95,
+   "g": "lift 1.5",
+   "chordSlope": -0.12,
+   "today": {
+    "bank": -2.7558,
+    "dw": 0.0338,
+    "dh": 0.7692,
+    "dl": -0.0306,
+    "ptAcross": 0.0001,
+    "ptUp": 0.0006,
+    "bankWin": 2.7558
+   },
+   "branch": {
+    "bank": -2.7558,
+    "dw": 0.0338,
+    "dh": 0.7692,
+    "dl": -0.0306,
+    "ptAcross": 0.0001,
+    "ptUp": 0.0006,
+    "bankWin": 2.7558
+   }
+  },
+  {
+   "name": "half-pipe r 0.3",
+   "u": 0.7,
+   "g": "out 3",
+   "chordSlope": -0.72,
+   "today": {
+    "bank": 0.0716,
+    "dw": 3.5322,
+    "dh": -0.0518,
+    "dl": 1.7649,
+    "ptAcross": -0.0017,
+    "ptUp": 0.0402,
+    "bankWin": 0.0716
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 3.5321,
+    "dh": -0.0739,
+    "dl": 1.764,
+    "ptAcross": -0.0021,
+    "ptUp": 0.0025,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "half-pipe r 0.3",
+   "u": 0.7,
+   "g": "lift 1.5",
+   "chordSlope": -0.72,
+   "today": {
+    "bank": 3.1611,
+    "dw": 0.0265,
+    "dh": 0.8824,
+    "dl": 0.0259,
+    "ptAcross": -0.0001,
+    "ptUp": 0.0002,
+    "bankWin": 3.1611
+   },
+   "branch": {
+    "bank": 3.1611,
+    "dw": 0.0265,
+    "dh": 0.8824,
+    "dl": 0.0259,
+    "ptAcross": -0.0001,
+    "ptUp": 0.0002,
+    "bankWin": 3.1611
+   }
+  },
+  {
+   "name": "half-pipe r 0.3",
+   "u": -0.7,
+   "g": "out 3",
+   "chordSlope": -0.72,
+   "today": {
+    "bank": -0.0716,
+    "dw": 3.5322,
+    "dh": -0.0518,
+    "dl": -1.7649,
+    "ptAcross": 0.0017,
+    "ptUp": 0.0402,
+    "bankWin": 0.0716
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 3.5321,
+    "dh": -0.0739,
+    "dl": -1.764,
+    "ptAcross": 0.0021,
+    "ptUp": 0.0025,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "half-pipe r 0.3",
+   "u": -0.7,
+   "g": "lift 1.5",
+   "chordSlope": -0.72,
+   "today": {
+    "bank": -3.1611,
+    "dw": 0.0265,
+    "dh": 0.8824,
+    "dl": -0.0259,
+    "ptAcross": 0.0001,
+    "ptUp": 0.0002,
+    "bankWin": 3.1611
+   },
+   "branch": {
+    "bank": -3.1611,
+    "dw": 0.0265,
+    "dh": 0.8824,
+    "dl": -0.0259,
+    "ptAcross": 0.0001,
+    "ptUp": 0.0002,
+    "bankWin": 3.1611
+   }
+  },
+  {
+   "name": "half-pipe r 0.3",
+   "u": 0.5,
+   "g": "out 3",
+   "chordSlope": -1.2,
+   "today": {
+    "bank": 0.1334,
+    "dw": 4.0019,
+    "dh": -0.0419,
+    "dl": 2.0003,
+    "ptAcross": -0.0007,
+    "ptUp": 0.0235,
+    "bankWin": 0.1334
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 4.0018,
+    "dh": -0.0838,
+    "dl": 1.9986,
+    "ptAcross": -0.002,
+    "ptUp": -0.0393,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "half-pipe r 0.3",
+   "u": 0.5,
+   "g": "lift 1.5",
+   "chordSlope": -1.2,
+   "today": {
+    "bank": 3.5826,
+    "dw": 0.0207,
+    "dh": 1.0002,
+    "dl": 0.0209,
+    "ptAcross": 0,
+    "ptUp": 0.0001,
+    "bankWin": 3.5826
+   },
+   "branch": {
+    "bank": 3.5826,
+    "dw": 0.0207,
+    "dh": 1.0002,
+    "dl": 0.0209,
+    "ptAcross": 0,
+    "ptUp": 0.0001,
+    "bankWin": 3.5826
+   }
+  },
+  {
+   "name": "half-pipe r 0.3",
+   "u": -0.5,
+   "g": "out 3",
+   "chordSlope": -1.2,
+   "today": {
+    "bank": -0.1334,
+    "dw": 4.0019,
+    "dh": -0.0419,
+    "dl": -2.0003,
+    "ptAcross": 0.0007,
+    "ptUp": 0.0235,
+    "bankWin": 0.1334
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 4.0018,
+    "dh": -0.0838,
+    "dl": -1.9986,
+    "ptAcross": 0.002,
+    "ptUp": -0.0393,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "half-pipe r 0.3",
+   "u": -0.5,
+   "g": "lift 1.5",
+   "chordSlope": -1.2,
+   "today": {
+    "bank": -3.5826,
+    "dw": 0.0207,
+    "dh": 1.0002,
+    "dl": -0.0209,
+    "ptAcross": 0,
+    "ptUp": 0.0001,
+    "bankWin": 3.5826
+   },
+   "branch": {
+    "bank": -3.5826,
+    "dw": 0.0207,
+    "dh": 1.0002,
+    "dl": -0.0209,
+    "ptAcross": 0,
+    "ptUp": 0.0001,
+    "bankWin": 3.5826
+   }
+  },
+  {
+   "name": "half-pipe r 0.6",
+   "u": 1,
+   "g": "out 3",
+   "chordSlope": 0,
+   "today": {
+    "bank": 0,
+    "dw": 3.0141,
+    "dh": -0.1259,
+    "dl": 1.5,
+    "ptAcross": -0.0161,
+    "ptUp": 0.1371,
+    "bankWin": 0
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 3.0141,
+    "dh": -0.1259,
+    "dl": 1.5,
+    "ptAcross": -0.0161,
+    "ptUp": 0.1371,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "half-pipe r 0.6",
+   "u": 1,
+   "g": "lift 1.5",
+   "chordSlope": 0,
+   "today": {
+    "bank": 2.6964,
+    "dw": 0.0354,
+    "dh": 0.75,
+    "dl": 0.063,
+    "ptAcross": -0.0003,
+    "ptUp": 0.0015,
+    "bankWin": 2.6964
+   },
+   "branch": {
+    "bank": 2.6964,
+    "dw": 0.0354,
+    "dh": 0.75,
+    "dl": 0.063,
+    "ptAcross": -0.0003,
+    "ptUp": 0.0015,
+    "bankWin": 2.6964
+   }
+  },
+  {
+   "name": "half-pipe r 0.6",
+   "u": -1,
+   "g": "out 3",
+   "chordSlope": 0,
+   "today": {
+    "bank": 0,
+    "dw": 3.0141,
+    "dh": -0.1259,
+    "dl": -1.5,
+    "ptAcross": 0.0161,
+    "ptUp": 0.1371,
+    "bankWin": 0
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 3.0141,
+    "dh": -0.1259,
+    "dl": -1.5,
+    "ptAcross": 0.0161,
+    "ptUp": 0.1371,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "half-pipe r 0.6",
+   "u": -1,
+   "g": "lift 1.5",
+   "chordSlope": 0,
+   "today": {
+    "bank": -2.6964,
+    "dw": 0.0354,
+    "dh": 0.75,
+    "dl": -0.063,
+    "ptAcross": 0.0003,
+    "ptUp": 0.0015,
+    "bankWin": 2.6964
+   },
+   "branch": {
+    "bank": -2.6964,
+    "dw": 0.0354,
+    "dh": 0.75,
+    "dl": -0.063,
+    "ptAcross": 0.0003,
+    "ptUp": 0.0015,
+    "bankWin": 2.6964
+   }
+  },
+  {
+   "name": "half-pipe r 0.6",
+   "u": 0.95,
+   "g": "out 3",
+   "chordSlope": -0.24,
+   "today": {
+    "bank": 0.0211,
+    "dw": 3.0906,
+    "dh": -0.1227,
+    "dl": 1.5387,
+    "ptAcross": -0.0142,
+    "ptUp": 0.1272,
+    "bankWin": 0.0211
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 3.0906,
+    "dh": -0.1292,
+    "dl": 1.5381,
+    "ptAcross": -0.0143,
+    "ptUp": 0.1147,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "half-pipe r 0.6",
+   "u": 0.95,
+   "g": "lift 1.5",
+   "chordSlope": -0.24,
+   "today": {
+    "bank": 2.7653,
+    "dw": 0.0308,
+    "dh": 0.7693,
+    "dl": 0.0614,
+    "ptAcross": -0.0002,
+    "ptUp": 0.0012,
+    "bankWin": 2.7653
+   },
+   "branch": {
+    "bank": 2.7653,
+    "dw": 0.0308,
+    "dh": 0.7693,
+    "dl": 0.0614,
+    "ptAcross": -0.0002,
+    "ptUp": 0.0012,
+    "bankWin": 2.7653
+   }
+  },
+  {
+   "name": "half-pipe r 0.6",
+   "u": -0.95,
+   "g": "out 3",
+   "chordSlope": -0.24,
+   "today": {
+    "bank": -0.0211,
+    "dw": 3.0906,
+    "dh": -0.1227,
+    "dl": -1.5387,
+    "ptAcross": 0.0142,
+    "ptUp": 0.1272,
+    "bankWin": 0.0211
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 3.0906,
+    "dh": -0.1292,
+    "dl": -1.5381,
+    "ptAcross": 0.0143,
+    "ptUp": 0.1147,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "half-pipe r 0.6",
+   "u": -0.95,
+   "g": "lift 1.5",
+   "chordSlope": -0.24,
+   "today": {
+    "bank": -2.7653,
+    "dw": 0.0308,
+    "dh": 0.7693,
+    "dl": -0.0614,
+    "ptAcross": 0.0002,
+    "ptUp": 0.0012,
+    "bankWin": 2.7653
+   },
+   "branch": {
+    "bank": -2.7653,
+    "dw": 0.0308,
+    "dh": 0.7693,
+    "dl": -0.0614,
+    "ptAcross": 0.0002,
+    "ptUp": 0.0012,
+    "bankWin": 2.7653
+   }
+  },
+  {
+   "name": "half-pipe r 0.6",
+   "u": 0.7,
+   "g": "out 3",
+   "chordSlope": -1.44,
+   "today": {
+    "bank": 0.1435,
+    "dw": 3.5404,
+    "dh": -0.1037,
+    "dl": 1.7656,
+    "ptAcross": -0.0068,
+    "ptUp": 0.0803,
+    "bankWin": 0.1435
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 3.5403,
+    "dh": -0.148,
+    "dl": 1.7619,
+    "ptAcross": -0.0085,
+    "ptUp": 0.005,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "half-pipe r 0.6",
+   "u": 0.7,
+   "g": "lift 1.5",
+   "chordSlope": -1.44,
+   "today": {
+    "bank": 3.1706,
+    "dw": 0.0045,
+    "dh": 0.8828,
+    "dl": 0.0518,
+    "ptAcross": 0,
+    "ptUp": 0.0001,
+    "bankWin": 3.1706
+   },
+   "branch": {
+    "bank": 3.1706,
+    "dw": 0.0045,
+    "dh": 0.8828,
+    "dl": 0.0518,
+    "ptAcross": 0,
+    "ptUp": 0.0001,
+    "bankWin": 3.1706
+   }
+  },
+  {
+   "name": "half-pipe r 0.6",
+   "u": -0.7,
+   "g": "out 3",
+   "chordSlope": -1.44,
+   "today": {
+    "bank": -0.1435,
+    "dw": 3.5404,
+    "dh": -0.1037,
+    "dl": -1.7656,
+    "ptAcross": 0.0068,
+    "ptUp": 0.0803,
+    "bankWin": 0.1435
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 3.5403,
+    "dh": -0.148,
+    "dl": -1.7619,
+    "ptAcross": 0.0085,
+    "ptUp": 0.005,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "half-pipe r 0.6",
+   "u": -0.7,
+   "g": "lift 1.5",
+   "chordSlope": -1.44,
+   "today": {
+    "bank": -3.1706,
+    "dw": 0.0045,
+    "dh": 0.8828,
+    "dl": -0.0518,
+    "ptAcross": 0,
+    "ptUp": 0.0001,
+    "bankWin": 3.1706
+   },
+   "branch": {
+    "bank": -3.1706,
+    "dw": 0.0045,
+    "dh": 0.8828,
+    "dl": -0.0518,
+    "ptAcross": 0,
+    "ptUp": 0.0001,
+    "bankWin": 3.1706
+   }
+  },
+  {
+   "name": "half-pipe r 0.6",
+   "u": 0.5,
+   "g": "out 3",
+   "chordSlope": -2.4,
+   "today": {
+    "bank": 0.2672,
+    "dw": 4.0075,
+    "dh": -0.0839,
+    "dl": 2.0012,
+    "ptAcross": -0.003,
+    "ptUp": 0.0471,
+    "bankWin": 0.2672
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 4.0071,
+    "dh": -0.1675,
+    "dl": 1.9942,
+    "ptAcross": -0.008,
+    "ptUp": -0.0784,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "half-pipe r 0.6",
+   "u": 0.5,
+   "g": "lift 1.5",
+   "chordSlope": -2.4,
+   "today": {
+    "bank": 3.592,
+    "dw": -0.0211,
+    "dh": 1.0006,
+    "dl": 0.0419,
+    "ptAcross": 0,
+    "ptUp": -0.0002,
+    "bankWin": 3.592
+   },
+   "branch": {
+    "bank": 3.592,
+    "dw": -0.0211,
+    "dh": 1.0006,
+    "dl": 0.0419,
+    "ptAcross": 0,
+    "ptUp": -0.0002,
+    "bankWin": 3.592
+   }
+  },
+  {
+   "name": "half-pipe r 0.6",
+   "u": -0.5,
+   "g": "out 3",
+   "chordSlope": -2.4,
+   "today": {
+    "bank": -0.2672,
+    "dw": 4.0075,
+    "dh": -0.0839,
+    "dl": -2.0012,
+    "ptAcross": 0.003,
+    "ptUp": 0.0471,
+    "bankWin": 0.2672
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 4.0071,
+    "dh": -0.1675,
+    "dl": -1.9942,
+    "ptAcross": 0.008,
+    "ptUp": -0.0784,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "half-pipe r 0.6",
+   "u": -0.5,
+   "g": "lift 1.5",
+   "chordSlope": -2.4,
+   "today": {
+    "bank": -3.592,
+    "dw": -0.0211,
+    "dh": 1.0006,
+    "dl": -0.0419,
+    "ptAcross": 0,
+    "ptUp": -0.0002,
+    "bankWin": 3.592
+   },
+   "branch": {
+    "bank": -3.592,
+    "dw": -0.0211,
+    "dh": 1.0006,
+    "dl": -0.0419,
+    "ptAcross": 0,
+    "ptUp": -0.0002,
+    "bankWin": 3.592
+   }
+  },
+  {
+   "name": "half-pipe r 0.3, bank 20",
+   "u": 1,
+   "g": "out 3",
+   "chordSlope": 20,
+   "today": {
+    "bank": -1.6897,
+    "dw": 2.8376,
+    "dh": -0.0629,
+    "dl": 1.5,
+    "ptAcross": -0.0239,
+    "ptUp": 0.0601,
+    "bankWin": 1.6897
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 2.8224,
+    "dh": 0.4266,
+    "dl": 1.3447,
+    "ptAcross": -0.3764,
+    "ptUp": 1.0233,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "half-pipe r 0.3, bank 20",
+   "u": 1,
+   "g": "lift 1.5",
+   "chordSlope": 20,
+   "today": {
+    "bank": 2.4852,
+    "dw": 0.5443,
+    "dh": 0.75,
+    "dl": 0.0314,
+    "ptAcross": -0.005,
+    "ptUp": 0.0104,
+    "bankWin": 2.4852
+   },
+   "branch": {
+    "bank": 2.4852,
+    "dw": 0.5443,
+    "dh": 0.75,
+    "dl": 0.0314,
+    "ptAcross": -0.005,
+    "ptUp": 0.0104,
+    "bankWin": 2.4852
+   }
+  },
+  {
+   "name": "half-pipe r 0.3, bank 20",
+   "u": -1,
+   "g": "out 3",
+   "chordSlope": -20,
+   "today": {
+    "bank": -1.6897,
+    "dw": 2.8376,
+    "dh": -0.0629,
+    "dl": -1.5,
+    "ptAcross": -0.0167,
+    "ptUp": 0.0625,
+    "bankWin": 1.6897
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 2.8224,
+    "dh": -0.5376,
+    "dl": -1.3044,
+    "ptAcross": 0.3324,
+    "ptUp": -0.9025,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "half-pipe r 0.3, bank 20",
+   "u": -1,
+   "g": "lift 1.5",
+   "chordSlope": -20,
+   "today": {
+    "bank": -2.5662,
+    "dw": -0.482,
+    "dh": 0.75,
+    "dl": -0.0314,
+    "ptAcross": 0.0025,
+    "ptUp": -0.0096,
+    "bankWin": 2.5662
+   },
+   "branch": {
+    "bank": -2.5662,
+    "dw": -0.482,
+    "dh": 0.75,
+    "dl": -0.0314,
+    "ptAcross": 0.0025,
+    "ptUp": -0.0096,
+    "bankWin": 2.5662
+   }
+  },
+  {
+   "name": "half-pipe r 0.3, bank 20",
+   "u": 0.95,
+   "g": "out 3",
+   "chordSlope": 19.88,
+   "today": {
+    "bank": -1.7193,
+    "dw": 2.9125,
+    "dh": -0.0613,
+    "dl": 1.5385,
+    "ptAcross": -0.022,
+    "ptUp": 0.0559,
+    "bankWin": 1.7193
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 2.8968,
+    "dh": 0.4379,
+    "dl": 1.3802,
+    "ptAcross": -0.3704,
+    "ptUp": 1.0143,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "half-pipe r 0.3, bank 20",
+   "u": 0.95,
+   "g": "lift 1.5",
+   "chordSlope": 19.88,
+   "today": {
+    "bank": 2.5499,
+    "dw": 0.556,
+    "dh": 0.7692,
+    "dl": 0.0306,
+    "ptAcross": -0.0047,
+    "ptUp": 0.0096,
+    "bankWin": 2.5499
+   },
+   "branch": {
+    "bank": 2.5499,
+    "dw": 0.556,
+    "dh": 0.7692,
+    "dl": 0.0306,
+    "ptAcross": -0.0047,
+    "ptUp": 0.0096,
+    "bankWin": 2.5499
+   }
+  },
+  {
+   "name": "half-pipe r 0.3, bank 20",
+   "u": -0.95,
+   "g": "out 3",
+   "chordSlope": -20.12,
+   "today": {
+    "bank": -1.7394,
+    "dw": 2.9085,
+    "dh": -0.0613,
+    "dl": -1.5385,
+    "ptAcross": -0.0156,
+    "ptUp": 0.0579,
+    "bankWin": 1.7394
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 2.8924,
+    "dh": -0.551,
+    "dl": -1.3367,
+    "ptAcross": 0.3377,
+    "ptUp": -0.912,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "half-pipe r 0.3, bank 20",
+   "u": -0.95,
+   "g": "lift 1.5",
+   "chordSlope": -20.12,
+   "today": {
+    "bank": -2.6311,
+    "dw": -0.4966,
+    "dh": 0.7692,
+    "dl": -0.0306,
+    "ptAcross": 0.0023,
+    "ptUp": -0.009,
+    "bankWin": 2.6311
+   },
+   "branch": {
+    "bank": -2.6311,
+    "dw": -0.4966,
+    "dh": 0.7692,
+    "dl": -0.0306,
+    "ptAcross": 0.0023,
+    "ptUp": -0.009,
+    "bankWin": 2.6311
+   }
+  },
+  {
+   "name": "half-pipe r 0.3, bank 20",
+   "u": 0.7,
+   "g": "out 3",
+   "chordSlope": 19.28,
+   "today": {
+    "bank": -1.8906,
+    "dw": 3.3535,
+    "dh": -0.0518,
+    "dl": 1.7649,
+    "ptAcross": -0.0133,
+    "ptUp": 0.0356,
+    "bankWin": 1.8906
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 3.3343,
+    "dh": 0.504,
+    "dl": 1.5887,
+    "ptAcross": -0.3414,
+    "ptUp": 0.97,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "half-pipe r 0.3, bank 20",
+   "u": 0.7,
+   "g": "lift 1.5",
+   "chordSlope": 19.28,
+   "today": {
+    "bank": 2.929,
+    "dw": 0.6258,
+    "dh": 0.8824,
+    "dl": 0.0259,
+    "ptAcross": -0.0028,
+    "ptUp": 0.0059,
+    "bankWin": 2.929
+   },
+   "branch": {
+    "bank": 2.929,
+    "dw": 0.6258,
+    "dh": 0.8824,
+    "dl": 0.0259,
+    "ptAcross": -0.0028,
+    "ptUp": 0.0059,
+    "bankWin": 2.929
+   }
+  },
+  {
+   "name": "half-pipe r 0.3, bank 20",
+   "u": -0.7,
+   "g": "out 3",
+   "chordSlope": -20.72,
+   "today": {
+    "bank": -2.0274,
+    "dw": 3.3261,
+    "dh": -0.0518,
+    "dl": -1.7649,
+    "ptAcross": -0.0102,
+    "ptUp": 0.0362,
+    "bankWin": 2.0274
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 3.304,
+    "dh": -0.6294,
+    "dl": -1.5269,
+    "ptAcross": 0.3642,
+    "ptUp": -0.9572,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "half-pipe r 0.3, bank 20",
+   "u": -0.7,
+   "g": "lift 1.5",
+   "chordSlope": -20.72,
+   "today": {
+    "bank": -3.014,
+    "dw": -0.5815,
+    "dh": 0.8824,
+    "dl": -0.0259,
+    "ptAcross": 0.0015,
+    "ptUp": -0.0057,
+    "bankWin": 3.014
+   },
+   "branch": {
+    "bank": -3.014,
+    "dw": -0.5815,
+    "dh": 0.8824,
+    "dl": -0.0259,
+    "ptAcross": 0.0015,
+    "ptUp": -0.0057,
+    "bankWin": 3.014
+   }
+  },
+  {
+   "name": "half-pipe r 0.3, bank 20",
+   "u": 0.5,
+   "g": "out 3",
+   "chordSlope": 18.8,
+   "today": {
+    "bank": -2.0642,
+    "dw": 3.8123,
+    "dh": -0.0419,
+    "dl": 2.0003,
+    "ptAcross": -0.0075,
+    "ptUp": 0.021,
+    "bankWin": 2.0642
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 3.7891,
+    "dh": 0.5727,
+    "dl": 1.8054,
+    "ptAcross": -0.3197,
+    "ptUp": 0.9358,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "half-pipe r 0.3, bank 20",
+   "u": 0.5,
+   "g": "lift 1.5",
+   "chordSlope": 18.8,
+   "today": {
+    "bank": 3.3214,
+    "dw": 0.6999,
+    "dh": 1.0002,
+    "dl": 0.0209,
+    "ptAcross": -0.0016,
+    "ptUp": 0.0034,
+    "bankWin": 3.3214
+   },
+   "branch": {
+    "bank": 3.3214,
+    "dw": 0.6999,
+    "dh": 1.0002,
+    "dl": 0.0209,
+    "ptAcross": -0.0016,
+    "ptUp": 0.0034,
+    "bankWin": 3.3214
+   }
+  },
+  {
+   "name": "half-pipe r 0.3, bank 20",
+   "u": -0.5,
+   "g": "out 3",
+   "chordSlope": -21.2,
+   "today": {
+    "bank": -2.3197,
+    "dw": 3.7611,
+    "dh": -0.0419,
+    "dl": -2.0003,
+    "ptAcross": -0.0061,
+    "ptUp": 0.0211,
+    "bankWin": 2.3197
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 3.7318,
+    "dh": -0.7108,
+    "dl": -1.7246,
+    "ptAcross": 0.3855,
+    "ptUp": -0.9908,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "half-pipe r 0.3, bank 20",
+   "u": -0.5,
+   "g": "lift 1.5",
+   "chordSlope": -21.2,
+   "today": {
+    "bank": -3.4141,
+    "dw": -0.6681,
+    "dh": 1.0002,
+    "dl": -0.0209,
+    "ptAcross": 0.0009,
+    "ptUp": -0.0033,
+    "bankWin": 3.4141
+   },
+   "branch": {
+    "bank": -3.4141,
+    "dw": -0.6681,
+    "dh": 1.0002,
+    "dl": -0.0209,
+    "ptAcross": 0.0009,
+    "ptUp": -0.0033,
+    "bankWin": 3.4141
+   }
+  }
+ ],
+ "c3": [
+  {
+   "name": "phi 20 kh 0",
+   "u": 1,
+   "g": "out 4",
+   "chordSlope": 20,
+   "today": {
+    "bank": -2.191,
+    "dw": 3.785,
+    "dh": 0,
+    "dl": 2,
+    "ptAcross": 0.0001,
+    "ptUp": 0,
+    "bankWin": 2.191
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 3.7588,
+    "dh": 0.6428,
+    "dl": 1.7661,
+    "ptAcross": -0.4679,
+    "ptUp": 1.2856,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "phi 20 kh 0",
+   "u": -1,
+   "g": "out 4",
+   "chordSlope": -20,
+   "today": {
+    "bank": -2.191,
+    "dw": 3.785,
+    "dh": 0,
+    "dl": -2,
+    "ptAcross": -0.0001,
+    "ptUp": 0,
+    "bankWin": 2.191
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 3.7588,
+    "dh": -0.6428,
+    "dl": -1.7661,
+    "ptAcross": 0.4679,
+    "ptUp": -1.2856,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "phi 20 kh 0",
+   "u": 0.95,
+   "g": "out 4",
+   "chordSlope": 20,
+   "today": {
+    "bank": -2.2411,
+    "dw": 3.8826,
+    "dh": 0,
+    "dl": 2.0513,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 2.2411
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 3.8552,
+    "dh": 0.6593,
+    "dl": 1.8113,
+    "ptAcross": -0.4679,
+    "ptUp": 1.2856,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "phi 20 kh 0",
+   "u": 0.5,
+   "g": "out 4",
+   "chordSlope": 20,
+   "today": {
+    "bank": -2.8215,
+    "dw": 5.0566,
+    "dh": 0,
+    "dl": 2.6667,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 2.8215
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 5.0117,
+    "dh": 0.857,
+    "dl": 2.3548,
+    "ptAcross": -0.4679,
+    "ptUp": 1.2856,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "phi 20 kh 1/150",
+   "u": 1,
+   "g": "out 4",
+   "chordSlope": 20,
+   "today": {
+    "bank": -2.191,
+    "dw": 3.785,
+    "dh": 0,
+    "dl": 2,
+    "ptAcross": 0.0001,
+    "ptUp": 0,
+    "bankWin": 2.191
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 3.7588,
+    "dh": 0.6428,
+    "dl": 1.7661,
+    "ptAcross": -0.4679,
+    "ptUp": 1.2856,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "phi 20 kh 1/150",
+   "u": -1,
+   "g": "out 4",
+   "chordSlope": -20,
+   "today": {
+    "bank": -2.191,
+    "dw": 3.785,
+    "dh": 0,
+    "dl": -2,
+    "ptAcross": -0.0001,
+    "ptUp": 0,
+    "bankWin": 2.191
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 3.7588,
+    "dh": -0.6428,
+    "dl": -1.7661,
+    "ptAcross": 0.4679,
+    "ptUp": -1.2856,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "phi 20 kh 1/150",
+   "u": 0.95,
+   "g": "out 4",
+   "chordSlope": 20,
+   "today": {
+    "bank": -2.2411,
+    "dw": 3.8826,
+    "dh": 0,
+    "dl": 2.0513,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 2.2411
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 3.8552,
+    "dh": 0.6593,
+    "dl": 1.8113,
+    "ptAcross": -0.4679,
+    "ptUp": 1.2856,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "phi 20 kh 1/150",
+   "u": 0.5,
+   "g": "out 4",
+   "chordSlope": 20,
+   "today": {
+    "bank": -2.8215,
+    "dw": 5.0566,
+    "dh": 0,
+    "dl": 2.6667,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 2.8215
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 5.0117,
+    "dh": 0.857,
+    "dl": 2.3548,
+    "ptAcross": -0.4679,
+    "ptUp": 1.2856,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "phi -20 kh 0",
+   "u": 1,
+   "g": "out 4",
+   "chordSlope": -20,
+   "today": {
+    "bank": 2.191,
+    "dw": 3.785,
+    "dh": 0,
+    "dl": 2,
+    "ptAcross": 0.0001,
+    "ptUp": 0,
+    "bankWin": 2.191
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 3.7588,
+    "dh": -0.6428,
+    "dl": 1.7661,
+    "ptAcross": -0.4679,
+    "ptUp": -1.2856,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "phi -20 kh 0",
+   "u": -1,
+   "g": "out 4",
+   "chordSlope": 20,
+   "today": {
+    "bank": 2.191,
+    "dw": 3.785,
+    "dh": 0,
+    "dl": -2,
+    "ptAcross": -0.0001,
+    "ptUp": 0,
+    "bankWin": 2.191
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 3.7588,
+    "dh": 0.6428,
+    "dl": -1.7661,
+    "ptAcross": 0.4679,
+    "ptUp": 1.2856,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "phi -20 kh 0",
+   "u": 0.95,
+   "g": "out 4",
+   "chordSlope": -20,
+   "today": {
+    "bank": 2.2411,
+    "dw": 3.8826,
+    "dh": 0,
+    "dl": 2.0513,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 2.2411
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 3.8552,
+    "dh": -0.6593,
+    "dl": 1.8113,
+    "ptAcross": -0.4679,
+    "ptUp": -1.2856,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "phi -20 kh 0",
+   "u": 0.5,
+   "g": "out 4",
+   "chordSlope": -20,
+   "today": {
+    "bank": 2.8215,
+    "dw": 5.0566,
+    "dh": 0,
+    "dl": 2.6667,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 2.8215
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 5.0117,
+    "dh": -0.857,
+    "dl": 2.3548,
+    "ptAcross": -0.4679,
+    "ptUp": -1.2856,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "phi -20 kh 1/150",
+   "u": 1,
+   "g": "out 4",
+   "chordSlope": -20,
+   "today": {
+    "bank": 2.191,
+    "dw": 3.785,
+    "dh": 0,
+    "dl": 2,
+    "ptAcross": 0.0001,
+    "ptUp": 0,
+    "bankWin": 2.191
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 3.7588,
+    "dh": -0.6428,
+    "dl": 1.7661,
+    "ptAcross": -0.4679,
+    "ptUp": -1.2856,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "phi -20 kh 1/150",
+   "u": -1,
+   "g": "out 4",
+   "chordSlope": 20,
+   "today": {
+    "bank": 2.191,
+    "dw": 3.785,
+    "dh": 0,
+    "dl": -2,
+    "ptAcross": -0.0001,
+    "ptUp": 0,
+    "bankWin": 2.191
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 3.7588,
+    "dh": 0.6428,
+    "dl": -1.7661,
+    "ptAcross": 0.4679,
+    "ptUp": 1.2856,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "phi -20 kh 1/150",
+   "u": 0.95,
+   "g": "out 4",
+   "chordSlope": -20,
+   "today": {
+    "bank": 2.2411,
+    "dw": 3.8826,
+    "dh": 0,
+    "dl": 2.0513,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 2.2411
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 3.8552,
+    "dh": -0.6593,
+    "dl": 1.8113,
+    "ptAcross": -0.4679,
+    "ptUp": -1.2856,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "phi -20 kh 1/150",
+   "u": 0.5,
+   "g": "out 4",
+   "chordSlope": -20,
+   "today": {
+    "bank": 2.8215,
+    "dw": 5.0566,
+    "dh": 0,
+    "dl": 2.6667,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 2.8215
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 5.0117,
+    "dh": -0.857,
+    "dl": 2.3548,
+    "ptAcross": -0.4679,
+    "ptUp": -1.2856,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "phi 45 kh 0",
+   "u": 1,
+   "g": "out 4",
+   "chordSlope": 45,
+   "today": {
+    "bank": -4.6428,
+    "dw": 2.9431,
+    "dh": 0,
+    "dl": 2,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 4.6428
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 2.8284,
+    "dh": 1,
+    "dl": 1,
+    "ptAcross": -2,
+    "ptUp": 2,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "phi 45 kh 0",
+   "u": -1,
+   "g": "out 4",
+   "chordSlope": -45,
+   "today": {
+    "bank": -4.6428,
+    "dw": 2.9431,
+    "dh": 0,
+    "dl": -2,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 4.6428
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 2.8284,
+    "dh": -1,
+    "dl": -1,
+    "ptAcross": 2,
+    "ptUp": -2,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "phi 45 kh 0",
+   "u": 0.95,
+   "g": "out 4",
+   "chordSlope": 45,
+   "today": {
+    "bank": -4.7515,
+    "dw": 3.0213,
+    "dh": 0,
+    "dl": 2.0513,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 4.7515
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 2.901,
+    "dh": 1.0256,
+    "dl": 1.0256,
+    "ptAcross": -2,
+    "ptUp": 2,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "phi 45 kh 0",
+   "u": 0.5,
+   "g": "out 4",
+   "chordSlope": 45,
+   "today": {
+    "bank": -6.0183,
+    "dw": 3.9695,
+    "dh": 0,
+    "dl": 2.6667,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 6.0183
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 3.7712,
+    "dh": 1.3333,
+    "dl": 1.3333,
+    "ptAcross": -2,
+    "ptUp": 2,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "phi 45 kh 1/150",
+   "u": 1,
+   "g": "out 4",
+   "chordSlope": 45,
+   "today": {
+    "bank": -4.6428,
+    "dw": 2.9431,
+    "dh": 0,
+    "dl": 2,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 4.6428
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 2.8284,
+    "dh": 1,
+    "dl": 1,
+    "ptAcross": -2,
+    "ptUp": 2,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "phi 45 kh 1/150",
+   "u": -1,
+   "g": "out 4",
+   "chordSlope": -45,
+   "today": {
+    "bank": -4.6428,
+    "dw": 2.9431,
+    "dh": 0,
+    "dl": -2,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 4.6428
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 2.8284,
+    "dh": -1,
+    "dl": -1,
+    "ptAcross": 2,
+    "ptUp": -2,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "phi 45 kh 1/150",
+   "u": 0.95,
+   "g": "out 4",
+   "chordSlope": 45,
+   "today": {
+    "bank": -4.7515,
+    "dw": 3.0213,
+    "dh": 0,
+    "dl": 2.0513,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 4.7515
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 2.901,
+    "dh": 1.0256,
+    "dl": 1.0256,
+    "ptAcross": -2,
+    "ptUp": 2,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "phi 45 kh 1/150",
+   "u": 0.5,
+   "g": "out 4",
+   "chordSlope": 45,
+   "today": {
+    "bank": -6.0183,
+    "dw": 3.9695,
+    "dh": 0,
+    "dl": 2.6667,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 6.0183
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 3.7712,
+    "dh": 1.3333,
+    "dl": 1.3333,
+    "ptAcross": -2,
+    "ptUp": 2,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "phi -45 kh 0",
+   "u": 1,
+   "g": "out 4",
+   "chordSlope": -45,
+   "today": {
+    "bank": 4.6428,
+    "dw": 2.9431,
+    "dh": 0,
+    "dl": 2,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 4.6428
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 2.8284,
+    "dh": -1,
+    "dl": 1,
+    "ptAcross": -2,
+    "ptUp": -2,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "phi -45 kh 0",
+   "u": -1,
+   "g": "out 4",
+   "chordSlope": 45,
+   "today": {
+    "bank": 4.6428,
+    "dw": 2.9431,
+    "dh": 0,
+    "dl": -2,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 4.6428
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 2.8284,
+    "dh": 1,
+    "dl": -1,
+    "ptAcross": 2,
+    "ptUp": 2,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "phi -45 kh 0",
+   "u": 0.95,
+   "g": "out 4",
+   "chordSlope": -45,
+   "today": {
+    "bank": 4.7515,
+    "dw": 3.0213,
+    "dh": 0,
+    "dl": 2.0513,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 4.7515
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 2.901,
+    "dh": -1.0256,
+    "dl": 1.0256,
+    "ptAcross": -2,
+    "ptUp": -2,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "phi -45 kh 0",
+   "u": 0.5,
+   "g": "out 4",
+   "chordSlope": -45,
+   "today": {
+    "bank": 6.0183,
+    "dw": 3.9695,
+    "dh": 0,
+    "dl": 2.6667,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 6.0183
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 3.7712,
+    "dh": -1.3333,
+    "dl": 1.3333,
+    "ptAcross": -2,
+    "ptUp": -2,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "phi -45 kh 1/150",
+   "u": 1,
+   "g": "out 4",
+   "chordSlope": -45,
+   "today": {
+    "bank": 4.6428,
+    "dw": 2.9431,
+    "dh": 0,
+    "dl": 2,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 4.6428
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 2.8284,
+    "dh": -1,
+    "dl": 1,
+    "ptAcross": -2,
+    "ptUp": -2,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "phi -45 kh 1/150",
+   "u": -1,
+   "g": "out 4",
+   "chordSlope": 45,
+   "today": {
+    "bank": 4.6428,
+    "dw": 2.9431,
+    "dh": 0,
+    "dl": -2,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 4.6428
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 2.8284,
+    "dh": 1,
+    "dl": -1,
+    "ptAcross": 2,
+    "ptUp": 2,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "phi -45 kh 1/150",
+   "u": 0.95,
+   "g": "out 4",
+   "chordSlope": -45,
+   "today": {
+    "bank": 4.7515,
+    "dw": 3.0213,
+    "dh": 0,
+    "dl": 2.0513,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 4.7515
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 2.901,
+    "dh": -1.0256,
+    "dl": 1.0256,
+    "ptAcross": -2,
+    "ptUp": -2,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "phi -45 kh 1/150",
+   "u": 0.5,
+   "g": "out 4",
+   "chordSlope": -45,
+   "today": {
+    "bank": 6.0183,
+    "dw": 3.9695,
+    "dh": 0,
+    "dl": 2.6667,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 6.0183
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 3.7712,
+    "dh": -1.3333,
+    "dl": 1.3333,
+    "ptAcross": -2,
+    "ptUp": -2,
+    "bankWin": 0
+   }
+  }
+ ],
+ "control": [
+  {
+   "name": "bowl cup 30",
+   "u": 0.95,
+   "g": "out 3",
+   "chordSlope": -0.78,
+   "today": {
+    "bank": 0.0722,
+    "dw": 3.2652,
+    "dh": -0.4403,
+    "dl": 1.5414,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 0.0722
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 3.2652,
+    "dh": -0.4612,
+    "dl": 1.5351,
+    "ptAcross": -0.0005,
+    "ptUp": -0.0408,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "bowl cup 30",
+   "u": 0.5,
+   "g": "out 3",
+   "chordSlope": -8.86,
+   "today": {
+    "bank": 1.0106,
+    "dw": 4.0876,
+    "dh": -0.2773,
+    "dl": 2.009,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 1.0106
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 4.082,
+    "dh": -0.5765,
+    "dl": 1.9191,
+    "ptAcross": -0.0712,
+    "ptUp": -0.4566,
+    "bankWin": 0
+   }
+  },
+  {
+   "name": "bowl cup 30",
+   "u": -0.5,
+   "g": "out 3",
+   "chordSlope": -8.86,
+   "today": {
+    "bank": -1.0106,
+    "dw": 4.0876,
+    "dh": -0.2773,
+    "dl": -2.009,
+    "ptAcross": 0,
+    "ptUp": 0,
+    "bankWin": 1.0106
+   },
+   "branch": {
+    "bank": 0,
+    "dw": 4.082,
+    "dh": -0.5765,
+    "dl": -1.9191,
+    "ptAcross": 0.0712,
+    "ptUp": -0.4566,
+    "bankWin": 0
+   }
+  }
+ ]
+}
