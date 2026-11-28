@@ -19,8 +19,14 @@ THE PICTURES, in order, and how each hands off to the next (the whole part is on
                                 the rim, and the needle follows the lamp. The candle at the hub turns the lamp's blue.
   7 "One sentence"              the lamp lands once. A ring crosses the floor; the needle snaps back to the mark; then, in
                                 three quick looks back: the panes fall flat, the doors fly open, the track straightens.
+  7b "Someone skilled"          before he lands: a blue line of sight from the lamp to the needle
   8 "Most people can't"         up: a whole land of pairs, every candle the colour of its lamp. One pair is two colours.
-  9 "what he built"             down to that pair. The house goes up round them piece by piece.
+  8b "They shouldn't have to"   down to one pair that has gone over: the candle pink like its lamp, a small compass
+                                between them with its needle on the lamp, and nobody to land
+  9 "one person who could"      across to the pair of two colours; he lands once more; the ring
+  9b "what he built"            the house goes up behind them, room by room
+  9c "so that no one else has to"   the house's light reaches the pair beside it: that candle turns warm, its needle
+                                swings to the mark
 OUT: the two of them in front of the house, lit. Fade.
 """
 import math
@@ -49,6 +55,8 @@ T_MOST = at("Most people", 1)
 T_HAVE = at("They shouldn't have to", 1)
 T_STORY = at("This is the story", 1)
 T_BUILT = T_STORY + 2.9                     # "...and what he built"
+T_COULD = T_STORY + 1.35                    # "...one person who could": he lands, once more
+T_REACH = T_BUILT + 3.0                     # "...so that no one else has to": the house's light reaches the pair beside it
 
 # ---- the plane everything stands on is z = 0; the run goes down +Y --------------------------------------------------
 Y_WORK0, Y_WORK1 = 3.0, 13.0                # the straight line of the work
@@ -59,6 +67,7 @@ COMPASS = (0.0, 33.0)                       # the middle of the compass
 CR = 0.95                                   # its radius
 MARK = math.radians(90.0)                   # where the needle should point: dead ahead (+Y)
 LAND0 = (0.0, 46.0)                         # where the one two-coloured pair stands, and where the house goes up
+NEAR = (LAND0[0] - 1.55, LAND0[1] + 1.15)   # a pair close by that has gone over
 N_FIELD = 420
 N_PAIRS = 150
 
@@ -163,6 +172,20 @@ def build(k):
     k.us_c = k.candle((LAND0[0] - 0.24, LAND0[1], 0.0), "us_candle", seed=7.0)
     k.us_l = k.lamp((LAND0[0] + 0.24, LAND0[1] + 0.04, 0.0), kit.HIS, "us_lamp", seed=8.0)
     k.house = sets.House(k, at=(LAND0[0], LAND0[1] + 2.6, 0.0))
+    # "Someone skilled can catch that": his line of sight to the needle
+    k.sight = k.line([(0.0, 0.0, 0.0), (1.0, 0.0, 0.0)], "sight", color=kit.HIS, radius=0.010, glow=1.8)
+    # "They shouldn't have to": one pair seen close. Its candle has gone over to its lamp's colour; a small compass
+    # between them has its needle on the lamp. At the very end the house's light reaches them.
+    nx, ny = NEAR
+    k.other_c = k.candle((nx - 0.24, ny, 0.0), "other_candle", seed=11.0)
+    k.other_l = k.lamp((nx + 0.24, ny + 0.03, 0.0), kit.LAMPS[1], "other_lamp", seed=12.0)
+    small = kit.lathe("small_compass", [(0.0, 0.0), (0.17, 0.0), (0.19, 0.0), (0.19, 0.02), (0.17, 0.02), (0.17, 0.006), (0.0, 0.006)], seg=40)
+    small.location = (nx, ny - 0.30, 0.0)
+    small.data.materials.append(brass)
+    k.small_needle = kit.empty("small_needle", (nx, ny - 0.30, 0.03))
+    kit.parent(kit.box("small_needle_point", (0.15, 0.022, 0.008), (0.075, 0, 0), k.mat("needle", (0.9, 0.3, 0.2), emit=kit.PAPER, emit_strength=1.6)), k.small_needle)
+    k.small_parts = (small, k.small_needle)
+    k.ring2 = k.line(ring, "shock2", color=kit.HIS, radius=0.012, glow=3.0, cyclic=True)
 
 
 def pose(k, t):
@@ -261,6 +284,9 @@ def pose(k, t):
               tint=kit.HIS, mix=0.9 * gone, still=0.7 * gone)
     kit.show(k.hub.root, on_compass)
     kit.squash(k.hub.root, land(t, T_LAND + 0.05, 0.22), turn=0.0)
+    sp = k.sight.ob.data.splines[0].points
+    sp[0].co, sp[1].co = (sx, sy, 0.20, 1.0), (cx, cy, 0.20, 1.0)
+    k.sight.set(grow=ss(T_SKILLED + 0.5, T_SKILLED + 1.0, t) if (on_compass and t < T_LAND) else 0.0, glow=1.0 + 0.8 * hit(t, T_SKILLED + 1.0, 4.0))
     r = 0.2 + 9.0 * max(0.0, t - T_LAND)
     k.ring.ob.location = (sx, sy, 0.01)
     k.ring.ob.scale = (r, r, 1.0)
@@ -268,7 +294,7 @@ def pose(k, t):
 
     # =============================================================== 8, 9: the land of pairs; the house
     for i, (c, l, d) in enumerate(k.pairs):
-        u = round(ss(T_MOST - 0.4 + d * 0.05, T_MOST + d * 0.05, t), 3)
+        u = round(ss(T_MOST - 1.1 + d * 0.05, T_MOST - 0.7 + d * 0.05, t), 3)
         if k.last.get(("p", i)) == u:
             continue
         k.last[("p", i)] = u
@@ -276,12 +302,30 @@ def pose(k, t):
             ob.scale = (max(0.001, u),) * 3
             ob.hide_render = u <= 0.0
     for li, d in k.pair_lights:
-        li.data.energy = 20.0 * ss(T_MOST - 0.4 + d * 0.05, T_MOST + d * 0.05, t)
-    us = t > T_MOST - 0.5
-    k.us_c.set(t, size=1.0 if us else 0.0)
-    k.us_l.set(t, size=1.0 if us else 0.0, lean=(0.26, 0.05))
+        li.data.energy = 20.0 * ss(T_MOST - 1.1 + d * 0.05, T_MOST - 0.7 + d * 0.05, t)
+    us = t > T_MOST - 1.2
+    hop2 = bounce(t, T_COULD, 0.16, 0.28)
+    land2 = T_COULD + 0.28
+    k.us_c.set(t, size=(1.0 + 0.5 * hit(t, land2, 3.2)) if us else 0.0, lean=(0.18 * math.sin((t - land2) * 21.0) * hit(t, land2, 3.2), 0.0))
+    k.us_l.set(t, size=(1.0 + 0.5 * hit(t, land2, 5.0)) if us else 0.0, lean=(0.26, 0.05), bright=1.0 + 1.0 * hit(t, land2, 4.0))
+    k.us_l.root.location = (LAND0[0] + 0.24, LAND0[1] + 0.04, hop2)
+    kit.squash(k.us_l.root, land(t, land2, 0.28), turn=0.0)
     kit.show(k.us_c.root, us)
     kit.show(k.us_l.root, us)
+    r2 = 0.2 + 7.0 * max(0.0, t - land2)
+    k.ring2.ob.location = (LAND0[0] + 0.24, LAND0[1] + 0.04, 0.01)
+    k.ring2.ob.scale = (r2, r2, 1.0)
+    k.ring2.set(grow=1.0 if land2 <= t < land2 + 0.7 else 0.0, glow=max(0.0, 1.0 - (t - land2) / 0.7))
+    reached = ss(T_REACH, T_REACH + 1.0, t)                                         # the house's light reaches the pair beside it
+    pink = tuple(0.22 * w + 0.78 * v for w, v in zip((1.0, 0.80, 0.55), kit.LAMPS[1]))
+    k.other_l.set(t, size=1.0 if us else 0.0, lean=(0.22, 0.05))
+    k.other_c.set(t, size=lerp(0.62, 1.0, reached) if us else 0.0, lean=(0.24 * (1.0 - reached), 0.0), tint=pink, mix=0.88 * (1.0 - reached), still=0.8 * (1.0 - reached))
+    kit.show(k.other_c.root, us)
+    kit.show(k.other_l.root, us)
+    to_lamp = math.atan2(0.33, 0.24)                                               # from the small compass to its lamp
+    k.small_needle.rotation_euler = (0, 0, lerp(to_lamp, MARK, reached) + 0.4 * hit(t, T_REACH + 1.0, 3.5) * math.sin((t - T_REACH) * 22.0))
+    for ob in k.small_parts:
+        kit.show(ob, us)
     h = k.house
     h.show(t > T_BUILT - 0.1)
     up = ss(T_BUILT, T_BUILT + 0.5, t)
@@ -320,15 +364,20 @@ def pose(k, t):
         pos, look, lens = (0.55, DOORS[1] - 2.4, 0.75), (-1.3, DOORS[1] + 1.4, 0.85), 30.0
     elif t < T_LAND + 2.45:                                                        # ...the track is straight
         pos, look, lens = (0.6, 7.0, 2.2), (-0.1, 10.9, 0.0), 32.0
-    elif t < T_MOST - 0.6:                                                         # back on the needle, holding
-        pos = kf(t, [(T_LAND + 2.45, (0.2, cy - 2.2, 1.5)), (T_MOST - 0.6, (0.1, cy - 2.0, 1.35))])
+    elif t < T_MOST - 0.1:                                                         # back on the needle, holding
+        pos = kf(t, [(T_LAND + 2.45, (0.2, cy - 2.2, 1.5)), (T_MOST - 0.1, (0.1, cy - 2.0, 1.35))])
         look, lens = (cx, cy + 0.2, 0.05), 34.0
     else:                                                                          # 8, 9
-        pos = kf(t, [(T_MOST - 0.6, (lx, ly - 5.0, 3.0)), (T_MOST + 2.2, (lx, ly - 15.0, 11.0)), (T_STORY - 0.3, (lx, ly - 16.5, 12.0)),
-                     (T_STORY + 2.4, (lx + 0.05, ly - 2.3, 0.42)), (P1, (lx + 0.05, ly - 2.6, 0.44))])
-        look = kf(t, [(T_MOST - 0.6, (lx, ly, 0.2)), (T_MOST + 2.2, (lx, ly + 2.0, 0.0)), (T_STORY - 0.3, (lx, ly + 2.0, 0.0)),
-                      (T_STORY + 2.4, (lx, ly + 2.6, 0.72)), (P1, (lx, ly + 2.6, 0.78))])
-        lens = kf(t, [(T_MOST - 0.6, 32.0), (T_STORY - 0.3, 30.0), (T_STORY + 2.4, 31.0)])
+        nx, ny = NEAR
+        pos = kf(t, [(T_MOST - 0.1, (lx, ly - 5.0, 3.0)), (T_MOST + 1.9, (lx, ly - 15.0, 11.0)), (T_HAVE - 0.2, (lx, ly - 15.5, 11.3)),
+                     (T_HAVE + 1.2, (nx + 0.20, ny - 1.60, 0.52)), (T_STORY - 0.2, (nx + 0.16, ny - 1.48, 0.48)),
+                     (T_STORY + 1.2, (lx + 0.05, ly - 2.3, 0.42)), (P1, (lx + 0.05, ly - 2.6, 0.44))])
+        look = kf(t, [(T_MOST - 0.1, (lx, ly, 0.2)), (T_MOST + 1.9, (lx, ly + 2.0, 0.0)), (T_HAVE - 0.2, (lx, ly + 2.0, 0.0)),
+                      (T_HAVE + 1.2, (nx, ny - 0.10, 0.12)), (T_STORY - 0.2, (nx, ny - 0.10, 0.12)),
+                      (T_STORY + 1.2, (lx, ly + 2.6, 0.72)), (P1, (lx, ly + 2.6, 0.78))])
+        lens = kf(t, [(T_MOST - 0.1, 32.0), (T_HAVE - 0.2, 30.0), (T_HAVE + 1.2, 42.0), (T_STORY - 0.2, 42.0), (T_STORY + 1.2, 31.0)])
+        shake2 = 0.015 * hit(t, T_COULD + 0.28, 8.0)
+        pos = (pos[0] + shake2 * math.sin(t * 61.0), pos[1], pos[2] + shake2 * math.sin(t * 77.0))
     k.camera(pos, look, lens)
     k.sky(ss(T_TRUE, T_TRUE + 1.6, t))
     k.fade(ss(P0 + 0.2, P0 + 1.2, t) * (1.0 - ss(P1 - 1.2, P1 - 0.05, t)))
