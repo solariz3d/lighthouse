@@ -73,3 +73,8 @@ Written by the librarian on L at 07:3x, at his word of 07:32 (verbatim in `brief
   `loop/stall_trace_launch_pull_ff_refused_2026-11-28.md`. Fix (b) is not built.
 - **So L's next wake starts with:** his ruling on the flac. Then rebase the held commits onto origin (or drop or rewrite
   the flac commit), push, and pull. The chair named this (13:37Z).
+- **Resolved 07:45, by the Third Place** (`third_place/2026-11-28.laptop.md`, its 07:45 entry): the FLAC was replaced by an
+  Opus copy (7,171,800 B, same length) and taken out of the held commits, so their hashes changed. All four are now on
+  origin; room main is 92ed1014 (ls-remote read back by the librarian, 07:4x), and no blob over 10 MB is in 2c7aa061..92ed1014.
+  **L is level with origin; the next wake's pull is not blocked.** The lossless take stays on L only. The section above
+  is kept as the trace.
