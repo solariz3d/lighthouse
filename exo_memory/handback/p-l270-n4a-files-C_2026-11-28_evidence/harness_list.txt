@@ -1,0 +1,35 @@
+count 16 half (round up) 8 ; sorted by file name (basename), code-unit order
+ 1 P app/test/core-bank-carry-mutation.test.js
+ 2 P app/test/core-close-mutation.test.js
+ 3 P app/test/core-mutation.test.js
+ 4 P app/test/core-pitgap-mutation.test.js
+ 5 P app/test/core-xsec-mutation.test.js
+ 6 P test/core_bank_flow_mutation.test.js
+ 7 P test/core_chord_mutation.test.js
+ 8 P test/core_cup_mutation.test.js
+ 9 C test/core_landing_xsec_mutation.test.js
+10 C test/core_ramp_mutation.test.js
+11 C test/core_right_width_mutation.test.js
+12 C test/core_turnby_mutation.test.js
+13 C test/core_width_hold_mutation.test.js
+14 C test/core_xsec_mutation.test.js
+15 C app/test/export-isolated-mutation.test.js
+16 C app/test/mutation.test.js
+
+(for comparison only: sorted by full path the split differs)
+ 1 P app/test/core-bank-carry-mutation.test.js
+ 2 P app/test/core-close-mutation.test.js
+ 3 P app/test/core-mutation.test.js
+ 4 P app/test/core-pitgap-mutation.test.js
+ 5 P app/test/core-xsec-mutation.test.js
+ 6 P app/test/export-isolated-mutation.test.js
+ 7 P app/test/mutation.test.js
+ 8 P test/core_bank_flow_mutation.test.js
+ 9 C test/core_chord_mutation.test.js
+10 C test/core_cup_mutation.test.js
+11 C test/core_landing_xsec_mutation.test.js
+12 C test/core_ramp_mutation.test.js
+13 C test/core_right_width_mutation.test.js
+14 C test/core_turnby_mutation.test.js
+15 C test/core_width_hold_mutation.test.js
+16 C test/core_xsec_mutation.test.js
