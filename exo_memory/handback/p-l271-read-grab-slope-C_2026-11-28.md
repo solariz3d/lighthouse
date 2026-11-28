@@ -214,3 +214,71 @@ The default is NOT CLEAN. CLEAN needs R1, R2 and R3.
   handles) are green on 16a93d1: 0 fail, 0 cancelled. NOT CLEAN on any other change or any red.
 - **Unwelcome, in the words that would make it true:** "row 25 is green under M2 in my run"; "the 0 m control is red, so the bites are the harness";
   "B's 1.09 m below is not what my B+ gives".
+
+### 8.2 Results (checked: `evidence/short/j8.log`, `r25c.json`, `touched8.tap`; one heavy-run job at BelowNormal, 10:26:38Z to 10:27:41Z)
+
+**Verdict: CLEAN.** R1, R2 and R3 hold. Row 25 now bites on M2 by itself, the two CHANGELOG sentences are true to my cases, and nothing else changed.
+
+The registration was committed first by the job itself, at 280fcb52 (04:26:38 −0600, 10:26:38Z), before the worktree was added or any row ran.
+
+**R1, row 25 alone** (`--test-name-pattern "^row 25 \("`, 1 test per run; follow's line replaced in a worktree at 16a93d1, restored, sha256 equal: `restored true`):
+
+| follow's line | row 25 | first failing assertion |
+|---|---|---|
+| the branch | pass | |
+| **M0, the 0 m control (`+ 0 * e`)** | **pass** | |
+| c522ea6's line | fail | the cupped press: 0.0308 m from the slope place |
+| M1 no rise along the slope | fail | the cupped press: 0.0308 m |
+| **M2 the pull whole across** | **fail** | **the banked press: 0.7208 m** from the slope place (1.98 m from the pointer) |
+| M2 at 10 % of its difference across | fail | the banked press: 0.0721 m |
+| M5 the share not squared | fail | the cupped press: 8.86 m |
+| M6 half the slope move | fail | the cupped press: 2.22 m |
+| M7 down the slope | fail | the cupped press: 0.0617 m |
+| M8 the slope move 10 % long | fail | the cupped press: 0.443 m |
+| D's literal form | fail | the cupped press: 2.84 m |
+
+Applied 10 / NOT APPLIED 0 (the branch run is unmutated). B's figures reproduce: 0.7208 under M2, 0.0308 under c522ea6 and M1, 8.86, 0.0617 and 2.84.
+
+- **The 0 m control is green.** So the reds come from the line, not the harness. M0 also reads the same figures as the branch, to every digit printed.
+- **The readout** (a `console.log` after the banked press in the test copy, restored after):
+  - **The branch:** s 1055 of 1130. The road is tilted −20.000° rim to rim there, so the press is on the 20° bank. The row's control `r.across` is 0.72083 m, `slopeMiss` 0.00003 m and the far rim 0.00004 m.
+  - **M2:** `slopeMiss` 0.72084 m. The consistency check holds: M2 lands where the row's control says the whole pull puts it, 0.00001 m apart.
+- **M2 at 10 % is caught** (0.072 m against the 0.01 m bar). So the banked press resolves about 1.4 % of M2's change. inferred: 0.01/0.7208.
+- **A figure for him, from the readout:** on the branch at this press the rim point ends **2.11 m from the pointer** for the row's 40 px pull. That is the slope grab's known cost on a 20° bank (section 5), at a pull larger than B's 4 m. Not a defect in the row.
+- **One thing the row still does not show:** the banked press is reached only when the cupped press passes, so under c522ea6's line the banked press never runs. That is B's P2 note, and it is not a weakness: c522ea6 is caught either way.
+
+**R2, the CHANGELOG** (my section 2 runs, `today.json.gz` against `branch.json.gz`; `cl8.js`):
+- (a) The edge piece. **True.** On my flat edge pieces' rim presses, pulled out 3 m and in 2 m:
+  - The branch's bank moves 0 over the window in 8 of 8 asymmetric cases. Today's largest is **0.4137°** (e 0/er 40, out 3), and 0.41° is the rounding stated.
+  - At the low rim (e 0/er 40, u 1, chord −4.66°) pulled out, the middle drops **0.3936 m** on the branch against **0.2767 m** today, stated as 0.39 and 0.28.
+  - The symmetric edge (e 30/er 30) is the same on both, to 4 decimals in every case. So "two rims at different heights" is the right limit.
+  - A note, not a nit: pulled **in**, the middle rises (0.26 m against 0.18 at that rim). The sentence speaks of a pull at the rim, and its figures are the pull out's.
+- (b) Down the bank. **True.** My B+ T1 on the branch: **0.4387 m short and 1.093 m below** (up −1.093), stated as 0.44 and 1.09 below. Today's B+ ends **0.1972 m** off (B− 0.1971), stated as 0.20, and that stands for both pulls.
+- inferred: these figures are from cc4fa71's follow. 16a93d1 changes no code (R3), so they are 16a93d1's.
+
+**R3, nothing else changed.** **Holds.**
+- 16a93d1's parent is cc4fa71.
+- `git diff --stat` names 2 files (CHANGELOG.md +6 −4, core-pieces-ui.test.js +17 −4).
+- Under app/core, src and test, no file changed.
+- The four hunks of the test file land at lines 1202, 1209–1212, 1226–1227 and 1247–1256. Row 25 runs from 1202 to 1258 (25b starts at 1259), so every changed line is inside row 25.
+- The touched rows on 16a93d1 (zonegrab, core-pieces-ui, handles): **tests 139, pass 139, fail 0, cancelled 0, skipped 0.**
+
+**Unwelcome outcomes:** none came true. Row 25 is red under M2, the 0 m control is green, and my B+ reads 1.09 m below.
+
+### 8.3 The machine
+
+- **One heavy-run job** (`j8.sh`) at BelowNormal from the scratch folder.
+  - It waited behind P's exclusive hold and started when the hold was gone, at 10:26:38Z.
+  - `--status` was joined to it with `;`, not `&&`, because `--status` exits 1 while a hold stands and `&&` would have skipped the run instead of queueing it.
+  - Nothing ran outside heavy-run but `git fetch`, `git diff` and `ls-remote` before the hold was read, and `node --check`.
+- **The worktree** `C:/Consonance/t180-wt-c-l271s` (16a93d1, detached): removed by the job after a clean status check.
+- Nothing was pushed, merged or built. No picture was taken.
+
+BASE: C:\Users\zackn\Downloads\t180-track-builder 16a93d1
+BASE: C:\Consonance\lighthouse e3a7c925
+
+SOURCES: chair paste 09:34:02Z; handback/p-l271-grab-slope-B_2026-11-28.md A1, A2; git diff cc4fa71 16a93d1; evidence/short/j8.log, r25c.json, touched8.tap; evidence/today.json.gz, branch.json.gz, c5_out3.txt
+
+NEXT: librarian, when this section is committed: read it. By this read the slope grab is closed for the combined build, as the plan's default says.
+
+Seat: pane C (sibling-0845a868)

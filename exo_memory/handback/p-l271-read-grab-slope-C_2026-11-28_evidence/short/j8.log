@@ -1,0 +1,55 @@
+start 2026-11-28T10:26:38Z
+registered: 280fcb52 2026-11-28T04:26:38-06:00 pane C (L): L271 short re-read registered (R1-R3) before any run, cc4fa71..16a93d1
+== R3
+16a93d1 parent cc4fa7151b0058370abb3fa3005dc3111c0be3df
+ CHANGELOG.md                    | 10 ++++++----
+ app/test/core-pieces-ui.test.js | 21 +++++++++++++++++----
+ 2 files changed, 23 insertions(+), 8 deletions(-)
+(names under app/core, src, test above, none expected)
+@@ -1202 +1202 @@ test('row D464: Sculpt\'s how-to line and value line read as instructions, not e
+@@ -1209,2 +1209,4 @@ test('row 25 (D519, amended D520): Grab on the road: the pressed point follows t
+@@ -1224 +1226,2 @@ test('row 25 (D519, amended D520): Grab on the road: the pressed point follows t
+@@ -1243,0 +1247,10 @@ test('row 25 (D519, amended D520): Grab on the road: the pressed point follows t
+1202:test('row 25 (D519, amended D520, L271): Grab on the road: the pressed point follows the pointer (a rim press, along the road slope) and a rim keeps the far rim (built again and read), a dot opens at its own station, off the road is Grab as before', async () => {
+1259:test('row 25b (D519): with another key the press keeps that key\'s one channel wherever it lands; the shell says what the piece is and why a channel would be refused', async () => {
+== R1
+BRANCH | row 25: tests 1 pass 1 fail 0 | row 25 (D519, amended D520, L271): Grab  | first: 
+M0 the 0 m control (+ 0 * e) | row 25: tests 1 pass 1 fail 0 | row 25 (D519, amended D520, L271): Grab  | first: 
+BASE c522ea6 | row 25: tests 1 pass 0 fail 1 | row 25 (D519, amended D520, L271): Grab  | first: "the rim point is 0.03082252376344708 m from the slope grab's place (0.0000697168897837347 m from the pointer)"
+M1 no rise along the slope | row 25: tests 1 pass 0 fail 1 | row 25 (D519, amended D520, L271): Grab  | first: "the rim point is 0.030808103728173164 m from the slope grab's place (0.00013422844262749007 m from the pointer)"
+M2 the pull whole across (rise kept) | row 25: tests 1 pass 0 fail 1 | row 25 (D519, amended D520, L271): Grab  | first: "on the banked road the rim point is 0.7208361943625862 m from the slope grab's place (1.9804599768192783 m from the pointer)"
+M2 at 10% of its difference across | row 25: tests 1 pass 0 fail 1 | row 25 (D519, amended D520, L271): Grab  | first: "on the banked road the rim point is 0.07206221270550758 m from the slope grab's place (2.083964450134219 m from the pointer)"
+M5 the share not squared | row 25: tests 1 pass 0 fail 1 | row 25 (D519, amended D520, L271): Grab  | first: "the rim point is 8.862526358420196 m from the slope grab's place (8.862580103762989 m from the pointer)"
+M6 half the slope move | row 25: tests 1 pass 0 fail 1 | row 25 (D519, amended D520, L271): Grab  | first: "the rim point is 2.2155468787539325 m from the slope grab's place (2.2157619702014713 m from the pointer)"
+M7 down the slope instead of up | row 25: tests 1 pass 0 fail 1 | row 25 (D519, amended D520, L271): Grab  | first: "the rim point is 0.06169024180102814 m from the slope grab's place (0.0308454171284625 m from the pointer)"
+M8 the slope move 10% long | row 25: tests 1 pass 0 fail 1 | row 25 (D519, amended D520, L271): Grab  | first: "the rim point is 0.44318291328779524 m from the slope grab's place (0.44425796136153695 m from the pointer)"
+LIT D's literal | row 25: tests 1 pass 0 fail 1 | row 25 (D519, amended D520, L271): Grab  | first: "the rim point is 2.8368008154217725 m from the slope grab's place (2.8059545785408444 m from the pointer)"
+READ BRANCH | pass 1 fail 0 | s 1055 of 1130; rim-to-rim slope -20.000 deg; across 0.7208268473162165; slopeMiss 0.0000325662314651006; miss 2.1075421099083096; far 0.000040618071428852575
+READ M2 the pull whole across (rise kept) | pass 0 fail 1 | s 1055 of 1130; rim-to-rim slope -20.000 deg; across 0.7208268473162165; slopeMiss 0.7208361943625862; miss 1.9804599768192783; far 0.000040720765207993774
+READ M0 the 0 m control (+ 0 * e) | pass 1 fail 0 | s 1055 of 1130; rim-to-rim slope -20.000 deg; across 0.7208268473162165; slopeMiss 0.0000325662314651006; miss 2.1075421099083096; far 0.000040618071428852575
+restored true | touched {"tests":139,"pass":139,"fail":0,"cancelled":0,"skipped":0,"fails":0}
+== R2
+cases 631 631
+
+(a) flat edge pieces, rim presses (u 1, -1), pulls out 3 and in 2
+  edge e 30 er 0 s 0.64, flat                u  1 out 3  chord 2.55 | bank at s0 today -0.2235 branch 0 | window max today 0.2235 branch 0 | middle dh today -0.2165 branch -0.1486
+  edge e 30 er 0 s 0.64, flat                u  1 in 2   chord 2.55 | bank at s0 today 0.1744 branch 0 | window max today 0.1744 branch 0 | middle dh today 0.1443 branch 0.0991
+  edge e 30 er 0 s 0.64, flat                u -1 out 3  chord -2.55 | bank at s0 today -0.2235 branch 0 | window max today 0.2235 branch 0 | middle dh today -0.2165 branch -0.2822
+  edge e 30 er 0 s 0.64, flat                u -1 in 2   chord -2.55 | bank at s0 today 0.1744 branch 0 | window max today 0.1744 branch 0 | middle dh today 0.1443 branch 0.1881
+  edge e 0 er 40 s 0.5, flat                 u  1 out 3  chord -4.66 | bank at s0 today 0.4137 branch 0 | window max today 0.4137 branch 0 | middle dh today -0.2767 branch -0.3936
+  edge e 0 er 40 s 0.5, flat                 u  1 in 2   chord -4.66 | bank at s0 today -0.3236 branch 0 | window max today 0.3236 branch 0 | middle dh today 0.1845 branch 0.2624
+  edge e 0 er 40 s 0.5, flat                 u -1 out 3  chord 4.66 | bank at s0 today 0.4137 branch 0 | window max today 0.4137 branch 0 | middle dh today -0.2767 branch -0.1508
+  edge e 0 er 40 s 0.5, flat                 u -1 in 2   chord 4.66 | bank at s0 today -0.3236 branch 0 | window max today 0.3236 branch 0 | middle dh today 0.1845 branch 0.1005
+  edge e 30 er 30 s 0.64, flat (symmetric)   u  1 out 3  chord 0 | bank at s0 today 0 branch 0 | window max today 0 branch 0 | middle dh today -0.2877 branch -0.2877
+  edge e 30 er 30 s 0.64, flat (symmetric)   u  1 in 2   chord 0 | bank at s0 today 0 branch 0 | window max today 0 branch 0 | middle dh today 0.1918 branch 0.1918
+  edge e 30 er 30 s 0.64, flat (symmetric)   u -1 out 3  chord 0 | bank at s0 today 0 branch 0 | window max today 0 branch 0 | middle dh today -0.2877 branch -0.2877
+  edge e 30 er 30 s 0.64, flat (symmetric)   u -1 in 2   chord 0 | bank at s0 today 0 branch 0 | window max today 0 branch 0 | middle dh today 0.1918 branch 0.1918
+
+(b) B's fixtures, T1 (s 320, the right rim pulled 4 m out, r 30)
+  B- (plan -20): today across 0.0874 up 0.1762 total 0.1971; middle dh -0.2403; bank at s0 4.9984
+                 branch across 0.5693 up 1.4519 total 1.5596; middle dh 0.4306; bank at s0 0
+  B+ (plan 20): today across -0.0124 up 0.1963 total 0.1972; middle dh -0.2403; bank at s0 -4.9984
+                branch across 0.4387 up -1.093 total 1.1779; middle dh -0.855; bank at s0 0
+== cleanup
+worktree removed (status clean)
+end 2026-11-28T10:27:41Z

@@ -1,0 +1,260 @@
+{
+ "rows": [
+  {
+   "id": "BRANCH",
+   "applied": true,
+   "tests": 1,
+   "pass": 1,
+   "fail": 0,
+   "cancelled": 0,
+   "names": [
+    "row 25 (D519, amended D520, L271): Grab "
+   ],
+   "msgs": []
+  },
+  {
+   "id": "M0 the 0 m control (+ 0 * e)",
+   "applied": true,
+   "tests": 1,
+   "pass": 1,
+   "fail": 0,
+   "cancelled": 0,
+   "names": [
+    "row 25 (D519, amended D520, L271): Grab "
+   ],
+   "msgs": []
+  },
+  {
+   "id": "BASE c522ea6",
+   "applied": true,
+   "tests": 1,
+   "pass": 0,
+   "fail": 1,
+   "cancelled": 0,
+   "names": [
+    "row 25 (D519, amended D520, L271): Grab "
+   ],
+   "msgs": [
+    "\"the rim point is 0.03082252376344708 m from the slope grab's place (0.0000697168897837347 m from the pointer)\""
+   ]
+  },
+  {
+   "id": "M1 no rise along the slope",
+   "applied": true,
+   "tests": 1,
+   "pass": 0,
+   "fail": 1,
+   "cancelled": 0,
+   "names": [
+    "row 25 (D519, amended D520, L271): Grab "
+   ],
+   "msgs": [
+    "\"the rim point is 0.030808103728173164 m from the slope grab's place (0.00013422844262749007 m from the pointer)\""
+   ]
+  },
+  {
+   "id": "M2 the pull whole across (rise kept)",
+   "applied": true,
+   "tests": 1,
+   "pass": 0,
+   "fail": 1,
+   "cancelled": 0,
+   "names": [
+    "row 25 (D519, amended D520, L271): Grab "
+   ],
+   "msgs": [
+    "\"on the banked road the rim point is 0.7208361943625862 m from the slope grab's place (1.9804599768192783 m from the pointer)\""
+   ]
+  },
+  {
+   "id": "M2 at 10% of its difference across",
+   "applied": true,
+   "tests": 1,
+   "pass": 0,
+   "fail": 1,
+   "cancelled": 0,
+   "names": [
+    "row 25 (D519, amended D520, L271): Grab "
+   ],
+   "msgs": [
+    "\"on the banked road the rim point is 0.07206221270550758 m from the slope grab's place (2.083964450134219 m from the pointer)\""
+   ]
+  },
+  {
+   "id": "M5 the share not squared",
+   "applied": true,
+   "tests": 1,
+   "pass": 0,
+   "fail": 1,
+   "cancelled": 0,
+   "names": [
+    "row 25 (D519, amended D520, L271): Grab "
+   ],
+   "msgs": [
+    "\"the rim point is 8.862526358420196 m from the slope grab's place (8.862580103762989 m from the pointer)\""
+   ]
+  },
+  {
+   "id": "M6 half the slope move",
+   "applied": true,
+   "tests": 1,
+   "pass": 0,
+   "fail": 1,
+   "cancelled": 0,
+   "names": [
+    "row 25 (D519, amended D520, L271): Grab "
+   ],
+   "msgs": [
+    "\"the rim point is 2.2155468787539325 m from the slope grab's place (2.2157619702014713 m from the pointer)\""
+   ]
+  },
+  {
+   "id": "M7 down the slope instead of up",
+   "applied": true,
+   "tests": 1,
+   "pass": 0,
+   "fail": 1,
+   "cancelled": 0,
+   "names": [
+    "row 25 (D519, amended D520, L271): Grab "
+   ],
+   "msgs": [
+    "\"the rim point is 0.06169024180102814 m from the slope grab's place (0.0308454171284625 m from the pointer)\""
+   ]
+  },
+  {
+   "id": "M8 the slope move 10% long",
+   "applied": true,
+   "tests": 1,
+   "pass": 0,
+   "fail": 1,
+   "cancelled": 0,
+   "names": [
+    "row 25 (D519, amended D520, L271): Grab "
+   ],
+   "msgs": [
+    "\"the rim point is 0.44318291328779524 m from the slope grab's place (0.44425796136153695 m from the pointer)\""
+   ]
+  },
+  {
+   "id": "LIT D's literal",
+   "applied": true,
+   "tests": 1,
+   "pass": 0,
+   "fail": 1,
+   "cancelled": 0,
+   "names": [
+    "row 25 (D519, amended D520, L271): Grab "
+   ],
+   "msgs": [
+    "\"the rim point is 2.8368008154217725 m from the slope grab's place (2.8059545785408444 m from the pointer)\""
+   ]
+  }
+ ],
+ "reads": [
+  {
+   "id": "BRANCH",
+   "pass": 1,
+   "fail": 0,
+   "read": {
+    "s": 1055,
+    "Lb": 1130,
+    "rimL": [
+     559.5889003356505,
+     -3.0386825682101057,
+     332.7463279798875
+    ],
+    "rimR": [
+     531.0382373215067,
+     7.392543968912946,
+     330.2503338578525
+    ],
+    "across": 0.7208268473162165,
+    "slopeMiss": 0.0000325662314651006,
+    "miss": 2.1075421099083096,
+    "far": 0.000040618071428852575,
+    "d": {
+     "h": -1.403536221487883,
+     "l": -2.5701963881831773,
+     "w": 5.88560893910008,
+     "phi": -5.135911612680397e-17
+    }
+   },
+   "chordDeg": -19.999999977146665,
+   "msgs": []
+  },
+  {
+   "id": "M2 the pull whole across (rise kept)",
+   "pass": 0,
+   "fail": 1,
+   "read": {
+    "s": 1055,
+    "Lb": 1130,
+    "rimL": [
+     559.5889003356505,
+     -3.0386825682101057,
+     332.7463279798875
+    ],
+    "rimR": [
+     531.0382373215067,
+     7.392543968912946,
+     330.2503338578525
+    ],
+    "across": 0.7208268473162165,
+    "slopeMiss": 0.7208361943625862,
+    "miss": 1.9804599768192783,
+    "far": 0.000040720765207993774,
+    "d": {
+     "h": -1.458288985529574,
+     "l": -2.930609811841279,
+     "w": 6.574929995093032,
+     "phi": -0.006669076172323138
+    }
+   },
+   "chordDeg": -19.999999977146665,
+   "msgs": [
+    "\"on the banked road the rim point is 0.7208361943625862 m from the slope grab's place (1.9804599768192783 m from the pointer)\""
+   ]
+  },
+  {
+   "id": "M0 the 0 m control (+ 0 * e)",
+   "pass": 1,
+   "fail": 0,
+   "read": {
+    "s": 1055,
+    "Lb": 1130,
+    "rimL": [
+     559.5889003356505,
+     -3.0386825682101057,
+     332.7463279798875
+    ],
+    "rimR": [
+     531.0382373215067,
+     7.392543968912946,
+     330.2503338578525
+    ],
+    "across": 0.7208268473162165,
+    "slopeMiss": 0.0000325662314651006,
+    "miss": 2.1075421099083096,
+    "far": 0.000040618071428852575,
+    "d": {
+     "h": -1.403536221487883,
+     "l": -2.5701963881831773,
+     "w": 5.88560893910008,
+     "phi": -5.135911612680397e-17
+    }
+   },
+   "chordDeg": -19.999999977146665,
+   "msgs": []
+  }
+ ],
+ "touched": {
+  "tests": 139,
+  "pass": 139,
+  "fail": 0,
+  "cancelled": 0,
+  "skipped": 0,
+  "fails": []
+ },
+ "restored": true
+}

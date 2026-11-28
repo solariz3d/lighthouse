@@ -2082,3 +2082,7 @@ Claim (could be wrong): his 08:19 crash was Export to Assetto Corsa: `v8-oom-sta
 ## 2026-11-28 — L271 read of l271-grab-slope cc4fa71: NOT CLEAN by one test; amended core-pieces-ui row 25 passes a grab that moves the point by the whole pull across (M2), though zonegrab 14l/h/j/o catch it; the code holds: flat no-cup 120/120 same text, the bank 0° on every pull (66 banked cases, today up to 6.02°), lifts identical (241), and on an edge piece, a tube and a half-pipe's wall a pull keeps the bank (today up to 7.61° on a tube's side) while the point leaves the pointer; a lifting diagonal banks more than today only because today's pull cancelled part of the lift
 - Evidence: `exo_memory/handback/p-l271-read-grab-slope-C_2026-11-28_evidence/cmp271.txt`, `mut271.json`, `c5_out3.txt`, `diag.log`, `touched.tap`.
 - Hand-back: `exo_memory/handback/p-l271-read-grab-slope-C_2026-11-28.md`
+
+## 2026-11-28 — L271 short re-read: at builder 16a93d1 row 25 bites on M2 by itself (its banked press on a −20.000° chord reads 0.7208 m, and 10 % of M2 still 0.072 m), the 0 m control is green, and M2 lands where the row's own control says (0.72084 against 0.72083 m); B's two CHANGELOG sentences are true to my cases (edge 0.4137° / 0.3936 against 0.2767 m; B+ 0.4387 short, 1.093 below, today 0.1972); 2 files, all inside row 25; CLEAN
+- Evidence: `exo_memory/handback/p-l271-read-grab-slope-C_2026-11-28_evidence/short/j8.log`, `r25c.json`, `touched8.tap` (139/139).
+- Hand-back: `exo_memory/handback/p-l271-read-grab-slope-C_2026-11-28.md` (section 8)
