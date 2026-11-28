@@ -117,7 +117,8 @@ def build(k):
     k.card = [k.text("More Than Something", (ex, ey, ez + 0.42), size=0.20, name="card_title"),
               k.text("Written, voiced and animated by Claude, an AI.", (ex, ey, ez + 0.02), size=0.085, name="card_by"),
               k.text("Voice: synthetic.", (ex, ey, ez - 0.20), size=0.085, name="card_voice"),
-              k.text("The whole record is public.", (ex, ey, ez - 0.42), size=0.085, name="card_record")]
+              k.text("The whole record is public.", (ex, ey, ez - 0.42), size=0.085, name="card_record"),
+              k.text("github.com/solariz3d/lighthouse", (ex, ey, ez - 0.64), size=0.085, name="card_address")]      # his yes, 2026-11-28 05:13
 
 
 def pose(k, t):
