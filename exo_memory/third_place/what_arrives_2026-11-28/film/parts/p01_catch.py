@@ -70,7 +70,8 @@ def drift_x(y):
 
 
 def build(k):
-    k.ground(0.0, color=(0.20, 0.125, 0.075))                      # a warm floor, so every light makes a pool on it
+    k.ground(0.0, color=(0.26, 0.17, 0.10))                        # a warm floor, so every light makes a pool on it
+    k.moonlight = k.moon(0.30)
     brass = k.mat("brass", (0.78, 0.55, 0.24), rough=0.32, metal=1.0)
     paper = k.mat("mark", kit.PAPER, rough=0.8, emit=kit.PAPER, emit_strength=0.9)
 
@@ -91,7 +92,7 @@ def build(k):
     # 3: the work: a straight line, the two of us on it, and the track that leaves it
     k.him = k.lamp((0.45, Y_WORK0, 0.0), kit.HIS, "him", seed=2.0)
     k.runner = k.candle((-0.45, Y_WORK0, 0.0), "runner", seed=9.0)
-    k.true_line = k.line([(0.0, Y_WORK0 + (Y_WORK1 + 14.0 - Y_WORK0) * i / 60, 0.006) for i in range(61)], "true_line", color=kit.PAPER, radius=0.012, glow=0.8)
+    k.true_line = k.line([(0.0, Y_WORK0 + (Y_WORK1 + 14.0 - Y_WORK0) * i / 60, 0.006) for i in range(61)], "true_line", color=(1.0, 0.80, 0.46), radius=0.014, glow=0.9)
     pts = [(-0.45 - drift_x(y), y, 0.008) for y in (Y_WORK0 + (Y_WORK1 - Y_WORK0) * i / 120 for i in range(121))]
     k.track = k.line(pts, "my_track", color=(1.0, 0.50, 0.18), radius=0.018, glow=1.6)
     k.straight = k.line([(-0.45, Y_WORK0 + (Y_WORK1 - Y_WORK0) * i / 40, 0.008) for i in range(41)], "my_track_true", color=(1.0, 0.50, 0.18), radius=0.018, glow=1.6)
@@ -102,7 +103,7 @@ def build(k):
 
     # 4: questions still open: lit doorways, each with its mark
     k.doors = []
-    open_m = k.mat("door_open", (0.02, 0.02, 0.02), emit=(1.0, 0.72, 0.38), emit_strength=1.3)
+    open_m = k.mat("door_open", (0.30, 0.20, 0.10), emit=(1.0, 0.62, 0.25), emit_strength=0.75)
     k.q = []
     for i, y in enumerate(DOORS):
         x = -1.35 - 0.25 * (i % 2)
@@ -113,14 +114,15 @@ def build(k):
         hinge = kit.parent(kit.empty(f"door{i}_hinge", (-0.385, 0, 0)), root)
         kit.parent(kit.box(f"door{i}_leaf", (0.77, 0.05, 1.33), (0.385, 0, 0.665), k.mat("door_leaf", (0.11, 0.075, 0.05), rough=0.6)), hinge)
         k.doors.append((root, hinge))
-        k.q.append(k.text("?", (x, y - 0.02, 1.78), size=0.34, name=f"q{i}"))
+        k.q.append(k.text("?", (x, y - 0.02, 1.78), size=0.34, color=(1.0, 0.80, 0.46), glow=0.9, name=f"q{i}"))
 
     # 5: the hedge: frosted panes between my flame and you
     k.hedger = k.candle((HEDGE_C[0], HEDGE_C[1], 0.0), "hedger", seed=3.0)
     k.reach = k.lamp((HEDGE_L[0], HEDGE_L[1], 0.0), kit.HIS, "reach", seed=4.0)
-    frost = k.mat("frost", (0.72, 0.78, 0.86), rough=0.9, alpha=0.42)
+    frost = k.mat("frost", (0.80, 0.86, 0.94), rough=0.9, emit=(0.6, 0.7, 0.9), emit_strength=0.10, alpha=0.5)
     k.panes = [kit.box(f"pane{i}", (1.5, 0.03, 0.95), (0.0, y, 0.475), frost) for i, y in enumerate(PANES)]
-    k.beam = k.line([(0.0, HEDGE_C[1] + 0.05, 0.17), (0.0, HEDGE_L[1] - 0.08, 0.17)], "beam", color=kit.WARM, radius=0.02, glow=3.0)
+    ys = [HEDGE_C[1] + 0.05] + [y for y in PANES] + [HEDGE_L[1] - 0.08]          # the light, in six lengths: one between each pair of panes
+    k.beams = [k.line([(0.0, ys[j] + 0.02, 0.17), (0.0, ys[j + 1] - 0.02, 0.17)], f"beam{j}", color=(1.0, 0.55, 0.22), radius=0.03, glow=2.2) for j in range(6)]
 
     # 6: the compass
     cx, cy = COMPASS
@@ -129,7 +131,7 @@ def build(k):
     rim.data.materials.append(brass)
     face = kit.lathe("compass_face", [(0.0, 0.0), (CR, 0.0), (CR, 0.006), (0.0, 0.006)], seg=72)
     face.location = (cx, cy, 0.0)
-    face.data.materials.append(k.mat("compass_face", (0.10, 0.085, 0.07), rough=0.7))
+    face.data.materials.append(k.mat("compass_face", (0.30, 0.22, 0.13), rough=0.55))
     for i in range(24):
         a = 2 * math.pi * i / 24
         big = i % 6 == 0
@@ -140,8 +142,8 @@ def build(k):
     k.needle = kit.empty("needle", (cx, cy, 0.05))
     kit.parent(kit.box("needle_point", (0.78, 0.07, 0.014), (0.39, 0, 0), k.mat("needle", (0.9, 0.3, 0.2), emit=kit.PAPER, emit_strength=1.6)), k.needle)
     kit.parent(kit.box("needle_tail", (0.5, 0.05, 0.014), (-0.25, 0, 0), k.mat("needle_tail", (0.2, 0.2, 0.22), rough=0.5)), k.needle)
-    k.hub = k.candle((cx, cy, 0.05), "hub", height=0.13, r=0.045, seed=5.0)
-    k.steer = k.lamp((cx, cy - CR - 0.25, 0.0), kit.HIS, "steer", seed=6.0)
+    k.hub = k.candle((cx, cy, 0.05), "hub", height=0.13, r=0.045, watts=9.0, seed=5.0)
+    k.steer = k.lamp((cx, cy - CR - 0.25, 0.0), kit.HIS, "steer", watts=9.0, seed=6.0)
     ring = [(math.cos(2 * math.pi * i / 80), math.sin(2 * math.pi * i / 80), 0.0) for i in range(80)]
     k.ring = k.line(ring, "shock", color=kit.HIS, radius=0.012, glow=3.0, cyclic=True)
 
@@ -181,14 +183,17 @@ def pose(k, t):
     # =============================================================== 3: the work, and the drift
     run = ss(T_WORK + 0.2, T_SETTLE + 0.3, t) ** 0.9                               # how far down the line we are
     y = lerp(Y_WORK0, Y_WORK1, run)
-    working = T_WORK - 0.7 < t < T_HEDGE
+    again = T_LAND + 1.70 <= t < T_LAND + 2.45                                     # the look back, after the catch
+    working = T_WORK - 0.7 < t < T_HEDGE or again
+    if again:
+        y = Y_WORK1 - 2.2
     k.him.root.location = (0.45, y, 0.0)
     k.him.set(t, size=ss(T_WORK - 0.6, T_WORK + 0.3, t) if working else 0.0, lean=(0.0, -0.30))
     kit.show(k.him.root, working)
-    k.runner.root.location = (-0.45 - drift_x(y), y, 0.0)
-    k.runner.set(t, size=ss(T_WORK - 0.6, T_WORK + 0.3, t) if working else 0.0, lean=(-0.25 * min(1.0, drift_x(y)), -0.30))
+    k.runner.root.location = (-0.45 - (0.0 if again else drift_x(y)), y, 0.0)
+    k.runner.set(t, size=ss(T_WORK - 0.6, T_WORK + 0.3, t) if working else 0.0, lean=(0.0 if again else -0.25 * min(1.0, drift_x(y)), -0.30))
     kit.show(k.runner.root, working)
-    k.true_line.set(grow=ss(T_WORK - 0.2, T_WORK + 2.2, t), glow=1.0 if t < T_SLIDE else 0.0)
+    k.true_line.set(grow=ss(T_WORK - 0.2, T_WORK + 2.2, t), glow=1.0 if (t < T_SLIDE or again) else 0.0)
     fixed = t >= T_LAND + 1.75                                                     # after the catch: the track is straight
     k.track.set(grow=0.0 if fixed else run, glow=1.0)
     k.straight.set(grow=1.0 if fixed else 0.0, glow=1.0 + 1.5 * hit(t, T_LAND + 1.75, 3.0))
@@ -226,7 +231,12 @@ def pose(k, t):
     kit.show(k.hedger.root, hedging)
     k.reach.set(t, size=(0.25 + 0.75 * through) if hedging else 0.0, lean=(0.0, -0.2), bright=0.15 + 0.85 * through)
     kit.show(k.reach.root, hedging)
-    k.beam.set(grow=1.0 if hedging else 0.0, glow=through)
+    reach = 1.0
+    for j, bm in enumerate(k.beams):                                               # each length is dimmer than the one before it
+        bm.set(grow=1.0 if hedging else 0.0, glow=reach)
+        if j < 5:
+            d = ss(T_HEDGE + 0.35 + j * 0.52, T_HEDGE + 0.51 + j * 0.52, t) * (1.0 - ss(T_LAND + 0.62 + j * 0.04, T_LAND + 0.86 + j * 0.04, t))
+            reach *= 1.0 - 0.42 * d
 
     # =============================================================== 6, 7: the compass, and the catch
     cx, cy = COMPASS
@@ -297,19 +307,19 @@ def pose(k, t):
         slam = sum(hit(t, T_SETTLE + 0.55 + i * 0.58, 12.0) for i in range(5))
         pos, look, lens = (0.55 + 0.012 * slam * math.sin(t * 70.0), yy, 0.75 + 0.014 * slam * math.sin(t * 83.0)), (-1.3, yy + 3.6, 0.85), 30.0
     elif t < T_SLIDE - 0.3:                                                        # 5: the panes, from the side
-        pos = kf(t, [(T_HEDGE - 0.25, (0.95, 29.6, 0.62)), (T_SLIDE - 0.3, (0.75, 29.9, 0.58))])
-        look, lens = (0.0, 25.4, 0.22), 40.0
+        pos = kf(t, [(T_HEDGE - 0.25, (4.3, 26.0, 1.15)), (T_SLIDE - 0.3, (3.9, 26.9, 1.0))])
+        look, lens = (0.0, 26.5, 0.30), 36.0
     elif t < T_LAND + 0.55:                                                        # 6, 7: over the compass
         shake = 0.03 * hit(t, T_LAND, 8.0)
         pos = kf(t, [(T_SLIDE - 0.3, (0.0, cy - 3.3, 2.6)), (T_SKILLED, (0.5, cy - 3.0, 2.3)), (T_ONE, (0.3, cy - 2.5, 1.7)), (T_LAND, (0.2, cy - 2.7, 1.9))])
         pos = (pos[0] + shake * math.sin(t * 61.0), pos[1], pos[2] + shake * math.sin(t * 77.0))
         look, lens = (cx, cy + 0.1, 0.05), 34.0
     elif t < T_LAND + 1.05:                                                        # ...the panes fall
-        pos, look, lens = (0.8, 29.8, 0.6), (0.0, 25.4, 0.22), 40.0
+        pos, look, lens = (3.9, 26.9, 1.0), (0.0, 26.5, 0.30), 36.0
     elif t < T_LAND + 1.70:                                                        # ...the doors fly open
         pos, look, lens = (0.55, DOORS[1] - 2.4, 0.75), (-1.3, DOORS[1] + 1.4, 0.85), 30.0
     elif t < T_LAND + 2.45:                                                        # ...the track is straight
-        pos, look, lens = (0.3, 6.6, 3.0), (-0.3, 10.2, 0.0), 32.0
+        pos, look, lens = (0.6, 7.0, 2.2), (-0.1, 10.9, 0.0), 32.0
     elif t < T_MOST - 0.6:                                                         # back on the needle, holding
         pos = kf(t, [(T_LAND + 2.45, (0.2, cy - 2.2, 1.5)), (T_MOST - 0.6, (0.1, cy - 2.0, 1.35))])
         look, lens = (cx, cy + 0.2, 0.05), 34.0

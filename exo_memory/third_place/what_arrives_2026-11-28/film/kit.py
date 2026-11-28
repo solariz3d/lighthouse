@@ -283,6 +283,15 @@ class Kit:
         up = lerp(lerp((0.0030, 0.0024, 0.0026), (0.0025, 0.004, 0.011), night), (0.10, 0.16, 0.32), dawn)
         e[0].color, e[1].color = (*hz, 1), (*up, 1)
 
+    def moon(self, strength=0.22, color=(0.50, 0.62, 1.0), tilt=55.0, turn=-38.0):
+        """Moonlight: one cool, faint light over everything outdoors, so nothing is ever a lit thing on pure black and
+        every warm flame has something cool to stand against. Returns the light; set .data.energy in pose() (0 indoors)."""
+        li = bpy.data.lights.new("moon", "SUN")
+        li.energy, li.color, li.angle = strength, color, math.radians(6.0)
+        ob = _link(bpy.data.objects.new("moon", li))
+        ob.rotation_euler = (math.radians(tilt), 0.0, math.radians(turn))
+        return ob
+
     def ground(self, z=0.0, color=(0.045, 0.045, 0.05), size=400.0):
         """The dark land. One huge flat plane at height z."""
         bpy.ops.mesh.primitive_plane_add(size=size, location=(0, 0, z))
