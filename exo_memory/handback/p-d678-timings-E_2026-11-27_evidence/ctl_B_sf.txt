@@ -1,0 +1,40 @@
+sf: f3cd425 (f3cd425) against c66b503 (c66b503); 10 runs kept (5 / 5; 0 ended by a game); quiet by the record: 0 of 10; busy before each run 6.6-18 %
+
+EVERY SAMPLE (the first attempt; a retry after it in brackets; - none):
+  row 1 aqua                     f3cd425: 4.7*  4.8*  4.7*  4.5*  -   |   c66b503: 4.6*  4.8*  4.6*  6.9 [6.8]*  6.2 [8.4]*
+  row 1 skyline                  f3cd425: 4.7*  4.5*  4.5*  4.9*  -   |   c66b503: 4.5*  4.7*  4.6*  -  -
+  row 1 glass                    f3cd425: 4.4*  4.6*  4.2*  5.2*  -   |   c66b503: 4.5*  4.4*  4.4*  -  -
+  row 1 aurora                   f3cd425: 4.9*  5*  4.4*  6.2 [4.5]*  9.5 [6.1]*   |   c66b503: 4.7*  4.9*  4.2*  -  -
+  row 1 sigil                    f3cd425: 4.4*  4.3*  4.4*  4.5*  -   |   c66b503: 4.1*  4.5*  4.4*  -  -
+  row 2                          f3cd425: 14.1 [13.4]*  14.3 [14.8]*  14.3 [26.6]*  15 [15.1]*  21.7 [20.7]*   |   c66b503: 14.3 [15.3]*  14.8 [20.8]*  14.6 [13.9]*  20.6 [20.8]*  25.6 [32.8]*
+  row 3                          f3cd425: 6.5 [6.3]*  6.5 [6.5]*  7.1 [7.2]*  6.4 [6.7]*  14.2 [10.4]*   |   c66b503: 6.4 [6.3]*  8.4 [8.3]*  5.8*  8.4 [11.4]*  16 [10.1]*
+  row 4a                         f3cd425: 18.4 [18.7]*  20.9 [18.9]*  25.7 [26.2]*  23.4 [24.4]*  25.7 [24.7]*   |   c66b503: 17.6 [18.5]*  17.7 [18]*  17.6 [20.6]*  25.1 [27]*  27.4 [25.2]*
+  row 4b                         f3cd425: 4.9 [5.1]*  5.8*  6.1 [6]*  9.2 [7]*  8.6 [7.7]*   |   c66b503: 4.4*  4.2*  4.6*  5.8*  5.8*
+  (* a run not quiet by the record)
+  row 3 other bars, first attempt (release ms / longest ms / whole after ms): f3cd425: 2/43/1653; 2.3/47/1659; 2.8/60/2204; 2.5/46/1650; 4/106/2697  |  c66b503: 2.2/46/1623; 2.8/62/2270; 2.2/43/1589; 2.5/63/2377; 3.5/73/2382
+  row 4a other bars, first attempt (release ms / longest ms / whole after ms): f3cd425: 0.8/76/213; 0.9/47/212; 0.7/66/223; 0.9/60/226; 1.1/74/332  |  c66b503: 1/62/211; 0.7/47/221; 0.8/51/215; 1.5/61/244; 1.2/60/239
+  row 4b other bars, first attempt (release ms / longest ms / whole after ms): f3cd425: 14.3/345/104; 18.4/65/225; 16.9/59/131; 18/46/124; 18.3/55/220  |  c66b503: 14.7/37/103; 13.8/39/106; 13.3/38/104; 15.1/50/119; 18.2/53/115
+
+VERDICTS (every run; c66b503 against f3cd425; rule: one-sided p < 0.01 AND the median more than the margin):
+  row 1 aqua       f3cd425 median 4.700 (n 4), c66b503 4.800 (n 5); diff +0.100 (margin 0.3); above p 0.2302, below p 0.8016 -> not told; over the bar 6: 0/4 and 2/5
+  row 1 skyline    f3cd425 median 4.600 (n 4), c66b503 4.600 (n 3); diff +0.000 (margin 0.3); above p 0.6286, below p 0.5429 (CANNOT FIRE at this n: the smallest p is 0.0286) -> not told; over the bar 6: 0/4 and 0/3
+  row 1 glass      f3cd425 median 4.500 (n 4), c66b503 4.400 (n 3); diff -0.100 (margin 0.3); above p 0.7143, below p 0.4571 (CANNOT FIRE at this n: the smallest p is 0.0286) -> not told; over the bar 6: 0/4 and 0/3
+  row 1 aurora     f3cd425 median 5.000 (n 5), c66b503 4.700 (n 3); diff -0.300 (margin 0.3); above p 0.9464, below p 0.0893 (CANNOT FIRE at this n: the smallest p is 0.0179) -> not told; over the bar 6: 2/5 and 0/3 — f3cd425 SITS AT ITS BAR (its own runs both pass and fail)
+  row 1 sigil      f3cd425 median 4.400 (n 4), c66b503 4.400 (n 3); diff +0.000 (margin 0.3); above p 0.6857, below p 0.4857 (CANNOT FIRE at this n: the smallest p is 0.0286) -> not told; over the bar 6: 0/4 and 0/3
+  row 2            f3cd425 median 14.300 (n 5), c66b503 14.800 (n 5); diff +0.500 (margin 0.3); above p 0.2024, below p 0.8413 -> not told; over the bar 6: 5/5 and 5/5 — f3cd425 is over its bar in every run
+  row 3            f3cd425 median 6.500 (n 5), c66b503 8.400 (n 5); diff +1.900 (margin 0.3); above p 0.4365, below p 0.5952 -> not told; over the bar 6: 5/5 and 4/5 — f3cd425 is over its bar in every run
+  row 4a           f3cd425 median 23.400 (n 5), c66b503 17.700 (n 5); diff -5.700 (margin 0.3); above p 0.8333, below p 0.1944 -> not told; over the bar 6: 5/5 and 5/5 — f3cd425 is over its bar in every run
+  row 4b           f3cd425 median 6.100 (n 5), c66b503 4.600 (n 5); diff -1.500 (margin 0.3); above p 0.9881, below p 0.0278 -> not told; over the bar 6: 3/5 and 0/5 — f3cd425 SITS AT ITS BAR (its own runs both pass and fail)
+  across the cases: c66b503's median higher in 3, lower in 4, of 9 (one-sided sign p 0.9102; told at 8 of 9) -> not told
+
+VERDICTS (quiet runs only; c66b503 against f3cd425; rule: one-sided p < 0.01 AND the median more than the margin):
+  row 1 aqua: no samples on one side (0 / 0)
+  row 1 skyline: no samples on one side (0 / 0)
+  row 1 glass: no samples on one side (0 / 0)
+  row 1 aurora: no samples on one side (0 / 0)
+  row 1 sigil: no samples on one side (0 / 0)
+  row 2: no samples on one side (0 / 0)
+  row 3: no samples on one side (0 / 0)
+  row 4a: no samples on one side (0 / 0)
+  row 4b: no samples on one side (0 / 0)
+  across the cases: c66b503's median higher in 0, lower in 0, of 0 (one-sided sign p 1.0000; told at Infinity of 0) -> not told

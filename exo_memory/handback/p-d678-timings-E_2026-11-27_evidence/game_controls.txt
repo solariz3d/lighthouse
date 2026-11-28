@@ -1,0 +1,3 @@
+proc_control_game.txt: {"ok":false,"games":["acs"],"hisApp":true,"contentManager":false}
+proc_control_clear.txt: {"ok":true,"games":[],"hisApp":false,"contentManager":false}
+proc_control_missing.txt: {"ok":false,"unreadable":true,"games":[]}

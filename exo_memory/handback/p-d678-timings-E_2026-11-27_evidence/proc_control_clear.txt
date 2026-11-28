@@ -1,0 +1,4 @@
+1|explorer|1|C:\Windowsxplorer.exe
+2|node|0|C:
+
+ode.exe

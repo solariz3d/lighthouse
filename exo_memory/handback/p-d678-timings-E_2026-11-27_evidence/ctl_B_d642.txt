@@ -1,0 +1,16 @@
+d642: 7b3926e (7b3926e) against e7b9128 (e7b9128); 30 runs kept (15 / 15; 0 ended by a game); quiet by the record: 0 of 30; busy before each run 2.3-18.1 %
+
+EVERY SAMPLE (the first attempt; a retry after it in brackets; - none):
+  ratio                          7b3926e: 2.21*  2.21*  1.62*  3.66*  1.92*  1.7*  1.74*  2.27*  1.87*  2.15*  1.74*  2.34*  2.32*  2.36*  2.5*   |   e7b9128: 2.13*  2.23*  1.9*  2.15*  1.71*  1.92*  2.01*  2.15*  2.46*  1.85*  2.12*  1.57*  1.65*  2.63*  2.22*
+  rolling p95 (secondary)        7b3926e: 12.1*  12.9*  10.6*  39.6*  10.1*  12*  9.3*  12.5*  11.3*  14.3*  11.6*  13.5*  16.7*  16.5*  14.5*   |   e7b9128: 15.5*  13.1*  10*  12.3*  9.1*  11.2*  12.7*  12.8*  12.5*  11.5*  12.2*  12.1*  10.2*  13.1*  11*
+  early p95                      7b3926e: 5.5*  5.8*  6.5*  10.8*  5.3*  7.1*  5.3*  5.5*  6*  6.6*  6.7*  5.7*  7.2*  7*  5.8*   |   e7b9128: 7.3*  5.9*  5.3*  5.7*  5.3*  5.8*  6.3*  5.9*  5.1*  6.2*  5.7*  7.7*  6.2*  5*  5*
+  (* a run not quiet by the record)
+  the row's own verdicts at 2x: 7b3926e 9 fail of 15, e7b9128 9 fail of 15
+
+VERDICTS (every run; e7b9128 against 7b3926e; rule: one-sided p < 0.05 AND the median more than the margin):
+  ratio            7b3926e median 2.210 (n 15), e7b9128 2.120 (n 15); diff -0.090 (margin 0.1); above p 0.7850, below p 0.2210 -> not told; over the bar 2: 9/15 and 9/15 — 7b3926e SITS AT ITS BAR (its own runs both pass and fail)
+  secondary, rolling p95 (secondary): 7b3926e median 12.5, e7b9128 12.2; above p 0.8550, below p 0.1498
+  secondary, early p95: 7b3926e median 6, e7b9128 5.8; above p 0.8902, below p 0.1138
+
+VERDICTS (quiet runs only; e7b9128 against 7b3926e; rule: one-sided p < 0.05 AND the median more than the margin):
+  ratio: no samples on one side (0 / 0)

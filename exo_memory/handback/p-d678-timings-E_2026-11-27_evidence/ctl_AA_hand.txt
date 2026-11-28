@@ -1,0 +1,18 @@
+d642: a (0000000) against b (0000000) — ONE COMMIT, run twice: the A/A; 10 runs kept (5 / 5; 0 ended by a game); quiet by the record: 10 of 10; busy before each run 1-1 %
+
+EVERY SAMPLE (the first attempt; a retry after it in brackets; - none):
+  ratio                          a: 1  2  3  4  5   |   b: 1  2  3  4  5
+  rolling p95 (secondary)        a: 2  4  6  8  10   |   b: 2  4  6  8  10
+  early p95                      a: 2  2  2  2  2   |   b: 2  2  2  2  2
+  (* a run not quiet by the record)
+  the row's own verdicts at 2x: a 0 fail of 5, b 0 fail of 5
+
+VERDICTS (every run; b against a; rule: one-sided p < 0.05 AND the median more than the margin):
+  ratio            a median 3.000 (n 5), b 3.000 (n 5); diff +0.000 (margin 0.1); above p 0.5873, below p 0.5873 -> not told; over the bar 2: 3/5 and 3/5 — a SITS AT ITS BAR (its own runs both pass and fail)
+  secondary, rolling p95 (secondary): a median 6, b 6; above p 0.5873, below p 0.5873
+  secondary, early p95: a median 2, b 2; above p 1.0000, below p 1.0000
+
+  THE A/A (every run): the NULL control is MET: no case told either way; WHAT D RESOLVES, the smallest uniform shift the rule tells (each way, the larger):
+    ratio            2.01 (b up 2.01, a up 2.01); spread at this commit 1 to 5 (n 10), the margin 0.1
+
+quiet runs only: every run was quiet by the record, so this reading is the one above
