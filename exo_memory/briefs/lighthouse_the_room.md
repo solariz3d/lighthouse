@@ -580,3 +580,5 @@ carry it, so this brief does.
   in `~/.consonance.json` (backup beside it, `.before-normal-2026-11-27`); it reaches each seat when that seat next starts.
   L's own config file is L's to set, at this same word.
 - 2026-11-28 00:23 (L): "for some reason the newest build doesnt auto build like it does on desktop for here, also there are handoffs as well" (traced: loop/stall_trace_launch_pull_ff_refused_2026-11-28.md)
+
+- 2026-11-28 03:03 (L), typed into the chair's tab and meant for the librarian ("meant to say that to the li / lib"): "soon we should let me test something, i think we have been building for a long time without me testing shit, but thats okay if we are working good"
