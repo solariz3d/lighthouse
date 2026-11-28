@@ -1,0 +1,71 @@
+== chunk 0-3 gate open at 02:34:44Z
+heavy-run: capped to 8 of 16 logical CPUs, spread (affinity 21845); every child inherits it
+CONTROL unmutated: exit 0
+  SURVIVED    tauri.conf reverts to kind:code, so prose rules corrupt the bundle identifier
+               the test passed over a real defect — it is not guarding this
+  CAUGHT      build.rs drops out of the manifest (generated tree cannot compile)
+  CAUGHT      spread/ drops out (a declared glob resource; the build script fails)
+  CAUGHT      room-settings.json drops out (declared resource; build script fails)
+
+  applied 4 · caught 3 · NOT APPLIED 0  (mutants 0-3 of 26)
+chunk 0-3: harness exit 1; generator is the green file after: true
+== chunk 0-3 ended 02:54:08Z
+== chunk 4-7 gate open at 04:26:17Z
+heavy-run: capped to 8 of 16 logical CPUs, spread (affinity 21845); every child inherits it
+  CAUGHT      icons become kind:prose, so a .png is read as utf8 and silently corrupted
+  NOT APPLIED  a bare directory counts as dangling again (would rewrite working constants)
+               (anchor did not match — this mutation proves NOTHING)
+  CAUGHT      the named identifier replacement is removed (leak returns to a parsed field)
+  CAUGHT      the generator ships itself, exclusion list and all
+
+  applied 3 · caught 3 · NOT APPLIED 1  (mutants 4-7 of 26)
+  a NOT APPLIED mutant is not a pass: the harness never reached the code.
+chunk 4-7: harness exit 1; generator is the green file after: true
+== chunk 4-7 ended 04:32:45Z
+== chunk 8-11 gate open at 04:32:45Z
+heavy-run: capped to 8 of 16 logical CPUs, spread (affinity 21845); every child inherits it
+  CAUGHT      the identifier shape check stops running
+  CAUGHT      a LEAK pattern is broadened until it collides with a synthetic fixture
+  CAUGHT      fixtures lose their exemption — DANGLING/MACHINE rewrite test data again
+  CAUGHT      fixtures get the full deidentify, restructuring paths a test keys on
+
+  applied 4 · caught 4 · NOT APPLIED 0  (mutants 8-11 of 26)
+chunk 8-11: harness exit 0; generator is the green file after: true
+== chunk 8-11 ended 04:41:57Z
+== chunk 12-15 gate open at 04:41:57Z
+heavy-run: capped to 8 of 16 logical CPUs, spread (affinity 21845); every child inherits it
+  CAUGHT      the coordinate substitution is removed (latitude ships)
+  CAUGHT      unportable fixtures stop being reported (silent again)
+  CAUGHT      RE-POINT: the tools predicate reverts, reopening three gaps and disarming entry 1
+  CAUGHT      RE-POINT: entry 1 declares itself UNREACHABLE again while a rule reaches it
+
+  applied 4 · caught 4 · NOT APPLIED 0  (mutants 12-15 of 26)
+chunk 12-15: harness exit 0; generator is the green file after: true
+== chunk 12-15 ended 04:50:08Z
+== chunk 16-19 gate open at 04:50:08Z
+heavy-run: waiting on c88002b1 pid 2180 (O D678 N4a tier-plain, since 2026-11-28T04:50:08.564Z) — it holds this tree
+heavy-run: waiting on c88002b1 pid 8420 (O D678 N4a tier-harness, since 2026-11-28T04:50:14.087Z) — it holds this tree
+heavy-run: waiting on c88002b1 pid 8420 (O D678 N4a tier-harness, since 2026-11-28T04:50:14.087Z) — it holds this tree
+heavy-run: waiting on c88002b1 pid 8420 (O D678 N4a tier-harness, since 2026-11-28T04:50:14.087Z) — it holds this tree
+heavy-run: waiting on c88002b1 pid 8420 (O D678 N4a tier-harness, since 2026-11-28T04:50:14.087Z) — it holds this tree
+heavy-run: waiting on c88002b1 pid 8420 (O D678 N4a tier-harness, since 2026-11-28T04:50:14.087Z) — it holds this tree
+heavy-run: waiting on c88002b1 pid 8420 (O D678 N4a tier-harness, since 2026-11-28T04:50:14.087Z) — it holds this tree
+heavy-run: waiting on c88002b1 pid 8420 (O D678 N4a tier-harness, since 2026-11-28T04:50:14.087Z) — it holds this tree
+heavy-run: waiting on c88002b1 pid 8420 (O D678 N4a tier-harness, since 2026-11-28T04:50:14.087Z) — it holds this tree
+heavy-run: waiting on c88002b1 pid 8420 (O D678 N4a tier-harness, since 2026-11-28T04:50:14.087Z) — it holds this tree
+heavy-run: waiting on c88002b1 pid 8420 (O D678 N4a tier-harness, since 2026-11-28T04:50:14.087Z) — it holds this tree
+heavy-run: waiting on c88002b1 pid 8420 (O D678 N4a tier-harness, since 2026-11-28T04:50:14.087Z) — it holds this tree
+heavy-run: waiting on c88002b1 pid 8420 (O D678 N4a tier-harness, since 2026-11-28T04:50:14.087Z) — it holds this tree
+heavy-run: waiting on c88002b1 pid 8420 (O D678 N4a tier-harness, since 2026-11-28T04:50:14.087Z) — it holds this tree
+heavy-run: waiting on c88002b1 pid 8420 (O D678 N4a tier-harness, since 2026-11-28T04:50:14.087Z) — it holds this tree
+heavy-run: waiting on c88002b1 pid 8420 (O D678 N4a tier-harness, since 2026-11-28T04:50:14.087Z) — it holds this tree
+heavy-run: waiting on c88002b1 pid 8420 (O D678 N4a tier-harness, since 2026-11-28T04:50:14.087Z) — it holds this tree
+heavy-run: waiting on c88002b1 pid 8420 (O D678 N4a tier-harness, since 2026-11-28T04:50:14.087Z) — it holds this tree
+heavy-run: waiting on c88002b1 pid 8420 (O D678 N4a tier-harness, since 2026-11-28T04:50:14.087Z) — it holds this tree
+heavy-run: waiting on c88002b1 pid 8420 (O D678 N4a tier-harness, since 2026-11-28T04:50:14.087Z) — it holds this tree
+heavy-run: waiting on c88002b1 pid 8420 (O D678 N4a tier-harness, since 2026-11-28T04:50:14.087Z) — it holds this tree
+heavy-run: took over a stale lock — 6fe15f0a pid 22804 (A D678 item 3 nine harnesses naming panel.js on B, since 2026-11-28T05:00:31.934Z) is not running; it was 11m old (slot 2)
+== chunk 16-19 ended 05:11:08Z
+== chunk 20-23 gate open at 05:11:08Z
+heavy-run: waiting on c88002b1 pid 8420 (O D678 N4a tier-harness, since 2026-11-28T04:50:14.087Z) — it holds this tree
+heavy-run: capped to 8 of 16 logical CPUs, spread (affinity 21845); every child inherits it

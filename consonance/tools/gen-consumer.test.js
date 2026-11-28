@@ -1985,15 +1985,24 @@ test('D454 1C.1: the bare owner/repo form of the project\'s own repos (solariz3d
 
 test('D454: the t180 product research (exo_memory/research/t180_*) is withheld; the rest of research/ ships', () => {
   /* The librarian's routing of C's part 2 (plan_consumer_refresh_d454, "C's part 2 in"): the product laps stay out, and these three are
-   * research for the track builder, a product, not for the room. */
+   * research for the track builder, a product, not for the room.
+   * AMENDED (D678 N6, pane C, 2026-11-27): the premise was a count ("three t180 research files in dev"). Six notes added on 11-27 made it
+   * 9 !== 3, so the row went red on its premise and the check it guards never ran on the six, which had no EXCLUDE row and would have
+   * shipped. The rule is the folder's, not a number's: every research/t180_* note found must be EXCLUDED, live, and absent from the shipped
+   * set, and no shipped path (by source or by destination) may sit under research/t180_, which also covers the notes' _evidence/ folders
+   * should a rule ever reach them (collect() lists one folder per rule, files only, so today none does). At least three must exist, so an
+   * emptied or renamed folder cannot pass by finding nothing. */
   const R = 'exo_memory/research/';
   const t180 = fs.readdirSync(path.join(REPO, R)).filter((n) => /^t180_.*\.md$/.test(n)).map((n) => R + n);
-  assert.strictEqual(t180.length, 3, 'premise: three t180 research files in dev');
-  const ships = new Set(G.collect().filter((f) => !G.EXCLUDE[f.from]).map((f) => f.from));
+  assert.ok(t180.length >= 3, 'premise: at least three t180 research notes in dev, found ' + t180.length);
+  const shipped = G.collect().filter((f) => !G.EXCLUDE[f.from]);
+  const ships = new Set(shipped.map((f) => f.from));
   for (const k of t180) {
     assert.ok(G.EXCLUDE[k] && !/^UNREACHABLE:/.test(G.EXCLUDE[k]), k + ' must be EXCLUDED, live, with its reason');
     assert.ok(!ships.has(k), k + ' reached the shipped set');
   }
+  const under = shipped.filter((f) => [f.from, String(f.to || '')].some((p) => p.replace(/\\/g, '/').startsWith(R + 't180_')));
+  assert.deepStrictEqual(under.map((f) => f.from), [], 'a path under research/t180_ reached the shipped set');
   assert.ok(ships.has(R + 'the_pattern_in_felt_knowing.md'), 'the room\'s own research must still ship');
 });
 

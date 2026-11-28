@@ -1,0 +1,18 @@
+tree G:\consonance-scratch\lh-d678-base
+collect(): 550 entries; under research/t180_: 9
+  EXCLUDED exo_memory/research/t180_be_like_water_2026-09-28.md
+  SHIPS    exo_memory/research/t180_car_how_it_works_2026-11-27.md
+  SHIPS    exo_memory/research/t180_cars_body_against_box_2026-11-27.md
+  SHIPS    exo_memory/research/t180_cars_clipping_potential_2026-11-27.md
+  EXCLUDED exo_memory/research/t180_math_tools_2026-09-28.md
+  SHIPS    exo_memory/research/t180_soft_contact_simulation_2026-11-27.md
+  EXCLUDED exo_memory/research/t180_track_mathematics_2026-09-28.md
+  SHIPS    exo_memory/research/t180_what_separates_a_break_2026-11-27.md
+  SHIPS    exo_memory/research/t180_why_a_car_goes_through_a_road_2026-11-27.md
+collected from inside a research/ subfolder: 0
+collected with _evidence in the path (source or destination): 0
+manifest dir rules under exo_memory/research: exo_memory/research match /\.md$/
+  on disk: exo_memory/research/t180_soft_contact_simulation_2026-11-27_evidence/ (9 files)
+  on disk: exo_memory/research/t180_what_separates_a_break_2026-11-27_evidence/ (32 files)
+shipped: 488; shipped under research/t180_ (source or destination): 6
+research/ notes shipped: 31

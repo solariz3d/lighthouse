@@ -829,6 +829,22 @@ const EXCLUDE = {
     'research for the track builder, a product of the first keeper\'s, not for the room; the product laps stay out of the consumer',
   'exo_memory/research/t180_track_mathematics_2026-09-28.md':
     'research for the track builder, a product of the first keeper\'s, not for the room; the product laps stay out of the consumer',
+  /* D678 N6 (pane C; the librarian's packet of 2026-11-27, found red by O's suite): six notes of 11-27, research for the track builder and the
+   * car it builds for, withheld by the same D454 routing as the three above. Their _evidence/ folders need no row: collect() lists one folder
+   * per rule, files only, so research/'s rule never reaches them (gen-consumer.test.js, the D454 research row, reads the shipped set for any
+   * path under research/t180_). */
+  'exo_memory/research/t180_car_how_it_works_2026-11-27.md':
+    'research for the track builder (how the T-180 car works, read from the car mod\'s own repository), a product of the first keeper\'s, not for the room; the product laps stay out of the consumer',
+  'exo_memory/research/t180_cars_body_against_box_2026-11-27.md':
+    'research for the track builder (the installed cars\' bodies measured against their floor box), a product of the first keeper\'s, not for the room; the product laps stay out of the consumer',
+  'exo_memory/research/t180_cars_clipping_potential_2026-11-27.md':
+    'research for the track builder (the installed cars compared on how they clip through a road), a product of the first keeper\'s, not for the room; the product laps stay out of the consumer',
+  'exo_memory/research/t180_soft_contact_simulation_2026-11-27.md':
+    'research for the track builder (simulations of the floor box in a soft road contact, scored against recorded passes), a product of the first keeper\'s, not for the room; the product laps stay out of the consumer',
+  'exo_memory/research/t180_what_separates_a_break_2026-11-27.md':
+    'research for the track builder (what separates a pass that goes under the road from one that holds), a product of the first keeper\'s, not for the room; the product laps stay out of the consumer',
+  'exo_memory/research/t180_why_a_car_goes_through_a_road_2026-11-27.md':
+    'research for the track builder (why a fast car goes through a road, and what a road can do), a product of the first keeper\'s, not for the room; the product laps stay out of the consumer',
   'consonance/tools/janitor-task.ps1':
     'UNREACHABLE: no rule reaches .ps1 under tools/, and it stays out by decision: it registers an unattended daily deleter, a fresh install schedules nothing by itself (the D273 dream-installer rule), and janitor.js ships for a hand run',
 };
