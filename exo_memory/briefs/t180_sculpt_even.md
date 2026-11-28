@@ -91,3 +91,13 @@ The second probe is not dispatched; it is queued for D in the handoff.
   `loop/packet_t180_sculpt_even_build_on_D_2026-11-27.md`, "Amended 14:5x".
 - **Pictures put to him:** https://claude.ai/artifact/UYhbuWYjLgM74gWyAY6XcK (four of the nine; the rest untracked in the
   hand-back's evidence folder). His call, still open: the grab along the road's slope.
+
+## 2026-11-28 01:35 (L), his answers to decisions 1 and 2, verbatim
+
+Asked (librarian, 01:33): "1. Even on a road you've pulled with grabs ... (a) A clean road ... (b) Your shape stays put ...
+(c) Neither ... 2. Grabbing a banked turn ... Should it pull along the road's tilt instead ... Yes or no?"
+
+His words, 01:35: "1 a clean road, b i guess? c. we could try c if a and b doesnt work. 2. yes? I think?"
+
+Read by the librarian as: (a) first (A0, `d678-even-a`); (b) as the second choice; (c) only if neither works. And for 2, a
+tentative yes. Both go forward on branches with pictures for his eye before anything reaches a build.
