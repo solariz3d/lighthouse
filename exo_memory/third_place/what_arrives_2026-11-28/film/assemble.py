@@ -15,6 +15,8 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 FPS = 24
 TL = json.load(open(os.path.join(HERE, "..", "timeline.json"), encoding="utf-8"))
 WAV = os.path.join(HERE, "..", "out", "narration.wav")
+if not os.path.exists(WAV):                                   # the repository carries a compressed copy (Opus, 48 kbit/s):
+    WAV = os.path.join(HERE, "..", "out", "narration.opus")    # the room does not push files over 10 MB
 
 
 def frames_in(d):
