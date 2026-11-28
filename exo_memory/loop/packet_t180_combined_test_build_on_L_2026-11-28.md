@@ -11,7 +11,7 @@ can give me a checklist of things to test". So this is one build. Installing it 
 | grab along the slope | `l271-grab-slope` **16a93d1** | c522ea6 | `handback/p-l271-read-grab-slope-C_2026-11-28.md` §8 |
 | Even A1 with A1B | `d678-even-a` **0c16169** | c522ea6 | `handback/p-l271-read-even-E_2026-11-28.md` §8 |
 
-## Trial merges, read-only, by the librarian (05:4x on L, `git merge-tree --write-tree`)
+## Trial merges, read-only, by the librarian (05:3x on L, `git merge-tree --write-tree`)
 
 - 4ff069e + 0c16169: **clean** (tree f230506c).
 - 16a93d1 + 0c16169: **clean** (tree ca6e3058).
