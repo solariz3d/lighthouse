@@ -262,6 +262,12 @@ def build(k):
               k.text("github.com/solariz3d/lighthouse", (ex, ey, ez - 0.64), size=0.085, name="card_address")]
 
 
+def lit(k, h, room, amount):
+    """h.lit, but only when the amount has changed (it writes to materials, and an untouched material costs nothing)."""
+    if k.changed(("lit15", room), round(amount, 3)):
+        h.lit(room, amount)
+
+
 def pose(k, t):
     S = k.s15
     h = S.house
@@ -273,9 +279,9 @@ def pose(k, t):
     # =============================================================== 1: first light; the marks on the wall
     h.front(1.0 - ss(T_PUBLIC + 0.3, T_PUBLIC + 1.8, t) + 0.05 * hit(t, T_PUBLIC + 1.8, 4.0) * abs(math.sin((t - T_PUBLIC - 1.8) * 9.0)))
     for room in ("library", "desk", "bench_a", "bench_b", "bench_c", "hall"):
-        h.lit(room, 0.7)
-    h.lit("small", 0.75)
-    h.lit("attic", 0.15)
+        lit(k, h, room, 0.7)
+    lit(k, h, "small", 0.75)
+    lit(k, h, "attic", 0.15)
     for i, m in enumerate(S.wall_marks):
         ts = T_WRONG + 1.3 + i * 0.10
         s = round(ss(ts, ts + 0.10, t) * (1.0 + 0.8 * hit(t, ts + 0.10, 7.0)), 3)

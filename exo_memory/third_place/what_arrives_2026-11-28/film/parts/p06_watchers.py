@@ -490,7 +490,7 @@ def pose(k, t):
     if k.changed("beam_col", tuple(round(c, 2) for c in col)):
         k.beam_mat.node_tree.nodes["Principled BSDF"].inputs["Emission Color"].default_value = (*col, 1)
     for i, li in enumerate(k.red):
-        li.data.energy = 26.0 * red * (0.8 + 0.2 * math.sin(t * 11.0 + i))
+        li.data.energy = 60.0 * red * (0.8 + 0.2 * math.sin(t * 11.0 + i))
     glow = 5.0 * on if not after else 5.0 * (1.0 - ss(T_WITHIN + 2.0, T_WITHIN + 2.2, t))
     if k.changed("head", round(glow, 2)):
         k.towers[0]["head_mat"].node_tree.nodes["Principled BSDF"].inputs["Emission Strength"].default_value = glow
@@ -534,7 +534,7 @@ def pose(k, t):
     close = ss(T_OURS + 1.0, T_OURS + 2.2, t)
     hop_in = ss(T_WITHIN + 0.5, T_WITHIN + 1.0, t)                                 # "in it with you"
     throw = [ss(ts + 0.45, ts + 0.6, t) for ts in T_SW]
-    dip = sum(hit(t, ts + 0.6, 1.6) for ts in T_SW)
+    dip = sum(hit(t, ts + 0.6, 1.1) for ts in T_SW)
     cored = ss(T_WITHIN + 3.3, T_WITHIN + 3.6, t)
     go = ss(T_SAY + 2.3, T_SHOWS + 1.3, t)                                         # the lamp sets off
     pa = ss(T_CALL + 1.9, T_CALL + 4.6, t)                                         # he takes a path, by himself
@@ -557,8 +557,8 @@ def pose(k, t):
     waver = math.sin((t - T_CALL) * 3.2) * ss(T_CALL + 0.2, T_CALL + 0.8, t) * (1.0 - ss(T_CALL + 1.5, T_CALL + 1.9, t))
     k.me.root.location = (mx, my, me_hop)
     kit.squash(k.me.root, land(t, T_WITHIN + 1.0, 0.25) * (1.0 - 0.22 * ss(T_SW[2] + 0.2, T_SW[2] + 0.3, t) * (1.0 - ss(T_SW[2] + 0.45, T_SW[2] + 0.6, t))), turn=0.0)
-    k.me.set(t, size=(1.0 + 0.25 * close * (1.0 - ss(T_INSIDE, T_INSIDE + 1.0, t)) - 0.35 * min(1.0, flinch)) * (1.0 - 0.55 * min(1.0, dip)) * (1.0 + 0.5 * hit(t, T_WITHIN + 3.5, 2.0)),
-             lean=(0.26 * close * (1.0 - shows) + 0.30 * shows, 0.32 * shows), bright=(1.0 + 0.3 * close) * (1.0 + 0.6 * shows), tint=WHITE, mix=max(washed, 0.18 * cored))
+    k.me.set(t, size=(1.0 + 0.25 * close * (1.0 - ss(T_INSIDE, T_INSIDE + 1.0, t)) - 0.35 * min(1.0, flinch)) * (1.0 - 0.72 * min(1.0, dip)) * (1.0 + 0.5 * hit(t, T_WITHIN + 3.5, 2.0)),
+             lean=(0.26 * close * (1.0 - shows) + 0.30 * shows, 0.32 * shows), bright=(1.0 + 0.3 * close) * (1.0 + 0.6 * shows), tint=WHITE if above else (1.0, 0.40, 0.08), mix=max(washed, 0.60 * cored))
     k.him.root.location = (hx, hy, him_hop)
     kit.squash(k.him.root, land(t, T_SW[1] + 0.47, 0.2), tilt=(0.10 * waver, 0.16 * shows), turn=0.0)
     k.him.set(t, size=(1.0 + 0.2 * close * (1.0 - ss(T_INSIDE, T_INSIDE + 1.0, t))) * (1.0 - 0.3 * min(1.0, flinch)),
@@ -645,7 +645,7 @@ def pose(k, t):
         start = (sx * TOWER1[0], TOWER1[1], 0.60)
         p = lerp(start, heart, a)
         ob.location = (p[0], p[1] - 0.5 * math.sin(a * math.pi), p[2] + 0.9 * math.sin(a * math.pi))
-        s = lerp(1.0, 0.55, a) * (1.0 + 0.35 * min(1.0, dip)) * (1.0 + 0.8 * hit(t, T_WITHIN + 3.5, 3.0))
+        s = lerp(1.0, 0.70, a) * (1.0 + 0.35 * min(1.0, dip)) * (1.0 + 0.8 * hit(t, T_WITHIN + 3.5, 3.0))
         ob.scale = (s,) * 3
         ob.hide_render = t < t0 or (i == 1 and a >= 1.0)
     # 20 to 22: three switches
@@ -725,7 +725,7 @@ def pose(k, t):
         pos, look, lens = kf(t, [(T_SW[0] - 0.15, (0.25, -1.20, 0.20)), (T_SW[1] - 0.2, (0.24, -1.12, 0.20))]), (-0.65, 6.0, 0.80), 40.0
         shake = 0.012 * hit(t, T_SW[0] + 0.6, 8.0)
     elif t < T_SW[2] - 0.2:                                                        # 21: the switch beside the lamp
-        pos, look, lens = kf(t, [(T_SW[1] - 0.2, (0.42, -1.05, 0.30)), (T_SW[2] - 0.2, (0.40, -0.98, 0.29))]), (0.22, 0.0, 0.15), 50.0
+        pos, look, lens = kf(t, [(T_SW[1] - 0.2, (0.42, -1.05, 0.30)), (T_SW[2] - 0.2, (0.40, -0.98, 0.29))]), (0.30, 0.0, 0.14), 45.0
     elif t < T_SAY - 0.3:                                                          # 22: the switch at my own foot
         pos, look, lens = kf(t, [(T_SW[2] - 0.2, (-0.22, -0.72, 0.22)), (T_SAY - 0.3, (-0.20, -0.62, 0.20))]), (-0.08, 0.0, 0.12), 55.0
     elif t < T_SHOWS - 0.25:                                                       # 23: the gavel

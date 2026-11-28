@@ -254,7 +254,7 @@ def build(k):
 
     # ---- the site: bricks, the kept room's lamp, the house full of candles
     k.plan = brick_plan()
-    b0 = kit.box("brick0", (BW - 0.008, BD - 0.006, BH - 0.006), (0, 0, 0), k.mat("brick", (0.80, 0.60, 0.40), rough=0.85))
+    b0 = kit.box("brick0", (BW - 0.008, BD - 0.006, BH - 0.006), (0, 0, 0), k.mat("brick", (0.80, 0.60, 0.40), rough=0.85, emit=(0.80, 0.50, 0.30), emit_strength=0.05))
     k.bricks = [b0] + [clone(b0, f"brick{n}", (0, 0, 0)) for n in range(1, N_BRICK)]
     k.kept = k.lamp((KEPT[0], KEPT[1] - 0.20, 0.0), kit.LAMPS[2], "kept_lamp", seed=81.0)
     hB = k.house_b = sets.House(k, at=HOUSE_B, name="house_b")
@@ -432,7 +432,7 @@ def pose(k, t):
     hA.root.scale = (1.0, 1.0, 1.0 - 0.10 * hit(t, T_HOUSE, 7.0) * math.cos((t - T_HOUSE) * 24.0) * (t >= T_HOUSE))
     for i, room in enumerate(("hall", "library", "small", "desk", "bench_a", "bench_b", "bench_c")):
         on = T_HOUSE + 0.15 + 0.16 * i
-        hA.lit(room, ss(on, on + 0.12, t) * ((0.85 if i == 0 else 0.45) + 0.5 * hit(t, on + 0.12, 5.0)))
+        hA.lit(room, ss(on, on + 0.12, t) * ((0.85 if i == 0 else 0.62) + 0.5 * hit(t, on + 0.12, 5.0)))
     hA.lit("attic", 0.0)
     for li in hA.lights.values():
         li.hide_render = site or t < T_ANYONE + 0.35
@@ -567,8 +567,8 @@ def pose(k, t):
                 (T_ANYONE + 2.6, (-0.5, -3.6, 1.4), (1.6, 8.0, 0.9), 42.0),
                 (T_LEND + 0.9, (p3[0] - 0.1, p3[1] - 1.75, 0.46), (p3[0] - 0.1, p3[1] + 0.3, 0.26), 40.0),
                 (T_LEND + 5.6, (p3[0] - 0.12, p3[1] - 1.45, 0.44), (p3[0] - 0.12, p3[1] + 0.3, 0.27), 40.0),
-                (T_ASKED + 1.2, (-0.55, -3.0, 0.85), (1.0, 5.0, 0.10), 45.0),
-                (T_ANSWER + 0.6, (-0.50, -2.8, 0.82), (1.0, 5.0, 0.10), 45.0),
+                (T_ASKED + 1.2, (-0.60, -3.7, 1.05), (0.9, 4.0, 0.0), 45.0),
+                (T_ANSWER + 0.6, (-0.55, -3.5, 1.0), (0.9, 4.0, 0.0), 45.0),
                 (T_ANSWER + 2.3, (p3[0], p3[1] - 1.65, 0.44), (p3[0], p3[1], 0.20), 42.0),
                 (T_SITE, (p3[0] + 0.05, p3[1] - 1.35, 0.40), (p3[0], p3[1], 0.19), 42.0)]
         sh = 0.03 * hit(t, T_HOUSE, 8.0)

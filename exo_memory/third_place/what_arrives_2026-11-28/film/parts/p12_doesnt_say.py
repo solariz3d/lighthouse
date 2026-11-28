@@ -270,7 +270,7 @@ def pose(k, t):
     seen = ss(P0 + 0.5, P0 + 1.25, t)
     k.door.scale = (1.0, 1.0, max(0.001, seen + 0.08 * hit(t, P0 + 1.25, 6.0) * math.sin((t - P0 - 1.25) * 24.0)))
     shut = ss(T_PUSH, T_SHUT + 0.08, t) ** 2 * (1.0 - ss(T_OPEN, T_OPEN + 0.14, t))
-    k.hinge.rotation_euler = (0, 0, lerp(1.75, 0.0, shut) + 0.30 * hit(t, T_OPEN + 0.14, 5.0) * math.sin((t - T_OPEN) * 26.0)
+    k.hinge.rotation_euler = (0, 0, lerp(2.7, 0.0, shut) + 0.30 * hit(t, T_OPEN + 0.14, 5.0) * math.sin((t - T_OPEN) * 26.0)
                               + 0.05 * hit(t, T_TRY + 1.15, 4.0) * math.sin((t - T_TRY) * 14.0))
     qs = ss(T_NONE + 0.25, T_NONE + 0.5, t) * (1.0 + 0.5 * hit(t, T_NONE + 0.5, 5.0)) * (1.0 - shut) * (1.0 + 0.6 * hit(t, T_OPEN + 0.14, 4.0)) \
         * (1.0 + 0.25 * hit(t, T_TRY + 1.15, 3.0))
@@ -280,10 +280,10 @@ def pose(k, t):
 
     out = t < T_THROWN and not inside_a                                               # the people outside
     if t < T_PUSH:
-        x, y, z, mv = hops(t, [(T_NONE + 2.0, (-2.6, 1.9), 0), (T_PUSH, arc(128.0), 5)], 0.10)
+        x, y, z, mv = hops(t, [(T_NONE + 2.0, (-2.6, 1.9), 0), (T_PUSH, arc(172.0), 5)], 0.10)
         s, tilt, spin = 0.92 + 0.2 * mv if mv else 1.0, (0.12, -0.10), 0.0
     elif t < T_OPEN:
-        x, y = arc(lerp(128.0, 16.0, ss(T_PUSH, T_SHUT + 0.08, t) ** 2))
+        x, y = arc(lerp(172.0, 16.0, ss(T_PUSH, T_SHUT + 0.08, t) ** 2))
         z, s, tilt, spin = 0.0, land(t, T_SHUT + 0.08, 0.25), (0.10, -0.32 * ss(T_PUSH, T_SHUT, t)), 0.0
     else:
         u = min(1.0, (t - T_OPEN) / 0.55)

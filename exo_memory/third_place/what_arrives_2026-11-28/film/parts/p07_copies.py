@@ -662,7 +662,7 @@ def pose(k, t):
         reach = (x0 - 0.16 - (BENCH[0] - 1.32)) / 2.57
         t_k = T_SIMPLER + 0.9 + 2.4 * (0.5 - math.sin(math.asin(1.0 - 2.0 * min(1.0, max(0.0, reach))) / 3.0))
         v = max(0.0, t - t_k)
-        root.location = (x0 + 1.5 * v, BENCH[1] - 0.9 * v * (0.6 + 0.8 * hsh(j)), BENCH_Z + 1.6 * v - 4.5 * v * v)
+        root.location = (x0 + 1.5 * v, BENCH[1] - 0.9 * v * (0.6 + 0.8 * hsh(j)), BENCH_Z + 1.6 * v - 3.0 * v * v)
         root.rotation_euler = (-5.0 * v, 3.0 * v * (hsh(j + 3) - 0.3), 0)
         root.scale = (max(0.001, up),) * 3
         kit.show(root, bench_on and up > 0.0 and root.location[2] > -0.3)

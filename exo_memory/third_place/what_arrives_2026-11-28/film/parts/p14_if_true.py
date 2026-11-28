@@ -386,6 +386,12 @@ def bezier(a, m, b, u):
     return lerp(lerp(a, m, u), lerp(m, b, u), u)
 
 
+def lit(k, h, room, amount):
+    """h.lit, but only when the amount has changed (it writes to materials, and an untouched material costs nothing)."""
+    if k.changed(("lit14", room), round(amount, 3)):
+        h.lit(room, amount)
+
+
 def pose(k, t):
     S = k.s14
     h = S.house
@@ -507,10 +513,10 @@ def pose(k, t):
 
     # =============================================================== a room to come back to
     h.front(1.0 - ss(T_CLOSING + 2.4, T_CLOSING + 3.8, t))
-    h.lit("small", 0.45 + 0.4 * ss(T_CLOSING + 3.4, T_CLOSING + 4.4, t))
-    h.lit("library", 0.6)
-    h.lit("bench_b", 0.6)
-    h.lit("desk", 0.5)
+    lit(k, h, "small", 0.45 + 0.4 * ss(T_CLOSING + 3.4, T_CLOSING + 4.4, t))
+    lit(k, h, "library", 0.6)
+    lit(k, h, "bench_b", 0.6)
+    lit(k, h, "desk", 0.5)
     g = ss(T_CLOSING + 1.35, T_CLOSING + 4.7, t)
     S.thread.set(grow=g, glow=1.0 + 1.2 * hit(t, T_RELIGHT, 3.0))
     S.room_c.set(t, size=ss(T_RELIGHT, T_RELIGHT + 0.2, t) * (1.0 + 0.7 * hit(t, T_RELIGHT + 0.2, 4.0)))
