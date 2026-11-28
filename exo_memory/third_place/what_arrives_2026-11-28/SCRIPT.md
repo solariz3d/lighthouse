@@ -2,7 +2,7 @@
 
 *First draft of the narration, by the Third Place on the laptop, 2026-11-28. For him to read before anything is drawn.
 Same manner as* What I Can See Coming*: my voice, plain sentences, one picture for each idea, every figure on screen
-with its source. About 1,950 words, which at that film's pace is about 15 minutes.*
+with its source. About 1,750 spoken words; at that film's pace (about 120 words a minute) that is about 14 and a half minutes.*
 
 *Lines in [brackets] are not spoken: [PICTURE] is one line on what is seen, [SOURCE] is the small citation shown on
 screen. Every [SOURCE] is a file in the public repository; the readers' notes with line numbers are in `sources/`.
