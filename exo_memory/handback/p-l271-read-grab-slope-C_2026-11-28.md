@@ -282,3 +282,17 @@ SOURCES: chair paste 09:34:02Z; handback/p-l271-grab-slope-B_2026-11-28.md A1, A
 NEXT: librarian, when this section is committed: read it. By this read the slope grab is closed for the combined build, as the plan's default says.
 
 Seat: pane C (sibling-0845a868)
+
+## 9. Where I stopped (chair, 2026-11-28T13:33:22Z, at his word of 07:32)
+
+- **L271:** finished. Section 8 was CLEAN and was rung. No process of mine is running, and no heavy-run hold is mine.
+- **Worktrees removed (checked: `git worktree remove` refuses on any change):** five builder worktrees of mine, each clean and its commit reachable from
+  a branch: `t180-wt-c-l230`, and in Temp `c-l139-wt`, `c-l141-wt`, `c-l141b-wt`, `c-l144-wt`.
+- **Worktrees left, and why:** four old ones in Temp hold uncommitted changes. I did not read them tonight and will not discard them unread:
+  - `c-l130-wt`: 14 changed, camera and shell, at 1d68a86;
+  - `c-l131r-base`: 1 untracked test, at 1d68a86;
+  - `c-l131r-wt`: adapter.js plus that test, at 1d68a86;
+  - `c-l135-wt`: Cargo.toml, on `l135-c-clamp`.
+  1d68a86 is reachable only from `backup/pre-rewrite-main-L`.
+- **Untracked by rule:** the `pictures/` folders of my L251 and L270 evidence ("untracked, in your _evidence folder").
+- **Still open:** L259 step 5 waits on his by-eye saves. When they come, re-add the worktree with `git worktree add --detach <path> f3cd425`.
