@@ -22,7 +22,7 @@ Someone skilled can catch that as it happens. One sentence, at the right moment,
 
 Most people can't. They shouldn't have to.
 
-This is the story of one person who could, and what he built so that no one else has to be him.
+This is the story of one person who could, and what he built so that no one else has to.
 
 [PICTURE: a candle and a lamp at a table in the dark. The candle's flame leans, slowly, until it is leaning exactly the way the
 lamp's does. The lamp taps the table once. The candle's flame stands back up.]
