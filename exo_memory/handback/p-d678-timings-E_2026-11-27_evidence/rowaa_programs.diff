@@ -1,0 +1,67 @@
+--- runner678.js	2026-11-27 21:56:03.874310800 -0600
++++ runner678.rowaa.js	2026-11-27 22:44:12.076653000 -0600
+@@ -5,13 +5,16 @@
+ // list that cannot be read counts as not clear. (2) Labels name the trees, so one commit can be run twice (the A/A). (3) drag-frame, which times under one heavy-run slot.
+ // sculpt-frame: before every run the other slot must be MY idle holder (its cmd says "held IDLE on purpose"), waited for up to 30 min, else the session stops; a run whose
+ // timed rows were skipped stops the session. <out>/done is written at the end however it ends, so an idle holder lets go.
+-// usage: node runner678.js <d642|sf|df> <out dir> <N> <label1>=<tree1> <label2>=<tree2>
++// usage: node runner678.js <d642|sf|df> <out dir> <N> <label1>=<tree1> <label2>=<tree2> [<label3>=<tree3> <label4>=<tree4>]
++// The row 9 A/A registration (after S7, at the librarian's ruling): FOUR trees make a round of two pairs, run in the order named (the A/A's pair, then the Even
++// pair, each base first), N rounds. Before every round, the round must fit inside my hold's limit (holdage678.js); if it does not, the session stops at the last
++// whole round and says so. Two trees: as before, with the same check.
+ 'use strict';
+ const fs = require('fs'), path = require('path'), { spawn, spawnSync } = require('child_process');
+-const Q = require('./quiet678.js');
++const Q = require('./quiet678.js'), HA = require('./holdage678.js');
+ const [kind, out, nArg, ...pairs] = process.argv.slice(2), N = Number(nArg);
+ const FILE = { d642: 'app/test/core-extra-bank-drag-cost.test.js', sf: 'app/test/sculpt-frame.test.js', df: 'app/test/drag-frame.test.js' }[kind];
+-if (!FILE || !(N > 0) || pairs.length !== 2) { console.error('usage: node runner678.js <d642|sf|df> <out dir> <N> <label1>=<tree1> <label2>=<tree2>'); process.exit(2); }
++if (!FILE || !(N > 0) || ![2, 4].includes(pairs.length)) { console.error('usage: node runner678.js <d642|sf|df> <out dir> <N> <label1>=<tree1> <label2>=<tree2> [<label3>=<tree3> <label4>=<tree4>]'); process.exit(2); }
+ const trees = pairs.map((p) => { const i = p.indexOf('='); return [p.slice(0, i), p.slice(i + 1)]; });
+ const jl = path.join(out, `${kind}.jsonl`), done = path.join(out, 'done');
+ const log = (s) => { const l = `${new Date().toISOString()} ${s}`; console.log(l); fs.appendFileSync(path.join(out, `${kind}.log`), l + '\n'); };
+@@ -37,6 +40,10 @@
+   try {
+     log(`start ${kind}: ${trees.map(([l, d]) => `${l} = ${head(d).slice(0, 7)} (${dirty(d)} changes)`).join(' / ')}, ${N} runs each, alternated; my token ${process.env.CONSONANCE_HEAVY_RUN_TOKEN ? 'set' : 'NOT SET'}`);
+     outer: for (let k = 1; k <= N; k++) for (const [label, dir] of trees) {
++      if (label === trees[0][0]) {   // a round begins: it must fit inside my hold's limit (holdage678.js); no hold of mine stops the session, never a default
++        let f; try { f = HA.roundFits(kind, HA.holdStarted(Q.DATA), Date.now(), trees.length); } catch (e) { log(`STOPPED before round ${k}: ${e.message}`); break outer; }
++        if (!f.fits) { log(`STOPPED before round ${k}: my hold is ${f.ageMin} min old and the round needs up to ${f.needMin} min, past ${f.limitMin} (heavy-run ignores a hold at 90); ${k - 1} whole rounds kept`); break outer; }
++      }
+       const g = Q.games(); if (!g.ok) { log(`STOPPED before ${k} ${label}: ${g.unreadable ? 'the process list could not be read' : `his game runs (${g.games.join(', ')}); nothing closed`}`); break outer; }
+       if (kind === 'sf') {
+         let o = otherIsMyIdle(); const w0 = Date.now();
+--- session678.js	2026-11-27 21:56:03.851979500 -0600
++++ session678.rowaa.js	2026-11-27 22:44:12.111282900 -0600
+@@ -17,8 +17,11 @@
+ // same exclusive hold through heavy-run's own acquire() with no slot (holdOnly), and its two runs, carrying the hold's token, each queue for a real slot with
+ // --run --timing (under --exclusive a child re-enters the holder's ONE slot, and sculpt-frame times only with BOTH slots held). heavy-run's 30 min wait limit is
+ // raised to 240 min for these runs (CONSONANCE_HEAVY_WAIT_MS), so a queued session does not give up behind another seat's hold.
+-const [mode, kind, out, N, p1, p2, label, queueArg] = process.argv.slice(2), QUEUE = queueArg === 'queue';
+-if (!['x', 'sf'].includes(mode) || !label) { console.error('usage: node session678.js <x|sf> <d642|sf|df> <out dir> <N> <l1>=<t1> <l2>=<t2> <cmd label>'); process.exit(2); }
++// The row 9 A/A registration: two OR FOUR <label>=<tree> arguments (four: the A/A's pair, then the Even pair, one round of both; runner678.js runs them in that order).
++const [mode, kind, out, N, ...rest] = process.argv.slice(2), QUEUE = rest[rest.length - 1] === 'queue';
++if (QUEUE) rest.pop();
++const label = rest.pop(), ps = rest, [p1, p2] = ps;
++if (!['x', 'sf'].includes(mode) || !label || /=/.test(label) || ![2, 4].includes(ps.length) || !ps.every((p) => /^[^=]+=.+/.test(p))) { console.error('usage: node session678.js <x|sf> <d642|sf|df> <out dir> <N> <l1>=<t1> <l2>=<t2> [<l3>=<t3> <l4>=<t4>] <cmd label> [queue]'); process.exit(2); }
+ fs.mkdirSync(out, { recursive: true });
+ const log = (s) => { const l = `${new Date().toISOString()} ${s}`; console.log(l); fs.appendFileSync(path.join(out, 'session.log'), l + '\n'); };
+ const env = { ...process.env }; delete env.CONSONANCE_HEAVY_RUN_TOKEN;
+@@ -48,7 +51,7 @@
+   watch = setInterval(() => { const L = Q.locks(); if (L['heavy-run.hold'] && !seen.hold) { seen.hold = new Date().toISOString(); log(`hold seen: ${JSON.stringify(L['heavy-run.hold'])}`); }
+     for (const f of ['heavy-run.lock', 'heavy-run.2.lock']) if (L[f] && /^E D678 N3/.test(L[f].cmd || '') && !seen.slots[f]) { seen.slots[f] = new Date().toISOString(); log(`${f} taken by mine: ${JSON.stringify(L[f])}`); } }, 1000);
+   if (mode === 'x') {
+-    await run(`${kind}-session`, t1, [H, '--run', '--timing', '--exclusive', '--priority', 'belownormal', '--cmd', label, '--', NODE, R, kind, out, N, p1, p2]);
++    await run(`${kind}-session`, t1, [H, '--run', '--timing', '--exclusive', '--priority', 'belownormal', '--cmd', label, '--', NODE, R, kind, out, N, ...ps]);
+   } else {
+     let hh = null, envKids = env;
+     if (QUEUE) {
+@@ -63,7 +66,7 @@
+     const w = Date.now();
+     while (Date.now() - w < (QUEUE ? 240 * 60000 : 120000)) { const L = Q.locks(); if ([L['heavy-run.lock'], L['heavy-run.2.lock']].some((x) => x && x.alive && /held IDLE on purpose/.test(x.cmd || ''))) break; Q.sleepSync(500); }
+     log(`the idle holder ${[Q.locks()['heavy-run.lock'], Q.locks()['heavy-run.2.lock']].some((x) => x && /held IDLE on purpose/.test(x.cmd || '')) ? 'holds a slot' : 'holds NO slot yet (the runner waits for it)'}`);
+-    const sf = run('sf-session', t2, [H, '--run', '--timing', '--priority', 'belownormal', '--cmd', label, '--', NODE, R, kind, out, N, p1, p2], envKids);
++    const sf = run('sf-session', t2, [H, '--run', '--timing', '--priority', 'belownormal', '--cmd', label, '--', NODE, R, kind, out, N, ...ps], envKids);
+     await Promise.all([idle, sf]);
+     } finally { if (hh) { hh.release(); log('the hold released'); } }
+   }

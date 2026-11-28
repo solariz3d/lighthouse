@@ -1,0 +1,5 @@
+R1: exit 0, 25.1 s; runs 1a 1b 1c 1d 2a 2b 2c 2d; done; done file true
+R2: exit 0, 12.6 s; runs 1a 1b 1c 1d; STOPPED before round 2: my hold is 74.1 min old and the round needs up to 14 min, past 88 (heavy-run ignores a hold at 90); 1 whole rounds kept | done; done file true
+R3: exit 0, 0.2 s; runs none; STOPPED before round 1: the hold is not mine (a: A D678 item 3) | done; done file true
+R4: exit 0, 0.2 s; runs none; STOPPED before round 1: no hold readable in G:\consonance-scratch\e-d678t\ctl_rowaa_runner\data\r4 (ENOENT) | done; done file true
+R5: exit 0, 6.3 s; runs 1a 1b; done; done file true

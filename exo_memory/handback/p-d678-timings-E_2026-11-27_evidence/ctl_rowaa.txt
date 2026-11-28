@@ -1,0 +1,15 @@
+1a no hold file:            THROWS: no hold readable in G:\consonance-scratch\e-d678t\ctl_rowaa\hold\none (ENOENT)
+1b someone else's hold:     THROWS: the hold is not mine (x: A D678 item 3)
+1c mine, no start time:     THROWS: my hold has no start time (started: undefined)
+1d mine at 10 min, 4 df runs: {"fits":true,"ageMin":10,"needMin":14,"limitMin":88}
+1e mine at 80 min, 4 df runs: {"fits":false,"ageMin":80,"needMin":14,"limitMin":88}
+1f the boundary, age 74 min + 4 x 210 s = 88 min: {"fits":true,"ageMin":74,"needMin":14,"limitMin":88}; one second more: {"fits":false,"ageMin":74,"needMin":14,"limitMin":88}
+1g unknown kind: THROWS: no run length for kind xx
+2 built: 20 runs, the first round in the order c522ea6-a, c522ea6-b, c522ea6, 15e7d62
+2a split A/A:  0 split 10 of 20 runs (c522ea6-a 5, c522ea6-b 5) into G:\consonance-scratch\e-d678t\ctl_rowaa\aa
+2b split pair: 0 split 10 of 20 runs (c522ea6 5, 15e7d62 5) into G:\consonance-scratch\e-d678t\ctl_rowaa\pair
+2c the wrong order refused: 1  G:\consonance-scratch\e-d678t\ev\split678.js:11
+2d a label absent refused: 1  G:\consonance-scratch\e-d678t\ev\split678.js:10
+2e the pair's analysis equals S7's byte for byte: true
+2f the A/A's analysis equals S2's with the label c522ea6-a read as c522ea6: true
+2g row 9 in the A/A as split:  row 9 ratio c522ea6-a median 1.662 (n 5), c522ea6-b 1.807 (n 5); diff +0.145 (margin 0.1); above p 0.0079, below p 1.0000 -> SLOWER; over the bar 2: 0/5 and 1/
