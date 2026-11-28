@@ -1,0 +1,32 @@
+{
+ "at": "2026-11-28T10:33:27.897Z",
+ "minAgeMin": 120,
+ "strays": null,
+ "straysAt": null,
+ "proxies": {
+  "state": "UNCALIBRATED",
+  "count": null,
+  "titles": {},
+  "how": "read 0, and the control made none (0 → 0 → 0)"
+ },
+ "worktrees": [
+  {
+   "label": "Consonance/lighthouse",
+   "dir": "C:\\Consonance\\lighthouse",
+   "linked": 29
+  }
+ ],
+ "fakeRoots": [],
+ "processes": [
+  {
+   "pid": 7404,
+   "ppid": 2068,
+   "name": "node.exe",
+   "started": "2026-11-28T06:19:21.312Z",
+   "ageMin": 254,
+   "seat": null,
+   "cmd": "C:\\Program Files\\nodejs\\node.exe \"C:\\Program Files\\nodejs\\node.exe\"  \"C:\\Consonance\\lighthouse\\consonance\\tools\\head-watch.js\""
+  }
+ ],
+ "orphanBrowsers": []
+}

@@ -1,0 +1,267 @@
+✖ CONTROL: core_even.test.js, sculpt-even.test.js, sculpt-even-sentence.test.js, validate_lines_between.test.js, core_knots.test.js and passclear.test.js pass whole on an unmutated copy (41454.1442ms)
+✔ a crashed inner run reads NOT TESTED, never a verdict (the crash stand-in, D352) (317.9189ms)
+✔ mutant H1 the held rim's reference eases from a window end still in a taper (the registered C1b rule, U4): applied, and caught by "F1-F7: from T1" (538.7533ms)
+ℹ H1 the held rim's reference eases from a window end still in a taper (the registered C1b rule, U4): 1 of 1 run tests failed
+✔ mutant H2 the held rim is read on the other side of the section: applied, and caught by "rim held|K2 and K3" (2389.0237ms)
+ℹ H2 the held rim is read on the other side of the section: 5 of 5 run tests failed
+✔ mutant H3 the held rim is read unturned by the bank (flat-road arithmetic on a banked road): applied, and caught by "K2 and K3" (2451.0863ms)
+ℹ H3 the held rim is read unturned by the bank (flat-road arithmetic on a banked road): 3 of 3 run tests failed
+✔ mutant H4 the centre does not rise or fall with the bank as it moves sideways: applied, and caught by "K2 and K3" (8347.7709ms)
+ℹ H4 the centre does not rise or fall with the bank as it moves sideways: 3 of 3 run tests failed
+✔ mutant H5 the centre moves in the plane of the bank channel, not the road as built (call 10): applied, and caught by "K2 and K3" (8975.0718ms)
+ℹ H5 the centre moves in the plane of the bank channel, not the road as built (call 10): 2 of 3 run tests failed
+✖ mutant H9 the held rim is read back from the window's ends even where they disagree (the road's own width changing across the window): applied, and caught by "changes across" (172.6077ms)
+✔ mutant H8 the centre is not moved to hold the rim (hold is read as centre): applied, and caught by "rim held" (552.1797ms)
+ℹ H8 the centre is not moved to hold the rim (hold is read as centre): 2 of 2 run tests failed
+✔ mutant W1 no margin at the value beyond the run (its first span still ramping): applied, and caught by "first metre|one piece" (548.0875ms)
+ℹ W1 no margin at the value beyond the run (its first span still ramping): 2 of 3 run tests failed
+✔ mutant W5 the window does not reach back over a coarse piece before the run (the carry side: its last span's slope carried into the run): applied, and caught by "coarse knots" (506.9937ms)
+ℹ W5 the window does not reach back over a coarse piece before the run (the carry side: its last span's slope carried into the run): 1 of 1 run tests failed
+✔ mutant W2 the ramp is a step: every control point in the window set to the value: applied, and caught by "one piece|designed ease" (460.0714ms)
+ℹ W2 the ramp is a step: every control point in the window set to the value: 2 of 2 run tests failed
+✔ mutant W3 the window is not stopped at the open end: applied, and caught by "open end" (430.9182ms)
+ℹ W3 the window is not stopped at the open end: 1 of 1 run tests failed
+✔ mutant W4 the bank is levelled too: applied, and caught by "K5" (1584.9363ms)
+ℹ W4 the bank is levelled too: 1 of 1 run tests failed
+✖ mutant X1m the knots over the window's reaches are not cut: applied, and caught by "X1|X3" (186.388ms)
+✔ mutant X2m the reaches are cut to 7.5 m, not 3.75: applied, and caught by "X1|X3" (10965.0245ms)
+ℹ X2m the reaches are cut to 7.5 m, not 3.75: 4 of 7 run tests failed
+✔ mutant X3m the near reach is not cut: applied, and caught by "X1" (707.7163ms)
+ℹ X3m the near reach is not cut: 4 of 4 run tests failed
+✔ mutant X4m the far reach is not cut: applied, and caught by "X1" (760.0304ms)
+ℹ X4m the far reach is not cut: 4 of 4 run tests failed
+✖ mutant X5m the window is not taken again on the cut track (the carry side still reaches back): applied, and caught by "coarse knots" (195.345ms)
+✔ mutant X6m Even does not ask for one rounding (each knot rounds its new points): applied, and caught by "X1" (722.7558ms)
+ℹ X6m Even does not ask for one rounding (each knot rounds its new points): 2 of 4 run tests failed
+✔ mutant X7m refineKnots ignores roundOnce: applied, and caught by "roundOnce" (598.0404ms)
+ℹ X7m refineKnots ignores roundOnce: 1 of 2 run tests failed
+✔ mutant X8m the round-once insertion leaves its new points unrounded: applied, and caught by "roundOnce" (621.4092ms)
+ℹ X8m the round-once insertion leaves its new points unrounded: 1 of 2 run tests failed
+✔ mutant X9m the round-once insertion reads every knot's span on the knots it started with: applied, and caught by "roundOnce" (566.8877ms)
+ℹ X9m the round-once insertion reads every knot's span on the knots it started with: 1 of 2 run tests failed
+✔ mutant X10m the first sentence does not say what holds beyond the stretch: applied, and caught by "W3" (716.1894ms)
+ℹ X10m the first sentence does not say what holds beyond the stretch: 1 of 1 run tests failed
+✔ mutant X11m the release's check reads the old road on its own knots (the middle's l and h laid on the wrong control points): applied, and caught by "E1 and E2|E5" (1013.6432ms)
+ℹ X11m the release's check reads the old road on its own knots (the middle's l and h laid on the wrong control points): 3 of 4 run tests failed
+✔ mutant B1m the pass clearance ignores `to` (every station from `from` to the end leads): applied, and caught by "row 11" (494.7625ms)
+ℹ B1m the pass clearance ignores `to` (every station from `from` to the end leads): 1 of 1 run tests failed
+✔ mutant B2m the guard on Even's step reads only the window's first station: applied, and caught by "B2" (785.194ms)
+ℹ B2m the guard on Even's step reads only the window's first station: 1 of 1 run tests failed
+✔ mutant B3m the guard on Even's step starts its read at the window's end: applied, and caught by "B2" (749.8064ms)
+ℹ B3m the guard on Even's step starts its read at the window's end: 1 of 1 run tests failed
+✔ mutant B4m Even's result is frozen shallow again (its changed pieces left unfrozen, so every offset read converts the whole lap): applied, and caught by "B4" (769.0958ms)
+ℹ B4m Even's result is frozen shallow again (its changed pieces left unfrozen, so every offset read converts the whole lap): 3 of 3 run tests failed
+✔ mutant G1m the pass-clearance guard runs on Even's step again: applied, and caught by "G1" (1324.3722ms)
+ℹ G1m the pass-clearance guard runs on Even's step again: 1 of 1 run tests failed
+✔ mutant G2m Even's release runs no pass-clearance guard: applied, and caught by "G1|B2" (1013.3511ms)
+ℹ G2m Even's release runs no pass-clearance guard: 2 of 2 run tests failed
+✔ mutant G3m Even's release measures the road against itself (the dragged road), not the road before the drag: applied, and caught by "G1|B2" (934.5872ms)
+ℹ G3m Even's release measures the road against itself (the dragged road), not the road before the drag: 2 of 2 run tests failed
+✔ mutant G4m a refused release keeps the dragged road: applied, and caught by "G1|B2" (1240.3304ms)
+ℹ G4m a refused release keeps the dragged road: 2 of 2 run tests failed
+✔ mutant C1m the cut track is not kept (every step cuts again): applied, and caught by "C1" (423.4161ms)
+ℹ C1m the cut track is not kept (every step cuts again): 1 of 1 run tests failed
+✔ mutant C2m the cut is kept per document, whatever the run: applied, and caught by "C1" (446.1656ms)
+ℹ C2m the cut is kept per document, whatever the run: 1 of 1 run tests failed
+✔ mutant A1m1 an end is tested at 10 m only (a grab just beyond it reads as at rest): applied, and caught by "A1-6" (464.0945ms)
+ℹ A1m1 an end is tested at 10 m only (a grab just beyond it reads as at rest): 1 of 1 run tests failed
+✔ mutant A1m2 an end with no road beyond it reads as at rest: applied, and caught by "A1-6" (433.3972ms)
+ℹ A1m2 an end with no road beyond it reads as at rest: 1 of 1 run tests failed
+✔ mutant A1m3 the other end is not asked to head toward the end at rest (or match it, at the track's start): applied, and caught by "A1-2|A1-3" (535.9096ms)
+ℹ A1m3 the other end is not asked to head toward the end at rest (or match it, at the track's start): 2 of 2 run tests failed
+✔ mutant A1m4 two ends at rest are eased between however far apart: applied, and caught by "A1-4" (509.0954ms)
+ℹ A1m4 two ends at rest are eased between however far apart: 1 of 1 run tests failed
+✔ mutant A1m5 the fallback 'keep' is ignored (an unread road refused anyway): applied, and caught by "A1-3|A1-4" (463.6245ms)
+ℹ A1m5 the fallback 'keep' is ignored (an unread road refused anyway): 2 of 2 run tests failed
+✔ mutant A1m6 the fallback 'keep' lays nothing (the edge moves with the width): applied, and caught by "A1-3|A1-4" (634.3632ms)
+ℹ A1m6 the fallback 'keep' lays nothing (the edge moves with the width): 2 of 2 run tests failed
+✔ mutant A1m7 the kept edge's move is read without the line's move: applied, and caught by "A1-5" (574.8637ms)
+ℹ A1m7 the kept edge's move is read without the line's move: 1 of 1 run tests failed
+✔ mutant A1m8 a banked stretch is not said to be banked: applied, and caught by "A1-7" (1718.5148ms)
+ℹ A1m8 a banked stretch is not said to be banked: 2 of 3 run tests failed
+✔ mutant A1m9 the shell opens the drag on a road it cannot read: applied, and caught by "U1" (550.3212ms)
+ℹ A1m9 the shell opens the drag on a road it cannot read: 1 of 1 run tests failed
+✔ mutant A1m10 the words drop how far the kept edge moved: applied, and caught by "W1|W4" (636.1642ms)
+ℹ A1m10 the words drop how far the kept edge moved: 2 of 2 run tests failed
+✔ mutant A1m11 the words drop the bank: applied, and caught by "W5" (663.6627ms)
+ℹ A1m11 the words drop the bank: 1 of 1 run tests failed
+✔ mutant A1m12 the check job is sent no reading (its words cannot be said): applied, and caught by "E5|E6" (1142.5571ms)
+ℹ A1m12 the check job is sent no reading (its words cannot be said): 3 of 4 run tests failed
+✔ mutant A1m13 the words say a kept edge with no reading as if read: applied, and caught by "W7" (472.5456ms)
+ℹ A1m13 the words say a kept edge with no reading as if read: 1 of 1 run tests failed
+✔ mutant R1 a closed lap's start line inside the window is not refused: applied, and caught by "closed lap" (685.8303ms)
+ℹ R1 a closed lap's start line inside the window is not refused: 1 of 1 run tests failed
+✔ mutant R2 a run across the start line is refused as no run, not by the line: applied, and caught by "closed lap" (582.3583ms)
+ℹ R2 a run across the start line is refused as no run, not by the line: 1 of 1 run tests failed
+✔ mutant R3 a jump within reach is not refused: applied, and caught by "jump" (472.3859ms)
+ℹ R3 a jump within reach is not refused: 1 of 1 run tests failed
+✔ mutant R4 a tube is not refused: applied, and caught by "tube" (447.4742ms)
+ℹ R4 a tube is not refused: 1 of 1 run tests failed
+✔ mutant R5 a split width is not refused: applied, and caught by "tube" (537.0848ms)
+ℹ R5 a split width is not refused: 1 of 1 run tests failed
+✔ mutant R6 a width under 0.5 m is taken: applied, and caught by "refuses by name, and changes nothing" (538.4516ms)
+ℹ R6 a width under 0.5 m is taken: 1 of 1 run tests failed
+✔ mutant R7 a width over 400 m is taken: applied, and caught by "refuses by name, and changes nothing" (634.7286ms)
+ℹ R7 a width over 400 m is taken: 1 of 1 run tests failed
+✔ mutant R8 a width that is not a number is taken: applied, and caught by "refuses by name, and changes nothing" (514.8247ms)
+ℹ R8 a width that is not a number is taken: 1 of 1 run tests failed
+✔ mutant R9 a run that ends on a jump is taken: applied, and caught by "jump" (415.8028ms)
+ℹ R9 a run that ends on a jump is taken: 1 of 1 run tests failed
+✔ mutant S1 the drag is not snapped to 0.5 m: applied, and caught by "snaps" (502.6555ms)
+ℹ S1 the drag is not snapped to 0.5 m: 1 of 1 run tests failed
+✔ mutant S2 the typed width is snapped: applied, and caught by "typed" (1081.2689ms)
+ℹ S2 the typed width is snapped: 2 of 3 run tests failed
+✔ mutant S3 the drag drops the run's selection (its handles go): applied, and caught by "snaps" (481.0151ms)
+ℹ S3 the drag drops the run's selection (its handles go): 1 of 1 run tests failed
+✖ mutant S4 a jump within reach opens the drag anyway: applied, and caught by "refuses by name and changes nothing" (443.6616ms)
+ℹ S4 a jump within reach opens the drag anyway: 0 of 1 run tests failed
+✔ mutant S5 the drag forgets the rim it holds (both rims move): applied, and caught by "snaps" (533.4674ms)
+ℹ S5 the drag forgets the rim it holds (both rims move): 1 of 1 run tests failed
+✔ mutant E1m the release starts no check (the second sentence is never said): applied, and caught by "E1 and E2" (1112.1621ms)
+ℹ E1m the release starts no check (the second sentence is never said): 3 of 3 run tests failed
+✔ mutant E4m the check's words are said on a track changed since (an Undo meanwhile): applied, and caught by "E4" (693.8742ms)
+ℹ E4m the check's words are said on a track changed since (an Undo meanwhile): 1 of 1 run tests failed
+✔ mutant E2m the job does not read the middle's move between the two tracks (it says 0.0 m): applied, and caught by "E1 and E2|E5" (1334.0086ms)
+ℹ E2m the job does not read the middle's move between the two tracks (it says 0.0 m): 3 of 4 run tests failed
+✔ mutant E3m linesBetween stops a station short of its end: applied, and caught by "E3" (783.7976ms)
+ℹ E3m linesBetween stops a station short of its end: 2 of 2 run tests failed
+✔ mutant E3n linesBetween reads the speed from its own stations, not the lap: applied, and caught by "E3" (972.5302ms)
+ℹ E3n linesBetween reads the speed from its own stations, not the lap: 1 of 2 run tests failed
+ℹ tests 67
+ℹ suites 0
+ℹ pass 62
+ℹ fail 5
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 115622.7577
+
+✖ failing tests:
+
+test at test\core_even_mutation.test.js:139:1
+✖ CONTROL: core_even.test.js, sculpt-even.test.js, sculpt-even-sentence.test.js, validate_lines_between.test.js, core_knots.test.js and passclear.test.js pass whole on an unmutated copy (41454.1442ms)
+  AssertionError [ERR_ASSERTION]: tests 92, fail 1
+   against every other (129.415ms)
+  ✔ row 10: the solid is the export's: the hull deepens toward a rising edge by the square of the distance in, and the apron's box reaches the edge's depth (0.8298ms)
+  ✔ row 9: bad inputs are refused by name (0.837ms)
+  ✔ E3: on B+ levelled, the lines inside the level's window are the whole validate's, every field the same bits (190.0064ms)
+  ✔ E3: on a closed lap, a span in its middle gives the whole validate's lines there (the speed profile is the lap's) (376.0885ms)
+  ✔ linesBetween refuses a span that is not one, and gives nothing past the last station (13.0961ms)
+  ℹ tests 92
+  ℹ suites 0
+  ℹ pass 91
+  ℹ fail 1
+  ℹ cancelled 0
+  ℹ skipped 0
+  ℹ todo 0
+  ℹ duration_ms 41245.7904
+  
+  ✖ failing tests:
+  
+  test at app\test\sculpt-even.test.js:207:1
+  ✖ U1: a run from the track's start with an edge kept is refused by name (EVEN_UNREAD) as the drag opens and when typed, and nothing changes (53.1398ms)
+    AssertionError [ERR_ASSERTION]: the middle kept is levelled
+        at TestContext.<anonymous> (<local path>)
+        at async Test.run (node:internal/test_runner/test:1332:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+      generatedMessage: false,
+      code: 'ERR_ASSERTION',
+      actual: 'EVEN_RUN: select the piece or the run to even first: click it on the track (Shift-click for a run)',
+      expected: /^Even: 16 m wide/,
+      operator: 'match',
+      diff: 'simple'
+    }
+  
+      at TestContext.<anonymous> (<scratch>\tu\test\core_even_mutation.test.js:141:41)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.start (node:internal/test_runner/test:1191:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:385:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at test\core_even_mutation.test.js:153:3
+✖ mutant H9 the held rim is read back from the window's ends even where they disagree (the road's own width changing across the window): applied, and caught by "changes across" (172.6077ms)
+  AssertionError [ERR_ASSERTION]: NOT APPLIED: the string occurs 0 times in src/core/even.js: one = [rw, rl].every((f) => Math.abs(f(w0) - f(w1)) <= EVEN_AGREE_M);
+  
+  0 !== 1
+  
+      at TestContext.<anonymous> (<scratch>\tu\test\core_even_mutation.test.js:158:16)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test\core_even_mutation.test.js:153:3
+✖ mutant X1m the knots over the window's reaches are not cut: applied, and caught by "X1|X3" (186.388ms)
+  AssertionError [ERR_ASSERTION]: NOT APPLIED: the string occurs 0 times in src/core/even.js: const cut = refineEnds(doc, off, L, lo, hi, margin + ramp);
+  
+  0 !== 1
+  
+      at TestContext.<anonymous> (<scratch>\tu\test\core_even_mutation.test.js:158:16)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test\core_even_mutation.test.js:153:3
+✖ mutant X5m the window is not taken again on the cut track (the carry side still reaches back): applied, and caught by "coarse knots" (195.345ms)
+  AssertionError [ERR_ASSERTION]: NOT APPLIED: the string occurs 0 times in src/core/even.js: const W = cut === doc ? W0 : evenWindow(cut, { from, to, ramp, margin });
+  
+  0 !== 1
+  
+      at TestContext.<anonymous> (<scratch>\tu\test\core_even_mutation.test.js:158:16)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test\core_even_mutation.test.js:153:3
+✖ mutant S4 a jump within reach opens the drag anyway: applied, and caught by "refuses by name and changes nothing" (443.6616ms)
+  AssertionError [ERR_ASSERTION]: NOT CAUGHT: 1 pass, 0 fail with the pattern "refuses by name and changes nothing"
+      at TestContext.<anonymous> (<scratch>\tu\test\core_even_mutation.test.js:164:14)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

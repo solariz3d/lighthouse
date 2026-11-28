@@ -1,0 +1,134 @@
+✔ CONTROL: core_even.test.js, sculpt-even.test.js, sculpt-even-sentence.test.js, validate_lines_between.test.js, core_knots.test.js and passclear.test.js pass whole on an unmutated copy (57441.1302ms)
+✔ a crashed inner run reads NOT TESTED, never a verdict (the crash stand-in, D352) (414.9598ms)
+✔ mutant H1 the held rim's reference eases from a window end still in a taper (the registered C1b rule, U4): applied, and caught by "F1-F7: from T1" (718.7578ms)
+ℹ H1 the held rim's reference eases from a window end still in a taper (the registered C1b rule, U4): 1 of 1 run tests failed
+✔ mutant H2 the held rim is read on the other side of the section: applied, and caught by "rim held|K2 and K3" (2712.5945ms)
+ℹ H2 the held rim is read on the other side of the section: 5 of 5 run tests failed
+✔ mutant H3 the held rim is read unturned by the bank (flat-road arithmetic on a banked road): applied, and caught by "K2 and K3" (2599.7872ms)
+ℹ H3 the held rim is read unturned by the bank (flat-road arithmetic on a banked road): 3 of 3 run tests failed
+✔ mutant H4 the centre does not rise or fall with the bank as it moves sideways: applied, and caught by "K2 and K3" (11649.9661ms)
+ℹ H4 the centre does not rise or fall with the bank as it moves sideways: 3 of 3 run tests failed
+✔ mutant H5 the centre moves in the plane of the bank channel, not the road as built (call 10): applied, and caught by "K2 and K3" (10803.6445ms)
+ℹ H5 the centre moves in the plane of the bank channel, not the road as built (call 10): 2 of 3 run tests failed
+✔ mutant H9 the held rim is read back from the window's ends even where they disagree (the road's own width changing across the window): applied, and caught by "A1-1|A1-4" (374.1488ms)
+ℹ H9 the held rim is read back from the window's ends even where they disagree (the road's own width changing across the window): 1 of 1 run tests failed
+✔ mutant H8 the centre is not moved to hold the rim (hold is read as centre): applied, and caught by "rim held" (635.9051ms)
+ℹ H8 the centre is not moved to hold the rim (hold is read as centre): 2 of 2 run tests failed
+✔ mutant W1 no margin at the value beyond the run (its first span still ramping): applied, and caught by "first metre|one piece" (642.416ms)
+ℹ W1 no margin at the value beyond the run (its first span still ramping): 2 of 3 run tests failed
+✔ mutant W5 the window does not reach back over a coarse piece before the run (the carry side: its last span's slope carried into the run): applied, and caught by "coarse knots" (599.946ms)
+ℹ W5 the window does not reach back over a coarse piece before the run (the carry side: its last span's slope carried into the run): 1 of 1 run tests failed
+✔ mutant W2 the ramp is a step: every control point in the window set to the value: applied, and caught by "one piece|designed ease" (545.1752ms)
+ℹ W2 the ramp is a step: every control point in the window set to the value: 2 of 2 run tests failed
+✔ mutant W3 the window is not stopped at the open end: applied, and caught by "open end" (507.4407ms)
+ℹ W3 the window is not stopped at the open end: 1 of 1 run tests failed
+✔ mutant W4 the bank is levelled too: applied, and caught by "K5" (1667.0138ms)
+ℹ W4 the bank is levelled too: 1 of 1 run tests failed
+✔ mutant X1m the knots over the window's reaches are not cut: applied, and caught by "X1|X3" (12992.6546ms)
+ℹ X1m the knots over the window's reaches are not cut: 7 of 7 run tests failed
+✔ mutant X2m the reaches are cut to 7.5 m, not 3.75: applied, and caught by "X1|X3" (13650.1921ms)
+ℹ X2m the reaches are cut to 7.5 m, not 3.75: 4 of 7 run tests failed
+✔ mutant X3m the near reach is not cut: applied, and caught by "X1" (790.6561ms)
+ℹ X3m the near reach is not cut: 4 of 4 run tests failed
+✔ mutant X4m the far reach is not cut: applied, and caught by "X1" (791.1562ms)
+ℹ X4m the far reach is not cut: 4 of 4 run tests failed
+✔ mutant X5m the window is not taken again on the cut track (the carry side still reaches back): applied, and caught by "coarse knots" (587.3925ms)
+ℹ X5m the window is not taken again on the cut track (the carry side still reaches back): 1 of 1 run tests failed
+✔ mutant X6m Even does not ask for one rounding (each knot rounds its new points): applied, and caught by "X1" (811.7592ms)
+ℹ X6m Even does not ask for one rounding (each knot rounds its new points): 2 of 4 run tests failed
+✔ mutant X7m refineKnots ignores roundOnce: applied, and caught by "roundOnce" (607.9251ms)
+ℹ X7m refineKnots ignores roundOnce: 1 of 2 run tests failed
+✔ mutant X8m the round-once insertion leaves its new points unrounded: applied, and caught by "roundOnce" (615.8811ms)
+ℹ X8m the round-once insertion leaves its new points unrounded: 1 of 2 run tests failed
+✔ mutant X9m the round-once insertion reads every knot's span on the knots it started with: applied, and caught by "roundOnce" (625.104ms)
+ℹ X9m the round-once insertion reads every knot's span on the knots it started with: 1 of 2 run tests failed
+✔ mutant X10m the first sentence does not say what holds beyond the stretch: applied, and caught by "W3" (780.5002ms)
+ℹ X10m the first sentence does not say what holds beyond the stretch: 1 of 1 run tests failed
+✔ mutant X11m the release's check reads the old road on its own knots (the middle's l and h laid on the wrong control points): applied, and caught by "E1 and E2|E5" (1113.4704ms)
+ℹ X11m the release's check reads the old road on its own knots (the middle's l and h laid on the wrong control points): 3 of 4 run tests failed
+✔ mutant B1m the pass clearance ignores `to` (every station from `from` to the end leads): applied, and caught by "row 11" (516.815ms)
+ℹ B1m the pass clearance ignores `to` (every station from `from` to the end leads): 1 of 1 run tests failed
+✔ mutant B2m the guard on Even's step reads only the window's first station: applied, and caught by "B2" (840.2386ms)
+ℹ B2m the guard on Even's step reads only the window's first station: 1 of 1 run tests failed
+✔ mutant B3m the guard on Even's step starts its read at the window's end: applied, and caught by "B2" (808.7412ms)
+ℹ B3m the guard on Even's step starts its read at the window's end: 1 of 1 run tests failed
+✔ mutant B4m Even's result is frozen shallow again (its changed pieces left unfrozen, so every offset read converts the whole lap): applied, and caught by "B4" (840.1996ms)
+ℹ B4m Even's result is frozen shallow again (its changed pieces left unfrozen, so every offset read converts the whole lap): 3 of 3 run tests failed
+✔ mutant G1m the pass-clearance guard runs on Even's step again: applied, and caught by "G1" (1175.4885ms)
+ℹ G1m the pass-clearance guard runs on Even's step again: 1 of 1 run tests failed
+✔ mutant G2m Even's release runs no pass-clearance guard: applied, and caught by "G1|B2" (1120.9453ms)
+ℹ G2m Even's release runs no pass-clearance guard: 2 of 2 run tests failed
+✔ mutant G3m Even's release measures the road against itself (the dragged road), not the road before the drag: applied, and caught by "G1|B2" (1077.1689ms)
+ℹ G3m Even's release measures the road against itself (the dragged road), not the road before the drag: 2 of 2 run tests failed
+✔ mutant G4m a refused release keeps the dragged road: applied, and caught by "G1|B2" (1278.9491ms)
+ℹ G4m a refused release keeps the dragged road: 2 of 2 run tests failed
+✔ mutant C1m the cut track is not kept (every step cuts again): applied, and caught by "C1" (519.5882ms)
+ℹ C1m the cut track is not kept (every step cuts again): 1 of 1 run tests failed
+✔ mutant C2m the cut is kept per document, whatever the run: applied, and caught by "C1" (548.7767ms)
+ℹ C2m the cut is kept per document, whatever the run: 1 of 1 run tests failed
+✔ mutant A1m1 an end is tested at 10 m only (a grab just beyond it reads as at rest): applied, and caught by "A1-6" (706.0799ms)
+ℹ A1m1 an end is tested at 10 m only (a grab just beyond it reads as at rest): 1 of 1 run tests failed
+✔ mutant A1m2 an end with no road beyond it reads as at rest: applied, and caught by "A1-6" (552.4882ms)
+ℹ A1m2 an end with no road beyond it reads as at rest: 1 of 1 run tests failed
+✔ mutant A1m3 the other end is not asked to head toward the end at rest (or match it, at the track's start): applied, and caught by "A1-1|A1-3" (613.5434ms)
+ℹ A1m3 the other end is not asked to head toward the end at rest (or match it, at the track's start): 2 of 2 run tests failed
+✔ mutant A1m6 the fallback 'keep' lays nothing (the edge moves with the width): applied, and caught by "A1-3|A1-4" (604.6672ms)
+ℹ A1m6 the fallback 'keep' lays nothing (the edge moves with the width): 2 of 2 run tests failed
+✔ mutant A1m7 the kept edge's move is read without the line's move: applied, and caught by "A1-5" (651.195ms)
+ℹ A1m7 the kept edge's move is read without the line's move: 1 of 1 run tests failed
+✔ mutant A1m8 a banked stretch is not said to be banked: applied, and caught by "A1-7" (1970.3741ms)
+ℹ A1m8 a banked stretch is not said to be banked: 2 of 3 run tests failed
+✔ mutant A1m10 the words drop how far the kept edge moved: applied, and caught by "W1|W4" (738.4294ms)
+ℹ A1m10 the words drop how far the kept edge moved: 2 of 2 run tests failed
+✔ mutant A1m11 the words drop the bank: applied, and caught by "W5" (653.9423ms)
+ℹ A1m11 the words drop the bank: 1 of 1 run tests failed
+✔ mutant A1m12 the check job is sent no reading (its words cannot be said): applied, and caught by "E5|E6" (1233.3261ms)
+ℹ A1m12 the check job is sent no reading (its words cannot be said): 3 of 4 run tests failed
+✔ mutant A1m13 the words say a kept edge with no reading as if read: applied, and caught by "W7" (519.9333ms)
+ℹ A1m13 the words say a kept edge with no reading as if read: 1 of 1 run tests failed
+✔ mutant R1 a closed lap's start line inside the window is not refused: applied, and caught by "closed lap" (704.9934ms)
+ℹ R1 a closed lap's start line inside the window is not refused: 1 of 1 run tests failed
+✔ mutant R2 a run across the start line is refused as no run, not by the line: applied, and caught by "closed lap" (632.5825ms)
+ℹ R2 a run across the start line is refused as no run, not by the line: 1 of 1 run tests failed
+✔ mutant R3 a jump within reach is not refused: applied, and caught by "jump" (488.7665ms)
+ℹ R3 a jump within reach is not refused: 1 of 1 run tests failed
+✔ mutant R4 a tube is not refused: applied, and caught by "tube" (498.61ms)
+ℹ R4 a tube is not refused: 1 of 1 run tests failed
+✔ mutant R5 a split width is not refused: applied, and caught by "tube" (767.0834ms)
+ℹ R5 a split width is not refused: 1 of 1 run tests failed
+✔ mutant R6 a width under 0.5 m is taken: applied, and caught by "refuses by name, and changes nothing" (533.8104ms)
+ℹ R6 a width under 0.5 m is taken: 1 of 1 run tests failed
+✔ mutant R7 a width over 400 m is taken: applied, and caught by "refuses by name, and changes nothing" (505.5107ms)
+ℹ R7 a width over 400 m is taken: 1 of 1 run tests failed
+✔ mutant R8 a width that is not a number is taken: applied, and caught by "refuses by name, and changes nothing" (490.4708ms)
+ℹ R8 a width that is not a number is taken: 1 of 1 run tests failed
+✔ mutant R9 a run that ends on a jump is taken: applied, and caught by "jump" (465.6781ms)
+ℹ R9 a run that ends on a jump is taken: 1 of 1 run tests failed
+✔ mutant S1 the drag is not snapped to 0.5 m: applied, and caught by "snaps" (544.2611ms)
+ℹ S1 the drag is not snapped to 0.5 m: 1 of 1 run tests failed
+✔ mutant S2 the typed width is snapped: applied, and caught by "typed" (1095.3813ms)
+ℹ S2 the typed width is snapped: 1 of 3 run tests failed
+✔ mutant S3 the drag drops the run's selection (its handles go): applied, and caught by "snaps" (703.7703ms)
+ℹ S3 the drag drops the run's selection (its handles go): 1 of 1 run tests failed
+✔ mutant S4 a jump within reach opens the drag anyway: applied, and caught by "refuses by name and changes nothing" (521.042ms)
+ℹ S4 a jump within reach opens the drag anyway: 1 of 1 run tests failed
+✔ mutant S5 the drag forgets the rim it holds (both rims move): applied, and caught by "snaps" (664.1342ms)
+ℹ S5 the drag forgets the rim it holds (both rims move): 1 of 1 run tests failed
+✔ mutant E1m the release starts no check (the second sentence is never said): applied, and caught by "E1 and E2" (1134.9795ms)
+ℹ E1m the release starts no check (the second sentence is never said): 3 of 3 run tests failed
+✔ mutant E4m the check's words are said on a track changed since (an Undo meanwhile): applied, and caught by "E4" (733.0208ms)
+ℹ E4m the check's words are said on a track changed since (an Undo meanwhile): 1 of 1 run tests failed
+✔ mutant E2m the job does not read the middle's move between the two tracks (it says 0.0 m): applied, and caught by "E1 and E2|E5" (1398.8614ms)
+ℹ E2m the job does not read the middle's move between the two tracks (it says 0.0 m): 3 of 4 run tests failed
+✔ mutant E3m linesBetween stops a station short of its end: applied, and caught by "E3" (911.5802ms)
+ℹ E3m linesBetween stops a station short of its end: 2 of 2 run tests failed
+✔ mutant E3n linesBetween reads the speed from its own stations, not the lap: applied, and caught by "E3" (955.9974ms)
+ℹ E3n linesBetween reads the speed from its own stations, not the lap: 1 of 2 run tests failed
+ℹ tests 64
+ℹ suites 0
+ℹ pass 64
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 155487.647

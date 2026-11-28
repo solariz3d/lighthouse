@@ -1,0 +1,520 @@
+heavy-run: waiting on 6fe15f0a pid 31920 (L271 A the built A1 on the 28 cases, switch three ways (2), since 2026-11-28T08:59:00.676Z) — it holds this tree
+heavy-run: waiting on 6fe15f0a pid 31920 (L271 A the built A1 on the 28 cases, switch three ways (2), since 2026-11-28T08:59:00.676Z) — it holds this tree
+heavy-run: waiting on 6fe15f0a pid 31920 (L271 A the built A1 on the 28 cases, switch three ways (2), since 2026-11-28T08:59:00.676Z) — it holds this tree
+heavy-run: waiting on 6fe15f0a pid 31920 (L271 A the built A1 on the 28 cases, switch three ways (2), since 2026-11-28T08:59:00.676Z) — it holds this tree
+heavy-run: waiting on 6fe15f0a pid 31920 (L271 A the built A1 on the 28 cases, switch three ways (2), since 2026-11-28T08:59:00.676Z) — it holds this tree
+heavy-run: waiting on 6fe15f0a pid 31920 (L271 A the built A1 on the 28 cases, switch three ways (2), since 2026-11-28T08:59:00.676Z) — it holds this tree
+heavy-run: waiting on 6fe15f0a pid 31920 (L271 A the built A1 on the 28 cases, switch three ways (2), since 2026-11-28T08:59:00.676Z) — it holds this tree
+heavy-run: waiting on 6fe15f0a pid 31920 (L271 A the built A1 on the 28 cases, switch three ways (2), since 2026-11-28T08:59:00.676Z) — it holds this tree
+heavy-run: waiting on 6fe15f0a pid 31920 (L271 A the built A1 on the 28 cases, switch three ways (2), since 2026-11-28T08:59:00.676Z) — it holds this tree
+heavy-run: waiting on 6fe15f0a pid 31920 (L271 A the built A1 on the 28 cases, switch three ways (2), since 2026-11-28T08:59:00.676Z) — it holds this tree
+heavy-run: waiting on 6fe15f0a pid 31920 (L271 A the built A1 on the 28 cases, switch three ways (2), since 2026-11-28T08:59:00.676Z) — it holds this tree
+heavy-run: waiting on 6fe15f0a pid 31920 (L271 A the built A1 on the 28 cases, switch three ways (2), since 2026-11-28T08:59:00.676Z) — it holds this tree
+heavy-run: waiting on 6fe15f0a pid 31920 (L271 A the built A1 on the 28 cases, switch three ways (2), since 2026-11-28T08:59:00.676Z) — it holds this tree
+heavy-run: waiting on 6fe15f0a pid 31920 (L271 A the built A1 on the 28 cases, switch three ways (2), since 2026-11-28T08:59:00.676Z) — it holds this tree
+heavy-run: waiting on 6fe15f0a pid 31920 (L271 A the built A1 on the 28 cases, switch three ways (2), since 2026-11-28T08:59:00.676Z) — it holds this tree
+heavy-run: waiting on 6fe15f0a pid 31920 (L271 A the built A1 on the 28 cases, switch three ways (2), since 2026-11-28T08:59:00.676Z) — it holds this tree
+heavy-run: waiting on 6fe15f0a pid 31920 (L271 A the built A1 on the 28 cases, switch three ways (2), since 2026-11-28T08:59:00.676Z) — it holds this tree
+heavy-run: waiting on 6fe15f0a pid 31920 (L271 A the built A1 on the 28 cases, switch three ways (2), since 2026-11-28T08:59:00.676Z) — it holds this tree
+heavy-run: waiting on 6fe15f0a pid 31920 (L271 A the built A1 on the 28 cases, switch three ways (2), since 2026-11-28T08:59:00.676Z) — it holds this tree
+heavy-run: waiting on 6fe15f0a pid 31920 (L271 A the built A1 on the 28 cases, switch three ways (2), since 2026-11-28T08:59:00.676Z) — it holds this tree
+heavy-run: waiting on 6fe15f0a pid 31920 (L271 A the built A1 on the 28 cases, switch three ways (2), since 2026-11-28T08:59:00.676Z) — it holds this tree
+heavy-run: waiting on 6fe15f0a pid 31920 (L271 A the built A1 on the 28 cases, switch three ways (2), since 2026-11-28T08:59:00.676Z) — it holds this tree
+heavy-run: waiting on 6fe15f0a pid 31920 (L271 A the built A1 on the 28 cases, switch three ways (2), since 2026-11-28T08:59:00.676Z) — it holds this tree
+heavy-run: waiting on 6fe15f0a pid 31920 (L271 A the built A1 on the 28 cases, switch three ways (2), since 2026-11-28T08:59:00.676Z) — it holds this tree
+heavy-run: waiting on 6fe15f0a pid 31920 (L271 A the built A1 on the 28 cases, switch three ways (2), since 2026-11-28T08:59:00.676Z) — it holds this tree
+✔ row 1c: on a CLOSED lap a shift-click across the start line takes the SHORT way: the pieces either side of the line; Save keeps them, Delete says CLOSED (354.6437ms)
+✔ row 1d: where the run across the start line CANNOT be saved (a cup at one side of it, a plain piece at the other) and the inside run can, the inside run is selected and the line says why (268.7542ms)
+✔ row 1e: a tie stays inside the lap even when the lengths are decimals whose sums differ in the last bit (A's tiefloat case) (5.4098ms)
+✔ row 1: select a piece, shift-click a run (the first piece selected stays the anchor), an out-of-range piece is refused, and any change of the document drops the selection (203.1048ms)
+✔ row 2: Save as piece stores exactly the core's text; a name already used is refused and the stored piece untouched; a bad name and a mixed run are refused by name (146.9577ms)
+✔ row 3: the library lists name, length, turn, climb and a thumbnail; an unreadable file and a whole track are LISTED with the reason (92.8423ms)
+✔ row 4: Add at head is the core's insert as ONE undo step, mirrored on request; closed, missing and damaged are refused by name with nothing changed (195.9283ms)
+✔ row 5 (REQUIRED, through the app): a track built by saving a run and adding it back through the shell is the SAME DOCUMENT and exports the SAME BYTES (5311.9365ms)
+✔ row 6: rename (the new name must be free; the file's own name changes) and delete of a saved piece (61.7071ms)
+✔ row 6b: a CASE-ONLY rename (Run to run) works where names are case-blind (C, look F2), on a case-sensitive store too, and a failure on the way never loses the piece (94.1758ms)
+✔ row 7: delete at the open end is simple (one undo step, ids kept); a closed track refuses by name (177.5279ms)
+✔ row 8: delete in the MIDDLE is previewed (displacement, overlap check); Apply writes the backup FIRST and is one undo step; a failed copy refuses; Cancel, a stale preview, and DELETE_REJOIN (1971.2948ms)
+✔ row 8b: the delete preview's overlap check finds a road running into itself (a two-circle coil, as TEST 1 stacked) and reports where (5808.7842ms)
+✔ row 9: the preview shows a delete's proposal as a ghost (dropped on Cancel and on Apply), and the selection highlight lands where the preview's own pick says the piece is (780.5629ms)
+✔ row 10: the panel: a click selects the piece under it and a shift-click the run; a drag, an armed brush and a click on nothing do not select; Save as piece, the list, Add at head with Mirror, Rename, Delete with its confirm (332.231ms)
+✔ row 10b: the panel: a middle delete shows the preview in words (what moves, the overlap check) with Apply and Cancel; a mixed run says why it cannot be saved (739.7055ms)
+✔ row 11d (D331 B, amended): as corners the ghost has the corner handles, turnDeg and climbDeg, labelled in degrees, even with the fields blank; "turn & climb as" rate gives the rate handles back (148.7177ms)
+✔ row 11e (D331): as a corner, a Shift drag of 37 px on the turn handle is 37 × 0.01° of corner, and the placed piece turns exactly that and ends at rate 0 (217.9976ms)
+✔ row 11e (D331): as a corner, a Shift drag of 23 px on the climb handle is 23 × 0.01° of corner, and the placed piece climbs exactly that and ends at rate 0 (221.4056ms)
+✔ row 11: Extend's handles: on the ghost and only while there is one; a drag types into the matching field and reaches no document until Extend; mirrored handles change the same field; Extend places what was dragged (470.0987ms)
+✔ row 11b: no ghost, no handles; a press ON a handle is the handle's and the camera keeps a press anywhere else (in Build no press is a brush); the cup's handles go with the cup field; the switch turns them off (254.9118ms)
+✔ row 11c: the preview mounts AFTER the panel, so the first ask for the ghost can go to nobody: the handles ask again about every half second and appear once it listens (found in the real window) (589.3229ms)
+✔ row 12: Sculpt through the panel: the strip offers the tools; ONE selected piece gets its handles; a drag reshapes that piece, is ONE undo step and the centreline does not move; Undo gives it back (440.7377ms)
+✔ row 13: the preview's ghostInfo (what the handles read): none without a ghost, the path's samples and where the new piece starts with one, none for a delete preview's ghost, none after clearGhost (427.3983ms)
+✔ row 14: the Jump button (D258, the free jump): beside Extend; the old Add-jump fields are gone; hover shows a jump ghost with no Extend handles on it; a click is ONE undo step with the note; a refusal says why; Undo gives the fields back (1263.2239ms)
+✔ row 14b: the landing boxes appear while a landing is the head, show the pose in metres and degrees, a typed value is ONE undo step, a refusal says why in words, and an Extend fixes the landing (471.9769ms)
+✔ row 14c: the landing's four handles (D278: BESIDE the Extend ghost's, where D258 had them replace it: row 14d); a drag moves the number of its box in ONE undo step; Shift is one step a pixel (D330), Ctrl snaps; two quick presses reset one; an Extend takes them away (1094.4921ms)
+✔ row 14d (D278, the user: "after placing jump piece, it doesnt go back to regular track manipulation with the base equation, it stays the heading, sideways, and height"): right after Jump the Extend ghost's handles are up BESIDE the landing's four; an Extend handle types into its field and edits no document; a landing handle still moves the landing in ONE undo step; Extend fixes the landing, and its handles go (4344.5762ms)
+✔ row 14e (D278): a hover on Jump shows the jump ghost with no Extend handles on it, while a landing's own handles stay; a hover on Extend with a landing as the head shows the Extend ghost's handles; Sculpt takes the landing's handles away as before (2461.7829ms)
+✔ row 16: the Grip field in Extend (D261): it shows the head's grip, "grip like…" fills it from a known track, a changed value is the new piece's grip and the next piece keeps it, the words say untested outside 60 to 110 and that the checker does not model grip; 49, 151 and 100.5 are refused; Undo gives the head's back (264.319ms)
+✔ row 16b: the selected pieces' grip (D261): the box shows the pieces' grip (blank where they differ), Set grip is ONE undo step on the road pieces and keeps the selection, "grip like…" fills the box, 49/151/100.5 are refused in words, 100 writes no grip, a flight alone is refused, Undo restores (357.0929ms)
+✔ row 16c: the track coloured by grip (D261): blue below 100, white at 100, orange above; the layer draws each road piece in its colour only while "colour by grip" is ticked; the hover label says "grip 85%" for a piece off 100 (always while the view is on) and nothing for a plain piece (234.5008ms)
+✔ row 17: the grip UI modules load in the webview loader with NO node built-in (D263: piecesui and griplayer required src/core/document.js, which pulls tools/piecewise.cjs and node's fs, and the panel failed to load), and their copy of the grip numbers is the core's (57.1976ms)
+✔ row 18: the CHEAP ghost while a handle is dragged (D266 item 2): every step of a drag asks the preview for a cheap ghost, the release asks for the full one, typing in a field and hovering Extend ask for the full one (191.5605ms)
+✔ row 19: no help paragraph stays in the left column (D267): the tube width, the grip, the turn-0 hint, the jump and the landing show only a few words or nothing, and the words are tooltips (271.9009ms)
+✔ row 19b: the values of the piece being edited are drawn LARGE over the 3D view (D267): length, turn, climb, bank and width, updated as a handle is dragged or a field is typed, hidden on a closed loop (649.2505ms)
+✔ row 19c: the share codes are in the File menu as "Copy track code" and "Paste track code…" (D267; D355 moved them from the ⋯ menu), not a section of the left column; the code itself is unchanged (135.4366ms)
+✔ row 20: the saved pieces are a drop-down bin in the top bar, not a section of the left column (D269): a row per piece with its thumbnail, name and summary; Add at head, Add mirrored, Rename and Delete; a click on the row adds it; the empty words are in the menu; Save as piece stays with the selection (250.1986ms)
+✔ row 20b: the Pieces menu opens and closes: it lists the pieces when opened, Esc closes it, a press outside closes it, a press inside does not; Esc with it closed does nothing; the top bar has the button beside Open… and Previous versions… (183.6043ms)
+✔ row 15: the preview's ghostInfo says whether the ghost is a jump's and carries its segments (what the handles and the flight overlay read) (135.1745ms)
+✔ D259 (amended D677): a typed 300 stays 300, and a typed 400 rolls on to 400 while the field shows 40 (266.7589ms)
+✔ D259: dragging the bank handle from 350 by about +20 gives about 10 (not 370), and from -350 by about -20 gives about -10; Extend applies what the field shows (494.0045ms)
+✔ D677 (ghost handle): from a head past one turn (−392, shown −32), a drag on the ghost's bank handle writes the field within one turn and Extend lays the road in the head's turn, one way, never back round (304.6007ms)
+✔ row 18b: a length drag previews whole 2 m, and the release previews the exact length the field shows (168.6066ms)
+✔ row 18c: a ghost whose sliced build needs more frames than the retry is still shown: the handles do not ask again while the preview is building one (D426) (249.069ms)
+✔ row 22 (D430): an EMPTIED turn, climb, bank or cup is 0, not the head's value: the new piece eases to 0, and the box shows 0 once the change is committed (320.6926ms)
+✔ row 22b (D430): a field left as shown still continues the head; an emptied width keeps its old meaning (blank: the head's; 0 is no width) (301.8568ms)
+✔ row 22c (D430): as a corner the turn and climb fields rest blank, so a blank there is untouched: the track keeps turning, it does not ease to straight (286.8653ms)
+✔ a selected piece lends its values to the Extend fields: Extend places a piece like it; a run lends nothing; clearing shows the head (127.0428ms)
+✔ D331 B: with the turn read as a corner (the default), a selected piece lends the degrees it turns, and Extend places a piece that turns them and ends straight (160.6698ms)
+✔ row 16 (D335): a steady bank drag on a placed piece's sculpt mark, the pointer following the mark as the road rolls, rises all the way, lands on 180 and never goes back (the axis fixed at the grab stalled it near 165) (12874.2564ms)
+✔ row 16b (D335): a slow bank drag on a sculpt mark is 0.01 degree a pixel with no key, and the piece reads what the handle says (2715.1693ms)
+✔ D677 (2): a steady bank drag on the Sculpt mark of a piece wound past a turn (340 → 392, its middle at 366) rises from 366 and never goes back round a turn (1932.2708ms)
+✔ D677 (2) row 720a: a steady bank drag on the Sculpt mark of a piece held at 710, dragged up 30 px across 720, rises on past 720 (710 → 723.5; 7b3926e: stopped at 720) (2130.7ms)
+✔ D677 (2) row 720b: a steady bank drag on the Sculpt mark of a piece wound 700 → 760 (its middle 730), dragged up 30 px, rises from 730 (730 → 743.5; 7b3926e: −10 on the first step, then held at 720) (2204.5485ms)
+✔ D677 (2) row 720c: a steady bank drag on the Sculpt mark of a piece wound 700 → 760 (its middle 730), dragged down 30 px, comes down from 730 (730 → 716.5; 7b3926e: −10 on the first step, then held at 720) (2209.7523ms)
+✔ D677 (2) row 720d: a steady bank drag on the Sculpt mark of a piece the mirror, wound −700 → −760 (its middle −730), dragged down 30 px, goes on down from −730 (−730 → −743.5; 7b3926e: +10 on the first step, then held at −720) (2311.3557ms)
+✔ D677 (2) row 720e: a wheel notch over the Sculpt bank mark of a piece whose middle is 730 is one step (0.01) either way, never a jump to 720 (7b3926e: 720) (462.0336ms)
+✔ D677 (2) row 720g, a guard: the ghost's bank handle keeps the bank kind's range (±720), unchanged by row 720a's fix: from a typed 710 a drag up 30 px stops at 720, which it writes into the field within one turn (0). Whether it carries is his to rule on (131.4872ms)
+✔ row 21: in Sculpt, a Tube sweep drag on a closed tube is refused in plain words: "Sculpt can't change the sweep of a closed tube…", not the core's (192.6149ms)
+✔ row D464: Sculpt's how-to line and value line read as instructions, not errors: class hint, painted in the text colour (131.2447ms)
+✔ row 25 (D519, amended D520): Grab on the road: the pressed point follows the pointer and a rim keeps the far rim (built again and read), a dot opens at its own station, off the road is Grab as before (332.015ms)
+✔ row 25b (D519): with another key the press keeps that key's one channel wherever it lands; the shell says what the piece is and why a channel would be refused (95.8458ms)
+✖ D678: Even through the panel: a drag of the run's left width handle brings the run to one width on a 0.5 m step, holds the right edge, and is one undo step (500.8402ms)
+✖ D678: Even through the panel: a drag of the run's right width handle brings the run to one width on a 0.5 m step, holds the left edge, and is one undo step (464.5452ms)
+✔ D678: Even typed through the panel: the width as typed (no step) with the edge picked under "keeps"; ◀ before and after ▶ write the road's width either side of the run (308.5682ms)
+✔ D678: Even with nothing selected: the handles are not there, and the typed Even and the picks say to select a run, changing nothing (130.1882ms)
+✔ E1 and E2: B+: the release says the first sentence at once with the check pending, and the check's words, when they land, are the on-page check's (490.4343ms)
+✔ E1 and E2: B+0: the release says the first sentence at once with the check pending, and the check's words, when they land, are the on-page check's (336.231ms)
+✔ E1 and E2: Bhold: the release says the first sentence at once with the check pending, and the check's words, when they land, are the on-page check's (233.4695ms)
+✔ E4: an Undo before the check lands drops its words: the message stays the Undo's (131.5389ms)
+✔ E6: B+0: with the page's runner, the request goes to a worker of its own as plain data, the words that come back are the on-page check's, and the worker is ended (252.8752ms)
+✔ E6: the worker script answers an Even request through the check job's evenCheck, beside the newest-only track check (48.3183ms)
+✔ E6: a request the worker cannot take is checked on the page, and a check that throws says so, keeping the first sentence (304.0655ms)
+✔ E5: B+: a typed width says the first sentence at once, and the check's words, when they land, are the on-page check's (210.0033ms)
+✖ W1: the message says the kept edge is put back where the road had it, read from the stretch's ends, and how far it moved; the middle is laid smooth; never that an edge stays (63.8072ms)
+✔ W2: the message says the road is back within the window's reach beyond each end (not "over" it), and where a window end is cut short by the track's start or the open end, that (145.9241ms)
+✔ W3: the message says the road's width, line and height beyond the stretch are as they were to a tenth of a millimetre, and outside the window nothing moves past one stored step (88.6347ms)
+✖ W4: after one grab (T1), the words say the kept edge moved the metres it moved, and where (77.1077ms)
+✖ W5: on a banked stretch the road is read "under the bank as Even finds it"; on a flat one it is not said (109.0381ms)
+✖ W6: with the fallback 'keep', the words say the edge was kept where it is, how far it moved, and why the road could not be read (19.3069ms)
+✖ W7: a result with an edge kept but no reading or no figure is not said (it throws): a sentence without the move would be the silent move again (16.4012ms)
+✔ F1-F7: from T1 on his flat turn, Even (the right edge's handle, the left edge held) brings the turn to 16 m with the inner edge where the road had it (455.4596ms)
+✔ F1-F7: from T2b on his flat turn, Even (the right edge's handle, the left edge held) brings the turn to 16 m with the inner edge where the road had it (348.5826ms)
+✖ the drag snaps to 0.5 m, keeps the run selected through every step, and its release says what it did (114.6565ms)
+✔ typed: Even takes the value as typed (no snap), with the edge picked, as one undo step; the picks read the road either side of the run (82.8637ms)
+✔ one piece: its width handle under Even levels that piece alone, eased into its neighbours (37.1036ms)
+✔ the open end: a run ending at the head is levelled to its end, the head taking the value (33.206ms)
+✔ Even refuses by name and changes nothing: no run selected, a drag on the road, an empty or wrong width, a jump within reach (11.6535ms)
+✔ B2: an Even drag that brings the road too close to another pass inside its window is refused by name at its release, and the track is as before the drag (867.635ms)
+✔ G1: an Even drag runs no pass-clearance check on its steps; the release is refused by name when the road comes too close, and the track is as before the drag (1084.2432ms)
+✔ G2: a typed Even width that brings the road too close to another pass is refused by name and changes nothing (439.3735ms)
+✖ U1: a run from the track's start with an edge kept is refused by name (EVEN_UNREAD) as the drag opens and when typed, and nothing changes (4.603ms)
+✔ Even brings the run to the value from its first metre to its last, and the input document is not changed (107.1647ms)
+✔ Even on a run of one piece levels that piece, eases into its neighbours and moves nothing outside its window (49.2756ms)
+✔ the ramp is the designed ease: where the knots are fine enough to carry it, the width before the run follows a smootherstep from the road to the value over 30 m (15.1746ms)
+✔ Even on a run that ends at the open end gives the head the value: no ramp after it (21.9155ms)
+✔ Even with the left rim held keeps that rim where the road has it and puts the right rim out at the new width (flat, from the untouched road) (124.1988ms)
+✔ the held rim on the other side: with the right rim held it stays and the left rim goes out (flat, from the untouched road) (107.7733ms)
+✔ after a piece with coarse knots (a plain Extend's 20 m spans), the run is still one width with the held rim in place from its first metre: the window reaches back to that piece's last span (131.9375ms)
+✖ where the road's own width changes across the window (a 31 m straight into a 12 m turn), the held rim is held where it is now with the fallback 'keep', not read back from the window's ends, and refused by name with the switch unset (80.6354ms)
+✔ K2 and K3 on Bhold from the untouched road: the held rim stays within 0.01 m, and the centre's height is within 0.01 m of its place in the plane of the road as built (2738.0389ms)
+✔ K2 and K3 on B- from the untouched road: the held rim stays within 0.01 m, and the centre's height is within 0.01 m of its place in the plane of the road as built (5869.7967ms)
+✔ K2 and K3 on B-0 from the untouched road: the held rim stays within 0.01 m, and the centre's height is within 0.01 m of its place in the plane of the road as built (6032.9556ms)
+✔ K5: Even keeps the bank as found: the bank channel and the bank as built within one stored step every metre (5655.2073ms)
+✔ X1, X4, X8: on flat, the left edge kept, the width is within 0.01 m of the value over both 20 m margins, nothing outside moves past one stored step and no joint steps (35.9907ms)
+✔ X1, X4, X8: on flat, the right edge kept, the width is within 0.01 m of the value over both 20 m margins, nothing outside moves past one stored step and no joint steps (30.9766ms)
+✔ X1, X4, X8: on B-, the left edge kept, the width is within 0.01 m of the value over both 20 m margins, nothing outside moves past one stored step and no joint steps (174.7654ms)
+✔ X1, X4, X8: on B-, the right edge kept, the width is within 0.01 m of the value over both 20 m margins, nothing outside moves past one stored step and no joint steps (172.1626ms)
+✔ X2: on B-, the left edge kept, the kept edge is within 0.01 m of where it was over both margins (240.8102ms)
+✔ X2: on B-, the right edge kept, the kept edge is within 0.01 m of where it was over both margins (260.8434ms)
+✔ X3, X4, X8: on B- after a grab at 470, K3: the centre's height is within 0.01 m of its target over the window, nothing outside moves past one stored step and no joint steps (5732.9829ms)
+✔ X3, X4, X8: on B- after a grab at 485, K3: the centre's height is within 0.01 m of its target over the window, nothing outside moves past one stored step and no joint steps (4507.3937ms)
+✔ X3, X4, X8: on B- after a grab at 175 and 465, K3: the centre's height is within 0.01 m of its target over the window, nothing outside moves past one stored step and no joint steps (5969.0256ms)
+✔ Even refuses by name, and changes nothing: a run that is not one, a width out of range, a hold it does not know (37.7019ms)
+✔ Even refuses by name a jump within reach of the run, and a run that starts or ends on the jump (21.4024ms)
+✔ Even refuses by name a tube and a split width in the window (28.1593ms)
+✔ Even refuses by name on a closed lap when the run or its ramps reach the start line, and levels a run clear of it (311.3793ms)
+✔ B4: Even's result, the left kept, is frozen all the way down: the document, every piece, its channels and their control points (229.5786ms)
+✔ B4: Even's result, the right kept, is frozen all the way down: the document, every piece, its channels and their control points (184.5963ms)
+✔ B4: Even's result, the centre kept, is frozen all the way down: the document, every piece, its channels and their control points (116.9643ms)
+✔ C1: two Even calls on one base reuse one cut track and one reference road (the reaches cut once per drag) (47.6917ms)
+✔ C2: Even with its cut and reference memoised gives the same bytes as Even run on a fresh copy of the base (no memo hit) (713.1897ms)
+✖ A1-1: the fallback switch is unset (null) until the keeper chooses; a fallback Even does not know is refused by name (0.9238ms)
+✖ A1-2: a run from the track's start with an edge kept, the fallback unset: refused by name (EVEN_UNREAD), nothing changed (A0 put the edge 9.31 m off, silently) (25.5188ms)
+✖ A1-2: a run from the track's start with an edge kept, the fallback 'refuse': refused by name (EVEN_UNREAD), nothing changed (A0 put the edge 9.31 m off, silently) (17.8206ms)
+✖ A1-3: the same run with the fallback 'keep': Even says it kept the edge, and the edge is where it was within 0.01 m over the run (12.54ms)
+✖ A1-4: a road whose own width steps inside the run (WC3, no grab): refused by name with the switch unset; with 'keep' the edge stays within 0.01 m (A0: 2.92 m off, silently) (11.8446ms)
+✖ A1-5: where the ends support a reading (flat, after one grab, T1), Even reads the road: the kept edge goes back to the untouched road within 0.01 m, and its own figure for the move is the move measured (45.8553ms)
+✖ A1-6: a grab centred 5 m outside the window's start (B-, at 145) fools a 10 m test but not A1's 10, 20 and 30 m: that end reads as moving; the track's start reads as an edge (89.1195ms)
+✖ A1-7: B- T1: the road is read "under the bank as Even finds it": Even says the stretch is banked, and the kept edge is within 0.01 m of that road (L271 point 4) (96.3434ms)
+✖ A1-7: B- T2b: the road is read "under the bank as Even finds it": Even says the stretch is banked, and the kept edge is within 0.01 m of that road (L271 point 4) (1683.7936ms)
+✖ A1-7: an unbanked stretch is not said to be banked (26.0484ms)
+✖ A1-8: the middle kept ('centre') reads nothing and is never refused for its ends: a run from the track's start is levelled (12.0469ms)
+ℹ tests 134
+ℹ suites 0
+ℹ pass 113
+ℹ fail 21
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 63972.0392
+
+✖ failing tests:
+
+test at app\test\core-pieces-ui.test.js:1266:3
+✖ D678: Even through the panel: a drag of the run's left width handle brings the run to one width on a 0.5 m step, holds the right edge, and is one undo step (500.8402ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /^Even: 32.5 m wide from 0\.30 km to 0\.60 km.*the right edge is put back where the road had it, read from the stretch's ends: it moved \d+\.\d\d m across at most, at \d+\.\d\d km/. Input:
+  
+  "Even: 32.5 m wide from 0.30 km to 0.60 km, back to the road within 50 m either side; the right edge is laid where Even reads the road's own edge from the stretch's ends, so it can move; beyond the stretch the road's width, line and height are as they were, to a tenth of a millimetre (Ctrl+Z puts it back)."
+  
+      at TestContext.<anonymous> (<scratch>\tred2\app\test\core-pieces-ui.test.js:1279:12)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: "Even: 32.5 m wide from 0.30 km to 0.60 km, back to the road within 50 m either side; the right edge is laid where Even reads the road's own edge from the stretch's ends, so it can move; beyond the stretch the road's width, line and height are as they were, to a tenth of a millimetre (Ctrl+Z puts it back).",
+    expected: /^Even: 32.5 m wide from 0\.30 km to 0\.60 km.*the right edge is put back where the road had it, read from the stretch's ends: it moved \d+\.\d\d m across at most, at \d+\.\d\d km/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at app\test\core-pieces-ui.test.js:1266:3
+✖ D678: Even through the panel: a drag of the run's right width handle brings the run to one width on a 0.5 m step, holds the left edge, and is one undo step (464.5452ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /^Even: 32.5 m wide from 0\.30 km to 0\.60 km.*the left edge is put back where the road had it, read from the stretch's ends: it moved \d+\.\d\d m across at most, at \d+\.\d\d km/. Input:
+  
+  "Even: 32.5 m wide from 0.30 km to 0.60 km, back to the road within 50 m either side; the left edge is laid where Even reads the road's own edge from the stretch's ends, so it can move; beyond the stretch the road's width, line and height are as they were, to a tenth of a millimetre (Ctrl+Z puts it back)."
+  
+      at TestContext.<anonymous> (<scratch>\tred2\app\test\core-pieces-ui.test.js:1279:12)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: "Even: 32.5 m wide from 0.30 km to 0.60 km, back to the road within 50 m either side; the left edge is laid where Even reads the road's own edge from the stretch's ends, so it can move; beyond the stretch the road's width, line and height are as they were, to a tenth of a millimetre (Ctrl+Z puts it back).",
+    expected: /^Even: 32.5 m wide from 0\.30 km to 0\.60 km.*the left edge is put back where the road had it, read from the stretch's ends: it moved \d+\.\d\d m across at most, at \d+\.\d\d km/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at app\test\sculpt-even-sentence.test.js:128:1
+✖ W1: the message says the kept edge is put back where the road had it, read from the stretch's ends, and how far it moved; the middle is laid smooth; never that an edge stays (63.8072ms)
+  AssertionError [ERR_ASSERTION]: left: Even: 16 m wide from 0.20 km to 0.44 km, back to the road within 50 m either side; the left edge is laid where Even reads the road's own edge from the stretch's ends, so it can move; beyond the stretch the road's width, line and height are as they were, to a tenth of a millimetre (Ctrl+Z puts it back).
+      at TestContext.<anonymous> (<scratch>\tred2\app\test\sculpt-even-sentence.test.js:132:12)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: "Even: 16 m wide from 0.20 km to 0.44 km, back to the road within 50 m either side; the left edge is laid where Even reads the road's own edge from the stretch's ends, so it can move; beyond the stretch the road's width, line and height are as they were, to a tenth of a millimetre (Ctrl+Z puts it back).",
+    expected: /the left edge is put back where the road had it, read from the stretch's ends: it moved \d+\.\d\d m across at most, at \d+\.\d\d km/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at app\test\sculpt-even-sentence.test.js:166:1
+✖ W4: after one grab (T1), the words say the kept edge moved the metres it moved, and where (77.1077ms)
+  AssertionError [ERR_ASSERTION]: Even: 16 m wide from 0.20 km to 0.44 km, back to the road within 50 m either side; the right edge is laid where Even reads the road's own edge from the stretch's ends, so it can move; beyond the stretch the road's width, line and height are as they were, to a tenth of a millimetre (Ctrl+Z puts it back).
+      at TestContext.<anonymous> (<scratch>\tred2\app\test\sculpt-even-sentence.test.js:169:10)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at app\test\sculpt-even-sentence.test.js:176:1
+✖ W5: on a banked stretch the road is read "under the bank as Even finds it"; on a flat one it is not said (109.0381ms)
+  AssertionError [ERR_ASSERTION]: B-: Even: 16 m wide from 0.20 km to 0.44 km, back to the road within 50 m either side; the left edge is laid where Even reads the road's own edge from the stretch's ends, so it can move; beyond the stretch the road's width, line and height are as they were, to a tenth of a millimetre (Ctrl+Z puts it back).
+      at TestContext.<anonymous> (<scratch>\tred2\app\test\sculpt-even-sentence.test.js:179:50)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: "Even: 16 m wide from 0.20 km to 0.44 km, back to the road within 50 m either side; the left edge is laid where Even reads the road's own edge from the stretch's ends, so it can move; beyond the stretch the road's width, line and height are as they were, to a tenth of a millimetre (Ctrl+Z puts it back).",
+    expected: /read from the stretch's ends under the bank as Even finds it:/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at app\test\sculpt-even-sentence.test.js:182:1
+✖ W6: with the fallback 'keep', the words say the edge was kept where it is, how far it moved, and why the road could not be read (19.3069ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /the left edge is kept where it is \(it moved 0\.0\d m at most\), because Even could not read the road under the stretch from its ends: the stretch reaches the track's start/. Input:
+  
+  "Even: 16 m wide from 0.00 km to 0.26 km, from the track's start, and back to the road within 50 m after it; the left edge is laid where Even reads the road's own edge from the stretch's ends, so it can move; beyond the stretch the road's width, line and height are as they were, to a tenth of a millimetre (Ctrl+Z puts it back)."
+  
+      at TestContext.<anonymous> (<scratch>\tred2\app\test\sculpt-even-sentence.test.js:184:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: "Even: 16 m wide from 0.00 km to 0.26 km, from the track's start, and back to the road within 50 m after it; the left edge is laid where Even reads the road's own edge from the stretch's ends, so it can move; beyond the stretch the road's width, line and height are as they were, to a tenth of a millimetre (Ctrl+Z puts it back).",
+    expected: /the left edge is kept where it is \(it moved 0\.0\d m at most\), because Even could not read the road under the stretch from its ends: the stretch reaches the track's start/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at app\test\sculpt-even-sentence.test.js:186:1
+✖ W7: a result with an edge kept but no reading or no figure is not said (it throws): a sentence without the move would be the silent move again (16.4012ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (<scratch>\tred2\app\test\sculpt-even-sentence.test.js:189:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /need the reading/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at app\test\sculpt-even.test.js:53:1
+✖ the drag snaps to 0.5 m, keeps the run selected through every step, and its release says what it did (114.6565ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /the right edge is put back where the road had it, read from the stretch's ends: it moved \d+\.\d\d m across at most, at \d+\.\d\d km/. Input:
+  
+  "Even: 16 m wide from 0.20 km to 0.44 km, back to the road within 50 m either side; the right edge is laid where Even reads the road's own edge from the stretch's ends, so it can move; beyond the stretch the road's width, line and height are as they were, to a tenth of a millimetre (Ctrl+Z puts it back)."
+  
+      at TestContext.<anonymous> (<scratch>\tred2\app\test\sculpt-even.test.js:72:10)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: "Even: 16 m wide from 0.20 km to 0.44 km, back to the road within 50 m either side; the right edge is laid where Even reads the road's own edge from the stretch's ends, so it can move; beyond the stretch the road's width, line and height are as they were, to a tenth of a millimetre (Ctrl+Z puts it back).",
+    expected: /the right edge is put back where the road had it, read from the stretch's ends: it moved \d+\.\d\d m across at most, at \d+\.\d\d km/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at app\test\sculpt-even.test.js:206:1
+✖ U1: a run from the track's start with an edge kept is refused by name (EVEN_UNREAD) as the drag opens and when typed, and nothing changes (4.603ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /^EVEN_UNREAD: /. Input:
+  
+  ''
+  
+      at TestContext.<anonymous> (<scratch>\tred2\app\test\sculpt-even.test.js:210:10)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '',
+    expected: /^EVEN_UNREAD: /,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at test\core_even.test.js:110:1
+✖ where the road's own width changes across the window (a 31 m straight into a 12 m turn), the held rim is held where it is now with the fallback 'keep', not read back from the window's ends, and refused by name with the switch unset (80.6354ms)
+  AssertionError [ERR_ASSERTION]: the held rim moved 0.07736719338255504 m
+      at TestContext.<anonymous> (<scratch>\tred2\test\core_even.test.js:119:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at test\core_even.test.js:266:1
+✖ A1-1: the fallback switch is unset (null) until the keeper chooses; a fallback Even does not know is refused by name (0.9238ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + undefined
+  - null
+  
+      at TestContext.<anonymous> (<scratch>\tred2\test\core_even.test.js:267:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: null,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test\core_even.test.js:274:3
+✖ A1-2: a run from the track's start with an edge kept, the fallback unset: refused by name (EVEN_UNREAD), nothing changed (A0 put the edge 9.31 m off, silently) (25.5188ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception: left
+      at TestContext.<anonymous> (<scratch>\tred2\test\core_even.test.js:276:50)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at test\core_even.test.js:274:3
+✖ A1-2: a run from the track's start with an edge kept, the fallback 'refuse': refused by name (EVEN_UNREAD), nothing changed (A0 put the edge 9.31 m off, silently) (17.8206ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception: left
+      at TestContext.<anonymous> (<scratch>\tred2\test\core_even.test.js:276:50)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at test\core_even.test.js:282:1
+✖ A1-3: the same run with the fallback 'keep': Even says it kept the edge, and the edge is where it was within 0.01 m over the run (12.54ms)
+  AssertionError [ERR_ASSERTION]: left
+  + actual - expected
+  
+  + undefined
+  - 'kept'
+  
+      at TestContext.<anonymous> (<scratch>\tred2\test\core_even.test.js:286:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'kept',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test\core_even.test.js:293:1
+✖ A1-4: a road whose own width steps inside the run (WC3, no grab): refused by name with the switch unset; with 'keep' the edge stays within 0.01 m (A0: 2.92 m off, silently) (11.8446ms)
+  AssertionError [ERR_ASSERTION]: control: 12 m before the run, 18 m after it
+      at TestContext.<anonymous> (<scratch>\tred2\test\core_even.test.js:295:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at test\core_even.test.js:303:1
+✖ A1-5: where the ends support a reading (flat, after one grab, T1), Even reads the road: the kept edge goes back to the untouched road within 0.01 m, and its own figure for the move is the move measured (45.8553ms)
+  AssertionError [ERR_ASSERTION]: left
+  + actual - expected
+  
+  + undefined
+  - 'road'
+  
+      at TestContext.<anonymous> (<scratch>\tred2\test\core_even.test.js:307:12)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'road',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test\core_even.test.js:315:1
+✖ A1-6: a grab centred 5 m outside the window's start (B-, at 145) fools a 10 m test but not A1's 10, 20 and 30 m: that end reads as moving; the track's start reads as an edge (89.1195ms)
+  TypeError: I.endState is not a function
+      at TestContext.<anonymous> (<scratch>\tred2\test\core_even.test.js:319:18)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+
+test at test\core_even.test.js:324:3
+✖ A1-7: B- T1: the road is read "under the bank as Even finds it": Even says the stretch is banked, and the kept edge is within 0.01 m of that road (L271 point 4) (96.3434ms)
+  TypeError: I.readSupported is not a function
+      at TestContext.<anonymous> (<scratch>\tred2\test\core_even.test.js:326:43)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+
+test at test\core_even.test.js:324:3
+✖ A1-7: B- T2b: the road is read "under the bank as Even finds it": Even says the stretch is banked, and the kept edge is within 0.01 m of that road (L271 point 4) (1683.7936ms)
+  TypeError: I.readSupported is not a function
+      at TestContext.<anonymous> (<scratch>\tred2\test\core_even.test.js:326:43)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+
+test at test\core_even.test.js:335:1
+✖ A1-7: an unbanked stretch is not said to be banked (26.0484ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + undefined
+  - false
+  
+      at TestContext.<anonymous> (<scratch>\tred2\test\core_even.test.js:336:42)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: false,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test\core_even.test.js:339:1
+✖ A1-8: the middle kept ('centre') reads nothing and is never refused for its ends: a run from the track's start is levelled (12.0469ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + undefined
+  - 'centre'
+  
+      at TestContext.<anonymous> (<scratch>\tred2\test\core_even.test.js:341:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'centre',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
