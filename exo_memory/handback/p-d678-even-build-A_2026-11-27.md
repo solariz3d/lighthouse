@@ -1522,3 +1522,27 @@ All of these go through heavy-run at BelowNormal.
 **Falsifier:** the bar is refuted if, after the bounding, the median of T3 is above the median of T2 on that lap. The finding "the guard is Even's own on a drag step" is refuted if T2's profile shows `passClearanceGuard` or `passClearance`.
 
 **The timing run.** No other heavy run may be going: my two runs (the table and Even's harness) finish first. Before and during the run, `tasklist` must show no `acs.exe`. The run is marked `--timing` (O's N1 rule at `a5514a23`, read at 23:5xZ: a label is never read for a timing session).
+
+### 5.2b Item 2: the bar's number, and the bounding's rows, registered at 00:12Z before any bounding code
+
+**The measurement the bar comes from** (heavy-run `--exclusive --timing` at BelowNormal; `tasklist` showed no `acs.exe` before or after either run):
+- checked: `$S/tim_c52.out` (00:05:07–00:05:13Z, `node tim678.js $S/c52 $S/cp678 <wt>`) → at c522ea6 on that lap (27,592 m, 44 pieces, closed), T1 the Width step median **27.4 ms** (27.4–28.1), T2 the grab step median **114.3 ms** (105.3–123.4). T2's profile shows no `passClearanceGuard` and no `passClearance`.
+- checked: `$S/tim_i1.out` (00:05:41–00:07:16Z, the worktree with item 1) → T4 Width 28.6 ms, grab 90.8 ms; T3 Even's step median **8,201.4 ms** (7,313.8–9,678.3); of a 9,136 ms profiled step, `passClearanceGuard` 4,014 ms inclusive, `even` 3,672 (`evenIn` 3,191, `rimReader` 1,568, `fitHeight` 324, `levelTo` 310, `bankPlan` 175), `toSegments` 3,621 across all callers.
+- checked: `node probe_wmsg.js $S/c52 $S/cp678 <wt>` → T1's step really changed the track (the document is a new one) and its message is a 39-word note, no refusal code.
+
+**The bar, its number:** an Even drag step on that lap no slower than **114.3 ms** (T2's median at c522ea6).
+
+**The bounding, as it will be built:**
+- `even()`: its rim reader converts the whole lap three times a step. It gets the segment cache `sculpt.js` already keeps (`SEG_CACHE`, exact: `test/core_segcache.test.js`), under the same rule (only a document frozen all the way down).
+- The guard on Even's step only (`coreshell.js` `brushTo`, `b.mode === 'even'`): its read is bounded to the stations inside Even's window. Each queried station still meets every station of the lap, so a pair with one end in the window is read as before. A pair with both ends outside is not read; outside the window nothing moved past one stored step (0.0123 mm on that lap, 5.3). For that, `passclear.js` `passClearance` takes a `to` beside `from`. The default reads as before, and the checker, the export, `commit` and the level-end drag pass no `to`.
+
+**Rows, each seen red before its code:**
+- **B1** (`test/passclear.test.js`, row 11): `to`, only stations from `from` to `to` lead, each against every other. On the crossing fixture, reading only the upper pass's stations gives the whole read's findings. Reading a stretch of the lower road that does not reach the crossing gives none. Red today: `to` is ignored, so the second read finds the crossing.
+- **B2** (`app/test/sculpt-even.test.js`): Even's step is still refused by name (`PASS_CLEARANCE`) when it brings the road too close under another pass inside its window. The drag stays at its last good step. The fixture is a banked lower straight under a crossing, widened with its low edge kept, so its high edge rises toward the upper pass. This row would pass today too: it guards the bounding and is not red first. Its mutant (the bounded read's `to` set to `from`) must be caught.
+- **T3 again** after the bounding, as T3 was timed.
+
+**Predictions I can lose:**
+- After the bounding, T3 falls below 1 s but stays above 114.3 ms. The guard still builds two whole-lap paths and reads every station's section for its grid, and `even()` still runs `bankPlan` on the whole lap. So the bar is not met. The hand-back will say by how much, and where the rest of the time goes.
+- B1's two reads are equal to the whole read where they should be, and B2 is refused at the step with the bounded read.
+
+**Falsifier:** the bounding is wrong if any existing row of `sculpt-even*.test.js`, `core-pass-clearance.test.js` or `passclear.test.js` turns red. It is also wrong if B2 is not refused with the bounded read.
