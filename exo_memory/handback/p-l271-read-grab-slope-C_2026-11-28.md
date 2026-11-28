@@ -179,3 +179,38 @@ app/test/zonegrab.test.js (helpers, 14e-14p); app/test/core-pieces-ui.test.js ro
 NEXT: librarian, when this file is committed: read it and decide C6 (row 25's weak half) with B. The plan default (the pictures to him) stands by my read, with a tube's wall worth one more picture.
 
 Seat: pane C (sibling-0845a868)
+
+---
+
+## 8. Short re-read: B's answer to C6, cc4fa71..16a93d1 (chair, 2026-11-28T09:34:02Z)
+
+### 8.1 Registered before any run (this section is committed before the job that runs the bites starts)
+
+The default is NOT CLEAN. CLEAN needs R1, R2 and R3.
+
+- **R1, row 25 bites on M2 by itself.** Each mutant is one exact replacement of follow's line in `app/core/zonegrab.js` of a worktree at 16a93d1,
+  then row 25 alone (`--test-name-pattern "^row 25 \("`, so 25b is not counted), then the file restored and its sha256 checked.
+  - The 0 m control, **M0**: follow's line with `+ 0 * e` added to the share across. It moves the point by 0 m. It must be **green**. If it is red,
+    the reds below come from the harness and not from the line (B's void first run was this failure), and nothing below is read.
+  - The branch itself: **green**.
+  - **M2** (the pull whole across, the rise kept): **red, at the banked press**, its rim point over 0.01 m from the slope place.
+  - c522ea6's line, M1, M5, M7 and D's literal form: **red** (where each first fails is recorded, not scored).
+  - Also run and recorded, not scored: M6 (half), M8 (10 % long), and M2 at 10 % of its difference across.
+  - Read on the branch by changing only an assertion's bar in the test copy (the test's own figure printed by its own failure): the row's control
+    `r.across`, the banked press's `slopeMiss`, `miss` and `far`. A consistency check, scored: under M2 the rim point lands where the row's control
+    says the whole pull puts it, so **M2's slope miss equals the branch's `r.across` within 0.01 m**. If not, the control does not measure what M2 does.
+  - NOT CLEAN on: M0 red; the branch red; M2 green, or red only at a press other than the banked one; any of c522ea6, M1, M5, M7 or LIT green; the
+    consistency check off by over 0.01 m.
+- **R2, the two CHANGELOG sentences, against my own cases** (`c5_out3.txt`, `today.json.gz`, `branch.json.gz` from section 2, built by my c271.js):
+  - (a) the edge piece: "the bank kept at 0 where today it tips up to 0.41°, and the middle dropping 0.39 m at the low rim where today it drops
+    0.28 m". True when, over my flat edge-piece rim presses (u ±1) pulled out 3 m and in 2 m, the branch's bank moves 0 over the window, today's
+    largest is 0.41° at the rounding stated, and at the low rim pulled out the middle drops 0.39 m (branch) against 0.28 m (today).
+  - (b) "pulled down the bank, about 0.44 m short and 1.09 m below it. Today's grab ends it 0.20 m off". True when my B+ T1 reads 0.44 short and
+    1.09 below at the rounding stated, and today's B+ point is within 0.02 m of 0.20 m off (the sentence now sits after both pulls).
+  - NOT CLEAN on a figure that differs past its rounding, or a direction that is wrong (above for below, short for long, a rise for a drop).
+    "Up to" understated by a case of mine it does not name is a nit, recorded, not NOT CLEAN.
+- **R3, nothing else changed.** `git diff --stat cc4fa71 16a93d1` names the two files only; every changed line of `core-pieces-ui.test.js` is inside row
+  25; nothing under `app/core`, `src` or `test` other than that row; the commit's parent is cc4fa71; the touched rows (zonegrab, core-pieces-ui,
+  handles) are green on 16a93d1: 0 fail, 0 cancelled. NOT CLEAN on any other change or any red.
+- **Unwelcome, in the words that would make it true:** "row 25 is green under M2 in my run"; "the 0 m control is red, so the bites are the harness";
+  "B's 1.09 m below is not what my B+ gives".
