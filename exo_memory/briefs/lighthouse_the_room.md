@@ -582,3 +582,4 @@ carry it, so this brief does.
 - 2026-11-28 00:23 (L): "for some reason the newest build doesnt auto build like it does on desktop for here, also there are handoffs as well" (traced: loop/stall_trace_launch_pull_ff_refused_2026-11-28.md)
 
 - 2026-11-28 03:03 (L), typed into the chair's tab and meant for the librarian ("meant to say that to the li / lib"): "soon we should let me test something, i think we have been building for a long time without me testing shit, but thats okay if we are working good"
+- 2026-11-28 03:04 (L), to the librarian's decision 3 (install the width hold + ghost build when green?): "i can wait to test once all in motion is built, then you can give me a checklist of things to test"
