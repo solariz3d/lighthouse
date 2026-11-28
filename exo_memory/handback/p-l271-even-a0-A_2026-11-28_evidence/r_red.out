@@ -1,0 +1,74 @@
+✖ R1: a run from the track's start whose first piece is typed 31 m: Even keeps the edge and its reason is true of the road (no "still changing" where the width is level) (71.4693ms)
+✖ R2: a 150 m track evened whole (its open end level at 12 m): Even keeps the edge and its reason is true of the road (no "still changing" where the width is level) (22.9881ms)
+✖ R3: a 150 m track level at 31 m everywhere, evened whole: Even keeps the edge and its reason is true of the road (no "still changing" where the width is level) (21.891ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 0
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 295.1124
+
+✖ failing tests:
+
+test at test\core_even.test.js:346:3
+✖ R1: a run from the track's start whose first piece is typed 31 m: Even keeps the edge and its reason is true of the road (no "still changing" where the width is level) (71.4693ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /^the stretch reaches the track's start, where the road's width differs from the road at the stretch's other end$/. Input:
+  
+  "the stretch reaches the track's start, where the road's width is still changing"
+  
+      at TestContext.<anonymous> (<local path>)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.start (node:internal/test_runner/test:1191:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:385:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: "the stretch reaches the track's start, where the road's width is still changing",
+    expected: /^the stretch reaches the track's start, where the road's width differs from the road at the stretch's other end$/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at test\core_even.test.js:346:3
+✖ R2: a 150 m track evened whole (its open end level at 12 m): Even keeps the edge and its reason is true of the road (no "still changing" where the width is level) (22.9881ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /^the stretch reaches both ends of the track, so there is no road beyond it to read$/. Input:
+  
+  "the stretch reaches the track's start, and the road's width is still changing at its other end"
+  
+      at TestContext.<anonymous> (<local path>)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: "the stretch reaches the track's start, and the road's width is still changing at its other end",
+    expected: /^the stretch reaches both ends of the track, so there is no road beyond it to read$/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at test\core_even.test.js:346:3
+✖ R3: a 150 m track level at 31 m everywhere, evened whole: Even keeps the edge and its reason is true of the road (no "still changing" where the width is level) (21.891ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /^the stretch reaches both ends of the track, so there is no road beyond it to read$/. Input:
+  
+  "the stretch reaches the track's start, and the road's width is still changing at its other end"
+  
+      at TestContext.<anonymous> (<local path>)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: "the stretch reaches the track's start, and the road's width is still changing at its other end",
+    expected: /^the stretch reaches both ends of the track, so there is no road beyond it to read$/,
+    operator: 'match',
+    diff: 'simple'
+  }
