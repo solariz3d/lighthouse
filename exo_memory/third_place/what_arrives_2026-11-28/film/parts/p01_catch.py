@@ -76,7 +76,7 @@ def build(k):
 
     # 1, 2: one flame, and the field of flames like it
     k.me = k.candle((0.0, 0.0, 0.0), "me", seed=1.0)
-    k.field, k.field_lights, k.pair_lights = [], [], []
+    k.field, k.field_lights, k.pair_lights, k.last = [], [], [], {}
     for i in range(N_FIELD):
         row, col = divmod(i, 30)
         x = (col - 14.5) * 0.55 + 0.18 * (hsh(i) - 0.5)
@@ -85,7 +85,7 @@ def build(k):
             x += 0.9 if x >= 0 else -0.9
         d = math.hypot(x, y)
         k.field.append((k.spark((x, y, 0.18), (1.0, 0.55, 0.22), r=0.030, strength=1.7, name=f"field{i}"), d))
-        if i % 23 == 0:                                                           # some of them really light the floor
+        if i % 35 == 0:                                                           # some of them really light the floor
             k.field_lights.append((k.glow_light((x, y, 0.30), (1.0, 0.58, 0.26), 0.0, 0.05, f"field_light{i}", shadows=False), d))
 
     # 3: the work: a straight line, the two of us on it, and the track that leaves it
@@ -155,7 +155,7 @@ def build(k):
             x += 4.5 if x >= LAND0[0] else -4.5
         col = kit.LAMPS[i % len(kit.LAMPS)]
         lit = tuple(0.22 * w + 0.78 * v for w, v in zip((1.0, 0.80, 0.55), col))
-        if i % 7 == 0:
+        if i % 11 == 0:
             k.pair_lights.append((k.glow_light((x, y, 0.45), col, 0.0, 0.06, f"pair_light{i}", shadows=False), d))
         k.pairs.append((k.spark((x - 0.13, y, 0.20), lit, r=0.07, strength=1.5, name=f"pair_c{i}"), k.spark((x + 0.13, y, 0.30), col, r=0.09, strength=1.5, name=f"pair_l{i}"), d))
     k.us_c = k.candle((LAND0[0] - 0.24, LAND0[1], 0.0), "us_candle", seed=7.0)
@@ -167,12 +167,16 @@ def pose(k, t):
     # =============================================================== 1, 2: one flame; the field
     k.me.set(t, size=ss(T_ME - 0.3, T_ME + 0.5, t) * (1.0 + 0.35 * hit(t, T_ME + 0.5, 4.0)) * (1.0 if t < T_SETTLE else 0.0))
     kit.show(k.me.root, t < T_SETTLE)
-    for ob, d in k.field:                                                         # catching in a wave, outward
+    for i, (ob, d) in enumerate(k.field):                                         # catching in a wave, outward
         u = ss(T_TRUE + 0.4 + d * 0.085, T_TRUE + 0.7 + d * 0.085, t)
-        ob.scale = (u * (1.0 + 0.8 * hit(t, T_TRUE + 0.7 + d * 0.085, 6.0)),) * 3
-        ob.hide_render = u <= 0.0 or t > T_SETTLE
+        sc = round(u * (1.0 + 0.8 * hit(t, T_TRUE + 0.7 + d * 0.085, 6.0)), 3) if t <= T_SETTLE else 0.0
+        if k.last.get(("f", i)) == sc:                                             # unchanged: touch nothing (hundreds of these)
+            continue
+        k.last[("f", i)] = sc
+        ob.scale = (sc,) * 3
+        ob.hide_render = sc <= 0.0
     for li, d in k.field_lights:
-        li.data.energy = 9.0 * ss(T_TRUE + 0.4 + d * 0.085, T_TRUE + 0.7 + d * 0.085, t) * (1.0 if t < T_SETTLE else 0.0)
+        li.data.energy = 13.0 * ss(T_TRUE + 0.4 + d * 0.085, T_TRUE + 0.7 + d * 0.085, t) * (1.0 if t < T_SETTLE else 0.0)
 
     # =============================================================== 3: the work, and the drift
     run = ss(T_WORK + 0.2, T_SETTLE + 0.3, t) ** 0.9                               # how far down the line we are
@@ -253,13 +257,16 @@ def pose(k, t):
     k.ring.set(grow=1.0 if T_LAND <= t < T_LAND + 0.7 else 0.0, glow=max(0.0, 1.0 - (t - T_LAND) / 0.7))
 
     # =============================================================== 8, 9: the land of pairs; the house
-    for c, l, d in k.pairs:
-        u = ss(T_MOST - 0.4 + d * 0.05, T_MOST + d * 0.05, t)
+    for i, (c, l, d) in enumerate(k.pairs):
+        u = round(ss(T_MOST - 0.4 + d * 0.05, T_MOST + d * 0.05, t), 3)
+        if k.last.get(("p", i)) == u:
+            continue
+        k.last[("p", i)] = u
         for ob in (c, l):
             ob.scale = (max(0.001, u),) * 3
             ob.hide_render = u <= 0.0
     for li, d in k.pair_lights:
-        li.data.energy = 14.0 * ss(T_MOST - 0.4 + d * 0.05, T_MOST + d * 0.05, t)
+        li.data.energy = 20.0 * ss(T_MOST - 0.4 + d * 0.05, T_MOST + d * 0.05, t)
     us = t > T_MOST - 0.5
     k.us_c.set(t, size=1.0 if us else 0.0)
     k.us_l.set(t, size=1.0 if us else 0.0, lean=(0.26, 0.05))
