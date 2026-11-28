@@ -30,7 +30,17 @@ six decisions: `loop/handoff_t180_2026-11-27-D.md`.
 
 - **N6, the consumer list** (`loop/packet_t180_night_on_D_2026-11-27.md`, "N6"): the six T-180 research notes of 11-27 had no
   row in `gen-consumer.js`'s EXCLUDE, so they would ship in a consumer build; `gen-consumer.test.js` row D454 is red on main
-  (116 tests, 1 fail). The pane had it green in its worktree with part of its mutants run. Where it stopped: the last section.
+  (116 tests, 1 fail). **Stopped at 23:16, on a BRANCH of the room, not main: `d678-consumer-t180-c` 59d41acf on origin**
+  (read back by the librarian with ls-remote). Its hand-back is on that branch only:
+  `git show origin/d678-consumer-t180-c:exo_memory/handback/p-d678-consumer-t180-research-C_2026-11-27.md`.
+  - On the branch the row is green, 116 of 116; the six notes are withheld with reasons; the row's premise follows the folder;
+    `collect()` does not reach the `_evidence/` folders.
+  - Mutants so far: the pane's own 4 applied / 4 caught / 3 NOT APPLIED (re-written, not re-run); the generator's harness
+    0 to 15: 14 caught, 1 SURVIVED, 1 NOT APPLIED, neither checked at the base.
+  - **To land it (its section 8), for a pane on L:** harness mutants 16 to 25, `mutants_n6b.js`, the two base checks of its
+    section 6, the 10 downstream files of its section 7; then fast-forward main to the branch (origin/main was 22449900 when
+    it was cut, so merge or rebase over the day's notes first). No consumer build is generated or installed.
+  - Until it lands, **main still carries the red row and the notes are not withheld.**
 
 ## How the day ran (for the next plan)
 
@@ -42,7 +52,7 @@ six decisions: `loop/handoff_t180_2026-11-27-D.md`.
 - A researcher workflow of this seat's ran again from the librarian's seat (seven agents, 1,160,240 tokens by its count), its
   node runs through heavy-run. His call from 11-27 L is still open: should a workflow started from a seat take a slot like a
   pane's run?
-- Seats ran inside another seat's timing hold five times (the Even builder's own list, its hand-back 5.5). The quiet record
+- Seats ran inside another seat's timing hold five times (the Even builder's own list, its hand-back 5.5). The consumer-list pane's first mutant run also overlapped E's S2 session, 00:11 to 00:20Z, with no lock (its own correction). The quiet record
   cannot see a process started outside heavy-run (E's hand-back says so).
 
 ## Misses of this seat today (all in the notes, his words beside the ones he caught)
