@@ -105,6 +105,22 @@ def bounce(t, when, height=1.0, dur=0.32):
     return height * 4.0 * u * (1.0 - u) if 0.0 < u < 1.0 else 0.0
 
 
+def squash(root, s=1.0, tilt=(0.0, 0.0), turn=None):
+    """Body acting. s below 1 squashes a candle or lamp down and out (keeping its volume), above 1 stretches it up.
+    tilt (toward +X, toward +Y) in radians leans the whole body. Use with bounce(): stretch on the way up, squash on landing."""
+    w = 1.0 / math.sqrt(max(0.05, s))
+    root.scale = (w, w, s)
+    root.rotation_euler = (-tilt[1], tilt[0], root.rotation_euler[2] if turn is None else turn)
+
+
+def land(t, when, depth=0.28, k=9.0):
+    """The squash of a landing at `when`: 1 before it, dips by `depth` on impact, and springs back with a wobble."""
+    if t < when:
+        return 1.0
+    u = t - when
+    return 1.0 - depth * math.exp(-u * k) * math.cos(u * 26.0)
+
+
 def hsh(i):
     """A fixed number in 0..1 for an index."""
     x = math.sin(i * 127.1 + 311.7) * 43758.5453
@@ -452,8 +468,10 @@ class Kit:
         wick = parent(lathe(name + "_wick", [(0.0, 0.0), (0.0012, 0.0), (0.0012, 0.014), (0.0, 0.015)], seg=8), root)
         wick.location = (0, 0, height - 0.009)
         wick.data.materials.append(self.mat("soot", (0.02, 0.016, 0.012), rough=0.9))
-        return Flame(self, root, (0, 0, height - 0.001), 0.048, 0.0105, self.flame_mat((1.0, 0.52, 0.14), (1.0, 0.95, 0.80), "flame_warm"),
-                     WARM, watts, seed, wax=wax)
+        fl = Flame(self, root, (0, 0, height - 0.001), 0.048, 0.0105, self.flame_mat((1.0, 0.52, 0.14), (1.0, 0.95, 0.80), "flame_warm"),
+                   WARM, watts, seed, wax=wax)
+        fl.r_body, fl.h_body = r, height
+        return fl
 
     def lamp(self, at, tint=HIS, name="lamp", watts=3.6, seed=2.0):
         """A brass oil lamp with a tinted glass chimney: a person. Blue is the keeper and nobody else. Returns a Flame."""
@@ -616,4 +634,3 @@ class Line:
         b.inputs["Base Color"].default_value = (0.22, 0.20, 0.18, 1)
         b.inputs["Emission Color"].default_value = (*c, 1)
         b.inputs["Emission Strength"].default_value = self.full * max(0.0, glow)
-
