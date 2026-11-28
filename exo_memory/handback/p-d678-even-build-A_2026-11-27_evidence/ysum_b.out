@@ -1,0 +1,53 @@
+start 0..1, untouched | flat | left                  y1 0.0013 @122 (was 0.0013) y1q 0.0137 y2 - y3 - wRun 0 wMar 0.0091 x4 0 j 0 redsNew 0 vsA0 0
+start 0..1, untouched | flat | right                 y1 0.0013 @122 (was 0.0013) y1q 0.0137 y2 - y3 - wRun 0 wMar 0.0091 x4 0 j 0 redsNew 0 vsA0 0
+start 0..1, a grab at 30 | flat | left               y1 0.0138 @51 (was 0.0138) y1q 0.0787 y2 - y3 - wRun 0 wMar 0.0091 x4 0 j 0 redsNew 0 vsA0 1
+start 0..1, a grab at 30 | flat | right              y1 0.0138 @51 (was 0.0138) y1q 0.0787 y2 - y3 - wRun 0 wMar 0.0091 x4 0 j 0 redsNew 0 vsA0 1
+T1 | flat | left                                     y1 0.0042 @343 (was 0.0042) y1q 0.0233 y2 - y3 - wRun 0 wMar 0.0083 x4 0 j 0 redsNew 0 vsA0 2
+T1 | flat | right                                    y1 0.0042 @343 (was 0.0042) y1q 0.0233 y2 - y3 - wRun 0 wMar 0.0083 x4 0 j 0 redsNew 0 vsA0 2
+T2b | flat | left                                    y1 0.0048 @440 (was 0.0541) y1q 0.0215 y2 - y3 - wRun 0 wMar 0.0063 x4 0 j 0 redsNew 0 vsA0 2
+T2b | flat | right                                   y1 0.0048 @440 (was 0.0541) y1q 0.0215 y2 - y3 - wRun 0 wMar 0.0063 x4 0 j 0 redsNew 0 vsA0 2
+W1 | flat | left                                     y1 0.0018 @310 (was 0.0018) y1q 0.0166 y2 - y3 - wRun 0 wMar 0.0083 x4 0 j 0 redsNew 0 vsA0 0
+W1 | flat | right                                    y1 0.0018 @310 (was 0.0018) y1q 0.0166 y2 - y3 - wRun 0 wMar 0.0083 x4 0 j 0 redsNew 0 vsA0 0
+W8 | flat | left                                     y1 0.0025 @321 (was 0.0123) y1q 0.0103 y2 - y3 - wRun 0 wMar 0.0076 x4 0 j 0 redsNew 0 vsA0 0
+W8 | flat | right                                    y1 0.0025 @321 (was 0.0123) y1q 0.0103 y2 - y3 - wRun 0 wMar 0.0076 x4 0 j 0 redsNew 0 vsA0 0
+T1 | B- | left                                       y1 0.0041 @343 (was 0.0041) y1q 0.0227 y2 - y3 0.0008 wRun 0 wMar 0.0083 x4 0 j 0 redsNew 0 vsA0 2
+T1 | B- | right                                      y1 0.0036 @343 (was 0.0041) y1q 0.02 y2 - y3 0.0007 wRun 0 wMar 0.0083 x4 0 j 0 redsNew 0 vsA0 2
+T2b | B- | left                                      y1 0.0048 @200 (was 0.0546) y1q 0.0215 y2 - y3 0.0017 wRun 0 wMar 0.0077 x4 0 j 0 redsNew 0 vsA0 1
+T2b | B- | right                                     y1 0.0048 @200 (was 0.0549) y1q 0.0216 y2 - y3 0.0016 wRun 0 wMar 0.0077 x4 0 j 0 redsNew 1 vsA0 3
+W1 | B- | left                                       y1 0.0018 @351 (was 0.0018) y1q 0.017 y2 - y3 0.0007 wRun 0 wMar 0.0083 x4 0 j 0 redsNew 0 vsA0 0
+W1 | B- | right                                      y1 0.0017 @330 (was 0.0017) y1q 0.0145 y2 - y3 0.0007 wRun 0 wMar 0.0083 x4 0 j 0 redsNew 0 vsA0 0
+W8 | B- | left                                       y1 0.0026 @321 (was 0.013) y1q 0.0099 y2 - y3 0.0031 wRun 0 wMar 0.0076 x4 0 j 0 redsNew 0 vsA0 0
+W8 | B- | right                                      y1 0.0028 @245 (was 0.013) y1q 0.0095 y2 - y3 0.0028 wRun 0 wMar 0.0076 x4 0 j 0 redsNew 1 vsA0 1
+WC0 | flat | left                                    y1 0.0002 @200 (was 0.0008) y1q 0.0002 y2 - y3 - wRun 0 wMar 0.0083 x4 0 j 0 redsNew 0 vsA0 0
+WC0 | flat | right                                   y1 0.0002 @200 (was 0.0008) y1q 0.0002 y2 - y3 - wRun 0 wMar 0.0083 x4 0 j 0 redsNew 0 vsA0 0
+WC1 | flat | left                                    y1 0.0043 @202 (was 0.0072) y1q 0.0445 y2 - y3 - wRun 0 wMar 0.0288 x4 0 j 0 redsNew 0 vsA0 0
+WC1 | flat | right                                   y1 0.0043 @202 (was 0.0072) y1q 0.0445 y2 - y3 - wRun 0 wMar 0.0288 x4 0 j 0 redsNew 0 vsA0 0
+WC2 | flat | left                                    y1 0.0002 @200 (was 0.0008) y1q 0.0002 y2 - y3 - wRun 0 wMar 0.0072 x4 0 j 0 redsNew 0 vsA0 0
+WC2 | flat | right                                   y1 0.0002 @200 (was 0.0008) y1q 0.0002 y2 - y3 - wRun 0 wMar 0.0072 x4 0 j 0 redsNew 0 vsA0 0
+WC3 | flat | left                                    y1 0.0014 @379 (was 0.0023) y1q 0.0142 y2 - y3 - wRun 0 wMar 0.0063 x4 0 j 0 redsNew 0 vsA0 0
+WC3 | flat | right                                   y1 0.0014 @379 (was 0.0023) y1q 0.0142 y2 - y3 - wRun 0 wMar 0.0063 x4 0 j 0 redsNew 0 vsA0 0
+WC4 | flat | left                                    y1 0.0013 @200 (was 0.0055) y1q 0.0013 y2 - y3 - wRun 0 wMar 0.0083 x4 0 j 0 redsNew 0 vsA0 0
+WC4 | flat | right                                   y1 0.0013 @200 (was 0.0055) y1q 0.0013 y2 - y3 - wRun 0 wMar 0.0083 x4 0 j 0 redsNew 0 vsA0 0
+row 175..475 | flat | left                           y1 0.0087 @259 (was 0.0178) y1q 0.0117 y2 - y3 - wRun 0 wMar 0.0013 x4 0 j 0 redsNew 0 vsA0 15
+row 175..475 | flat | right                          y1 0.0087 @259 (was 0.0178) y1q 0.0117 y2 - y3 - wRun 0 wMar 0.0013 x4 0 j 0 redsNew 0 vsA0 15
+row 145..505 | flat | left                           y1 0.0087 @259 (was 0.0178) y1q 0.0117 y2 - y3 - wRun 0 wMar 0.0013 x4 0 j 0 redsNew 0 vsA0 14
+row 145..505 | flat | right                          y1 0.0087 @259 (was 0.0178) y1q 0.0117 y2 - y3 - wRun 0 wMar 0.0013 x4 0 j 0 redsNew 0 vsA0 14
+row 145..505 | B- | left                             y1 0.0086 @259 (was 0.0173) y1q 0.0126 y2 - y3 0.0027 wRun 0 wMar 0.0015 x4 0 j 0 redsNew 1 vsA0 15
+row 145..505 | B- | right                            y1 0.0078 @259 (was 0.0156) y1q 0.0121 y2 - y3 0.0026 wRun 0 wMar 0.0015 x4 0 j 0 redsNew 0 vsA0 15
+a grab at 145 | flat | left                          y1 0.0002 @200 (was 0.0008) y1q 0.0002 y2 - y3 - wRun 0 wMar 0.0083 x4 0 j 0 redsNew 0 vsA0 0
+a grab at 145 | flat | right                         y1 0.0002 @200 (was 0.0008) y1q 0.0002 y2 - y3 - wRun 0 wMar 0.0083 x4 0 j 0 redsNew 0 vsA0 0
+a grab at 145 | B- | left                            y1 0.0001 @245 (was 0.0001) y1q 0.0001 y2 - y3 0.0007 wRun 0 wMar 0.0083 x4 0 j 0 redsNew 0 vsA0 0
+a grab at 145 | B- | right                           y1 0.0003 @216 (was 0.0003) y1q 0.0004 y2 - y3 0.0007 wRun 0 wMar 0.0083 x4 0 j 0 redsNew 0 vsA0 0
+to the head 4..5, a grab at 560 | flat | left        y1 0.0054 @543 (was 0.0054) y1q 0.0293 y2 - y3 - wRun 0 wMar 0.0091 x4 0 j 0 redsNew 0 vsA0 2
+to the head 4..5, a grab at 560 | flat | right       y1 0.0054 @543 (was 0.0054) y1q 0.0293 y2 - y3 - wRun 0 wMar 0.0091 x4 0 j 0 redsNew 0 vsA0 2
+one piece 2, a grab at 320 | flat | left             y1 0.0042 @297 (was 0.0042) y1q 0.0232 y2 - y3 - wRun 0 wMar 0.0091 x4 0 j 0 redsNew 0 vsA0 2
+one piece 2, a grab at 320 | flat | right            y1 0.0042 @297 (was 0.0042) y1q 0.0232 y2 - y3 - wRun 0 wMar 0.0091 x4 0 j 0 redsNew 0 vsA0 2
+a width stroke at 470 | flat | left                  y1 0.005 @431 (was 0.0068) y1q 0.019 y2 - y3 - wRun 0 wMar 0.0063 x4 0 j 0 redsNew 0 vsA0 0
+a width stroke at 470 | flat | right                 y1 0.005 @431 (was 0.0068) y1q 0.019 y2 - y3 - wRun 0 wMar 0.0063 x4 0 j 0 redsNew 0 vsA0 0
+a width stroke at 470 | B- | left                    y1 0.005 @431 (was 0.0068) y1q 0.0192 y2 - y3 0.0007 wRun 0 wMar 0.0077 x4 0 j 0 redsNew 0 vsA0 0
+a width stroke at 470 | B- | right                   y1 0.0044 @431 (was 0.0059) y1q 0.0165 y2 - y3 0.0007 wRun 0 wMar 0.0077 x4 0 j 0 redsNew 0 vsA0 0
+a hill at 320 | flat | centre                        y1 -   y1q - y2 0/0 y3 - wRun 0 wMar 0.0083 x4 0 j 0 redsNew 0 vsA0 1
+a swerve at 320 | flat | centre                      y1 -   y1q - y2 0/0 y3 - wRun 0 wMar 0.0083 x4 0 j 0 redsNew 0 vsA0 0
+a hill at 320 | B- | centre                          y1 -   y1q - y2 0/0 y3 0 wRun 0 wMar 0.0083 x4 0 j 0 redsNew 0 vsA0 1
+a swerve at 320 | B- | centre                        y1 -   y1q - y2 0/0 y3 0 wRun 0 wMar 0.0083 x4 0 j 0 redsNew 0 vsA0 1
+rows 52; y1 over 0.01: 2; worst y1 0.0138 at start 0..1, a grab at 30 | flat | left @51

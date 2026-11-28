@@ -1,0 +1,21 @@
+window {"lo":0,"hi":260,"w0":0,"w1":310} run end 260
+piece 0 length 200 knots in 0..60 [5,10,20,30,40,50,60]
+cut piece 0 knots in 0..60 [5,10,20,30,40,50,60]
+s 44.5 off -0.20601 w before 22.083
+s 45.5 off -0.20443 w before 22.919
+s 42.5 off -0.20281 w before 20.410
+s 43.5 off -0.20104 w before 21.240
+s 14.5 off 0.19996 w before 23.647
+s 15.5 off 0.19944 w before 22.837
+s 12.5 off 0.19708 w before 25.264
+s 13.5 off 0.19655 w before 24.460
+max 0..10 0.16327 10..60 0.20601 60..end 0.03509
+whole metres, worst 6:
+  s 51 off -0.01382 w before 26.471
+  s 49 off -0.01285 w before 25.491
+  s 50 off 0.01274 w before 26.039
+  s 52 off 0.01263 w before 26.794
+  s 4 off 0.01163 w before 30.404
+  s 40 off -0.01155 w before 18.531
+section read: worst at half metres 0.07866 at 43.5 ; worst at whole metres -0.01382 at 51
+section read every 0.25 m: worst 0.07866 stations over 0.01: 311 of 1041

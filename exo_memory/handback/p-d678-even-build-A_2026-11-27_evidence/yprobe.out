@@ -1,0 +1,8 @@
+{"row":"F2/F3 flat T1","across":0,"outer":0.045,"innerAsItWas":0.051,"inner":{"m":0.0042,"at":343},"k3":0}
+{"row":"F2/F3 flat T2b","across":0,"outer":0.0203,"innerAsItWas":0.027,"inner":{"m":0.0048,"at":440},"k3":0.0001}
+{"row":"K2/K3 Bhold W8","held":{"m":0.0027,"at":321},"k3":0}
+{"row":"K2/K3 B- W8","held":{"m":0.0026,"at":321},"k3":0.0031}
+{"row":"K2/K3 B-0 W8","held":{"m":0.0025,"at":321},"k3":0.0031}
+{"row":"T2b B- right","reason":"leaves-surface","s":[250,250],"where":"the run","a0HasIt":false,"startRedsInWindow":2}
+{"row":"W8 B- right","reason":"leaves-surface","s":[200,200],"where":"the run","a0HasIt":false,"startRedsInWindow":0}
+{"row":"row 145..505 B- left","reason":"leaves-surface","s":[210,210],"where":"the run","a0HasIt":false,"startRedsInWindow":17}

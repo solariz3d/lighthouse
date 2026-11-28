@@ -1,0 +1,52 @@
+heavy-run: capped to 8 of 16 logical CPUs, spread (affinity 21845); every child inherits it
+[32m✔ Even brings the run to the value from its first metre to its last, and the input document is not changed [90m(79.6339ms)[39m[39m
+[32m✔ Even on a run of one piece levels that piece, eases into its neighbours and moves nothing outside its window [90m(22.3188ms)[39m[39m
+[32m✔ the ramp is the designed ease: where the knots are fine enough to carry it, the width before the run follows a smootherstep from the road to the value over 30 m [90m(4.5086ms)[39m[39m
+[32m✔ Even on a run that ends at the open end gives the head the value: no ramp after it [90m(6.7673ms)[39m[39m
+[32m✔ Even with the left rim held keeps that rim where the road has it and puts the right rim out at the new width (flat, from the untouched road) [90m(78.1786ms)[39m[39m
+[32m✔ the held rim on the other side: with the right rim held it stays and the left rim goes out (flat, from the untouched road) [90m(71.6962ms)[39m[39m
+[32m✔ after a piece with coarse knots (a plain Extend's 20 m spans), the run is still one width with the held rim in place from its first metre: the window reaches back to that piece's last span [90m(88.6336ms)[39m[39m
+[32m✔ where the road's own width changes across the window (a 31 m straight into a 12 m turn), the held rim is held where it is now, not read back from the window's ends [90m(59.1941ms)[39m[39m
+[32m✔ K2 and K3 on Bhold from the untouched road: the held rim stays within 0.01 m, and the centre's height is within 0.01 m of its place in the plane of the road as built [90m(1676.9667ms)[39m[39m
+[32m✔ K2 and K3 on B- from the untouched road: the held rim stays within 0.01 m, and the centre's height is within 0.01 m of its place in the plane of the road as built [90m(3060.6769ms)[39m[39m
+[32m✔ K2 and K3 on B-0 from the untouched road: the held rim stays within 0.01 m, and the centre's height is within 0.01 m of its place in the plane of the road as built [90m(3108.9909ms)[39m[39m
+[32m✔ K5: Even keeps the bank as found: the bank channel and the bank as built within one stored step every metre [90m(2979.0687ms)[39m[39m
+[32m✔ X1, X4, X8: on flat, the left edge kept, the width is within 0.01 m of the value over both 20 m margins, nothing outside moves past one stored step and no joint steps [90m(35.8681ms)[39m[39m
+[32m✔ X1, X4, X8: on flat, the right edge kept, the width is within 0.01 m of the value over both 20 m margins, nothing outside moves past one stored step and no joint steps [90m(33.7106ms)[39m[39m
+[32m✔ X1, X4, X8: on B-, the left edge kept, the width is within 0.01 m of the value over both 20 m margins, nothing outside moves past one stored step and no joint steps [90m(108.1059ms)[39m[39m
+[32m✔ X1, X4, X8: on B-, the right edge kept, the width is within 0.01 m of the value over both 20 m margins, nothing outside moves past one stored step and no joint steps [90m(106.4971ms)[39m[39m
+[32m✔ X2: on flat, the left edge kept, the kept edge is within 0.01 m of where it was over both margins [90m(34.4172ms)[39m[39m
+[32m✔ X2: on flat, the right edge kept, the kept edge is within 0.01 m of where it was over both margins [90m(33.9516ms)[39m[39m
+[32m✔ X2: on B-, the left edge kept, the kept edge is within 0.01 m of where it was over both margins [90m(152.8963ms)[39m[39m
+[32m✔ X2: on B-, the right edge kept, the kept edge is within 0.01 m of where it was over both margins [90m(168.301ms)[39m[39m
+[32m✔ X3, X4, X8: on B- after a grab at 470, K3: the centre's height is within 0.01 m of its target over the window, nothing outside moves past one stored step and no joint steps [90m(3011.5476ms)[39m[39m
+[32m✔ X3, X4, X8: on B- after a grab at 485, K3: the centre's height is within 0.01 m of its target over the window, nothing outside moves past one stored step and no joint steps [90m(2385.1405ms)[39m[39m
+[32m✔ X3, X4, X8: on B- after a grab at 175 and 465, K3: the centre's height is within 0.01 m of its target over the window, nothing outside moves past one stored step and no joint steps [90m(3146.058ms)[39m[39m
+[32m✔ Even refuses by name, and changes nothing: a run that is not one, a width out of range, a hold it does not know [90m(6.3186ms)[39m[39m
+[32m✔ Even refuses by name a jump within reach of the run, and a run that starts or ends on the jump [90m(4.1042ms)[39m[39m
+[32m✔ Even refuses by name a tube and a split width in the window [90m(12.8988ms)[39m[39m
+[32m✔ Even refuses by name on a closed lap when the run or its ramps reach the start line, and levels a run clear of it [90m(105.7219ms)[39m[39m
+[32m✔ B4: Even's result, the left kept, is frozen all the way down: the document, every piece, its channels and their control points [90m(115.4074ms)[39m[39m
+[32m✔ B4: Even's result, the right kept, is frozen all the way down: the document, every piece, its channels and their control points [90m(102.8117ms)[39m[39m
+[32m✔ B4: Even's result, the centre kept, is frozen all the way down: the document, every piece, its channels and their control points [90m(58.3025ms)[39m[39m
+[32m✔ Y1 and Y3: on flat after one grab (T1), the left edge kept stays within 0.01 m of where it is over the run, the run is one width, and K3 holds against the start [90m(119.7692ms)[39m[39m
+[32m✔ Y1 and Y3: on flat after one grab (T1), the right edge kept stays within 0.01 m of where it is over the run, the run is one width, and K3 holds against the start [90m(142.2874ms)[39m[39m
+[32m✔ Y1 and Y3: on B- after one grab (T1), the left edge kept stays within 0.01 m of where it is over the run, the run is one width, and K3 holds against the start [90m(5155.5315ms)[39m[39m
+[32m✔ Y1 and Y3: on B- after one grab (T1), the right edge kept stays within 0.01 m of where it is over the run, the run is one width, and K3 holds against the start [90m(5194.6689ms)[39m[39m
+[32m✔ Y1 across the joints: on flat from T2b, the left edge kept stays within 0.01 m of where it is over the run [90m(81.696ms)[39m[39m
+[32m✔ Y1 across the joints: on flat from W8, the left edge kept stays within 0.01 m of where it is over the run [90m(89.0213ms)[39m[39m
+[32m✔ Y1 across the joints: on flat from a row of grabs every 30 m from 175 to 475, the left edge kept stays within 0.01 m of where it is over the run [90m(94.5018ms)[39m[39m
+[32m✔ Y1 across the joints: on B- from T2b, the left edge kept stays within 0.01 m of where it is over the run [90m(6154.9332ms)[39m[39m
+[32m✔ Y1: a run from the track's start after a grab at 30, the right edge kept, stays within 0.014 m of where it is from the start to the run's end (B's 0.01 m missed here, by 0.0038 m) [90m(58.4475ms)[39m[39m
+[32m✔ Y2: on flat with a hill at 320, the middle kept: its sideways offset and height everywhere within one stored step of the track as given [90m(72.5966ms)[39m[39m
+[32m✔ Y2: on flat with a swerve at 320, the middle kept: its sideways offset and height everywhere within one stored step of the track as given [90m(79.9006ms)[39m[39m
+[32m✔ Y2: on B- with a hill at 320, the middle kept: its sideways offset and height everywhere within one stored step of the track as given [90m(3233.9964ms)[39m[39m
+[32m✔ Y2: on B- with a swerve at 320, the middle kept: its sideways offset and height everywhere within one stored step of the track as given [90m(3058.5564ms)[39m[39m
+[34mℹ tests 43[39m
+[34mℹ suites 0[39m
+[34mℹ pass 43[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 44514.3191[39m

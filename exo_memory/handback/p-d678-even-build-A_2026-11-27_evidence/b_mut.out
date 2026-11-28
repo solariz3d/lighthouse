@@ -1,0 +1,107 @@
+heavy-run: capped to 8 of 16 logical CPUs, spread (affinity 21845); every child inherits it
+[32m✔ CONTROL: core_even.test.js, sculpt-even.test.js, sculpt-even-sentence.test.js, validate_lines_between.test.js, core_knots.test.js, passclear.test.js and core-pieces-ui.test.js pass whole on an unmutated copy [90m(51026.1007ms)[39m[39m
+[32m✔ a crashed inner run reads NOT TESTED, never a verdict (the crash stand-in, D352) [90m(273.4114ms)[39m[39m
+[32m✔ mutant H2 the held rim is read on the other side of the section: applied, and caught by "rim held|K2 and K3" [90m(2388.0884ms)[39m[39m
+[34mℹ H2 the held rim is read on the other side of the section: 5 of 5 run tests failed[39m
+[32m✔ mutant H3 the held rim is read unturned by the bank (flat-road arithmetic on a banked road): applied, and caught by "K2 and K3" [90m(2294.2545ms)[39m[39m
+[34mℹ H3 the held rim is read unturned by the bank (flat-road arithmetic on a banked road): 3 of 3 run tests failed[39m
+[32m✔ mutant H4 the centre does not rise or fall with the bank as it moves sideways: applied, and caught by "K2 and K3" [90m(8141.4558ms)[39m[39m
+[34mℹ H4 the centre does not rise or fall with the bank as it moves sideways: 3 of 3 run tests failed[39m
+[32m✔ mutant H5 the centre moves in the plane of the bank channel, not the road as built (call 10): applied, and caught by "K2 and K3" [90m(8140.5759ms)[39m[39m
+[34mℹ H5 the centre moves in the plane of the bank channel, not the road as built (call 10): 2 of 3 run tests failed[39m
+[32m✔ mutant H8 the centre is not moved to hold the rim (hold is read as centre): applied, and caught by "rim held" [90m(494.7094ms)[39m[39m
+[34mℹ H8 the centre is not moved to hold the rim (hold is read as centre): 2 of 2 run tests failed[39m
+[32m✔ mutant W1 no margin at the value beyond the run (its first span still ramping): applied, and caught by "first metre|one piece" [90m(575.3483ms)[39m[39m
+[34mℹ W1 no margin at the value beyond the run (its first span still ramping): 2 of 3 run tests failed[39m
+[32m✔ mutant W5 the window does not reach back over a coarse piece before the run (the carry side: its last span's slope carried into the run): applied, and caught by "coarse knots" [90m(485.8005ms)[39m[39m
+[34mℹ W5 the window does not reach back over a coarse piece before the run (the carry side: its last span's slope carried into the run): 1 of 1 run tests failed[39m
+[32m✔ mutant W2 the ramp is a step: every control point in the window set to the value: applied, and caught by "one piece|designed ease" [90m(419.0825ms)[39m[39m
+[34mℹ W2 the ramp is a step: every control point in the window set to the value: 2 of 2 run tests failed[39m
+[32m✔ mutant W3 the window is not stopped at the open end: applied, and caught by "open end" [90m(391.8217ms)[39m[39m
+[34mℹ W3 the window is not stopped at the open end: 1 of 1 run tests failed[39m
+[32m✔ mutant W4 the bank is levelled too: applied, and caught by "K5" [90m(1532.605ms)[39m[39m
+[34mℹ W4 the bank is levelled too: 1 of 1 run tests failed[39m
+[32m✔ mutant X1m the knots over the window's reaches are not cut: applied, and caught by "X1|X3" [90m(9873.3574ms)[39m[39m
+[34mℹ X1m the knots over the window's reaches are not cut: 4 of 7 run tests failed[39m
+[32m✔ mutant X2m the reaches are cut to 7.5 m, not 3.75: applied, and caught by "X1|X3" [90m(9875.669ms)[39m[39m
+[34mℹ X2m the reaches are cut to 7.5 m, not 3.75: 4 of 7 run tests failed[39m
+[32m✔ mutant X3m the near reach is not cut: applied, and caught by "X1" [90m(755.7996ms)[39m[39m
+[34mℹ X3m the near reach is not cut: 4 of 4 run tests failed[39m
+[32m✔ mutant X4m the far reach is not cut: applied, and caught by "X1" [90m(741.4548ms)[39m[39m
+[34mℹ X4m the far reach is not cut: 4 of 4 run tests failed[39m
+[32m✔ mutant X5m the window is not taken again on the cut track (the carry side still reaches back): applied, and caught by "coarse knots" [90m(494.1671ms)[39m[39m
+[34mℹ X5m the window is not taken again on the cut track (the carry side still reaches back): 1 of 1 run tests failed[39m
+[32m✔ mutant X6m Even does not ask for one rounding (each knot rounds its new points): applied, and caught by "X1" [90m(776.4401ms)[39m[39m
+[34mℹ X6m Even does not ask for one rounding (each knot rounds its new points): 2 of 4 run tests failed[39m
+[32m✔ mutant X7m refineKnots ignores roundOnce: applied, and caught by "roundOnce" [90m(505.8206ms)[39m[39m
+[34mℹ X7m refineKnots ignores roundOnce: 1 of 2 run tests failed[39m
+[32m✔ mutant X8m the round-once insertion leaves its new points unrounded: applied, and caught by "roundOnce" [90m(529.0309ms)[39m[39m
+[34mℹ X8m the round-once insertion leaves its new points unrounded: 1 of 2 run tests failed[39m
+[32m✔ mutant X9m the round-once insertion reads every knot's span on the knots it started with: applied, and caught by "roundOnce" [90m(498.7583ms)[39m[39m
+[34mℹ X9m the round-once insertion reads every knot's span on the knots it started with: 1 of 2 run tests failed[39m
+[32m✔ mutant X10m the first sentence does not say what holds beyond the stretch: applied, and caught by "W3" [90m(499.5155ms)[39m[39m
+[34mℹ X10m the first sentence does not say what holds beyond the stretch: 1 of 1 run tests failed[39m
+[32m✔ mutant X11m the release's check reads the old road on its own knots (the middle's l and h laid on the wrong control points): applied, and caught by "E1 and E2|E5" [90m(942.9287ms)[39m[39m
+[34mℹ X11m the release's check reads the old road on its own knots (the middle's l and h laid on the wrong control points): 3 of 4 run tests failed[39m
+[32m✔ mutant B1m the pass clearance ignores `to` (every station from `from` to the end leads): applied, and caught by "row 11" [90m(441.5867ms)[39m[39m
+[34mℹ B1m the pass clearance ignores `to` (every station from `from` to the end leads): 1 of 1 run tests failed[39m
+[32m✔ mutant B2m the guard on Even's step reads only the window's first station: applied, and caught by "B2" [90m(539.315ms)[39m[39m
+[34mℹ B2m the guard on Even's step reads only the window's first station: 1 of 1 run tests failed[39m
+[32m✔ mutant B3m the guard on Even's step starts its read at the window's end: applied, and caught by "B2" [90m(549.4521ms)[39m[39m
+[34mℹ B3m the guard on Even's step starts its read at the window's end: 1 of 1 run tests failed[39m
+[32m✔ mutant B4m Even's result is frozen shallow again (its changed pieces left unfrozen, so every offset read converts the whole lap): applied, and caught by "B4" [90m(702.5833ms)[39m[39m
+[34mℹ B4m Even's result is frozen shallow again (its changed pieces left unfrozen, so every offset read converts the whole lap): 2 of 3 run tests failed[39m
+[32m✔ mutant Y1m the fit's target leaves out the new width's rim (the offset kept as it is, so the kept edge moves by half the change): applied, and caught by "Y1" [90m(8924.6566ms)[39m[39m
+[34mℹ Y1m the fit's target leaves out the new width's rim (the offset kept as it is, so the kept edge moves by half the change): 9 of 9 run tests failed[39m
+[32m✔ mutant Y1j the one fit treats the point after a joint as held, so the joint's slope is not fitted across both sides: applied, and caught by "Y1 across the joints" [90m(6932.5597ms)[39m[39m
+[34mℹ Y1j the one fit treats the point after a joint as held, so the joint's slope is not fitted across both sides: 4 of 4 run tests failed[39m
+[32m✔ mutant Y2m the middle is moved as if an edge were kept: applied, and caught by "Y2" [90m(6794.6735ms)[39m[39m
+[34mℹ Y2m the middle is moved as if an edge were kept: 4 of 4 run tests failed[39m
+[32m✔ mutant Y6m the guidance line is gone from the tool's hint: applied, and caught by "Y6" [90m(571.4406ms)[39m[39m
+[34mℹ Y6m the guidance line is gone from the tool's hint: 1 of 1 run tests failed[39m
+[32m✔ mutant R1 a closed lap's start line inside the window is not refused: applied, and caught by "closed lap" [90m(523.1231ms)[39m[39m
+[34mℹ R1 a closed lap's start line inside the window is not refused: 1 of 1 run tests failed[39m
+[32m✔ mutant R2 a run across the start line is refused as no run, not by the line: applied, and caught by "closed lap" [90m(498.5709ms)[39m[39m
+[34mℹ R2 a run across the start line is refused as no run, not by the line: 1 of 1 run tests failed[39m
+[32m✔ mutant R3 a jump within reach is not refused: applied, and caught by "jump" [90m(356.2186ms)[39m[39m
+[34mℹ R3 a jump within reach is not refused: 1 of 1 run tests failed[39m
+[32m✔ mutant R4 a tube is not refused: applied, and caught by "tube" [90m(381.1641ms)[39m[39m
+[34mℹ R4 a tube is not refused: 1 of 1 run tests failed[39m
+[32m✔ mutant R5 a split width is not refused: applied, and caught by "tube" [90m(379.0535ms)[39m[39m
+[34mℹ R5 a split width is not refused: 1 of 1 run tests failed[39m
+[32m✔ mutant R6 a width under 0.5 m is taken: applied, and caught by "refuses by name, and changes nothing" [90m(377.9914ms)[39m[39m
+[34mℹ R6 a width under 0.5 m is taken: 1 of 1 run tests failed[39m
+[32m✔ mutant R7 a width over 400 m is taken: applied, and caught by "refuses by name, and changes nothing" [90m(371.6903ms)[39m[39m
+[34mℹ R7 a width over 400 m is taken: 1 of 1 run tests failed[39m
+[32m✔ mutant R8 a width that is not a number is taken: applied, and caught by "refuses by name, and changes nothing" [90m(367.3844ms)[39m[39m
+[34mℹ R8 a width that is not a number is taken: 1 of 1 run tests failed[39m
+[32m✔ mutant R9 a run that ends on a jump is taken: applied, and caught by "jump" [90m(377.608ms)[39m[39m
+[34mℹ R9 a run that ends on a jump is taken: 1 of 1 run tests failed[39m
+[32m✔ mutant S1 the drag is not snapped to 0.5 m: applied, and caught by "snaps" [90m(471.0104ms)[39m[39m
+[34mℹ S1 the drag is not snapped to 0.5 m: 1 of 1 run tests failed[39m
+[32m✔ mutant S2 the typed width is snapped: applied, and caught by "typed" [90m(486.7393ms)[39m[39m
+[34mℹ S2 the typed width is snapped: 1 of 1 run tests failed[39m
+[32m✔ mutant S3 the drag drops the run's selection (its handles go): applied, and caught by "snaps" [90m(515.995ms)[39m[39m
+[34mℹ S3 the drag drops the run's selection (its handles go): 1 of 1 run tests failed[39m
+[32m✔ mutant S4 a jump within reach opens the drag anyway: applied, and caught by "refuses by name and changes nothing" [90m(426.7597ms)[39m[39m
+[34mℹ S4 a jump within reach opens the drag anyway: 1 of 1 run tests failed[39m
+[32m✔ mutant S5 the drag forgets the rim it holds (both rims move): applied, and caught by "snaps" [90m(454.9389ms)[39m[39m
+[34mℹ S5 the drag forgets the rim it holds (both rims move): 1 of 1 run tests failed[39m
+[32m✔ mutant E1m the release starts no check (the second sentence is never said): applied, and caught by "E1 and E2" [90m(1050.4026ms)[39m[39m
+[34mℹ E1m the release starts no check (the second sentence is never said): 3 of 3 run tests failed[39m
+[32m✔ mutant E4m the check's words are said on a track changed since (an Undo meanwhile): applied, and caught by "E4" [90m(598.668ms)[39m[39m
+[34mℹ E4m the check's words are said on a track changed since (an Undo meanwhile): 1 of 1 run tests failed[39m
+[32m✔ mutant E2m the job does not read the middle's move between the two tracks (it says 0.0 m): applied, and caught by "E1 and E2|E5" [90m(1377.4005ms)[39m[39m
+[34mℹ E2m the job does not read the middle's move between the two tracks (it says 0.0 m): 3 of 4 run tests failed[39m
+[32m✔ mutant E3m linesBetween stops a station short of its end: applied, and caught by "E3" [90m(733.8563ms)[39m[39m
+[34mℹ E3m linesBetween stops a station short of its end: 2 of 2 run tests failed[39m
+[32m✔ mutant E3n linesBetween reads the speed from its own stations, not the lap: applied, and caught by "E3" [90m(736.4277ms)[39m[39m
+[34mℹ E3n linesBetween reads the speed from its own stations, not the lap: 1 of 2 run tests failed[39m
+[34mℹ tests 50[39m
+[34mℹ suites 0[39m
+[34mℹ pass 50[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 137667.9861[39m

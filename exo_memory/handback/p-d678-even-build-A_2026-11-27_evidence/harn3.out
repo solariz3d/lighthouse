@@ -1,0 +1,8 @@
+heavy-run: capped to 8 of 16 logical CPUs, spread (affinity 21845); every child inherits it
+{"harness":"test/core_sharp_mutation.test.js","tests":15,"pass":15,"fail":0,"notAppliedMentions":0,"notTested":0,"exit":0,"s":56}
+{"harness":"test/core_right_width_mutation.test.js","tests":37,"pass":37,"fail":0,"notAppliedMentions":0,"notTested":0,"exit":0,"s":144}
+{"harness":"test/core_ramp_mutation.test.js","tests":108,"pass":108,"fail":0,"notAppliedMentions":0,"notTested":0,"exit":0,"s":110}
+{"harness":"test/core_landing_xsec_mutation.test.js","tests":20,"pass":20,"fail":0,"notAppliedMentions":0,"notTested":0,"exit":0,"s":71}
+{"harness":"test/core_early_turn_climb_mutation.test.js","tests":7,"pass":7,"fail":0,"notAppliedMentions":0,"notTested":0,"exit":0,"s":3}
+{"harness":"app/test/core-xsec-mutation.test.js","tests":35,"pass":35,"fail":0,"notAppliedMentions":0,"notTested":0,"exit":0,"s":29}
+{"harness":"app/test/core-mutation.test.js","tests":70,"pass":70,"fail":0,"notAppliedMentions":0,"notTested":1,"exit":0,"s":87}
