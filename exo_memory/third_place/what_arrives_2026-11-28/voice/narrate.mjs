@@ -16,7 +16,7 @@ const only = process.argv[2] ? Number(process.argv[2]) : null;
 
 // ---- read the spoken lines out of SCRIPT.md: sections, paragraphs, sentences ----
 const src = fs.readFileSync(path.resolve("..", "SCRIPT.md"), "utf8").replace(/\r/g, "");
-const body = src.split(/^## 1\. /m)[1].split(/^## What is his to decide/m)[0];
+const body = src.split(/^## 1\. /m)[1].split(/^## What is (?:his to decide|not checked yet)/m)[0];
 const sections = [];
 let cur = { n: 1, title: body.split("\n")[0].trim(), paras: [] }, para = [], inBracket = false;
 const flush = () => { if (para.length) { cur.paras.push(para.join(" ")); para = []; } };
