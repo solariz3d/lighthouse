@@ -573,3 +573,9 @@ carry it, so this brief does.
 
 - 2026-11-27 15:01 (D), to the librarian: "having my 8 hour sleep compaction lol, keep going". Read as: he sleeps about
   eight hours; the room goes on with what is already his line of work. Not a word to compact any seat.
+
+- 2026-11-27 23:10 (D), to the librarian: "take all work and decisions i need to make and fold them into the handoff, as well
+  make other handoffs if they need to exist. Will work on them at work tonight on laptop. Since we are on back the new week,
+  it is good to go back to normal consonance config as well". Done on D at 23:1x: `run_preset` set from "turbo" to "normal"
+  in `~/.consonance.json` (backup beside it, `.before-normal-2026-11-27`); it reaches each seat when that seat next starts.
+  L's own config file is L's to set, at this same word.
