@@ -73,3 +73,22 @@ librarian's own routing of D454: research for the track builder is a product's, 
 - No consumer build is generated or installed here. Push follows the room's rule after the checks.
 
 NEXT: chair dispatch N6 to a free pane now; that pane call_librarian with its hand-back
+
+---
+
+## N4a, added 21:5x (D): a test build of what is FINISHED, prepared and not installed (a landing pane; tier PROVE IT)
+
+N4 as written waits on the Even tool, which waits on his choice and on its drag cost. Two things are finished and read, and
+he should be able to say yes to them when he wakes without waiting for Even:
+- the width hold, `l264-extend-holds-width-b` 15e7d62 (read twice and two delta reads, CLEAN:
+  `handback/p-d678-width-hold-delta-read-E_2026-11-27.md` section 10);
+- the four ghosts carrying the road's offsets, `d678-ghost-offset-p` 8c78a59 (`handback/p-d678-ghost-offset-P_2026-11-27.md`
+  section 13; rows red first, 76 of 76 ghost rows; no second seat has read it, said to him).
+
+On c522ea6 (the build installed on D): trial-merge the two; the touched tier and the harnesses that name a merged file; the
+whole suite once on the merge; his saved tracks and undo steps the same on c522ea6 and the merge, from copies; the no-preview
+case of the ghost hand-back's section 9 run on the merge (the preview back AND the ghost on the head, which neither branch
+shows alone); build the exe and installer and hash them. **Do not install.** Runs queue through heavy-run behind the timing
+sessions; no timing figure is taken by this track.
+
+NEXT: chair dispatch N4a to a landing pane now; that pane call_librarian with its hand-back when the exe is built and hashed
