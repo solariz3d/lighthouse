@@ -1,0 +1,892 @@
+TAP version 13
+# Subtest: row 1: a straight back placed level across the first is refused by name, saying where and how close, and nothing changes
+ok 1 - row 1: a straight back placed level across the first is refused by name, saying where and how close, and nothing changes
+  ---
+  duration_ms: 157.2194
+  type: 'test'
+  ...
+# Subtest: row 2: the same straight placed high enough over the first is placed
+ok 2 - row 2: the same straight placed high enough over the first is placed
+  ---
+  duration_ms: 70.587
+  type: 'test'
+  ...
+# Subtest: row 3: a track that already breaks the rule is still edited elsewhere
+ok 3 - row 3: a track that already breaks the rule is still edited elsewhere
+  ---
+  duration_ms: 26.7967
+  type: 'test'
+  ...
+# Subtest: row 4: the checker shows the break red at both passes, in plain words
+ok 4 - row 4: the checker shows the break red at both passes, in plain words
+  ---
+  duration_ms: 310.5108
+  type: 'test'
+  ...
+# Subtest: row 1c: on a CLOSED lap a shift-click across the start line takes the SHORT way: the pieces either side of the line; Save keeps them, Delete says CLOSED
+ok 5 - row 1c: on a CLOSED lap a shift-click across the start line takes the SHORT way: the pieces either side of the line; Save keeps them, Delete says CLOSED
+  ---
+  duration_ms: 234.4336
+  type: 'test'
+  ...
+# Subtest: row 1d: where the run across the start line CANNOT be saved (a cup at one side of it, a plain piece at the other) and the inside run can, the inside run is selected and the line says why
+ok 6 - row 1d: where the run across the start line CANNOT be saved (a cup at one side of it, a plain piece at the other) and the inside run can, the inside run is selected and the line says why
+  ---
+  duration_ms: 174.3573
+  type: 'test'
+  ...
+# Subtest: row 1e: a tie stays inside the lap even when the lengths are decimals whose sums differ in the last bit (A's tiefloat case)
+ok 7 - row 1e: a tie stays inside the lap even when the lengths are decimals whose sums differ in the last bit (A's tiefloat case)
+  ---
+  duration_ms: 4.0095
+  type: 'test'
+  ...
+# Subtest: row 1: select a piece, shift-click a run (the first piece selected stays the anchor), an out-of-range piece is refused, and any change of the document drops the selection
+ok 8 - row 1: select a piece, shift-click a run (the first piece selected stays the anchor), an out-of-range piece is refused, and any change of the document drops the selection
+  ---
+  duration_ms: 155.2147
+  type: 'test'
+  ...
+# Subtest: row 2: Save as piece stores exactly the core's text; a name already used is refused and the stored piece untouched; a bad name and a mixed run are refused by name
+ok 9 - row 2: Save as piece stores exactly the core's text; a name already used is refused and the stored piece untouched; a bad name and a mixed run are refused by name
+  ---
+  duration_ms: 95.6534
+  type: 'test'
+  ...
+# Subtest: row 3: the library lists name, length, turn, climb and a thumbnail; an unreadable file and a whole track are LISTED with the reason
+ok 10 - row 3: the library lists name, length, turn, climb and a thumbnail; an unreadable file and a whole track are LISTED with the reason
+  ---
+  duration_ms: 52.263
+  type: 'test'
+  ...
+# Subtest: row 4: Add at head is the core's insert as ONE undo step, mirrored on request; closed, missing and damaged are refused by name with nothing changed
+ok 11 - row 4: Add at head is the core's insert as ONE undo step, mirrored on request; closed, missing and damaged are refused by name with nothing changed
+  ---
+  duration_ms: 142.722
+  type: 'test'
+  ...
+# Subtest: row 5 (REQUIRED, through the app): a track built by saving a run and adding it back through the shell is the SAME DOCUMENT and exports the SAME BYTES
+ok 12 - row 5 (REQUIRED, through the app): a track built by saving a run and adding it back through the shell is the SAME DOCUMENT and exports the SAME BYTES
+  ---
+  duration_ms: 3965.9278
+  type: 'test'
+  ...
+# Subtest: row 6: rename (the new name must be free; the file's own name changes) and delete of a saved piece
+ok 13 - row 6: rename (the new name must be free; the file's own name changes) and delete of a saved piece
+  ---
+  duration_ms: 50.4191
+  type: 'test'
+  ...
+# Subtest: row 6b: a CASE-ONLY rename (Run to run) works where names are case-blind (C, look F2), on a case-sensitive store too, and a failure on the way never loses the piece
+ok 14 - row 6b: a CASE-ONLY rename (Run to run) works where names are case-blind (C, look F2), on a case-sensitive store too, and a failure on the way never loses the piece
+  ---
+  duration_ms: 80.0957
+  type: 'test'
+  ...
+# Subtest: row 7: delete at the open end is simple (one undo step, ids kept); a closed track refuses by name
+ok 15 - row 7: delete at the open end is simple (one undo step, ids kept); a closed track refuses by name
+  ---
+  duration_ms: 161.0632
+  type: 'test'
+  ...
+# Subtest: row 8: delete in the MIDDLE is previewed (displacement, overlap check); Apply writes the backup FIRST and is one undo step; a failed copy refuses; Cancel, a stale preview, and DELETE_REJOIN
+ok 16 - row 8: delete in the MIDDLE is previewed (displacement, overlap check); Apply writes the backup FIRST and is one undo step; a failed copy refuses; Cancel, a stale preview, and DELETE_REJOIN
+  ---
+  duration_ms: 1738.4582
+  type: 'test'
+  ...
+# Subtest: row 8b: the delete preview's overlap check finds a road running into itself (a two-circle coil, as TEST 1 stacked) and reports where
+ok 17 - row 8b: the delete preview's overlap check finds a road running into itself (a two-circle coil, as TEST 1 stacked) and reports where
+  ---
+  duration_ms: 4595.3051
+  type: 'test'
+  ...
+# Subtest: row 9: the preview shows a delete's proposal as a ghost (dropped on Cancel and on Apply), and the selection highlight lands where the preview's own pick says the piece is
+ok 18 - row 9: the preview shows a delete's proposal as a ghost (dropped on Cancel and on Apply), and the selection highlight lands where the preview's own pick says the piece is
+  ---
+  duration_ms: 668.5241
+  type: 'test'
+  ...
+# Subtest: row 10: the panel: a click selects the piece under it and a shift-click the run; a drag, an armed brush and a click on nothing do not select; Save as piece, the list, Add at head with Mirror, Rename, Delete with its confirm
+ok 19 - row 10: the panel: a click selects the piece under it and a shift-click the run; a drag, an armed brush and a click on nothing do not select; Save as piece, the list, Add at head with Mirror, Rename, Delete with its confirm
+  ---
+  duration_ms: 234.3627
+  type: 'test'
+  ...
+# Subtest: row 10b: the panel: a middle delete shows the preview in words (what moves, the overlap check) with Apply and Cancel; a mixed run says why it cannot be saved
+ok 20 - row 10b: the panel: a middle delete shows the preview in words (what moves, the overlap check) with Apply and Cancel; a mixed run says why it cannot be saved
+  ---
+  duration_ms: 626.5801
+  type: 'test'
+  ...
+# Subtest: row 11d (D331 B, amended): as corners the ghost has the corner handles, turnDeg and climbDeg, labelled in degrees, even with the fields blank; "turn & climb as" rate gives the rate handles back
+ok 21 - row 11d (D331 B, amended): as corners the ghost has the corner handles, turnDeg and climbDeg, labelled in degrees, even with the fields blank; "turn & climb as" rate gives the rate handles back
+  ---
+  duration_ms: 114.4762
+  type: 'test'
+  ...
+# Subtest: row 11e (D331): as a corner, a Shift drag of 37 px on the turn handle is 37 × 0.01° of corner, and the placed piece turns exactly that and ends at rate 0
+ok 22 - row 11e (D331): as a corner, a Shift drag of 37 px on the turn handle is 37 × 0.01° of corner, and the placed piece turns exactly that and ends at rate 0
+  ---
+  duration_ms: 170.196
+  type: 'test'
+  ...
+# Subtest: row 11e (D331): as a corner, a Shift drag of 23 px on the climb handle is 23 × 0.01° of corner, and the placed piece climbs exactly that and ends at rate 0
+ok 23 - row 11e (D331): as a corner, a Shift drag of 23 px on the climb handle is 23 × 0.01° of corner, and the placed piece climbs exactly that and ends at rate 0
+  ---
+  duration_ms: 162.1877
+  type: 'test'
+  ...
+# Subtest: row 11: Extend's handles: on the ghost and only while there is one; a drag types into the matching field and reaches no document until Extend; mirrored handles change the same field; Extend places what was dragged
+ok 24 - row 11: Extend's handles: on the ghost and only while there is one; a drag types into the matching field and reaches no document until Extend; mirrored handles change the same field; Extend places what was dragged
+  ---
+  duration_ms: 379.4723
+  type: 'test'
+  ...
+# Subtest: row 11b: no ghost, no handles; a press ON a handle is the handle's and the camera keeps a press anywhere else (in Build no press is a brush); the cup's handles go with the cup field; the switch turns them off
+ok 25 - row 11b: no ghost, no handles; a press ON a handle is the handle's and the camera keeps a press anywhere else (in Build no press is a brush); the cup's handles go with the cup field; the switch turns them off
+  ---
+  duration_ms: 190.6392
+  type: 'test'
+  ...
+# Subtest: row 11c: the preview mounts AFTER the panel, so the first ask for the ghost can go to nobody: the handles ask again about every half second and appear once it listens (found in the real window)
+ok 26 - row 11c: the preview mounts AFTER the panel, so the first ask for the ghost can go to nobody: the handles ask again about every half second and appear once it listens (found in the real window)
+  ---
+  duration_ms: 446.5853
+  type: 'test'
+  ...
+# Subtest: row 12: Sculpt through the panel: the strip offers the tools; ONE selected piece gets its handles; a drag reshapes that piece, is ONE undo step and the centreline does not move; Undo gives it back
+ok 27 - row 12: Sculpt through the panel: the strip offers the tools; ONE selected piece gets its handles; a drag reshapes that piece, is ONE undo step and the centreline does not move; Undo gives it back
+  ---
+  duration_ms: 317.5474
+  type: 'test'
+  ...
+# Subtest: row 13: the preview's ghostInfo (what the handles read): none without a ghost, the path's samples and where the new piece starts with one, none for a delete preview's ghost, none after clearGhost
+ok 28 - row 13: the preview's ghostInfo (what the handles read): none without a ghost, the path's samples and where the new piece starts with one, none for a delete preview's ghost, none after clearGhost
+  ---
+  duration_ms: 393.963
+  type: 'test'
+  ...
+# Subtest: row 14: the Jump button (D258, the free jump): beside Extend; the old Add-jump fields are gone; hover shows a jump ghost with no Extend handles on it; a click is ONE undo step with the note; a refusal says why; Undo gives the fields back
+ok 29 - row 14: the Jump button (D258, the free jump): beside Extend; the old Add-jump fields are gone; hover shows a jump ghost with no Extend handles on it; a click is ONE undo step with the note; a refusal says why; Undo gives the fields back
+  ---
+  duration_ms: 997.8193
+  type: 'test'
+  ...
+# Subtest: row 14b: the landing boxes appear while a landing is the head, show the pose in metres and degrees, a typed value is ONE undo step, a refusal says why in words, and an Extend fixes the landing
+ok 30 - row 14b: the landing boxes appear while a landing is the head, show the pose in metres and degrees, a typed value is ONE undo step, a refusal says why in words, and an Extend fixes the landing
+  ---
+  duration_ms: 394.154
+  type: 'test'
+  ...
+# Subtest: row 14c: the landing's four handles (D278: BESIDE the Extend ghost's, where D258 had them replace it: row 14d); a drag moves the number of its box in ONE undo step; Shift is one step a pixel (D330), Ctrl snaps; two quick presses reset one; an Extend takes them away
+ok 31 - row 14c: the landing's four handles (D278: BESIDE the Extend ghost's, where D258 had them replace it: row 14d); a drag moves the number of its box in ONE undo step; Shift is one step a pixel (D330), Ctrl snaps; two quick presses reset one; an Extend takes them away
+  ---
+  duration_ms: 837.1713
+  type: 'test'
+  ...
+# Subtest: row 14d (D278, the user: "after placing jump piece, it doesnt go back to regular track manipulation with the base equation, it stays the heading, sideways, and height"): right after Jump the Extend ghost's handles are up BESIDE the landing's four; an Extend handle types into its field and edits no document; a landing handle still moves the landing in ONE undo step; Extend fixes the landing, and its handles go
+ok 32 - row 14d (D278, the user: "after placing jump piece, it doesnt go back to regular track manipulation with the base equation, it stays the heading, sideways, and height"): right after Jump the Extend ghost's handles are up BESIDE the landing's four; an Extend handle types into its field and edits no document; a landing handle still moves the landing in ONE undo step; Extend fixes the landing, and its handles go
+  ---
+  duration_ms: 3067.5752
+  type: 'test'
+  ...
+# Subtest: row 14e (D278): a hover on Jump shows the jump ghost with no Extend handles on it, while a landing's own handles stay; a hover on Extend with a landing as the head shows the Extend ghost's handles; Sculpt takes the landing's handles away as before
+ok 33 - row 14e (D278): a hover on Jump shows the jump ghost with no Extend handles on it, while a landing's own handles stay; a hover on Extend with a landing as the head shows the Extend ghost's handles; Sculpt takes the landing's handles away as before
+  ---
+  duration_ms: 1890.3781
+  type: 'test'
+  ...
+# Subtest: row 16: the Grip field in Extend (D261): it shows the head's grip, "grip like…" fills it from a known track, a changed value is the new piece's grip and the next piece keeps it, the words say untested outside 60 to 110 and that the checker does not model grip; 49, 151 and 100.5 are refused; Undo gives the head's back
+ok 34 - row 16: the Grip field in Extend (D261): it shows the head's grip, "grip like…" fills it from a known track, a changed value is the new piece's grip and the next piece keeps it, the words say untested outside 60 to 110 and that the checker does not model grip; 49, 151 and 100.5 are refused; Undo gives the head's back
+  ---
+  duration_ms: 241.2205
+  type: 'test'
+  ...
+# Subtest: row 16b: the selected pieces' grip (D261): the box shows the pieces' grip (blank where they differ), Set grip is ONE undo step on the road pieces and keeps the selection, "grip like…" fills the box, 49/151/100.5 are refused in words, 100 writes no grip, a flight alone is refused, Undo restores
+ok 35 - row 16b: the selected pieces' grip (D261): the box shows the pieces' grip (blank where they differ), Set grip is ONE undo step on the road pieces and keeps the selection, "grip like…" fills the box, 49/151/100.5 are refused in words, 100 writes no grip, a flight alone is refused, Undo restores
+  ---
+  duration_ms: 342.1354
+  type: 'test'
+  ...
+# Subtest: row 16c: the track coloured by grip (D261): blue below 100, white at 100, orange above; the layer draws each road piece in its colour only while "colour by grip" is ticked; the hover label says "grip 85%" for a piece off 100 (always while the view is on) and nothing for a plain piece
+ok 36 - row 16c: the track coloured by grip (D261): blue below 100, white at 100, orange above; the layer draws each road piece in its colour only while "colour by grip" is ticked; the hover label says "grip 85%" for a piece off 100 (always while the view is on) and nothing for a plain piece
+  ---
+  duration_ms: 192.7885
+  type: 'test'
+  ...
+# Subtest: row 17: the grip UI modules load in the webview loader with NO node built-in (D263: piecesui and griplayer required src/core/document.js, which pulls tools/piecewise.cjs and node's fs, and the panel failed to load), and their copy of the grip numbers is the core's
+ok 37 - row 17: the grip UI modules load in the webview loader with NO node built-in (D263: piecesui and griplayer required src/core/document.js, which pulls tools/piecewise.cjs and node's fs, and the panel failed to load), and their copy of the grip numbers is the core's
+  ---
+  duration_ms: 52.0632
+  type: 'test'
+  ...
+# Subtest: row 18: the CHEAP ghost while a handle is dragged (D266 item 2): every step of a drag asks the preview for a cheap ghost, the release asks for the full one, typing in a field and hovering Extend ask for the full one
+ok 38 - row 18: the CHEAP ghost while a handle is dragged (D266 item 2): every step of a drag asks the preview for a cheap ghost, the release asks for the full one, typing in a field and hovering Extend ask for the full one
+  ---
+  duration_ms: 142.1067
+  type: 'test'
+  ...
+# Subtest: row 19: no help paragraph stays in the left column (D267): the tube width, the grip, the turn-0 hint, the jump and the landing show only a few words or nothing, and the words are tooltips
+ok 39 - row 19: no help paragraph stays in the left column (D267): the tube width, the grip, the turn-0 hint, the jump and the landing show only a few words or nothing, and the words are tooltips
+  ---
+  duration_ms: 210.891
+  type: 'test'
+  ...
+# Subtest: row 19b: the values of the piece being edited are drawn LARGE over the 3D view (D267): length, turn, climb, bank and width, updated as a handle is dragged or a field is typed, hidden on a closed loop
+ok 40 - row 19b: the values of the piece being edited are drawn LARGE over the 3D view (D267): length, turn, climb, bank and width, updated as a handle is dragged or a field is typed, hidden on a closed loop
+  ---
+  duration_ms: 609.4945
+  type: 'test'
+  ...
+# Subtest: row 19c: the share codes are in the File menu as "Copy track code" and "Paste track code…" (D267; D355 moved them from the ⋯ menu), not a section of the left column; the code itself is unchanged
+ok 41 - row 19c: the share codes are in the File menu as "Copy track code" and "Paste track code…" (D267; D355 moved them from the ⋯ menu), not a section of the left column; the code itself is unchanged
+  ---
+  duration_ms: 113.133
+  type: 'test'
+  ...
+# Subtest: row 20: the saved pieces are a drop-down bin in the top bar, not a section of the left column (D269): a row per piece with its thumbnail, name and summary; Add at head, Add mirrored, Rename and Delete; a click on the row adds it; the empty words are in the menu; Save as piece stays with the selection
+ok 42 - row 20: the saved pieces are a drop-down bin in the top bar, not a section of the left column (D269): a row per piece with its thumbnail, name and summary; Add at head, Add mirrored, Rename and Delete; a click on the row adds it; the empty words are in the menu; Save as piece stays with the selection
+  ---
+  duration_ms: 246.4907
+  type: 'test'
+  ...
+# Subtest: row 20b: the Pieces menu opens and closes: it lists the pieces when opened, Esc closes it, a press outside closes it, a press inside does not; Esc with it closed does nothing; the top bar has the button beside Open… and Previous versions…
+ok 43 - row 20b: the Pieces menu opens and closes: it lists the pieces when opened, Esc closes it, a press outside closes it, a press inside does not; Esc with it closed does nothing; the top bar has the button beside Open… and Previous versions…
+  ---
+  duration_ms: 163.5825
+  type: 'test'
+  ...
+# Subtest: row 15: the preview's ghostInfo says whether the ghost is a jump's and carries its segments (what the handles and the flight overlay read)
+ok 44 - row 15: the preview's ghostInfo says whether the ghost is a jump's and carries its segments (what the handles and the flight overlay read)
+  ---
+  duration_ms: 113.4888
+  type: 'test'
+  ...
+# Subtest: D259 (amended D677): a typed 300 stays 300, and a typed 400 rolls on to 400 while the field shows 40
+ok 45 - D259 (amended D677): a typed 300 stays 300, and a typed 400 rolls on to 400 while the field shows 40
+  ---
+  duration_ms: 225.2774
+  type: 'test'
+  ...
+# Subtest: D259: dragging the bank handle from 350 by about +20 gives about 10 (not 370), and from -350 by about -20 gives about -10; Extend applies what the field shows
+ok 46 - D259: dragging the bank handle from 350 by about +20 gives about 10 (not 370), and from -350 by about -20 gives about -10; Extend applies what the field shows
+  ---
+  duration_ms: 472.0506
+  type: 'test'
+  ...
+# Subtest: D677 (ghost handle): from a head past one turn (−392, shown −32), a drag on the ghost's bank handle writes the field within one turn and Extend lays the road in the head's turn, one way, never back round
+ok 47 - D677 (ghost handle): from a head past one turn (−392, shown −32), a drag on the ghost's bank handle writes the field within one turn and Extend lays the road in the head's turn, one way, never back round
+  ---
+  duration_ms: 276.877
+  type: 'test'
+  ...
+# Subtest: row 18b: a length drag previews whole 2 m, and the release previews the exact length the field shows
+ok 48 - row 18b: a length drag previews whole 2 m, and the release previews the exact length the field shows
+  ---
+  duration_ms: 126.5499
+  type: 'test'
+  ...
+# Subtest: row 18c: a ghost whose sliced build needs more frames than the retry is still shown: the handles do not ask again while the preview is building one (D426)
+ok 49 - row 18c: a ghost whose sliced build needs more frames than the retry is still shown: the handles do not ask again while the preview is building one (D426)
+  ---
+  duration_ms: 221.9623
+  type: 'test'
+  ...
+# Subtest: row 22 (D430): an EMPTIED turn, climb, bank or cup is 0, not the head's value: the new piece eases to 0, and the box shows 0 once the change is committed
+ok 50 - row 22 (D430): an EMPTIED turn, climb, bank or cup is 0, not the head's value: the new piece eases to 0, and the box shows 0 once the change is committed
+  ---
+  duration_ms: 261.8018
+  type: 'test'
+  ...
+# Subtest: row 22b (D430): a field left as shown still continues the head; an emptied width keeps its old meaning (blank: the head's; 0 is no width)
+ok 51 - row 22b (D430): a field left as shown still continues the head; an emptied width keeps its old meaning (blank: the head's; 0 is no width)
+  ---
+  duration_ms: 222.0367
+  type: 'test'
+  ...
+# Subtest: row 22c (D430): as a corner the turn and climb fields rest blank, so a blank there is untouched: the track keeps turning, it does not ease to straight
+ok 52 - row 22c (D430): as a corner the turn and climb fields rest blank, so a blank there is untouched: the track keeps turning, it does not ease to straight
+  ---
+  duration_ms: 221.0001
+  type: 'test'
+  ...
+# Subtest: a selected piece lends its values to the Extend fields: Extend places a piece like it; a run lends nothing; clearing shows the head
+ok 53 - a selected piece lends its values to the Extend fields: Extend places a piece like it; a run lends nothing; clearing shows the head
+  ---
+  duration_ms: 116.7397
+  type: 'test'
+  ...
+# Subtest: D331 B: with the turn read as a corner (the default), a selected piece lends the degrees it turns, and Extend places a piece that turns them and ends straight
+ok 54 - D331 B: with the turn read as a corner (the default), a selected piece lends the degrees it turns, and Extend places a piece that turns them and ends straight
+  ---
+  duration_ms: 157.9958
+  type: 'test'
+  ...
+# Subtest: row 16 (D335): a steady bank drag on a placed piece's sculpt mark, the pointer following the mark as the road rolls, rises all the way, lands on 180 and never goes back (the axis fixed at the grab stalled it near 165)
+ok 55 - row 16 (D335): a steady bank drag on a placed piece's sculpt mark, the pointer following the mark as the road rolls, rises all the way, lands on 180 and never goes back (the axis fixed at the grab stalled it near 165)
+  ---
+  duration_ms: 8998.7922
+  type: 'test'
+  ...
+# Subtest: row 16b (D335): a slow bank drag on a sculpt mark is 0.01 degree a pixel with no key, and the piece reads what the handle says
+ok 56 - row 16b (D335): a slow bank drag on a sculpt mark is 0.01 degree a pixel with no key, and the piece reads what the handle says
+  ---
+  duration_ms: 2177.971
+  type: 'test'
+  ...
+# Subtest: D677 (2): a steady bank drag on the Sculpt mark of a piece wound past a turn (340 → 392, its middle at 366) rises from 366 and never goes back round a turn
+ok 57 - D677 (2): a steady bank drag on the Sculpt mark of a piece wound past a turn (340 → 392, its middle at 366) rises from 366 and never goes back round a turn
+  ---
+  duration_ms: 1624.7093
+  type: 'test'
+  ...
+# Subtest: D677 (2) row 720a: a steady bank drag on the Sculpt mark of a piece held at 710, dragged up 30 px across 720, rises on past 720 (710 → 723.5; 7b3926e: stopped at 720)
+ok 58 - D677 (2) row 720a: a steady bank drag on the Sculpt mark of a piece held at 710, dragged up 30 px across 720, rises on past 720 (710 → 723.5; 7b3926e: stopped at 720)
+  ---
+  duration_ms: 1759.5968
+  type: 'test'
+  ...
+# Subtest: D677 (2) row 720b: a steady bank drag on the Sculpt mark of a piece wound 700 → 760 (its middle 730), dragged up 30 px, rises from 730 (730 → 743.5; 7b3926e: −10 on the first step, then held at 720)
+ok 59 - D677 (2) row 720b: a steady bank drag on the Sculpt mark of a piece wound 700 → 760 (its middle 730), dragged up 30 px, rises from 730 (730 → 743.5; 7b3926e: −10 on the first step, then held at 720)
+  ---
+  duration_ms: 1769.7424
+  type: 'test'
+  ...
+# Subtest: D677 (2) row 720c: a steady bank drag on the Sculpt mark of a piece wound 700 → 760 (its middle 730), dragged down 30 px, comes down from 730 (730 → 716.5; 7b3926e: −10 on the first step, then held at 720)
+ok 60 - D677 (2) row 720c: a steady bank drag on the Sculpt mark of a piece wound 700 → 760 (its middle 730), dragged down 30 px, comes down from 730 (730 → 716.5; 7b3926e: −10 on the first step, then held at 720)
+  ---
+  duration_ms: 1801.5584
+  type: 'test'
+  ...
+# Subtest: D677 (2) row 720d: a steady bank drag on the Sculpt mark of a piece the mirror, wound −700 → −760 (its middle −730), dragged down 30 px, goes on down from −730 (−730 → −743.5; 7b3926e: +10 on the first step, then held at −720)
+ok 61 - D677 (2) row 720d: a steady bank drag on the Sculpt mark of a piece the mirror, wound −700 → −760 (its middle −730), dragged down 30 px, goes on down from −730 (−730 → −743.5; 7b3926e: +10 on the first step, then held at −720)
+  ---
+  duration_ms: 1774.0491
+  type: 'test'
+  ...
+# Subtest: D677 (2) row 720e: a wheel notch over the Sculpt bank mark of a piece whose middle is 730 is one step (0.01) either way, never a jump to 720 (7b3926e: 720)
+ok 62 - D677 (2) row 720e: a wheel notch over the Sculpt bank mark of a piece whose middle is 730 is one step (0.01) either way, never a jump to 720 (7b3926e: 720)
+  ---
+  duration_ms: 386.1316
+  type: 'test'
+  ...
+# Subtest: D677 (2) row 720g, a guard: the ghost's bank handle keeps the bank kind's range (±720), unchanged by row 720a's fix: from a typed 710 a drag up 30 px stops at 720, which it writes into the field within one turn (0). Whether it carries is his to rule on
+ok 63 - D677 (2) row 720g, a guard: the ghost's bank handle keeps the bank kind's range (±720), unchanged by row 720a's fix: from a typed 710 a drag up 30 px stops at 720, which it writes into the field within one turn (0). Whether it carries is his to rule on
+  ---
+  duration_ms: 118.7755
+  type: 'test'
+  ...
+# Subtest: row 21: in Sculpt, a Tube sweep drag on a closed tube is refused in plain words: "Sculpt can't change the sweep of a closed tube…", not the core's
+ok 64 - row 21: in Sculpt, a Tube sweep drag on a closed tube is refused in plain words: "Sculpt can't change the sweep of a closed tube…", not the core's
+  ---
+  duration_ms: 160.8459
+  type: 'test'
+  ...
+# Subtest: row D464: Sculpt's how-to line and value line read as instructions, not errors: class hint, painted in the text colour
+ok 65 - row D464: Sculpt's how-to line and value line read as instructions, not errors: class hint, painted in the text colour
+  ---
+  duration_ms: 115.24
+  type: 'test'
+  ...
+# Subtest: row 25 (D519, amended D520): Grab on the road: the pressed point follows the pointer and a rim keeps the far rim (built again and read), a dot opens at its own station, off the road is Grab as before
+ok 66 - row 25 (D519, amended D520): Grab on the road: the pressed point follows the pointer and a rim keeps the far rim (built again and read), a dot opens at its own station, off the road is Grab as before
+  ---
+  duration_ms: 313.1906
+  type: 'test'
+  ...
+# Subtest: row 25b (D519): with another key the press keeps that key's one channel wherever it lands; the shell says what the piece is and why a channel would be refused
+ok 67 - row 25b (D519): with another key the press keeps that key's one channel wherever it lands; the shell says what the piece is and why a channel would be refused
+  ---
+  duration_ms: 76.9697
+  type: 'test'
+  ...
+# Subtest: D678: Even through the panel: a drag of the run's left width handle brings the run to one width on a 0.5 m step, holds the right edge, and is one undo step
+ok 68 - D678: Even through the panel: a drag of the run's left width handle brings the run to one width on a 0.5 m step, holds the right edge, and is one undo step
+  ---
+  duration_ms: 390.5029
+  type: 'test'
+  ...
+# Subtest: D678: Even through the panel: a drag of the run's right width handle brings the run to one width on a 0.5 m step, holds the left edge, and is one undo step
+ok 69 - D678: Even through the panel: a drag of the run's right width handle brings the run to one width on a 0.5 m step, holds the left edge, and is one undo step
+  ---
+  duration_ms: 400.714
+  type: 'test'
+  ...
+# Subtest: D678: Even typed through the panel: the width as typed (no step) with the edge picked under "keeps"; ◀ before and after ▶ write the road's width either side of the run
+ok 70 - D678: Even typed through the panel: the width as typed (no step) with the edge picked under "keeps"; ◀ before and after ▶ write the road's width either side of the run
+  ---
+  duration_ms: 275.4425
+  type: 'test'
+  ...
+# Subtest: D678: Even with nothing selected: the handles are not there, and the typed Even and the picks say to select a run, changing nothing
+ok 71 - D678: Even with nothing selected: the handles are not there, and the typed Even and the picks say to select a run, changing nothing
+  ---
+  duration_ms: 127.0761
+  type: 'test'
+  ...
+# Subtest: K1-K6: Bhold from U: Even levels the banked turn to 16 m, the left edge held, the centre in the plane of the road as built, the bank as found
+ok 72 - K1-K6: Bhold from U: Even levels the banked turn to 16 m, the left edge held, the centre in the plane of the road as built, the bank as found
+  ---
+  duration_ms: 4451.8494
+  type: 'test'
+  ...
+# Subtest: K1-K6: Bhold from W1: Even levels the banked turn to 16 m, the left edge held, the centre in the plane of the road as built, the bank as found
+ok 73 - K1-K6: Bhold from W1: Even levels the banked turn to 16 m, the left edge held, the centre in the plane of the road as built, the bank as found
+  ---
+  duration_ms: 5685.2929
+  type: 'test'
+  ...
+# Subtest: K1-K6: Bhold from W8: Even levels the banked turn to 16 m, the left edge held, the centre in the plane of the road as built, the bank as found
+ok 74 - K1-K6: Bhold from W8: Even levels the banked turn to 16 m, the left edge held, the centre in the plane of the road as built, the bank as found
+  ---
+  duration_ms: 5905.529
+  type: 'test'
+  ...
+# Subtest: K1-K6: B- from U: Even levels the banked turn to 16 m, the left edge held, the centre in the plane of the road as built, the bank as found
+ok 75 - K1-K6: B- from U: Even levels the banked turn to 16 m, the left edge held, the centre in the plane of the road as built, the bank as found
+  ---
+  duration_ms: 11133.6309
+  type: 'test'
+  ...
+# Subtest: K1-K6: B- from W1: Even levels the banked turn to 16 m, the left edge held, the centre in the plane of the road as built, the bank as found
+ok 76 - K1-K6: B- from W1: Even levels the banked turn to 16 m, the left edge held, the centre in the plane of the road as built, the bank as found
+  ---
+  duration_ms: 11041.7115
+  type: 'test'
+  ...
+# Subtest: K1-K6: B- from W8: Even levels the banked turn to 16 m, the left edge held, the centre in the plane of the road as built, the bank as found
+ok 77 - K1-K6: B- from W8: Even levels the banked turn to 16 m, the left edge held, the centre in the plane of the road as built, the bank as found
+  ---
+  duration_ms: 11132.1015
+  type: 'test'
+  ...
+# Subtest: K1-K6: B-0 from U: Even levels the banked turn to 16 m, the left edge held, the centre in the plane of the road as built, the bank as found
+ok 78 - K1-K6: B-0 from U: Even levels the banked turn to 16 m, the left edge held, the centre in the plane of the road as built, the bank as found
+  ---
+  duration_ms: 10984.0794
+  type: 'test'
+  ...
+# Subtest: K1-K6: B-0 from W1: Even levels the banked turn to 16 m, the left edge held, the centre in the plane of the road as built, the bank as found
+ok 79 - K1-K6: B-0 from W1: Even levels the banked turn to 16 m, the left edge held, the centre in the plane of the road as built, the bank as found
+  ---
+  duration_ms: 9098.698
+  type: 'test'
+  ...
+# Subtest: K1-K6: B-0 from W8: Even levels the banked turn to 16 m, the left edge held, the centre in the plane of the road as built, the bank as found
+ok 80 - K1-K6: B-0 from W8: Even levels the banked turn to 16 m, the left edge held, the centre in the plane of the road as built, the bank as found
+  ---
+  duration_ms: 7519.3315
+  type: 'test'
+  ...
+# Subtest: P1-P3: B+: Even is laid, and where the new middle's line leaves the road the release says so in plain words with the place and three figures
+ok 81 - P1-P3: B+: Even is laid, and where the new middle's line leaves the road the release says so in plain words with the place and three figures
+  ---
+  duration_ms: 220.3722
+  type: 'test'
+  ...
+# Subtest: P1-P3: B+0: Even is laid, and where the new middle's line leaves the road the release says so in plain words with the place and three figures
+ok 82 - P1-P3: B+0: Even is laid, and where the new middle's line leaves the road the release says so in plain words with the place and three figures
+  ---
+  duration_ms: 222.1513
+  type: 'test'
+  ...
+# Subtest: E1 and E2: B+: the release says the first sentence at once with the check pending, and the check's words, when they land, are the on-page check's
+ok 83 - E1 and E2: B+: the release says the first sentence at once with the check pending, and the check's words, when they land, are the on-page check's
+  ---
+  duration_ms: 342.8538
+  type: 'test'
+  ...
+# Subtest: E1 and E2: B+0: the release says the first sentence at once with the check pending, and the check's words, when they land, are the on-page check's
+ok 84 - E1 and E2: B+0: the release says the first sentence at once with the check pending, and the check's words, when they land, are the on-page check's
+  ---
+  duration_ms: 247.8616
+  type: 'test'
+  ...
+# Subtest: E1 and E2: Bhold: the release says the first sentence at once with the check pending, and the check's words, when they land, are the on-page check's
+ok 85 - E1 and E2: Bhold: the release says the first sentence at once with the check pending, and the check's words, when they land, are the on-page check's
+  ---
+  duration_ms: 160.0166
+  type: 'test'
+  ...
+# Subtest: E4: an Undo before the check lands drops its words: the message stays the Undo's
+ok 86 - E4: an Undo before the check lands drops its words: the message stays the Undo's
+  ---
+  duration_ms: 101.0843
+  type: 'test'
+  ...
+# Subtest: E6: B+0: with the page's runner, the request goes to a worker of its own as plain data, the words that come back are the on-page check's, and the worker is ended
+ok 87 - E6: B+0: with the page's runner, the request goes to a worker of its own as plain data, the words that come back are the on-page check's, and the worker is ended
+  ---
+  duration_ms: 192.0425
+  type: 'test'
+  ...
+# Subtest: E6: the worker script answers an Even request through the check job's evenCheck, beside the newest-only track check
+ok 88 - E6: the worker script answers an Even request through the check job's evenCheck, beside the newest-only track check
+  ---
+  duration_ms: 44.5859
+  type: 'test'
+  ...
+# Subtest: E6: a request the worker cannot take is checked on the page, and a check that throws says so, keeping the first sentence
+ok 89 - E6: a request the worker cannot take is checked on the page, and a check that throws says so, keeping the first sentence
+  ---
+  duration_ms: 260.4761
+  type: 'test'
+  ...
+# Subtest: E5: B+: a typed width says the first sentence at once, and the check's words, when they land, are the on-page check's
+ok 90 - E5: B+: a typed width says the first sentence at once, and the check's words, when they land, are the on-page check's
+  ---
+  duration_ms: 164.5995
+  type: 'test'
+  ...
+# Subtest: W1: the message says the kept edge is put back where the road had it, read from the stretch's ends, and how far it moved; the middle is laid smooth; never that an edge stays
+ok 91 - W1: the message says the kept edge is put back where the road had it, read from the stretch's ends, and how far it moved; the middle is laid smooth; never that an edge stays
+  ---
+  duration_ms: 116.5029
+  type: 'test'
+  ...
+# Subtest: W2: the message says the road is back within the window's reach beyond each end (not "over" it), and where a window end is cut short by the track's start or the open end, that
+ok 92 - W2: the message says the road is back within the window's reach beyond each end (not "over" it), and where a window end is cut short by the track's start or the open end, that
+  ---
+  duration_ms: 124.4469
+  type: 'test'
+  ...
+# Subtest: W3: the message says the road's width, line and height beyond the stretch are as they were to a tenth of a millimetre, and outside the window nothing moves past one stored step
+ok 93 - W3: the message says the road's width, line and height beyond the stretch are as they were to a tenth of a millimetre, and outside the window nothing moves past one stored step
+  ---
+  duration_ms: 53.9362
+  type: 'test'
+  ...
+# Subtest: W4: after one grab (T1), the words say the kept edge moved the metres it moved, and where
+ok 94 - W4: after one grab (T1), the words say the kept edge moved the metres it moved, and where
+  ---
+  duration_ms: 130.7185
+  type: 'test'
+  ...
+# Subtest: W5: on a banked stretch the road is read "under the bank as Even finds it"; on a flat one it is not said
+ok 95 - W5: on a banked stretch the road is read "under the bank as Even finds it"; on a flat one it is not said
+  ---
+  duration_ms: 122.1526
+  type: 'test'
+  ...
+# Subtest: W6: where Even has no reading (A1B), the words say the edge was kept where it is, how far it moved, and why the road could not be read
+ok 96 - W6: where Even has no reading (A1B), the words say the edge was kept where it is, how far it moved, and why the road could not be read
+  ---
+  duration_ms: 37.6567
+  type: 'test'
+  ...
+# Subtest: W7: a result with an edge kept but no reading or no figure is not said (it throws): a sentence without the move would be the silent move again
+ok 97 - W7: a result with an edge kept but no reading or no figure is not said (it throws): a sentence without the move would be the silent move again
+  ---
+  duration_ms: 17.1673
+  type: 'test'
+  ...
+# Subtest: F1-F7: from T1 on his flat turn, Even (the right edge's handle, the left edge held) brings the turn to 16 m with the inner edge where the road had it
+ok 98 - F1-F7: from T1 on his flat turn, Even (the right edge's handle, the left edge held) brings the turn to 16 m with the inner edge where the road had it
+  ---
+  duration_ms: 282.2222
+  type: 'test'
+  ...
+# Subtest: F1-F7: from T2b on his flat turn, Even (the right edge's handle, the left edge held) brings the turn to 16 m with the inner edge where the road had it
+ok 99 - F1-F7: from T2b on his flat turn, Even (the right edge's handle, the left edge held) brings the turn to 16 m with the inner edge where the road had it
+  ---
+  duration_ms: 209.8333
+  type: 'test'
+  ...
+# Subtest: the drag snaps to 0.5 m, keeps the run selected through every step, and its release says what it did
+ok 100 - the drag snaps to 0.5 m, keeps the run selected through every step, and its release says what it did
+  ---
+  duration_ms: 83.9794
+  type: 'test'
+  ...
+# Subtest: typed: Even takes the value as typed (no snap), with the edge picked, as one undo step; the picks read the road either side of the run
+ok 101 - typed: Even takes the value as typed (no snap), with the edge picked, as one undo step; the picks read the road either side of the run
+  ---
+  duration_ms: 57.0275
+  type: 'test'
+  ...
+# Subtest: one piece: its width handle under Even levels that piece alone, eased into its neighbours
+ok 102 - one piece: its width handle under Even levels that piece alone, eased into its neighbours
+  ---
+  duration_ms: 18.9824
+  type: 'test'
+  ...
+# Subtest: the open end: a run ending at the head is levelled to its end, the head taking the value
+ok 103 - the open end: a run ending at the head is levelled to its end, the head taking the value
+  ---
+  duration_ms: 22.4997
+  type: 'test'
+  ...
+# Subtest: Even refuses by name and changes nothing: no run selected, a drag on the road, an empty or wrong width, a jump within reach
+ok 104 - Even refuses by name and changes nothing: no run selected, a drag on the road, an empty or wrong width, a jump within reach
+  ---
+  duration_ms: 10.4317
+  type: 'test'
+  ...
+# Subtest: B2: an Even drag that brings the road too close to another pass inside its window is refused by name at its release, and the track is as before the drag
+ok 105 - B2: an Even drag that brings the road too close to another pass inside its window is refused by name at its release, and the track is as before the drag
+  ---
+  duration_ms: 576.9204
+  type: 'test'
+  ...
+# Subtest: G1: an Even drag runs no pass-clearance check on its steps; the release is refused by name when the road comes too close, and the track is as before the drag
+ok 106 - G1: an Even drag runs no pass-clearance check on its steps; the release is refused by name when the road comes too close, and the track is as before the drag
+  ---
+  duration_ms: 626.004
+  type: 'test'
+  ...
+# Subtest: G2: a typed Even width that brings the road too close to another pass is refused by name and changes nothing
+ok 107 - G2: a typed Even width that brings the road too close to another pass is refused by name and changes nothing
+  ---
+  duration_ms: 216.5732
+  type: 'test'
+  ...
+# Subtest: U1: a run from the track's start with an edge kept: the drag opens, and the typed width keeps the edge where it is, said
+ok 108 - U1: a run from the track's start with an edge kept: the drag opens, and the typed width keeps the edge where it is, said
+  ---
+  duration_ms: 52.9804
+  type: 'test'
+  ...
+# Subtest: Even brings the run to the value from its first metre to its last, and the input document is not changed
+ok 109 - Even brings the run to the value from its first metre to its last, and the input document is not changed
+  ---
+  duration_ms: 70.2818
+  type: 'test'
+  ...
+# Subtest: Even on a run of one piece levels that piece, eases into its neighbours and moves nothing outside its window
+ok 110 - Even on a run of one piece levels that piece, eases into its neighbours and moves nothing outside its window
+  ---
+  duration_ms: 31.4244
+  type: 'test'
+  ...
+# Subtest: the ramp is the designed ease: where the knots are fine enough to carry it, the width before the run follows a smootherstep from the road to the value over 30 m
+ok 111 - the ramp is the designed ease: where the knots are fine enough to carry it, the width before the run follows a smootherstep from the road to the value over 30 m
+  ---
+  duration_ms: 9.1358
+  type: 'test'
+  ...
+# Subtest: Even on a run that ends at the open end gives the head the value: no ramp after it
+ok 112 - Even on a run that ends at the open end gives the head the value: no ramp after it
+  ---
+  duration_ms: 13.8136
+  type: 'test'
+  ...
+# Subtest: Even with the left rim held keeps that rim where the road has it and puts the right rim out at the new width (flat, from the untouched road)
+ok 113 - Even with the left rim held keeps that rim where the road has it and puts the right rim out at the new width (flat, from the untouched road)
+  ---
+  duration_ms: 73.3629
+  type: 'test'
+  ...
+# Subtest: the held rim on the other side: with the right rim held it stays and the left rim goes out (flat, from the untouched road)
+ok 114 - the held rim on the other side: with the right rim held it stays and the left rim goes out (flat, from the untouched road)
+  ---
+  duration_ms: 64.0049
+  type: 'test'
+  ...
+# Subtest: after a piece with coarse knots (a plain Extend's 20 m spans), the run is still one width with the held rim in place from its first metre: the window reaches back to that piece's last span
+ok 115 - after a piece with coarse knots (a plain Extend's 20 m spans), the run is still one width with the held rim in place from its first metre: the window reaches back to that piece's last span
+  ---
+  duration_ms: 89.3926
+  type: 'test'
+  ...
+# Subtest: where the road's own width changes across the window (a 31 m straight into a 12 m turn), the held rim is held where it is now (A1B), not read back from the window's ends
+ok 116 - where the road's own width changes across the window (a 31 m straight into a 12 m turn), the held rim is held where it is now (A1B), not read back from the window's ends
+  ---
+  duration_ms: 78.4537
+  type: 'test'
+  ...
+# Subtest: K2 and K3 on Bhold from the untouched road: the held rim stays within 0.01 m, and the centre's height is within 0.01 m of its place in the plane of the road as built
+ok 117 - K2 and K3 on Bhold from the untouched road: the held rim stays within 0.01 m, and the centre's height is within 0.01 m of its place in the plane of the road as built
+  ---
+  duration_ms: 1920.5587
+  type: 'test'
+  ...
+# Subtest: K2 and K3 on B- from the untouched road: the held rim stays within 0.01 m, and the centre's height is within 0.01 m of its place in the plane of the road as built
+ok 118 - K2 and K3 on B- from the untouched road: the held rim stays within 0.01 m, and the centre's height is within 0.01 m of its place in the plane of the road as built
+  ---
+  duration_ms: 5354.8307
+  type: 'test'
+  ...
+# Subtest: K2 and K3 on B-0 from the untouched road: the held rim stays within 0.01 m, and the centre's height is within 0.01 m of its place in the plane of the road as built
+ok 119 - K2 and K3 on B-0 from the untouched road: the held rim stays within 0.01 m, and the centre's height is within 0.01 m of its place in the plane of the road as built
+  ---
+  duration_ms: 5138.6999
+  type: 'test'
+  ...
+# Subtest: K5: Even keeps the bank as found: the bank channel and the bank as built within one stored step every metre
+ok 120 - K5: Even keeps the bank as found: the bank channel and the bank as built within one stored step every metre
+  ---
+  duration_ms: 3536.7736
+  type: 'test'
+  ...
+# Subtest: X1, X4, X8: on flat, the left edge kept, the width is within 0.01 m of the value over both 20 m margins, nothing outside moves past one stored step and no joint steps
+ok 121 - X1, X4, X8: on flat, the left edge kept, the width is within 0.01 m of the value over both 20 m margins, nothing outside moves past one stored step and no joint steps
+  ---
+  duration_ms: 19.6041
+  type: 'test'
+  ...
+# Subtest: X1, X4, X8: on flat, the right edge kept, the width is within 0.01 m of the value over both 20 m margins, nothing outside moves past one stored step and no joint steps
+ok 122 - X1, X4, X8: on flat, the right edge kept, the width is within 0.01 m of the value over both 20 m margins, nothing outside moves past one stored step and no joint steps
+  ---
+  duration_ms: 16.165
+  type: 'test'
+  ...
+# Subtest: X1, X4, X8: on B-, the left edge kept, the width is within 0.01 m of the value over both 20 m margins, nothing outside moves past one stored step and no joint steps
+ok 123 - X1, X4, X8: on B-, the left edge kept, the width is within 0.01 m of the value over both 20 m margins, nothing outside moves past one stored step and no joint steps
+  ---
+  duration_ms: 92.0515
+  type: 'test'
+  ...
+# Subtest: X1, X4, X8: on B-, the right edge kept, the width is within 0.01 m of the value over both 20 m margins, nothing outside moves past one stored step and no joint steps
+ok 124 - X1, X4, X8: on B-, the right edge kept, the width is within 0.01 m of the value over both 20 m margins, nothing outside moves past one stored step and no joint steps
+  ---
+  duration_ms: 106.4234
+  type: 'test'
+  ...
+# Subtest: X2: on B-, the left edge kept, the kept edge is within 0.01 m of where it was over both margins
+ok 125 - X2: on B-, the left edge kept, the kept edge is within 0.01 m of where it was over both margins
+  ---
+  duration_ms: 163.101
+  type: 'test'
+  ...
+# Subtest: X2: on B-, the right edge kept, the kept edge is within 0.01 m of where it was over both margins
+ok 126 - X2: on B-, the right edge kept, the kept edge is within 0.01 m of where it was over both margins
+  ---
+  duration_ms: 149.5613
+  type: 'test'
+  ...
+# Subtest: X3, X4, X8: on B- after a grab at 470, K3: the centre's height is within 0.01 m of its target over the window, nothing outside moves past one stored step and no joint steps
+ok 127 - X3, X4, X8: on B- after a grab at 470, K3: the centre's height is within 0.01 m of its target over the window, nothing outside moves past one stored step and no joint steps
+  ---
+  duration_ms: 3601.0101
+  type: 'test'
+  ...
+# Subtest: X3, X4, X8: on B- after a grab at 485, K3: the centre's height is within 0.01 m of its target over the window, nothing outside moves past one stored step and no joint steps
+ok 128 - X3, X4, X8: on B- after a grab at 485, K3: the centre's height is within 0.01 m of its target over the window, nothing outside moves past one stored step and no joint steps
+  ---
+  duration_ms: 2796.0607
+  type: 'test'
+  ...
+# Subtest: X3, X4, X8: on B- after a grab at 175 and 465, K3: the centre's height is within 0.01 m of its target over the window, nothing outside moves past one stored step and no joint steps
+ok 129 - X3, X4, X8: on B- after a grab at 175 and 465, K3: the centre's height is within 0.01 m of its target over the window, nothing outside moves past one stored step and no joint steps
+  ---
+  duration_ms: 3629.1113
+  type: 'test'
+  ...
+# Subtest: Even refuses by name, and changes nothing: a run that is not one, a width out of range, a hold it does not know
+ok 130 - Even refuses by name, and changes nothing: a run that is not one, a width out of range, a hold it does not know
+  ---
+  duration_ms: 20.3911
+  type: 'test'
+  ...
+# Subtest: Even refuses by name a jump within reach of the run, and a run that starts or ends on the jump
+ok 131 - Even refuses by name a jump within reach of the run, and a run that starts or ends on the jump
+  ---
+  duration_ms: 11.0993
+  type: 'test'
+  ...
+# Subtest: Even refuses by name a tube and a split width in the window
+ok 132 - Even refuses by name a tube and a split width in the window
+  ---
+  duration_ms: 14.9414
+  type: 'test'
+  ...
+# Subtest: Even refuses by name on a closed lap when the run or its ramps reach the start line, and levels a run clear of it
+ok 133 - Even refuses by name on a closed lap when the run or its ramps reach the start line, and levels a run clear of it
+  ---
+  duration_ms: 157.6602
+  type: 'test'
+  ...
+# Subtest: B4: Even's result, the left kept, is frozen all the way down: the document, every piece, its channels and their control points
+ok 134 - B4: Even's result, the left kept, is frozen all the way down: the document, every piece, its channels and their control points
+  ---
+  duration_ms: 127.0327
+  type: 'test'
+  ...
+# Subtest: B4: Even's result, the right kept, is frozen all the way down: the document, every piece, its channels and their control points
+ok 135 - B4: Even's result, the right kept, is frozen all the way down: the document, every piece, its channels and their control points
+  ---
+  duration_ms: 147.4849
+  type: 'test'
+  ...
+# Subtest: B4: Even's result, the centre kept, is frozen all the way down: the document, every piece, its channels and their control points
+ok 136 - B4: Even's result, the centre kept, is frozen all the way down: the document, every piece, its channels and their control points
+  ---
+  duration_ms: 81.5059
+  type: 'test'
+  ...
+# Subtest: C1: two Even calls on one base reuse one cut track and one reference road (the reaches cut once per drag)
+ok 137 - C1: two Even calls on one base reuse one cut track and one reference road (the reaches cut once per drag)
+  ---
+  duration_ms: 28.389
+  type: 'test'
+  ...
+# Subtest: C2: Even with its cut and reference memoised gives the same bytes as Even run on a fresh copy of the base (no memo hit)
+ok 138 - C2: Even with its cut and reference memoised gives the same bytes as Even run on a fresh copy of the base (no memo hit)
+  ---
+  duration_ms: 396.8127
+  type: 'test'
+  ...
+# Subtest: A1-1: no stretch is refused for the road under it (A1R is not built): from the track's start, a width stepping inside the run, and a window end on a grab, the edge is kept and Even says so
+ok 139 - A1-1: no stretch is refused for the road under it (A1R is not built): from the track's start, a width stepping inside the run, and a window end on a grab, the edge is kept and Even says so
+  ---
+  duration_ms: 325.4645
+  type: 'test'
+  ...
+# Subtest: A1-3: a run from the track's start (A0: 9.31 m off, silently): Even says it kept the edge, and the edge is where it was within 0.01 m over the run
+ok 140 - A1-3: a run from the track's start (A0: 9.31 m off, silently): Even says it kept the edge, and the edge is where it was within 0.01 m over the run
+  ---
+  duration_ms: 123.1548
+  type: 'test'
+  ...
+# Subtest: A1-4: a road whose own width steps inside the run (WC3, no grab): the edge stays within 0.01 m (A0: 2.92 m off, silently)
+ok 141 - A1-4: a road whose own width steps inside the run (WC3, no grab): the edge stays within 0.01 m (A0: 2.92 m off, silently)
+  ---
+  duration_ms: 124.1123
+  type: 'test'
+  ...
+# Subtest: A1-5: where the ends support a reading (flat, after one grab, T1), Even reads the road: the kept edge goes back to the untouched road within 0.01 m, and its own figure for the move is the move measured
+ok 142 - A1-5: where the ends support a reading (flat, after one grab, T1), Even reads the road: the kept edge goes back to the untouched road within 0.01 m, and its own figure for the move is the move measured
+  ---
+  duration_ms: 161.969
+  type: 'test'
+  ...
+# Subtest: A1-6: a grab centred 5 m outside the window's start (B-, at 145) fools a 10 m test but not A1's 10, 20 and 30 m: that end reads as moving; the track's start reads as an edge
+ok 143 - A1-6: a grab centred 5 m outside the window's start (B-, at 145) fools a 10 m test but not A1's 10, 20 and 30 m: that end reads as moving; the track's start reads as an edge
+  ---
+  duration_ms: 53.0554
+  type: 'test'
+  ...
+# Subtest: A1-7: B- T1: the road is read "under the bank as Even finds it": Even says the stretch is banked, and the kept edge is within 0.01 m of that road (L271 point 4)
+ok 144 - A1-7: B- T1: the road is read "under the bank as Even finds it": Even says the stretch is banked, and the kept edge is within 0.01 m of that road (L271 point 4)
+  ---
+  duration_ms: 2438.4378
+  type: 'test'
+  ...
+# Subtest: A1-7: B- T2b: the road is read "under the bank as Even finds it": Even says the stretch is banked, and the kept edge is within 0.01 m of that road (L271 point 4)
+ok 145 - A1-7: B- T2b: the road is read "under the bank as Even finds it": Even says the stretch is banked, and the kept edge is within 0.01 m of that road (L271 point 4)
+  ---
+  duration_ms: 12918.925
+  type: 'test'
+  ...
+# Subtest: A1-7: an unbanked stretch is not said to be banked
+ok 146 - A1-7: an unbanked stretch is not said to be banked
+  ---
+  duration_ms: 13.9393
+  type: 'test'
+  ...
+# Subtest: A1-8: the middle kept ('centre') reads nothing: a run from the track's start is levelled, with no kept edge to measure
+ok 147 - A1-8: the middle kept ('centre') reads nothing: a run from the track's start is levelled, with no kept edge to measure
+  ---
+  duration_ms: 7.5108
+  type: 'test'
+  ...
+1..147
+# tests 147
+# suites 0
+# pass 147
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 99360.8718
