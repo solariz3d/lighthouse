@@ -259,3 +259,42 @@ Each `pair_*` is today (left, c522ea6) against the slope grab (right), the previ
   through the same `follow`.
 
 NEXT: librarian call_chair with this hand-back's path when it has read it, for a non-author read of l271-grab-slope c522ea6..cc4fa71 and the pictures to him
+
+---
+
+# Amendment lap (the chair's order of 08:56:11Z, on C's read: NOT CLEAN on C6)
+
+BASE: the builder checkout (t180-track-builder) cc4fa71 (origin l271-grab-slope)
+BASE: C:\Consonance\lighthouse 628b3a25
+SOURCES: handback/p-l271-read-grab-slope-C_2026-11-28.md sections 2 to 5 (628b3a25); the librarian's ruling of 08:55Z as the chair quotes it
+
+## A1. Registered before row 25 is changed (written 09:0xZ, committed before the edit)
+
+**What C found, in my words:** amended row 25 pins the rise along the slope but not the share across. On its cupped road, pressed at u −0.95, the
+chord's slope is small, so e·cx² is within 1 cm of e and M2 (`v0[0] + e` for `v0[0] + e * cx * cx`) passes. True: the row was written on the one
+road where the two are near equal.
+
+**Row 25's new form (the rim half gets a banked road; the cupped press stays, it still catches M1 and M7):**
+- After the existing presses, the row lays two pieces at the head with the panel's core: 200 m banking to 20° (`targets: { phi: 20° }`), then 150 m
+  held. It moves its view to a station in the held piece and presses the rim at u −1 with a level 40 px pull outward (no screen-vertical part).
+- It asserts, as the cupped press does: the rim point within 0.01 m of the slope grab's place read from the road (`slopeWant`, unchanged), and the far
+  rim within 0.01 m of where it was.
+- **And a control in the row itself, so it can tell M2 apart without a mutant run:** the place M2 would give (e whole across, the rise kept) is more than
+  0.05 m from the slope grab's place. If that control fails, the row cannot bite on M2 at that press, and I stop and choose another press.
+- The title's "the pressed point follows the pointer" is amended to say the rim half follows the road's slope (C's nit).
+
+**Predictions, scored after:**
+- P1. Under M2, row 25 is **red**, on the banked press, with the rim point between 0.1 and 0.6 m from the slope place (inferred: e·cy² with e about 2 to
+  3 m and cy about sin 20°).
+- P2. Under c522ea6's line (`[v0[0] + e, v0[1] + v]`), row 25 is **red**, the rim point over 0.3 m from the slope place.
+- P3. On the branch, row 25 is **green**; the control margin over 0.05 m.
+- P4. Under M1, M5, M7 and the literal form row 25 is still red (C's table); every zonegrab mutant result is unchanged (zonegrab.test.js is not touched).
+- P5. The touched set (zonegrab, core-pieces-ui, handles, sculpt-frame) gives the same counts as before, 140 pass / 0 fail / 5 skip (no row added; row 25
+  gains assertions only).
+- **Stop:** if row 25 is green under M2 after the change, or the control fails on the branch, nothing is committed to the builder.
+
+**The two CHANGELOG nits**, in the same builder commit: (a) an edge piece whose rims sit at different heights is not "the same on a flat road": a press
+at its rim now follows its slope; (b) pulled down the bank the point ends about 0.44 m short and 1.09 m **below** the pointer (C's B+ figures, mine
+re-read from `probe271.json` / `item3.json` before quoting).
+
+**The picture:** a tube's side wall (t 300, pressed partway round) pulled sideways, today against the branch, before and after; headless as before.
