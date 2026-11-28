@@ -1,0 +1,4 @@
+heavy-run status (C:\Consonance\data), read only:
+  EXCLUSIVE HOLD: none
+  slot 1: held by 6e6e002c pid 30260 (L270 pane P: harness half (8) then the whole suite, landing-1128-n4a 9de0b18, since 2026-11-28T06:36:22.415Z)
+  slot 2: held by 0845a868 pid 22052 (L270 pane C: harness half (8 files, 9-16), 9de0b18, not a timing session, since 2026-11-28T06:37:59.321Z)

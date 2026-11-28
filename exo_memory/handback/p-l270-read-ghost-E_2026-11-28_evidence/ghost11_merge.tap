@@ -1,0 +1,467 @@
+TAP version 13
+# Subtest: row 1: the track model: a CHEAP ghost of a 1000 m tube meshes at most a quarter of the vertices, has the same path, touches nothing placed, and the full ghost after it is the full ghost without it
+ok 1 - row 1: the track model: a CHEAP ghost of a 1000 m tube meshes at most a quarter of the vertices, has the same path, touches nothing placed, and the full ghost after it is the full ghost without it
+  ---
+  duration_ms: 830.4456
+  type: 'test'
+  ...
+# Subtest: row 3: a short plain piece: cheap is still a ghost of the same path, with no more vertices than the full one
+ok 2 - row 3: a short plain piece: cheap is still a ghost of the same path, with no more vertices than the full one
+  ---
+  duration_ms: 45.7282
+  type: 'test'
+  ...
+# Subtest: row 2: the preview: showGhost(candidate, { cheap: true }) keeps ghostInfo (the same samples, segments and s0) and the placed track; a plain showGhost is the full ghost
+ok 3 - row 2: the preview: showGhost(candidate, { cheap: true }) keeps ghostInfo (the same samples, segments and s0) and the placed track; a plain showGhost is the full ghost
+  ---
+  duration_ms: 621.871
+  type: 'test'
+  ...
+# Subtest: row 4: a long plain piece's cheap ghost shares one row grid across its new segments at 1600 m
+ok 4 - row 4: a long plain piece's cheap ghost shares one row grid across its new segments at 1600 m
+  ---
+  duration_ms: 65.1614
+  type: 'test'
+  ...
+# Subtest: row 5: an empty run and a run of one segment are coarsened as before
+ok 5 - row 5: an empty run and a run of one segment are coarsened as before
+  ---
+  duration_ms: 2.6822
+  type: 'test'
+  ...
+# Subtest: row 6: a cheap ghost after a cheap ghost reuses the unchanged chords and draws the same as one built fresh
+ok 6 - row 6: a cheap ghost after a cheap ghost reuses the unchanged chords and draws the same as one built fresh
+  ---
+  duration_ms: 301.4537
+  type: 'test'
+  ...
+# Subtest: row 7: reuseMesh keeps its old rule unless asked: a different count needs `grow`, and a closed loop is refused with it
+ok 7 - row 7: reuseMesh keeps its old rule unless asked: a different count needs `grow`, and a closed loop is refused with it
+  ---
+  duration_ms: 3.966
+  type: 'test'
+  ...
+# Subtest: D642: after his p2 (his p2: a −90 corner, then the extra +180 from 500; bank 88.45, cup 15.5, width 31) is placed, the next piece's ghost is built, so its handles are there to add to
+ok 8 - D642: after his p2 (his p2: a −90 corner, then the extra +180 from 500; bank 88.45, cup 15.5, width 31) is placed, the next piece's ghost is built, so its handles are there to add to
+  ---
+  duration_ms: 596.4559
+  type: 'test'
+  ...
+# Subtest: D642: after his p2 (the same piece with no extra turn; bank 88.45, cup 15.5, width 31) is placed, the next piece's ghost is built, so its handles are there to add to
+ok 9 - D642: after his p2 (the same piece with no extra turn; bank 88.45, cup 15.5, width 31) is placed, the next piece's ghost is built, so its handles are there to add to
+  ---
+  duration_ms: 342.1058
+  type: 'test'
+  ...
+# Subtest: row 1: toSegments: segMFor absent or undefined is the same segments; a piece with its own chord length is that many chords of the same length in all
+ok 10 - row 1: toSegments: segMFor absent or undefined is the same segments; a piece with its own chord length is that many chords of the same length in all
+  ---
+  duration_ms: 104.6538
+  type: 'test'
+  ...
+# Subtest: row 2: the coarse ghost: few chords whatever the length, the placed pieces' segments the same objects, the same end of road, and a short piece unchanged
+ok 11 - row 2: the coarse ghost: few chords whatever the length, the placed pieces' segments the same objects, the same end of road, and a short piece unchanged
+  ---
+  duration_ms: 1162.689
+  type: 'test'
+  ...
+# Subtest: row 3: the release is byte for byte what it was: the placed mesh and two full ghosts hash to what c2d7cb5 (0.4.7) made
+ok 12 - row 3: the release is byte for byte what it was: the placed mesh and two full ghosts hash to what c2d7cb5 (0.4.7) made
+  ---
+  duration_ms: 203.3475
+  type: 'test'
+  ...
+# Subtest: row 4: the cheap ghost: at most 64 stations on its new piece, the same end, the placed path and mesh untouched, a full ghost after it the full ghost, the handles where the full ghost's are
+ok 13 - row 4: the cheap ghost: at most 64 stations on its new piece, the same end, the placed path and mesh untouched, a full ghost after it the full ghost, the handles where the full ghost's are
+  ---
+  duration_ms: 349.5483
+  type: 'test'
+  ...
+# Subtest: row 5: the documents are byte for byte what they were: pieces placed and corners solved, hashed (taken at c2d7cb5; since L264 the corners' width holds the head's), and basisN is basis, channelValue is channelAt(...).v, and extendCorner answers the same fields with the same object
+ok 14 - row 5: the documents are byte for byte what they were: pieces placed and corners solved, hashed (taken at c2d7cb5; since L264 the corners' width holds the head's), and basisN is basis, channelValue is channelAt(...).v, and extendCorner answers the same fields with the same object
+  ---
+  duration_ms: 152.6787
+  type: 'test'
+  ...
+# Subtest: row 6 (E's review §0): a kept answer is never handed back across a non-finite number: kh null kept, then kh NaN, Infinity or -Infinity refused by name, as on a fresh document
+ok 15 - row 6 (E's review §0): a kept answer is never handed back across a non-finite number: kh null kept, then kh NaN, Infinity or -Infinity refused by name, as on a fresh document
+  ---
+  duration_ms: 96.9591
+  type: 'test'
+  ...
+# Subtest: row 7 (E's review §1b): a document frozen at the top only, its pieces array open, keeps no answer, so an edit in place is answered afresh
+ok 16 - row 7 (E's review §1b): a document frozen at the top only, its pieces array open, keeps no answer, so an edit in place is answered afresh
+  ---
+  duration_ms: 8.4581
+  type: 'test'
+  ...
+# Subtest: N5 1: on his D642 bank with a sideways grab (lateral 2 m) in its middle, the next piece's ghost lies on the road placing builds, and starts at the re-laid tail, not at the grab
+ok 17 - N5 1: on his D642 bank with a sideways grab (lateral 2 m) in its middle, the next piece's ghost lies on the road placing builds, and starts at the re-laid tail, not at the grab
+  ---
+  duration_ms: 588.5742
+  type: 'test'
+  ...
+# Subtest: N5 2: on his D642 bank with a height grab (a hill, 2 m) in its middle, the next piece's ghost lies on the road placing builds, and starts at the re-laid tail, not at the grab
+ok 18 - N5 2: on his D642 bank with a height grab (a hill, 2 m) in its middle, the next piece's ghost lies on the road placing builds, and starts at the re-laid tail, not at the grab
+  ---
+  duration_ms: 433.2303
+  type: 'test'
+  ...
+# Subtest: N5 3: a road that ends at rest, with a sideways grab, keeps the copy-and-extend ghost, and placing matches it (a control)
+ok 19 - N5 3: a road that ends at rest, with a sideways grab, keeps the copy-and-extend ghost, and placing matches it (a control)
+  ---
+  duration_ms: 219.4964
+  type: 'test'
+  ...
+# Subtest: N5 4: on a flat road with a sideways grab that moves the head's middle, the next piece's ghost starts at the offset head, where placing lays the piece
+ok 20 - N5 4: on a flat road with a sideways grab that moves the head's middle, the next piece's ghost starts at the offset head, where placing lays the piece
+  ---
+  duration_ms: 255.5274
+  type: 'test'
+  ...
+# Subtest: N5 5: on a road whose head a grab moved, the Jump ghost lies where Jump places the jump
+ok 21 - N5 5: on a road whose head a grab moved, the Jump ghost lies where Jump places the jump
+  ---
+  duration_ms: 286.1489
+  type: 'test'
+  ...
+# Subtest: N5 6: on a road whose head a grab moved, Extend then Undo: the undone piece's ghost lies where the piece was
+ok 22 - N5 6: on a road whose head a grab moved, Extend then Undo: the undone piece's ghost lies where the piece was
+  ---
+  duration_ms: 235.9816
+  type: 'test'
+  ...
+# Subtest: N5 7: on a road whose head a grab moved, a saved piece's ghost lies where Place lays the piece
+ok 23 - N5 7: on a road whose head a grab moved, a saved piece's ghost lies where Place lays the piece
+  ---
+  duration_ms: 244.2227
+  type: 'test'
+  ...
+# Subtest: D642 1: after his piece, 88.45° over 1,000 m still rolling at its end, then a 100 m straight, the next piece gets a ghost, and it is what placing builds from the first re-laid segment on
+ok 24 - D642 1: after his piece, 88.45° over 1,000 m still rolling at its end, then a 100 m straight, the next piece gets a ghost, and it is what placing builds from the first re-laid segment on
+  ---
+  duration_ms: 289.5233
+  type: 'test'
+  ...
+# Subtest: D642 2: after a D626 corkscrew, −90° over 250 m, then −90° more over 250 m (a carried joint), the next piece gets a ghost, and it is what placing builds from the first re-laid segment on
+ok 25 - D642 2: after a D626 corkscrew, −90° over 250 m, then −90° more over 250 m (a carried joint), the next piece gets a ghost, and it is what placing builds from the first re-laid segment on
+  ---
+  duration_ms: 177.4863
+  type: 'test'
+  ...
+# Subtest: D642 3: such a ghost leaves the placed track as it was (the same path and mesh, the same stations; the placed document updates as 'same')
+ok 26 - D642 3: such a ghost leaves the placed track as it was (the same path and mesh, the same stations; the placed document updates as 'same')
+  ---
+  duration_ms: 148.3724
+  type: 'test'
+  ...
+# Subtest: D642 4: a candidate that changes a piece before the last placed one is refused by name
+ok 27 - D642 4: a candidate that changes a piece before the last placed one is refused by name
+  ---
+  duration_ms: 161.8107
+  type: 'test'
+  ...
+# Subtest: D642 5: after a piece that ends at rest the ghost is the copy-and-extend one, as before (no re-laid tail)
+ok 28 - D642 5: after a piece that ends at rest the ghost is the copy-and-extend one, as before (no re-laid tail)
+  ---
+  duration_ms: 153.7676
+  type: 'test'
+  ...
+# Subtest: D642 6: a candidate whose last placed piece truly moves (its turn, climb or length on one segment) is refused by name; a roll alone is taken
+ok 29 - D642 6: a candidate whose last placed piece truly moves (its turn, climb or length on one segment) is refused by name; a roll alone is taken
+  ---
+  duration_ms: 290.5509
+  type: 'test'
+  ...
+# Subtest: D642 7: on a 21 km track the re-laid ghost grows its path only from the re-laid segment on (its work under a tenth of a full build)
+ok 30 - D642 7: on a 21 km track the re-laid ghost grows its path only from the re-laid segment on (its work under a tenth of a full build)
+  ---
+  duration_ms: 5769.1074
+  type: 'test'
+  ...
+# Subtest: a chord handed out with a cheap ghost, changed in place by a reader to what the next candidate holds, does not make the next ghost keep its old mesh
+ok 31 - a chord handed out with a cheap ghost, changed in place by a reader to what the next candidate holds, does not make the next ghost keep its old mesh
+  ---
+  duration_ms: 163.6159
+  type: 'test'
+  ...
+# Subtest: sameContent: equal content in different objects is the same, frozen or not; a number, a key or a kind that differs is not
+ok 32 - sameContent: equal content in different objects is the same, frozen or not; a number, a key or a kind that differs is not
+  ---
+  duration_ms: 0.3151
+  type: 'test'
+  ...
+# Subtest: sameContent: one object reached from both sides is the same only when it is frozen all the way down
+ok 33 - sameContent: one object reached from both sides is the same only when it is frozen all the way down
+  ---
+  duration_ms: 0.1602
+  type: 'test'
+  ...
+# Subtest: snapshot: a change made in place after it does not reach it; what is frozen all the way down is shared, not copied
+ok 34 - snapshot: a change made in place after it does not reach it; what is frozen all the way down is shared, not copied
+  ---
+  duration_ms: 0.7749
+  type: 'test'
+  ...
+# Subtest: P1: Save as piece beside a recipe sidecar: the piece file is byte for byte what the core writes, and the sidecar holds the numbers
+ok 35 - P1: Save as piece beside a recipe sidecar: the piece file is byte for byte what the core writes, and the sidecar holds the numbers
+  ---
+  duration_ms: 60.1406
+  type: 'test'
+  ...
+# Subtest: P1b: a storage with no recipe commands saves the same piece file and says it saved
+ok 36 - P1b: a storage with no recipe commands saves the same piece file and says it saved
+  ---
+  duration_ms: 67.7464
+  type: 'test'
+  ...
+# Subtest: P2: a run laid by two Extends, and a piece changed after it was laid, keep no recipe
+ok 37 - P2: a run laid by two Extends, and a piece changed after it was laid, keep no recipe
+  ---
+  duration_ms: 44.284
+  type: 'test'
+  ...
+# Subtest: P3: Rename carries the recipe, Delete takes it with the piece
+ok 38 - P3: Rename carries the recipe, Delete takes it with the piece
+  ---
+  duration_ms: 27.5753
+  type: 'test'
+  ...
+# Subtest: P4: a click shows the piece as a ghost with its numbers and lays nothing
+ok 39 - P4: a click shows the piece as a ghost with its numbers and lays nothing
+  ---
+  duration_ms: 36.5877
+  type: 'test'
+  ...
+# Subtest: P5: Place lays it as one undo step, the same document Add at head makes, and the ghost is gone
+ok 40 - P5: Place lays it as one undo step, the same document Add at head makes, and the ghost is gone
+  ---
+  duration_ms: 45.8313
+  type: 'test'
+  ...
+# Subtest: P6: a piece saved before this build (no sidecar) shows its shape read off, fills no numbers, and Place is its own bytes
+ok 41 - P6: a piece saved before this build (no sidecar) shows its shape read off, fills no numbers, and Place is its own bytes
+  ---
+  duration_ms: 54.3956
+  type: 'test'
+  ...
+# Subtest: P7: a sidecar that belongs to another piece file is not used
+ok 42 - P7: a sidecar that belongs to another piece file is not used
+  ---
+  duration_ms: 27.9578
+  type: 'test'
+  ...
+# Subtest: P8: mirrored: the ghost is the mirror image, no numbers (they are the unmirrored ones), and Place equals Add mirrored
+ok 43 - P8: mirrored: the ghost is the mirror image, no numbers (they are the unmirrored ones), and Place equals Add mirrored
+  ---
+  duration_ms: 40.6443
+  type: 'test'
+  ...
+# Subtest: P9: Drop clears the ghost; any change of the document clears it
+ok 44 - P9: Drop clears the ghost; any change of the document clears it
+  ---
+  duration_ms: 22.5623
+  type: 'test'
+  ...
+# Subtest: P10: a refusal shows no ghost, says why, and changes nothing
+ok 45 - P10: a refusal shows no ghost, says why, and changes nothing
+  ---
+  duration_ms: 5.6274
+  type: 'test'
+  ...
+# Subtest: P11: the piece reader (piece.js, unchanged) still opens a piece file saved with a sidecar
+ok 46 - P11: the piece reader (piece.js, unchanged) still opens a piece file saved with a sidecar
+  ---
+  duration_ms: 11.3332
+  type: 'test'
+  ...
+# Subtest: Q1: a click shows the ghost, fills the boxes with the numbers that made the piece, and offers Place; nothing is laid
+ok 47 - Q1: a click shows the ghost, fills the boxes with the numbers that made the piece, and offers Place; nothing is laid
+  ---
+  duration_ms: 68.7205
+  type: 'test'
+  ...
+# Subtest: Q2: Place lays the piece the ghost showed, as one undo step
+ok 48 - Q2: Place lays the piece the ghost showed, as one undo step
+  ---
+  duration_ms: 65.6889
+  type: 'test'
+  ...
+# Subtest: Q3: tweak one box: the ghost becomes the panel own piece from the boxes, and Place lays what that ghost shows
+ok 49 - Q3: tweak one box: the ghost becomes the panel own piece from the boxes, and Place lays what that ghost shows
+  ---
+  duration_ms: 37.1836
+  type: 'test'
+  ...
+# Subtest: Q4: Esc drops the ghost and the boxes stay as they are
+ok 50 - Q4: Esc drops the ghost and the boxes stay as they are
+  ---
+  duration_ms: 21.269
+  type: 'test'
+  ...
+# Subtest: R1: Rename rewrites the recipe for the renamed text: a click on the new name still shows the numbers
+ok 51 - R1: Rename rewrites the recipe for the renamed text: a click on the new name still shows the numbers
+  ---
+  duration_ms: 20.0236
+  type: 'test'
+  ...
+# Subtest: R2: a case-only Rename on a case-blind store keeps the recipe, rewritten, and the click still shows the numbers
+ok 52 - R2: a case-only Rename on a case-blind store keeps the recipe, rewritten, and the click still shows the numbers
+  ---
+  duration_ms: 17.5821
+  type: 'test'
+  ...
+# Subtest: R3: Rename does not carry a recipe that was not the piece's own
+ok 53 - R3: Rename does not carry a recipe that was not the piece's own
+  ---
+  duration_ms: 17.4031
+  type: 'test'
+  ...
+# Subtest: row 1: the mesh is byte for byte what v0.4.8 made: placed, placed after four more pieces, and the full ghosts
+ok 54 - row 1: the mesh is byte for byte what v0.4.8 made: placed, placed after four more pieces, and the full ghosts
+  ---
+  duration_ms: 1438.3618
+  type: 'test'
+  ...
+# Subtest: row 2: samplesAcrossFor is samplesAcross exactly, and a frozen profile is worked out once
+ok 55 - row 2: samplesAcrossFor is samplesAcross exactly, and a frozen profile is worked out once
+  ---
+  duration_ms: 12.352
+  type: 'test'
+  ...
+# Subtest: row 3: the answer follows the numbers; the array handed back is the caller own
+ok 56 - row 3: the answer follows the numbers; the array handed back is the caller own
+  ---
+  duration_ms: 6.9067
+  type: 'test'
+  ...
+# Subtest: row 4: a full ghost of 1,000 m walks the cross-section a handful of times, and the cache is bounded
+ok 57 - row 4: a full ghost of 1,000 m walks the cross-section a handful of times, and the cache is bounded
+  ---
+  duration_ms: 119.8094
+  type: 'test'
+  ...
+# Subtest: row 5: the exact ghost in slices is ghostFor to the byte, and yields at least once a chord
+ok 58 - row 5: the exact ghost in slices is ghostFor to the byte, and yields at least once a chord
+  ---
+  duration_ms: 185.4475
+  type: 'test'
+  ...
+# Subtest: row 6a: the batches of a piece split into parts each read their own cell's record: the rows' s inside that cell, and that part's own columns
+ok 59 - row 6a: the batches of a piece split into parts each read their own cell's record: the rows' s inside that cell, and that part's own columns
+  ---
+  duration_ms: 13.822
+  type: 'test'
+  ...
+# Subtest: row 6: the road's edge lines, ties and centre line are the bytes D524's by-position cell records make
+ok 60 - row 6: the road's edge lines, ties and centre line are the bytes D524's by-position cell records make
+  ---
+  duration_ms: 362.1942
+  type: 'test'
+  ...
+# Subtest: row 7: profileAt keeps one frozen profile per family, width and rate, and refuses bad input every time
+ok 61 - row 7: profileAt keeps one frozen profile per family, width and rate, and refuses bad input every time
+  ---
+  duration_ms: 1.517
+  type: 'test'
+  ...
+# Subtest: row 8: placing the ghost on show takes its work, and the track is the same to the byte; undo and a second placement too; a cheap or stale ghost is never taken
+ok 62 - row 8: placing the ghost on show takes its work, and the track is the same to the byte; undo and a second placement too; a cheap or stale ghost is never taken
+  ---
+  duration_ms: 1825.2236
+  type: 'test'
+  ...
+# Subtest: row 9: spawnsInfo on a growing track is what it is built afresh, and an answer given is never changed by a growth
+ok 63 - row 9: spawnsInfo on a growing track is what it is built afresh, and an answer given is never changed by a growth
+  ---
+  duration_ms: 584.3646
+  type: 'test'
+  ...
+# Subtest: the candidate for a built-in word is exactly the track place() then builds, pickers and all
+ok 64 - the candidate for a built-in word is exactly the track place() then builds, pickers and all
+  ---
+  duration_ms: 3.8936
+  type: 'test'
+  ...
+# Subtest: the candidate for one of the user's own pieces is what placing it builds
+ok 65 - the candidate for one of the user's own pieces is what placing it builds
+  ---
+  duration_ms: 1.6877
+  type: 'test'
+  ...
+# Subtest: asking for a candidate commits nothing: the document, the history and the state stay as they were
+ok 66 - asking for a candidate commits nothing: the document, the history and the state stay as they were
+  ---
+  duration_ms: 2.9572
+  type: 'test'
+  ...
+# Subtest: the candidate for a jump ends on its landing ramp, so the ghost shows where the next piece will start
+ok 67 - the candidate for a jump ends on its landing ramp, so the ghost shows where the next piece will start
+  ---
+  duration_ms: 0.8886
+  type: 'test'
+  ...
+# Subtest: a candidate that cannot be built is refused with the model's reason, and nothing changes
+ok 68 - a candidate that cannot be built is refused with the model's reason, and nothing changes
+  ---
+  duration_ms: 0.4786
+  type: 'test'
+  ...
+# Subtest: P1: undo puts the removed road up as the ghost, and the preview model accepts it
+ok 69 - P1: undo puts the removed road up as the ghost, and the preview model accepts it
+  ---
+  duration_ms: 248.4176
+  type: 'test'
+  ...
+# Subtest: P2: the readout shows the removed piece (170 m), not the next one
+ok 70 - P2: the readout shows the removed piece (170 m), not the next one
+  ---
+  duration_ms: 80.6981
+  type: 'test'
+  ...
+# Subtest: P3: a redo clears the ghost; typing hands the picture back to the next piece
+ok 71 - P3: a redo clears the ghost; typing hands the picture back to the next piece
+  ---
+  duration_ms: 75.8747
+  type: 'test'
+  ...
+# R4 pieces [33m41[39m ghost segments [33m4150[39m rebuilt by the undo [33m0[39m
+# Subtest: R1: undo leaves the removed piece as the ghost, with its own segments; redo drops it
+ok 72 - R1: undo leaves the removed piece as the ghost, with its own segments; redo drops it
+  ---
+  duration_ms: 88.8922
+  type: 'test'
+  ...
+# Subtest: R2: a new extend, candidate or brush starts with no undo ghost; two undos show the last one only
+ok 73 - R2: a new extend, candidate or brush starts with no undo ghost; two undos show the last one only
+  ---
+  duration_ms: 120.1878
+  type: 'test'
+  ...
+# Subtest: R3: an undone edit that removes no piece (a grip change) holds no ghost: the preview draws only a road that extends the placed one
+ok 74 - R3: an undone edit that removes no piece (a grip change) holds no ghost: the preview draws only a road that extends the placed one
+  ---
+  duration_ms: 36.6758
+  type: 'test'
+  ...
+# Subtest: R4: one undo rebuilds no piece: every ghost segment is an object the document already had
+ok 75 - R4: one undo rebuilds no piece: every ghost segment is an object the document already had
+  ---
+  duration_ms: 2510.1527
+  type: 'test'
+  ...
+# Subtest: R5: the ghost carries the removed piece's own readout
+ok 76 - R5: the ghost carries the removed piece's own readout
+  ---
+  duration_ms: 22.8707
+  type: 'test'
+  ...
+1..76
+# tests 76
+# suites 0
+# pass 76
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 25132.6603
