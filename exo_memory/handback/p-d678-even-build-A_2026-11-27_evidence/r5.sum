@@ -1,0 +1,5 @@
+heavy-run: waiting on an exclusive hold by a2122153 pid 6944 (E D678 N3: S6 sculpt-frame, c522ea6 against 15e7d62, 5 runs a commit (the hold: sculpt-frame times only with BOTH slots held, so its two runs take the slots under this hold), since 2026-11-28T02:35:03.761Z)
+heavy-run: waiting on c88002b1 pid 9440 (O D678 N4a stage 1: git merge previews, read only, since 2026-11-28T03:54:29.561Z) — it holds this tree
+heavy-run: capped to 8 of 16 logical CPUs, spread (affinity 21845); every child inherits it
+{"name":"dragframe","files":1,"started":"2026-11-28T03:54:33.002Z","ended":"2026-11-28T03:57:20.041Z","exit":0,"tests":9,"pass":9,"fail":0,"skipped":0,"todo":0}
+{"name":"d642","files":1,"started":"2026-11-28T03:57:20.042Z","ended":"2026-11-28T03:57:23.333Z","exit":0,"tests":4,"pass":3,"fail":0,"skipped":0,"todo":1}

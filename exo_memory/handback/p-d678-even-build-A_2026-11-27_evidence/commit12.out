@@ -1,0 +1,28 @@
+heavy-run: waiting on an exclusive hold by a2122153 pid 30892 (E D678 N3: S7 drag-frame, c522ea6 against 15e7d62, 5 runs a commit, since 2026-11-28T03:57:24.941Z)
+heavy-run: capped to 8 of 16 logical CPUs, spread (affinity 21845); every child inherits it
+branch d678-even-a head bcedaaf
+untracked: 0
+warning: in the working copy of 'app/core/coreshell.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/validate/passclear.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'test/even_fixtures.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'test/passclear.test.js', LF will be replaced by CRLF the next time Git touches it
+pre added lines: 349
+pre keyscan: {"keyLines":5,"terms":9,"termsHit":0,"hits":0}
+pre key shapes: 0
+pre local paths: 0
+pre address: 0
+warning: in the working copy of 'app/core/coreshell.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/validate/passclear.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'test/even_fixtures.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'test/passclear.test.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'app/core/coreshell.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/validate/passclear.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'test/even_fixtures.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'test/passclear.test.js', LF will be replaced by CRLF the next time Git touches it
+committed 298eaf6 on d678-even-a
+post added lines: 349
+post keyscan: {"keyLines":5,"terms":9,"termsHit":0,"hits":0}
+post key shapes: 0
+post local paths: 0
+post address: 0
+commits not on origin: 1

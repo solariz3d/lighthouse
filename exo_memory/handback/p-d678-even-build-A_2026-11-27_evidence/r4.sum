@@ -1,0 +1,18 @@
+heavy-run: waiting on an exclusive hold by a2122153 pid 28868 (E D678 N3: S5 sculpt-frame, f3cd425 against c66b503, 5 runs a commit (the hold: sculpt-frame times only with BOTH slots held, so its two runs take the slots under this hold), since 2026-11-28T02:07:11.933Z)
+heavy-run: capped to 8 of 16 logical CPUs, spread (affinity 21845); every child inherits it
+{"name":"suite","files":354,"started":"2026-11-28T02:34:38.872Z","ended":"2026-11-28T02:51:04.751Z","exit":1,"tests":3957,"pass":3931,"fail":2,"skipped":21,"todo":3}
+{"name":"core_chord_mutation","files":1,"started":"2026-11-28T02:51:04.753Z","ended":"2026-11-28T02:51:26.957Z","exit":0,"tests":17,"pass":17,"fail":0,"skipped":0,"todo":0,"mutantTests":15,"mutantPass":15,"notAppliedMentions":0,"notCaughtMentions":0}
+{"name":"core_cup_mutation","files":1,"started":"2026-11-28T02:51:26.957Z","ended":"2026-11-28T02:52:46.363Z","exit":0,"tests":50,"pass":50,"fail":0,"skipped":0,"todo":0,"mutantTests":48,"mutantPass":48,"notAppliedMentions":0,"notCaughtMentions":0}
+{"name":"core_even_mutation","files":1,"started":"2026-11-28T02:52:46.363Z","ended":"2026-11-28T02:54:05.016Z","exit":0,"tests":48,"pass":48,"fail":0,"skipped":0,"todo":0,"mutantTests":46,"mutantPass":46,"notAppliedMentions":0,"notCaughtMentions":0}
+{"name":"core_jump_mutation","files":1,"started":"2026-11-28T02:54:05.017Z","ended":"2026-11-28T02:54:30.574Z","exit":0,"tests":29,"pass":29,"fail":0,"skipped":0,"todo":0}
+{"name":"core_piece_mutation","files":1,"started":"2026-11-28T02:54:30.574Z","ended":"2026-11-28T02:59:15.690Z","exit":0,"tests":66,"pass":66,"fail":0,"skipped":0,"todo":0,"mutantTests":64,"mutantPass":64,"notAppliedMentions":0,"notCaughtMentions":0}
+{"name":"core_right_width_mutation","files":1,"started":"2026-11-28T02:59:15.690Z","ended":"2026-11-28T03:01:20.340Z","exit":0,"tests":37,"pass":37,"fail":0,"skipped":0,"todo":0,"mutantTests":35,"mutantPass":35,"notAppliedMentions":0,"notCaughtMentions":0}
+{"name":"core_xsec_mutation","files":1,"started":"2026-11-28T03:01:20.341Z","ended":"2026-11-28T03:04:47.919Z","exit":0,"tests":69,"pass":69,"fail":0,"skipped":0,"todo":0,"mutantTests":67,"mutantPass":67,"notAppliedMentions":0,"notCaughtMentions":0}
+{"name":"finalscene_mutation","files":1,"started":"2026-11-28T03:04:47.919Z","ended":"2026-11-28T03:10:47.613Z","exit":0,"tests":34,"pass":34,"fail":0,"skipped":0,"todo":0}
+{"name":"gltf_mutation","files":1,"started":"2026-11-28T03:10:47.613Z","ended":"2026-11-28T03:11:16.433Z","exit":0,"tests":10,"pass":10,"fail":0,"skipped":0,"todo":0,"mutantTests":9,"mutantPass":9,"notAppliedMentions":0,"notCaughtMentions":0}
+{"name":"core-bank-carry-mutation","files":1,"started":"2026-11-28T03:11:16.433Z","ended":"2026-11-28T03:12:02.369Z","exit":0,"tests":15,"pass":15,"fail":0,"skipped":0,"todo":0,"mutantTests":13,"mutantPass":13,"notAppliedMentions":0,"notCaughtMentions":0}
+{"name":"core-close-mutation","files":1,"started":"2026-11-28T03:12:02.369Z","ended":"2026-11-28T03:17:56.312Z","exit":0,"tests":63,"pass":63,"fail":0,"skipped":0,"todo":0}
+{"name":"core-mutation","files":1,"started":"2026-11-28T03:17:56.312Z","ended":"2026-11-28T03:18:56.235Z","exit":0,"tests":70,"pass":70,"fail":0,"skipped":0,"todo":0}
+{"name":"core-pitgap-mutation","files":1,"started":"2026-11-28T03:18:56.235Z","ended":"2026-11-28T03:19:03.753Z","exit":0,"tests":13,"pass":13,"fail":0,"skipped":0,"todo":0}
+{"name":"core-xsec-mutation","files":1,"started":"2026-11-28T03:19:03.754Z","ended":"2026-11-28T03:19:26.288Z","exit":0,"tests":35,"pass":35,"fail":0,"skipped":0,"todo":0}
+{"name":"export-isolated-mutation","files":1,"started":"2026-11-28T03:19:26.289Z","ended":"2026-11-28T03:27:04.137Z","exit":0,"tests":13,"pass":13,"fail":0,"skipped":0,"todo":0}

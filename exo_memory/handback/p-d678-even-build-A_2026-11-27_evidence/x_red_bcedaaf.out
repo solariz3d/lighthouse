@@ -1,0 +1,185 @@
+[32m✔ Even brings the run to the value from its first metre to its last, and the input document is not changed [90m(483.0656ms)[39m[39m
+[32m✔ Even on a run of one piece levels that piece, eases into its neighbours and moves nothing outside its window [90m(1633.2458ms)[39m[39m
+[32m✔ the ramp is the designed ease: where the knots are fine enough to carry it, the width before the run follows a smootherstep from the road to the value over 30 m [90m(35.4848ms)[39m[39m
+[32m✔ Even on a run that ends at the open end gives the head the value: no ramp after it [90m(178.3278ms)[39m[39m
+[32m✔ Even with the left rim held keeps that rim where the road has it and puts the right rim out at the new width (flat, from the untouched road) [90m(462.329ms)[39m[39m
+[32m✔ the held rim on the other side: with the right rim held it stays and the left rim goes out (flat, from the untouched road) [90m(461.5183ms)[39m[39m
+[32m✔ after a piece with coarse knots (a plain Extend's 20 m spans), the run is still one width with the held rim in place from its first metre: the window reaches back to that piece's last span [90m(2129.1437ms)[39m[39m
+[32m✔ where the road's own width changes across the window (a 31 m straight into a 12 m turn), the held rim is held where it is now, not read back from the window's ends [90m(528.8871ms)[39m[39m
+[32m✔ K2 and K3 on Bhold from the untouched road: the held rim stays within 0.01 m, and the centre's height is within 0.01 m of its place in the plane of the road as built [90m(3286.5089ms)[39m[39m
+[32m✔ K2 and K3 on B- from the untouched road: the held rim stays within 0.01 m, and the centre's height is within 0.01 m of its place in the plane of the road as built [90m(4401.8361ms)[39m[39m
+[32m✔ K2 and K3 on B-0 from the untouched road: the held rim stays within 0.01 m, and the centre's height is within 0.01 m of its place in the plane of the road as built [90m(4855.3749ms)[39m[39m
+[32m✔ K5: Even keeps the bank as found: the bank channel the same values and the bank as built the same bits every metre [90m(2337.5363ms)[39m[39m
+[31m✖ X1, X4, X8: on flat, the left edge kept, the width is within 0.01 m of the value over both 20 m margins, nothing outside moves past one stored step and no joint steps [90m(60.7477ms)[39m[39m
+[31m✖ X1, X4, X8: on flat, the right edge kept, the width is within 0.01 m of the value over both 20 m margins, nothing outside moves past one stored step and no joint steps [90m(56.6206ms)[39m[39m
+[31m✖ X1, X4, X8: on B-, the left edge kept, the width is within 0.01 m of the value over both 20 m margins, nothing outside moves past one stored step and no joint steps [90m(149.8402ms)[39m[39m
+[31m✖ X1, X4, X8: on B-, the right edge kept, the width is within 0.01 m of the value over both 20 m margins, nothing outside moves past one stored step and no joint steps [90m(158.3657ms)[39m[39m
+[31m✖ X2: on B-, the left edge kept, the kept edge is within 0.01 m of where it was over both margins [90m(213.4662ms)[39m[39m
+[31m✖ X2: on B-, the right edge kept, the kept edge is within 0.01 m of where it was over both margins [90m(222.7995ms)[39m[39m
+[31m✖ X3, X4, X8: on B- after a grab at 470, K3: the centre's height is within 0.01 m of its target over the window, nothing outside moves past one stored step and no joint steps [90m(4147.5925ms)[39m[39m
+[31m✖ X3, X4, X8: on B- after a grab at 485, K3: the centre's height is within 0.01 m of its target over the window, nothing outside moves past one stored step and no joint steps [90m(3410.2741ms)[39m[39m
+[31m✖ X3, X4, X8: on B- after a grab at 175 and 465, K3: the centre's height is within 0.01 m of its target over the window, nothing outside moves past one stored step and no joint steps [90m(4244.3022ms)[39m[39m
+[32m✔ Even refuses by name, and changes nothing: a run that is not one, a width out of range, a hold it does not know [90m(17.4951ms)[39m[39m
+[32m✔ Even refuses by name a jump within reach of the run, and a run that starts or ends on the jump [90m(15.0737ms)[39m[39m
+[32m✔ Even refuses by name a tube and a split width in the window [90m(17.1055ms)[39m[39m
+[32m✔ Even refuses by name on a closed lap when the run or its ramps reach the start line, and levels a run clear of it [90m(156.0458ms)[39m[39m
+[34mℹ tests 25[39m
+[34mℹ suites 0[39m
+[34mℹ pass 16[39m
+[34mℹ fail 9[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 33805.9013[39m
+
+[31m✖ failing tests:[39m
+
+test at test\core_even.test.js:137:3
+[31m✖ X1, X4, X8: on flat, the left edge kept, the width is within 0.01 m of the value over both 20 m margins, nothing outside moves past one stored step and no joint steps [90m(60.7477ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: X1: the width is 2.7207459207459195 m off 16 in the margins
+      at TestContext.<anonymous> [90m(G:\consonance-scratch\a-d678-r3\wt\[39mtest\core_even.test.js:140:12[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at test\core_even.test.js:137:3
+[31m✖ X1, X4, X8: on flat, the right edge kept, the width is within 0.01 m of the value over both 20 m margins, nothing outside moves past one stored step and no joint steps [90m(56.6206ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: X1: the width is 2.7207459207459195 m off 16 in the margins
+      at TestContext.<anonymous> [90m(G:\consonance-scratch\a-d678-r3\wt\[39mtest\core_even.test.js:140:12[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at test\core_even.test.js:137:3
+[31m✖ X1, X4, X8: on B-, the left edge kept, the width is within 0.01 m of the value over both 20 m margins, nothing outside moves past one stored step and no joint steps [90m(149.8402ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: X1: the width is 2.7207459207459195 m off 16 in the margins
+      at TestContext.<anonymous> [90m(G:\consonance-scratch\a-d678-r3\wt\[39mtest\core_even.test.js:140:12[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at test\core_even.test.js:137:3
+[31m✖ X1, X4, X8: on B-, the right edge kept, the width is within 0.01 m of the value over both 20 m margins, nothing outside moves past one stored step and no joint steps [90m(158.3657ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: X1: the width is 2.7207459207459195 m off 16 in the margins
+      at TestContext.<anonymous> [90m(G:\consonance-scratch\a-d678-r3\wt\[39mtest\core_even.test.js:140:12[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at test\core_even.test.js:149:3
+[31m✖ X2: on B-, the left edge kept, the kept edge is within 0.01 m of where it was over both margins [90m(213.4662ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: the kept edge moved 0.16726697590148198 m in the margins
+      at TestContext.<anonymous> [90m(G:\consonance-scratch\a-d678-r3\wt\[39mtest\core_even.test.js:152:12[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at test\core_even.test.js:149:3
+[31m✖ X2: on B-, the right edge kept, the kept edge is within 0.01 m of where it was over both margins [90m(222.7995ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: the kept edge moved 0.1635475212481614 m in the margins
+      at TestContext.<anonymous> [90m(G:\consonance-scratch\a-d678-r3\wt\[39mtest\core_even.test.js:152:12[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at test\core_even.test.js:156:3
+[31m✖ X3, X4, X8: on B- after a grab at 470, K3: the centre's height is within 0.01 m of its target over the window, nothing outside moves past one stored step and no joint steps [90m(4147.5925ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: X3 (K3): 0.05118574609484393 m at 477
+      at TestContext.<anonymous> [90m(G:\consonance-scratch\a-d678-r3\wt\[39mtest\core_even.test.js:159:12[90m)[39m
+  [90m    at async Test.run (node:internal/test_runner/test:1125:7)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at test\core_even.test.js:156:3
+[31m✖ X3, X4, X8: on B- after a grab at 485, K3: the centre's height is within 0.01 m of its target over the window, nothing outside moves past one stored step and no joint steps [90m(3410.2741ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: X3 (K3): 0.0505403008243219 m at 475
+      at TestContext.<anonymous> [90m(G:\consonance-scratch\a-d678-r3\wt\[39mtest\core_even.test.js:159:12[90m)[39m
+  [90m    at async Test.run (node:internal/test_runner/test:1125:7)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at test\core_even.test.js:156:3
+[31m✖ X3, X4, X8: on B- after a grab at 175 and 465, K3: the centre's height is within 0.01 m of its target over the window, nothing outside moves past one stored step and no joint steps [90m(4244.3022ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: X3 (K3): 0.05441003748818726 m at 475
+      at TestContext.<anonymous> [90m(G:\consonance-scratch\a-d678-r3\wt\[39mtest\core_even.test.js:159:12[90m)[39m
+  [90m    at async Test.run (node:internal/test_runner/test:1125:7)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }

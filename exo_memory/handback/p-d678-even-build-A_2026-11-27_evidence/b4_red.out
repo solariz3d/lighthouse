@@ -1,0 +1,98 @@
+heavy-run: waiting on a2122153 pid 2552 (E D678 N3: S3 sculpt-frame A/A at c522ea6, 5 runs a tree: this slot held IDLE on purpose (sculpt-frame times only while BOTH slots are held, its bothSlots rule), since 2026-11-28T00:41:25.758Z) and a2122153 pid 14340 (E D678 N3: S3 sculpt-frame A/A at c522ea6, 5 runs a tree, since 2026-11-28T00:41:26.416Z) — all 2 slots are held
+heavy-run: waiting on a2122153 pid 2552 (E D678 N3: S3 sculpt-frame A/A at c522ea6, 5 runs a tree: this slot held IDLE on purpose (sculpt-frame times only while BOTH slots are held, its bothSlots rule), since 2026-11-28T00:41:25.758Z) and a2122153 pid 14340 (E D678 N3: S3 sculpt-frame A/A at c522ea6, 5 runs a tree, since 2026-11-28T00:41:26.416Z) — all 2 slots are held
+heavy-run: waiting on a2122153 pid 2552 (E D678 N3: S3 sculpt-frame A/A at c522ea6, 5 runs a tree: this slot held IDLE on purpose (sculpt-frame times only while BOTH slots are held, its bothSlots rule), since 2026-11-28T00:41:25.758Z) and a2122153 pid 14340 (E D678 N3: S3 sculpt-frame A/A at c522ea6, 5 runs a tree, since 2026-11-28T00:41:26.416Z) — all 2 slots are held
+heavy-run: waiting on a2122153 pid 2552 (E D678 N3: S3 sculpt-frame A/A at c522ea6, 5 runs a tree: this slot held IDLE on purpose (sculpt-frame times only while BOTH slots are held, its bothSlots rule), since 2026-11-28T00:41:25.758Z) and a2122153 pid 14340 (E D678 N3: S3 sculpt-frame A/A at c522ea6, 5 runs a tree, since 2026-11-28T00:41:26.416Z) — all 2 slots are held
+heavy-run: waiting on a2122153 pid 2552 (E D678 N3: S3 sculpt-frame A/A at c522ea6, 5 runs a tree: this slot held IDLE on purpose (sculpt-frame times only while BOTH slots are held, its bothSlots rule), since 2026-11-28T00:41:25.758Z) and a2122153 pid 14340 (E D678 N3: S3 sculpt-frame A/A at c522ea6, 5 runs a tree, since 2026-11-28T00:41:26.416Z) — all 2 slots are held
+heavy-run: IDLE HOLDER — a2122153 pid 2552 (E D678 N3: S3 sculpt-frame A/A at c522ea6, 5 runs a tree: this slot held IDLE on purpose (sculpt-frame times only while BOTH slots are held, its bothSlots rule), since 2026-11-28T00:41:25.758Z): its whole process tree (node.exe) used 0.03 s of CPU in the last 5 min. An idle shell that Git Bash started with its `cmd /c` rewritten into a drive argument looks like this. Reported only: nothing is stopped or released (L202).
+heavy-run: waiting on a2122153 pid 2552 (E D678 N3: S3 sculpt-frame A/A at c522ea6, 5 runs a tree: this slot held IDLE on purpose (sculpt-frame times only while BOTH slots are held, its bothSlots rule), since 2026-11-28T00:41:25.758Z) and a2122153 pid 14340 (E D678 N3: S3 sculpt-frame A/A at c522ea6, 5 runs a tree, since 2026-11-28T00:41:26.416Z) — all 2 slots are held
+heavy-run: waiting on a2122153 pid 2552 (E D678 N3: S3 sculpt-frame A/A at c522ea6, 5 runs a tree: this slot held IDLE on purpose (sculpt-frame times only while BOTH slots are held, its bothSlots rule), since 2026-11-28T00:41:25.758Z) and a2122153 pid 14340 (E D678 N3: S3 sculpt-frame A/A at c522ea6, 5 runs a tree, since 2026-11-28T00:41:26.416Z) — all 2 slots are held
+heavy-run: waiting on a2122153 pid 2552 (E D678 N3: S3 sculpt-frame A/A at c522ea6, 5 runs a tree: this slot held IDLE on purpose (sculpt-frame times only while BOTH slots are held, its bothSlots rule), since 2026-11-28T00:41:25.758Z) and a2122153 pid 14340 (E D678 N3: S3 sculpt-frame A/A at c522ea6, 5 runs a tree, since 2026-11-28T00:41:26.416Z) — all 2 slots are held
+heavy-run: waiting on a2122153 pid 2552 (E D678 N3: S3 sculpt-frame A/A at c522ea6, 5 runs a tree: this slot held IDLE on purpose (sculpt-frame times only while BOTH slots are held, its bothSlots rule), since 2026-11-28T00:41:25.758Z) and a2122153 pid 14340 (E D678 N3: S3 sculpt-frame A/A at c522ea6, 5 runs a tree, since 2026-11-28T00:41:26.416Z) — all 2 slots are held
+heavy-run: waiting on a2122153 pid 2552 (E D678 N3: S3 sculpt-frame A/A at c522ea6, 5 runs a tree: this slot held IDLE on purpose (sculpt-frame times only while BOTH slots are held, its bothSlots rule), since 2026-11-28T00:41:25.758Z) and a2122153 pid 14340 (E D678 N3: S3 sculpt-frame A/A at c522ea6, 5 runs a tree, since 2026-11-28T00:41:26.416Z) — all 2 slots are held
+heavy-run: waiting on a2122153 pid 2552 (E D678 N3: S3 sculpt-frame A/A at c522ea6, 5 runs a tree: this slot held IDLE on purpose (sculpt-frame times only while BOTH slots are held, its bothSlots rule), since 2026-11-28T00:41:25.758Z) and a2122153 pid 14340 (E D678 N3: S3 sculpt-frame A/A at c522ea6, 5 runs a tree, since 2026-11-28T00:41:26.416Z) — all 2 slots are held
+heavy-run: waiting on a2122153 pid 2552 (E D678 N3: S3 sculpt-frame A/A at c522ea6, 5 runs a tree: this slot held IDLE on purpose (sculpt-frame times only while BOTH slots are held, its bothSlots rule), since 2026-11-28T00:41:25.758Z) and a2122153 pid 14340 (E D678 N3: S3 sculpt-frame A/A at c522ea6, 5 runs a tree, since 2026-11-28T00:41:26.416Z) — all 2 slots are held
+heavy-run: waiting on a2122153 pid 2552 (E D678 N3: S3 sculpt-frame A/A at c522ea6, 5 runs a tree: this slot held IDLE on purpose (sculpt-frame times only while BOTH slots are held, its bothSlots rule), since 2026-11-28T00:41:25.758Z) and a2122153 pid 14340 (E D678 N3: S3 sculpt-frame A/A at c522ea6, 5 runs a tree, since 2026-11-28T00:41:26.416Z) — all 2 slots are held
+heavy-run: waiting on a2122153 pid 2552 (E D678 N3: S3 sculpt-frame A/A at c522ea6, 5 runs a tree: this slot held IDLE on purpose (sculpt-frame times only while BOTH slots are held, its bothSlots rule), since 2026-11-28T00:41:25.758Z) and a2122153 pid 14340 (E D678 N3: S3 sculpt-frame A/A at c522ea6, 5 runs a tree, since 2026-11-28T00:41:26.416Z) — all 2 slots are held
+heavy-run: waiting on a2122153 pid 2552 (E D678 N3: S3 sculpt-frame A/A at c522ea6, 5 runs a tree: this slot held IDLE on purpose (sculpt-frame times only while BOTH slots are held, its bothSlots rule), since 2026-11-28T00:41:25.758Z) and a2122153 pid 14340 (E D678 N3: S3 sculpt-frame A/A at c522ea6, 5 runs a tree, since 2026-11-28T00:41:26.416Z) — all 2 slots are held
+heavy-run: waiting on a2122153 pid 2552 (E D678 N3: S3 sculpt-frame A/A at c522ea6, 5 runs a tree: this slot held IDLE on purpose (sculpt-frame times only while BOTH slots are held, its bothSlots rule), since 2026-11-28T00:41:25.758Z) and a2122153 pid 14340 (E D678 N3: S3 sculpt-frame A/A at c522ea6, 5 runs a tree, since 2026-11-28T00:41:26.416Z) — all 2 slots are held
+heavy-run: waiting on a2122153 pid 2552 (E D678 N3: S3 sculpt-frame A/A at c522ea6, 5 runs a tree: this slot held IDLE on purpose (sculpt-frame times only while BOTH slots are held, its bothSlots rule), since 2026-11-28T00:41:25.758Z) and a2122153 pid 14340 (E D678 N3: S3 sculpt-frame A/A at c522ea6, 5 runs a tree, since 2026-11-28T00:41:26.416Z) — all 2 slots are held
+heavy-run: waiting on a2122153 pid 2552 (E D678 N3: S3 sculpt-frame A/A at c522ea6, 5 runs a tree: this slot held IDLE on purpose (sculpt-frame times only while BOTH slots are held, its bothSlots rule), since 2026-11-28T00:41:25.758Z) and a2122153 pid 14340 (E D678 N3: S3 sculpt-frame A/A at c522ea6, 5 runs a tree, since 2026-11-28T00:41:26.416Z) — all 2 slots are held
+heavy-run: waiting on a2122153 pid 2552 (E D678 N3: S3 sculpt-frame A/A at c522ea6, 5 runs a tree: this slot held IDLE on purpose (sculpt-frame times only while BOTH slots are held, its bothSlots rule), since 2026-11-28T00:41:25.758Z) and a2122153 pid 14340 (E D678 N3: S3 sculpt-frame A/A at c522ea6, 5 runs a tree, since 2026-11-28T00:41:26.416Z) — all 2 slots are held
+heavy-run: waiting on a2122153 pid 2552 (E D678 N3: S3 sculpt-frame A/A at c522ea6, 5 runs a tree: this slot held IDLE on purpose (sculpt-frame times only while BOTH slots are held, its bothSlots rule), since 2026-11-28T00:41:25.758Z) and a2122153 pid 14340 (E D678 N3: S3 sculpt-frame A/A at c522ea6, 5 runs a tree, since 2026-11-28T00:41:26.416Z) — all 2 slots are held
+heavy-run: waiting on a2122153 pid 2552 (E D678 N3: S3 sculpt-frame A/A at c522ea6, 5 runs a tree: this slot held IDLE on purpose (sculpt-frame times only while BOTH slots are held, its bothSlots rule), since 2026-11-28T00:41:25.758Z) and a2122153 pid 14340 (E D678 N3: S3 sculpt-frame A/A at c522ea6, 5 runs a tree, since 2026-11-28T00:41:26.416Z) — all 2 slots are held
+heavy-run: waiting on a2122153 pid 2552 (E D678 N3: S3 sculpt-frame A/A at c522ea6, 5 runs a tree: this slot held IDLE on purpose (sculpt-frame times only while BOTH slots are held, its bothSlots rule), since 2026-11-28T00:41:25.758Z) and a2122153 pid 14340 (E D678 N3: S3 sculpt-frame A/A at c522ea6, 5 runs a tree, since 2026-11-28T00:41:26.416Z) — all 2 slots are held
+heavy-run: waiting on a2122153 pid 2552 (E D678 N3: S3 sculpt-frame A/A at c522ea6, 5 runs a tree: this slot held IDLE on purpose (sculpt-frame times only while BOTH slots are held, its bothSlots rule), since 2026-11-28T00:41:25.758Z) and a2122153 pid 14340 (E D678 N3: S3 sculpt-frame A/A at c522ea6, 5 runs a tree, since 2026-11-28T00:41:26.416Z) — all 2 slots are held
+heavy-run: waiting on a2122153 pid 2552 (E D678 N3: S3 sculpt-frame A/A at c522ea6, 5 runs a tree: this slot held IDLE on purpose (sculpt-frame times only while BOTH slots are held, its bothSlots rule), since 2026-11-28T00:41:25.758Z) and a2122153 pid 14340 (E D678 N3: S3 sculpt-frame A/A at c522ea6, 5 runs a tree, since 2026-11-28T00:41:26.416Z) — all 2 slots are held
+heavy-run: waiting on a2122153 pid 2552 (E D678 N3: S3 sculpt-frame A/A at c522ea6, 5 runs a tree: this slot held IDLE on purpose (sculpt-frame times only while BOTH slots are held, its bothSlots rule), since 2026-11-28T00:41:25.758Z) and a2122153 pid 14340 (E D678 N3: S3 sculpt-frame A/A at c522ea6, 5 runs a tree, since 2026-11-28T00:41:26.416Z) — all 2 slots are held
+heavy-run: waiting on a2122153 pid 2552 (E D678 N3: S3 sculpt-frame A/A at c522ea6, 5 runs a tree: this slot held IDLE on purpose (sculpt-frame times only while BOTH slots are held, its bothSlots rule), since 2026-11-28T00:41:25.758Z) and a2122153 pid 14340 (E D678 N3: S3 sculpt-frame A/A at c522ea6, 5 runs a tree, since 2026-11-28T00:41:26.416Z) — all 2 slots are held
+heavy-run: capped to 8 of 16 logical CPUs, spread (affinity 21845); every child inherits it
+[31m✖ B4: Even's result, the left kept, is frozen all the way down: the document, every piece, its channels and their control points [90m(146.6979ms)[39m[39m
+[31m✖ B4: Even's result, the right kept, is frozen all the way down: the document, every piece, its channels and their control points [90m(123.7432ms)[39m[39m
+[31m✖ B4: Even's result, the centre kept, is frozen all the way down: the document, every piece, its channels and their control points [90m(82.9074ms)[39m[39m
+[34mℹ tests 3[39m
+[34mℹ suites 0[39m
+[34mℹ pass 0[39m
+[34mℹ fail 3[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 483.7785[39m
+
+[31m✖ failing tests:[39m
+
+test at G:\consonance-scratch\a-d678-r3\wt\test\core_even.test.js:223:3
+[31m✖ B4: Even's result, the left kept, is frozen all the way down: the document, every piece, its channels and their control points [90m(146.6979ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: not frozen: doc.pieces
+  [32m+ actual[39m [31m- expected[39m
+  
+  [32m+[39m 'doc.pieces'
+  [31m- [39mnull
+  
+      at TestContext.<anonymous> (G:\consonance-scratch\a-d678-r3\wt\test\core_even.test.js:226:12)
+  [90m    at async Test.run (node:internal/test_runner/test:1125:7)[39m
+  [90m    at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [32m'doc.pieces'[39m,
+    expected: [1mnull[22m,
+    operator: [32m'strictEqual'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at G:\consonance-scratch\a-d678-r3\wt\test\core_even.test.js:223:3
+[31m✖ B4: Even's result, the right kept, is frozen all the way down: the document, every piece, its channels and their control points [90m(123.7432ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: not frozen: doc.pieces
+  [32m+ actual[39m [31m- expected[39m
+  
+  [32m+[39m 'doc.pieces'
+  [31m- [39mnull
+  
+      at TestContext.<anonymous> (G:\consonance-scratch\a-d678-r3\wt\test\core_even.test.js:226:12)
+  [90m    at async Test.run (node:internal/test_runner/test:1125:7)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [32m'doc.pieces'[39m,
+    expected: [1mnull[22m,
+    operator: [32m'strictEqual'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at G:\consonance-scratch\a-d678-r3\wt\test\core_even.test.js:223:3
+[31m✖ B4: Even's result, the centre kept, is frozen all the way down: the document, every piece, its channels and their control points [90m(82.9074ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: not frozen: doc.pieces
+  [32m+ actual[39m [31m- expected[39m
+  
+  [32m+[39m 'doc.pieces'
+  [31m- [39mnull
+  
+      at TestContext.<anonymous> (G:\consonance-scratch\a-d678-r3\wt\test\core_even.test.js:226:12)
+  [90m    at async Test.run (node:internal/test_runner/test:1125:7)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [32m'doc.pieces'[39m,
+    expected: [1mnull[22m,
+    operator: [32m'strictEqual'[39m,
+    diff: [32m'simple'[39m
+  }

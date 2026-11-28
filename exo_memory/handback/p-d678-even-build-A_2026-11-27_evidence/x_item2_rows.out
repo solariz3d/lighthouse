@@ -1,0 +1,82 @@
+heavy-run: capped to 8 of 16 logical CPUs, spread (affinity 21845); every child inherits it
+[32m✔ row 1: a straight back placed level across the first is refused by name, saying where and how close, and nothing changes [90m(167.8106ms)[39m[39m
+[32m✔ row 2: the same straight placed high enough over the first is placed [90m(80.3535ms)[39m[39m
+[32m✔ row 3: a track that already breaks the rule is still edited elsewhere [90m(28.9963ms)[39m[39m
+[32m✔ row 4: the checker shows the break red at both passes, in plain words [90m(307.1242ms)[39m[39m
+[32m✔ K1-K6: Bhold from U: Even levels the banked turn to 16 m, the left edge held, the centre in the plane of the road as built, the bank as found [90m(3924.8567ms)[39m[39m
+[32m✔ K1-K6: Bhold from W1: Even levels the banked turn to 16 m, the left edge held, the centre in the plane of the road as built, the bank as found [90m(3745.065ms)[39m[39m
+[32m✔ K1-K6: Bhold from W8: Even levels the banked turn to 16 m, the left edge held, the centre in the plane of the road as built, the bank as found [90m(3925.5539ms)[39m[39m
+[32m✔ K1-K6: B- from U: Even levels the banked turn to 16 m, the left edge held, the centre in the plane of the road as built, the bank as found [90m(6506.9521ms)[39m[39m
+[32m✔ K1-K6: B- from W1: Even levels the banked turn to 16 m, the left edge held, the centre in the plane of the road as built, the bank as found [90m(6531.7306ms)[39m[39m
+[32m✔ K1-K6: B- from W8: Even levels the banked turn to 16 m, the left edge held, the centre in the plane of the road as built, the bank as found [90m(6695.2507ms)[39m[39m
+[32m✔ K1-K6: B-0 from U: Even levels the banked turn to 16 m, the left edge held, the centre in the plane of the road as built, the bank as found [90m(6657.3188ms)[39m[39m
+[32m✔ K1-K6: B-0 from W1: Even levels the banked turn to 16 m, the left edge held, the centre in the plane of the road as built, the bank as found [90m(6278.1237ms)[39m[39m
+[32m✔ K1-K6: B-0 from W8: Even levels the banked turn to 16 m, the left edge held, the centre in the plane of the road as built, the bank as found [90m(6595.9286ms)[39m[39m
+[32m✔ P1-P3: B+: Even is laid, and where the new middle's line leaves the road the release says so in plain words with the place and three figures [90m(169.2057ms)[39m[39m
+[32m✔ P1-P3: B+0: Even is laid, and where the new middle's line leaves the road the release says so in plain words with the place and three figures [90m(168.0706ms)[39m[39m
+[32m✔ E1 and E2: B+: the release says the first sentence at once with the check pending, and the check's words, when they land, are the on-page check's [90m(359.3869ms)[39m[39m
+[32m✔ E1 and E2: B+0: the release says the first sentence at once with the check pending, and the check's words, when they land, are the on-page check's [90m(280.2265ms)[39m[39m
+[32m✔ E1 and E2: Bhold: the release says the first sentence at once with the check pending, and the check's words, when they land, are the on-page check's [90m(164.3985ms)[39m[39m
+[32m✔ E4: an Undo before the check lands drops its words: the message stays the Undo's [90m(124.6545ms)[39m[39m
+[32m✔ E6: B+0: with the page's runner, the request goes to a worker of its own as plain data, the words that come back are the on-page check's, and the worker is ended [90m(237.3785ms)[39m[39m
+[32m✔ E6: the worker script answers an Even request through the check job's evenCheck, beside the newest-only track check [90m(41.5471ms)[39m[39m
+[32m✔ E6: a request the worker cannot take is checked on the page, and a check that throws says so, keeping the first sentence [90m(283.6013ms)[39m[39m
+[32m✔ E5: B+: a typed width says the first sentence at once, and the check's words, when they land, are the on-page check's [90m(169.6674ms)[39m[39m
+[32m✔ W1: the message says the kept edge is laid where Even reads the road's own edge and can move, and the middle is laid smooth; never that an edge stays [90m(89.9389ms)[39m[39m
+[32m✔ W2: the message says the road is back within the window's reach beyond each end (not "over" it), and where a window end is cut short by the track's start or the open end, that [90m(107.3762ms)[39m[39m
+[32m✔ W3: the message says the road's width, line and height beyond the stretch are as they were to a tenth of a millimetre, and outside the window nothing moves past one stored step [90m(53.945ms)[39m[39m
+[32m✔ F1-F7: from T1 on his flat turn, Even (the right edge's handle, the left edge held) brings the turn to 16 m with the inner edge where the road had it [90m(301.8223ms)[39m[39m
+[32m✔ F1-F7: from T2b on his flat turn, Even (the right edge's handle, the left edge held) brings the turn to 16 m with the inner edge where the road had it [90m(235.1534ms)[39m[39m
+[32m✔ the drag snaps to 0.5 m, keeps the run selected through every step, and its release says what it did [90m(130.1348ms)[39m[39m
+[32m✔ typed: Even takes the value as typed (no snap), with the edge picked, as one undo step; the picks read the road either side of the run [90m(53.1389ms)[39m[39m
+[32m✔ one piece: its width handle under Even levels that piece alone, eased into its neighbours [90m(19.8329ms)[39m[39m
+[32m✔ the open end: a run ending at the head is levelled to its end, the head taking the value [90m(21.5955ms)[39m[39m
+[32m✔ Even refuses by name and changes nothing: no run selected, a drag on the road, an empty or wrong width, a jump within reach [90m(9.9336ms)[39m[39m
+[32m✔ B2: an Even step that brings the road too close to another pass inside its window is refused by name, and the drag stays at its last good step [90m(579.4312ms)[39m[39m
+[32m✔ Even brings the run to the value from its first metre to its last, and the input document is not changed [90m(71.1176ms)[39m[39m
+[32m✔ Even on a run of one piece levels that piece, eases into its neighbours and moves nothing outside its window [90m(32.924ms)[39m[39m
+[32m✔ the ramp is the designed ease: where the knots are fine enough to carry it, the width before the run follows a smootherstep from the road to the value over 30 m [90m(15.5122ms)[39m[39m
+[32m✔ Even on a run that ends at the open end gives the head the value: no ramp after it [90m(14.4067ms)[39m[39m
+[32m✔ Even with the left rim held keeps that rim where the road has it and puts the right rim out at the new width (flat, from the untouched road) [90m(78.182ms)[39m[39m
+[32m✔ the held rim on the other side: with the right rim held it stays and the left rim goes out (flat, from the untouched road) [90m(68.3322ms)[39m[39m
+[32m✔ after a piece with coarse knots (a plain Extend's 20 m spans), the run is still one width with the held rim in place from its first metre: the window reaches back to that piece's last span [90m(82.8205ms)[39m[39m
+[32m✔ where the road's own width changes across the window (a 31 m straight into a 12 m turn), the held rim is held where it is now, not read back from the window's ends [90m(61.4978ms)[39m[39m
+[32m✔ K2 and K3 on Bhold from the untouched road: the held rim stays within 0.01 m, and the centre's height is within 0.01 m of its place in the plane of the road as built [90m(1771.3197ms)[39m[39m
+[32m✔ K2 and K3 on B- from the untouched road: the held rim stays within 0.01 m, and the centre's height is within 0.01 m of its place in the plane of the road as built [90m(3183.8329ms)[39m[39m
+[32m✔ K2 and K3 on B-0 from the untouched road: the held rim stays within 0.01 m, and the centre's height is within 0.01 m of its place in the plane of the road as built [90m(3317.889ms)[39m[39m
+[32m✔ K5: Even keeps the bank as found: the bank channel and the bank as built within one stored step every metre [90m(3182.2224ms)[39m[39m
+[32m✔ X1, X4, X8: on flat, the left edge kept, the width is within 0.01 m of the value over both 20 m margins, nothing outside moves past one stored step and no joint steps [90m(21.9498ms)[39m[39m
+[32m✔ X1, X4, X8: on flat, the right edge kept, the width is within 0.01 m of the value over both 20 m margins, nothing outside moves past one stored step and no joint steps [90m(24.9688ms)[39m[39m
+[32m✔ X1, X4, X8: on B-, the left edge kept, the width is within 0.01 m of the value over both 20 m margins, nothing outside moves past one stored step and no joint steps [90m(115.3129ms)[39m[39m
+[32m✔ X1, X4, X8: on B-, the right edge kept, the width is within 0.01 m of the value over both 20 m margins, nothing outside moves past one stored step and no joint steps [90m(107.4773ms)[39m[39m
+[32m✔ X2: on B-, the left edge kept, the kept edge is within 0.01 m of where it was over both margins [90m(184.4214ms)[39m[39m
+[32m✔ X2: on B-, the right edge kept, the kept edge is within 0.01 m of where it was over both margins [90m(151.9254ms)[39m[39m
+[32m✔ X3, X4, X8: on B- after a grab at 470, K3: the centre's height is within 0.01 m of its target over the window, nothing outside moves past one stored step and no joint steps [90m(3078.5235ms)[39m[39m
+[32m✔ X3, X4, X8: on B- after a grab at 485, K3: the centre's height is within 0.01 m of its target over the window, nothing outside moves past one stored step and no joint steps [90m(2449.7578ms)[39m[39m
+[32m✔ X3, X4, X8: on B- after a grab at 175 and 465, K3: the centre's height is within 0.01 m of its target over the window, nothing outside moves past one stored step and no joint steps [90m(3285.3167ms)[39m[39m
+[32m✔ Even refuses by name, and changes nothing: a run that is not one, a width out of range, a hold it does not know [90m(19.7687ms)[39m[39m
+[32m✔ Even refuses by name a jump within reach of the run, and a run that starts or ends on the jump [90m(10.424ms)[39m[39m
+[32m✔ Even refuses by name a tube and a split width in the window [90m(12.8991ms)[39m[39m
+[32m✔ Even refuses by name on a closed lap when the run or its ramps reach the start line, and levels a run clear of it [90m(132.4503ms)[39m[39m
+[32m✔ B4: Even's result, the left kept, is frozen all the way down: the document, every piece, its channels and their control points [90m(115.9894ms)[39m[39m
+[32m✔ B4: Even's result, the right kept, is frozen all the way down: the document, every piece, its channels and their control points [90m(107.9538ms)[39m[39m
+[32m✔ B4: Even's result, the centre kept, is frozen all the way down: the document, every piece, its channels and their control points [90m(68.9172ms)[39m[39m
+[32m✔ row 1: a road over another is found within its underside's depth plus the car's room, and not past it [90m(147.1474ms)[39m[39m
+[32m✔ row 2: the finding is the upper road's underside: its depth and how far it comes over the lower road add up to the road gap [90m(60.1308ms)[39m[39m
+[32m✔ row 3: a road crossing level with the other is a clip [90m(32.1712ms)[39m[39m
+[32m✔ row 4: a banked road over another brings its low edge down: the other road's surface is the road gap less the edge's drop [90m(91.074ms)[39m[39m
+[32m✔ row 5: an inverted road over another keeps only the car's room: its underside hangs on its far side [90m(106.0614ms)[39m[39m
+[32m✔ row 6: two roads side by side 1.5 m apart: their aprons reach under each other's; with no apron nothing is over anything [90m(24.8271ms)[39m[39m
+[32m✔ row 7: one pass of a road is never measured against itself [90m(32.881ms)[39m[39m
+[32m✔ row 8: from: only stations from that index lead, each against every other [90m(62.5201ms)[39m[39m
+[32m✔ row 11: to: only stations from `from` to `to` lead, each against every other [90m(80.4538ms)[39m[39m
+[32m✔ row 10: the solid is the export's: the hull deepens toward a rising edge by the square of the distance in, and the apron's box reaches the edge's depth [90m(0.5468ms)[39m[39m
+[32m✔ row 9: bad inputs are refused by name [90m(0.8345ms)[39m[39m
+[34mℹ tests 73[39m
+[34mℹ suites 0[39m
+[34mℹ pass 73[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 51324.5127[39m

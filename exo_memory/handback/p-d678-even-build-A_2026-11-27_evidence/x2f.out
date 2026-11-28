@@ -1,0 +1,4 @@
+{"fx":"flat","hold":"left","worst":0.2516,"at":180,"at180":-0.2516,"at200":0,"at440":0,"at460":0.0069,"pass":false}
+{"fx":"flat","hold":"right","worst":0.2516,"at":180,"at180":0.2516,"at200":0,"at440":0,"at460":-0.0069,"pass":false}
+{"fx":"B-","hold":"left","worst":0.007,"at":460,"at180":0.0065,"at200":0,"at440":0,"at460":0.007,"pass":true}
+{"fx":"B-","hold":"right","worst":0.0065,"at":180,"at180":-0.0065,"at200":0,"at440":0,"at460":-0.006,"pass":true}
