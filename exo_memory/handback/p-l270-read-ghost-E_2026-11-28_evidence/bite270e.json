@@ -1,0 +1,99 @@
+{
+ "v0_unchanged": {
+  "exit": 0,
+  "tests": 1,
+  "pass": 1,
+  "fail": 0,
+  "why": null,
+  "tapBytes": 503
+ },
+ "v1_551_shift05": {
+  "exit": 1,
+  "tests": 1,
+  "pass": 0,
+  "fail": 1,
+  "why": "the same piece: the two lifts lift one path the same (first apart at sample 0 (s 0), 0.5000 m)'",
+  "tapBytes": 1199
+ },
+ "v1c_551_shift0_control": {
+  "exit": 0,
+  "tests": 1,
+  "pass": 1,
+  "fail": 0,
+  "why": null,
+  "tapBytes": 504
+ },
+ "v2_553_shift05": {
+  "exit": 1,
+  "tests": 1,
+  "pass": 0,
+  "fail": 1,
+  "why": "the ghost drawn is the blank one: the two lifts lift one path the same (first apart at sample 0 (s 0), 0.5000 m)'",
+  "tapBytes": 1218
+ },
+ "v2c_553_shift0_control": {
+  "exit": 0,
+  "tests": 1,
+  "pass": 1,
+  "fail": 0,
+  "why": null,
+  "tapBytes": 503
+ },
+ "v3_551_nolift": {
+  "exit": 1,
+  "tests": 1,
+  "pass": 0,
+  "fail": 1,
+  "why": "the same piece: both carry a lift, or neither does",
+  "tapBytes": 1429
+ },
+ "v4_553_nolift": {
+  "exit": 1,
+  "tests": 1,
+  "pass": 0,
+  "fail": 1,
+  "why": "the ghost drawn is the blank one: both carry a lift, or neither does",
+  "tapBytes": 1448
+ },
+ "v5_551_height05": {
+  "exit": 1,
+  "tests": 1,
+  "pass": 0,
+  "fail": 1,
+  "why": "the same piece: the two lifts lift one path the same (first apart at sample 0 (s 0), 0.5000 m)'",
+  "tapBytes": 1203
+ },
+ "v6_551_shift05_past50m": {
+  "exit": 1,
+  "tests": 1,
+  "pass": 0,
+  "fail": 1,
+  "why": "the same piece: the two lifts lift one path the same (first apart at sample 26 (s 52), 0.5000 m)'",
+  "tapBytes": 1226
+ },
+ "v7_551_shift5mm": {
+  "exit": 1,
+  "tests": 1,
+  "pass": 0,
+  "fail": 1,
+  "why": "the same piece: the two lifts lift one path the same (first apart at sample 0 (s 0), 0.0050 m)'",
+  "tapBytes": 1203
+ },
+ "v8_551_equal_copy_control": {
+  "exit": 0,
+  "tests": 1,
+  "pass": 1,
+  "fail": 0,
+  "why": null,
+  "tapBytes": 502
+ },
+ "v9_P_style_one_side_0m": {
+  "exit": 1,
+  "tests": 1,
+  "pass": 0,
+  "fail": 1,
+  "why": "the same piece: the two lifts lift one path the same (first apart at sample 0 (s 0), 0.0000 m)'",
+  "tapBytes": 1224
+ },
+ "_left": 0
+}

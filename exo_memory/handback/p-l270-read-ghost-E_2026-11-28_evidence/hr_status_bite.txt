@@ -1,0 +1,5 @@
+heavy-run status (C:\Consonance\data), read only:
+  EXCLUSIVE HOLD: STANDS — 6fe15f0a pid 10160 (L271 A item 2 (c) Even drag step on his largest lap, before and after, since 2026-11-28T08:25:16.233Z). Run nothing, light or heavy, until it is gone.
+  slot 1: held by 6fe15f0a pid 12768 (L271 A a1 prototype table, resumed, since 2026-11-28T08:24:54.717Z)
+  slot 2: free
+  GATE: exit 1 — an exclusive hold stands. Run nothing, light or heavy.

@@ -207,3 +207,83 @@ runs, then ran 25.1 s) → **tests 76, pass 76, fail 0, cancelled 0**. P's 76 at
 - No push, no merge, no build, nothing committed to the builder. No browser opened. His tracks folder not read.
 - The node probes ran as single processes at BelowNormal (`start /belownormal`), with no timing session held
   (`S\hr_status_before.txt`); the 11 test files under heavy-run.
+
+## 7. The short read of 8c78a59..6ba9e19 (ruling item 1 of "Amended 02:3x", chair's paste 08:34:29Z): CLEAN
+
+The order: the packet's "Amended 02:3x" (room a8072cb4), against the 01:1x ruling's condition 2. P's record:
+`handback/p-l270-n4a-land-P_2026-11-28.md` sections 6-8.
+
+**Verdict: CLEAN.** I set three conditions, from the paste: (1) each amended row compares `lift` by what it does on one path,
+never by leaving it out; (2) each still goes red when `lift` shifts the path 0.5 m, bitten by me; (3) the CHANGELOG carries
+my section 4, true to the cases. All three hold. P may push 6ba9e19. One correction to P's evidence (7.3), not to the fix.
+
+### 7.1 The delta
+
+checked: `git diff --stat 8c78a59 6ba9e19` → CHANGELOG.md (+9 −4), app/test/core-readout-display.test.js (+22 −2). No code
+file. `git rev-parse --short d678-ghost-offset-p` → 6ba9e19 (local).
+- The helper `sameCandidate(a, b, msg)`: every field but `lift` by `assert.deepEqual`; `typeof` of the two lifts equal;
+  both applied to ONE path, `G.buildPath(a.segments, { step: 2, closed, start })`, compared by `util.isDeepStrictEqual`,
+  failing short with the first sample apart. `lift` is never dropped: condition 1 holds.
+- `:551` ("the same piece") and `:553` ("the ghost drawn is the blank one") call it; `:552` and the rest of the row are as before.
+- inferred: on this row's road (no h or l anywhere) both real lifts return the path unchanged (`offsetPath` returns the same
+  object when no offset is set), so this row sees a lift that DIFFERS between the two sides, not whether `liftFor` is right.
+  The ghost-offset rows and my section 3 see that. P's 8.3 says the same.
+
+### 7.2 The bites, mine (condition 2)
+
+**Instrument:** `S\bite270e.js <tree>`. For each variant it copies the test file with ONE call changed, runs the row alone
+(`--test-name-pattern`), and deletes the copy. Run through heavy-run at BelowNormal, which waited out A's L271 exclusive
+hold (`S\hr_status_bite.txt`), in a worktree at 6ba9e19 (`Downloads\t180-wt-e-l270b`, clean, removed after).
+**Every shifted bite wraps BOTH sides the same way, one at 0 m and one at 0.5 m**, and each has a 0 m control (why: 7.3).
+
+checked: `S\bite270e.out`, `S\bite270e.json` →
+
+| variant | expected | result | the row's words |
+|---|---|---|---|
+| v0 unchanged | green | **pass** | |
+| v1 `:551`, one side 0.5 m sideways | red | **fail** | "the same piece: the two lifts lift one path the same (first apart at sample 0 (s 0), 0.5000 m)" |
+| v1c `:551`, both sides 0 m (control) | green | **pass** | |
+| v2 `:553`, one side 0.5 m sideways | red | **fail** | "the ghost drawn is the blank one: … 0.5000 m" |
+| v2c `:553`, both 0 m (control) | green | **pass** | |
+| v3 `:551`, blank's candidate with no lift | red | **fail** | "both carry a lift, or neither does" |
+| v4 `:553`, no lift (P did not run this one) | red | **fail** | the same |
+| v5 `:551`, 0.5 m in HEIGHT | red | **fail** | "… 0.5000 m" |
+| v6 `:551`, 0.5 m only past s 50 m | red | **fail** | "first apart at sample 26 (s 52), 0.5000 m" |
+| v7 `:551`, 5 mm | red | **fail** | "… 0.0050 m" |
+| v8 `:551`, a lift returning an equal copy (new path object, new samples array) | green | **pass** | |
+| v9 `:551`, P's way: ONE side wrapped, at **0 m** | (the confound test) | **fail** | "… 0.0000 m" |
+
+- 12 of 12 as expected; probe copies left 0. Condition 2 holds on both rows, sideways and in height, at 5 mm, and on a
+  shift that starts mid-piece. v8 shows the compare is by effect, not by function or path identity.
+
+### 7.3 Correction to P's evidence, not to the fix
+
+- **P's 0.5 m bite would be red at 0 m too.** P's `bite270.js` shifts one side with `({ ...x, pos: [...] })`, and its
+  samples are `SampleView` objects (`src/geom/path.js:285`, getters on the prototype). The spread makes a plain object, and
+  `isDeepStrictEqual` compares prototypes, so the two paths differ whatever the shift. My v9 is that construction at 0 m: red,
+  "0.0000 m". So P's v1 and v2 (8.3) could not tell a 0.5 m lift from an equal one. The "0.5000 m" in its message is the
+  distance printed after the fail, not what caused it.
+- My v1/v2 with their v1c/v2c controls are the evidence that the rows see 0.5 m. P's v3 (no lift) was never confounded.
+- What it says about the compare: it is strict on the sample's type as well as its numbers. Real lifts on the two sides are
+  the same `offsetPath` on the same kind of document, so they always make the same type (inferred). A false red from this
+  would need a lift that returns another kind of path, which no code does today.
+
+### 7.4 The CHANGELOG (condition 3)
+
+Read whole, against my section 3 table and section 4 runs:
+- "no bound: 6.80 m … 100 m piece, 7.62 m on a banked road, and 40.50 m … 1,000 m piece (a second seat's read)" →
+  6.7954, 7.6163 and 40.5003 in `S\e270-base.jsonl` and `S\ghostlen-base.txt`. True.
+- "the Jump's ghost, the ghost an Undo leaves …, and a saved piece's ghost … (up to 3.24, 6.80 and 1.67 m in that read)" →
+  the largest of my Jump cases 3.2397, of my Undo cases 6.7954 (others 2.5518, 2.5518, 5.925), of the piece 1.6706. True as
+  scoped, "in that read". inferred: the undo ghost of a longer piece missed by more, by the same run-on; the words do not
+  claim a bound, so this is no fault.
+- "after a grab or a hill whose stretch reaches the road's end, Extend with the fields as shown carries that offset's slope on
+  … (40.5 m sideways at the end of a 1,000 m piece …) … That is where the piece was always laid" → `S\runon-base.txt` and
+  `S\runon_merge.txt` are the same: true. "whether it should be is a question still open": as section 4 put it.
+- No "up to 2 m" or "up to 2.5 m" left: checked by reading the entry.
+
+### 7.5 The machine
+
+- One worktree, `Downloads\t180-wt-e-l270b` (detached at 6ba9e19): 0 status lines, 0 probe copies left, removed with
+  `git worktree remove`; the folder is gone.
+- No push, no merge, no build, nothing committed to the builder.
