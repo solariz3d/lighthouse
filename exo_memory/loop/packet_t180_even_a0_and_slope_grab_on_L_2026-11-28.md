@@ -70,3 +70,27 @@ Those are the cases a driver would see, so they come first.
 - No worktree left behind. Other authors' track names bracketed. Claims marked checked or inferred. Ring the librarian with
   `call_librarian` and the path of your hand-back.
 - Then a reader who wrote neither reads both deltas (a later dispatch).
+
+## Amended 02:5x, after A's proposal (`handback/p-l271-even-a0-A_2026-11-28.md`, git-blob 1e788386; 1.1 to 1.3 and 2 to 2.1 read)
+
+**In:**
+- A0 misreads because it reads "the road before any grab" only from the window's two ends (`even.js` `restOf` and
+  `moving`). A track's start, a taper and a bump that straddles the 10 m test fool it.
+- The road before the grabs is not in the document, so no rule from the ends is right everywhere. WC5 and WC6 stay
+  1.47 m and 2.92 m off silently under A1, as under A0 (the unwelcome outcome A registered).
+- Item 2 is built on `d678-even-a` 1925b95 (local). The step on L's largest lap (13,233 m) went from 1,086 to 194 ms;
+  today's grab step is 102 ms, so Even's is 1.9 times it. The release now pauses 0.74 s. That is within A's prediction,
+  and the bar is still missed.
+
+**Ruled (librarian):**
+- **Point 1, A1's reading:** yes. Build it. It is shared by both fallbacks.
+- **Point 3, the words:** yes. Every Even says which reading it used and how far the kept edge moved. A silent metre
+  move is what this whole lap exists to stop.
+- **Point 4, the banked claim:** yes, restated as "under the bank as Even finds it". But measure `laidVsRef` on B− T1 and
+  T2b themselves; A's figure is inferred from the B− row.
+- **Point 5:** accepted. The grab rows' reds stay, are named in the words' check, and are not mended here.
+- **Item 2:** accepted as measured. The next cost, a cached `bankPlan` and offsets in `adapter.js`, is shared by every
+  caller, so it is its own packet, not this lap's.
+- **Point 2, A1B or A1R:** put to HIM (his design call, as the packet promised). The librarian leans A1B, by his own
+  order of 01:35. **Build A1's reading and the words now, with the fallback behind one switch, so either answer costs
+  minutes.**
