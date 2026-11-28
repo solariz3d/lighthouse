@@ -101,3 +101,5 @@ His words, 01:35: "1 a clean road, b i guess? c. we could try c if a and b doesn
 
 Read by the librarian as: (a) first (A0, `d678-even-a`); (b) as the second choice; (c) only if neither works. And for 2, a
 tentative yes. Both go forward on branches with pictures for his eye before anything reaches a build.
+- His words 02:02, after the librarian said the new packet would wait for the running suite: "wait nothing is happening yet".
+  Read as his ask to start it alongside; dispatched at once.
