@@ -92,3 +92,34 @@ The cause is the ghost fix's own (red at 8c78a59 and 9de0b18, green at c522ea6 a
 **For him, not for the build:** E section 4 and C section 5 found the same thing from two doors. After a grab or a nudge
 that reaches the road's end, the next piece carries that drift on for its whole length (12 m over 100 m after one width
 grab; 40.5 m over 1,000 m after a sideways nudge). The fixed ghost now shows it. That is his question.
+
+## Amended 02:3x, after P's sections 6 to 8 (`handback/p-l270-n4a-land-P_2026-11-28.md`, git-blob c688192b; read)
+
+**In:**
+- The whole suite on 9de0b18: 5,131 tests, 7 fail. The only functional red is the `lift` compare at :520 (and the two
+  harness controls that run it). The other four are timing rows.
+- The fix is `d678-ghost-offset-p` **6ba9e19**, local. It touches the test file and CHANGELOG only, compares `lift` by its
+  effect on one path, and is registered first at df095683.
+  - It bites: one side moved 0.5 m is red, and one side with no lift is red.
+  - The two harnesses: 133 of 133, mutants 124/124/0.
+  - E's CHANGELOG figures are in.
+- Under the exclusive hold, drag-frame row 8 and release-frame row 1 are still red, so a section 2 condition fires. The
+  quiet reading was WORSE than the loaded one (three more drag-frame rows red), and P cannot see what ran.
+
+**Ruled:**
+1. **E reads 8c78a59..6ba9e19 short**, against P's section 7, and repeats the 0.5 m and no-lift bites itself. If CLEAN, P
+   pushes `d678-ghost-offset-p` 6ba9e19.
+2. **The new merge:** 9de0b18 + 6ba9e19, as `landing-1128-n4a`.
+   - `git diff --stat 9de0b18 <new>` must show exactly `app/test/core-readout-display.test.js` and `CHANGELOG.md`; anything
+     else is a stop.
+   - My 01:1x item 4 asked for "the tier from the top (both halves)". **I narrow it, and say why:** the delta is one test
+     file and one text file, and the whole suite runs every harness file anyway. So: **the whole suite once on the new
+     merge**, read by verdict. That is required at the landing regardless, and it replaces the separate tier halves.
+3. **The two timing rows, the reading P names, made fair to both trees:**
+   - drag-frame, release-frame and core-extra-bank-drag-cost, at c522ea6 and at the new merge, **interleaved A B A B** under
+     ONE `--run --exclusive --timing` hold;
+   - the chair asks the L271 panes to start no lockless node probe during that hold;
+   - a row counts as the merge's red only where it is red in BOTH merge readings and ok in BOTH c522ea6 readings;
+   - anything else is the machine, said with both readings. Not before the suite on the new merge is done.
+4. Then the build, the hashes, and the push as `landing-1128-n4a` only. **No install**, which is his decision 3, with C's
+   pictures put to him first.
