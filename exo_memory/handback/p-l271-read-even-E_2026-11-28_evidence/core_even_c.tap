@@ -1,0 +1,262 @@
+TAP version 13
+# Subtest: Even brings the run to the value from its first metre to its last, and the input document is not changed
+ok 1 - Even brings the run to the value from its first metre to its last, and the input document is not changed
+  ---
+  duration_ms: 84.8997
+  type: 'test'
+  ...
+# Subtest: Even on a run of one piece levels that piece, eases into its neighbours and moves nothing outside its window
+ok 2 - Even on a run of one piece levels that piece, eases into its neighbours and moves nothing outside its window
+  ---
+  duration_ms: 40.4008
+  type: 'test'
+  ...
+# Subtest: the ramp is the designed ease: where the knots are fine enough to carry it, the width before the run follows a smootherstep from the road to the value over 30 m
+ok 3 - the ramp is the designed ease: where the knots are fine enough to carry it, the width before the run follows a smootherstep from the road to the value over 30 m
+  ---
+  duration_ms: 14.0622
+  type: 'test'
+  ...
+# Subtest: Even on a run that ends at the open end gives the head the value: no ramp after it
+ok 4 - Even on a run that ends at the open end gives the head the value: no ramp after it
+  ---
+  duration_ms: 19.6326
+  type: 'test'
+  ...
+# Subtest: Even with the left rim held keeps that rim where the road has it and puts the right rim out at the new width (flat, from the untouched road)
+ok 5 - Even with the left rim held keeps that rim where the road has it and puts the right rim out at the new width (flat, from the untouched road)
+  ---
+  duration_ms: 87.4489
+  type: 'test'
+  ...
+# Subtest: the held rim on the other side: with the right rim held it stays and the left rim goes out (flat, from the untouched road)
+ok 6 - the held rim on the other side: with the right rim held it stays and the left rim goes out (flat, from the untouched road)
+  ---
+  duration_ms: 83.4661
+  type: 'test'
+  ...
+# Subtest: after a piece with coarse knots (a plain Extend's 20 m spans), the run is still one width with the held rim in place from its first metre: the window reaches back to that piece's last span
+ok 7 - after a piece with coarse knots (a plain Extend's 20 m spans), the run is still one width with the held rim in place from its first metre: the window reaches back to that piece's last span
+  ---
+  duration_ms: 88.3783
+  type: 'test'
+  ...
+# Subtest: where the road's own width changes across the window (a 31 m straight into a 12 m turn), the held rim is held where it is now (A1B), not read back from the window's ends
+ok 8 - where the road's own width changes across the window (a 31 m straight into a 12 m turn), the held rim is held where it is now (A1B), not read back from the window's ends
+  ---
+  duration_ms: 92.3718
+  type: 'test'
+  ...
+# Subtest: K2 and K3 on Bhold from the untouched road: the held rim stays within 0.01 m, and the centre's height is within 0.01 m of its place in the plane of the road as built
+ok 9 - K2 and K3 on Bhold from the untouched road: the held rim stays within 0.01 m, and the centre's height is within 0.01 m of its place in the plane of the road as built
+  ---
+  duration_ms: 2245.9454
+  type: 'test'
+  ...
+# Subtest: K2 and K3 on B- from the untouched road: the held rim stays within 0.01 m, and the centre's height is within 0.01 m of its place in the plane of the road as built
+ok 10 - K2 and K3 on B- from the untouched road: the held rim stays within 0.01 m, and the centre's height is within 0.01 m of its place in the plane of the road as built
+  ---
+  duration_ms: 5545.0915
+  type: 'test'
+  ...
+# Subtest: K2 and K3 on B-0 from the untouched road: the held rim stays within 0.01 m, and the centre's height is within 0.01 m of its place in the plane of the road as built
+ok 11 - K2 and K3 on B-0 from the untouched road: the held rim stays within 0.01 m, and the centre's height is within 0.01 m of its place in the plane of the road as built
+  ---
+  duration_ms: 5328.7623
+  type: 'test'
+  ...
+# Subtest: K5: Even keeps the bank as found: the bank channel and the bank as built within one stored step every metre
+ok 12 - K5: Even keeps the bank as found: the bank channel and the bank as built within one stored step every metre
+  ---
+  duration_ms: 5016.0409
+  type: 'test'
+  ...
+# Subtest: X1, X4, X8: on flat, the left edge kept, the width is within 0.01 m of the value over both 20 m margins, nothing outside moves past one stored step and no joint steps
+ok 13 - X1, X4, X8: on flat, the left edge kept, the width is within 0.01 m of the value over both 20 m margins, nothing outside moves past one stored step and no joint steps
+  ---
+  duration_ms: 27.4783
+  type: 'test'
+  ...
+# Subtest: X1, X4, X8: on flat, the right edge kept, the width is within 0.01 m of the value over both 20 m margins, nothing outside moves past one stored step and no joint steps
+ok 14 - X1, X4, X8: on flat, the right edge kept, the width is within 0.01 m of the value over both 20 m margins, nothing outside moves past one stored step and no joint steps
+  ---
+  duration_ms: 28.7213
+  type: 'test'
+  ...
+# Subtest: X1, X4, X8: on B-, the left edge kept, the width is within 0.01 m of the value over both 20 m margins, nothing outside moves past one stored step and no joint steps
+ok 15 - X1, X4, X8: on B-, the left edge kept, the width is within 0.01 m of the value over both 20 m margins, nothing outside moves past one stored step and no joint steps
+  ---
+  duration_ms: 129.1171
+  type: 'test'
+  ...
+# Subtest: X1, X4, X8: on B-, the right edge kept, the width is within 0.01 m of the value over both 20 m margins, nothing outside moves past one stored step and no joint steps
+ok 16 - X1, X4, X8: on B-, the right edge kept, the width is within 0.01 m of the value over both 20 m margins, nothing outside moves past one stored step and no joint steps
+  ---
+  duration_ms: 167.2102
+  type: 'test'
+  ...
+# Subtest: X2: on B-, the left edge kept, the kept edge is within 0.01 m of where it was over both margins
+ok 17 - X2: on B-, the left edge kept, the kept edge is within 0.01 m of where it was over both margins
+  ---
+  duration_ms: 228.5148
+  type: 'test'
+  ...
+# Subtest: X2: on B-, the right edge kept, the kept edge is within 0.01 m of where it was over both margins
+ok 18 - X2: on B-, the right edge kept, the kept edge is within 0.01 m of where it was over both margins
+  ---
+  duration_ms: 238.4099
+  type: 'test'
+  ...
+# Subtest: X3, X4, X8: on B- after a grab at 470, K3: the centre's height is within 0.01 m of its target over the window, nothing outside moves past one stored step and no joint steps
+ok 19 - X3, X4, X8: on B- after a grab at 470, K3: the centre's height is within 0.01 m of its target over the window, nothing outside moves past one stored step and no joint steps
+  ---
+  duration_ms: 5312.195
+  type: 'test'
+  ...
+# Subtest: X3, X4, X8: on B- after a grab at 485, K3: the centre's height is within 0.01 m of its target over the window, nothing outside moves past one stored step and no joint steps
+ok 20 - X3, X4, X8: on B- after a grab at 485, K3: the centre's height is within 0.01 m of its target over the window, nothing outside moves past one stored step and no joint steps
+  ---
+  duration_ms: 4047.1566
+  type: 'test'
+  ...
+# Subtest: X3, X4, X8: on B- after a grab at 175 and 465, K3: the centre's height is within 0.01 m of its target over the window, nothing outside moves past one stored step and no joint steps
+ok 21 - X3, X4, X8: on B- after a grab at 175 and 465, K3: the centre's height is within 0.01 m of its target over the window, nothing outside moves past one stored step and no joint steps
+  ---
+  duration_ms: 5316.7657
+  type: 'test'
+  ...
+# Subtest: Even refuses by name, and changes nothing: a run that is not one, a width out of range, a hold it does not know
+ok 22 - Even refuses by name, and changes nothing: a run that is not one, a width out of range, a hold it does not know
+  ---
+  duration_ms: 29.5116
+  type: 'test'
+  ...
+# Subtest: Even refuses by name a jump within reach of the run, and a run that starts or ends on the jump
+ok 23 - Even refuses by name a jump within reach of the run, and a run that starts or ends on the jump
+  ---
+  duration_ms: 17.7678
+  type: 'test'
+  ...
+# Subtest: Even refuses by name a tube and a split width in the window
+ok 24 - Even refuses by name a tube and a split width in the window
+  ---
+  duration_ms: 24.6189
+  type: 'test'
+  ...
+# Subtest: Even refuses by name on a closed lap when the run or its ramps reach the start line, and levels a run clear of it
+ok 25 - Even refuses by name on a closed lap when the run or its ramps reach the start line, and levels a run clear of it
+  ---
+  duration_ms: 245.9487
+  type: 'test'
+  ...
+# Subtest: B4: Even's result, the left kept, is frozen all the way down: the document, every piece, its channels and their control points
+ok 26 - B4: Even's result, the left kept, is frozen all the way down: the document, every piece, its channels and their control points
+  ---
+  duration_ms: 191.1779
+  type: 'test'
+  ...
+# Subtest: B4: Even's result, the right kept, is frozen all the way down: the document, every piece, its channels and their control points
+ok 27 - B4: Even's result, the right kept, is frozen all the way down: the document, every piece, its channels and their control points
+  ---
+  duration_ms: 185.2873
+  type: 'test'
+  ...
+# Subtest: B4: Even's result, the centre kept, is frozen all the way down: the document, every piece, its channels and their control points
+ok 28 - B4: Even's result, the centre kept, is frozen all the way down: the document, every piece, its channels and their control points
+  ---
+  duration_ms: 132.7787
+  type: 'test'
+  ...
+# Subtest: C1: two Even calls on one base reuse one cut track and one reference road (the reaches cut once per drag)
+ok 29 - C1: two Even calls on one base reuse one cut track and one reference road (the reaches cut once per drag)
+  ---
+  duration_ms: 44.4641
+  type: 'test'
+  ...
+# Subtest: C2: Even with its cut and reference memoised gives the same bytes as Even run on a fresh copy of the base (no memo hit)
+ok 30 - C2: Even with its cut and reference memoised gives the same bytes as Even run on a fresh copy of the base (no memo hit)
+  ---
+  duration_ms: 616.5604
+  type: 'test'
+  ...
+# Subtest: A1-1: no stretch is refused for the road under it (A1R is not built): from the track's start, a width stepping inside the run, and a window end on a grab, the edge is kept and Even says so
+ok 31 - A1-1: no stretch is refused for the road under it (A1R is not built): from the track's start, a width stepping inside the run, and a window end on a grab, the edge is kept and Even says so
+  ---
+  duration_ms: 531.2126
+  type: 'test'
+  ...
+# Subtest: A1-3: a run from the track's start (A0: 9.31 m off, silently): Even says it kept the edge, and the edge is where it was within 0.01 m over the run
+ok 32 - A1-3: a run from the track's start (A0: 9.31 m off, silently): Even says it kept the edge, and the edge is where it was within 0.01 m over the run
+  ---
+  duration_ms: 185.1945
+  type: 'test'
+  ...
+# Subtest: A1-4: a road whose own width steps inside the run (WC3, no grab): the edge stays within 0.01 m (A0: 2.92 m off, silently)
+ok 33 - A1-4: a road whose own width steps inside the run (WC3, no grab): the edge stays within 0.01 m (A0: 2.92 m off, silently)
+  ---
+  duration_ms: 174.4473
+  type: 'test'
+  ...
+# Subtest: A1-5: where the ends support a reading (flat, after one grab, T1), Even reads the road: the kept edge goes back to the untouched road within 0.01 m, and its own figure for the move is the move measured
+ok 34 - A1-5: where the ends support a reading (flat, after one grab, T1), Even reads the road: the kept edge goes back to the untouched road within 0.01 m, and its own figure for the move is the move measured
+  ---
+  duration_ms: 249.7794
+  type: 'test'
+  ...
+# Subtest: A1-6: a grab centred 5 m outside the window's start (B-, at 145) fools a 10 m test but not A1's 10, 20 and 30 m: that end reads as moving; the track's start reads as an edge
+ok 35 - A1-6: a grab centred 5 m outside the window's start (B-, at 145) fools a 10 m test but not A1's 10, 20 and 30 m: that end reads as moving; the track's start reads as an edge
+  ---
+  duration_ms: 55.5972
+  type: 'test'
+  ...
+# Subtest: A1-7: B- T1: the road is read "under the bank as Even finds it": Even says the stretch is banked, and the kept edge is within 0.01 m of that road (L271 point 4)
+ok 36 - A1-7: B- T1: the road is read "under the bank as Even finds it": Even says the stretch is banked, and the kept edge is within 0.01 m of that road (L271 point 4)
+  ---
+  duration_ms: 2732.1029
+  type: 'test'
+  ...
+# Subtest: A1-7: B- T2b: the road is read "under the bank as Even finds it": Even says the stretch is banked, and the kept edge is within 0.01 m of that road (L271 point 4)
+ok 37 - A1-7: B- T2b: the road is read "under the bank as Even finds it": Even says the stretch is banked, and the kept edge is within 0.01 m of that road (L271 point 4)
+  ---
+  duration_ms: 21959.7689
+  type: 'test'
+  ...
+# Subtest: A1-7: an unbanked stretch is not said to be banked
+ok 38 - A1-7: an unbanked stretch is not said to be banked
+  ---
+  duration_ms: 24.6927
+  type: 'test'
+  ...
+# Subtest: A1-8: the middle kept ('centre') reads nothing: a run from the track's start is levelled, with no kept edge to measure
+ok 39 - A1-8: the middle kept ('centre') reads nothing: a run from the track's start is levelled, with no kept edge to measure
+  ---
+  duration_ms: 9.9537
+  type: 'test'
+  ...
+# Subtest: R1: a run from the track's start whose first piece is typed 31 m: Even keeps the edge and its reason is true of the road (no "still changing" where the width is level)
+ok 40 - R1: a run from the track's start whose first piece is typed 31 m: Even keeps the edge and its reason is true of the road (no "still changing" where the width is level)
+  ---
+  duration_ms: 89.5056
+  type: 'test'
+  ...
+# Subtest: R2: a 150 m track evened whole (its open end level at 12 m): Even keeps the edge and its reason is true of the road (no "still changing" where the width is level)
+ok 41 - R2: a 150 m track evened whole (its open end level at 12 m): Even keeps the edge and its reason is true of the road (no "still changing" where the width is level)
+  ---
+  duration_ms: 36.566
+  type: 'test'
+  ...
+# Subtest: R3: a 150 m track level at 31 m everywhere, evened whole: Even keeps the edge and its reason is true of the road (no "still changing" where the width is level)
+ok 42 - R3: a 150 m track level at 31 m everywhere, evened whole: Even keeps the edge and its reason is true of the road (no "still changing" where the width is level)
+  ---
+  duration_ms: 36.3266
+  type: 'test'
+  ...
+1..42
+# tests 42
+# suites 0
+# pass 42
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 61913.0175
