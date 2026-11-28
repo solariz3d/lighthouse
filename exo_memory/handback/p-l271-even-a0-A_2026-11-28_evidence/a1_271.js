@@ -57,9 +57,9 @@ function restOf(`;
 const SETTLE_L = "const c1 = freeze(D.checkDoc({ ...d1, pieces: SC.settle(d1, 'l', resL).pieces }));";
 const CANDS = {
   A0: [],
-  A1B: [['function restOf(', READ], [RW, 'const rd = readSupported(doc, off, win, L), one = !!rd, rw = rd && rd.w, rl = rd && rd.l;'],
+  A1B: [['function restOf(', READ], [RW, 'var rd271 = readSupported(doc, off, win, L); const one = !!rd271, rw = rd271 && rd271.w, rl = rd271 && rd271.l;'],
     ['function fitHeight(', FITB + '\nfunction fitHeight('],
-    [SETTLE_L, "const resL2 = side && !one ? fitChannel(d1, 'l', (s) => { const x = Math.min(L, Math.max(0, s)); return valueAt(doc, off, 'l', x) + rim0(x) - rim1(x); }, win) : resL;\n  const c1 = freeze(D.checkDoc({ ...d1, pieces: SC.settle(d1, 'l', resL2).pieces }));"]],
+    [SETTLE_L, "const resL2 = side && !rd271 ? fitChannel(d1, 'l', (s) => { const x = Math.min(L, Math.max(0, s)); return valueAt(doc, off, 'l', x) + rim0(x) - rim1(x); }, win) : resL;\n  const c1 = freeze(D.checkDoc({ ...d1, pieces: SC.settle(d1, 'l', resL2).pieces }));"]],
   A1R: [['function restOf(', READ], [RW, "const rd = readSupported(doc, off, win, L), one = !!rd, rw = rd && rd.w, rl = rd && rd.l;\n    if (!rd) refuse('EVEN_UNREAD', 'the road under this stretch cannot be read from its ends');"]],
 };
 

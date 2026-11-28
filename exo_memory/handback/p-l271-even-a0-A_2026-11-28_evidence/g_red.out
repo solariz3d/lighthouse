@@ -1,0 +1,52 @@
+heavy-run: waiting on 6e6e002c pid 16944 (L270 pane P: the whole suite, landing-1128-n4a 9de0b18 (ruling item 1), since 2026-11-28T07:13:15.630Z) and 6fe15f0a pid 31832 (L271 A a1 prototype table, since 2026-11-28T08:15:02.303Z) — all 2 slots are held
+✖ G1: an Even drag runs no pass-clearance check on its steps; the release is refused by name when the road comes too close, and the track is as before the drag (690.8439ms)
+✔ G2: a typed Even width that brings the road too close to another pass is refused by name and changes nothing (253.4053ms)
+✖ C1: two Even calls on one base reuse one cut track and one reference road (the reaches cut once per drag) (19.8231ms)
+✔ C2: Even with its cut and reference memoised gives the same bytes as Even run on a fresh copy of the base (no memo hit) (636.8884ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 2
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1131.8825
+
+✖ failing tests:
+
+test at app\test\sculpt-even.test.js:163:1
+✖ G1: an Even drag runs no pass-clearance check on its steps; the release is refused by name when the road comes too close, and the track is as before the drag (690.8439ms)
+  AssertionError [ERR_ASSERTION]: left: no step of the drag ran the guard
+  
+  4 !== 0
+  
+      at TestContext.<anonymous> (<local path>)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 4,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test\core_even.test.js:234:1
+✖ C1: two Even calls on one base reuse one cut track and one reference road (the reaches cut once per drag) (19.8231ms)
+  AssertionError [ERR_ASSERTION]: the cut track is memoised (cutOf)
+  actual expected
+  
+  'fundefctioned'
+  
+      at TestContext.<anonymous> (<local path>)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.start (node:internal/test_runner/test:1191:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:385:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'undefined',
+    expected: 'function',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
