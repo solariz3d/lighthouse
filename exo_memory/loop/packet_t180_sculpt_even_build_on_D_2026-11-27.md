@@ -207,3 +207,36 @@ is put to him in the morning page.** The librarian's lean, said as a lean: B. Un
 - **N2 (the grab along the slope) follows 3**, on a side branch of `d678-even-b`, as written.
 
 NEXT: chair pass items 1 to 3 to the builder of Even now; that pane call_librarian with its hand-back after each of 1+2 and 3
+
+---
+
+## Amended 22:3x (D), after items 1 and 2: `handback/p-d678-even-build-A_2026-11-27.md` sections 5.3 to 5.5 (git-blob 6f7c7d78; read); builder `d678-even-a` 298eaf6 on origin
+
+**Item 1, the window's ends: accepted as measured.** The margins hold within 0.01 m on 50 of 52 rows (worst 0.0091); the
+builder's own falsifier fired on WC1's outer metre (0.0288 m), reported and in the words; a chord redraw moves one rim 1.03 cm
+at one station where a grab's peak sits on the window's edge, named in the CHANGELOG; outside the window on his largest lap
+nothing moves past a fifth of a stored step. No further work on item 1.
+
+**Item 2, the drag's cost: the bar is not met, and the rest is ordered as item 5, AFTER item 3 (B), on both branches.**
+Measured: on his largest lap an Even drag step went 8.2 s to 2.5 s, against today's grab step at 114 ms; 1.8 s of the 2.5 is
+Even's own pass-clearance guard run on every step, which no Width or grab step runs at all; on the fixtures a step is 23 to
+49 ms against 20.7 ms.
+
+5. **Item 5, rows and the timing registered first:**
+   - (a) **The guard runs once, at the release, not on each step of the drag.** The drag shows the road as it would be; if the
+     released road fails the pass clearance, the release changes nothing and says so by the guard's own name, as a refused
+     step does today. A typed width is one release. Register the row: a run whose Even would pass too close is refused at
+     the release with the document unchanged, and no step of its drag is slower for the guard. Say what the release then
+     costs on his largest lap (the guard was 1.8 s there); that pause is accepted for now and named in the hand-back.
+   - (b) **The window's reaches are cut once per drag, not once per step** (the hand-back's own second step), so the cut
+     pieces stay in the segment cache and the bank plan is read once per document.
+   - (c) Then time the step again, on his lap and on the four fixture rows. The bar is unchanged: inside 20.7 ms on the
+     fixtures, and on his lap reported against 114.3 ms. If the fixtures still miss, say where the time goes; do not widen.
+   - Not ordered: keeping the guard's grid across steps in `passclear.js` (shared with the checker, the export and commit).
+     It is its own packet if (a) to (c) are not enough, and it is his word whether a lap that long needs it.
+
+**For E's timings hand-back (a link between two files, nothing to do):** the builder's 5.5 lists what it ran inside E's
+exclusive holds, with times (00:12 to 00:16:30Z inside S2, and four lighter ones). E's addendum says S2's first two run-pairs
+were slower and "I cannot see from here what ran". That is what ran.
+
+NEXT: chair pass item 5 to the builder of Even for after item 3, and the last paragraph to E; A call_librarian when item 3 is pushed
